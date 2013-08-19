@@ -23,7 +23,7 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "title" => "MyString" } }
+  let(:valid_attributes) { { "description" => "MyString" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -85,14 +85,14 @@ describe JobOffersController do
       it "assigns a newly created but unsaved job_offer as @job_offer" do
         # Trigger the behavior that occurs when invalid params are submitted
         JobOffer.any_instance.stub(:save).and_return(false)
-        post :create, {:job_offer => { "title" => "invalid value" }}, valid_session
+        post :create, {:job_offer => { "description" => "invalid value" }}, valid_session
         assigns(:job_offer).should be_a_new(JobOffer)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         JobOffer.any_instance.stub(:save).and_return(false)
-        post :create, {:job_offer => { "title" => "invalid value" }}, valid_session
+        post :create, {:job_offer => { "description" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -106,8 +106,8 @@ describe JobOffersController do
         # specifies that the JobOffer created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        JobOffer.any_instance.should_receive(:update).with({ "title" => "MyString" })
-        put :update, {:id => job_offer.to_param, :job_offer => { "title" => "MyString" }}, valid_session
+        JobOffer.any_instance.should_receive(:update).with({ "description" => "MyString" })
+        put :update, {:id => job_offer.to_param, :job_offer => { "description" => "MyString" }}, valid_session
       end
 
       it "assigns the requested job_offer as @job_offer" do
@@ -128,7 +128,7 @@ describe JobOffersController do
         job_offer = JobOffer.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         JobOffer.any_instance.stub(:save).and_return(false)
-        put :update, {:id => job_offer.to_param, :job_offer => { "title" => "invalid value" }}, valid_session
+        put :update, {:id => job_offer.to_param, :job_offer => { "description" => "invalid value" }}, valid_session
         assigns(:job_offer).should eq(job_offer)
       end
 
@@ -136,7 +136,7 @@ describe JobOffersController do
         job_offer = JobOffer.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         JobOffer.any_instance.stub(:save).and_return(false)
-        put :update, {:id => job_offer.to_param, :job_offer => { "title" => "invalid value" }}, valid_session
+        put :update, {:id => job_offer.to_param, :job_offer => { "description" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end

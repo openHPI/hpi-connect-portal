@@ -1,5 +1,5 @@
-<%- model_class = JobOffer -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
-</div>
-<%= render :partial => 'form' %>
+<h1>New job_offer</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', job_offers_path %>

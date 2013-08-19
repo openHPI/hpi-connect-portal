@@ -34,6 +34,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'rake'
 end
 
 # basic layouting

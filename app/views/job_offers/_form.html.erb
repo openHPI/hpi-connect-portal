@@ -1,20 +1,25 @@
-<%= form_for @job_offer, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :description, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :description, :class => 'text_field' %>
-    </div>
-  </div>
+<%= form_for(@job_offer) do |f| %>
+  <% if @job_offer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@job_offer.errors.count, "error") %> prohibited this job_offer from being saved:</h2>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                job_offers_path, :class => 'btn' %>
+      <ul>
+      <% @job_offer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
   </div>
 <% end %>

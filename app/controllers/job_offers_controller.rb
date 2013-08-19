@@ -69,6 +69,6 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:title, :description)
+      params.require(:job_offer).permit(:description, :title)
     end
 end
