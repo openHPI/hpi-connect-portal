@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: hpi_hiwi_portal_development
   pool: 5
-  username: postgresql
+  username: postgres
   host: localhost
   port: 5432    
 
@@ -49,7 +49,7 @@ test:
   encoding: unicode
   database: hpi_hiwi_portal_test
   pool: 5
-  username: postgresql
+  username: postgres
   host: localhost
   port: 5432
 
@@ -58,6 +58,6 @@ production:
   encoding: unicode
   database: hpi_hiwi_portal_production
   pool: 5
-  username: postgresql
+  username: postgres
   host: localhost
   port: 5432
