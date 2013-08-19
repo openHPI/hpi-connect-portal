@@ -47,7 +47,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: hpi-hiwi-portal_test
+  database: hpi_hiwi_portal_test
   pool: 5
   username: postgresql
   host: localhost
@@ -56,7 +56,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: hpi-hiwi-portal_production
+  database: hpi_hiwi_portal_production
   pool: 5
   username: postgresql
   host: localhost
