@@ -40,4 +40,4 @@ end
 gem 'twitter-bootstrap-rails'
 
 # authentication including support for oauth
-gem 'devise'
+gem 'devise', "~> 3.0.3"
