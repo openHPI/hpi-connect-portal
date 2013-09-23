@@ -8,4 +8,5 @@ Vagrant.configure("2") do |config|
   
   # port forward
   config.vm.network :forwarded_port, host: 3000, guest: 3000
+  config.vm.synced_folder ".", "/home/vagrant/hpi-hiwi-portal"  
 end
