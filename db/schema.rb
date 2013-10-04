@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130819123905) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "job_offers", force: true do |t|
     t.string   "description"
     t.string   "title"
