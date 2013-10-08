@@ -35,10 +35,14 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
+  gem 'codeclimate-test-reporter'
 end
 
 # basic layouting
 gem 'twitter-bootstrap-rails'
+
+# navigation
+gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
 gem 'devise', "~> 3.1.0"
