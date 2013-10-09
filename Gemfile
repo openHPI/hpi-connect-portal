@@ -49,3 +49,6 @@ gem 'devise', "~> 3.1.0"
 
 # simple http requests
 gem "rest-client"
+
+# command line parsing for project registration
+gem "highline"
