@@ -25,7 +25,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.5.1'
+gem 'jbuilder', '~> 1.5'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -46,3 +46,6 @@ gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
 gem 'devise', "~> 3.1.0"
+
+# simple http requests
+gem "rest-client"
