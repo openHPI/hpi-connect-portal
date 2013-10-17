@@ -6,9 +6,11 @@ namespace :project do
     say "Tests ran successfully. Congratulations! Now please register yourself for the project."
     say_line    
     github_username = get_github_username()
+    
     unless github_username.nil?
       say_line
-      register(github_username)
+      codeschool_account_number = ask("Please enter your Codeschool Account Id.: ", Integer){|q| q.in = 100000..9999999}      
+      register(github_username, codeschool_account_number)
     end
   end
   
@@ -29,10 +31,11 @@ namespace :project do
     say("Please set your git username to match your github account (<%= color('git config user.name \"<github account>\"', BOLD) %>)!")
   end
   
-  def register(github_name)
+  def register(github_name, codeschool_account_number)
     mat_nr = ask("Please enter your Mat-Nr.: ", Integer){|q| q.in = 100000..999999}
-    resp = begin
-      RestClient.post(server_address, assignment_hash(github_name, mat_nr), {:accept => :json})
+    begin
+      resp = RestClient.post(server_address, assignment_hash(github_name, mat_nr, codeschool_account_number), {:accept => :json})
+      say(JSON.parse(resp.body)["message"])      
     rescue => e
       if e.response.code == 409
         json = JSON.parse(e.response.body)
@@ -40,14 +43,16 @@ namespace :project do
         say_line
         choose do |menu|
           menu.prompt = "Overwrite existing record?"
-          menu.choice("yes") {RestClient.put(json["redirect_url"], assignment_hash(github_name, mat_nr), {:accept => :json})}
+          menu.choice("yes") {
+            resp = RestClient.put(json["redirect_url"], assignment_hash(github_name, mat_nr, codeschool_account_number), {:accept => :json})
+            say(JSON.parse(resp.body)["message"])
+          }
           menu.choice("no") {return}
         end
       else
         puts e.response
       end
     end
-    say(JSON.parse(resp.body)["message"])
   end
   
   def server_address()
@@ -58,7 +63,7 @@ namespace :project do
     say("------------------")
   end
   
-  def assignment_hash(github_name, mat_nr)
-    {:assignment => {:github_account => github_name, :mat_nr => mat_nr}}
+  def assignment_hash(github_name, mat_nr, codeschool_account_number)
+    {:assignment => {:github_account => github_name, :mat_nr => mat_nr, :code_school_account => codeschool_account_number}}
   end
 end
