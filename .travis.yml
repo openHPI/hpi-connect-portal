@@ -5,8 +5,8 @@ before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database hpi_hiwi_portal_test;' -U postgres
 # ADD ME once the edu account for code climate is up
-#addons:
-#  code_climate:
-#    repo_token: 
+addons:
+  code_climate:
+    repo_token: b12aae94364b0a1d40d4c5ada71edf27fbbe180713cdabae717e0f0342a449c0 
 # uncomment this line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
