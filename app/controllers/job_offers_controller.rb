@@ -31,8 +31,7 @@ class JobOffersController < ApplicationController
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
         format.json { render action: 'show', status: :created, location: @job_offer }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+        render_errors_and_redirect_to(@job_offer, 'new', format)
       end
     end
   end
@@ -45,8 +44,7 @@ class JobOffersController < ApplicationController
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+        render_errors_and_redirect_to(@job_offer, 'edit', format)
       end
     end
   end
@@ -71,4 +69,9 @@ class JobOffersController < ApplicationController
     def job_offer_params
       params.require(:job_offer).permit(:description, :title)
     end
+    
+    def render_errors_and_redirect_to(object, target, format)
+      format.html { render action: target }
+      format.json { render json: object.errors, status: :unprocessable_entity }
+    end  
 end
