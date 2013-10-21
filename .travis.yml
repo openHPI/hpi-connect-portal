@@ -1,12 +1,16 @@
 language: ruby
 rvm:
-  - "2.0.0"
+- 2.0.0
 before_script:
-  - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database hpi_hiwi_portal_test;' -U postgres
-# ADD ME once the edu account for code climate is up
-addons:
-  code_climate:
-    repo_token: b12aae94364b0a1d40d4c5ada71edf27fbbe180713cdabae717e0f0342a449c0 
-# uncomment this line if your project needs to run something other than `rake`:
-# script: bundle exec rspec spec
+- cp config/database.travis.yml config/database.yml
+- psql -c 'create database hpi_hiwi_portal_test;' -U postgres
+#addons:
+#  code_climate:
+#    repo_token: b12aae94364b0a1d40d4c5ada71edf27fbbe180713cdabae717e0f0342a449c0
+deploy:
+  provider: heroku
+  api_key:
+    secure: IrNqyY8hWCOkdddDQrYLmVG4eGxhrGVaFskv2fTpJcR3FZLS4lNbdRlBuEbUHE6cGg7NLKSES3GmXkkLv8KBPCfT6htdHyu22SmekrVZD2TwfrIhYh7xUrRXz5A0Rl8WMbVzAIfPdPs/pQiimH/V5JOq8+Kc4VLjQ+OHPbK8T24=
+  app: hpi-hiwi-portal
+  on:
+    repo: tkowark/hpi-hiwi-portal

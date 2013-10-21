@@ -35,8 +35,10 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
-  gem 'codeclimate-test-reporter', :require => nil
+  #gem 'codeclimate-test-reporter', :require => nil
 end
+
+gem 'simplecov', :group => :test, :require => nil
 
 # basic layouting
 gem 'twitter-bootstrap-rails'
