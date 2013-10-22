@@ -4,9 +4,6 @@ rvm:
 before_script:
 - cp config/database.travis.yml config/database.yml
 - psql -c 'create database hpi_hiwi_portal_test;' -U postgres
-#addons:
-#  code_climate:
-#    repo_token: b12aae94364b0a1d40d4c5ada71edf27fbbe180713cdabae717e0f0342a449c0
 deploy:
   provider: heroku
   api_key:
