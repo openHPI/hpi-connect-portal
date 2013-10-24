@@ -9,7 +9,7 @@ namespace :project do
     
     unless github_username.nil?
       say_line
-      codeschool_account_number = ask("Please enter your Codeschool Account Id.: ", Integer){|q| q.in = 100000..9999999}      
+      codeschool_account_number = ask("Please enter your Codeschool Account Id.: ", String)
       register(github_username, codeschool_account_number)
     end
   end
@@ -32,7 +32,7 @@ namespace :project do
   end
   
   def register(github_name, codeschool_account_number)
-    mat_nr = ask("Please enter your Mat-Nr.: ", Integer){|q| q.in = 100000..999999}
+    mat_nr = ask("Please enter your HPI Account Name: ", String)
     begin
       resp = RestClient.post(server_address, assignment_hash(github_name, mat_nr, codeschool_account_number), {:accept => :json})
       say(JSON.parse(resp.body)["message"])      
