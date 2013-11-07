@@ -51,7 +51,7 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
-gem 'devise', "~> 3.1.0"
+gem 'devise', "~> 3.1"
 
 # simple http requests
 gem "rest-client"
