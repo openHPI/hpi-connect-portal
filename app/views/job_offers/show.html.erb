@@ -10,5 +10,10 @@
   <%= @job_offer.title %>
 </p>
 
+<p>
+  <strong>Chair:</strong>
+  <%= @job_offer.chair %>
+</p>
+
 <%= link_to 'Edit', edit_job_offer_path(@job_offer) %> |
 <%= link_to 'Back', job_offers_path %>

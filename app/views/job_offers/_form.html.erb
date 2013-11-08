@@ -12,13 +12,35 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :chair %><br>
+    <%= f.text_field :chair %>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_date %><br>
+    <%= f.text_field :start_date, :class => 'datepicker' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :time_effort %><br>
+    <%= f.text_field :time_effort %>
+  </div>
+
+  <div class="field">
+    <%= f.label :compensation %><br>
+    <%= f.text_field :compensation %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
