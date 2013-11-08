@@ -61,3 +61,6 @@ gem "highline"
 
 # add some more UI controls
 gem 'jquery-ui-rails'
+
+#load jQuery fast without refresh
+gem 'jquery-turbolinks'
