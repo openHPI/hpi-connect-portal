@@ -11,19 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131108151402) do
+ActiveRecord::Schema.define(version: 20131108215859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "job_offers", force: true do |t|
-    t.string   "description"
+    t.text     "description"
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "chair"
-    t.datetime "start_date"
-    t.datetime "end_time"
+    t.date     "start_date"
+    t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
   end

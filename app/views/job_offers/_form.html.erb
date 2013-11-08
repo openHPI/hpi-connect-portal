@@ -33,7 +33,7 @@
 
    <div class="field">
     <%= f.label :end_date %><br>
-    <%= f.text_field :end_time, :class => 'datepicker', :value => (@job_offer.end_time.blank? ? '' : @job_offer.end_time.strftime('%d-%m-%Y'))%>
+    <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
   </div>
 
   <div class="field">
