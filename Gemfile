@@ -58,3 +58,6 @@ gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
+
+# add some more UI controls
+gem 'jquery-ui-rails'
