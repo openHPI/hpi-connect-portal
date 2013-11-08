@@ -28,12 +28,12 @@
 
   <div class="field">
     <%= f.label :start_date %><br>
-    <%= f.text_field :start_date, :class => 'datepicker'%>
+    <%= f.text_field  :start_date, :class => 'datepicker', :value => @job_offer.start_date.strftime("%d-%m-%Y")%>
   </div>
 
    <div class="field">
     <%= f.label :end_date %><br>
-    <%= f.text_field :end_time, :class => 'datepicker'%>
+    <%= f.text_field :end_time, :class => 'datepicker', :value => @job_offer.end_time.strftime("%d-%m-%Y")%>
   </div>
 
   <div class="field">
