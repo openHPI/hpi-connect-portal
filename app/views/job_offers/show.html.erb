@@ -1,6 +1,4 @@
-<div class="row-fluid">
-<div class="span9">
-<div class="row-fluid">
+<div class="row-fluid span9">
 	<span class="pull-left">
 		<%= link_to 'Back', job_offers_path, :class => "btn" %>
 	</span>
@@ -8,7 +6,7 @@
 		<%= link_to 'Edit', edit_job_offer_path(@job_offer), :class => "btn btn-primary" %> 
     <%= link_to 'Destroy', job_offer_path(@job_offer), :confirm => 'Are you sure you want to destroy your account?', :method => :delete, :class => "btn btn-danger" %>
 	</span>
-	</div>
+	
 	<br><br>
 
 <div class="panel">
@@ -36,7 +34,6 @@
   <dd> <%= @job_offer.compensation %></dd>
 
 </dl>
-</div>
 </div>
 </div>
   

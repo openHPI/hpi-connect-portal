@@ -36,6 +36,13 @@ a.btn-primary{
   }
 }
 
+a.btn-warning{
+  color: #fff;
+  &:visited {
+    color: #fff;
+  }
+}
+
 a.btn-danger{
   color: #fff;
   &:visited {
