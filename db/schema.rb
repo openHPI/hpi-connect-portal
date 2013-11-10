@@ -11,14 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20131110165030) do
-=======
-ActiveRecord::Schema.define(version: 20131108215859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
->>>>>>> origin/crud-job-offers
 
   create_table "job_offers", force: true do |t|
     t.text     "description"

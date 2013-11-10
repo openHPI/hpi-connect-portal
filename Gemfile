@@ -59,13 +59,11 @@ gem "rest-client"
 # command line parsing for project registration
 gem "highline"
 
-<<<<<<< HEAD
 #For Upload
 gem "paperclip", "~> 3.5.2"
-=======
+
 # add some more UI controls
 gem 'jquery-ui-rails'
 
 #load jQuery fast without refresh
 gem 'jquery-turbolinks'
->>>>>>> origin/crud-job-offers
