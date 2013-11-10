@@ -58,3 +58,6 @@ gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
+
+#For Upload
+gem "paperclip", "~> 3.5.2"
