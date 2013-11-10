@@ -21,3 +21,6 @@
 
 # ignore simplecov data
 /coverage/*
+
+#Ignore DS.Store
+.DS_Store

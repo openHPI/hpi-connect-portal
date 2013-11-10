@@ -5,6 +5,7 @@
     <tr>
       <th>Description</th>
       <th>Title</th>
+      <th>Chair</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,6 +17,7 @@
       <tr>
         <td><%= job_offer.description %></td>
         <td><%= job_offer.title %></td>
+        <td><%= job_offer.chair %></td>
         <td><%= link_to 'Show', job_offer %></td>
         <td><%= link_to 'Edit', edit_job_offer_path(job_offer) %></td>
         <td><%= link_to 'Destroy', job_offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
