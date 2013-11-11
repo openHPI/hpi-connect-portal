@@ -1,4 +1,6 @@
 HpiHiwiPortal::Application.routes.draw do
+  resources :chairs
+
   resources :job_offers
 
   devise_for :users

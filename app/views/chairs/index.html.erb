@@ -1,0 +1,30 @@
+<h1>Listing chairs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+			<th>Description</th>
+			<th>Head of Chair</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chairs.each do |chair| %>
+      <tr>
+        <td><%= chair.name %></td>
+				<td><%= chair.description %></td>
+				<td><%=  %></td>
+        <td><%= link_to 'Show', chair %></td>
+        <td><%= link_to 'Edit', edit_chair_path(chair) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Chair', new_chair_path %>
