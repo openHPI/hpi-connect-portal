@@ -12,6 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.all
+//= require jquery.turbolinks
 //= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
+
+
+ $(function() {
+    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+  });
