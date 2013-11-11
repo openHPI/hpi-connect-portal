@@ -1,31 +1,36 @@
-<h1>Listing job_offers</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Title</th>
-      <th>Chair</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @job_offers.each do |job_offer| %>
-      <tr>
-        <td><%= job_offer.description %></td>
-        <td><%= job_offer.title %></td>
-        <td><%= job_offer.chair %></td>
-        <td><%= link_to 'Show', job_offer %></td>
-        <td><%= link_to 'Edit', edit_job_offer_path(job_offer) %></td>
-        <td><%= link_to 'Destroy', job_offer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<div class="row" style="width:50%">
+  <div class="span9">
+    <h2>Job Offers</h2>
+  </div>
+  <div class="span3">
+    <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success", :style => "color: white; margin-top: 20px"%>
+  </div>
+</div>
 <br>
 
-<%= link_to 'New Job offer', new_job_offer_path %>
+<% len = @job_offers.length %>
+<% @job_offers.each_with_index do |job_offer, index| %>
+  
+  <% if index == 0 %>
+    <div class="jobList_top">
+  <% elsif index+1 < len %>
+    <div class="jobList_middle">
+  <% else %>
+    <div class="jobList_bottom">
+  <%end%>
+
+    <div class="row">
+      <div class="span8 offset1">
+        <h4><%= link_to job_offer.title, job_offer%></h4>
+      </div>
+      <div class="span3">
+        <p class="startDate">starts <%= job_offer.start_date%></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span10 offset2">
+        <p><%= job_offer.chair %></p>
+      </div>
+    </div>
+  </div>
+<%end%>

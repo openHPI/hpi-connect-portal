@@ -11,3 +11,32 @@
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
+
+.jobList_top{
+	width: 50%;
+	border-left: darkgrey 1px solid;
+	border-right: darkgrey 1px solid;
+	border-top: darkgrey 1px solid;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.jobList_middle{
+	width: 50%;
+	border-left: darkgrey 1px solid;
+	border-right: darkgrey 1px solid;
+	border-top: darkgrey 1px solid;
+}
+
+.jobList_bottom{
+	width: 50%;
+	border: darkgrey 1px solid;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.startDate {
+	text-align: right;
+	margin-top: 10px;
+	margin-right: 5px;
+}
