@@ -58,3 +58,6 @@ gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
+
+#picture uploads
+gem "paperclip", :git => "http://github.com/thoughtbot/paperclip.git"
