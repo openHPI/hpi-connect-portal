@@ -23,7 +23,7 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => DateTime.new(2013,11,1),
+  let(:valid_attributes) { { "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30 } }
 
   # This should return the minimal set of values that should be in the session
