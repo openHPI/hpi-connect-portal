@@ -64,3 +64,6 @@ gem 'jquery-ui-rails'
 
 #load jQuery fast without refresh
 gem 'jquery-turbolinks'
+
+#a Helper to validate dates
+gem 'validates_timeliness', '~> 3.0'

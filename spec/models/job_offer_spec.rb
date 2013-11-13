@@ -14,6 +14,20 @@ describe JobOffer do
 		afterCount = JobOffer.count
 		assert_equal(beforeCount+1, afterCount)
 	end
+
+	it "does not create a joboffer if start_date is after end_date" do
+		beforeCount = JobOffer.count
+		JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", start_date: Date.new(2013,11,1), end_date: Date.new(2013,10,1), compensation: 10.5, time_effort: 9)
+		afterCount = JobOffer.count
+		assert_equal(beforeCount, afterCount)
+	end
+
+	it "does create a joboffer if end_date is after start_date" do
+		beforeCount = JobOffer.count
+		JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9)
+		afterCount = JobOffer.count
+		assert_equal(beforeCount+1, afterCount)
+	end
 end
 
 
