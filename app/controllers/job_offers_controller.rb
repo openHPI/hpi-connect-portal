@@ -26,7 +26,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.new(job_offer_params)
 
-    respond_to do |format|
+    respond_to do |format|ontroller
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
         format.json { render action: 'show', status: :created, location: @job_offer }
@@ -38,7 +38,7 @@ class JobOffersController < ApplicationController
 
   # PATCH/PUT /job_offers/1
   # PATCH/PUT /job_offers/1.json
-  def update
+  def updateontroller
     respond_to do |format|
       if @job_offer.update(job_offer_params)
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully updated.' }
@@ -57,6 +57,15 @@ class JobOffersController < ApplicationController
       format.html { redirect_to job_offers_url }
       format.json { head :no_content }
     end
+  end
+
+  # GET /job_offers/sort
+  def sort
+    # @job_offers = JobOffer.sort params.require()
+
+    # respond_to do |format|
+    #   format.html { redirect_to "http://www.google.de" }
+    # end
   end
 
   private

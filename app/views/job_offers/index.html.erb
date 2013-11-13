@@ -1,5 +1,18 @@
 <h1>Listing job_offers</h1>
 
+<script>
+$('input:checkbox').click(function(e){
+  $(this).closest('form').submit();
+});
+</script>
+
+<%= form_tag("/job_offers/sort", :method => :get ) do %>
+    <%= check_box_tag 'sort_date', 'sort_date' %>
+    <%= label_tag "sort_date", "Sort by Date", :class => "checkbox inline" %><br />
+    <%= check_box_tag 'sort_chair', 'sort_chair' %>
+    <%= label_tag "sort_chair", "Sort by Chair", :class => "checkbox inline" %>
+<% end %> 
+
 <table>
   <thead>
     <tr>
