@@ -38,7 +38,7 @@ class JobOffersController < ApplicationController
 
   # PATCH/PUT /job_offers/1
   # PATCH/PUT /job_offers/1.json
-  def updateontroller
+  def update
     respond_to do |format|
       if @job_offer.update(job_offer_params)
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully updated.' }
