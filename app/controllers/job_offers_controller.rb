@@ -4,7 +4,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @job_offers = JobOffer.all
+    @job_offers = JobOffer.order("created_at")
   end
 
   # GET /job_offers/1
@@ -74,7 +74,7 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title)
+      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort)
     end
     
     def render_errors_and_redirect_to(object, target, format)

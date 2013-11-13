@@ -1,14 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div class="row-fluid span9">
+	<span class="pull-left">
+		<%= link_to 'Back', job_offers_path, :class => "btn" %>
+	</span>
+	<span class="pull-right">
+		<%= link_to 'Edit', edit_job_offer_path(@job_offer), :class => "btn btn-primary" %> 
+    <%= link_to 'Destroy', job_offer_path(@job_offer), :confirm => 'Are you sure you want to destroy your account?', :method => :delete, :class => "btn btn-danger" %>
+	</span>
+	
+	<br><br>
 
-<p>
-  <strong>Description:</strong>
-  <%= @job_offer.description %>
-</p>
-
-<p>
-  <strong>Title:</strong>
+<div class="panel">
+<h1>
   <%= @job_offer.title %>
-</p>
+</h1>
 
-<%= link_to 'Edit', edit_job_offer_path(@job_offer) %> |
-<%= link_to 'Back', job_offers_path %>
+<dl>
+  <dt>Description:</dt>
+  <dd> <%= @job_offer.description %></dd>
+
+  <dt>Chair:</dt>
+  <dd> <%= @job_offer.chair %></dd>
+
+  <dt>Start Date:</dt>
+  <dd> <%= @job_offer.start_date %></dd>
+
+  <dt>End Date:</dt>
+  <dd> <%= @job_offer.end_date %></dd>
+
+  <dt>Time Effort:</dt>
+  <dd> <%= @job_offer.time_effort %></dd>
+
+  <dt>Compensation:</dt>
+  <dd> <%= @job_offer.compensation %></dd>
+
+</dl>
+</div>
+</div>
+  
