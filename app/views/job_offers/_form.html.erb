@@ -49,8 +49,10 @@
   <div class="field">
      <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
     <% ProgrammingLanguage.all.each do |programming_language| %>
-      <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
-      <%= label_tag dom_id(programming_language), programming_language.name %><br>
+      <div>
+        <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id) %>
+        <%= programming_language.name %>
+      </div>
     <% end %>
   </div>
 
