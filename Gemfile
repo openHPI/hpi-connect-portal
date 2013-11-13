@@ -58,3 +58,6 @@ gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
+
+# simplify rspec integration testing
+gem 'capybara'
