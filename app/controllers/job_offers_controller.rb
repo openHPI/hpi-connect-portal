@@ -26,7 +26,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.new(job_offer_params)
 
-    respond_to do |format|ontroller
+    respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
         format.json { render action: 'show', status: :created, location: @job_offer }
