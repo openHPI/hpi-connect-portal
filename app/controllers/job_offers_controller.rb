@@ -61,11 +61,9 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/sort
   def sort
-    # @job_offers = JobOffer.sort params.require()
+     @job_offers = JobOffer.sort params.require(:sort_value)
 
-    # respond_to do |format|
-    #   format.html { redirect_to "http://www.google.de" }
-    # end
+     render "index"
   end
 
   private
