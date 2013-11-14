@@ -62,8 +62,12 @@ gem "highline"
 # add some more UI controls
 gem 'jquery-ui-rails'
 
-#load jQuery fast without refresh
+# load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
-#a Helper to validate dates
+# a Helper to validate dates
 gem 'validates_timeliness', '~> 3.0'
+
+# simplify rspec integration testing
+gem 'capybara'
+
