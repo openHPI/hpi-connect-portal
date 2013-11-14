@@ -1,19 +1,13 @@
-<<<<<<< HEAD
 
 <h1>Listing job_offers</h1>
 
 
-<%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %>
-    
-    <div style="display:inline">
-      Sort by <br />
+<%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
       <%= label_tag :sort, "Date", :class => "radio inline " %>
       <%= radio_button_tag :sort_value, 'date' , false %>
       <%= label_tag :sort, 'Chair', :class => "radio inline" %>
-      <%= radio_button_tag :sort_value, 'chair' , false %>
-      
-    <%= submit_tag "go" %>
-    </div>
+      <%= radio_button_tag :sort_value, 'chair' , false %>     
+      <%= submit_tag "Sort" %>
 <% end %> 
 
 
