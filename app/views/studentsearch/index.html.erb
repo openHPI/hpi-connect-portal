@@ -8,8 +8,9 @@
 
   <br>
 
+  <% if not @no_search %>
   <h3>Suchergebnisse (<%= @students.length %> gefunden)</h3>
-
+  <% end %>
   <ul>
  
     <% @students.each do |student| %>
