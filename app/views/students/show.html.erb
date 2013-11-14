@@ -1,0 +1,80 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @student.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @student.last_name %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @student.semester %>
+</p>
+
+<p>
+  <strong>Academic program:</strong>
+  <%= @student.academic_program %>
+</p>
+
+<p>
+  <strong>Birthday:</strong>
+  <%= @student.birthday %>
+</p>
+
+<p>
+  <strong>Education:</strong>
+  <%= @student.education %>
+</p>
+
+<p>
+  <strong>Additional information:</strong>
+  <%= @student.additional_information %>
+</p>
+
+<p>
+  <strong>Homepage:</strong>
+  <%= @student.homepage %>
+</p>
+
+<p>
+  <strong>Github:</strong>
+  <%= @student.github %>
+</p>
+
+<p>
+  <strong>Facebook:</strong>
+  <%= @student.facebook %>
+</p>
+
+<p>
+  <strong>Xing:</strong>
+  <%= @student.xing %>
+</p>
+
+<p>
+  <strong>Linkedin:</strong>
+  <%= @student.linkedin %>
+</p>
+<p>
+  <strong>Languages:</strong>
+  <% @student.languages.each do |language| %>
+    <%= language.name %>
+  <% end %>
+</p>
+<p>
+  <strong>Programming Languages:</strong>
+  <% @student.programming_languages.each do |programming_language| %>
+    <%= programming_language.name %>
+  <% end %>
+</p>
+<p>
+  <strong>Photo:</strong>
+  <%= image_tag @student.photo.url %>
+</p>
+
+<%= link_to 'Edit', edit_student_path(@student) %> |
+<%= link_to 'Back', students_path %>

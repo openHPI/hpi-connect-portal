@@ -1,4 +1,12 @@
 HpiHiwiPortal::Application.routes.draw do
+  resources :programming_languages
+
+  resources :languages
+
+  resources :students
+
+  resources :studentsearch
+
   resources :job_offers
 
   devise_for :users

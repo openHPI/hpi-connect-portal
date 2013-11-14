@@ -39,7 +39,7 @@ group :development, :test do
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+#gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
@@ -51,10 +51,25 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
-gem 'devise', "~> 3.1"
+gem 'devise', "~> 3.1.0"
 
 # simple http requests
 gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
+
+#For Upload
+gem "paperclip", "~> 3.5.2"
+
+# add some more UI controls
+gem 'jquery-ui-rails'
+
+#load jQuery fast without refresh
+gem 'jquery-turbolinks'
+
+#factory girl
+
+gem 'factory_girl'
+
+gem 'capybara'
