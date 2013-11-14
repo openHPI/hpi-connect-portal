@@ -58,6 +58,13 @@ class JobOffersController < ApplicationController
     end
   end
 
+  # GET /job_offers/sort
+  def sort
+     @job_offers = JobOffer.sort params.require(:sort_value)
+
+     render "index"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
