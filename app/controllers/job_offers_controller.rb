@@ -58,6 +58,13 @@ class JobOffersController < ApplicationController
     end
   end
 
+  # GET /job_offers/sort
+  def sort
+     @job_offers = JobOffer.sort params.require(:sort_value)
+
+     render "index"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
@@ -66,7 +73,7 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, :programming_language_ids )
+      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []})
     end
     
     def render_errors_and_redirect_to(object, target, format)

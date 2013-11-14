@@ -1,4 +1,11 @@
 HpiHiwiPortal::Application.routes.draw do
+
+  resources :job_offers do    
+    collection do
+      get "sort"
+    end
+  end
+
   resources :job_offers
 
   devise_for :users

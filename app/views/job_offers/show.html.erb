@@ -33,6 +33,11 @@
   <dt>Compensation:</dt>
   <dd> <%= @job_offer.compensation %></dd>
 
+  <dt>Programming Languages:</dt>
+  <% @job_offer.programming_languages.each do |programming_language| %>
+    <dd><%= programming_language.name %></dd>
+  <% end %>
+
 </dl>
 </div>
 </div>
