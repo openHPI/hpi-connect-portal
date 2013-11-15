@@ -51,13 +51,14 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
-gem 'devise', "~> 3.1"
+gem 'devise', '~> 3.1'
+gem 'devise_openid_authenticatable'
 
 # simple http requests
-gem "rest-client"
+gem 'rest-client'
 
 # command line parsing for project registration
-gem "highline"
+gem 'highline'
 
 #picture uploads
-gem "paperclip", :git => "http://github.com/thoughtbot/paperclip.git"
+gem 'paperclip', :git => 'http://github.com/thoughtbot/paperclip.git'
