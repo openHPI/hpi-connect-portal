@@ -3,7 +3,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :job_offers
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions'}
   
   root :to => "job_offers#index"
   # The priority is based upon order of creation: first created -> highest priority.
