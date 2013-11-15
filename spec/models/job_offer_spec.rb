@@ -19,6 +19,24 @@ describe JobOffer do
 		assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", 
 			start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9).valid?
 	end
+
+	it "returns job offers sorted by start_date" do
+		    
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1))
+
+		sorted_job_offers = JobOffer.sort "date"
+		(sorted_job_offers).each_with_index do |offer, index|
+
+			 if sorted_job_offers.length == (index + 1)	
+			 	break
+			 end
+			offer.start_date.should <= sorted_job_offers[index+1].start_date
+		end
+	end
 end
 
 
