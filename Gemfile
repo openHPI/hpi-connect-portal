@@ -40,7 +40,7 @@ group :development, :test do
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+#gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
@@ -68,5 +68,8 @@ gem 'jquery-ui-rails'
 #load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
-# simplify rspec integration testing
+#factory girl
+
+gem 'factory_girl'
+
 gem 'capybara'
