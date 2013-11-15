@@ -1,5 +1,24 @@
 require 'spec_helper'
 
 describe JobOffer do
-  pending "add some examples to (or delete) #{__FILE__}"
+	it "does not create a joboffer if attributes are not set" do
+		assert !JobOffer.create.valid?
+	end
+
+	it "does create a joboffer if all required attributes are set" do
+		assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", 
+			start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9).valid?
+	end
+
+	it "does not create a joboffer if start_date is after end_date" do
+		assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", 
+			chair:"Epic", start_date: Date.new(2013,11,1), end_date: Date.new(2013,10,1), compensation: 10.5, time_effort: 9).valid?
+	end
+
+	it "does create a joboffer if end_date is after start_date" do
+		assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", 
+			start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9).valid?
+	end
 end
+
+

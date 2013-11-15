@@ -26,7 +26,6 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
-
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
@@ -80,7 +79,7 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort)
+      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []})
     end
     
     def render_errors_and_redirect_to(object, target, format)
