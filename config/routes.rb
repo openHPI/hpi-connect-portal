@@ -5,6 +5,8 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :students
 
+  resources :studentsearch
+
   resources :job_offers
 
   devise_for :users
