@@ -5,6 +5,7 @@ describe "chairs/show" do
     @chair = assign(:chair, stub_model(Chair,
       :name => "Name"
     ))
+    @head_of_chair = User.new(email: 'email@hpi.uni-potsdam.de')
   end
 
   it "renders attributes in <p>" do

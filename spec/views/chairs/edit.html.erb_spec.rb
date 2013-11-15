@@ -5,6 +5,7 @@ describe "chairs/edit" do
     @chair = assign(:chair, stub_model(Chair,
       :name => "MyString"
     ))
+    @users = User.all
   end
 
   it "renders the edit chair form" do
