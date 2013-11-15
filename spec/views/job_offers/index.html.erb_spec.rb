@@ -12,6 +12,7 @@ describe "job_offers/index" do
         :title => "Title"
       )
     ])
+    assign(:radio_button_sort_value, {"date" => false, "chair" => false})
   end
 
   it "renders a list of job_offers" do
