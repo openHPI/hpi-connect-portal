@@ -36,6 +36,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
+  gem 'factory_girl_rails', :require => false
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
@@ -62,8 +63,12 @@ gem "highline"
 # add some more UI controls
 gem 'jquery-ui-rails'
 
-#load jQuery fast without refresh
+# load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
-#a Helper to validate dates
+# a Helper to validate dates
 gem 'validates_timeliness', '~> 3.0'
+
+# simplify rspec integration testing
+gem 'capybara'
+
