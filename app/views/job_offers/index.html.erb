@@ -12,7 +12,7 @@
 
 <%= form_tag("/job_offers/search", :method => :get) do %>
   <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:search_value, '', :required => true, :placeholder=>'search term') %>
+  <%= text_field_tag(:search, params[:search], :placeholder=>'search term') %>
   <%= submit_tag("Search") %>
 <% end %>
 

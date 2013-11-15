@@ -68,7 +68,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/search
   def search
-    @job_offers = JobOffer.search params.require(:search_value)
+    @job_offers = JobOffer.search params[:search]
 
     render "index"
   end
