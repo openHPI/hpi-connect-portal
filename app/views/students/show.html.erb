@@ -1,6 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <%= image_tag(@student.photo.url, size: "150") %>
+</p>
+<p>
   <strong>First name:</strong>
   <%= @student.first_name %>
 </p>
@@ -72,8 +75,12 @@
   <% end %>
 </p>
 <p>
-  <strong>Photo:</strong>
-  <%= image_tag @student.photo.url %>
+  <strong>CV:</strong>
+  <% if (@student.cv.path).nil? %>
+    <%= image_tag('file_thumbnails/missing.png', size: "16") %>
+  <% else %>
+    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_student_path(@student) %> |

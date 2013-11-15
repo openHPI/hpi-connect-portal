@@ -5,4 +5,7 @@ class Student < ActiveRecord::Base
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+    has_attached_file 	:cv,
+						:url  => "/assets/students/:id/:style/:basename.:extension",
+    					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
 end
