@@ -18,46 +18,22 @@
 #  firstname           :string(255)
 #
 
-#this method will be deprecated as soon as open id returns the email
-def email_from_identity_url(identity_url)
-    username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
-    return username + '@student.hpi.uni-potsdam.de'
-end
-
 class User < ActiveRecord::Base
     # Include default devise modules. Others available are:
     # :token_authenticatable, :confirmable,
     # :lockable, :timeoutable and :omniauthable
-    devise :rememberable, :trackable, :openid_authenticatable
+    devise :trackable, :openid_authenticatable
 
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
 
     def self.build_from_identity_url(identity_url)
-        User.new(identity_url: identity_url, email: email_from_identity_url(identity_url))
-    end
-    
-    def self.openid_required_fields
-       ['email', 'http://axschema.org/contact/email']
-    end
+        username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
 
-    def openid_fields=(fields)
-        fields.each do |key, value|
-            # Some AX providers can return multiple values per key
-            if value.is_a? Array
-                value = value.first
-            end
+        first_name = username.split('.').first.capitalize
+        last_name = username.split('.').second.capitalize
+        email = username + '@student.hpi.uni-potsdam.de'
 
-            case key.to_s
-                when 'first', 'http://axschema.org/namePerson/first'
-                    self.firstname = value unless value.blank?
-                when 'last', 'http://axschema.org/namePerson/last'
-                    self.lastname = value unless value.blank?
-                when 'email', 'http://axschema.org/contact/email'
-                    self.email = value unless value.blank?
-                else
-                    logger.error "Unknown OpenID field: #{key}"
-            end
-        end
+        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
     end
 end

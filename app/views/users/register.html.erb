@@ -1,0 +1,11 @@
+%= form_for @user do |f| %>
+	<p><%= f.text_field :first_name %></p>
+	<p><%= f.text_field :last_name %></p>
+
+	<p>Are you a student?</p>
+	<%= radio_button("is_student", "Yes", true) %>
+	<%= radio_button("is_student", "No", false) %>
+
+	<%= f.submit "Save" %>
+
+<% end %>

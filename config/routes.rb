@@ -6,6 +6,8 @@ HpiHiwiPortal::Application.routes.draw do
   devise_for :users, controllers: { sessions: 'sessions'}
   
   root :to => "job_offers#index"
+
+  get 'users/register/:id' => 'users#register', as: 'register'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
