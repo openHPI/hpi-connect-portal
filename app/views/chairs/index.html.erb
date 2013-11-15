@@ -17,7 +17,7 @@
       <tr>
         <td><%= chair.name %></td>
 				<td><%= chair.description %></td>
-				<td><%=  %></td>
+				<td><%= link_to "#{chair.head_of_chair.firstname} #{chair.head_of_chair.lastname}", '#' %></td>
         <td><%= link_to 'Show', chair %></td>
         <td><%= link_to 'Edit', edit_chair_path(chair) %></td>
       </tr>

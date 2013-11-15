@@ -9,27 +9,29 @@ class ChairsController < ApplicationController
 
   # GET /chairs/1
   # GET /chairs/1.json
-  def show
-		@head_of_chair = @chair.head_of_chair
+  def show	
   end
 
   # GET /chairs/new
   def new
     @chair = Chair.new
-		@users = User.all
   end
 
   # GET /chairs/1/edit
   def edit
-		@users = User.all
   end
 
   # POST /chairs
   # POST /chairs.json
   def create
-    @chair = Chair.new(chair_params)
-		@chair.head_of_chair = User.find_by_id(params[:head_of_chair].to_i)
+    params_tmp = chair_params    
+    begin
+      params_tmp[:head_of_chair] = User.find(chair_params[:head_of_chair])
+    rescue
+      params_tmp[:head_of_chair] = nil
+    end   
 
+    @chair = Chair.new(params_tmp)
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
@@ -45,10 +47,14 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
-		@chair.head_of_chair = User.find_by_id(params[:head_of_chair].to_i)
-
+    params_tmp = chair_params
+    begin
+      params_tmp[:head_of_chair] = User.find(chair_params[:head_of_chair])
+    rescue
+      params_tmp[:head_of_chair] = nil
+    end   
     respond_to do |format|
-      if @chair.update(chair_params)
+      if @chair.update(params_tmp)
         format.html { redirect_to @chair, notice: 'Chair was successfully updated.' }
         format.json { head :no_content }
       else
