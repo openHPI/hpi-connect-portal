@@ -1,3 +1,16 @@
+
+<h1>Listing job_offers</h1>
+
+
+<%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
+      <%= label_tag :sort, "Date", :class => "radio inline " %>
+      <%= radio_button_tag :sort_value, 'date' , false %>
+      <%= label_tag :sort, 'Chair', :class => "radio inline" %>
+      <%= radio_button_tag :sort_value, 'chair' , false %>     
+      <%= submit_tag "Sort" %>
+<% end %> 
+
+
 <div class="row" style="width:50%">
   <div class="span9">
     <h2>Job Offers</h2>
@@ -6,6 +19,7 @@
     <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success", :style => "color: white; margin-top: 20px"%>
   </div>
 </div>
+
 <br>
 
 <% len = @job_offers.length %>
