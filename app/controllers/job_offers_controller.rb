@@ -6,8 +6,6 @@ class JobOffersController < ApplicationController
   def index
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.order("created_at")
-    logger.warn("index")
-    logger.warn(@radio_button_sort_value)
   end
 
   # GET /job_offers/1
