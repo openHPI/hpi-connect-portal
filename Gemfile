@@ -36,6 +36,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
+  gem 'factory_girl_rails', :require => false
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
@@ -62,3 +63,6 @@ gem 'highline'
 
 #picture uploads
 gem 'paperclip', :git => 'http://github.com/thoughtbot/paperclip.git'
+
+# simplify rspec integration testing
+gem 'capybara'
