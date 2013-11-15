@@ -13,13 +13,22 @@ JobOffer.create(
 	:start_date => Date.new(2013, 10, 1),
 	:end_date => Date.new(2014, 03, 31),
 	:time_effort => 7,
-	:compensation => 10)
+	:compensation => 10,
+	:programming_languages_attributes => [
+											{:name => 'C'},
+											{:name => 'C++'},
+											{:name => 'Java'}])
 
 
-ProgrammingLanguage.create(name: "C")
-ProgrammingLanguage.create(name: "C++")
-ProgrammingLanguage.create(name: "Java")
-ProgrammingLanguage.create(name: "Javascript")
-ProgrammingLanguage.create(name: "Python")
-ProgrammingLanguage.create(name: "Ruby")
-ProgrammingLanguage.create(name: "Smalltalk")
+
+# Programming Languages should always be created in the context of job offers!
+# For this use the nested attribute syntax from the Example above!
+
+
+# ProgrammingLanguage.create(name: "C")
+# ProgrammingLanguage.create(name: "C++")
+# ProgrammingLanguage.create(name: "Java")
+# ProgrammingLanguage.create(name: "Javascript")
+# ProgrammingLanguage.create(name: "Python")
+# ProgrammingLanguage.create(name: "Ruby")
+# ProgrammingLanguage.create(name: "Smalltalk")
