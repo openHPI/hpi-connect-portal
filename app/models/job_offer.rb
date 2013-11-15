@@ -12,4 +12,9 @@ class JobOffer < ActiveRecord::Base
 		end
 	end
 
+	def self.search(search_attribute)
+		search_string = "%" + search_attribute + "%"
+		find(:all, :conditions => ['title LIKE ? OR description LIKE ? OR chair LIKE ?', search_string, search_string, search_string])
+	end
+
 end

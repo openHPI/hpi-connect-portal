@@ -8,7 +8,13 @@
       <%= label_tag :sort, 'Chair', :class => "radio inline" %>
       <%= radio_button_tag :sort_value, 'chair' , false %>     
       <%= submit_tag "Sort" %>
-<% end %> 
+<% end %>
+
+<%= form_tag("/job_offers/search", :method => :get) do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:search_value) %>
+  <%= submit_tag("Search") %>
+<% end %>
 
 
 <div class="row" style="width:50%">

@@ -65,6 +65,14 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
+
+  # GET /job_offers/search
+  def search
+    @job_offers = JobOffer.search params.require(:search_value)
+
+    render "index"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
