@@ -8,8 +8,8 @@ describe "students/index" do
         :last_name => "Last Name",
         :semester => 1,
         :academic_program => "Academic Program",
-        :education => "MyText",
-        :additional_information => "MyText",
+        :education => "MyEducation",
+        :additional_information => "MyAdditionalInformation",
         :homepage => "Homepage",
         :github => "Github",
         :facebook => "Facebook",
@@ -21,8 +21,8 @@ describe "students/index" do
         :last_name => "Last Name",
         :semester => 1,
         :academic_program => "Academic Program",
-        :education => "MyText",
-        :additional_information => "MyText",
+        :education => "MyEducation",
+        :additional_information => "MyAdditionalInformation",
         :homepage => "Homepage",
         :github => "Github",
         :facebook => "Facebook",
@@ -39,8 +39,8 @@ describe "students/index" do
     assert_select "tr>td", :text => "Last Name".to_s, :count => 2
     assert_select "tr>td", :text => 1.to_s, :count => 2
     assert_select "tr>td", :text => "Academic Program".to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
-    assert_select "tr>td", :text => "MyText".to_s, :count => 2
+    assert_select "tr>td", :text => "MyEducation".to_s, :count => 2
+    assert_select "tr>td", :text => "MyAdditionalInformation".to_s, :count => 2
     assert_select "tr>td", :text => "Homepage".to_s, :count => 2
     assert_select "tr>td", :text => "Github".to_s, :count => 2
     assert_select "tr>td", :text => "Facebook".to_s, :count => 2
