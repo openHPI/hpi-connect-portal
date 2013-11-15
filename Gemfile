@@ -17,7 +17,7 @@ gem 'uglifier', '~> 2.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '~> 0.12.0', platforms: :ruby 
+gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -36,6 +36,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
+  gem 'factory_girl_rails', :require => false
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
@@ -58,7 +59,6 @@ gem "rest-client"
 
 # command line parsing for project registration
 gem "highline"
-
 #For Upload
 gem "paperclip", "~> 3.5.2"
 
@@ -67,3 +67,6 @@ gem 'jquery-ui-rails'
 
 #load jQuery fast without refresh
 gem 'jquery-turbolinks'
+
+# simplify rspec integration testing
+gem 'capybara'
