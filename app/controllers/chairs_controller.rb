@@ -10,7 +10,7 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show
-		@head_of_chair = User.find(@chair.head_of_chair)
+		@head_of_chair = @chair.head_of_chair
   end
 
   # GET /chairs/new
@@ -28,7 +28,7 @@ class ChairsController < ApplicationController
   # POST /chairs.json
   def create
     @chair = Chair.new(chair_params)
-		@chair.head_of_chair = User.find(params[:head_of_chair].to_i).id
+		@chair.head_of_chair = User.find_by_id(params[:head_of_chair].to_i)
 
     respond_to do |format|
       if @chair.save
@@ -45,7 +45,7 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
-		@chair.head_of_chair = User.find(params[:head_of_chair].to_i).id
+		@chair.head_of_chair = User.find_by_id(params[:head_of_chair].to_i)
 
     respond_to do |format|
       if @chair.update(chair_params)

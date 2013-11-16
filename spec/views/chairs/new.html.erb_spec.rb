@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe "chairs/new" do
   before(:each) do
-    assign(:chair, stub_model(Chair,
+    @chair = assign(:chair, stub_model(Chair,
       :name => "MyString"
     ).as_new_record)
+    @users = User.all
   end
 
   it "renders new chair form" do

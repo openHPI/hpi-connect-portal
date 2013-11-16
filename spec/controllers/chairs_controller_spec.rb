@@ -23,7 +23,7 @@ describe ChairsController do
   # This should return the minimal set of attributes required to create a valid
   # Chair. As you add validations to Chair, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "name" => "MyString" } }
+  let(:valid_attributes) { { "name" => "MyString", "description" => "MyString" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -142,19 +142,19 @@ describe ChairsController do
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested chair" do
-      chair = Chair.create! valid_attributes
-      expect {
-        delete :destroy, {:id => chair.to_param}, valid_session
-      }.to change(Chair, :count).by(-1)
-    end
+  # describe "DELETE destroy" do
+  #   it "destroys the requested chair" do
+  #     chair = Chair.create! valid_attributes
+  #     expect {
+  #       delete :destroy, {:id => chair.to_param}, valid_session
+  #     }.to change(Chair, :count).by(-1)
+  #   end
 
-    it "redirects to the chairs list" do
-      chair = Chair.create! valid_attributes
-      delete :destroy, {:id => chair.to_param}, valid_session
-      response.should redirect_to(chairs_url)
-    end
-  end
+  #   it "redirects to the chairs list" do
+  #     chair = Chair.create! valid_attributes
+  #     delete :destroy, {:id => chair.to_param}, valid_session
+  #     response.should redirect_to(chairs_url)
+  #   end
+  # end
 
 end
