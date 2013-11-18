@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-	<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: @chair.name%>
+	<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
   <p>
 		<strong>Name:</strong>
 		<%= @chair.name %>

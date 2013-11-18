@@ -21,3 +21,6 @@
 
 # ignore simplecov data
 /coverage/*
+
+# ignore public folder
+/public/system/*
