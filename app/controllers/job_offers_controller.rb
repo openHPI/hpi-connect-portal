@@ -15,10 +15,12 @@ class JobOffersController < ApplicationController
   # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
+    @programming_languages = ProgrammingLanguage.all
   end
 
   # GET /job_offers/1/edit
   def edit
+    @programming_languages = ProgrammingLanguage.all
   end
 
   # POST /job_offers
