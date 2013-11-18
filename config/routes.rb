@@ -1,13 +1,13 @@
 HpiHiwiPortal::Application.routes.draw do
+  
   resources :chairs
-
   resources :job_offers
+  resources :users, only: [:edit, :update]
 
-  devise_for :users, controllers: { sessions: 'sessions'}
+  devise_for :users, controllers: { sessions: 'sessions' }
   
   root :to => "job_offers#index"
 
-  get 'users/register/:id' => 'users#register', as: 'register'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
