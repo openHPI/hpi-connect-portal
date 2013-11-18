@@ -73,3 +73,6 @@ gem 'jquery-turbolinks'
 gem 'factory_girl'
 
 gem 'capybara'
+
+# Use debugger
+gem 'debugger', group: [:development, :test]

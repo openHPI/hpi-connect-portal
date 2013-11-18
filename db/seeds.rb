@@ -23,3 +23,54 @@ Student.create([{
 	languages: [languages.first], 
 	programming_languages: [programming_languages.first]
 }])
+
+Student.create([{
+	first_name: 'Jasper', 
+	last_name: 'Schulze', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: [languages.last], 
+	programming_languages: [programming_languages.first]
+}])
+
+Student.create([{
+	first_name: 'Frank', 
+	last_name: 'Blechschmidt', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: [languages.first, languages.last], 
+	programming_languages: [programming_languages.first, programming_languages.last]
+}])
+
+Student.create([{
+	first_name: 'Malte', 
+	last_name: 'Mues', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: languages, 
+	programming_languages: programming_languages
+}])

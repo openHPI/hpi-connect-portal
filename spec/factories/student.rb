@@ -10,5 +10,7 @@ FactoryGirl.define do
     facebook 'larry2harry'
     xing 'theLarry'
     linkedin 'notHasso'
+    languages {Language.create([{name: 'Englisch'}])}
+    programming_languages {ProgrammingLanguage.create([{ name: 'Ruby'}])}
   end
 end
