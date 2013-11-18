@@ -24,11 +24,9 @@
   <%= f.label :user %><br>
 
   <div class="">
-    <select class="form-control" id="head_of_chair" name="head_of_chair">
-			<% @users.each do |user| %>
-				<option value="<%= user.id %>"><%= user.email %></option>
-			<% end %>
-    </select>
+
+	<%= f.select :head_of_chair, User.all.collect {|u| [ "#{u.firstname} #{u.lastname}", u.id ] }, {prompt: "Select Person"} %>
+	
   </div>  
 </div>
 

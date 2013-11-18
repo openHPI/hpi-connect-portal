@@ -14,7 +14,7 @@
 
 	<p>
 		<strong>Head of Chair:</strong>
-		<%= link_to @head_of_chair.email, root_path %>
+		<%= link_to "#{@chair.head_of_chair.firstname} #{@chair.head_of_chair.lastname}", '#' %>
 	</p>
 
   <%= link_to 'Edit', edit_chair_path(@chair) %> |
