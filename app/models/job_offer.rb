@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: job_offers
+#
+#  id          :integer          not null, primary key
+#  description :string(255)
+#  title       :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class JobOffer < ActiveRecord::Base
 	has_many :programming_languages
 	accepts_nested_attributes_for :programming_languages

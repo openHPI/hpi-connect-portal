@@ -1,7 +1,39 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                  :integer          not null, primary key
+#  email               :string(255)      default(""), not null
+#  remember_created_at :datetime
+#  sign_in_count       :integer          default(0)
+#  current_sign_in_at  :datetime
+#  last_sign_in_at     :datetime
+#  current_sign_in_ip  :string(255)
+#  last_sign_in_ip     :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  identity_url        :string(255)
+#  is_student          :boolean
+#  lastname            :string(255)
+#  firstname           :string(255)
+#
+
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+    # Include default devise modules. Others available are:
+    # :token_authenticatable, :confirmable,
+    # :lockable, :timeoutable and :omniauthable
+    devise :trackable, :openid_authenticatable
+
+    validates :email, uniqueness: { case_sensitive: false }
+    validates :identity_url, uniqueness: true
+
+    def self.build_from_identity_url(identity_url)
+        username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
+
+        first_name = username.split('.').first.capitalize
+        last_name = username.split('.').second.capitalize
+        email = username + '@student.hpi.uni-potsdam.de'
+
+        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+    end
 end
