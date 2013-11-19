@@ -37,6 +37,24 @@ describe JobOffer do
 			offer.start_date.should <= sorted_job_offers[index+1].start_date
 		end
 	end
+
+	it "returns job offers sorted by their chair" do
+		    
+		FactoryGirl.create(:joboffer, chair: "Internet Technologies")
+		FactoryGirl.create(:joboffer, chair: "EPIC")
+		FactoryGirl.create(:joboffer, chair: "Software Architecture")
+		FactoryGirl.create(:joboffer, chair: "Information Systems")
+		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+		sorted_job_offers = JobOffer.sort "chair"
+		(sorted_job_offers).each_with_index do |offer, index|
+
+			 if sorted_job_offers.length == (index + 1)	
+			 	break
+			 end
+			offer.chair.should <= sorted_job_offers[index+1].chair
+		end
+	end
 end
 
 
