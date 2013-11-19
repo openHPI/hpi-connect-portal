@@ -65,7 +65,7 @@ gem 'rest-client'
 gem 'highline'
 
 #picture uploads
-gem 'paperclip', :git => 'http://github.com/thoughtbot/paperclip.git'
+gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
 
 # simplify rspec integration testing
 gem 'capybara'
