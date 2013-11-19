@@ -1,50 +1,67 @@
 
-<h1>Listing job_offers</h1>
+<h1>Job Offers </h1>
 
+<div class="row">
 
-<%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
-      <%= label_tag :sort, "Date", :class => "radio inline " %>
-      <%= radio_button_tag :sort_value, 'date' , false, :checked => @radio_button_sort_value["date"]  %>
-      <%= label_tag :sort, 'Chair', :class => "radio inline" %>
-      <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
-      <%= submit_tag "Sort" %>
-<% end %> 
+  <div class="span8"> 
+    <div class="row-fluid">
 
+      <% len = @job_offers.length %>
+      <% @job_offers.each_with_index do |job_offer, index| %>
+       
+        <% if index == 0 %>
+          <div class="jobList_top">
+        <% elsif index+1 < len %>
+          <div class="jobList_middle">
+        <% else %>
+          <div class="jobList_bottom">
+        <%end%>
 
-<div class="row" style="width:50%">
-  <div class="span9">
-    <h2>Job Offers</h2>
-  </div>
+          <div class="row">
+            <div class="span8 offset1">
+              <h4><%= link_to job_offer.title, job_offer%></h4>
+            </div>
+            <div class="span3">
+              <p class="startDate">starts <%= job_offer.start_date%></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span10 offset2">
+              <p class="chair"><%= job_offer.chair %></p>
+            </div>
+          </div>
+        </div>
+      <%end%>
+    </div><!--/.row -->
+  </div><!--/.span -->
+
   <div class="span3">
-    <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success", :style => "color: white; margin-top: 20px"%>
+    <div class="container-fluid ">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li>
+            <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
+            <%= label_tag :sort, "Date", :class => "radio inline " %>
+            <%= radio_button_tag :sort_value, 'date' , false, :checked => @radio_button_sort_value["date"]  %>
+            <%= label_tag :sort, 'Chair', :class => "radio inline" %>
+            <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
+            <%= submit_tag "Sort", :class => "btn" %>
+            <% end %> 
+          </li>
+        </ul>
+      </div><!--/.well -->
+    </div> <!-- /container -->
+  </div> <!-- /span -->  
+
+</div> <!-- /row -->
+
+<div class="row">
+  <div class="span8">
+    <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success pull-right", :style => "color: white; margin-top: 20px"%>
   </div>
 </div>
 
-<br>
 
-<% len = @job_offers.length %>
-<% @job_offers.each_with_index do |job_offer, index| %>
-  
-  <% if index == 0 %>
-    <div class="jobList_top">
-  <% elsif index+1 < len %>
-    <div class="jobList_middle">
-  <% else %>
-    <div class="jobList_bottom">
-  <%end%>
 
-    <div class="row">
-      <div class="span8 offset1">
-        <h4><%= link_to job_offer.title, job_offer%></h4>
-      </div>
-      <div class="span3">
-        <p class="startDate">starts <%= job_offer.start_date%></p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="span10 offset2">
-        <p class="chair"><%= job_offer.chair %></p>
-      </div>
-    </div>
-  </div>
-<%end%>
+
+    
