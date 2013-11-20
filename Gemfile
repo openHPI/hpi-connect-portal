@@ -28,6 +28,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.5'
 
+# Annotate database fields to model files
+gem 'annotate', '>=2.5.0'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -52,10 +55,12 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
-gem 'devise', "~> 3.1.0"
+
+gem 'devise', '~> 3.1'
+gem 'devise_openid_authenticatable'
 
 # simple http requests
-gem "rest-client"
+gem 'rest-client'
 
 # command line parsing for project registration
 gem "highline"
@@ -71,6 +76,8 @@ gem 'jquery-turbolinks'
 #factory girl
 
 gem 'factory_girl'
+
+gem 'highline'
 
 gem 'capybara'
 
