@@ -9,13 +9,17 @@
       <% len = @job_offers.length %>
       <% @job_offers.each_with_index do |job_offer, index| %>
        
-        <% if index == 0 %>
-          <div class="jobList_top">
-        <% elsif index+1 < len %>
-          <div class="jobList_middle">
-        <% else %>
-          <div class="jobList_bottom">
-        <%end%>
+        <% if len == 1 %>
+          <div class="jobList_single">
+        <%else %>
+          <% if index == 0 %>
+            <div class="jobList_top">
+          <% elsif index+1 < len %>
+            <div class="jobList_middle">
+          <% else %>
+            <div class="jobList_bottom">
+          <%end%>
+        <% end%>
 
           <div class="row">
             <div class="span8 offset1">
@@ -60,3 +64,5 @@
     <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success pull-right", :style => "color: white; margin-top: 20px"%>
   </div>
 </div>
+
+  
