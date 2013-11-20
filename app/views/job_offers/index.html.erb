@@ -9,13 +9,17 @@
       <% len = @job_offers.length %>
       <% @job_offers.each_with_index do |job_offer, index| %>
        
-        <% if index == 0 %>
-          <div class="jobList_top">
-        <% elsif index+1 < len %>
-          <div class="jobList_middle">
-        <% else %>
-          <div class="jobList_bottom">
-        <%end%>
+        <% if len == 1 %>
+          <div class="jobList_single">
+        <%else %>
+          <% if index == 0 %>
+            <div class="jobList_top">
+          <% elsif index+1 < len %>
+            <div class="jobList_middle">
+          <% else %>
+            <div class="jobList_bottom">
+          <%end%>
+        <% end%>
 
           <div class="row">
             <div class="span8 offset1">
@@ -51,6 +55,79 @@
         </ul>
       </div><!--/.well -->
     </div> <!-- /container -->
+
+    
+    <div class="well sidebar-nav">
+      <div class="container-fluid">
+        <ul class="nav nav-list">
+          <li class="filter">
+            <%= form_tag( "/job_offers/filter", :method => :get, :id => 'Form') do %> 
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :title %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :title , params.fetch(:title, '')%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :description %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :description, params.fetch(:description, '') %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :chair %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :chair, params.fetch(:chair, '')%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :start_date %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker'%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :end_date %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker'%>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :time_effort %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :time_effort, params.fetch(:time_effort, '') %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="span5">
+                  <%= label_tag :compensation %>
+                </div>
+                <div class="span7">
+                  <%= text_field_tag :compensation, params.fetch(:compensation, '') %>
+                </div>
+              </div>
+              <div class="span3 offset9">
+              <%= submit_tag "Filter", :class => "btn" %>
+              </div>
+            <% end %>
+          </li>
+        </ul>
+      </div><!--/.well -->
+    </div> <!-- /container -->
+
+
   </div> <!-- /span -->  
 
 </div> <!-- /row -->
@@ -61,7 +138,3 @@
   </div>
 </div>
 
-
-
-
-    

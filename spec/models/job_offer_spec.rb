@@ -66,6 +66,18 @@ describe JobOffer do
 			offer.chair.should <= sorted_job_offers[index+1].chair
 		end
 	end
+
+	it "returns job offers filtered by chair EPIC" do
+		    
+		FactoryGirl.create(:joboffer, chair: "EPIC")
+		FactoryGirl.create(:joboffer, chair: "EPIC")
+		FactoryGirl.create(:joboffer, chair: "Software Architecture")
+		FactoryGirl.create(:joboffer, chair: "Information Systems")
+		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+		filtered_job_offers = JobOffer.filter(chair: "EPIC")
+		assert_equal(filtered_job_offers.length, 2);
+	end
 end
 
 
