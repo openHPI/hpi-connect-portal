@@ -75,5 +75,4 @@ describe "Studentsearches" do
         expect(page).to have_no_content "#{@student3.first_name} #{@student3.last_name}"
         expect(page).to have_no_content "#{@student4.first_name} #{@student4.last_name}"
     end
-
 end

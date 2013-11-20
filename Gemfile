@@ -40,7 +40,7 @@ group :development, :test do
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+#gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production

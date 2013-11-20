@@ -84,7 +84,6 @@ GEM
       railties (>= 3.1.0)
     json (1.8.1)
     libv8 (3.16.14.3)
-    lockfile (2.1.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -150,13 +149,13 @@ GEM
       rdoc (~> 3.10)
     simple-navigation (3.11.0)
       activesupport (>= 2.3.2)
-    simplecov (0.8.1)
+<<<<<<< .mine    simplecov (0.8.1)
       docile (~> 1.1.0)
       lockfile (>= 2.1.0)
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
-    sprockets (2.10.0)
+=======>>>>>>> .theirs    sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -199,9 +198,10 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   debugger
   devise (~> 3.1.0)
-  factory_girl
+<<<<<<< .mine  factory_girl
   factory_girl_rails
-  highline
+=======  factory_girl
+>>>>>>> .theirs  highline
   jbuilder (~> 1.5)
   jquery-rails
   jquery-turbolinks
@@ -216,7 +216,6 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   simple-navigation (~> 3.11)
-  simplecov
   therubyracer (~> 0.12.0)
   turbolinks
   twitter-bootstrap-rails
