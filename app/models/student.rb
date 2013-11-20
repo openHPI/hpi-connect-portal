@@ -50,6 +50,9 @@ class Student < ActiveRecord::Base
                 tmpStudentIDs << Student.find(x.student_id)
             }
         }
+
+        debugger
+
         return tmpStudentIDs.sort{|a,b| self.sortDecision(a,b)}
     end
 

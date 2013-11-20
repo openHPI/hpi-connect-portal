@@ -1,7 +1,7 @@
 class StudentsearchController < ApplicationController
     def index
         result =[]
-        if params.include? :q and params[:q] != ''
+        if params.include?( :q) and params[:q] != ''
                 @query = params[:q]
                 param = "%#{@query.downcase}%"
                 result = result + Student.searchStudent(param)
@@ -10,22 +10,23 @@ class StudentsearchController < ApplicationController
         end
 
         if params.include?("Language")
-            tmp = []
             params["Language"].each{
                 |name|
-                    result = (result &  Student.searchStudentsByLanguage(name.downcase))
+                    result = (result &  Student.searchStudentsByLanguage(name))
             }
         end
 
         if params.include?("ProgrammingLanguage")
             params["ProgrammingLanguage"].each{
                 |name|
-                    result = (result & Student.searchStudentsByProgrammingLanguage(name.downcase))
-
+                    tmp = []
+                    tmp =  Student.searchStudentsByProgrammingLanguage(name)
+                    result = result & tmp
+                    pp result
             }
         end
 
-        if params.include?:semester and params[:semester] != ''
+        if params.include?(:semester) and params[:semester] != ''
             @semester = params[:semester]
             tmp = params[:semester]
                 studentForSemester = []
