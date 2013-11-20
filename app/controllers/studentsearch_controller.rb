@@ -1,10 +1,10 @@
 class StudentsearchController < ApplicationController
     def index
-        result =[]
+        result = nil
         if params.include?( :q) and params[:q] != ''
                 @query = params[:q]
                 param = "%#{@query.downcase}%"
-                result = result + Student.searchStudent(param)
+                result = Student.searchStudent(param)
                 #Optimierungspotiential Could catch empty querrystrings
                 #Have not done this to provide better readable code 
         end
@@ -12,17 +12,23 @@ class StudentsearchController < ApplicationController
         if params.include?("Language")
             params["Language"].each{
                 |name|
-                    result = (result &  Student.searchStudentsByLanguage(name))
+
+                    if result
+                        result = (result &  Student.searchStudentsByLanguage(name))        
+                    else
+                        result = Student.searchStudentsByLanguage(name)
+                    end
             }
         end
 
         if params.include?("ProgrammingLanguage")
             params["ProgrammingLanguage"].each{
                 |name|
-                    tmp = []
-                    tmp =  Student.searchStudentsByProgrammingLanguage(name)
-                    result = result & tmp
-                    pp result
+                    if result
+                        result = result & Student.searchStudentsByProgrammingLanguage(name)
+                    else
+                        result = Student.searchStudentsByProgrammingLanguage(name)
+                    end
             }
         end
 
@@ -35,11 +41,21 @@ class StudentsearchController < ApplicationController
                     |str|
                         int = str.to_i
                         if int > 0 and int < 20
-                            studentForSemester = studentForSemester +Student.where(semester: int)
+                            studentForSemester = studentForSemester + Student.where(semester: int)
                         end
                 }
-            result = result & studentForSemester  
+            if result    
+                result = result & studentForSemester  
+            else
+                result = studentForSemester
+            end
         end
-        @students = result        
+        if not result
+            @no_search = true
+            @students = []
+        else
+            @no_search = false
+            @students = result  
+        end
     end
 end
