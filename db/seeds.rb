@@ -74,3 +74,20 @@ Student.create([{
 	languages: languages, 
 	programming_languages: programming_languages
 }])
+
+Student.create([{
+	first_name: 'Julia', 
+	last_name: 'Steier', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1969-12-04', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.Günther.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: languages, 
+	programming_languages: programming_languages
+}])
