@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
     	tmpStudentIDs = []
     	ProgrammingLanguage.where("lower(name) LIKE ?", string.downcase).each {
     		|each| 
-    		tmp = ProgrammingLanguagesStudent.where(programming_language_id: each.id).to_a
+    		tmp = ProgrammingLanguagesStudent.where(programming_language_id: each.id).all
              tmp.each{
     			|x| 
     			tmpStudentIDs << Student.find(x.student_id)
@@ -44,7 +44,7 @@ class Student < ActiveRecord::Base
         tmpStudentIDs = []
         Language.where("lower(name) LIKE ?", string.downcase).each {
             |each| 
-            tmp = LanguagesStudent.where(language_id: each.id).to_a
+            tmp = LanguagesStudent.where(language_id: each.id).all
             tmp.each{
                 |x| 
                 tmpStudentIDs << Student.find(x.student_id)
