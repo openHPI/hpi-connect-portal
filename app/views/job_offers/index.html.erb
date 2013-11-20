@@ -57,6 +57,19 @@
       </div><!--/.well -->
     </div> <!-- /container -->
 
+    <div class="well sidebar-nav">
+      <div class="container-fluid">
+        <ul class="nav nav-list">
+          <li class="search">
+            <%= form_tag("/job_offers/search", :method => :get) do %>
+            <%= label_tag(:q, "Search for:") %>
+            <%= text_field_tag(:search, params[:search], :placeholder=>'search term') %>
+            <%= submit_tag("Search") %>
+            <% end %>
+          </li>
+        </ul>
+      </div><!--/.well -->
+    </div> <!-- /container -->
     
     <div class="well sidebar-nav">
       <div class="container-fluid">
