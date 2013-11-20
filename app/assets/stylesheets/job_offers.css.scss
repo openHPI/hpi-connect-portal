@@ -13,7 +13,6 @@
 }
 
 .jobList_top{
-	width: 50%;
 	border-left: darkgrey 1px solid;
 	border-right: darkgrey 1px solid;
 	border-top: darkgrey 1px solid;
@@ -22,21 +21,32 @@
 }
 
 .jobList_middle{
-	width: 50%;
 	border-left: darkgrey 1px solid;
 	border-right: darkgrey 1px solid;
 	border-top: darkgrey 1px solid;
 }
 
 .jobList_bottom{
-	width: 50%;
 	border: darkgrey 1px solid;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+
+.jobList_single{
+	border: darkgrey 1px solid;
+	border-radius: 10px;
 }
 
 .startDate {
 	text-align: right;
 	margin-top: 10px;
 	margin-right: 5px;
+}
+
+input[type="text"] {
+	width: auto;
+}
+
+.filter label {
+	margin-top:5px;
 }
