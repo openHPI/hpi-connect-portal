@@ -3,24 +3,8 @@ require 'spec_helper'
 describe Student do
   
   before :each do
-  	@student = FactoryGirl.build(:student)
+  	@student = FactoryGirl.create(:student)
 
-  	Student.create!([{
-	first_name: 'Jasper', 
-	last_name: 'Schulze', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.create([{name: 'Englisch'}]), 
-	programming_languages: ProgrammingLanguage.create([{ name: 'Ruby'}])
-}])
   end
 
   describe "#new" do
@@ -30,32 +14,44 @@ describe Student do
 
   end
 
-#   describe "#searchStudentsByProgrammingLanguage" do
+  describe "#searchStudentsByProgrammingLanguage" do
 
-#   	it "returns an array of students how speak a ProgrammingLanguage" do
-#   	student = Student.create!([{
-# 	first_name: 'Jasper', 
-# 	last_name: 'Schulze', 
-# 	semester: '5', 
-# 	academic_program: 'Bachelor', 
-# 	birthday: '1970-12-10', 
-# 	education: 'Abitur', 
-# 	additional_information: 'No', 
-# 	homepage: 'www.dieter.de', 
-# 	github: 'www.github.com/dieter', 
-# 	facebook: 'www.faceboook.com/dieter', 
-# 	xing: 'www.xing.com/dieter', 
-# 	linkedin: 'www.linkedin.com/dieter', 
-# 	languages: Language.create([{name: 'Englisch'}]), 
-# 	programming_languages: ProgrammingLanguage.create([{ name: 'Ruby'}])
-# }])
-#   	  	pp Student.searchStudentsByProgrammingLanguage('Ruby')
-#   	expect(Student.searchStudentsByProgrammingLanguage('Ruby')).to include (Student.find_by(first_name: 'Jasper'))
-#   	end
-#   end
-#   after(:all) do
-#   	Language.delete_all
-#   	ProgrammingLanguage.delete_all
-#   end
+  	it "returns an array of students who speak a ProgrammingLanguage" do
+   	expect(Student.searchStudentsByProgrammingLanguage('Ruby')).to include @student
+  	end
+  	it "should return an empty array if anyone speaks the requested language" do
+  		expect(Student.searchStudentsByProgrammingLanguage("Hindi")).should eq([])
+  	end
+  end
+
+  describe"#searchStudentsByLanguage" do
+  	it "returns an array of students who speak a language"do
+  		expect(Student.searchStudentsByLanguage('Englisch')).to include(@student)
+  	end
+
+  	it "should return an empty array if anyone speaks the requested language" do
+  		expect(Student.searchStudentsByLanguage("Hindi")).should eq([])
+  	end
+  end
+
+
+  describe"#searchStudent" do
+  	it "returns an array of students whos description contain a queryed string"do
+  		expect(Student.searchStudent('Englisch')).to include(@student)
+  	end
+  	it "returns an array of students whos description contain a queryed string"do
+  		expect(Student.searchStudent('Larry')).to include(@student)
+  	end
+
+  	it "should return an empty array if anyone speaks the requested language" do
+  		expect(Student.searchStudent("Hindi")).should eq([])
+  	end
+  end
+
+  after(:all) do
+  	Student.delete_all
+  	Language.delete_all
+  	ProgrammingLanguage.delete_all
+  end
 
 end

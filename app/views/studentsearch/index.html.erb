@@ -1,10 +1,41 @@
 <h1>Studenten durchsuchen</h1>
 
-<%= form_tag("", method: "get") do %>
+<%= form_tag("", method: "get") do |f| %>
   <%# %= label_tag(:q, "Studenten durchsuchen:") %>
   <%= text_field_tag(:q, @query) %>
   <%= submit_tag("Suchen") %>
+  <br>
+    <h2> Semester </h2>
+     <%= text_field_tag(:semester, @semester) %>
+
+    <h2>Sprachen</h2><br>
+    <% for language in Language.all%>
+    <div>
+        <%= check_box_tag  "Language[]", language.name, if params.include?('Language')
+                                                        !!params["Language"].include?(language.name)
+                                                        else 
+                                                        false
+                                                        end  %>
+        <%= language.name %>
+    </div>
+    <% end %>
+
+    <br><br>
+    <h2>Programmiersprachen</h2><br>
+     <% for language in ProgrammingLanguage.all%>
+    <div>
+        <%= check_box_tag "ProgrammingLanguage[]", language.name,if params.include?('Language')
+                                                                  !!params["Language"].include?(language.name)
+                                                                  else 
+                                                                   false
+                                                                  end %>
+        <%= language.name %>
+    </div>
+    <% end %>
+    <div>
+     </div>
 <% end %>
+
 
   <br>
 
