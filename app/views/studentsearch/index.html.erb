@@ -24,8 +24,8 @@
     <h2>Programmiersprachen</h2><br>
      <% for language in ProgrammingLanguage.all%>
     <div>
-        <%= check_box_tag "ProgrammingLanguage[]", language.name,if params.include?('Language')
-                                                                  !!params["Language"].include?(language.name)
+        <%= check_box_tag "ProgrammingLanguage[]", language.name,if params.include?('ProgrammingLanguage')
+                                                                  !!params["ProgrammingLanguage"].include?(language.name)
                                                                   else 
                                                                    false
                                                                   end %>

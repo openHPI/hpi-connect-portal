@@ -80,6 +80,3 @@ gem 'factory_girl'
 gem 'highline'
 
 gem 'capybara'
-
-# Use debugger
-gem 'debugger', group: [:development, :test]
