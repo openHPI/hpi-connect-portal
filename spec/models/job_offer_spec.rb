@@ -79,5 +79,3 @@ describe JobOffer do
 		assert_equal(filtered_job_offers.length, 2);
 	end
 end
-
-

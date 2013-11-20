@@ -27,7 +27,10 @@ class JobOffer < ActiveRecord::Base
 	def self.search(search_attribute)
 			search_string = "%" + search_attribute + "%"
 			search_string = search_string.downcase
-			find(:all, :include => :programming_languages, :conditions => ['lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string])
+			includes(:programming_languages).where('lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages)
+	end
+
+	def self.filter()
 	end
 
 end
