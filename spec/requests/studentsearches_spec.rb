@@ -6,24 +6,27 @@ describe "Studentsearches" do
             :last_name  => 'Zeier',
             :education => 'SAP'
         )
+
         @student2 = FactoryGirl.create(:student,
             :first_name => 'Maria',
             :last_name  => 'Müller',
-            :education => 'Telekom'
-        )
-        @student3 = FactoryGirl.create(:student,
-            :first_name => 'Tom',
-            :last_name  => 'Stett',
-            :education => 'Telekom'
-        )
-        @student4 = FactoryGirl.create(:student,
-            :first_name => 'Lisa',
-            :last_name  => 'Klan',
             :education => 'SAP'
+        )
+
+        @student3 = FactoryGirl.create(:student,
+            :first_name => 'Rafael',
+            :last_name  => 'Althofer',
+            :education => 'Telekom'
+        )
+
+        @student4 = FactoryGirl.create(:student,
+            :first_name => 'Sara',
+            :last_name  => 'Müller',
+            :education => 'Telekom'
         )
     end
 
-    it 'returns only Alexander Zeier' do
+    it 'returns Alexander Zeier' do
         visit studentsearch_index_path
         fill_in 'q', :with => 'Zeier'
         find('input[type="submit"]').click
@@ -33,17 +36,27 @@ describe "Studentsearches" do
         expect(page).to have_no_content "#{@student4.first_name} #{@student4.last_name}"
     end
 
-    it 'returns Alexander Zeier and Lisa Klan' do
+    it 'returns Alexander Zeier and Maria Müller' do
         visit studentsearch_index_path
-        fill_in 'q', :with => 'sap'
+        fill_in 'q', :with => 'SAP'
         find('input[type="submit"]').click
         expect(page).to have_content "#{@student1.first_name} #{@student1.last_name}"
-        expect(page).to have_no_content "#{@student2.first_name} #{@student2.last_name}"
+        expect(page).to have_content "#{@student2.first_name} #{@student2.last_name}"
         expect(page).to have_no_content "#{@student3.first_name} #{@student3.last_name}"
-        expect(page).to have_content "#{@student4.first_name} #{@student4.last_name}"
+        expect(page).to have_no_content "#{@student4.first_name} #{@student4.last_name}"
     end
 
-     it 'returns all of the Students' do
+    it 'returns Sara Müller and Maria Müller' do
+        visit studentsearch_index_path
+        fill_in 'q', :with => 'müller'
+        find('input[type="submit"]').click
+        expect(page).to have_content "#{@student4.first_name} #{@student4.last_name}"
+        expect(page).to have_content "#{@student2.first_name} #{@student2.last_name}"
+        expect(page).to have_no_content "#{@student1.first_name} #{@student1.last_name}"
+        expect(page).to have_no_content "#{@student3.first_name} #{@student3.last_name}"
+    end
+
+    it 'returns all students' do
         visit studentsearch_index_path
         fill_in 'q', :with => 'ORACLE'
         find('input[type="submit"]').click
@@ -53,9 +66,9 @@ describe "Studentsearches" do
         expect(page).to have_content "#{@student4.first_name} #{@student4.last_name}"
     end
 
-     it 'does not return a student' do
+    it 'does not return a student' do
         visit studentsearch_index_path
-        fill_in 'q', :with => 'Zeier'
+        fill_in 'q', :with => 'HPI'
         find('input[type="submit"]').click
         expect(page).to have_no_content "#{@student1.first_name} #{@student1.last_name}"
         expect(page).to have_no_content "#{@student2.first_name} #{@student2.last_name}"
