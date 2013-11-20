@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <h1>Studenten durchsuchen</h1>
 
 <%= form_tag("", method: "get") do |f| %>
@@ -50,25 +49,4 @@
     <% end %>
  
  </ul>
-=======
-<h1>Studenten durchsuchen</h1>
 
-<%= form_tag("", method: "get") do %>
-  <%# %= label_tag(:q, "Studenten durchsuchen:") %>
-  <%= text_field_tag(:q, @query) %>
-  <%= submit_tag("Suchen") %>
-<% end %>
-
-  <br>
-
-  <% if not @no_search %>
-  <h3>Suchergebnisse (<%= @students.length %> gefunden)</h3>
-  <% end %>
-  <ul>
- 
-    <% @students.each do |student| %>
-      <li> <%= link_to "#{student.first_name} #{student.last_name}", student %></li>
-    <% end %>
- 
- </ul>
->>>>>>> origin/develop-js-student-profile

@@ -149,13 +149,13 @@ GEM
       rdoc (~> 3.10)
     simple-navigation (3.11.0)
       activesupport (>= 2.3.2)
-<<<<<<< .mine    simplecov (0.8.1)
+    simplecov (0.8.1)
       docile (~> 1.1.0)
       lockfile (>= 2.1.0)
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
-=======>>>>>>> .theirs    sprockets (2.10.0)
+    sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -198,10 +198,9 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   debugger
   devise (~> 3.1.0)
-<<<<<<< .mine  factory_girl
+  factory_girl
   factory_girl_rails
-=======  factory_girl
->>>>>>> .theirs  highline
+  highline
   jbuilder (~> 1.5)
   jquery-rails
   jquery-turbolinks
