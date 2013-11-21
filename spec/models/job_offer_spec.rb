@@ -75,7 +75,7 @@ describe JobOffer do
 		FactoryGirl.create(:joboffer, chair: "Information Systems")
 		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
 
-		filtered_job_offers = JobOffer.filter(chair: "EPIC")
+		filtered_job_offers = JobOffer.filter({:chair => "EPIC"})
 		assert_equal(filtered_job_offers.length, 2);
 	end
 end
