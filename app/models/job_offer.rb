@@ -30,7 +30,21 @@ class JobOffer < ActiveRecord::Base
 			includes(:programming_languages).where('lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages)
 	end
 
-	def self.filter()
+	def self.filter(params)
+		query = JobOffer.all
+
+   		query = query.where(:title => params[:title].split(',').collect(&:strip)) unless params[:title].nil? or params[:title].blank?
+   		#puts query.to_yaml
+    	query = query.where(:chair => params[:chair].split(',').collect(&:strip)) unless params[:chair].nil? or params[:chair].blank?
+    	#puts query.to_yaml
+   		query = query.where(:description => params[:description]) unless params[:description].nil? or params[:description].blank?
+		#puts query.to_yaml
+    	query = query.where('start_date > ?', Date.parse(params[:start_date])) unless params[:start_date].nil? or params[:start_date].blank?
+    	query = query.where('end_date > ?', Date.parse(params[:end_date])) unless params[:end_date].nil? or params[:end_date].blank?
+    	query = query.where('time_effort <= ?', params[:time_effort].to_f) unless params[:time_effort].nil? or params[:time_effort].blank?
+    	query = query.where('compensation >= ?', params[:compensation].to_f) unless params[:compensation].nil? or params[:compensation].blank?
+    	
+    	return query
 	end
 
 end
