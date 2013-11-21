@@ -32,3 +32,90 @@ JobOffer.create(
 # ProgrammingLanguage.create(name: "Python")
 # ProgrammingLanguage.create(name: "Ruby")
 # ProgrammingLanguage.create(name: "Smalltalk")
+
+languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
+
+Student.create([{
+	first_name: 'Dieter', 
+	last_name: 'Nuhr', 
+	semester: '1', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: [languages.first], 
+	programming_languages: [programming_languages.first]
+}])
+
+Student.create([{
+	first_name: 'Jasper', 
+	last_name: 'Schulze', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: [languages.last], 
+	programming_languages: [programming_languages.first]
+}])
+
+Student.create([{
+	first_name: 'Frank', 
+	last_name: 'Blechschmidt', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: [languages.first, languages.last], 
+	programming_languages: [programming_languages.first, programming_languages.last]
+}])
+
+Student.create([{
+	first_name: 'Malte', 
+	last_name: 'Mues', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1970-12-10', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.dieter.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: languages, 
+	programming_languages: programming_languages
+}])
+
+Student.create([{
+	first_name: 'Julia', 
+	last_name: 'Steier', 
+	semester: '5', 
+	academic_program: 'Bachelor', 
+	birthday: '1969-12-04', 
+	education: 'Abitur', 
+	additional_information: 'No', 
+	homepage: 'www.Günther.de', 
+	github: 'www.github.com/dieter', 
+	facebook: 'www.faceboook.com/dieter', 
+	xing: 'www.xing.com/dieter', 
+	linkedin: 'www.linkedin.com/dieter', 
+	languages: languages, 
+	programming_languages: programming_languages
+}])

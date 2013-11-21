@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131117220311) do
+
+ActiveRecord::Schema.define(version: 20131115112417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,11 +41,52 @@ ActiveRecord::Schema.define(version: 20131117220311) do
     t.float    "compensation"
   end
 
+  create_table "languages", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "languages_students", force: true do |t|
+    t.integer "student_id"
+    t.integer "language_id"
+  end
+
   create_table "programming_languages", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "job_offer_id"
+  end
+
+  create_table "programming_languages_students", force: true do |t|
+    t.integer "student_id"
+    t.integer "programming_language_id"
+  end
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "semester"
+    t.string   "academic_program"
+    t.date     "birthday"
+    t.text     "education"
+    t.text     "additional_information"
+    t.string   "homepage"
+    t.string   "github"
+    t.string   "facebook"
+    t.string   "xing"
+    t.string   "linkedin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "cv_file_name"
+    t.string   "cv_content_type"
+    t.integer  "cv_file_size"
+    t.datetime "cv_updated_at"
   end
 
   create_table "users", force: true do |t|

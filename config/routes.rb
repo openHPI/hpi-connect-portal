@@ -8,7 +8,16 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
   
+  resources :programming_languages
+
+  resources :languages
+
+  resources :students
+
+  resources :studentsearch
+
   resources :chairs
+
   resources :job_offers
   resources :users, only: [:edit, :update]
 

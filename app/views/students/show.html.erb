@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= image_tag(@student.photo.url, size: "150") %>
+</p>
+<p>
+  <strong>First name:</strong>
+  <%= @student.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @student.last_name %>
+</p>
+
+<p>
+  <strong>Semester:</strong>
+  <%= @student.semester %>
+</p>
+
+<p>
+  <strong>Academic program:</strong>
+  <%= @student.academic_program %>
+</p>
+
+<p>
+  <strong>Birthday:</strong>
+  <%= @student.birthday %>
+</p>
+
+<p>
+  <strong>Education:</strong>
+  <%= @student.education %>
+</p>
+
+<p>
+  <strong>Additional information:</strong>
+  <%= @student.additional_information %>
+</p>
+
+<p>
+  <strong>Homepage:</strong>
+  <%= @student.homepage %>
+</p>
+
+<p>
+  <strong>Github:</strong>
+  <%= @student.github %>
+</p>
+
+<p>
+  <strong>Facebook:</strong>
+  <%= @student.facebook %>
+</p>
+
+<p>
+  <strong>Xing:</strong>
+  <%= @student.xing %>
+</p>
+
+<p>
+  <strong>Linkedin:</strong>
+  <%= @student.linkedin %>
+</p>
+<p>
+  <strong>Languages:</strong>
+  <% @student.languages.each do |language| %>
+    <%= language.name %>
+  <% end %>
+</p>
+<p>
+  <strong>Programming Languages:</strong>
+  <% @student.programming_languages.each do |programming_language| %>
+    <%= programming_language.name %>
+  <% end %>
+</p>
+<p>
+  <strong>CV:</strong>
+  <% if (@student.cv.path).nil? %>
+    <%= image_tag('file_thumbnails/missing.png', size: "16") %>
+  <% else %>
+    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_student_path(@student) %> |
+<%= link_to 'Back', students_path %>
