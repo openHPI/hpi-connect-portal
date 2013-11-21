@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
 JobOffer.create(
 	:title => 'Supporting the lab operations of the chair',
 	:description => 'We want you to help in implementing a new modelling tool designed for embedded systems',
@@ -34,7 +35,8 @@ JobOffer.create(
 # ProgrammingLanguage.create(name: "Smalltalk")
 
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
-programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}])
+programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
+
 Student.create([{
 	first_name: 'Dieter', 
 	last_name: 'Nuhr', 

@@ -83,4 +83,3 @@ gem 'capybara'
 #factory girl
 gem 'factory_girl'
 
-
