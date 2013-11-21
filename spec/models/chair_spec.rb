@@ -18,9 +18,7 @@ require 'spec_helper'
 
 describe Chair do
 	before(:each) do
-		@user = User.new(:email => "max.mustermann@student.hpi.uni-potsdam.de", :identity_url => "https://openid.hpi.uni-potsdam.de/user/max.mustermann", :firstname => "Max", :lastname => "mustermann")
-    	@user.save
-    	@chair = Chair.new("name" => "HCI", "description" => "Human Computer Interaction", "head_of_chair" => @user)
+    	@chair = Chair.new("name" => "HCI", "description" => "Human Computer Interaction", "head_of_chair" => "Prof. Patrick Baudisch")
 	end 
 
 	describe "validation of parameters" do
@@ -46,6 +44,5 @@ describe Chair do
 	end
 	after(:each) do
 		@chair = nil
-		@user = nil
 	end
 end
