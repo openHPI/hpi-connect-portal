@@ -16,7 +16,7 @@ describe JobOffer do
 		assert !JobOffer.create.valid?
 	end
 
-	it "does create a joboffer if all required attributes are set" do
+	it "does create a joboffer if all required attributes are set and valid" do
 		assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", 
 			start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9).valid?
 	end
