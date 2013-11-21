@@ -17,7 +17,7 @@ gem 'uglifier', '~> 2.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '~> 0.12.0', platforms: :ruby 
+gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -43,7 +43,7 @@ group :development, :test do
   #gem 'codeclimate-test-reporter', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+#gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
@@ -55,6 +55,7 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
+
 gem 'devise', '~> 3.1'
 gem 'devise_openid_authenticatable'
 
@@ -79,3 +80,5 @@ gem 'validates_timeliness', '~> 3.0'
 # simplify rspec integration testing
 gem 'capybara'
 
+#factory girl
+gem 'factory_girl'

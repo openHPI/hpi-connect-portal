@@ -10,7 +10,7 @@
 #
 
 class JobOffer < ActiveRecord::Base
-	has_many :programming_languages
+	has_and_belongs_to_many :programming_languages
 	accepts_nested_attributes_for :programming_languages
 	validates :title, :description, :chair, :start_date, :time_effort, :compensation, presence: true
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
