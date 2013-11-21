@@ -10,50 +10,72 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :chair %><br>
-    <%= f.text_field :chair %>
-  </div>
-
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.text_field  :start_date, :class => 'datepicker', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
-  </div>
-
-   <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
-  </div>
-
-  <div class="field">
-    <%= f.label :time_effort %><br>
-    <%= f.text_field :time_effort %>
-  </div>
-
-  <div class="field">
-    <%= f.label :compensation %><br>
-    <%= f.text_field :compensation %>
-  </div>
-
-  <div class="field">
-     <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
-    <% @programming_languages.each do |programming_language| %>
-      <div>
-        <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
-        <%= label_tag dom_id(programming_language), programming_language.name %>
+  
+  <div class="row">
+    <div class="span4 offset1">
+        <div class="field">
+          <%= f.label :title %><br>
+          <%= f.text_field :title %>
+        </div>
+    </div>
+    <div class="span4">
+      <div class="field">
+        <%= f.label :chair %><br>
+        <%= f.text_field :chair %>
       </div>
-    <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span9 offset1">
+      <div class="field">
+        <%= f.label :description %><br>
+        <%= f.text_area :description, :rows => 10, :class => "span10", :placeholder => "Enter the description here" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4 offset1">
+      <div class="field">
+        <%= f.label :start_date %><br>
+        <%= f.text_field  :start_date, :class => 'datepicker', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
+      </div>
+    </div>
+
+    <div class="span4">
+      <div class="field">
+        <%= f.label :end_date %><br>
+        <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span4 offset1">
+      <div class="field">
+        <%= f.label :time_effort %><br>
+        <%= f.text_field :time_effort, :placeholder => "in hours/week" %>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="field">
+        <%= f.label :compensation %><br>
+        <%= f.text_field :compensation, :placeholder => "in €/hour" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span1"></div>
+    <div class="field">
+       <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
+      <% @programming_languages.each do |programming_language| %>
+        <div class="span2">
+          <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
+          <%= label_tag dom_id(programming_language), programming_language.name %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">
