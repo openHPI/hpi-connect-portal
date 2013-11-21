@@ -67,6 +67,18 @@ describe JobOffer do
 		end
 	end
 
+	it "returns job offers including the word EPIC" do
+		    
+		FactoryGirl.create(:joboffer, chair: "EPIC")
+		FactoryGirl.create(:joboffer, chair: "EPIC")
+		FactoryGirl.create(:joboffer, chair: "Software Architecture", description: "develop a website with an epic framework")
+		FactoryGirl.create(:joboffer, chair: "Information Systems")
+		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+		resulted_job_offers = JobOffer.search("epic")
+		assert_equal(resulted_job_offers.length, 3);
+	end
+
 	it "returns job offers filtered by chair EPIC" do
 		    
 		FactoryGirl.create(:joboffer, chair: "EPIC")
