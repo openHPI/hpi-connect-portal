@@ -11,11 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20131117220311) do
-=======
-ActiveRecord::Schema.define(version: 20131115181452) do
->>>>>>> 72989b2667ba32e0d6f63573f77d1942923cf192
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +40,13 @@ ActiveRecord::Schema.define(version: 20131115181452) do
     t.float    "time_effort"
     t.float    "compensation"
   end
+
+  create_table "job_offers_programming_languages", id: false, force: true do |t|
+    t.integer "job_offer_id"
+    t.integer "programming_language_id"
+  end
+
+  add_index "job_offers_programming_languages", ["job_offer_id", "programming_language_id"], name: "jo_pl_index", unique: true, using: :btree
 
   create_table "languages", force: true do |t|
     t.string   "name"
