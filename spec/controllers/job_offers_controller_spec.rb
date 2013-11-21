@@ -62,6 +62,35 @@ describe JobOffersController do
     end
   end
 
+  describe "GET sort" do
+    it "assigns @job_offers all job offers sorted by date" do
+
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1))
+
+      job_offers = JobOffer.sort "date"
+      get :sort, {:sort_value => "date"}, valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
+    it "assigns @job_offers all job offers sorted by chair" do
+
+      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
+      FactoryGirl.create(:joboffer, chair: "EPIC")
+      FactoryGirl.create(:joboffer, chair: "Software Architecture")
+      FactoryGirl.create(:joboffer, chair: "Information Systems")
+      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+      job_offers = JobOffer.sort "chair"
+      get :sort, {:sort_value => "chair"}, valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new JobOffer" do

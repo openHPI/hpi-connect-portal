@@ -40,6 +40,20 @@
 # 										{:name => 'C'},
 # 										{:name => 'C++'}])
 
+
+
+# Programming Languages should always be created in the context of job offers!
+# For this use the nested attribute syntax from the Example above!
+
+
+# ProgrammingLanguage.create(name: "C")
+# ProgrammingLanguage.create(name: "C++")
+# ProgrammingLanguage.create(name: "Java")
+# ProgrammingLanguage.create(name: "Javascript")
+# ProgrammingLanguage.create(name: "Python")
+# ProgrammingLanguage.create(name: "Ruby")
+# ProgrammingLanguage.create(name: "Smalltalk")
+
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
 programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
 

@@ -63,9 +63,9 @@ gem 'devise_openid_authenticatable'
 gem 'rest-client'
 
 # command line parsing for project registration
-gem 'highline'
+gem "highline"
 
-#picture uploads
+#For picture Upload
 gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
 
 # add some more UI controls
