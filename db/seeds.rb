@@ -34,7 +34,7 @@ JobOffer.create(
 # ProgrammingLanguage.create(name: "Smalltalk")
 
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
-
+programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}])
 Student.create([{
 	first_name: 'Dieter', 
 	last_name: 'Nuhr', 

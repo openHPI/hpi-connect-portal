@@ -74,19 +74,13 @@ gem 'jquery-ui-rails'
 # load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
-<<<<<<< HEAD
 # a Helper to validate dates
 gem 'validates_timeliness', '~> 3.0'
 
 # simplify rspec integration testing
 gem 'capybara'
 
-=======
 #factory girl
-
 gem 'factory_girl'
 
-gem 'highline'
 
-gem 'capybara'
->>>>>>> 11b91cccbcdfd20c84d92ccd5e78d34fd86b9fa0
