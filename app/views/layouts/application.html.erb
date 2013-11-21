@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">HpiHiwiPortal</a>
+          <%= link_to "HpiHiwiPortal", root_path, :class =>"brand" %>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <li><%= link_to "Job Offers", job_offers_path  %></li>
@@ -73,8 +73,8 @@
             <ul class="nav nav-list">
               <li class="nav-header">Sidebar</li>
               <li><%= link_to "Jobs Overview", job_offers_path  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to "Create Job Offer", new_job_offer_path  %></li>
+              <li><%= link_to "Archive", "/path3"  %></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
