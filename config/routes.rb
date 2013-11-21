@@ -1,16 +1,29 @@
 HpiHiwiPortal::Application.routes.draw do
-
   resources :job_offers do    
     collection do
       get "sort"
+      get "search"
+      get "filter"
     end
   end
+  
+  resources :programming_languages
+
+  resources :languages
+
+  resources :students
+
+  resources :studentsearch
+
+  resources :chairs
 
   resources :job_offers
+  resources :users, only: [:edit, :update]
 
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
   
   root :to => "job_offers#index"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -4,6 +4,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
+    @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.order("created_at")
   end
 
@@ -62,8 +63,37 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/sort
   def sort
-     @job_offers = JobOffer.sort params.require(:sort_value)
+     @radio_button_sort_value = {"date" => false, "chair" => false}
+     sort_value =  params.require(:sort_value)
+     logger.warn(sort_value)
+     @radio_button_sort_value[sort_value] = true
+     logger.warn(@radio_button_sort_value)
 
+     @job_offers = JobOffer.sort sort_value
+     render "index"
+  end
+
+
+  # GET /job_offers/search
+  def search
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    @job_offers = JobOffer.search params[:search]
+    render "index"
+  end
+
+  # GET /job_offers/filter
+  def filter
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+
+    @job_offers = JobOffer.filter({
+                                    :title => params[:title],
+                                    :chair => params[:chair], 
+                                    :description => params[:description],
+                                    :start_date => params[:start_date],
+                                    :end_date => params[:end_date],
+                                    :time_effort => params[:time_effort],
+                                    :compensation => params[:compensation]})
+    
      render "index"
   end
 

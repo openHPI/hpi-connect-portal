@@ -24,3 +24,7 @@
 
 #Ignore DS.Store
 .DS_Store
+
+# ignore public folder
+/public/system/*
+

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+	<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
+  <p>
+		<strong>Name:</strong>
+		<%= @chair.name %>
+	</p>
+
+	<p>
+		<strong>Description:</strong>
+		<%= @chair.description %>
+	</p>
+
+	<p>
+		<strong>Head of Chair:</strong>
+		<%= link_to "#{@chair.head_of_chair.firstname} #{@chair.head_of_chair.lastname}", '#' %>
+	</p>
+
+  <%= link_to 'Edit', edit_chair_path(@chair) %> |
+  <%= link_to 'Back', chairs_path %>
+
+</div>
