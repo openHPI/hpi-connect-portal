@@ -14,4 +14,3 @@ deploy:
   run: "rake db:migrate"
   on:
     repo: tkowark/hpi-hiwi-portal
-    rvm: 2.0.0

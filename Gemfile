@@ -83,3 +83,5 @@ gem 'capybara'
 #factory girl
 gem 'factory_girl'
 
+#dpl
+gem "dpl", "~> 1.5.2"
