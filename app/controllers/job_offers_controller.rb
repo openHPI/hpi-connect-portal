@@ -82,15 +82,15 @@ class JobOffersController < ApplicationController
   # GET /job_offers/filter
   def filter
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.scoped
 
-    @job_offers = @job_offers.where(:title => params[:title].split(',').collect(&:strip)) unless params[:title].nil? or params[:title].blank?
-    @job_offers = @job_offers.where(:chair => params[:chair].split(',').collect(&:strip)) unless params[:chair].nil? or params[:chair].blank?
-    @job_offers = @job_offers.where(:description => params[:description]) unless params[:description].nil? or params[:description].blank?
-    @job_offers = @job_offers.where('start_date > ?', Date.parse(params[:start_date])) unless params[:start_date].nil? or params[:start_date].blank?
-    @job_offers = @job_offers.where('end_date > ?', Date.parse(params[:end_date])) unless params[:end_date].nil? or params[:end_date].blank?
-    @job_offers = @job_offers.where('time_effort <= ?', params[:time_effort].to_f) unless params[:time_effort].nil? or params[:time_effort].blank?
-    @job_offers = @job_offers.where('compensation >= ?', params[:compensation].to_f) unless params[:compensation].nil? or params[:compensation].blank?
+    @job_offers = JobOffer.filter({
+                                    :title => params[:title],
+                                    :chair => params[:chair], 
+                                    :description => params[:description],
+                                    :start_date => params[:start_date],
+                                    :end_date => params[:end_date],
+                                    :time_effort => params[:time_effort],
+                                    :compensation => params[:compensation]})
     
      render "index"
   end
