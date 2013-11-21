@@ -82,7 +82,15 @@ class JobOffersController < ApplicationController
   # GET /job_offers/filter
   def filter
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.filter params
+
+    @job_offers = JobOffer.filter({
+                                    :title => params[:title],
+                                    :chair => params[:chair], 
+                                    :description => params[:description],
+                                    :start_date => params[:start_date],
+                                    :end_date => params[:end_date],
+                                    :time_effort => params[:time_effort],
+                                    :compensation => params[:compensation]})
     
      render "index"
   end

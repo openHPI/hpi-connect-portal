@@ -30,21 +30,89 @@ class JobOffer < ActiveRecord::Base
 			includes(:programming_languages).where('lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages)
 	end
 
-	def self.filter(params)
-		query = JobOffer.all
+	def self.filter(options={})
+		all.filter_title(options[:title]).
+        filter_chair(options[:chair]).
+        filter_description(options[:description]).
+        filter_start_date(options[:start_date]).
+        filter_end_date(options[:end_date]).
+        filter_time_effort(options[:time_effort]).
+        filter_compensation(options[:compensation])
+    end
 
-   		query = query.where(:title => params[:title].split(',').collect(&:strip)) unless params[:title].nil? or params[:title].blank?
-   		#puts query.to_yaml
-    	query = query.where(:chair => params[:chair].split(',').collect(&:strip)) unless params[:chair].nil? or params[:chair].blank?
-    	#puts query.to_yaml
-   		query = query.where(:description => params[:description]) unless params[:description].nil? or params[:description].blank?
-		#puts query.to_yaml
-    	query = query.where('start_date > ?', Date.parse(params[:start_date])) unless params[:start_date].nil? or params[:start_date].blank?
-    	query = query.where('end_date > ?', Date.parse(params[:end_date])) unless params[:end_date].nil? or params[:end_date].blank?
-    	query = query.where('time_effort <= ?', params[:time_effort].to_f) unless params[:time_effort].nil? or params[:time_effort].blank?
-    	query = query.where('compensation >= ?', params[:compensation].to_f) unless params[:compensation].nil? or params[:compensation].blank?
+    def self.filter_title(title)
+    	if title.blank?
+    		all
+    	else
+    		where(:title => title.split(',').collect(&:strip))
+    	end
+    end
+
+    def self.filter_chair(chair)
+    	if chair.blank?
+    		all
+    	else
+    		where(:chair => chair.split(',').collect(&:strip))
+    	end
+    end
+
+    def self.filter_description(description)
+        if description.blank?
+            all
+        else
+            where(:description => description)
+        end
+    end        
+
+    def self.filter_start_date(start_date)
+        if start_date.blank?
+            all
+        else
+            where('start_date > ?', Date.parse(start_date))
+        end
+    end        
+
+    def self.filter_end_date(end_date)
+        if end_date.blank?
+            all
+        else
+            where('end_date > ?', Date.parse(end_date))
+        end
+    end
+
+    def self.filter_time_effort(time_effort)
+        if time_effort.blank?
+            all
+        else
+            where('time_effort <= ?', time_effort.to_f)
+        end
+    end
+
+    def self.filter_compensation(compensation)
+        if compensation.blank?
+            all
+        else
+            where('compensation >= ?', compensation.to_f)
+        end
+    end
+
+
+	# def self.filter(params)
+	# 	query = JobOffer.all
+
+ #   		query = query.where(:title => params[:title].split(',').collect(&:strip)) unless params[:title].nil? or params[:title].blank?
+ #   		#puts query.to_yaml
+ #    	query = query.where(:chair => params[:chair].split(',').collect(&:strip)) unless params[:chair].nil? or params[:chair].blank?
+ #    	#puts query.to_yaml
+ #   		query = query.where(:description => params[:description]) unless params[:description].nil? or params[:description].blank?
+	# 	#puts query.to_yaml
+ #    	query = query.where('start_date > ?', Date.parse(params[:start_date])) unless params[:start_date].nil? or params[:start_date].blank?
+ #    	query = query.where('end_date > ?', Date.parse(params[:end_date])) unless params[:end_date].nil? or params[:end_date].blank?
+ #    	query = query.where('time_effort <= ?', params[:time_effort].to_f) unless params[:time_effort].nil? or params[:time_effort].blank?
+ #    	query = query.where('compensation >= ?', params[:compensation].to_f) unless params[:compensation].nil? or params[:compensation].blank?
     	
-    	return query
-	end
+ #    	return query
+	# end
+
 
 end
