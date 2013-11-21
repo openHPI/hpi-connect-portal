@@ -11,7 +11,9 @@
 
 class JobOffer < ActiveRecord::Base
 	has_and_belongs_to_many :programming_languages
+    has_and_belongs_to_many :languages
 	accepts_nested_attributes_for :programming_languages
+    accepts_nested_attributes_for :languages
 	validates :title, :description, :chair, :start_date, :time_effort, :compensation, presence: true
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
 
@@ -95,24 +97,4 @@ class JobOffer < ActiveRecord::Base
             where('compensation >= ?', compensation.to_f)
         end
     end
-
-
-	# def self.filter(params)
-	# 	query = JobOffer.all
-
- #   		query = query.where(:title => params[:title].split(',').collect(&:strip)) unless params[:title].nil? or params[:title].blank?
- #   		#puts query.to_yaml
- #    	query = query.where(:chair => params[:chair].split(',').collect(&:strip)) unless params[:chair].nil? or params[:chair].blank?
- #    	#puts query.to_yaml
- #   		query = query.where(:description => params[:description]) unless params[:description].nil? or params[:description].blank?
-	# 	#puts query.to_yaml
- #    	query = query.where('start_date > ?', Date.parse(params[:start_date])) unless params[:start_date].nil? or params[:start_date].blank?
- #    	query = query.where('end_date > ?', Date.parse(params[:end_date])) unless params[:end_date].nil? or params[:end_date].blank?
- #    	query = query.where('time_effort <= ?', params[:time_effort].to_f) unless params[:time_effort].nil? or params[:time_effort].blank?
- #    	query = query.where('compensation >= ?', params[:compensation].to_f) unless params[:compensation].nil? or params[:compensation].blank?
-    	
- #    	return query
-	# end
-
-
 end

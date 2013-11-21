@@ -68,13 +68,33 @@
   <div class="row">
     <div class="span1"></div>
     <div class="field">
-       <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
-      <% @programming_languages.each do |programming_language| %>
+      <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
+      <% ProgrammingLanguage.all.each_with_index do |programming_language, index| 
+         if index == 5 %>
+      </div>
+      </div>
+      <div class="row">
+      <div class="span1"></div>
+      <div class="field">
+          <%end %>
         <div class="span2">
           <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
           <%= label_tag dom_id(programming_language), programming_language.name %>
         </div>
       <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span1"></div>
+    <div class="field">
+      <%= hidden_field_tag "job_offer[language_ids][]", nil %>
+      <% Language.all.each do |language| %>
+        <div class="span2">
+          <%= check_box_tag "job_offer[language_ids][]", language.id, @job_offer.language_ids.include?(language.id), id: dom_id(language) %>
+          <%= label_tag dom_id(language), language.name %>
+        </div>
+      <% end %>
+
     </div>
   </div>
 

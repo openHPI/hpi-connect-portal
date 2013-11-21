@@ -38,6 +38,11 @@
     <dd><%= programming_language.name %></dd>
   <% end %>
 
+  <dt>Languages:</dt>
+  <% @job_offer.languages.each do |language| %>
+    <dd><%= language.name %></dd>
+  <% end %>
+
 </dl>
 </div>
 </div>

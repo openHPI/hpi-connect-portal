@@ -17,11 +17,13 @@ class JobOffersController < ApplicationController
   def new
     @job_offer = JobOffer.new
     @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # GET /job_offers/1/edit
   def edit
     @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # POST /job_offers
@@ -105,7 +107,8 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []})
+      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+        {:language_ids => []})
     end
     
     def render_errors_and_redirect_to(object, target, format)

@@ -6,33 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-<<<<<<< HEAD
-def createJobOffers
-	JobOffer.delete_all
-	JobOffer.create(title: "tele-Task developer", description: "The Job includes the development of new features for tele-Task", 
-		chair:"Internet-Technologien und -Systeme", start_date: Date.new(2013,12,1), time_effort: 10, compensation: 11.50,
-		:programming_language_ids => [6])
-	JobOffer.create(title: "Touch floor", description: "The student extends the functionality of the touch floor.", 
-		chair:"Human Computer Interaction", start_date: Date.new(2013,12,3), time_effort: 6, compensation: 11.50,
-		:programming_language_ids => [1,2])
-
-end
-
-def createProgrammingLanguages
-	ProgrammingLanguage.create(name: "C")
-	ProgrammingLanguage.create(name: "C++")
-	ProgrammingLanguage.create(name: "Java")
-	ProgrammingLanguage.create(name: "Javascript")
-	ProgrammingLanguage.create(name: "Python")
-	ProgrammingLanguage.create(name: "Ruby")
-	ProgrammingLanguage.create(name: "Smalltalk")
-end
-
-
-createProgrammingLanguages
-createJobOffers
-=======
-
+JobOffer.delete_all
 JobOffer.create(
 	:title => 'Supporting the lab operations of the chair',
 	:description => 'We want you to help in implementing a new modelling tool designed for embedded systems',
@@ -45,6 +19,26 @@ JobOffer.create(
 											{:name => 'C'},
 											{:name => 'C++'},
 											{:name => 'Java'}])
+JobOffer.create(
+	:title => "tele-Task developer", 
+	:description => "The Job includes the development of new features for tele-Task", 
+	:chair => "Internet-Technologien und -Systeme", 
+	:start_date => Date.new(2013,12,1), 
+	:time_effort => 10, 
+	:compensation => 11.50,
+	:programming_languages_attributes => [
+										{:name => 'Ruby'},])
+
+JobOffer.create(
+	:title => "Touch floor", 
+	:description => "The student extends the functionality of the touch floor.", 
+	:chair => "Human Computer Interaction", 
+	:start_date => Date.new(2013,12,3), 
+	:time_effort => 6, 
+	:compensation => 11.50,
+	:programming_languages_attributes => [
+										{:name => 'C'},
+										{:name => 'C++'}])
 
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
 programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
@@ -133,4 +127,3 @@ Student.create([{
 	languages: languages, 
 	programming_languages: programming_languages
 }])
->>>>>>> origin/develop-ja
