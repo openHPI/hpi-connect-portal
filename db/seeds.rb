@@ -54,8 +54,38 @@
 # ProgrammingLanguage.create(name: "Ruby")
 # ProgrammingLanguage.create(name: "Smalltalk")
 
+
+
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
 programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
+
+
+JobOffer.create([{
+	title: "Touch floor", 
+	description: 'The student extends the functionality of the touch floor.', 
+	chair: 'Human Computer Interaction', 
+	start_date: '2013-11-10', 
+	time_effort: 6,
+	compensation: 11.50
+}])
+
+JobOffer.create([{
+	title: "tele-Task developer", 
+	description: 'The Job includes the development of new features for tele-Task', 
+	chair: 'Internet-Technologien und -Systeme', 
+	start_date: '2013-11-10', 
+	time_effort: 6,
+	compensation: 11.50
+}])
+
+JobOffer.create([{
+	title: "Supporting the lab operations of the chair", 
+	description: 'We want you to help in implementing a new modelling tool designed for embedded systems', 
+	chair: 'System Analysis and Modeling', 
+	start_date: '2013-11-10', 
+	time_effort: 6,
+	compensation: 11.50
+}])
 
 Student.create([{
 	first_name: 'Dieter', 
