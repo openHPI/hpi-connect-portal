@@ -31,6 +31,11 @@ describe JobOffer do
 			start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9).valid?
 	end
 
+	it "does not create a joboffer if compensation is not a number" do
+		assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", chair:"Epic", 
+			start_date: Date.new(2013,11,1), compensation: "i gonna be rich", time_effort: 9).valid?
+	end
+
 	it "returns job offers sorted by start_date" do
 		    
 		FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
