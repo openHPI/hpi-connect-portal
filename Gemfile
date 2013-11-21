@@ -65,8 +65,8 @@ gem 'rest-client'
 # command line parsing for project registration
 gem "highline"
 
-#For Upload
-gem "paperclip", "~> 3.5.2"
+#For picture Upload
+gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
 
 # add some more UI controls
 gem 'jquery-ui-rails'
