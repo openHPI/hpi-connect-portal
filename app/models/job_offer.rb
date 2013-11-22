@@ -7,7 +7,13 @@
 #  title       :string(255)
 #  created_at  :datetime
 #  updated_at  :datetime
-#
+#  chair       :string(255)
+#  start_date  :datetime
+#  end_date    :datetime
+#  time_effort :float
+#  compensation:float
+#  room_number :string(255)
+
 
 class JobOffer < ActiveRecord::Base
 	has_and_belongs_to_many :programming_languages
