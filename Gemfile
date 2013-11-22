@@ -49,7 +49,10 @@ gem 'simplecov', :group => :test, :require => nil
 gem 'rails_12factor', group: :production
 
 # basic layouting
-gem 'twitter-bootstrap-rails'
+# gem 'twitter-bootstrap-rails'
+
+#bootstrap 3
+gem 'bootstrap-rails-engine'
 
 # navigation
 gem 'simple-navigation', '~> 3.11'
