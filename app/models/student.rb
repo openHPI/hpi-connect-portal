@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
 	has_and_belongs_to_many :languages
 	has_and_belongs_to_many :programming_languages
+    validates :first_name, :last_name, presence: true
 
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
@@ -11,7 +12,7 @@ class Student < ActiveRecord::Base
 
     def self.search_student(string)
     	string = string.downcase
-        tmp_student = Student.where("
+        search_results = Student.where("
                 lower(first_name) LIKE ?
                 OR lower(last_name) LIKE ?
                 OR lower(academic_program) LIKE ?
@@ -21,11 +22,10 @@ class Student < ActiveRecord::Base
                 OR lower(facebook) LIKE ?
                 OR lower(xing) LIKE ?
                 OR lower(linkedin) LIKE ?
-                ", string, string, string, string, string, string, string, string, string).to_a
-    	tmp_student_programming = search_students_by_programming_language(string)
-        tmp_student_language = search_students_by_language(string)
-    	tmp_concate = tmp_student + tmp_student_programming + tmp_student_language
-    	tmp_concate.uniq.sort_by{|x| [x.last_name, x.first_name]}
+                ", string, string, string, string, string, string, string, string, string)
+    	search_results += search_students_by_programming_language(string)
+        search_results += search_students_by_language(string)
+    	search_results.uniq.sort_by{|x| [x.last_name, x.first_name]}
     end
 
     def self.search_students_by_programming_language(string)
