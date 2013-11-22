@@ -6,4 +6,3 @@ There are several options how to determine and persist a language setting for th
     - using geo IP, e.g. query the users IP address
     - user profile, e.g. the user saves the preffered language in his settings
 
-  
