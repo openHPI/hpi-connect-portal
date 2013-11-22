@@ -46,3 +46,23 @@ describe "a job offer entry" do
     current_path.should_not == job_offers_path
   end
 end
+
+describe "job_offers_history" do
+  it "should have a job-offers-history" do
+    @job_offer = FactoryGirl.create(:joboffer, 
+      title: "Closed Job Touch Floor", 
+      status: "closed"
+      )
+
+    visit job_offers_path
+    find("div#sidebar").should have_link "Archive"
+    click_on "Archive"
+    current_path.should == job_offers_archieve_path
+    page.should have_css "ul.list-group li"
+    page.should have_css ".search"
+    page.should have_css ".filter"
+    page.should have_css ".search"
+    find_button("Sort").visible?
+    first("ul.list-group li").should have_content "Closed Job Touch Floor"
+  end
+end
