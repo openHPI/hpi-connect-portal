@@ -17,34 +17,34 @@ describe Student do
   describe "#searchStudentsByProgrammingLanguage" do
 
   	it "returns an array of students who speak a ProgrammingLanguage" do
-   	expect(Student.searchStudentsByProgrammingLanguage('Ruby')).to include @student
+   	expect(Student.search_students_by_programming_language('Ruby')).to include @student
   	end
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.searchStudentsByProgrammingLanguage("Hindi")).should eq([])
+  		expect(Student.search_students_by_programming_language("Hindi")).should eq([])
   	end
   end
 
   describe"#searchStudentsByLanguage" do
   	it "returns an array of students who speak a language"do
-  		expect(Student.searchStudentsByLanguage('Englisch')).to include(@student)
+  		expect(Student.search_students_by_language('Englisch')).to include(@student)
   	end
 
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.searchStudentsByLanguage("Hindi")).should eq([])
+  		expect(Student.search_students_by_language("Hindi")).should eq([])
   	end
   end
 
 
   describe"#searchStudent" do
   	it "returns an array of students whos description contain a queryed string"do
-  		expect(Student.searchStudent('Englisch')).to include(@student)
+  		expect(Student.search_student('Englisch')).to include(@student)
   	end
   	it "returns an array of students whos description contain a queryed string"do
-  		expect(Student.searchStudent('Larry')).to include(@student)
+  		expect(Student.search_student('Larry')).to include(@student)
   	end
 
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.searchStudent("Hindi")).should eq([])
+  		expect(Student.search_student("Hindi")).should eq([])
   	end
   end
 
