@@ -25,32 +25,16 @@ class Student < ActiveRecord::Base
     	tmpStudentProgramming = searchStudentsByProgrammingLanguage(string)
         tmpStudentLanguage = searchStudentsByLanguage(string)
     	tmpConcate = tmpStudent + tmpStudentProgramming + tmpStudentLanguage
-    	tmpConcate.uniq.sort{|a,b| self.sortDecision(a,b)}
+    	tmpConcate.uniq.sort_by{|x| [x.last_name, x.first_name]}
     end
 
     def self.searchStudentsByProgrammingLanguage(string)
     	Student.joins(:programming_languages).where('lower(programming_languages.name) LIKE ?',string.downcase).
-        sort{|a,b| self.sortDecision(a,b)}
+        sort_by{|x| [x.last_name, x.first_name]}
     end
 
      def self.searchStudentsByLanguage(string)
         Student.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
-        sort{|a,b| self.sortDecision(a,b)}
-    end
-
-    def self.sortDecision(a,b)
-        if a.last_name < b.last_name
-            return -1
-        elsif a.last_name > b.last_name
-            return 1
-        else
-            if a.first_name <b.first_name
-                return -1
-            elsif b.first_name > a.first_name
-                return 1
-            else
-                return 0
-            end
-        end
-    end         
+        sort_by{|x| [x.last_name, x.first_name]}
+    end      
 end
