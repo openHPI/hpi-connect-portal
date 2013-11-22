@@ -38,13 +38,17 @@ class Student < ActiveRecord::Base
         sort_by{|x| [x.last_name, x.first_name]}
     end
 
-    def self.search_students_by_language_and_programming_language(language, programming_language)
-       if !language.empty? && !programming_language.empty?
-            result = search_students_by_language(language) & search_students_by_programming_language(programming_language)
-        elsif !language.empty? 
-            result = self.search_students_by_language(language)
-        else
-            result = search_students_by_programming_language(programming_language)
-        end
+    def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
+       matching_students = Student.all 
+
+       language_array.each do |language|
+        matching_students = matching_students & search_students_by_language(language)
+       end
+       
+       programming_language_array.each do |programming_language|
+        matching_students = matching_students & search_students_by_programming_language(programming_language)
+       end
+
+       matching_students
     end           
 end

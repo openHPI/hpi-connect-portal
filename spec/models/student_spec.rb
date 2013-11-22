@@ -47,7 +47,7 @@ describe Student do
       FactoryGirl.create(:student, programming_languages: [php], languages: [english])
       FactoryGirl.create(:student, programming_languages: [java, php], languages: [german, english])
 
-      matching_students = Student.search_students_by_language_and_programming_language("german", "php")
+      matching_students = Student.search_students_by_language_and_programming_language(["german"], ["php"])
       assert_equal(matching_students.length, 3);
     end
 
@@ -63,11 +63,12 @@ describe Student do
       FactoryGirl.create(:student, programming_languages: [php], languages: [english])
       FactoryGirl.create(:student, programming_languages: [java, php], languages: [german, english])
 
-      matching_students = Student.search_students_by_language_and_programming_language("german", "")
+
+      matching_students = Student.search_students_by_language_and_programming_language(["german"], [])
       assert_equal(matching_students.length, 4);
     end
 
-    it "should return all students who know the language php" do
+    it "should return all students who know the languages php AND java" do
       java = ProgrammingLanguage.new(:name => 'Java')
       php = ProgrammingLanguage.new(:name => 'php')
       german = Language.new(:name => 'German')
@@ -79,8 +80,8 @@ describe Student do
       FactoryGirl.create(:student, programming_languages: [php], languages: [english])
       FactoryGirl.create(:student, programming_languages: [java, php], languages: [german, english])
 
-      matching_students = Student.search_students_by_language_and_programming_language("", "php")
-      assert_equal(matching_students.length, 4);
+      matching_students = Student.search_students_by_language_and_programming_language([], ["php", "java"])
+      assert_equal(matching_students.length, 2);
     end
 
   end

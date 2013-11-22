@@ -3,7 +3,7 @@
 		<%= link_to 'Back', job_offers_path, :class => "btn btn-default" %>
 	</span>
 	<span class="pull-right">
-    <%= link_to 'Show matching students', matching_students_path(:languages => "Deutsch", :programming_languages => "java"), :class => "btn btn-default", :programming_languages => "java" %>
+    <%= link_to 'Show matching students', matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
 		<%= link_to 'Edit', edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
     <%= link_to 'Destroy', job_offer_path(@job_offer), :confirm => 'Are you sure you want to destroy your account?', :method => :delete, :class => "btn btn-default btn-danger" %>
 	</span>
