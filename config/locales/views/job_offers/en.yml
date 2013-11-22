@@ -1,0 +1,11 @@
+en:
+  job_offers:
+    headline: "Job Offers"
+    starts: "starts"
+    sortDate: "Date"
+    sortChair: "Chair"
+    sortButton: "Sort"
+    searchLabel: "Search for:"
+    searchButton: "Search"
+    filterButton: "Filter"
+    new_job_offer: "New Job Offer"

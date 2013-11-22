@@ -1,0 +1,11 @@
+de:
+  job_offers:
+    headline: "Stellenangebote"
+    starts: "beginnt"
+    sortDate: "Datum"
+    sortChair: "Lehrstuhl"
+    sortButton: "Sortieren"
+    searchLabel: "Suche nach:"
+    searchButton: "Suchen"
+    filterButton: "Filtern"
+    new_job_offer: "neues Stellenangebot"

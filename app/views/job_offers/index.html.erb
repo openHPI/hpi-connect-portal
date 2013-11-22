@@ -1,5 +1,5 @@
 
-<h1>Job Offers </h1>
+<h1> <%= t "job_offers.headline" %> </h1>
 
 <div class="row">
 
@@ -27,7 +27,7 @@
               <h4><%= link_to job_offer.title, job_offer%></h4>
             </div>
             <div class="col-md-3">
-              <p class="startDate">starts <%= job_offer.start_date%></p>
+              <p class="startDate"><%= t("job_offers.starts") %><%= l(job_offer.start_date) %></p>
             </div>
           </div>
           <div class="row">
@@ -46,11 +46,11 @@
         <ul class="nav nav-list">
           <li>
             <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
-            <%= label_tag :sort, "Date", :class => "radio-inline " %>
+            <%= label_tag :sort, t("job_offers.sortDate"), :class => "radio-inline " %>
             <%= radio_button_tag :sort_value, 'date' , false, :checked => @radio_button_sort_value["date"]  %>
-            <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
+            <%= label_tag :sort, t("job_offers.sortChair"), :class => "radio-inline" %>
             <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
-            <%= submit_tag "Sort", :class => "btn btn-default" %>
+            <%= submit_tag t("job_offers.sortButton"), :class => "btn btn-default" %>
             <% end %> 
           </li>
         </ul>
@@ -62,9 +62,9 @@
         <ul class="nav nav-list">
           <li class="search">
             <%= form_tag("/job_offers/search", :method => :get, :id => 'Form') do %>
-            <%= label_tag(:q, "Search for:") %>
+            <%= label_tag(:q, t("job_offers.searchLabel")) %>
             <%= text_field_tag(:search, params[:search], :placeholder=>'search term') %>
-            <%= submit_tag("Search") %>
+            <%= submit_tag t ("job_offers.searchButton"), :class => "btn btn-default" %>
             <% end %>
           </li>
         </ul>
@@ -78,7 +78,7 @@
             <%= form_tag( "/job_offers/filter", :method => :get, :id => 'Form') do %> 
               <div class="row">
                 <div class="col-md-5">
-                  <%= label_tag :chair %>
+                  <%= label_tag t("job_offer.chair") %>
                 </div>
                 <div class="col-md-7">
                   <%= text_field_tag :chair, params.fetch(:chair, '')%>
@@ -86,7 +86,7 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <%= label_tag :start_date %>
+                  <%= label_tag t("job_offer.start_date") %>
                 </div>
                 <div class="col-md-7">
                   <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker'%>
@@ -94,7 +94,7 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <%= label_tag :end_date %>
+                  <%= label_tag t("job_offer.end_date") %>
                 </div>
                 <div class="col-md-7">
                   <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker'%>
@@ -102,7 +102,7 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <%= label_tag :time_effort %>
+                  <%= label_tag t("job_offer.time_effort") %>
                 </div>
                 <div class="col-md-7">
                   <%= text_field_tag :time_effort, params.fetch(:time_effort, '') %>
@@ -110,14 +110,14 @@
               </div>
               <div class="row">
                 <div class="col-md-5">
-                  <%= label_tag :compensation %>
+                  <%= label_tag t("job_offer.compensation") %>
                 </div>
                 <div class="col-md-7">
                   <%= text_field_tag :compensation, params.fetch(:compensation, '') %>
                 </div>
               </div>
               <div class="col-md-3 offset9">
-              <%= submit_tag "Filter", :class => "btn default" %>
+              <%= submit_tag t("job_offers.filterButton"), :class => "btn default" %>
               </div>
             <% end %>
           </li>
@@ -132,7 +132,7 @@
 
 <div class="row">
   <div class="col-md-8">
-    <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success pull-right", :style => "color: white; margin-top: 20px"%>
+    <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, :class => "btn btn-success pull-right", :style => "color: white; margin-top: 20px"%>
   </div>
 </div>
 
