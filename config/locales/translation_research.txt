@@ -1,8 +1,0 @@
-There are several options how to determine and persist a language setting for the user:
-  * setting the language from the domain name, e.g. example.en , example.de , example.pl
-  * setting the language from url parameters, e.g. example.com?locale=en , example.com?locale=de
-  * setting the language from client supplied information
-    - using the accept language header from the browser
-    - using geo IP, e.g. query the users IP address
-    - user profile, e.g. the user saves the preffered language in his settings
-
