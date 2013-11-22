@@ -3,11 +3,17 @@
 # Table name: job_offers
 #
 #  id          :integer          not null, primary key
-#  description :string(255)
+#  description :text
 #  title       :string(255)
+#  chair       :string(255)
+#  room_number :string(255)
+#  start_date  :date
+#  end_date	   :date
+#  programming_language_ids  : {}
+#  language_ids  : {}
 #  created_at  :datetime
 #  updated_at  :datetime
-#
+
 
 require 'spec_helper'
 
@@ -84,8 +90,33 @@ describe JobOffer do
 		assert_equal(resulted_job_offers.length, 3);
 	end
 
+	it "returns job offers filtered by chair EPIC and start_date >= 20131125" do
+		    
+		FactoryGirl.create(:joboffer, chair: "EPIC", start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
+		FactoryGirl.create(:joboffer, chair: "EPIC", start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
+		FactoryGirl.create(:joboffer, chair: "EPIC",start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
+		FactoryGirl.create(:joboffer, chair: "Software Architecture")
+		FactoryGirl.create(:joboffer, chair: "Information Systems")
+		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+		filtered_job_offers = JobOffer.filter({:chair => "EPIC", :start_date => "20131125"})
+		assert_equal(filtered_job_offers.length, 2);
+	end
+
+	it "returns job offers filtered start_date >= 20131125" do
+		    
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
+	
+
+		filtered_job_offers = JobOffer.filter({:start_date => "20131125"})
+		assert_equal(filtered_job_offers.length, 2);
+	end
+
 	it "returns job offers filtered by chair EPIC" do
 		    
+		FactoryGirl.create(:joboffer, chair: "EPIC")
 		FactoryGirl.create(:joboffer, chair: "EPIC")
 		FactoryGirl.create(:joboffer, chair: "EPIC")
 		FactoryGirl.create(:joboffer, chair: "Software Architecture")
@@ -93,6 +124,27 @@ describe JobOffer do
 		FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
 
 		filtered_job_offers = JobOffer.filter({:chair => "EPIC"})
+		assert_equal(filtered_job_offers.length, 3);
+	end
+
+	it "returns job offers filtered between 20131125 and 20131226" do
+		    
+		FactoryGirl.create(:joboffer, chair: "EPIC", start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
+		FactoryGirl.create(:joboffer, chair: "EPIC", start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
+		FactoryGirl.create(:joboffer, chair: "EPIC",start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
+
+		filtered_job_offers = JobOffer.filter({:start_date => "20131125", :end_date => "20131227"})
 		assert_equal(filtered_job_offers.length, 2);
+	end
+
+	it "returns job offers filtered with compenation>=10 AND time_effort<=5" do
+		    
+		FactoryGirl.create(:joboffer, time_effort: 10, compensation: 20)
+		FactoryGirl.create(:joboffer, time_effort: 5, compensation: 20)
+		FactoryGirl.create(:joboffer, time_effort: 8, compensation: 5)
+		FactoryGirl.create(:joboffer, time_effort: 4, compensation: 8)
+
+		filtered_job_offers = JobOffer.filter({:compensation => 10, :time_effort => 5})
+		assert_equal(filtered_job_offers.length, 1);
 	end
 end

@@ -59,7 +59,7 @@
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
 programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
 
-
+JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
@@ -87,6 +87,7 @@ JobOffer.create([{
 	compensation: 11.50
 }])
 
+Student.delete_all
 Student.create([{
 	first_name: 'Dieter', 
 	last_name: 'Nuhr', 

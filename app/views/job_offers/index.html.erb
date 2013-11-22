@@ -78,22 +78,6 @@
             <%= form_tag( "/job_offers/filter", :method => :get, :id => 'Form') do %> 
               <div class="row">
                 <div class="span5">
-                  <%= label_tag :title %>
-                </div>
-                <div class="span7">
-                  <%= text_field_tag :title , params.fetch(:title, '')%>
-                </div>
-              </div>
-              <div class="row">
-                <div class="span5">
-                  <%= label_tag :description %>
-                </div>
-                <div class="span7">
-                  <%= text_field_tag :description, params.fetch(:description, '') %>
-                </div>
-              </div>
-              <div class="row">
-                <div class="span5">
                   <%= label_tag :chair %>
                 </div>
                 <div class="span7">
