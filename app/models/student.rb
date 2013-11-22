@@ -27,30 +27,15 @@ class Student < ActiveRecord::Base
     	tmpConcate = tmpStudent + tmpStudentProgramming + tmpStudentLanguage
     	tmpConcate.uniq.sort{|a,b| self.sortDecision(a,b)}
     end
+
     def self.searchStudentsByProgrammingLanguage(string)
-    	tmpStudentIDs = []
-    	ProgrammingLanguage.where("lower(name) LIKE ?", string.downcase).each {
-    		|each| 
-    		tmp = ProgrammingLanguagesStudent.where(programming_language_id: each.id).all
-             tmp.each{
-    			|x| 
-    			tmpStudentIDs << Student.find(x.student_id)
-    		}
-    	}
-    	return tmpStudentIDs.sort{|a,b| self.sortDecision(a,b)}
+    	Student.joins(:programming_languages).where('lower(programming_languages.name) LIKE ?',string.downcase).
+        sort{|a,b| self.sortDecision(a,b)}
     end
 
      def self.searchStudentsByLanguage(string)
-        tmpStudentIDs = []
-        Language.where("lower(name) LIKE ?", string.downcase).each {
-            |each| 
-            tmp = LanguagesStudent.where(language_id: each.id).all
-            tmp.each{
-                |x| 
-                tmpStudentIDs << Student.find(x.student_id)
-            }
-        }
-        return tmpStudentIDs.sort{|a,b| self.sortDecision(a,b)}
+        Student.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
+        sort{|a,b| self.sortDecision(a,b)}
     end
 
     def self.sortDecision(a,b)

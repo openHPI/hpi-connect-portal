@@ -55,7 +55,8 @@
 # ProgrammingLanguage.create(name: "Smalltalk")
 
 
-
+LanguagesStudent.delete_all
+ProgrammingLanguagesStudent.delete_all
 languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
 programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
 
