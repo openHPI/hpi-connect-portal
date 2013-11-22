@@ -71,7 +71,7 @@ class JobOffer < ActiveRecord::Base
         if start_date.blank?
             all
         else
-            where('start_date > ?', Date.parse(start_date))
+            where('start_date >= ?', Date.parse(start_date))
         end
     end        
 
@@ -79,7 +79,7 @@ class JobOffer < ActiveRecord::Base
         if end_date.blank?
             all
         else
-            where('end_date > ?', Date.parse(end_date))
+            where('end_date <= ?', Date.parse(end_date))
         end
     end
 
