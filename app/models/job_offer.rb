@@ -34,22 +34,13 @@ class JobOffer < ActiveRecord::Base
 	end
 
 	def self.filter(options={})
-		all.filter_title(options[:title]).
-        filter_chair(options[:chair]).
-        filter_description(options[:description]).
+		filter_chair(options[:chair]).
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
         filter_time_effort(options[:time_effort]).
         filter_compensation(options[:compensation])
     end
 
-    def self.filter_title(title)
-    	if title.blank?
-    		all
-    	else
-    		where(:title => title.split(',').collect(&:strip))
-    	end
-    end
 
     def self.filter_chair(chair)
     	if chair.blank?
@@ -58,14 +49,6 @@ class JobOffer < ActiveRecord::Base
     		where(:chair => chair.split(',').collect(&:strip))
     	end
     end
-
-    def self.filter_description(description)
-        if description.blank?
-            all
-        else
-            where(:description => description)
-        end
-    end        
 
     def self.filter_start_date(start_date)
         if start_date.blank?
