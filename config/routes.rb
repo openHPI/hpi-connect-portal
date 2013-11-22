@@ -7,6 +7,12 @@ HpiHiwiPortal::Application.routes.draw do
       get "filter"
     end
   end
+
+  resources :students do
+    collection do
+      get "matching"
+    end
+  end
   
   resources :programming_languages
 

@@ -36,5 +36,15 @@ class Student < ActiveRecord::Base
      def self.search_students_by_language(string)
         Student.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
         sort_by{|x| [x.last_name, x.first_name]}
-    end      
+    end
+
+    def self.search_students_by_language_and_programming_language(language, programming_language)
+       if !language.empty? && !programming_language.empty?
+            result = search_students_by_language(language) & search_students_by_programming_language(programming_language)
+        elsif !language.empty? 
+            result = self.search_students_by_language(language)
+        else
+            result = search_students_by_programming_language(programming_language)
+        end
+    end           
 end
