@@ -21,3 +21,8 @@
 
 de:
   hello: "Hallo Welt"
+  date:
+    formats:
+      default: ! '%d.%m.%Y'
+      long: ! '%e. %B %Y'
+      short: ! '%e. %b'
