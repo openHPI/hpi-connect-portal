@@ -14,13 +14,13 @@
     <div class="row">
       <div class="col-md-6">
           <div class="field">
-            <%= f.label :title %><br>
+            <%= f.label t "job_offer.title" %><br>
             <%= f.text_field :title %>
           </div>
       </div>
       <div class="col-md-6">
         <div class="field">
-          <%= f.label :chair %><br>
+          <%= f.label t "job_offer.chair" %><br>
           <%= f.text_field :chair %>
         </div>
       </div>
@@ -29,7 +29,7 @@
     <div class="row">
       <div class="col-md-11">
         <div class="field">
-          <%= f.label :description %><br>
+          <%= f.label t "job_offer.description" %><br>
           <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => "Enter the description here" %>
         </div>
       </div>
@@ -38,7 +38,7 @@
   <div class="row">
       <div class="col-md-6">
           <div class="field">
-            <%= f.label :room_number %><br>
+            <%= f.label t "job_offer.room_number" %><br>
             <%= f.text_field :room_number %>
           </div>
     </div>
@@ -47,14 +47,14 @@
     <div class="row">
       <div class="col-md-6">
         <div class="field">
-          <%= f.label :start_date %><br>
+          <%= f.label t "job_offer.start_date" %><br>
           <%= f.text_field  :start_date, :class => 'datepicker', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="field">
-          <%= f.label :end_date %><br>
+          <%= f.label t "job_offer.end_date" %><br>
           <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
         </div>
       </div>
@@ -63,13 +63,13 @@
     <div class="row">
       <div class="col-md-6">
         <div class="field">
-          <%= f.label :time_effort %><br>
+          <%= f.label t "job_offer.time_effort" %><br>
           <%= f.text_field :time_effort, :placeholder => "in hours/week" %>
         </div>
       </div>
       <div class="col-md-6">
         <div class="field">
-          <%= f.label :compensation %><br>
+          <%= f.label t "job_offer.compensation" %><br>
           <%= f.text_field :compensation, :placeholder => "in €/hour" %>
         </div>
       </div>
