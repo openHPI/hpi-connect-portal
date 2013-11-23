@@ -91,6 +91,20 @@ describe JobOffersController do
 
   end
 
+  describe "GET search" do
+    it "assigns all job_offers with relevant title as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes
+      get :search, {:search => "open hpi"}, valid_session
+      assigns(:job_offers).should eq([job_offer])
+    end
+
+    it "assigns no job_offers with irrelevant title as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes
+      get :search, {:search => "job hpi"}, valid_session
+      assigns(:job_offers).should eq([])
+    end
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new JobOffer" do
