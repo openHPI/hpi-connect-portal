@@ -11,8 +11,11 @@ de:
       destroy: "Löschen"
       edit: "Editieren"
       new: "Neu"
-    titles:
-      edit: "Editieren"
       save: "Speichern"
-      new: "Neu"
-      delete: "Löschen"
+      show: "Anzeigen"
+      discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
+    titles:
+      edit: "%{model} editieren"
+      save: "%{model} speichern"
+      new: "Neues %{model}"
+      delete: "%{model} löschen"

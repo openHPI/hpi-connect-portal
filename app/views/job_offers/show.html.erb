@@ -1,11 +1,11 @@
 <div class="row span9">
 	<span class="pull-left">
-		<%= link_to 'Back', job_offers_path, :class => "btn btn-default" %>
+		<%= link_to t("helpers.links.back"), job_offers_path, :class => "btn btn-default" %>
 	</span>
 	<span class="pull-right">
-    <%= link_to 'Show matching students', matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
-		<%= link_to 'Edit', edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
-    <%= link_to 'Destroy', job_offer_path(@job_offer), :confirm => 'Are you sure you want to destroy your account?', :method => :delete, :class => "btn btn-default btn-danger" %>
+    <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
+		<%= link_to t("helpers.links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
+    <%= link_to t("helpers.links.destroy"), job_offer_path(@job_offer), :confirm => t("helpers.links.confirm"), :method => :delete, :class => "btn btn-default btn-danger" %>
 	</span>
 	
 	<br><br>
@@ -16,33 +16,33 @@
 </h1>
 
 <dl>
-  <dt>Description:</dt>
+  <dt><%= t("job_offer.description") %>:</dt>
   <dd> <%= @job_offer.description %></dd>
 
-  <dt>Room Number:</dt>
+  <dt><%= t("job_offer.room_number") %>:</dt>
   <dd> <%= @job_offer.room_number %></dd>
 
-  <dt>Chair:</dt>
+  <dt><%= t("job_offer.chair") %>:</dt>
   <dd> <%= @job_offer.chair %></dd>
 
-  <dt>Start Date:</dt>
+  <dt><%= t("job_offer.start_date") %>:</dt>
   <dd> <%= @job_offer.start_date %></dd>
 
-  <dt>End Date:</dt>
+  <dt><%= t("job_offer.end_date") %>:</dt>
   <dd> <%= @job_offer.end_date %></dd>
 
-  <dt>Time Effort:</dt>
+  <dt><%= t("job_offer.time_effort") %>:</dt>
   <dd> <%= @job_offer.time_effort %></dd>
 
-  <dt>Compensation:</dt>
+  <dt><%= t("job_offer.compensation") %>:</dt>
   <dd> <%= @job_offer.compensation %></dd>
 
-  <dt>Programming Languages:</dt>
+  <dt><%= t("job_offer.programming_languages") %>:</dt>
   <% @job_offer.programming_languages.each do |programming_language| %>
     <dd><%= programming_language.name %></dd>
   <% end %>
 
-  <dt>Languages:</dt>
+  <dt><%= t("job_offer.languages") %>:</dt>
   <% @job_offer.languages.each do |language| %>
     <dd><%= language.name %></dd>
   <% end %>
