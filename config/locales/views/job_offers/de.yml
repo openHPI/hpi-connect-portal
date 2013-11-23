@@ -8,4 +8,6 @@ de:
     searchLabel: "Suche nach:"
     searchButton: "Suchen"
     filterButton: "Filtern"
-    new_job_offer: "neues Stellenangebot"
+    new_job_offer: "Neues Stellenangebot"
+    edit_job_offer: "Stellenangebot Editieren"
+    show_matching_students: "Passende Studenten Anzeigen"

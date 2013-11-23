@@ -11,6 +11,9 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
+      save: "Save"
+      show: "Show"
+      discard: "Are you sure you want to discard your changes?"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
