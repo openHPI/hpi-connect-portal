@@ -49,42 +49,22 @@ class JobOffer < ActiveRecord::Base
 
 
     def self.filter_chair(chair)
-    	if chair.blank?
-    		all
-    	else
-    		where(:chair => chair.split(',').collect(&:strip))
-    	end
+    	chair.blank? ? all : where(:chair => chair.split(',').collect(&:strip))             
     end
 
     def self.filter_start_date(start_date)
-        if start_date.blank?
-            all
-        else
-            where('start_date >= ?', Date.parse(start_date))
-        end
+        start_date.blank? ? all : where('start_date >= ?', Date.parse(start_date))
     end        
 
     def self.filter_end_date(end_date)
-        if end_date.blank?
-            all
-        else
-            where('end_date <= ?', Date.parse(end_date))
-        end
+        end_date.blank? ? all : where('end_date <= ?', Date.parse(end_date))
     end
 
     def self.filter_time_effort(time_effort)
-        if time_effort.blank?
-            all
-        else
-            where('time_effort <= ?', time_effort.to_f)
-        end
+        time_effort.blank? ? all : where('time_effort <= ?', time_effort.to_f)
     end
 
     def self.filter_compensation(compensation)
-        if compensation.blank?
-            all
-        else
-            where('compensation >= ?', compensation.to_f)
-        end
+        compensation.blank? ? all : where('compensation >= ?', compensation.to_f)
     end
 end
