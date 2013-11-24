@@ -5,11 +5,13 @@ describe "job_offers/index" do
     assign(:job_offers, [
       stub_model(JobOffer,
         :chair => "Chair",
-        :title => "Title"
+        :title => "Title",
+        :start_date => '2013-11-10'
       ),
       stub_model(JobOffer,
         :chair => "Chair",
-        :title => "Title"
+        :title => "Title",
+        :start_date => '2013-11-11'
       )
     ])
     assign(:radio_button_sort_value, {"date" => false, "chair" => false})

@@ -1,5 +1,5 @@
-# require 'simplecov'
-# SimpleCov.start 'rails'
+require 'simplecov'
+SimpleCov.start 'rails'
 
 require 'factory_girl'
 #FactoryGirl.find_definitions

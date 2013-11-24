@@ -16,10 +16,14 @@ class JobOffersController < ApplicationController
   # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # GET /job_offers/1/edit
   def edit
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # POST /job_offers
@@ -84,9 +88,7 @@ class JobOffersController < ApplicationController
     @radio_button_sort_value = {"date" => false, "chair" => false}
 
     @job_offers = JobOffer.filter({
-                                    :title => params[:title],
                                     :chair => params[:chair], 
-                                    :description => params[:description],
                                     :start_date => params[:start_date],
                                     :end_date => params[:end_date],
                                     :time_effort => params[:time_effort],
@@ -103,7 +105,8 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []})
+      params.require(:job_offer).permit(:description, :title, :chair, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+        {:language_ids => []})
     end
     
     def render_errors_and_redirect_to(object, target, format)

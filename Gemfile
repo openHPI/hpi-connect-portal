@@ -40,16 +40,19 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
   gem 'factory_girl_rails', :require => false
-  #gem 'codeclimate-test-reporter', :require => nil
+  gem 'codeclimate-test-reporter', :require => nil
 end
 
-#gem 'simplecov', :group => :test, :require => nil
+gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 
 # basic layouting
-gem 'twitter-bootstrap-rails'
+# gem 'twitter-bootstrap-rails'
+
+#bootstrap 3
+gem 'bootstrap-rails-engine'
 
 # navigation
 gem 'simple-navigation', '~> 3.11'
