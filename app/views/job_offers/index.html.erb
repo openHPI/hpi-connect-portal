@@ -47,7 +47,8 @@
           <li>
             <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
             <%= label_tag :sort, "Date", :class => "radio inline " %>
-            <%= radio_button_tag :sort_value, 'date' , false, :checked => @radio_button_sort_value["date"]  %>
+            <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
+            :id => "sort_by_date_RB"  %>
             <%= label_tag :sort, 'Chair', :class => "radio inline" %>
             <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
             <%= submit_tag "Sort", :class => "btn" %>

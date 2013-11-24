@@ -21,4 +21,9 @@ describe "job_offers/index" do
     assert_select "h4", :text => "Title".to_s, :count => 2
     assert_select ".chair", :text => "Chair".to_s, :count => 2
   end
+
+  it "has a date radio_button that is checked when loaded" do
+    render
+    assert_select "input[id='sort_by_date_RB'][checked='checked']"
+  end
 end

@@ -18,7 +18,7 @@ class JobOffer < ActiveRecord::Base
 
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
-			order(:start_date)
+			order(:created_at)
 		elsif order_attribute == "chair"
 			order(:chair)
 		end
