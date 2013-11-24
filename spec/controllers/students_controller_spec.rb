@@ -157,4 +157,23 @@ describe StudentsController do
     end
   end
 
+  describe "GET matching" do
+    it "finds all students with the requested programming language and language" do
+      java = ProgrammingLanguage.new(:name => 'Java')
+      php = ProgrammingLanguage.new(:name => 'php')
+      german = Language.new(:name => 'German')
+      english = Language.new(:name => 'English')
+
+      FactoryGirl.create(:student, programming_languages: [java, php], languages: [german])
+      FactoryGirl.create(:student, programming_languages: [java], languages: [german, english])
+      FactoryGirl.create(:student, programming_languages: [php], languages: [german])
+      FactoryGirl.create(:student, programming_languages: [php], languages: [english])
+      FactoryGirl.create(:student, programming_languages: [java, php], languages: [german, english])
+
+      students = Student.search_students_by_language_and_programming_language(["german"], ["Java"])
+      get :matching, ({:languages => ["German"], :programming_languages => ["java"]}), valid_session
+      assigns(:students).should eq(students)
+    end
+  end
+
 end

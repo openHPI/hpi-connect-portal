@@ -91,6 +91,22 @@ describe JobOffersController do
 
   end
 
+  describe "GET filer" do
+    it "assigns @job_offers to all job offers with the chait EPIC" do
+
+      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
+      FactoryGirl.create(:joboffer, chair: "EPIC")
+      FactoryGirl.create(:joboffer, chair: "Software Architecture")
+      FactoryGirl.create(:joboffer, chair: "Information Systems")
+      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+      job_offers = JobOffer.filter ({:chair => "EPIC"})
+      get :filter, ({:chair => "EPIC"}), valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
+  end
+
   describe "GET search" do
     it "assigns all job_offers with relevant title as @job_offers" do
       job_offer = JobOffer.create! valid_attributes
