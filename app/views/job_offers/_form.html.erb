@@ -15,13 +15,13 @@
       <div class="col-md-6">
           <div class="field">
             <%= f.label t "job_offer.title" %><br>
-            <%= f.text_field :title %>
+            <%= f.text_field :title, :class => "form-control"%>
           </div>
       </div>
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.chair" %><br>
-          <%= f.text_field :chair %>
+          <%= f.text_field :chair, :class => "form-control"%>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <div class="col-md-11">
         <div class="field">
           <%= f.label t "job_offer.description" %><br>
-          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => "Enter the description here" %>
+          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => "Enter the description here", :class => "form-control" %>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
       <div class="col-md-6">
           <div class="field">
             <%= f.label t "job_offer.room_number" %><br>
-            <%= f.text_field :room_number %>
+            <%= f.text_field :room_number, :class => "form-control" %>
           </div>
     </div>
   </div>
@@ -48,14 +48,14 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.start_date" %><br>
-          <%= f.text_field  :start_date, :class => 'datepicker', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
+          <%= f.text_field  :start_date, :class => 'datepicker form-control', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.end_date" %><br>
-          <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
+          <%= f.text_field :end_date, :class => 'datepicker form-control', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
         </div>
       </div>
     </div>
@@ -64,13 +64,13 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.time_effort" %><br>
-          <%= f.text_field :time_effort, :placeholder => "in hours/week" %>
+          <%= f.text_field :time_effort, :placeholder => "in hours/week", :class => "form-control" %>
         </div>
       </div>
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.compensation" %><br>
-          <%= f.text_field :compensation, :placeholder => "in €/hour" %>
+          <%= f.text_field :compensation, :placeholder => "in €/hour", :class => "form-control" %>
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
         <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
         <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
           <div class="col-md-2">
-            <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
+            <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
             <%= label_tag dom_id(programming_language), programming_language.name %>
           </div>
         <% end %>
