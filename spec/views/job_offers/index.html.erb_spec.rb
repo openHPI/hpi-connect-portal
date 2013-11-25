@@ -15,6 +15,7 @@ describe "job_offers/index" do
       )
     ])
     assign(:radio_button_sort_value, {"date" => false, "chair" => false})
+    assign(:chairs, ["Computer Graphics", "Internet Technologies", "EPIC","Softwarearchitekturen"])
   end
 
   it "renders a list of job_offers" do
