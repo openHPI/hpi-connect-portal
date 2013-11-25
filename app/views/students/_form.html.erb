@@ -73,7 +73,8 @@
       <%= image_tag(@student.photo.url, size: "80") %><br>
       <%= File.basename(@student.photo.path); %><br>
     <% end %>
-    <%= f.file_field :photo %>
+    <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
+    <%= f.label :photo, ".jpeg, .png, .gif" %><br>
   </div>
   <div class="field">
     <%= f.label :cv %><br>
@@ -81,7 +82,8 @@
       <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @student.cv.url) %><br>
       <%= File.basename(@student.cv.path); %><br>
     <% end %>
-    <%= f.file_field :cv %>
+    <%= f.file_field :cv, accept: 'application/pdf' %>
+    <%= f.label :cv, ".pdf" %><br>
   </div>
   <div class="actions">
     <%= f.submit %>
