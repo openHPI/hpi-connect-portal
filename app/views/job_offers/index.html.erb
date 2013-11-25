@@ -35,7 +35,9 @@
       <div class="container ">
         <%= form_tag( "/job_offers/find_jobs", :method => :get, :id => 'Form' ) do %> 
           <ul class="nav nav-list">
+
             <div class="form-group">
+              <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
               <%= label_tag :sort, "Date", :class => "radio-inline " %>
               <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
               :id => "sort_by_date_RB"  %>
@@ -43,32 +45,33 @@
               <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>
             </div>
             <div class="form-group">
-              <%= label_tag(:q, t("job_offers.searchLabel")) %>
-              <%= text_field_tag(:search, params[:search], :placeholder=>'search term', :class => "form-control") %>
+              <%= label_tag t("job_offers.searchLabel") %>
+              <%= text_field_tag(:search, params[:search], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
             </div>
 
+            <%= label_tag t("job_offers.filterLabel") %>
             <div class="form-group">
-                <%= label_tag t("job_offer.chair") %>
+                <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
                 <%= text_field_tag :chair, params.fetch(:chair, ''), :class => "form-control" %>
             </div>
             <div class="form-group">
-                <%= label_tag t("job_offer.start_date") %>
+                <%= label_tag t("job_offer.start_date"), nil, :class => "small" %>
                 <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker form-control'%>
             </div>
             <div class="form-group">
-                <%= label_tag t("job_offer.end_date") %>
+                <%= label_tag t("job_offer.end_date"), nil, :class => "small" %>
                 <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker form-control'%>
             </div>
             <div class="form-group">
-                <%= label_tag t("job_offer.time_effort") %>
-                <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :class => "form-control" %>
+                <%= label_tag t("job_offer.time_effort"), nil, :class => "small" %>
+                <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :placeholder => t('job_offers.time_effort'), :class => "form-control" %>
               </div>
             <div class="form-group">
-                <%= label_tag t("job_offer.compensation") %>
-                <%= text_field_tag :compensation, params.fetch(:compensation, ''), :class => "form-control" %>
+                <%= label_tag t("job_offer.compensation"), nil, :class => "small" %>
+                <%= text_field_tag :compensation, params.fetch(:compensation, ''),:placeholder => t('job_offers.compensation'), :class => "form-control" %>
               </div>
             <div class="form-group">
-            <%= submit_tag t("job_offers.filterButton"), :class => "btn btn-default" %>
+            <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
             </div>
          </ul>
         <% end %> 
