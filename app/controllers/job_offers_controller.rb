@@ -97,6 +97,26 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
+  def find_Jobs
+
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+
+    @job_offers = JobOffer.find_jobs({
+      search:  params[:search],
+      sort: params[:sort],
+      filter: {
+                :chair => params[:chair], 
+                :start_date => params[:start_date],
+                :end_date => params[:end_date],
+                :time_effort => params[:time_effort],
+                :compensation => params[:compensation]}
+
+    }) 
+    render "index"
+
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer

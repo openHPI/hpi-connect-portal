@@ -25,6 +25,25 @@ class JobOffer < ActiveRecord::Base
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
 
 
+    def self.find_jobs(attributes={})
+
+        result = all
+
+        if !attributes[:search].blank?
+            result = search(attributes[:search])
+        end
+
+        if !attributes[:filter].empty?
+            result = result.filter(attributes[:filter])
+        end
+
+        if !attributes[:sort].blank?
+            result = result.sort(attributes[:sort])
+        end
+
+        result
+    end
+
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
 			order(:created_at)

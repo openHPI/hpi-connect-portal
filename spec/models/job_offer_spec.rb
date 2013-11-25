@@ -136,7 +136,7 @@ describe JobOffer do
 		assert_equal(filtered_job_offers.length, 2);
 	end
 
-	it "returns job offers filtered with compenation>=10 AND time_effort<=5" do
+	it "returns job offers filtered with compensation>=10 AND time_effort<=5" do
 		    
 		FactoryGirl.create(:joboffer, time_effort: 10, compensation: 20)
 		FactoryGirl.create(:joboffer, time_effort: 5, compensation: 20)
@@ -146,4 +146,21 @@ describe JobOffer do
 		filtered_job_offers = JobOffer.filter({:compensation => 10, :time_effort => 5})
 		assert_equal(filtered_job_offers.length, 1);
 	end
+
+
+
+	it "returns job offers searched for programming languages filtered by time effort and sorted by chair" do
+
+		FactoryGirl.create(:joboffer, time_effort: 10, chair: "Software Architecture", description: "Ruby Programming")
+		FactoryGirl.create(:joboffer, time_effort: 8, chair: "Information Systems", description: "Ruby Programming")
+		FactoryGirl.create(:joboffer, time_effort: 5, chair: "EPIC", description: "Javascript Programming")
+		FactoryGirl.create(:joboffer, time_effort: 4, chair: "Operating Systems & Middleware", description: "Ruby Programming")
+
+		filtered_job_offers = JobOffer.find_jobs({:sort => "chair", :search => "Ruby", :filter => {:time_effort => 8}})
+		assert_equal(filtered_job_offers.length, 2);
+		assert_equal(filtered_job_offers[0].chair, "Information Systems");
+		assert_equal(filtered_job_offers[1].chair, "Operating Systems & Middleware");
+	end
+
+
 end

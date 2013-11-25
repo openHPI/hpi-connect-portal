@@ -5,6 +5,7 @@ HpiHiwiPortal::Application.routes.draw do
       get "sort"
       get "search"
       get "filter"
+      get "find_Jobs"
     end
   end
 
