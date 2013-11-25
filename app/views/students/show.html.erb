@@ -80,6 +80,7 @@
     <%= image_tag('file_thumbnails/missing.png', size: "16") %>
   <% else %>
     <%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %>
+    <%= File.basename(@student.cv.path); %><br>
   <% end %>
 </p>
 

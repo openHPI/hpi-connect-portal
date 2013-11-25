@@ -14,6 +14,20 @@ describe Student do
 
   end
 
+  describe "#checkTypeOfPhoto" do
+
+    it "accepts a jpeg image" do
+      # no working version found
+
+      
+      #@student.photo = File.new("spec/fixtures/pdf/test_cv.pdf")
+      #@student.photo = File.new("spec/fixtures/images/test_picture.jpg")
+      #expect(@student.photo.path).should eq("bla")
+
+      #expect(FileTest.exists?(@student.photo.path)).should eq(@student.photo)
+    end
+  end
+
   describe "#searchStudentsByProgrammingLanguage" do
 
   	it "returns an array of students who speak a ProgrammingLanguage" do
