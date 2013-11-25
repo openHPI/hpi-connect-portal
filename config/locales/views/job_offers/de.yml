@@ -14,3 +14,5 @@ de:
     search_term: "Suchwort"
     time_effort: "in Stunden/Woche"
     compensation: "in €/Stunde"
+    start_date: "beginnt frühestens"
+    end_date: "endet spätestens"

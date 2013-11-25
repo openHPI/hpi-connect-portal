@@ -50,17 +50,19 @@
             </div>
 
             <%= label_tag t("job_offers.filterLabel") %>
+
             <div class="form-group">
-                <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
-                <%= text_field_tag :chair, params.fetch(:chair, ''), :class => "form-control" %>
+              <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
+              <%= select_tag "chairs", options_for_select(@chairs, params.fetch(:chairs, '')), include_blank: true, :class => "form-control"%>
             </div>
+
             <div class="form-group">
                 <%= label_tag t("job_offer.start_date"), nil, :class => "small" %>
-                <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker form-control'%>
+                <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :placeholder => t('job_offers.start_date'),  :class => 'datepicker form-control'%>
             </div>
             <div class="form-group">
                 <%= label_tag t("job_offer.end_date"), nil, :class => "small" %>
-                <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker form-control'%>
+                <%= text_field_tag :end_date, params.fetch(:end_date, ''), :placeholder => t('job_offers.end_date'), :class => 'datepicker form-control'%>
             </div>
             <div class="form-group">
                 <%= label_tag t("job_offer.time_effort"), nil, :class => "small" %>

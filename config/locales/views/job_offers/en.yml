@@ -14,3 +14,5 @@ en:
     search_term: "search term"
     time_effort: "in hours/week"
     compensation: "in €/hour"
+    start_date: "starting at the earliest"
+    end_date: "finishing at the latest"

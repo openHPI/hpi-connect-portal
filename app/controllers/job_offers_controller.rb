@@ -1,5 +1,6 @@
 class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
+  before_action :set_chairs, only: [:index, :find_jobs]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -97,7 +98,7 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
-  def find_Jobs
+  def find_jobs
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
 
@@ -121,6 +122,13 @@ class JobOffersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
       @job_offer = JobOffer.find(params[:id])
+    end
+
+    def set_chairs
+      @chairs = Chair.all
+      if @chairs.blank?
+        @chairs = ["Computer Graphics", "Internet Technologies", "EPIC","Softwarearchitekturen"]
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
