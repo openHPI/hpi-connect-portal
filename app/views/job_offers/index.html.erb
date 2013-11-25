@@ -34,85 +34,65 @@
     <div class="container ">
       <div class="well sidebar-nav">
         <ul class="nav nav-list">
-          <li>
+          <div class="form-group">
             <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
-            <%= label_tag :sort, "Date", :class => "radio inline " %>
+            <%= label_tag :sort, "Date", :class => "radio-inline " %>
             <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
             :id => "sort_by_date_RB"  %>
-            <%= label_tag :sort, 'Chair', :class => "radio inline" %>
-            <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
+            <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
+            <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>
+          </div>
+          <div class="form-group">     
             <%= submit_tag t("job_offers.sortButton"), :class => "btn btn-default" %>
             <% end %> 
-          </li>
+          </div>
         </ul>
       </div><!--/.well -->
     </div> <!-- /container -->
 
     <div class="well sidebar-nav">
       <div class="container">
-        <ul class="nav nav-list">
-          <li class="search">
+          <div class="form-group">
             <%= form_tag("/job_offers/search", :method => :get, :id => 'Form') do %>
             <%= label_tag(:q, t("job_offers.searchLabel")) %>
             <%= text_field_tag(:search, params[:search], :placeholder=>'search term', :class => "form-control") %>
+          </div>
+          <div class="form-group">
             <%= submit_tag t("job_offers.searchButton"), :class => "btn btn-default" %>
             <% end %>
-          </li>
-        </ul>
+          </div>
       </div><!--/.well -->
     </div> <!-- /container -->
     
     <div class="well sidebar-nav">
       <div class="container">
-        <ul class="nav nav-list">
-          <li class="filter">
+          <form class="form" role="form">
             <%= form_tag( "/job_offers/filter", :method => :get, :id => 'Form') do %> 
-              <div class="row">
-                <div class="col-md-5">
+              <div class="form-group">
                   <%= label_tag t("job_offer.chair") %>
-                </div>
-                <div class="col-md-5">
                   <%= text_field_tag :chair, params.fetch(:chair, ''), :class => "form-control" %>
-                </div>
               </div>
-              <div class="row">
-                <div class="col-md-5">
+              <div class="form-group">
                   <%= label_tag t("job_offer.start_date") %>
-                </div>
-                <div class="col-md-5">
                   <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker form-control'%>
-                </div>
               </div>
-              <div class="row">
-                <div class="col-md-5">
+              <div class="form-group">
                   <%= label_tag t("job_offer.end_date") %>
-                </div>
-                <div class="col-md-5">
                   <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker form-control'%>
-                </div>
               </div>
-              <div class="row">
-                <div class="col-md-5">
+              <div class="form-group">
                   <%= label_tag t("job_offer.time_effort") %>
-                </div>
-                <div class="col-md-5">
                   <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :class => "form-control" %>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5">
+              <div class="form-group">
                   <%= label_tag t("job_offer.compensation") %>
-                </div>
-                <div class="col-md-5">
                   <%= text_field_tag :compensation, params.fetch(:compensation, ''), :class => "form-control" %>
                 </div>
-              </div>
-              <div class="col-md-3 col-md-offset-9">
+              <div class="form-group">
               <%= submit_tag t("job_offers.filterButton"), :class => "btn btn-default" %>
               </div>
             <% end %>
-          </li>
-        </ul>
+          </form>
       </div><!--/.well -->
     </div> <!-- /container -->
 
