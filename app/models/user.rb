@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
     # :lockable, :timeoutable and :omniauthable
     devise :trackable, :openid_authenticatable
 
+    has_many :applications
+    has_many :job_offers, through: :applications
+
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
 
@@ -35,5 +38,9 @@ class User < ActiveRecord::Base
         email = username + '@student.hpi.uni-potsdam.de'
 
         User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+    end
+
+    def applied?(job_offer)
+        applications.find_by_job_offer_id job_offer.id
     end
 end

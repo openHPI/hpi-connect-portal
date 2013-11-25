@@ -82,8 +82,6 @@ describe ChairsController do
         response.should redirect_to(Chair.last)
       end
     end
-
-    
   end
 
   describe "PUT update" do

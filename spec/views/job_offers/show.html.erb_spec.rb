@@ -6,6 +6,7 @@ describe "job_offers/show" do
       :description => "Description",
       :title => "Title"
     ))
+    view.stub(:signed_in?) { false }
   end
 
   it "renders attributes in <p>" do

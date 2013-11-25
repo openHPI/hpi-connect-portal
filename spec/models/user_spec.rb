@@ -21,5 +21,20 @@
 require 'spec_helper'
 
 describe User do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @user = User.create
+  end
+
+  subject { @user }
+
+  describe 'applying' do
+    before do
+      @job_offer = JobOffer.create
+      @application = Application.create(user: @user, job_offer: @job_offer)
+    end
+
+    it { should be_applied(@job_offer) }
+    its(:applications) { should include(@application) }
+    its(:job_offers) { should include(@job_offer) }
+  end
 end
