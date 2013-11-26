@@ -2,11 +2,13 @@
 	<span class="pull-left">
 		<%= link_to t("helpers.links.back"), job_offers_path, :class => "btn btn-default" %>
 	</span>
-	<span class="pull-right">
-    <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
-		<%= link_to t("helpers.links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
-    <%= link_to t("helpers.links.destroy"), job_offer_path(@job_offer), :confirm => t("helpers.links.confirm"), :method => :delete, :class => "btn btn-default btn-danger" %>
-	</span>
+  <% if @job_offer.status != "completed" %>
+  	<span class="pull-right">
+      <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
+  		<%= link_to t("helpers.links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
+      <%= link_to t("helpers.links.destroy"), job_offer_path(@job_offer), :confirm => t("helpers.links.confirm"), :method => :delete, :class => "btn btn-default btn-danger" %>
+  	</span>
+  <% end %>
 	
 	<br><br>
 
@@ -36,6 +38,11 @@
 
   <dt><%= t("job_offer.compensation") %>:</dt>
   <dd> <%= @job_offer.compensation %></dd>
+
+  <dt>Student Placeholder:</dt>
+  <% if @job_offer.status != "completed" %>
+    <dd> <%=  %></dd>
+  <% end %>
 
   <dt><%= t("job_offer.programming_languages") %>:</dt>
   <% @job_offer.programming_languages.each do |programming_language| %>

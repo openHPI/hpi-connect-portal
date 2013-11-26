@@ -63,6 +63,13 @@ class JobOffersController < ApplicationController
     end
   end
 
+  # GET /job_offers/archive
+  def archive
+    @job_offers = JobOffer.filter({:status => "completed"})
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    render 'archive'
+  end
+
   # GET /job_offers/sort
   def sort
      @radio_button_sort_value = {"date" => false, "chair" => false}

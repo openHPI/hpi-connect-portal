@@ -34,11 +34,24 @@ JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
 	chair: 'Human Computer Interaction', 
+	status: 'completed',
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
 	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
+}])
+
+JobOffer.create([{
+	title: "Website Developer", 
+	description: 'The student develops a wonderful website.', 
+	chair: 'Epic', 
+	status: 'completed',
+	start_date: '2013-10-01', 
+	time_effort: 9,
+	compensation: 13.50,
+	languages: Language.where(:name => 'Deutsch'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby'])
 }])
 
 JobOffer.create([{

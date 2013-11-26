@@ -146,4 +146,12 @@ describe JobOffer do
 		filtered_job_offers = JobOffer.filter({:compensation => 10, :time_effort => 5})
 		assert_equal(filtered_job_offers.length, 1);
 	end
+
+	it "returns job offers filtered by status" do
+		job_offer_with_status = FactoryGirl.create(:joboffer, status:"completed");
+		FactoryGirl.create(:joboffer);
+		filtered_job_offers = JobOffer.filter({:status => "completed"})
+		assert filtered_job_offers.include? job_offer_with_status
+		assert_equal(filtered_job_offers.length, 1);
+	end
 end

@@ -44,7 +44,8 @@ class JobOffer < ActiveRecord::Base
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
         filter_time_effort(options[:time_effort]).
-        filter_compensation(options[:compensation])
+        filter_compensation(options[:compensation]).
+        filter_status(options[:status])
     end
 
 
@@ -66,5 +67,9 @@ class JobOffer < ActiveRecord::Base
 
     def self.filter_compensation(compensation)
         compensation.blank? ? all : where('compensation >= ?', compensation.to_f)
+    end
+
+    def self.filter_status(status)
+        status.blank? ? all: where('status <= ?', status)
     end
 end

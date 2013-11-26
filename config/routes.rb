@@ -5,6 +5,7 @@ HpiHiwiPortal::Application.routes.draw do
       get "sort"
       get "search"
       get "filter"
+      get "archive"
     end
   end
 

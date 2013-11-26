@@ -23,8 +23,10 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30 } }
+  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30} }
+  let(:valid_attributes_with_status) {{"title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => "completed"}}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -36,6 +38,20 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :index, {}, valid_session
       assigns(:job_offers).should eq([job_offer])
+    end
+  end
+
+  describe "GET archive" do
+    it "assigns all archive job_offers as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes_with_status
+      get :archive, {}, valid_session
+      assigns(:job_offers).should eq([job_offer])
+    end
+
+    it "does not assign non-completed jobs" do
+      job_offer = JobOffer.create! valid_attributes
+      get :archive, {}, valid_session
+      assert assigns(:job_offers).empty?
     end
   end
 
