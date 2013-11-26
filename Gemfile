@@ -47,6 +47,7 @@ end
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
+gem 'newrelic_rpm', group: :production
 
 # basic layouting
 gem 'twitter-bootstrap-rails'
