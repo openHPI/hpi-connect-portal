@@ -1,127 +1,96 @@
 
-<h1>Job Offers </h1>
-
 <div class="row">
 
 
   <div class="col-md-8"> 
     <div class="row">
-
-      <% len = @job_offers.length %>
-      <% @job_offers.each_with_index do |job_offer, index| %>
+      <h1> <%= t "job_offers.headline" %> </h1> 
+      <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, :class => "btn btn-success", :style => "margin-bottom: 20px"%>
        
-        <% if len == 1 %>
-          <div class="jobList_single">
-        <%else %>
-          <% if index == 0 %>
-            <div class="jobList_top">
-          <% elsif index+1 < len %>
-            <div class="jobList_middle">
-          <% else %>
-            <div class="jobList_bottom">
-          <%end%>
-        <% end%>
 
+      <ul class="list-group">
+      <% @job_offers.each_with_index do |job_offer, index| %>
+        <li class="list-group-item">
           <div class="row">
-            <div class="col-md-8 offset1">
+            <div class="col-md-8">
               <h4><%= link_to job_offer.title, job_offer%></h4>
             </div>
-            <div class="col-md-3">
-              <p class="startDate">starts <%= job_offer.start_date%></p>
+            <div class="col-md-4">
+              <p class="startDate"><%= t("job_offers.starts ") %><%= l(job_offer.start_date) %></p>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-10 offset2">
+            <div class="col-md-11 col-md-offset-1">
               <p class="chair"><%= job_offer.chair %></p>
             </div>
           </div>
-        </div>
+        </li>
       <%end%>
+    </ul>
     </div><!--/.row -->
   </div><!--/.span -->
 
-  <div class="col-md-4">
+<div class="col-md-4">
+  <div class="well sidebar-nav">
     <div class="container ">
-      <div class="well sidebar-nav">
+      <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
         <ul class="nav nav-list">
-          <li>
-            <%= form_tag( "/job_offers/sort", :method => :get, :id => 'Form' ) do %> 
+          <div class="form-group">
             <%= label_tag :sort, "Date", :class => "radio-inline " %>
-            <%= radio_button_tag :sort_value, 'date' , false, :checked => @radio_button_sort_value["date"]  %>
+            <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
+            :id => "sort_by_date_RB"  %>
             <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
-            <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>     
-            <%= submit_tag "Sort", :class => "btn btn-default" %>
-            <% end %> 
-          </li>
-        </ul>
+            <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>
+          </div>
+          <div class="form-group">     
+            <%= submit_tag t("job_offers.sortButton"), :class => "btn btn-default" %>
+          </div>
+           </ul>
+          <% end %>  
       </div><!--/.well -->
     </div> <!-- /container -->
 
     <div class="well sidebar-nav">
       <div class="container">
-        <ul class="nav nav-list">
-          <li class="search">
-            <%= form_tag("/job_offers/search", :method => :get, :id => 'Form') do %>
-            <%= label_tag(:q, "Search for:") %>
-            <%= text_field_tag(:search, params[:search], :placeholder=>'search term') %>
-            <%= submit_tag("Search") %>
-            <% end %>
-          </li>
-        </ul>
+        <%= form_tag("/job_offers/search", :method => :get, :id => 'Form') do %>
+          <div class="form-group">
+            <%= label_tag(:q, t("job_offers.searchLabel")) %>
+            <%= text_field_tag(:search, params[:search], :placeholder=>'search term', :class => "form-control") %>
+          </div>
+          <div class="form-group">
+            <%= submit_tag t("job_offers.searchButton"), :class => "btn btn-default" %>
+          </div>
+          <% end %>
       </div><!--/.well -->
     </div> <!-- /container -->
     
     <div class="well sidebar-nav">
       <div class="container">
-        <ul class="nav nav-list">
-          <li class="filter">
             <%= form_tag( "/job_offers/filter", :method => :get, :id => 'Form') do %> 
-              <div class="row">
-                <div class="col-md-5">
-                  <%= label_tag :chair %>
-                </div>
-                <div class="col-md-7">
-                  <%= text_field_tag :chair, params.fetch(:chair, '')%>
-                </div>
+              <div class="form-group">
+                  <%= label_tag t("job_offer.chair") %>
+                  <%= text_field_tag :chair, params.fetch(:chair, ''), :class => "form-control" %>
               </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <%= label_tag :start_date %>
-                </div>
-                <div class="col-md-7">
-                  <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker'%>
-                </div>
+              <div class="form-group">
+                  <%= label_tag t("job_offer.start_date") %>
+                  <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :class => 'datepicker form-control'%>
               </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <%= label_tag :end_date %>
-                </div>
-                <div class="col-md-7">
-                  <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker'%>
-                </div>
+              <div class="form-group">
+                  <%= label_tag t("job_offer.end_date") %>
+                  <%= text_field_tag :end_date, params.fetch(:end_date, ''), :class => 'datepicker form-control'%>
               </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <%= label_tag :time_effort %>
+              <div class="form-group">
+                  <%= label_tag t("job_offer.time_effort") %>
+                  <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :class => "form-control" %>
                 </div>
-                <div class="col-md-7">
-                  <%= text_field_tag :time_effort, params.fetch(:time_effort, '') %>
+              <div class="form-group">
+                  <%= label_tag t("job_offer.compensation") %>
+                  <%= text_field_tag :compensation, params.fetch(:compensation, ''), :class => "form-control" %>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <%= label_tag :compensation %>
-                </div>
-                <div class="col-md-7">
-                  <%= text_field_tag :compensation, params.fetch(:compensation, '') %>
-                </div>
-              </div>
-              <div class="col-md-3 offset9">
-              <%= submit_tag "Filter", :class => "btn default" %>
+              <div class="form-group">
+              <%= submit_tag t("job_offers.filterButton"), :class => "btn btn-default" %>
               </div>
             <% end %>
-          </li>
-        </ul>
       </div><!--/.well -->
     </div> <!-- /container -->
 
@@ -129,10 +98,4 @@
   </div> <!-- /span -->  
 
 </div> <!-- /row -->
-
-<div class="row">
-  <div class="col-md-8">
-    <%= link_to 'New Job offer', new_job_offer_path, :class => "btn btn-success pull-right", :style => "color: white; margin-top: 20px"%>
-  </div>
-</div>
 

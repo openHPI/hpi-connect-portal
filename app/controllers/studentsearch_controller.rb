@@ -4,7 +4,7 @@ class StudentsearchController < ApplicationController
         if params.include?( :q) and params[:q] != ''
                 @query = params[:q]
                 param = "%#{@query.downcase}%"
-                result = Student.searchStudent(param)
+                result = Student.search_student(param)
                 #Optimierungspotiential Could catch empty querrystrings
                 #Have not done this to provide better readable code 
         end
@@ -14,9 +14,9 @@ class StudentsearchController < ApplicationController
                 |name|
 
                     if result
-                        result = (result &  Student.searchStudentsByLanguage(name))        
+                        result = (result &  Student.search_students_by_language(name))        
                     else
-                        result = Student.searchStudentsByLanguage(name)
+                        result = Student.search_students_by_language(name)
                     end
             }
         end
@@ -25,9 +25,9 @@ class StudentsearchController < ApplicationController
             params["ProgrammingLanguage"].each{
                 |name|
                     if result
-                        result = result & Student.searchStudentsByProgrammingLanguage(name)
+                        result = result & Student.search_students_by_programming_language(name)
                     else
-                        result = Student.searchStudentsByProgrammingLanguage(name)
+                        result = Student.search_students_by_programming_language(name)
                     end
             }
         end
@@ -41,13 +41,13 @@ class StudentsearchController < ApplicationController
                     |str|
                         int = str.to_i
                         if int > 0 and int < 20
-                            studentForSemester = studentForSemester + Student.where(semester: int)
+                            student_for_semester = student_for_semester + Student.where(semester: int)
                         end
                 }
             if result    
-                result = result & studentForSemester  
+                result = result & student_for_semester  
             else
-                result = studentForSemester
+                result = student_for_semester
             end
         end
         if not result

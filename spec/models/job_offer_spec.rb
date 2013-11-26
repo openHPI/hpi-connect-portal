@@ -44,19 +44,18 @@ describe JobOffer do
 
 	it "returns job offers sorted by start_date" do
 		    
-		FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
-		FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2))
-		FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1))
-		FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1))
-		FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), created_at: Date.new(2013, 2,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), created_at: Date.new(2013,10,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,1,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), created_at: Date.new(2013,7,1))
+		FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,4,1))
 
 		sorted_job_offers = JobOffer.sort "date"
 		(sorted_job_offers).each_with_index do |offer, index|
 
-			 if sorted_job_offers.length == (index + 1)	
-			 	break
-			 end
-			offer.start_date.should <= sorted_job_offers[index+1].start_date
+			 if !sorted_job_offers.length == (index + 1)	
+			 	offer.created_at.should <= sorted_job_offers[index+1].created_at
+			 end		
 		end
 	end
 

@@ -23,7 +23,7 @@ describe StudentsController do
   # This should return the minimal set of attributes required to create a valid
   # Student. As you add validations to Student, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "first_name" => "MyString" } }
+  let(:valid_attributes) { { "first_name" => "Jane", "last_name" => "Doe" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -154,6 +154,25 @@ describe StudentsController do
       student = Student.create! valid_attributes
       delete :destroy, {:id => student.to_param}, valid_session
       response.should redirect_to(students_url)
+    end
+  end
+
+  describe "GET matching" do
+    it "finds all students with the requested programming language and language" do
+      java = ProgrammingLanguage.new(:name => 'Java')
+      php = ProgrammingLanguage.new(:name => 'php')
+      german = Language.new(:name => 'German')
+      english = Language.new(:name => 'English')
+
+      FactoryGirl.create(:student, programming_languages: [java, php], languages: [german])
+      FactoryGirl.create(:student, programming_languages: [java], languages: [german, english])
+      FactoryGirl.create(:student, programming_languages: [php], languages: [german])
+      FactoryGirl.create(:student, programming_languages: [php], languages: [english])
+      FactoryGirl.create(:student, programming_languages: [java, php], languages: [german, english])
+
+      students = Student.search_students_by_language_and_programming_language(["german"], ["Java"])
+      get :matching, ({:languages => ["German"], :programming_languages => ["java"]}), valid_session
+      assigns(:students).should eq(students)
     end
   end
 

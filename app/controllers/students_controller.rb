@@ -61,6 +61,12 @@ class StudentsController < ApplicationController
     end
   end
 
+  # GET /students/matching
+  def matching 
+    @students = Student.search_students_by_language_and_programming_language(params[:languages], params[:programming_languages])
+    render "index"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
