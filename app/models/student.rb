@@ -6,9 +6,12 @@ class Student < ActiveRecord::Base
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+    validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
     has_attached_file 	:cv,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+	validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
     def self.search_student(string)
     	string = string.downcase
