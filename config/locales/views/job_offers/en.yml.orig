@@ -10,10 +10,13 @@ en:
     new_job_offer: "New Job Offer"
     edit_job_offer: "Editing Job Offer"
     show_matching_students: "Show Matching Students"
+<<<<<<< HEAD
+    archive: "Archive"
+=======
     find_jobs_button: "Go!"
     search_term: "search term"
     time_effort: "in hours/week"
     compensation: "in €/hour"
     start_date: "starting at the earliest"
     end_date: "finishing at the latest"
-    archive: "Archive"
+>>>>>>> origin/develop-ja-sort-search-filter
