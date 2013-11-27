@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
+	<div class="col-md-8"> 
+	<div class="row">
 	<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
   <p>
 		<strong>Name:</strong>
@@ -19,5 +21,12 @@
 
   <%= link_to 'Edit', edit_chair_path(@chair) %> |
   <%= link_to 'Back', chairs_path %>
+  </div>
+	<div class="row">
+  			<h2> Assigned Jobs </h2> 
+  			<%= render 'shared/overview' %>
+	</div><!--/.row -->
+ </div>
+<%= render 'shared/sort_filter_search'  %>
+</div> <!-- /row -->
 
-</div>

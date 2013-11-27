@@ -10,6 +10,9 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show	
+    @job_offers=JobOffer.all
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    @chairs=[@chair.name]
   end
 
   # GET /chairs/new
