@@ -5,8 +5,11 @@ HpiHiwiPortal::Application.routes.draw do
       get "sort"
       get "search"
       get "filter"
+<<<<<<< HEAD
       get "archive"
+=======
       get "find_jobs"
+>>>>>>> origin/develop-ja-sort-search-filter
     end
   end
 
