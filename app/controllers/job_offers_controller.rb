@@ -1,6 +1,6 @@
 class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
-  before_action :set_chairs, only: [:index, :find_jobs, :archive]
+  before_action :set_chairs, only: [:index, :find, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -104,7 +104,7 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
-  def find_jobs
+  def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
 

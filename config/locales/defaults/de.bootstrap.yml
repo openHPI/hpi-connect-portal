@@ -2,20 +2,19 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 de:
-  helpers:
-    actions: "Aktionen"
-    links:
-      back: "Zurück"
-      cancel: "Abbrechen"
-      confirm: "Sind sie sich sicher?"
-      destroy: "Löschen"
-      edit: "Editieren"
-      new: "Neu"
-      save: "Speichern"
-      show: "Anzeigen"
-      discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
-    titles:
-      edit: "%{model} editieren"
-      save: "%{model} speichern"
-      new: "Neues %{model}"
-      delete: "%{model} löschen"
+  actions: "Aktionen"
+  links:
+    back: "Zurück"
+    cancel: "Abbrechen"
+    confirm: "Sind sie sich sicher?"
+    destroy: "Löschen"
+    edit: "Editieren"
+    new: "Neu"
+    save: "Speichern"
+    show: "Anzeigen"
+    discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
+  titles:
+    edit: "%{model} editieren"
+    save: "%{model} speichern"
+    new: "Neues %{model}"
+    delete: "%{model} löschen"
