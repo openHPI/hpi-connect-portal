@@ -117,7 +117,6 @@ class JobOffersController < ApplicationController
                 :end_date => params[:end_date],
                 :time_effort => params[:time_effort],
                 :compensation => params[:compensation]}
-
     }) 
     render "index"
 

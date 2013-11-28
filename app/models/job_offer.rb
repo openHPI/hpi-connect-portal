@@ -33,7 +33,7 @@ class JobOffer < ActiveRecord::Base
             result = search(attributes[:search])
         end
 
-        if !attributes[:filter].blank?
+        if !attributes[:filter].empty?
             result = result.filter(attributes[:filter])
         end
 
