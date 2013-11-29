@@ -19,17 +19,13 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ChairsController do
-  before(:each) do
-    @user = User.new(:email => "max.mustermann@student.hpi.uni-potsdam.de", :identity_url => "https://openid.hpi.uni-potsdam.de/user/max.mustermann", :firstname => "Max", :lastname => "mustermann")
-    @user.save
-  end
 
 
   # This should return the minimal set of attributes required to create a valid
   # Chair. As you add validations to Chair, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", "head_of_chair" => @user } }
-  
+  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", 
+      "head_of_chair" => "Prof. Patrick Baudisch" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -98,8 +94,10 @@ describe ChairsController do
         # specifies that the Chair created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Chair.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", "head_of_chair" => @user })
-        put :update, {:id => chair.to_param, :chair => { "name" => "HCI", "description" => "Human Computer Interaction", "head_of_chair" => @user }}, valid_session
+        Chair.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", 
+              "head_of_chair" => "Prof. Patrick Baudisch" })
+        put :update, {:id => chair.to_param, :chair => { "name" => "HCI", "description" => "Human Computer Interaction", 
+              "head_of_chair" => "Prof. Patrick Baudisch" }}, valid_session
       end
 
       it "assigns the requested chair as @chair" do
@@ -115,11 +113,6 @@ describe ChairsController do
       end
     end
 
-  end
-
-
-  after(:each) do 
-    @user = nil
   end
 
 end

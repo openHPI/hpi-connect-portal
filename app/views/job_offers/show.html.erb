@@ -2,7 +2,7 @@
 	<span class="pull-left">
 		<%= link_to t("helpers.links.back"), job_offers_path, :class => "btn btn-default" %>
 	</span>
-  <% if @job_offer.status != "completed" %>
+  <% unless @job_offer.status == "completed" %>
   	<span class="pull-right">
       <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
   		<%= link_to t("helpers.links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 

@@ -15,8 +15,6 @@
 #
 
 class Chair < ActiveRecord::Base
-  	belongs_to :head_of_chair, :class_name => "User", foreign_key: :head_of_chair
-
   	has_attached_file :avatar, :styles => { :medium => "200x200" }, :default_url => "/images/:style/missing.png"
 
   	validates_attachment_size :avatar, :less_than => 5.megabytes
