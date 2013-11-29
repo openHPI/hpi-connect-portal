@@ -11,7 +11,7 @@
 #  avatar_content_type :string(255)
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
-#  head_of_chair       :integer
+#  head_of_chair       :string(255)      not null
 #
 
 require 'spec_helper'

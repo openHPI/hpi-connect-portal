@@ -13,14 +13,14 @@
 <%= link_to 'Edit', edit_job_offer_path(@job_offer) %> |
 <%= link_to 'Back', job_offers_path %>
 
-<% if signed_in? && !current_user.applied?(@job_offer) %>
+<% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
   <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
     <div><%= f.hidden_field :job_offer_id %></div>
     <%= f.submit 'Apply', class: 'btn btn-success apply-button' %>
   <% end %>
 <% end %>
 
-<% if @job_offer.applications.any? %>
+<% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
   <br /><br />
   <h4> Applications </h4>
   <table class="table">

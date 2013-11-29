@@ -15,4 +15,10 @@ describe "job_offers/show" do
     rendered.should match(/Description/)
     rendered.should match(/Title/)
   end
+
+  it "renders no applications if not signed in" do
+    render
+    rendered.should_not match(/Applications/)
+    rendered.should_not match(/Apply/)
+  end
 end

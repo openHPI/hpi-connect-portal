@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    redirect_back_or edit_user_path(resource)
+    edit_user_path(resource)
   end
 end

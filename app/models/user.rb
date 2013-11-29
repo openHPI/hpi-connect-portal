@@ -16,6 +16,7 @@
 #  is_student          :boolean
 #  lastname            :string(255)
 #  firstname           :string(255)
+#  role_id             :integer          default(1), not null
 #
 
 class User < ActiveRecord::Base
@@ -26,6 +27,7 @@ class User < ActiveRecord::Base
 
     has_many :applications
     has_many :job_offers, through: :applications
+    belongs_to :role
 
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
@@ -42,5 +44,17 @@ class User < ActiveRecord::Base
 
     def applied?(job_offer)
         applications.find_by_job_offer_id job_offer.id
+    end
+
+    def student?
+        role.name == 'Student'
+    end
+
+    def research_assistant?
+        role.name == 'Research Assistant'
+    end
+
+    def admin?
+        role.name == 'Admin'
     end
 end

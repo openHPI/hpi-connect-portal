@@ -16,6 +16,7 @@
 #  is_student          :boolean
 #  lastname            :string(255)
 #  firstname           :string(255)
+#  role_id             :integer          default(1), not null
 #
 
 require 'spec_helper'

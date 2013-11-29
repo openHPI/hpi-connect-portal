@@ -58,6 +58,9 @@ gem 'simple-navigation', '~> 3.11'
 gem 'devise', '~> 3.1'
 gem 'devise_openid_authenticatable'
 
+# authorizations in one place
+gem 'cancan'
+
 # simple http requests
 gem 'rest-client'
 
