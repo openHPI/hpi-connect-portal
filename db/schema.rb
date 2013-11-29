@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20131129103150) do
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
+    t.string   "room_number"
+    t.string   "status"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|

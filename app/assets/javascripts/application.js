@@ -11,10 +11,10 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require twitter/bootstrap
+//= require jquery.turbolinks
+//= require bootstrap/bootstrap
 //= require turbolinks
 //= require_tree .
 
@@ -22,3 +22,11 @@
  $(function() {
     $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy'});
   });
+
+ $(function(){
+    $('.field_with_errors').addClass('form-group has-error');
+});
+
+  $(function(){
+    $('#error_explanation').addClass('alert alert-danger block-message');
+});

@@ -10,95 +10,96 @@
       </ul>
     </div>
   <% end %>
-  
-  <div class="row">
-    <div class="span4 offset1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+          <div class="field">
+            <%= f.label t "job_offer.title" %><br>
+            <%= f.text_field :title, :class => "form-control"%>
+          </div>
+      </div>
+      <div class="col-md-6">
         <div class="field">
-          <%= f.label :title %><br>
-          <%= f.text_field :title %>
+          <%= f.label t "job_offer.chair" %><br>
+          <%= f.text_field :chair, :class => "form-control"%>
         </div>
-    </div>
-    <div class="span4">
-      <div class="field">
-        <%= f.label :chair %><br>
-        <%= f.text_field :chair %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span9 offset1">
-      <div class="field">
-        <%= f.label :description %><br>
-        <%= f.text_area :description, :rows => 10, :class => "span10", :placeholder => "Enter the description here" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span4 offset1">
-      <div class="field">
-        <%= f.label :start_date %><br>
-        <%= f.text_field  :start_date, :class => 'datepicker', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
       </div>
     </div>
 
-    <div class="span4">
-      <div class="field">
-        <%= f.label :end_date %><br>
-        <%= f.text_field :end_date, :class => 'datepicker', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span4 offset1">
-      <div class="field">
-        <%= f.label :time_effort %><br>
-        <%= f.text_field :time_effort, :placeholder => "in hours/week" %>
-      </div>
-    </div>
-    <div class="span4">
-      <div class="field">
-        <%= f.label :compensation %><br>
-        <%= f.text_field :compensation, :placeholder => "in €/hour" %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="span1"></div>
-    <div class="field">
-      <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
-      <% ProgrammingLanguage.all.each_with_index do |programming_language, index| 
-         if index == 5 %>
-      </div>
-      </div>
-      <div class="row">
-      <div class="span1"></div>
-      <div class="field">
-          <%end %>
-        <div class="span2">
-          <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language) %>
-          <%= label_tag dom_id(programming_language), programming_language.name %>
+    <div class="row">
+      <div class="col-md-11">
+        <div class="field">
+          <%= f.label t "job_offer.description" %><br>
+          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => "Enter the description here", :class => "form-control" %>
         </div>
-      <% end %>
+      </div>
     </div>
-  </div>
+
   <div class="row">
-    <div class="span1"></div>
-    <div class="field">
-      <%= hidden_field_tag "job_offer[language_ids][]", nil %>
-      <% Language.all.each do |language| %>
-        <div class="span2">
-          <%= check_box_tag "job_offer[language_ids][]", language.id, @job_offer.language_ids.include?(language.id), id: dom_id(language) %>
-          <%= label_tag dom_id(language), language.name %>
-        </div>
-      <% end %>
-
+      <div class="col-md-6">
+          <div class="field">
+            <%= f.label t "job_offer.room_number" %><br>
+            <%= f.text_field :room_number, :class => "form-control" %>
+          </div>
     </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit :class => "btn" %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label t "job_offer.start_date" %><br>
+          <%= f.text_field  :start_date, :class => 'datepicker form-control', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label t "job_offer.end_date" %><br>
+          <%= f.text_field :end_date, :class => 'datepicker form-control', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label t "job_offer.time_effort" %><br>
+          <%= f.text_field :time_effort, :placeholder => "in hours/week", :class => "form-control" %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="field">
+          <%= f.label t "job_offer.compensation" %><br>
+          <%= f.text_field :compensation, :placeholder => "in €/hour", :class => "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
+        <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
+          <div class="col-md-2">
+            <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
+            <%= label_tag dom_id(programming_language), programming_language.name %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <%= hidden_field_tag "job_offer[language_ids][]", nil %>
+        <% Language.all.each do |language| %>
+          <div class="col-md-2">
+            <%= check_box_tag "job_offer[language_ids][]", language.id, @job_offer.language_ids.include?(language.id), id: dom_id(language) %>
+            <%= label_tag dom_id(language), language.name %>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit t("helpers.links.save"), :class => "btn btn-default" %>
+    </div>
   </div>
 <% end %>

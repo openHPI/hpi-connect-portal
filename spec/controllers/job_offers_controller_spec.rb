@@ -23,8 +23,10 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30 } }
+  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30} }
+  let(:valid_attributes_with_status) {{"title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => "completed"}}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -36,6 +38,20 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :index, {}, valid_session
       assigns(:job_offers).should eq([job_offer])
+    end
+  end
+
+  describe "GET archive" do
+    it "assigns all archive job_offers as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes_with_status
+      get :archive, {}, valid_session
+      assigns(:job_offers).should eq([job_offer])
+    end
+
+    it "does not assign non-completed jobs" do
+      job_offer = JobOffer.create! valid_attributes
+      get :archive, {}, valid_session
+      assert assigns(:job_offers).empty?
     end
   end
 
@@ -89,6 +105,36 @@ describe JobOffersController do
       assigns(:job_offers).should eq(job_offers)
     end
 
+  end
+
+  describe "GET filer" do
+    it "assigns @job_offers to all job offers with the chait EPIC" do
+
+      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
+      FactoryGirl.create(:joboffer, chair: "EPIC")
+      FactoryGirl.create(:joboffer, chair: "Software Architecture")
+      FactoryGirl.create(:joboffer, chair: "Information Systems")
+      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+      job_offers = JobOffer.filter ({:chair => "EPIC"})
+      get :filter, ({:chair => "EPIC"}), valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
+  end
+
+  describe "GET search" do
+    it "assigns all job_offers with relevant title as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes
+      get :search, {:search => "open hpi"}, valid_session
+      assigns(:job_offers).should eq([job_offer])
+    end
+
+    it "assigns no job_offers with irrelevant title as @job_offers" do
+      job_offer = JobOffer.create! valid_attributes
+      get :search, {:search => "job hpi"}, valid_session
+      assigns(:job_offers).should eq([])
+    end
   end
 
   describe "POST create" do

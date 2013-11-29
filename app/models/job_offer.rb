@@ -2,17 +2,18 @@
 #
 # Table name: job_offers
 #
-#  id           :integer          not null, primary key
-#  description  :text
-#  title        :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  chair        :string(255)
-#  start_date   :date
-#  end_date     :date
-#  time_effort  :float
-#  compensation :float
-#
+#  id          :integer          not null, primary key
+#  description :string(255)
+#  title       :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  chair       :string(255)
+#  start_date  :datetime
+#  end_date    :datetime
+#  time_effort :float
+#  compensation:float
+#  room_number :string(255)
+
 
 class JobOffer < ActiveRecord::Base
 
@@ -25,12 +26,32 @@ class JobOffer < ActiveRecord::Base
     accepts_nested_attributes_for :languages
 
 	validates :title, :description, :chair, :start_date, :time_effort, :compensation, presence: true
+    validates :compensation, :time_effort, numericality: true
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
 
 
+    def self.find_jobs(attributes={})
+
+        result = all
+
+        if !attributes[:search].blank?
+            result = search(attributes[:search])
+        end
+
+        if !attributes[:filter].empty?
+            result = result.filter(attributes[:filter])
+        end
+
+        if !attributes[:sort].blank?
+            result = result.sort(attributes[:sort])
+        end
+
+        result
+    end
+
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
-			order(:start_date)
+			order(:created_at)
 		elsif order_attribute == "chair"
 			order(:chair)
 		end
@@ -43,68 +64,36 @@ class JobOffer < ActiveRecord::Base
 	end
 
 	def self.filter(options={})
-		all.filter_title(options[:title]).
-        filter_chair(options[:chair]).
-        filter_description(options[:description]).
+		filter_chair(options[:chair]).
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
         filter_time_effort(options[:time_effort]).
-        filter_compensation(options[:compensation])
+        filter_compensation(options[:compensation]).
+        filter_status(options[:status])
     end
 
-    def self.filter_title(title)
-    	if title.blank?
-    		all
-    	else
-    		where(:title => title.split(',').collect(&:strip))
-    	end
-    end
 
     def self.filter_chair(chair)
-    	if chair.blank?
-    		all
-    	else
-    		where(:chair => chair.split(',').collect(&:strip))
-    	end
+    	chair.blank? ? all : where(:chair => chair.split(',').collect(&:strip))             
     end
 
-    def self.filter_description(description)
-        if description.blank?
-            all
-        else
-            where(:description => description)
-        end
-    end        
-
     def self.filter_start_date(start_date)
-        if start_date.blank?
-            all
-        else
-            where('start_date > ?', Date.parse(start_date))
-        end
+        start_date.blank? ? all : where('start_date >= ?', Date.parse(start_date))
     end        
 
     def self.filter_end_date(end_date)
-        if end_date.blank?
-            all
-        else
-            where('end_date > ?', Date.parse(end_date))
-        end
+        end_date.blank? ? all : where('end_date <= ?', Date.parse(end_date))
     end
 
     def self.filter_time_effort(time_effort)
-        if time_effort.blank?
-            all
-        else
-            where('time_effort <= ?', time_effort.to_f)
-        end
+        time_effort.blank? ? all : where('time_effort <= ?', time_effort.to_f)
     end
 
     def self.filter_compensation(compensation)
-        if compensation.blank?
-            all
-        else
-            where('compensation >= ?', compensation.to_f)
-        end
+        compensation.blank? ? all : where('compensation >= ?', compensation.to_f)
+    end
+
+    def self.filter_status(status)
+        status.blank? ? all: where('status <= ?', status)
     end
 end

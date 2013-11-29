@@ -11,87 +11,76 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
-# JobOffer.delete_all
-# JobOffer.create(
-# 	:title => 'Supporting the lab operations of the chair',
-# 	:description => 'We want you to help in implementing a new modelling tool designed for embedded systems',
-# 	:chair => 'System Analysis and Modeling',
-# 	:start_date => Date.new(2013, 10, 1),
-# 	:end_date => Date.new(2014, 03, 31),
-# 	:time_effort => 7,
-# 	:compensation => 10,
-# 	:programming_languages_attributes => [
-# 											{:name => 'C'},
-# 											{:name => 'C++'},
-# 											{:name => 'Java'}])
-# JobOffer.create(
-# 	:title => "tele-Task developer", 
-# 	:description => "The Job includes the development of new features for tele-Task", 
-# 	:chair => "Internet-Technologien und -Systeme", 
-# 	:start_date => Date.new(2013,12,1), 
-# 	:time_effort => 10, 
-# 	:compensation => 11.50,
-# 	:programming_languages_attributes => [
-# 										{:name => 'Ruby'},])
+LanguagesStudent.delete_all
+ProgrammingLanguagesStudent.delete_all
 
-# JobOffer.create(
-# 	:title => "Touch floor", 
-# 	:description => "The student extends the functionality of the touch floor.", 
-# 	:chair => "Human Computer Interaction", 
-# 	:start_date => Date.new(2013,12,3), 
-# 	:time_effort => 6, 
-# 	:compensation => 11.50,
-# 	:programming_languages_attributes => [
-# 										{:name => 'C'},
-# 										{:name => 'C++'}])
+Language.delete_all
+Language.create([
+									{ name: 'Englisch'},
+									{ name: 'Deutsch'},
+									{ name: 'Spanisch'},
+									{ name: 'Französisch'},
+									{ name: 'Chinesisch'}
+])
 
+ProgrammingLanguage.delete_all
+ProgrammingLanguage.create([
+														{ name: 'Ruby'},
+														{ name: 'Java'},
+														{ name: 'C'},
+														{ name: 'C++'},
+														{ name: 'Python'},
+														{ name: 'Smalltalk'}
+])
 
-
-# Programming Languages should always be created in the context of job offers!
-# For this use the nested attribute syntax from the Example above!
-
-
-# ProgrammingLanguage.create(name: "C")
-# ProgrammingLanguage.create(name: "C++")
-# ProgrammingLanguage.create(name: "Java")
-# ProgrammingLanguage.create(name: "Javascript")
-# ProgrammingLanguage.create(name: "Python")
-# ProgrammingLanguage.create(name: "Ruby")
-# ProgrammingLanguage.create(name: "Smalltalk")
-
-
-
-languages = Language.create([{ name: 'Englisch'}, { name: 'Deutsch'}, { name: 'Spanisch'}, { name: 'Französisch'}, { name: 'Chinesisch'}])
-programming_languages = ProgrammingLanguage.create([{ name: 'Ruby'}, { name: 'Java'}, { name: 'C'}, { name: 'C++'}, { name: 'Python'}, { name: 'Smalltalk'}])
-
-
+JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
 	chair: 'Human Computer Interaction', 
-	start_date: '2013-11-10', 
+	status: 'completed',
+	start_date: '2013-11-01', 
 	time_effort: 6,
-	compensation: 11.50
+	compensation: 11.50,
+	languages: Language.where(:name => 'Deutsch'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
+}])
+
+JobOffer.create([{
+	title: "Website Developer", 
+	description: 'The student develops a wonderful website.', 
+	chair: 'Epic', 
+	status: 'completed',
+	start_date: '2013-10-01', 
+	time_effort: 9,
+	compensation: 13.50,
+	languages: Language.where(:name => 'Deutsch'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby'])
 }])
 
 JobOffer.create([{
 	title: "tele-Task developer", 
 	description: 'The Job includes the development of new features for tele-Task', 
 	chair: 'Internet-Technologien und -Systeme', 
-	start_date: '2013-11-10', 
-	time_effort: 6,
-	compensation: 11.50
+	start_date: '2013-11-11', 
+	time_effort: 10,
+	compensation: 12.00,
+	languages: Language.where(:name => ['Deutsch', 'English']), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java'])
 }])
 
 JobOffer.create([{
 	title: "Supporting the lab operations of the chair", 
-	description: 'We want you to help in implementing a new modelling tool designed for embedded systems', 
+	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
 	chair: 'System Analysis and Modeling', 
-	start_date: '2013-11-10', 
-	time_effort: 6,
-	compensation: 11.50
+	start_date: '2014-01-01', 
+	time_effort: 8,
+	compensation: 10.00,
+	languages: Language.where(:name => 'Deutsch'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk'])
 }])
 
+Student.delete_all
 Student.create([{
 	first_name: 'Dieter', 
 	last_name: 'Nuhr', 
@@ -105,8 +94,8 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: [languages.first], 
-	programming_languages: [programming_languages.first]
+	languages: Language.where(:name => 'English'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java'])
 }])
 
 Student.create([{
@@ -122,8 +111,8 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: [languages.last], 
-	programming_languages: [programming_languages.first]
+	languages: Language.where(:name => 'Deutsch'), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python'])
 }])
 
 Student.create([{
@@ -139,8 +128,8 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: [languages.first, languages.last], 
-	programming_languages: [programming_languages.first, programming_languages.last]
+	languages: Language.where(:name => ['Deutsch', 'English']), 
+	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
 }])
 
 Student.create([{
@@ -156,8 +145,8 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: languages, 
-	programming_languages: programming_languages
+	languages: Language.all, 
+	programming_languages: ProgrammingLanguage.all
 }])
 
 Student.create([{
@@ -173,6 +162,6 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: languages, 
-	programming_languages: programming_languages
+	languages: Language.all, 
+	programming_languages: ProgrammingLanguage.all
 }])

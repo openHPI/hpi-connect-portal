@@ -43,14 +43,17 @@ group :development, :test do
   gem 'codeclimate-test-reporter', :require => nil
 end
 
-#gem 'simplecov', :group => :test, :require => nil
+gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
 
 # basic layouting
-gem 'twitter-bootstrap-rails'
+# gem 'twitter-bootstrap-rails'
+
+#bootstrap 3
+gem 'bootstrap-rails-engine'
 
 # navigation
 gem 'simple-navigation', '~> 3.11'
