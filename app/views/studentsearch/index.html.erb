@@ -1,12 +1,14 @@
 <h1>Studenten durchsuchen</h1>
 
-<%= form_tag("", method: "get") do |f| %>
+<%= form_tag('',
+        :method => "get",
+        :class => "form-inline") do |f| %>
   <%# %= label_tag(:q, "Studenten durchsuchen:") %>
-  <%= text_field_tag(:q, @query) %>
-  <%= submit_tag("Suchen") %>
+  <%= text_field_tag(:q, @query, :class => "form-control") %>
+  <%= submit_tag("Suchen", :class => "btn btn-default") %>
   <br>
     <h2> Semester </h2>
-     <%= text_field_tag(:semester, @semester) %>
+    <%= text_field_tag(:semester, @semester) %>
 
     <h2>Sprachen</h2><br>
     <% for language in Language.all%>
