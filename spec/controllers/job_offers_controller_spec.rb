@@ -23,7 +23,8 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "description" => "MyString" } }
+  let(:valid_attributes) { { "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30 } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -59,6 +60,35 @@ describe JobOffersController do
       get :edit, {:id => job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(job_offer)
     end
+  end
+
+  describe "GET sort" do
+    it "assigns @job_offers all job offers sorted by date" do
+
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1))
+
+      job_offers = JobOffer.sort "date"
+      get :sort, {:sort_value => "date"}, valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
+    it "assigns @job_offers all job offers sorted by chair" do
+
+      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
+      FactoryGirl.create(:joboffer, chair: "EPIC")
+      FactoryGirl.create(:joboffer, chair: "Software Architecture")
+      FactoryGirl.create(:joboffer, chair: "Information Systems")
+      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+
+      job_offers = JobOffer.sort "chair"
+      get :sort, {:sort_value => "chair"}, valid_session
+      assigns(:job_offers).should eq(job_offers)
+    end
+
   end
 
   describe "POST create" do

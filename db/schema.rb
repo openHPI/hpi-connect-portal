@@ -38,10 +38,51 @@ ActiveRecord::Schema.define(version: 20131129103150) do
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
 
   create_table "job_offers", force: true do |t|
-    t.string   "description"
+    t.text     "description"
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "chair"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.float    "time_effort"
+    t.float    "compensation"
+  end
+
+  create_table "job_offers_languages", id: false, force: true do |t|
+    t.integer "job_offer_id"
+    t.integer "language_id"
+  end
+
+  add_index "job_offers_languages", ["job_offer_id", "language_id"], name: "jo_l_index", unique: true, using: :btree
+
+  create_table "job_offers_programming_languages", id: false, force: true do |t|
+    t.integer "job_offer_id"
+    t.integer "programming_language_id"
+  end
+
+  add_index "job_offers_programming_languages", ["job_offer_id", "programming_language_id"], name: "jo_pl_index", unique: true, using: :btree
+
+  create_table "languages", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "languages_students", force: true do |t|
+    t.integer "student_id"
+    t.integer "language_id"
+  end
+
+  create_table "programming_languages", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "programming_languages_students", force: true do |t|
+    t.integer "student_id"
+    t.integer "programming_language_id"
   end
 
   create_table "roles", force: true do |t|
@@ -49,6 +90,31 @@ ActiveRecord::Schema.define(version: 20131129103150) do
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "semester"
+    t.string   "academic_program"
+    t.date     "birthday"
+    t.text     "education"
+    t.text     "additional_information"
+    t.string   "homepage"
+    t.string   "github"
+    t.string   "facebook"
+    t.string   "xing"
+    t.string   "linkedin"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "cv_file_name"
+    t.string   "cv_content_type"
+    t.integer  "cv_file_size"
+    t.datetime "cv_updated_at"
   end
 
   create_table "users", force: true do |t|

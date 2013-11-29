@@ -1,27 +1,60 @@
-<p id="notice"><%= notice %></p>
+<div class="row-fluid span9">
+	<span class="pull-left">
+		<%= link_to 'Back', job_offers_path, :class => "btn" %>
+	</span>
+	<span class="pull-right">
+		<%= link_to 'Edit', edit_job_offer_path(@job_offer), :class => "btn btn-primary" %> 
+    <%= link_to 'Destroy', job_offer_path(@job_offer), :confirm => 'Are you sure you want to destroy your account?', :method => :delete, :class => "btn btn-danger" %>
+	</span>
+	
+	<br><br>
 
-<p>
-  <strong>Description:</strong>
-  <%= @job_offer.description %>
-</p>
+  <div class="panel">
+    <h1>
+      <%= @job_offer.title %>
+    </h1>
 
-<p>
-  <strong>Title:</strong>
-  <%= @job_offer.title %>
-</p>
+    <dl>
+      <dt>Description:</dt>
+      <dd> <%= @job_offer.description %></dd>
 
-<%= link_to 'Edit', edit_job_offer_path(@job_offer) %> |
-<%= link_to 'Back', job_offers_path %>
+      <dt>Chair:</dt>
+      <dd> <%= @job_offer.chair %></dd>
 
-<% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
-  <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
-    <div><%= f.hidden_field :job_offer_id %></div>
-    <%= f.submit 'Apply', class: 'btn btn-success apply-button' %>
-  <% end %>
-<% end %>
+      <dt>Start Date:</dt>
+      <dd> <%= @job_offer.start_date %></dd>
+
+      <dt>End Date:</dt>
+      <dd> <%= @job_offer.end_date %></dd>
+
+      <dt>Time Effort:</dt>
+      <dd> <%= @job_offer.time_effort %></dd>
+
+      <dt>Compensation:</dt>
+      <dd> <%= @job_offer.compensation %></dd>
+
+      <dt>Programming Languages:</dt>
+      <% @job_offer.programming_languages.each do |programming_language| %>
+        <dd><%= programming_language.name %></dd>
+      <% end %>
+
+      <dt>Languages:</dt>
+      <% @job_offer.languages.each do |language| %>
+        <dd><%= language.name %></dd>
+      <% end %>
+
+    </dl>
+    <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+      <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
+        <div><%= f.hidden_field :job_offer_id %></div>
+        <%= f.submit 'Apply', class: 'btn btn-success apply-button' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 <% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
-  <br /><br />
+  <div class="clearfix"></div>
   <h4> Applications </h4>
   <table class="table">
     <thead>

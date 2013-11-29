@@ -1,6 +1,23 @@
 HpiHiwiPortal::Application.routes.draw do
+
+  resources :job_offers do    
+    collection do
+      get "sort"
+      get "search"
+      get "filter"
+    end
+  end
   
+  resources :programming_languages
+
+  resources :languages
+
+  resources :students
+
+  resources :studentsearch
+
   resources :chairs
+
   resources :job_offers
   resources :users, only: [:edit, :update]
   resources :applications, only: [:create]

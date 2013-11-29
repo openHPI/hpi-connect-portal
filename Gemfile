@@ -17,7 +17,7 @@ gem 'uglifier', '~> 2.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '~> 0.12.0', platforms: :ruby 
+gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -40,13 +40,14 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
   gem 'factory_girl_rails', :require => false
-  #gem 'codeclimate-test-reporter', :require => nil
+  gem 'codeclimate-test-reporter', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+#gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
+gem 'newrelic_rpm', group: :production
 
 # basic layouting
 gem 'twitter-bootstrap-rails'
@@ -55,6 +56,7 @@ gem 'twitter-bootstrap-rails'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
+
 gem 'devise', '~> 3.1'
 gem 'devise_openid_authenticatable'
 
@@ -65,10 +67,22 @@ gem 'cancan'
 gem 'rest-client'
 
 # command line parsing for project registration
-gem 'highline'
+gem "highline"
 
-#picture uploads
-gem 'paperclip', :git => 'http://github.com/thoughtbot/paperclip.git'
+#For picture Upload
+gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
+
+# add some more UI controls
+gem 'jquery-ui-rails'
+
+# load jQuery fast without refresh
+gem 'jquery-turbolinks'
+
+# a Helper to validate dates
+gem 'validates_timeliness', '~> 3.0'
 
 # simplify rspec integration testing
 gem 'capybara'
+
+#factory girl
+gem 'factory_girl'

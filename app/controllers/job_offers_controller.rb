@@ -4,7 +4,8 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @job_offers = JobOffer.all
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    @job_offers = JobOffer.order("created_at")
   end
 
   # GET /job_offers/1
@@ -15,17 +16,20 @@ class JobOffersController < ApplicationController
   # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # GET /job_offers/1/edit
   def edit
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # POST /job_offers
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
-
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
@@ -59,6 +63,42 @@ class JobOffersController < ApplicationController
     end
   end
 
+  # GET /job_offers/sort
+  def sort
+     @radio_button_sort_value = {"date" => false, "chair" => false}
+     sort_value =  params.require(:sort_value)
+     logger.warn(sort_value)
+     @radio_button_sort_value[sort_value] = true
+     logger.warn(@radio_button_sort_value)
+
+     @job_offers = JobOffer.sort sort_value
+     render "index"
+  end
+
+
+  # GET /job_offers/search
+  def search
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    @job_offers = JobOffer.search params[:search]
+    render "index"
+  end
+
+  # GET /job_offers/filter
+  def filter
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+
+    @job_offers = JobOffer.filter({
+                                    :title => params[:title],
+                                    :chair => params[:chair], 
+                                    :description => params[:description],
+                                    :start_date => params[:start_date],
+                                    :end_date => params[:end_date],
+                                    :time_effort => params[:time_effort],
+                                    :compensation => params[:compensation]})
+    
+     render "index"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
@@ -67,7 +107,8 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title)
+      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+        {:language_ids => []})
     end
     
     def render_errors_and_redirect_to(object, target, format)

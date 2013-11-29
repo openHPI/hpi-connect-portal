@@ -1,3 +1,52 @@
 // Place all the styles related to the JobOffers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.panel {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.jobList_top{
+	border-left: darkgrey 1px solid;
+	border-right: darkgrey 1px solid;
+	border-top: darkgrey 1px solid;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.jobList_middle{
+	border-left: darkgrey 1px solid;
+	border-right: darkgrey 1px solid;
+	border-top: darkgrey 1px solid;
+}
+
+.jobList_bottom{
+	border: darkgrey 1px solid;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.jobList_single{
+	border: darkgrey 1px solid;
+	border-radius: 10px;
+}
+
+.startDate {
+	text-align: right;
+	margin-top: 10px;
+	margin-right: 5px;
+}
+
+input[type="text"] {
+	width: auto;
+}
+
+.filter label {
+	margin-top:5px;
+}
