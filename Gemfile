@@ -85,3 +85,7 @@ gem 'capybara'
 
 #factory girl
 gem 'factory_girl'
+
+gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
+
+gem 'simple_form'

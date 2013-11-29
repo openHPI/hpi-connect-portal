@@ -1,4 +1,4 @@
-<%= form_for @student, :html => { :multipart => true }  do |f| %>
+<%= simple_form_for @student, :html => { :multipart => true }  do |f| %>
   <% if @student.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
@@ -18,6 +18,10 @@
   <div class="field">
     <%= f.label :last_name %><br>
     <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.input :status, label: false, default: 1 %>
   </div>
   <div class="field">
     <%= f.label :semester %><br>
