@@ -26,19 +26,20 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
-    programming_languages = params[:programming_languages]
-    programming_languages.each do |programming_language_id, skill|
-      programming_language_student = ProgrammingLanguagesStudent.new
-      programming_language_student.student_id = params[:id]
-      programming_language_student.programming_language_id = programming_language_id
-      programming_language_student.skill = skill
-      programming_language_student.save
-    end
-    
     @student = Student.new(student_params)
-
     respond_to do |format|
       if @student.save
+        if params[:programming_languages]
+        debugger
+          programming_languages = params[:programming_languages]
+          programming_languages.each do |programming_language_id, skill|
+            programming_language_student = ProgrammingLanguagesStudent.new
+            programming_language_student.student_id = @student.id
+            programming_language_student.programming_language_id = programming_language_id
+            programming_language_student.skill = skill
+            programming_language_student.save
+          end
+        end
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render action: 'show', status: :created, location: @student }
       else
@@ -52,18 +53,20 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1.json
   def update
     debugger
-    programming_languages = params[:programming_languages]
-    programming_languages.each do |programming_language_id, skill|
-      pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(params[:id],programming_language_id)
-      if pl
-        pl.update_attributes(:skill => skill)
-      else
-        programming_language_student = ProgrammingLanguagesStudent.new
-        programming_language_student.student_id = params[:id]
-        programming_language_student.programming_language_id = programming_language_id
-        programming_language_student.skill = skill
-        programming_language_student.save
-      end 
+    if params[:programming_languages]
+      programming_languages = params[:programming_languages]
+      programming_languages.each do |programming_language_id, skill|
+        pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(params[:id],programming_language_id)
+        if pl
+          pl.update_attributes(:skill => skill)
+        else
+          programming_language_student = ProgrammingLanguagesStudent.new
+          programming_language_student.student_id = params[:id]
+          programming_language_student.programming_language_id = programming_language_id
+          programming_language_student.skill = skill
+          programming_language_student.save
+        end 
+      end
     end
     respond_to do |format|
       if @student.update(student_params)

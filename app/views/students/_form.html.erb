@@ -10,7 +10,6 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= f.label :first_name %><br>
     <%= f.text_field :first_name %>
@@ -70,19 +69,21 @@
       <%# Erstelle ein Label für jede Programmiersprache %>
       <%= f2.label programming_language.name %>
       <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung für die Programmierspr. gibt %>
+      <% if !@student.new_record? %>
       <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
+      <% end %>
       <%# Erzeuge 5 radio buttons für die Sterne %>
       <% (1..5).each do |i| %>
         <%# Falls es eine Angabe gibt, überprüfe, ob der aktuelle Stern der Angabe enspricht %>
         <% if pl %>
           <% if i == pl.skill %>
-            <%= f2.radio_button programming_language.id, i+1, :checked => "checked", :class=>"star" %>
+            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
           <% else %>
-            <%= f2.radio_button programming_language.id, i+1, :class=>"star" %>
+            <%= f2.radio_button programming_language.id, i, :class=>"star" %>
           <% end %>
         <%# Erzeuge sonst einen unchecked radio button %>
         <% else %>
-          <%= f2.radio_button programming_language.id, i+1, :class=>"star" %>
+          <%= f2.radio_button programming_language.id, i, :class=>"star" %>
         <% end %>
       <% end %>
         <br>
