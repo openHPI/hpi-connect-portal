@@ -51,6 +51,18 @@ describe "Job Offer pages" do
 
         it { should_not have_button('Apply') }
         it { should have_selector('h4', text: 'Applications') }
+
+        #it { should_not have_button('Accept') }
+        #it { should_not have_button('Decline') }
+
+        describe "and beeing the deputy" do
+          before do
+            # update th deputy of the offers chair to point to the research assistant
+          end
+
+          it { should have_button('Accept') }
+          it { should have_button('Decline') }
+        end
       end
     end
   end

@@ -12,10 +12,14 @@
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
 #  head_of_chair       :string(255)      not null
+#  deputy_id           :integer
+#  user_id             :integer
 #
 
 class Chair < ActiveRecord::Base
   	has_attached_file :avatar, :styles => { :medium => "200x200" }, :default_url => "/images/:style/missing.png"
+
+    belongs_to :deputy, :class_name => "User"
 
   	validates_attachment_size :avatar, :less_than => 5.megabytes
   	validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
@@ -23,4 +27,5 @@ class Chair < ActiveRecord::Base
 	validates :name, presence: true, uniqueness: true
 	validates :description, presence: true
 	validates :head_of_chair, presence: true
+    validates :deputy, presence: true
 end

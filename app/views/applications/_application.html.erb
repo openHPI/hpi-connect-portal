@@ -2,4 +2,15 @@
     <td><%= application.user.firstname %></td>
     <td><%= application.user.lastname %></td>
     <td><%= application.user.email %></td>
+    
+    <%# if signed_in? %>
+
+    <%# if @job_offer.chair.deputy == current_user %>
+    <td><button class="btn btn-danger">Decline</button></td>
+    <td><button class="btn btn-success">Accept</button></td>
+
+    <%# end %>
+
+    <%# end %>
+
 </tr>

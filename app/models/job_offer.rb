@@ -2,18 +2,19 @@
 #
 # Table name: job_offers
 #
-#  id          :integer          not null, primary key
-#  description :string(255)
-#  title       :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  chair       :string(255)
-#  start_date  :datetime
-#  end_date    :datetime
-#  time_effort :float
-#  compensation:float
-#  room_number :string(255)
-
+#  id           :integer          not null, primary key
+#  description  :text
+#  title        :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  chair        :string(255)
+#  start_date   :date
+#  end_date     :date
+#  time_effort  :float
+#  compensation :float
+#  room_number  :string(255)
+#  status       :string(255)
+#
 
 class JobOffer < ActiveRecord::Base
 

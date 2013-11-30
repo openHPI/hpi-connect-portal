@@ -25,6 +25,7 @@ class ChairsController < ApplicationController
   # POST /chairs.json
   def create
     @chair = Chair.new(chair_params)
+    
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
@@ -59,6 +60,6 @@ class ChairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chair_params
-      params.require(:chair).permit(:name, :description, :avatar, :head_of_chair)
+      params.require(:chair).permit(:name, :description, :avatar, :head_of_chair, :deputy_id)
     end
 end

@@ -12,6 +12,8 @@
 #  end_date     :date
 #  time_effort  :float
 #  compensation :float
+#  room_number  :string(255)
+#  status       :string(255)
 #
 
 FactoryGirl.define do
