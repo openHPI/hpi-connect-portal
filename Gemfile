@@ -86,7 +86,6 @@ gem 'capybara'
 #factory girl
 gem 'factory_girl'
 
-#rating
+gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
-
-gem 'debugger'
+gem 'simple_form'

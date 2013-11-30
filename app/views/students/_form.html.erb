@@ -1,4 +1,4 @@
-<%= form_for @student, :html => { :multipart => true }  do |f| %>
+<%= simple_form_for @student, :html => { :multipart => true }  do |f| %>
   <% if @student.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
@@ -17,6 +17,10 @@
   <div class="field">
     <%= f.label :last_name %><br>
     <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.input :status, label: false, default: 1 %>
   </div>
   <div class="field">
     <%= f.label :semester %><br>
@@ -65,28 +69,30 @@
   <div class="field">
     <%= f.label :programming_languages %><br>
     <%= fields_for :programming_languages do |f2| %>
-      <% @all_programming_languages.each do |programming_language| %>
-      <%# Erstelle ein Label für jede Programmiersprache %>
-      <%= f2.label programming_language.name %>
-      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung für die Programmierspr. gibt %>
-      <% if !@student.new_record? %>
-      <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
-      <% end %>
-      <%# Erzeuge 5 radio buttons für die Sterne %>
-      <% (1..5).each do |i| %>
-        <%# Falls es eine Angabe gibt, überprüfe, ob der aktuelle Stern der Angabe enspricht %>
-        <% if pl %>
-          <% if i == pl.skill %>
-            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+      <% if @all_programming_languages %>
+        <% @all_programming_languages.each do |programming_language| %>
+        <%# Erstelle ein Label für jede Programmiersprache %>
+        <%= f2.label programming_language.name %>
+        <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung für die Programmierspr. gibt %>
+        <% if !@student.new_record? %>
+        <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
+        <% end %>
+        <%# Erzeuge 5 radio buttons für die Sterne %>
+        <% (1..5).each do |i| %>
+          <%# Falls es eine Angabe gibt, überprüfe, ob der aktuelle Stern der Angabe enspricht %>
+          <% if pl %>
+            <% if i == pl.skill %>
+              <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+            <% else %>
+              <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+            <% end %>
+          <%# Erzeuge sonst einen unchecked radio button %>
           <% else %>
             <%= f2.radio_button programming_language.id, i, :class=>"star" %>
           <% end %>
-        <%# Erzeuge sonst einen unchecked radio button %>
-        <% else %>
-          <%= f2.radio_button programming_language.id, i, :class=>"star" %>
         <% end %>
-      <% end %>
         <br>
+        <% end %>
       <% end %>
     <% end %>
   </div>

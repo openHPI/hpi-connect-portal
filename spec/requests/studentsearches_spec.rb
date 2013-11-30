@@ -1,28 +1,33 @@
 require 'spec_helper'
 describe "Studentsearches" do
     before :all do
+        ruby = ProgrammingLanguage.new(:name => 'Ruby')
         @student1 = FactoryGirl.create(:student,
             :first_name => 'Alexander',
             :last_name  => 'Zeier',
-            :education => 'SAP'
+            :education => 'SAP',
+            :programming_languages => [ruby]
         )
 
         @student2 = FactoryGirl.create(:student,
             :first_name => 'Maria',
             :last_name  => 'Müller',
-            :education => 'SAP'
+            :education => 'SAP',
+            :programming_languages => [ruby]
         )
 
         @student3 = FactoryGirl.create(:student,
             :first_name => 'Rafael',
             :last_name  => 'Althofer',
-            :education => 'Telekom'
+            :education => 'Telekom',
+            :programming_languages => [ruby]
         )
 
         @student4 = FactoryGirl.create(:student,
             :first_name => 'Sara',
             :last_name  => 'Müller',
-            :education => 'Telekom'
+            :education => 'Telekom',
+            :programming_languages => [ruby]
         )
     end
 

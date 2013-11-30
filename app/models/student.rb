@@ -17,6 +17,8 @@ class Student < ActiveRecord::Base
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
 	validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
+    enumerate :status
+
     def self.search_student(string)
     	string = string.downcase
         search_results = Student.where("
