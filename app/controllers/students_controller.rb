@@ -30,7 +30,6 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.save
         if params[:programming_languages]
-        debugger
           programming_languages = params[:programming_languages]
           programming_languages.each do |programming_language_id, skill|
             programming_language_student = ProgrammingLanguagesStudent.new
@@ -52,7 +51,6 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    debugger
     if params[:programming_languages]
       programming_languages = params[:programming_languages]
       programming_languages.each do |programming_language_id, skill|
