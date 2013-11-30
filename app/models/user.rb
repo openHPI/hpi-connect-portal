@@ -17,6 +17,7 @@
 #  lastname            :string(255)
 #  firstname           :string(255)
 #  role_id             :integer          default(1), not null
+#  chair_id            :integer
 #
 
 class User < ActiveRecord::Base
@@ -28,6 +29,7 @@ class User < ActiveRecord::Base
     has_many :applications
     has_many :job_offers, through: :applications
     belongs_to :role
+    belongs_to :chair
 
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
