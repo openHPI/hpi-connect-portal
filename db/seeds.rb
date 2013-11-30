@@ -6,6 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Create Standard Roles
+Role.create(name: 'Student', level: 1)
+Role.create(name: 'Research Assistant', level: 2)
+Role.create(name: 'Admin', level: 3)
 
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all

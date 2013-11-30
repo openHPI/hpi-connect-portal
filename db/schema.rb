@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129161749) do
+ActiveRecord::Schema.define(version: 20131130121524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "job_offer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "chairs", force: true do |t|
     t.string   "name"
@@ -26,6 +33,7 @@ ActiveRecord::Schema.define(version: 20131129161749) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "head_of_chair",       null: false
+    t.integer  "deputy_id"
   end
 
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
@@ -81,6 +89,13 @@ ActiveRecord::Schema.define(version: 20131129161749) do
     t.integer "skill"
   end
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -121,6 +136,8 @@ ActiveRecord::Schema.define(version: 20131129161749) do
     t.boolean  "is_student"
     t.string   "lastname"
     t.string   "firstname"
+    t.integer  "role_id",             default: 1,  null: false
+    t.integer  "chair_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -20,12 +20,13 @@ require 'spec_helper'
 
 describe ChairsController do
 
+  let(:deputy) { FactoryGirl.create(:user) }
 
   # This should return the minimal set of attributes required to create a valid
   # Chair. As you add validations to Chair, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", 
-      "head_of_chair" => "Prof. Patrick Baudisch" } }
+      "head_of_chair" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -82,8 +83,6 @@ describe ChairsController do
         response.should redirect_to(Chair.last)
       end
     end
-
-    
   end
 
   describe "PUT update" do
@@ -95,9 +94,9 @@ describe ChairsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Chair.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", 
-              "head_of_chair" => "Prof. Patrick Baudisch" })
+              "head_of_chair" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id.to_s })
         put :update, {:id => chair.to_param, :chair => { "name" => "HCI", "description" => "Human Computer Interaction", 
-              "head_of_chair" => "Prof. Patrick Baudisch" }}, valid_session
+              "head_of_chair" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id }}, valid_session
       end
 
       it "assigns the requested chair as @chair" do

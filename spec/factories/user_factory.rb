@@ -20,23 +20,11 @@
 #  chair_id            :integer
 #
 
-require 'spec_helper'
-
-describe User do
-  before(:each) do
-    @user = User.create
-  end
-
-  subject { @user }
-
-  describe 'applying' do
-    before do
-      @job_offer = FactoryGirl.create(:joboffer)
-      @application = Application.create(user: @user, job_offer: @job_offer)
-    end
-
-    it { should be_applied(@job_offer) }
-    its(:applications) { should include(@application) }
-    its(:job_offers) { should include(@job_offer) }
+FactoryGirl.define do
+  factory :user do
+    sequence(:firstname)  { |n| "User #{n}" }
+    sequence(:lastname)  { |n| "the #{n} of his kind" }
+    sequence(:email) { |n| "user_#{n}@example.com" } 
+    sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
   end
 end
