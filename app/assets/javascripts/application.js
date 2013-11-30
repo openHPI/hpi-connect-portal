@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.turbolinks
+//= require jquery-star-rating
 //= require bootstrap/bootstrap
 //= require turbolinks
 //= require_tree .

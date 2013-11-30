@@ -14,16 +14,27 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
+    @all_programming_languages = ProgrammingLanguage.all
     @student = Student.new
   end
 
   # GET /students/1/edit
   def edit
+    @all_programming_languages = ProgrammingLanguage.all
   end
 
   # POST /students
   # POST /students.json
   def create
+    programming_languages = params[:programming_languages]
+    programming_languages.each do |programming_language_id, skill|
+      programming_language_student = ProgrammingLanguagesStudent.new
+      programming_language_student.student_id = params[:id]
+      programming_language_student.programming_language_id = programming_language_id
+      programming_language_student.skill = skill
+      programming_language_student.save
+    end
+    
     @student = Student.new(student_params)
 
     respond_to do |format|
@@ -40,6 +51,20 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
+    debugger
+    programming_languages = params[:programming_languages]
+    programming_languages.each do |programming_language_id, skill|
+      pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(params[:id],programming_language_id)
+      if pl
+        pl.update_attributes(:skill => skill)
+      else
+        programming_language_student = ProgrammingLanguagesStudent.new
+        programming_language_student.student_id = params[:id]
+        programming_language_student.programming_language_id = programming_language_id
+        programming_language_student.skill = skill
+        programming_language_student.save
+      end 
+    end
     respond_to do |format|
       if @student.update(student_params)
         format.html { redirect_to @student, notice: 'Student was successfully updated.' }
@@ -75,6 +100,7 @@ class StudentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
-      params.require(:student).permit(:first_name, :last_name, :semester, :academic_program, :birthday, :education, :additional_information, :homepage, :github, :facebook, :xing, :photo, :cv, :linkedin, :language_ids => [], :programming_language_ids => [])
+      params.require(:student).permit(:first_name, :last_name, :semester, :academic_program, :birthday, :education, :additional_information, :homepage, :github, :facebook, :xing, :photo, :cv, :linkedin, :language_ids => [])
     end
+
 end

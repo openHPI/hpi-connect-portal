@@ -85,3 +85,8 @@ gem 'capybara'
 
 #factory girl
 gem 'factory_girl'
+
+#rating
+gem 'jquery-star-rating-rails'
+
+gem 'debugger'

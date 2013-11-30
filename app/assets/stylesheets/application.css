@@ -10,6 +10,7 @@
  *
  *= require bootstrap/bootstrap
  *= require jquery.ui.all
+ *= require jquery-star-rating
  *= require_self
  *= require_tree .
  */

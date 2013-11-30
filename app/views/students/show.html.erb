@@ -69,9 +69,17 @@
   <% end %>
 </p>
 <p>
-  <strong>Programming Languages:</strong>
-  <% @student.programming_languages.each do |programming_language| %>
-    <%= programming_language.name %>
+  <strong>Programming Languages:</strong><br>
+  <% @student.programming_languages_students.each do |programming_languages_student| %>
+    <% (1..5).each do |i| %>
+      <% if i == programming_languages_student.skill %>
+        <%= radio_button_tag programming_languages_student.programming_language.name, i, true, disabled: true, class: "star" %>
+      <% else %>
+        <%= radio_button_tag programming_languages_student.programming_language.name, i, false, disabled: true, class: "star" %>
+      <% end %>
+    <% end %>
+    <%= programming_languages_student.programming_language.name %>
+    <br>
   <% end %>
 </p>
 <p>
@@ -83,6 +91,5 @@
     <%= File.basename(@student.cv.path); %><br>
   <% end %>
 </p>
-
 <%= link_to 'Edit', edit_student_path(@student) %> |
 <%= link_to 'Back', students_path %>

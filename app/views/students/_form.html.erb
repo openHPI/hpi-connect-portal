@@ -65,7 +65,29 @@
   </div>
   <div class="field">
     <%= f.label :programming_languages %><br>
-    <%=  collection_check_boxes(:student, :programming_language_ids, ProgrammingLanguage.all, :id, :name) %>
+    <%= fields_for :programming_languages do |f2| %>
+      <% @all_programming_languages.each do |programming_language| %>
+      <%# Erstelle ein Label für jede Programmiersprache %>
+      <%= f2.label programming_language.name %>
+      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung für die Programmierspr. gibt %>
+      <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
+      <%# Erzeuge 5 radio buttons für die Sterne %>
+      <% (1..5).each do |i| %>
+        <%# Falls es eine Angabe gibt, überprüfe, ob der aktuelle Stern der Angabe enspricht %>
+        <% if pl %>
+          <% if i == pl.skill %>
+            <%= f2.radio_button programming_language.id, i+1, :checked => "checked", :class=>"star" %>
+          <% else %>
+            <%= f2.radio_button programming_language.id, i+1, :class=>"star" %>
+          <% end %>
+        <%# Erzeuge sonst einen unchecked radio button %>
+        <% else %>
+          <%= f2.radio_button programming_language.id, i+1, :class=>"star" %>
+        <% end %>
+      <% end %>
+        <br>
+      <% end %>
+    <% end %>
   </div>
   <div class="field">
     <%= f.label :photo %><br>
