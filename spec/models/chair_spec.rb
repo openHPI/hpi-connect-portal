@@ -13,7 +13,6 @@
 #  avatar_updated_at   :datetime
 #  head_of_chair       :string(255)      not null
 #  deputy_id           :integer
-#  user_id             :integer
 #
 
 require 'spec_helper'
