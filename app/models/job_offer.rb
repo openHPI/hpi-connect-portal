@@ -24,6 +24,8 @@ class JobOffer < ActiveRecord::Base
     validates :compensation, :time_effort, numericality: true
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
 
+    self.per_page = 5
+
 
     def self.find_jobs(attributes={})
 

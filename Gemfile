@@ -85,3 +85,9 @@ gem 'capybara'
 
 #factory girl
 gem 'factory_girl'
+
+# pagination
+gem 'will_paginate', '~> 3.0'
+
+# styles pagination with bootstrap
+gem 'will_paginate-bootstrap'

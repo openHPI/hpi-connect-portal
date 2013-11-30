@@ -7,6 +7,7 @@ class JobOffersController < ApplicationController
   def index
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.order("created_at")
+    @job_offers = JobOffer.paginate(:page => params[:page])
   end
 
   # GET /job_offers/1
@@ -68,6 +69,7 @@ class JobOffersController < ApplicationController
   def archive
     @job_offers = JobOffer.filter({:status => "completed"})
     @radio_button_sort_value = {"date" => false, "chair" => false}
+    @job_offers = JobOffer.paginate(:page => params[:page])
   end
 
   # GET /job_offers/sort

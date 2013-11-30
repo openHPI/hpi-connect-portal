@@ -12,11 +12,11 @@ ProgrammingLanguagesStudent.delete_all
 
 Language.delete_all
 Language.create([
-									{ name: 'Englisch'},
-									{ name: 'Deutsch'},
-									{ name: 'Spanisch'},
-									{ name: 'Französisch'},
-									{ name: 'Chinesisch'}
+									{ name: 'English'},
+									{ name: 'German'},
+									{ name: 'Spanish'},
+									{ name: 'French'},
+									{ name: 'Chinese'}
 ])
 
 ProgrammingLanguage.delete_all
@@ -38,7 +38,7 @@ JobOffer.create([{
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
-	languages: Language.where(:name => 'Deutsch'), 
+	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
 }])
 
@@ -50,7 +50,7 @@ JobOffer.create([{
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
-	languages: Language.where(:name => 'Deutsch'), 
+	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby'])
 }])
 
@@ -61,8 +61,43 @@ JobOffer.create([{
 	start_date: '2013-11-11', 
 	time_effort: 10,
 	compensation: 12.00,
-	languages: Language.where(:name => ['Deutsch', 'English']), 
+	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java'])
+}])
+
+JobOffer.create([{
+	title: "Tutor for Operating systems", 
+	description: 'You have to control the assignments for the Operating Systems I lecture.', 
+	chair: 'Operating Systems and Middleware', 
+	start_date: '2013-12-01', 
+	time_effort: 5,
+	compensation: 12.00,
+	languages: Language.where(:name => ['German', 'English']), 
+	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java'])
+}])
+
+
+JobOffer.create([{
+	title: "Teleboard Developer", 
+	description: 'You have to develop the Teleboard with HTML5 and Javascript', 
+	chair: 'Internet-Technologien und -Systeme', 
+	start_date: '2013-12-12', 
+	time_effort: 5,
+	compensation: 12.00,
+	languages: Language.where(:name => ['German', 'English']), 
+	programming_languages: ProgrammingLanguage.where(:name => ['Java'])
+}])
+
+
+JobOffer.create([{
+	title: "HCI TA", 
+	description: 'The job includes preparing the framework for HCI I class, control the assignments and be present at every lecture', 
+	chair: 'Human Computer Interaction', 
+	start_date: '2013-12-01', 
+	time_effort: 20,
+	compensation: 12.00,
+	languages: Language.where(:name => ['English']), 
+	programming_languages: ProgrammingLanguage.where(:name => ['C++'])
 }])
 
 JobOffer.create([{
@@ -72,7 +107,7 @@ JobOffer.create([{
 	start_date: '2014-01-01', 
 	time_effort: 8,
 	compensation: 10.00,
-	languages: Language.where(:name => 'Deutsch'), 
+	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk'])
 }])
 
@@ -107,7 +142,7 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => 'Deutsch'), 
+	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python'])
 }])
 
@@ -124,7 +159,7 @@ Student.create([{
 	facebook: 'www.faceboook.com/dieter', 
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => ['Deutsch', 'English']), 
+	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
 }])
 
