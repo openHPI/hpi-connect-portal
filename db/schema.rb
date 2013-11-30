@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131130101119) do
+ActiveRecord::Schema.define(version: 20131130121524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,8 +34,10 @@ ActiveRecord::Schema.define(version: 20131130101119) do
     t.datetime "avatar_updated_at"
     t.string   "head_of_chair",       null: false
     t.integer  "deputy_id"
+    t.integer  "user_id"
   end
 
+  add_index "chairs", ["deputy_id"], name: "index_chairs_on_deputy_id", using: :btree
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
 
   create_table "job_offers", force: true do |t|
@@ -135,6 +137,7 @@ ActiveRecord::Schema.define(version: 20131130101119) do
     t.string   "lastname"
     t.string   "firstname"
     t.integer  "role_id",             default: 1,  null: false
+    t.integer  "chair_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

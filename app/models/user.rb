@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
     has_many :applications
     has_many :job_offers, through: :applications
     belongs_to :role
+    belongs_to :chair
 
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
