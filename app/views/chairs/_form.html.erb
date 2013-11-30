@@ -34,7 +34,7 @@
     <%= f.file_field :avatar %>
   </div>
 
-   <%= f.select "deputy_id", options_for_select(@chair.research_assistants.collect {|u| [ u.email, u.id ] })%>
+   <%= collection_select(:deputy, :deputy_id, @chair.research_assistants, :id, :email) %>
 
   <div class="actions" style="margin-top:30px;">
     <%= f.submit :class => "btn btn-success btn-large" %>

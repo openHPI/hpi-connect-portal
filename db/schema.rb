@@ -34,10 +34,8 @@ ActiveRecord::Schema.define(version: 20131130121524) do
     t.datetime "avatar_updated_at"
     t.string   "head_of_chair",       null: false
     t.integer  "deputy_id"
-    t.integer  "user_id"
   end
 
-  add_index "chairs", ["deputy_id"], name: "index_chairs_on_deputy_id", using: :btree
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
 
   create_table "job_offers", force: true do |t|
