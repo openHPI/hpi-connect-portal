@@ -1,14 +1,13 @@
 # == Schema Information
 #
-# Table name: languages
+# Table name: roles
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
+#  level      :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
 
-class Language < ActiveRecord::Base
-	has_and_belongs_to_many :students
-	validates_uniqueness_of :name
+class Role < ActiveRecord::Base
 end
