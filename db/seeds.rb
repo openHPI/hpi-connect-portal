@@ -7,9 +7,19 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Create Standard Roles
+Role.delete_all
 Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
+
+#Create User as an example deputy for all chairs
+User.delete_all
+User.create([{
+		firstname: "Chief",
+		lastname: "Smith",
+		email: "chief@smith.de",
+	   	role: Role.where(:name => 'Student').first
+	}])
 
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all
@@ -32,6 +42,79 @@ ProgrammingLanguage.create([
 														{ name: 'Python'},
 														{ name: 'Smalltalk'}
 ])
+
+Chair.delete_all
+Chair.create([{
+	name: "Enterprise Platform and Integration Concepts",
+	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
+	head_of_chair: "Hasso Plattner",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Internet Technologies and Systems",
+	description: "The research at the chair of Prof. Dr. Christoph Meinel focuses on investigation of scientific principles, methodes and technologies to design and implement novel Internet technologies and innovative Internet-based IT-systems",
+	head_of_chair: "Christoph Meinel",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Human Compter Interaction",
+	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
+	head_of_chair: "Patrick Baudisch",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Computer Graphic Systems",
+	description: "The Computer Graphics Systems group headed by Prof. Dr. Jürgen Döllner is concerned with the analysis, planning and construction of computer graphics and multimedia systems. Human-computer communication is the overall context of the group’s work.",
+	head_of_chair: "Jürgen Döllner",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "OS and Middleware",
+	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
+	head_of_chair: "Andreas Polze",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Business Process Technology",
+	description: "The Business Process Technology group headed by Prof. Dr. Mathias Weske is engaged in research on the development of innovative models, methods and techniques and the design and construction of software systems to support knowledge-intensive and flexible business processes. The particular focus is on languages and concepts for modeling such processes.",
+	head_of_chair: "Mathias Weske",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Software Architecture",
+	description: "The Software Architecture Group, led by Prof. Dr. Robert Hirschfeld, is concerned with fundamental elements and structures of software. Methods and tools are developed for improving the comprehension and design of large complex systems.",
+	head_of_chair: "Robert Hirschfeld",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Information Systems",
+	description: "Prof. Dr. Felix Naumann is head of the Information Systems Research Group. The group's research goals are the efficient and effective management of heterogeneous information in large, autonomous systems. These include information integration methods, approaches to information quality and data cleansing, directed information searches and metadata management.",
+	head_of_chair: "Felix Naumann",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Systems Analysis and Modeling",
+	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
+	head_of_chair: "Holger Giese",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+Chair.create([{
+	name: "Systems Analysis and Modeling",
+	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
+	head_of_chair: "Holger Giese",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
+
 
 JobOffer.delete_all
 JobOffer.create([{
