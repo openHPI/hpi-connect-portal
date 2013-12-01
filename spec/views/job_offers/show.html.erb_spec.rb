@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe "job_offers/show" do
   before(:each) do
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @job_offer = assign(:job_offer, stub_model(JobOffer,
       :description => "Description",
-      :title => "Title"
+      :title => "Title",
+      :chair => @TestChair
     ))
     view.stub(:signed_in?) { false }
   end

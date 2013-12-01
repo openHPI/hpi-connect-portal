@@ -7,7 +7,7 @@ class JobOffersController < ApplicationController
   def index
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.order("created_at")
-    @job_offers = JobOffer.paginate(:page => params[:page])
+    @job_offers = @job_offers.paginate(:page => params[:page])
   end
 
   # GET /job_offers/1
@@ -89,6 +89,7 @@ class JobOffersController < ApplicationController
   def search
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.search params[:search]
+
     render "index"
   end
 
@@ -102,7 +103,7 @@ class JobOffersController < ApplicationController
                                     :end_date => params[:end_date],
                                     :time_effort => params[:time_effort],
                                     :compensation => params[:compensation]})
-    
+
      render "index"
   end
 
@@ -121,6 +122,8 @@ class JobOffersController < ApplicationController
                 :compensation => params[:compensation]}
 
     }) 
+    
+    @job_offers = @job_offers.paginate(:page => params[:page])
     render "index"
 
 
@@ -134,14 +137,11 @@ class JobOffersController < ApplicationController
 
     def set_chairs
       @chairs = Chair.all
-      if @chairs.blank?
-        @chairs = ["Computer Graphics", "Internet Technologies", "EPIC","Softwarearchitekturen"]
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
     end
     

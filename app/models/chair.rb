@@ -19,6 +19,7 @@ class Chair < ActiveRecord::Base
   	has_attached_file :avatar, :styles => { :medium => "200x200" }, :default_url => "/images/:style/missing.png"
 
     has_many :users
+    has_many :job_offers
     belongs_to :deputy, class_name: "User"
 
   	validates_attachment_size :avatar, :less_than => 5.megabytes

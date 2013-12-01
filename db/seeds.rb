@@ -59,7 +59,7 @@ Chair.create([{
 }])
 
 Chair.create([{
-	name: "Human Compter Interaction",
+	name: "Human Computer Interaction",
 	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
 	head_of_chair: "Patrick Baudisch",
 	deputy: User.where(:firstname=>"Chief").first
@@ -120,7 +120,7 @@ JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
-	chair: 'Human Computer Interaction', 
+	chair: Chair.where(:name => "Human Computer Interaction").first, 
 	status: 'completed',
 	start_date: '2013-11-01', 
 	time_effort: 6,
@@ -132,7 +132,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "Website Developer", 
 	description: 'The student develops a wonderful website.', 
-	chair: 'Epic', 
+	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
 	status: 'completed',
 	start_date: '2013-10-01', 
 	time_effort: 9,
@@ -144,7 +144,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "tele-Task developer", 
 	description: 'The Job includes the development of new features for tele-Task', 
-	chair: 'Internet-Technologien und -Systeme', 
+	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
 	start_date: '2013-11-11', 
 	time_effort: 10,
 	compensation: 12.00,
@@ -155,7 +155,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "Tutor for Operating systems", 
 	description: 'You have to control the assignments for the Operating Systems I lecture.', 
-	chair: 'Operating Systems and Middleware', 
+	chair: Chair.where(:name => "OS and Middleware").first, 
 	start_date: '2013-12-01', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -167,7 +167,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "Teleboard Developer", 
 	description: 'You have to develop the Teleboard with HTML5 and Javascript', 
-	chair: 'Internet-Technologien und -Systeme', 
+	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
 	start_date: '2013-12-12', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -179,7 +179,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "HCI TA", 
 	description: 'The job includes preparing the framework for HCI I class, control the assignments and be present at every lecture', 
-	chair: 'Human Computer Interaction', 
+	chair: Chair.where(:name => "Human Computer Interaction").first, 
 	start_date: '2013-12-01', 
 	time_effort: 20,
 	compensation: 12.00,
@@ -190,7 +190,7 @@ JobOffer.create([{
 JobOffer.create([{
 	title: "Supporting the lab operations of the chair", 
 	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
-	chair: 'System Analysis and Modeling', 
+	chair: Chair.where(:name => "OS and Middleware").first,
 	start_date: '2014-01-01', 
 	time_effort: 8,
 	compensation: 10.00,

@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.chair" %><br>
-          <%= f.text_field :chair, :class => "form-control"%>
+          <%= f.collection_select :chair, Chair.all, :id, :name, {prompt: "Select a Chair"}, {class: "form-control"} %>
         </div>
       </div>
     </div>

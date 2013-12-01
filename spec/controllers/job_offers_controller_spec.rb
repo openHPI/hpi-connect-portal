@@ -23,15 +23,22 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+  let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
+  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30} }
-  let(:valid_attributes_with_status) {{"title"=>"Open HPI Job", "description" => "MyString", "chair" => "SWA", "start_date" => Date.new(2013,11,1),
+  let(:valid_attributes_with_status) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => "completed"}}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # JobOffersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  before(:each) do
+      @epic = FactoryGirl.create(:chair, name:"EPIC")
+      @os = FactoryGirl.create(:chair, name:"OS and Middleware")
+      @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+  end
 
   describe "GET index" do
     it "assigns all job_offers as @job_offers" do
@@ -81,11 +88,11 @@ describe JobOffersController do
   describe "GET sort" do
     it "assigns @job_offers all job offers sorted by date" do
 
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1))
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2))
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1))
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1))
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1))
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), chair: @epic)
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), chair: @epic)
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), chair: @epic)
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), chair: @epic)
+      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), chair: @epic)
 
       job_offers = JobOffer.sort "date"
       get :sort, {:sort_value => "date"}, valid_session
@@ -94,11 +101,9 @@ describe JobOffersController do
 
     it "assigns @job_offers all job offers sorted by chair" do
 
-      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
-      FactoryGirl.create(:joboffer, chair: "EPIC")
-      FactoryGirl.create(:joboffer, chair: "Software Architecture")
-      FactoryGirl.create(:joboffer, chair: "Information Systems")
-      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+      FactoryGirl.create(:joboffer, chair: @itas)
+      FactoryGirl.create(:joboffer, chair: @epic)
+      FactoryGirl.create(:joboffer, chair: @os)
 
       job_offers = JobOffer.sort "chair"
       get :sort, {:sort_value => "chair"}, valid_session
@@ -108,13 +113,11 @@ describe JobOffersController do
   end
 
   describe "GET filer" do
-    it "assigns @job_offers to all job offers with the chait EPIC" do
+    it "assigns @job_offers to all job offers with the chair EPIC" do
 
-      FactoryGirl.create(:joboffer, chair: "Internet Technologies")
-      FactoryGirl.create(:joboffer, chair: "EPIC")
-      FactoryGirl.create(:joboffer, chair: "Software Architecture")
-      FactoryGirl.create(:joboffer, chair: "Information Systems")
-      FactoryGirl.create(:joboffer, chair: "Operating Systems & Middleware")
+      FactoryGirl.create(:joboffer, chair: @itas)
+      FactoryGirl.create(:joboffer, chair: @epic)
+      FactoryGirl.create(:joboffer, chair: @os)
 
       job_offers = JobOffer.filter ({:chair => "EPIC"})
       get :filter, ({:chair => "EPIC"}), valid_session

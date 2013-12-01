@@ -22,6 +22,7 @@ class JobOffer < ActiveRecord::Base
     has_many :users, through: :applications
 	has_and_belongs_to_many :programming_languages
     has_and_belongs_to_many :languages
+    belongs_to :chair
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
@@ -56,14 +57,14 @@ class JobOffer < ActiveRecord::Base
 		if order_attribute == "date"
 			order(:created_at)
 		elsif order_attribute == "chair"
-			order(:chair)
+			includes(:chair).order("chairs.name ASC")
 		end
 	end
 
 	def self.search(search_attribute)
 			search_string = "%" + search_attribute + "%"
 			search_string = search_string.downcase
-			includes(:programming_languages).where('lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages)
+			includes(:programming_languages,:chair).where('lower(title) LIKE ? OR lower(job_offers.description) LIKE ? OR lower(chairs.name) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages,:chair)
 	end
 
 	def self.filter(options={})
@@ -77,7 +78,7 @@ class JobOffer < ActiveRecord::Base
 
 
     def self.filter_chair(chair)
-    	chair.blank? ? all : where(:chair => chair.split(',').collect(&:strip))             
+    	chair.blank? ? all : includes(:chair).where('lower(chairs.name) LIKE ?',chair.downcase)             
     end
 
     def self.filter_start_date(start_date)
