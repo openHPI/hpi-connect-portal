@@ -89,6 +89,8 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
+    font-awesome-rails (4.0.3.0)
+      railties (>= 3.2, < 5.0)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.5)
@@ -228,6 +230,7 @@ DEPENDENCIES
   devise_openid_authenticatable
   factory_girl
   factory_girl_rails
+  font-awesome-rails
   highline
   jbuilder (~> 1.5)
   jquery-rails

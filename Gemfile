@@ -93,3 +93,6 @@ gem 'factory_girl'
 gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
+
+#replacement for glyphicons
+gem "font-awesome-rails"
