@@ -63,7 +63,10 @@ class JobOffer < ActiveRecord::Base
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
         filter_time_effort(options[:time_effort]).
-        filter_compensation(options[:compensation])
+        filter_compensation(options[:compensation]).
+        filter_status(options[:status]).
+        filter_programming_languages(options[:programming_language_ids]).
+        filter_languages(options[:language_ids])
     end
 
 
@@ -85,5 +88,18 @@ class JobOffer < ActiveRecord::Base
 
     def self.filter_compensation(compensation)
         compensation.blank? ? all : where('compensation >= ?', compensation.to_f)
+    end
+
+    def self.filter_status(status)
+        status.blank? ? all : where('status <= ?', status)
+    end
+
+    def self.filter_programming_languages(programming_language_ids)
+        programming_language_ids.blank? ? all : includes(:job_offers_programming_languages).where('programming_language_id in ?', programming_language_ids)
+    end
+
+    def self.filter_languages(language_ids)
+        # programming_language_ids.blank? ? all : includes(:programming_languages).where('programming_language_id @> ?', programming_language_ids)
+        all
     end
 end
