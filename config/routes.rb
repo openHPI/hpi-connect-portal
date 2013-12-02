@@ -1,5 +1,7 @@
 HpiHiwiPortal::Application.routes.draw do
 
+  resources :student_statuses
+
   resources :job_offers do    
     collection do
       get "sort"
