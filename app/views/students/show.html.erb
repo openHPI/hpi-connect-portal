@@ -6,7 +6,9 @@
       <div class="col-xs-8">
         <h1><%= @student.first_name %> <%= @student.last_name %></h1>
         <blockquote>
-          <p><%= @student.status %></p>
+          <% if !(@student.student_status).nil? %>
+            <p><%= @student.student_status.name %></p>
+          <% end %>
         </blockquote>
       </div>
       <div class="col-xs-4">
@@ -16,7 +18,7 @@
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4>Basis Informationen</h4></div>
+      <div class="panel-heading"><h4>Allgemeine Informationen</h4></div>
       <table class="table">
         <tbody>
           <tr>
