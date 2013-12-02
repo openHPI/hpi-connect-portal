@@ -68,6 +68,7 @@ class JobOffer < ActiveRecord::Base
 	end
 
 	def self.filter(options={})
+
 		filter_chair(options[:chair]).
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
@@ -78,7 +79,7 @@ class JobOffer < ActiveRecord::Base
 
 
     def self.filter_chair(chair)
-    	chair.blank? ? all : includes(:chair).where('lower(chairs.name) LIKE ?',chair.downcase)             
+    	chair.blank? ? all : where(chair_id: chair.to_i)             
     end
 
     def self.filter_start_date(start_date)

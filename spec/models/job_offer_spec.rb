@@ -117,7 +117,7 @@ describe JobOffer do
     FactoryGirl.create(:joboffer, chair: @itas)
     FactoryGirl.create(:joboffer, chair: @os)
 
-    filtered_job_offers = JobOffer.filter({:chair => "EPIC", :start_date => "20131125"})
+    filtered_job_offers = JobOffer.filter({:chair => @epic.id, :start_date => "20131125"})
     assert_equal(filtered_job_offers.length, 2);
   end
 
@@ -140,7 +140,7 @@ describe JobOffer do
     FactoryGirl.create(:joboffer, chair: @itas)
     FactoryGirl.create(:joboffer, chair: @os)
 
-    filtered_job_offers = JobOffer.filter({:chair => "EPIC"})
+    filtered_job_offers = JobOffer.filter({:chair => @epic.id})
     assert_equal(filtered_job_offers.length, 3);
   end
 
