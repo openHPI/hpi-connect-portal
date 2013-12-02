@@ -1,6 +1,6 @@
 class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
-  before_action :set_chairs, only: [:index, :find_jobs, :archive]
+  before_action :set_chairs, only: [:index, :find, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -107,7 +107,7 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
-  def find_jobs
+  def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
 
@@ -120,7 +120,6 @@ class JobOffersController < ApplicationController
                 :end_date => params[:end_date],
                 :time_effort => params[:time_effort],
                 :compensation => params[:compensation]}
-
     }) 
     
     @job_offers = @job_offers.paginate(:page => params[:page])

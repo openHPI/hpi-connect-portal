@@ -42,12 +42,15 @@ class JobOffer < ActiveRecord::Base
             result = search(attributes[:search])
         end
 
-        if !attributes[:filter].empty?
+        if !attributes[:filter].blank?
+            puts attributes.inspect
             result = result.filter(attributes[:filter])
         end
 
         if !attributes[:sort].blank?
             result = result.sort(attributes[:sort])
+        else
+            result = result.sort("date")
         end
 
         result
