@@ -6,7 +6,7 @@
   	<span class="pull-right">
       <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
   		<%= link_to t("helpers.links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
-      <%= link_to t("helpers.links.destroy"), job_offer_path(@job_offer), :confirm => t("helpers.links.confirm"), :method => :delete, :class => "btn btn-default btn-danger" %>
+      <%= link_to t("helpers.links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("helpers.links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger" %>
   	</span>
   <% end %>
 	
