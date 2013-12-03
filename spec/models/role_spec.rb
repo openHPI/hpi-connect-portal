@@ -1,14 +1,16 @@
 # == Schema Information
 #
-# Table name: languages
+# Table name: roles
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
+#  level      :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
 
-class Language < ActiveRecord::Base
-	has_and_belongs_to_many :students
-	validates_uniqueness_of :name
+require 'spec_helper'
+
+describe Role do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

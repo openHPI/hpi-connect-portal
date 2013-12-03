@@ -47,6 +47,7 @@ gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
+gem 'newrelic_rpm', group: :production
 
 # basic layouting
 # gem 'twitter-bootstrap-rails'
@@ -61,6 +62,9 @@ gem 'simple-navigation', '~> 3.11'
 
 gem 'devise', '~> 3.1'
 gem 'devise_openid_authenticatable'
+
+# authorizations in one place
+gem 'cancan'
 
 # simple http requests
 gem 'rest-client'
