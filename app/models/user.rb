@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
     belongs_to :role
     belongs_to :chair
 
+    has_one :profile, :class_name => "Student"
+
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
 
@@ -41,7 +43,17 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+        user = User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+    end
+
+    def self.create_student_from_identity_url(identity_url)
+        username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
+
+        first_name = username.split('.').first.capitalize
+        last_name = username.split('.').second.capitalize
+        email = username + '@student.hpi.uni-potsdam.de'
+
+        User.createStudent(indentity_url, email, first_name, last_name)
     end
 
     def applied?(job_offer)
@@ -58,5 +70,18 @@ class User < ActiveRecord::Base
 
     def admin?
         role.name == 'Admin'
+    end
+
+    def self.search_students_for_string(string)
+        return User.where("is_student = true
+                AND
+                (lower(firstname) LIKE ?
+                OR lower(lastname) LIKE ?)", string.downcase, string.downcase)
+    end
+
+    def self.create_student(identity_url, email, first_name, last_name)
+        user = User.create(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+        user.profile = Student.create()
+        user
     end
 end

@@ -17,17 +17,17 @@
     <ul class="list-group">
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :first_name, class: "col-sm-2 control-label" %>
+          <%= f.label :firstname, class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.text_field :first_name, class: "form-control", type:"text" %>
+            <%= f.text_field :firstname, class: "form-control", type:"text" %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :last_name, class: "col-sm-2 control-label" %>
+          <%= f.label :lastname, class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.text_field :last_name, class: "form-control", type:"text" %>
+            <%= f.text_field :lastname, class: "form-control", type:"text" %>
           </div>
         </div>
       </li>
@@ -181,7 +181,7 @@
                 <div class="col-sm-10">
                   <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung für die Programmierspr. gibt %>
                   <% if !@student.new_record? %>
-                    <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
+                    <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.studentid,programming_language.id) %>
                   <% end %>
                   <%# Erzeuge 5 radio buttons für die Sterne %>
                   <% (1..5).each do |i| %>

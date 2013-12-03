@@ -4,12 +4,13 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    @users = User.where(is_student: true)
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
+    # @user = User.find(:params[:id])
   end
 
   # GET /students/new
@@ -33,7 +34,7 @@ class StudentsController < ApplicationController
           programming_languages = params[:programming_languages]
           programming_languages.each do |programming_language_id, skill|
             programming_language_student = ProgrammingLanguagesStudent.new
-            programming_language_student.student_id = @student.id
+            programming_language_student.student_id = @student.studentid
             programming_language_student.programming_language_id = programming_language_id
             programming_language_student.skill = skill
             programming_language_student.save
@@ -96,13 +97,14 @@ class StudentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
-      @student = Student.find(params[:id])
+      @user = User.find(params[:id])
+      @student = @user.profile
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def student_params
       params.require(:student).permit(
-        :first_name, :last_name, :semester, :academic_program,
+        :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
         :language_ids => [])

@@ -14,15 +14,15 @@
   </thead>
 
   <tbody>
-    <% @students.each do |student| %>
+    <% @users.each do |user| %>
       <tr>
-        <td><%= student.first_name %></td>
-        <td><%= student.last_name %></td>
-        <td><%= student.semester %></td>
-        <td><%= student.academic_program %></td>
-        <td><%= link_to 'Show', student, :class => "btn btn-info" %></td>
-        <td><%= link_to 'Edit', edit_student_path(student), :class => "btn btn-warning" %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+        <td><%= user.firstname %></td>
+        <td><%= user.lastname %></td>
+        <td><%= user.profile.semester %></td>
+        <td><%= user.profile.academic_program %></td>
+        <td><%= link_to 'Show', student_path(user.id), :class => "btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_student_path(user), :class => "btn btn-warning" %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>

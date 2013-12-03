@@ -29,12 +29,13 @@
 
 class Student < ActiveRecord::Base
     #equal to has_and_belongs_to_many :programming_languages
+    belongs_to :user
     has_many :programming_languages_students
     has_many :programming_languages, :through => :programming_languages_students
     accepts_nested_attributes_for :programming_languages
 	has_and_belongs_to_many :languages
     belongs_to :student_status
-    validates :first_name, :last_name, presence: true
+    # validates :first_name, :last_name, presence: true
 
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
@@ -46,19 +47,50 @@ class Student < ActiveRecord::Base
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
 	validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
+    def lastname
+        self.user.lastname
+    end
+
+    def lastname=(string)
+        self.user.lastname = string
+    end
+
+    def firstname
+        self.user.firstname
+    end
+
+    def firstname=(string)
+        self.user.firstname = string
+    end
+
+    def email
+        self.user.email
+    end
+
+     def email=(string)
+        self.user.email = string
+    end
+
+    def id
+        self.user.id
+    end
+
+    def id=(int)
+        self.user.id = int
+    end 
+    
     def self.search_student(string)
     	string = string.downcase
-        search_results = Student.where("
-                lower(first_name) LIKE ?
-                OR lower(last_name) LIKE ?
-                OR lower(academic_program) LIKE ?
+        search_results = User.search_students_for_string(string)
+        search_results += Student.where("
+                lower(academic_program) LIKE ?
                 OR lower(education) LIKE ?
                 OR lower(homepage) LIKE ?
                 OR lower(github) LIKE ?
                 OR lower(facebook) LIKE ?
                 OR lower(xing) LIKE ?
                 OR lower(linkedin) LIKE ?
-                ", string, string, string, string, string, string, string, string, string)
+                ", string.downcase, string.downcase, string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)
     	search_results += search_students_by_programming_language(string)
         search_results += search_students_by_language(string)
     	search_results.uniq.sort_by{|x| [x.last_name, x.first_name]}
@@ -86,5 +118,14 @@ class Student < ActiveRecord::Base
        end
 
        matching_students
-    end           
+    end 
+
+    def studentid
+        self.id
+    end
+
+    def studentid=(int)
+        self.id
+    end
+
 end
