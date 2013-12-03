@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /students
   # GET /students.json
@@ -10,13 +10,18 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    # @user = User.find(:params[:id])
+     user = User.find(params[:id])
+    if user.student?
+      @user = user
+    else
+      nil
+    end
   end
 
   # GET /students/new
   def new
     @all_programming_languages = ProgrammingLanguage.all
-    @student = Student.new
+    @user = User.new
   end
 
   # GET /students/1/edit
@@ -27,24 +32,24 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
-    @student = Student.new(student_params)
+    @user = user.new(user_params)
     respond_to do |format|
-      if @student.save
+      if @user.save
         if params[:programming_languages]
           programming_languages = params[:programming_languages]
           programming_languages.each do |programming_language_id, skill|
-            programming_language_student = ProgrammingLanguagesStudent.new
-            programming_language_student.student_id = @student.studentid
-            programming_language_student.programming_language_id = programming_language_id
-            programming_language_student.skill = skill
-            programming_language_student.save
+            programming_language_user = ProgrammingLanguagesuser.new
+            programming_language_user.user_id = @user.userid
+            programming_language_user.programming_language_id = programming_language_id
+            programming_language_user.skill = skill
+            programming_language_user.save
           end
         end
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @student }
+        format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -55,25 +60,25 @@ class StudentsController < ApplicationController
     if params[:programming_languages]
       programming_languages = params[:programming_languages]
       programming_languages.each do |programming_language_id, skill|
-        pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(params[:id],programming_language_id)
+        pl = ProgrammingLanguagesuser.find_by_user_id_and_programming_language_id(params[:id],programming_language_id)
         if pl
           pl.update_attributes(:skill => skill)
         else
-          programming_language_student = ProgrammingLanguagesStudent.new
-          programming_language_student.student_id = params[:id]
-          programming_language_student.programming_language_id = programming_language_id
-          programming_language_student.skill = skill
-          programming_language_student.save
+          programming_language_user = ProgrammingLanguagesuser.new
+          programming_language_user.user_id = params[:id]
+          programming_language_user.programming_language_id = programming_language_id
+          programming_language_user.skill = skill
+          programming_language_user.save
         end 
       end
     end
     respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to @student, notice: 'Student was successfully updated.' }
+      if @user.update(user_params)
+        format.html { redirect_to student_path(@user.id), notice: 'user was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,7 +86,7 @@ class StudentsController < ApplicationController
   # DELETE /students/1
   # DELETE /students/1.json
   def destroy
-    @student.destroy
+    @user.destroy
     respond_to do |format|
       format.html { redirect_to students_url }
       format.json { head :no_content }
@@ -90,20 +95,20 @@ class StudentsController < ApplicationController
 
   # GET /students/matching
   def matching 
-    @students = Student.search_students_by_language_and_programming_language(params[:languages], params[:programming_languages])
+    @user = User.search_users_by_language_and_programming_language(params[:languages], params[:programming_languages])
     render "index"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_student
+    def set_user
       @user = User.find(params[:id])
-      @student = @user.profile
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def student_params
-      params.require(:student).permit(
+    def user_params
+      params.require(:user).permit(
+        :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :status,

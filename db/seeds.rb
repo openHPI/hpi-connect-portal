@@ -11,9 +11,6 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
-LanguagesStudent.delete_all
-ProgrammingLanguagesStudent.delete_all
-
 Language.delete_all
 Language.create([
 	{ name: 'Englisch'},
@@ -33,8 +30,8 @@ ProgrammingLanguage.create([
 	{ name: 'Smalltalk'}
 ])
 
-StudentStatus.delete_all
-StudentStatus.create([
+UserStatus.delete_all
+UserStatus.create([
 	{ name: 'job-seeking'},
 	{ name: 'employed'},
 	{ name: 'employed (ext)'},
@@ -90,89 +87,105 @@ JobOffer.create([{
 }])
 
 User.delete_all
-Student.delete_all
-u1  = User.create_student('https://openid.hpi.uni-potsdam.de/user/dieter.nuhr', 'dieter.nuhr@student.hpi.uni-potsdam.de', 'Dieter', 'Nuhr')
-u1.profile.semester = 1
-u1.profile.academic_program = 'Bachelor'
-u1.profile.birthday = '1970-12-10'
-u1.profile.education = 'Abitur'
-u1.profile.additional_information = 'No'
-u1.profile.homepage = 'www.dieter.de'
-u1.profile.github = 'www.github.com/dieter'
-u1.profile.facebook = 'www.faceboook.com/dieter'
-u1.profile.xing = 'www.xing.com/dieter'
-u1.profile.linkedin = 'www.linkedin.com/dieter'
-u1.profile.languages =  Language.where(:name => 'English')
-u1.profile.programming_languages = ProgrammingLanguage.where(:name => ['Java'])
-u1.profile.student_status = StudentStatus.where(:name => 'employed (ext)').first
-u1.profile.save
+User.create([{
+identity_url: 'openid',
+email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
+firstname: 'Dieter', 
+lastname: 'Nuhr',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'English'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+is_student: true}])
 
+User.create({
+identity_url: 'stress?',
+email: 'bachelor@example.com', 
+firstname: 'Dunkeler', 
+lastname: 'Himmel',
+semester: 6,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Deutsch'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+user_status: UserStatus.where(:name => 'job-seeking').first,
+is_student: true})
 
-u1  = User.create_student('https://openid.hpi.uni-potsdam.de/user/dieter.nuhr2', 'test@example.com', 'Hans', 'Scholl')
-u1.profile.semester = 1
-u1.profile.academic_program = 'Master'
-u1.profile.birthday = '1970-12-10'
-u1.profile.education = 'Abitur'
-u1.profile.additional_information = 'No'
-u1.profile.homepage = 'www.dieter.de'
-u1.profile.github = 'www.github.com/dieter'
-u1.profile.facebook = 'www.faceboook.com/dieter'
-u1.profile.xing = 'www.xing.com/dieter'
-u1.profile.linkedin = 'www.linkedin.com/dieter'
-u1.profile.languages =  Language.where(:name => 'English')
-u1.profile.programming_languages = ProgrammingLanguage.where(:name => ['Ruby'])
-u1.profile.student_status = StudentStatus.where(:name => 'employed (ext)').first
-u1.profile.save
+User.create({
+identity_url: 'langweilig',
+email: 'master@example.com', 
+firstname: 'wackel', 
+lastname: 'dackel',
+semester: 4,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'English'),
+programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+is_student: true})
 
+User.create({
+identity_url: 'was?',
+email: 'jack@examlpe.com', 
+firstname: 'jack', 
+lastname: 'derDepp',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'English'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'no interest').first,
+is_student: true})
 
-u1  = User.create_student('https://openid.hpi.uni-potsdam.de/user/dieter.nuhr3', 'jack@examlpe.com', 'jack', 'derDepp')
-u1.profile.semester = 1
-u1.profile.academic_program = 'Bachelor'
-u1.profile.birthday = '1970-12-10'
-u1.profile.education = 'Abitur'
-u1.profile.additional_information = 'No'
-u1.profile.homepage = 'www.dieter.de'
-u1.profile.github = 'www.github.com/dieter'
-u1.profile.facebook = 'www.faceboook.com/dieter'
-u1.profile.xing = 'www.xing.com/dieter'
-u1.profile.linkedin = 'www.linkedin.com/dieter'
-u1.profile.languages =  Language.where(:name => 'English')
-u1.profile.programming_languages = ProgrammingLanguage.where(:name => ['Java'])
-u1.profile.student_status = StudentStatus.where(:name => 'no interest').first
-u1.profile.save
-
-u1  = User.create_student('https://openid.hpi.uni-potsdam.de/user/dieter.nuhr4', 'master@example.com', 'wackel', 'dackel')
-u1.profile.semester = 4
-u1.profile.academic_program = 'Bachelor'
-u1.profile.birthday = '1970-12-10'
-u1.profile.education = 'Abitur'
-u1.profile.additional_information = 'No'
-u1.profile.homepage = 'www.dieter.de'
-u1.profile.github = 'www.github.com/dieter'
-u1.profile.facebook = 'www.faceboook.com/dieter'
-u1.profile.xing = 'www.xing.com/dieter'
-u1.profile.linkedin = 'www.linkedin.com/dieter'
-u1.profile.languages =  Language.where(:name => 'English')
-u1.profile.programming_languages = ProgrammingLanguage.where(:name => ['C', 'C++'])
-u1.profile.student_status = StudentStatus.where(:name => 'employed (ext)').first
-u1.profile.save
-
-u1  = User.create_student('https://openid.hpi.uni-potsdam.de/user/dieter.nuhr5', 'bachelor@example.com', 'Dunkeler', 'Himmel')
-u1.profile.semester = 6
-u1.profile.academic_program = 'Bachelor'
-u1.profile.birthday = '1970-12-10'
-u1.profile.education = 'Abitur'
-u1.profile.additional_information = 'No'
-u1.profile.homepage = 'www.dieter.de'
-u1.profile.github = 'www.github.com/dieter'
-u1.profile.facebook = 'www.faceboook.com/dieter'
-u1.profile.xing = 'www.xing.com/dieter'
-u1.profile.linkedin = 'www.linkedin.com/dieter'
-u1.profile.languages =  Language.where(:name => 'Deutsch')
-u1.profile.programming_languages = ProgrammingLanguage.where(:name => ['Java', 'Python'])
-u1.profile.student_status = StudentStatus.where(:name => 'job-seeking').first
-u1.profile.save
-
+User.create({
+identity_url: 'halo',
+email: 'test@example.com', 
+firstname: 'Hans', 
+lastname: 'Scholl',
+semester: 1,
+academic_program: 'Master',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'English'),
+programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+is_student: true})
 
 Chair.create([{
 	name: 'EPIC',

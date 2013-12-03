@@ -1,6 +1,6 @@
 HpiHiwiPortal::Application.routes.draw do
 
-  resources :student_statuses
+  resources :user_statuses
 
   resources :job_offers do    
     collection do
@@ -12,7 +12,7 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
-  resources :students do
+  resources :users do
     collection do
       get "matching"
     end
@@ -22,19 +22,34 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :languages
 
-  resources :students
-
   resources :studentsearch
 
   resources :chairs
+
+  resources :students
 
   resources :job_offers
   resources :users, only: [:edit, :update]
   resources :applications, only: [:create]
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, controllers: { sessions: 'sessions'}
   
   root :to => "job_offers#index"
+
+  #student routes to contain the student side without student model
+  # get 'students/' => 'students#index'
+  # get 'students/:id' => 'students#show'
+  # get 'students/new' => 'students#new'
+  # post 'students/' =>'students#create'
+  # post 'students.json' => 'students#create'
+  # patch 'students/:id' => 'students#udpate'
+  # put  'students/:id' => 'students#udpate'
+
+
+
+   # PATCH/PUT /students/1
+  # PATCH/PUT /students/1.json
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

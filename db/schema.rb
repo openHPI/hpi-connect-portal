@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20131203151711) do
     t.datetime "updated_at"
   end
 
-  create_table "languages_students", force: true do |t|
-    t.integer "student_id"
+  create_table "languages_users", id: false, force: true do |t|
+    t.integer "user_id"
     t.integer "language_id"
   end
 
@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(version: 20131203151711) do
     t.datetime "updated_at"
   end
 
-  create_table "programming_languages_students", force: true do |t|
-    t.integer "student_id"
+  create_table "programming_languages_users", force: true do |t|
+    t.integer "user_id"
     t.integer "programming_language_id"
     t.integer "skill"
   end
@@ -96,42 +96,16 @@ ActiveRecord::Schema.define(version: 20131203151711) do
     t.datetime "updated_at"
   end
 
-  create_table "student_statuses", force: true do |t|
+  create_table "user_statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "students", force: true do |t|
-    t.integer  "semester"
-    t.string   "academic_program"
-    t.date     "birthday"
-    t.text     "education"
-    t.text     "additional_information"
-    t.string   "homepage"
-    t.string   "github"
-    t.string   "facebook"
-    t.string   "xing"
-    t.string   "linkedin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
-    t.string   "cv_file_name"
-    t.string   "cv_content_type"
-    t.integer  "cv_file_size"
-    t.datetime "cv_updated_at"
-    t.integer  "status"
-    t.integer  "student_status_id"
-    t.integer  "user_id"
-  end
-
   create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",                  default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -142,8 +116,28 @@ ActiveRecord::Schema.define(version: 20131203151711) do
     t.boolean  "is_student"
     t.string   "lastname"
     t.string   "firstname"
-    t.integer  "role_id",             default: 1,  null: false
+    t.integer  "role_id",                default: 1,  null: false
     t.integer  "chair_id"
+    t.integer  "semester"
+    t.string   "academic_program"
+    t.date     "birthday"
+    t.text     "education"
+    t.text     "additional_information"
+    t.string   "homepage"
+    t.string   "github"
+    t.string   "facebook"
+    t.string   "xing"
+    t.string   "linkedin"
+    t.date     "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.date     "photo_updated_at"
+    t.string   "cv_file_name"
+    t.string   "cv_content_type"
+    t.integer  "cv_file_size"
+    t.date     "cv_updated_at"
+    t.integer  "status"
+    t.integer  "user_status_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
