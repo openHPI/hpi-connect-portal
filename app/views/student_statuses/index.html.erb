@@ -1,0 +1,27 @@
+<h1>Listing student_statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @student_statuses.each do |student_status| %>
+      <tr>
+        <td><%= student_status.description %></td>
+        <td><%= link_to 'Show', student_status %></td>
+        <td><%= link_to 'Edit', edit_student_status_path(student_status) %></td>
+        <td><%= link_to 'Destroy', student_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Student status', new_student_status_path %>

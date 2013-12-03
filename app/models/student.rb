@@ -28,8 +28,12 @@
 #
 
 class Student < ActiveRecord::Base
+    #equal to has_and_belongs_to_many :programming_languages
+    has_many :programming_languages_students
+    has_many :programming_languages, :through => :programming_languages_students
+    accepts_nested_attributes_for :programming_languages
 	has_and_belongs_to_many :languages
-	has_and_belongs_to_many :programming_languages
+    belongs_to :student_status
     validates :first_name, :last_name, presence: true
 
 	has_attached_file 	:photo,
@@ -41,8 +45,6 @@ class Student < ActiveRecord::Base
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
 	validates_attachment_content_type :cv, :content_type => ['application/pdf']
-
-    enumerate :status
 
     def self.search_student(string)
     	string = string.downcase
