@@ -1,4 +1,5 @@
 class JobOffersController < ApplicationController
+  before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
 
@@ -32,6 +33,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
+    @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
@@ -132,7 +134,7 @@ class JobOffersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
-      @job_offer = JobOffer.find(params[:id])
+      @job_offer = JobOffer.find params[:id]
     end
 
     def set_chairs
@@ -149,4 +151,12 @@ class JobOffersController < ApplicationController
       format.html { render action: target }
       format.json { render json: object.errors, status: :unprocessable_entity }
     end  
+
+    def check_user_is_responsible
+      @job_offer = JobOffer.find params[:id]
+
+      unless current_user == @job_offer.responsible_user
+        redirect_to @job_offer
+      end
+    end
 end

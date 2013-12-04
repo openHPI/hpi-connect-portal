@@ -5,7 +5,7 @@ describe "Job Offer pages" do
   subject { page }
   
   describe "show page" do
-    let(:job_offer) { FactoryGirl.create(:joboffer) }
+    let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user)) }
 
     before { visit job_offer_path(job_offer) }
 
@@ -41,7 +41,7 @@ describe "Job Offer pages" do
       end
 
       describe "when being a research assistant" do
-        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role) }
+        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
 
         before do
           FactoryGirl.create(:application, job_offer: job_offer)
@@ -52,17 +52,8 @@ describe "Job Offer pages" do
         it { should_not have_button('Apply') }
         it { should have_selector('h4', text: 'Applications') }
 
-        #it { should_not have_button('Accept') }
-        #it { should_not have_button('Decline') }
-
-        describe "and beeing the deputy" do
-          before do
-            # update th deputy of the offers chair to point to the research assistant
-          end
-
-          it { should have_button('Accept') }
-          it { should have_button('Decline') }
-        end
+        it { should have_button('Accept') }
+        it { should have_button('Decline') }
       end
     end
   end
