@@ -83,6 +83,14 @@ describe JobOffersController do
       get :edit, {:id => job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(job_offer)
     end
+
+    it "only allows the responsible user to edit" do
+      job_offer = JobOffer.create! valid_attributes
+      job_offer.responsible_user = FactoryGirl.create(:user)
+      job_offer.save
+      get :edit, {:id => job_offer.to_param}, valid_session
+      response.should redirect_to(job_offer)
+    end
   end
 
   describe "GET sort" do

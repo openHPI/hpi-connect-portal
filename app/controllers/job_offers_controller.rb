@@ -24,14 +24,20 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/1/edit
   def edit
-    @programming_languages = ProgrammingLanguage.all
-    @languages = Language.all
+    if current_user == @job_offer.responsible_user
+      @programming_languages = ProgrammingLanguage.all
+      @languages = Language.all
+    else
+      redirect_to @job_offer
+    end
+
   end
 
   # POST /job_offers
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
+    @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }

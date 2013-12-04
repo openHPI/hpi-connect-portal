@@ -40,6 +40,9 @@
   <dt><%= t("job_offer.compensation") %>:</dt>
   <dd> <%= @job_offer.compensation %></dd>
 
+  <dt>Contact:</dt>
+  <dd> <%= @job_offer.responsible_user.email %></dd>
+
   <dt>Student Placeholder:</dt>
   <% if @job_offer.status != "completed" %>
     <dd> <%=  %></dd>

@@ -73,6 +73,15 @@
           <%= f.text_field :compensation, :placeholder => "in €/hour", :class => "form-control" %>
         </div>
       </div>
+      <% if @job_offer.persisted? && signed_in? && current_user == @job_offer.responsible_user %>
+      <div class="col-md-6">
+        <div class="field">
+          <label>Responsible User</label><br>
+         <%= collection_select(:responsible_user, :responsible_user_id, @job_offer.chair.research_assistants, :id, :email) %>
+        </div>
+      </div>
+
+      <% end %>
     </div>
     <div class="row">
       <div class="field">

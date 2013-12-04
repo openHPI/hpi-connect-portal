@@ -23,6 +23,7 @@ class JobOffer < ActiveRecord::Base
 	has_and_belongs_to_many :programming_languages
     has_and_belongs_to_many :languages
     belongs_to :chair
+    belongs_to :responsible_user, class_name: "User"
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages

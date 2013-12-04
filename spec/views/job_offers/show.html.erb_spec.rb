@@ -6,7 +6,8 @@ describe "job_offers/show" do
     @job_offer = assign(:job_offer, stub_model(JobOffer,
       :description => "Description",
       :title => "Title",
-      :chair => @TestChair
+      :chair => @TestChair,
+      :responsible_user => FactoryGirl.create(:user)
     ))
     view.stub(:signed_in?) { false }
   end
