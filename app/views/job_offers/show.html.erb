@@ -12,6 +12,7 @@
 	
 	<br><br>
 
+
 <div class="panel panel-default panel-body">
 <h1>
   <%= @job_offer.title %>
@@ -54,7 +55,29 @@
     <dd><%= language.name %></dd>
   <% end %>
 
-</dl>
+    </dl>
+    <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+      <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
+        <div><%= f.hidden_field :job_offer_id %></div>
+        <%= f.submit 'Apply', class: 'btn btn-success apply-button' %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
-</div>
-  
+
+<% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
+  <div class="clearfix"></div>
+  <h4> Applications </h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @job_offer.applications %>
+    </tbody>
+  </table>
+<% end %>

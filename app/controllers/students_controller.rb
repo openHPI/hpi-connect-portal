@@ -14,20 +14,31 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
+    @all_programming_languages = ProgrammingLanguage.all
     @student = Student.new
   end
 
   # GET /students/1/edit
   def edit
+    @all_programming_languages = ProgrammingLanguage.all
   end
 
   # POST /students
   # POST /students.json
   def create
     @student = Student.new(student_params)
-
     respond_to do |format|
       if @student.save
+        if params[:programming_languages]
+          programming_languages = params[:programming_languages]
+          programming_languages.each do |programming_language_id, skill|
+            programming_language_student = ProgrammingLanguagesStudent.new
+            programming_language_student.student_id = @student.id
+            programming_language_student.programming_language_id = programming_language_id
+            programming_language_student.skill = skill
+            programming_language_student.save
+          end
+        end
         format.html { redirect_to @student, notice: 'Student was successfully created.' }
         format.json { render action: 'show', status: :created, location: @student }
       else
@@ -40,6 +51,21 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
+    if params[:programming_languages]
+      programming_languages = params[:programming_languages]
+      programming_languages.each do |programming_language_id, skill|
+        pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(params[:id],programming_language_id)
+        if pl
+          pl.update_attributes(:skill => skill)
+        else
+          programming_language_student = ProgrammingLanguagesStudent.new
+          programming_language_student.student_id = params[:id]
+          programming_language_student.programming_language_id = programming_language_id
+          programming_language_student.skill = skill
+          programming_language_student.save
+        end 
+      end
+    end
     respond_to do |format|
       if @student.update(student_params)
         format.html { redirect_to @student, notice: 'Student was successfully updated.' }
@@ -79,6 +105,7 @@ class StudentsController < ApplicationController
         :first_name, :last_name, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
-        :language_ids => [], :programming_language_ids => [])
+        :language_ids => [])
     end
+
 end

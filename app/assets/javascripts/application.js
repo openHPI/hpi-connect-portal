@@ -12,8 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= no require jquery.ui.all
+//= require jquery.ui.datepicker
 //= require jquery.turbolinks
+//= require jquery-star-rating
 //= require bootstrap/bootstrap
 //= require turbolinks
 //= require_tree .

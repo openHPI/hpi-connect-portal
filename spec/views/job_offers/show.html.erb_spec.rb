@@ -6,6 +6,7 @@ describe "job_offers/show" do
       :description => "Description",
       :title => "Title"
     ))
+    view.stub(:signed_in?) { false }
   end
 
   it "renders attributes in <p>" do
@@ -13,5 +14,11 @@ describe "job_offers/show" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Description/)
     rendered.should match(/Title/)
+  end
+
+  it "renders no applications if not signed in" do
+    render
+    rendered.should_not match(/Applications/)
+    rendered.should_not match(/Apply/)
   end
 end
