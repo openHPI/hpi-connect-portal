@@ -5,6 +5,7 @@ HpiHiwiPortal::Application.routes.draw do
       get "sort"
       get "search"
       get "filter"
+      get "archive"
       get "find_jobs"
     end
   end
@@ -27,6 +28,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :job_offers
   resources :users, only: [:edit, :update]
+  resources :applications, only: [:create]
 
   devise_for :users, controllers: { sessions: 'sessions' }
   

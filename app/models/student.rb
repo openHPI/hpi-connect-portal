@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)
+#  last_name              :string(255)
+#  semester               :integer
+#  academic_program       :string(255)
+#  birthday               :date
+#  education              :text
+#  additional_information :text
+#  homepage               :string(255)
+#  github                 :string(255)
+#  facebook               :string(255)
+#  xing                   :string(255)
+#  linkedin               :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  photo_file_name        :string(255)
+#  photo_content_type     :string(255)
+#  photo_file_size        :integer
+#  photo_updated_at       :datetime
+#  cv_file_name           :string(255)
+#  cv_content_type        :string(255)
+#  cv_file_size           :integer
+#  cv_updated_at          :datetime
+#
+
 class Student < ActiveRecord::Base
 	has_and_belongs_to_many :languages
 	has_and_belongs_to_many :programming_languages
@@ -6,9 +35,12 @@ class Student < ActiveRecord::Base
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+    validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+
     has_attached_file 	:cv,
 						:url  => "/assets/students/:id/:style/:basename.:extension",
     					:path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+	validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
     def self.search_student(string)
     	string = string.downcase
