@@ -27,9 +27,11 @@
 
 		</div>
 		<div class="row">
-  			<h2> Assigned Jobs </h2> 
+  			<% @find_jobs_path = find_jobs_chairs_path %>
   			<%= render 'shared/overview' %>
 		</div><!--/.row -->
 	</div>
-	<%= render 'shared/sort_filter_search'  %>
+	<div class="col-md-3">
+		<%= render 'shared/sort_filter_search'  %>
+	</div>
 </div>

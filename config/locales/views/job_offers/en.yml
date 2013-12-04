@@ -16,4 +16,6 @@ en:
     compensation: "in €/hour"
     start_date: "starting at the earliest"
     end_date: "finishing at the latest"
-    archive: "Archive"
+    archive: "Job Offers: Archive"
+    assigned: "Assigned Job Offers"
+    not_assigned: "Unassigned Job Offers"

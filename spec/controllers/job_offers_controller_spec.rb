@@ -41,10 +41,10 @@ describe JobOffersController do
   end
 
   describe "GET index" do
-    it "assigns all job_offers as @job_offers" do
+    it "assigns all job_offers as @job_offer-list[:items]" do
       job_offer = JobOffer.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:job_offers).should eq([job_offer])
+      assigns(:job_offers_list.at(0)).should eq([job_offer])
     end
   end
 

@@ -1,4 +1,5 @@
 class JobOffersController < ApplicationController
+  include ApplicationHelper
   before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
@@ -6,9 +7,11 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.order("created_at")
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = JobOffer.order("created_at")
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+    @chairs = Chair.all
   end
 
   # GET /job_offers/1
@@ -69,9 +72,12 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.filter({:status => "completed"})
+    job_offers = JobOffer.filter({:status => "completed"})
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.archive"}]
+    @chairs = Chair.all
   end
 
   # GET /job_offers/sort
@@ -113,22 +119,18 @@ class JobOffersController < ApplicationController
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
 
-    @job_offers = JobOffer.find_jobs({
-      search:  params[:search],
-      sort: params[:sort],
-      filter: {
-                :chair => params[:chair], 
-                :start_date => params[:start_date],
-                :end_date => params[:end_date],
-                :time_effort => params[:time_effort],
-                :compensation => params[:compensation]}
-
-    }) 
+    @job_offers = find_jobs_in_job_list(JobOffer)
     
     @job_offers = @job_offers.paginate(:page => params[:page])
     render "index"
 
+  end
 
+  def find_archived_jobs
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    @job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    @job_offers = @job_offers.paginate(:page => params[:page])
+    render "archive"
   end
 
   private

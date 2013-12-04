@@ -16,4 +16,6 @@ de:
     compensation: "in €/Stunde"
     start_date: "beginnt frühestens"
     end_date: "endet spätestens"
-    archive: "Archiv"
+    archive: "Stellenangebote: Archiv"
+    assigned: "Vergebene Stellenangebote"
+    not_assigned: "Freie Stellenangebote"

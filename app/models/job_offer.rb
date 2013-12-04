@@ -100,6 +100,6 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: where('status <= ?', status)
+        status.blank? ? all: where('status = ?', status)
     end
 end

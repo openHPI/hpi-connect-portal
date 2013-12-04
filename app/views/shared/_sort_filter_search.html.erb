@@ -19,10 +19,12 @@
         <div id="filter">
           <%= label_tag t("job_offers.filterLabel") %>
 
+          <% unless @chairs.empty? %> 
           <div class="form-group">
             <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
-            <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}), include_blank: true, :class => "form-control"%>
+            <%= select_tag "chair", options_for_select(@chairs.collect {|p| [p.name, p.id]}), include_blank: true, :class => "form-control"%>
           </div>
+          <% end %>
 
           <div class="form-group">
               <%= label_tag t("job_offer.start_date"), nil, :class => "small" %>

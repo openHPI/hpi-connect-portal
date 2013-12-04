@@ -7,8 +7,12 @@ HpiHiwiPortal::Application.routes.draw do
       get "filter"
       get "archive"
       get "find_jobs"
+      get "find_archived_jobs"
     end
   end
+
+  resources :chairs
+  get "chairs/:id/find_jobs", to: "chairs#find_jobs", as: "find_jobs_chairs" 
 
   resources :students do
     collection do
@@ -24,7 +28,6 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :studentsearch
 
-  resources :chairs
 
   resources :job_offers
   resources :users, only: [:edit, :update]
