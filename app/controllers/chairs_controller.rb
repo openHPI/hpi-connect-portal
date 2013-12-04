@@ -11,6 +11,7 @@ class ChairsController < ApplicationController
   # GET /chairs/1.json
   def show	
     @job_offers=JobOffer.all
+    @job_offers = @job_offers.paginate(:page => params[:page], :per_page => 3)
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @chairs=[@chair.name]
   end
