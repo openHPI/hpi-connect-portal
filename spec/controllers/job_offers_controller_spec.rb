@@ -208,6 +208,14 @@ describe JobOffersController do
         put :update, {:id => job_offer.to_param, :job_offer => valid_attributes}, valid_session
         response.should redirect_to(job_offer)
       end
+
+      it "only allows the responsible user to update" do
+        job_offer = JobOffer.create! valid_attributes
+        job_offer.responsible_user = FactoryGirl.create(:user)
+        job_offer.save
+        put :update, {:id => job_offer.to_param, :job_offer => valid_attributes}, valid_session
+        response.should redirect_to(job_offer)
+      end
     end
 
     describe "with invalid params" do

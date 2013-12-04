@@ -1,4 +1,5 @@
 class JobOffersController < ApplicationController
+  before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
 
@@ -24,13 +25,8 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/1/edit
   def edit
-    if current_user == @job_offer.responsible_user
-      @programming_languages = ProgrammingLanguage.all
-      @languages = Language.all
-    else
-      redirect_to @job_offer
-    end
-
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
   end
 
   # POST /job_offers
@@ -138,7 +134,7 @@ class JobOffersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
-      @job_offer = JobOffer.find(params[:id])
+      @job_offer = JobOffer.find params[:id]
     end
 
     def set_chairs
@@ -155,4 +151,12 @@ class JobOffersController < ApplicationController
       format.html { render action: target }
       format.json { render json: object.errors, status: :unprocessable_entity }
     end  
+
+    def check_user_is_responsible
+      @job_offer = JobOffer.find params[:id]
+
+      unless current_user == @job_offer.responsible_user
+        redirect_to @job_offer
+      end
+    end
 end
