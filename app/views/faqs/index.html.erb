@@ -1,0 +1,23 @@
+<h1>FAQs</h1>
+  
+  <div class="container"> 
+    <% @faqs.each do |faq| %>
+      <div class="panel panel-default panel-body">
+        <div class="container">
+          <div class="col-md-11">
+            <h4> <%= faq.question %> </h4>
+            <br>
+            <p> <%= faq.answer %> </p>
+            <br>
+            <%= link_to 'Edit', edit_faq_path(faq), :class => "btn btn-default" %>
+            <%= link_to 'Destroy', faq, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default" %>
+            <br>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div> 
+
+<div>
+  <%= link_to 'New FAQ', new_faq_path, :class => "btn btn-default" %>
+</div>
