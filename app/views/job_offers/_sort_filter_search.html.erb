@@ -1,16 +1,15 @@
-<div class="col-md-4">
+<div class="col-md-3">
     <div class="well sidebar-nav">
       <div class="container ">
-        <%= form_tag( find_job_offers_url, :method => :get, :id => 'Form' ) do %> 
+        <%= form_tag( "/job_offers/find_jobs", :method => :get, :id => 'Form' ) do %> 
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
               <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
               <%= label_tag :sort, "Date", :class => "radio-inline " %>
-              <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
-              :id => "sort_by_date_RB"  %>
+              <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
               <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
-              <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>
+              <%= radio_button_tag :sort, 'chair' , params[:sort] == "chair" %>
             </div>
             <div class="form-group" id="search">
               <%= label_tag t("job_offers.searchLabel") %>
@@ -22,7 +21,7 @@
 
               <div class="form-group">
                 <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
-                <%= select_tag "chair", options_for_select(Chair.all.map {|p| [p.name]}), include_blank: true, :class => "form-control"%>
+                <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}), include_blank: true, :class => "form-control"%>
               </div>
 
               <div class="form-group">
@@ -33,6 +32,34 @@
                   <%= label_tag t("job_offer.end_date"), nil, :class => "small" %>
                   <%= text_field_tag :end_date, params.fetch(:end_date, ''), :placeholder => t('job_offers.end_date'), :class => 'datepicker form-control'%>
               </div>
+              <div class="form-group">
+                <%= label_tag t("job_offer.programming_languages"), nil, :class => "small" %>
+                <div class="row">
+                  <div class="field">
+                  <!--   <%= hidden_field_tag "programming_language_ids[]", nil %> -->
+                    <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
+                      <div class="col-md-6">
+                        <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids).include?(programming_language.id.to_s), id: dom_id(programming_language)%>
+                        <%= label_tag dom_id(programming_language), programming_language.name %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag t("job_offer.languages"), nil, :class => "small" %>
+                <div class="row">
+                  <div class="field">
+                    <!-- <%= hidden_field_tag "job_offer[language_ids][]", nil %> -->
+                    <% Language.all.each do |language| %>
+                      <div class="col-md-6">
+                        <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids).include?(language.id.to_s), id: dom_id(language) %>
+                        <%= label_tag dom_id(language), language.name %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>   
               <div class="form-group">
                   <%= label_tag t("job_offer.time_effort"), nil, :class => "small" %>
                   <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :placeholder => t('job_offers.time_effort'), :class => "form-control" %>

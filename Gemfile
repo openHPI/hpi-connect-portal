@@ -60,7 +60,7 @@ gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
 
-gem 'devise', '~> 3.1'
+gem 'devise', '~> 3.2'
 gem 'devise_openid_authenticatable'
 
 # authorizations in one place

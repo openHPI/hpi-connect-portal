@@ -6,9 +6,10 @@ describe "the job-offers page" do
   before(:each) do
     @epic = FactoryGirl.create(:chair, name:"EPIC")
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
-    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: @TestChair)
-    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2", chair: @epic)
-    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3", chair: @epic)
+    @user = FactoryGirl.create(:user)
+    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
+    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2", chair: @epic, responsible_user: @user)
+    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3", chair: @epic, responsible_user: @user)
   end
 
   it "should include all jobs currently available" do
@@ -34,7 +35,8 @@ describe "a job offer entry" do
 
   before(:each) do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
-    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: @TestChair)
+    @user = FactoryGirl.create(:user)
+    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: @TestChair, responsible_user: @user)
   end
 
   it "should have a title and the professorship" do
@@ -53,10 +55,12 @@ end
 describe "job_offers_history" do
   it "should have a job-offers-history" do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
     @job_offer = FactoryGirl.create(:joboffer, 
       title: "Closed Job Touch Floor", 
       status: "completed",
-      chair: @TestChair
+      chair: @TestChair,
+      responsible_user: @user
       )
 
     visit job_offers_path
