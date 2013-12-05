@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.chair" %><br>
-          <%= f.collection_select :chair, Chair.all, :id, :name, {prompt: "Select a Chair"}, {class: "form-control"} %>
+          <%= f.collection_select :chair_id, Chair.all, :id, :name, {prompt: "Select a Chair"}, {class: "form-control"} %>
         </div>
       </div>
     </div>
@@ -74,13 +74,12 @@
         </div>
       </div>
       <% if @job_offer.persisted? && signed_in? && current_user == @job_offer.responsible_user %>
-      <div class="col-md-6">
-        <div class="field">
-          <label>Responsible User</label><br>
-         <%= collection_select(:responsible_user, :responsible_user_id, @job_offer.chair.research_assistants, :id, :email) %>
+        <div class="col-md-6">
+          <div class="field">
+            <label>Responsible User</label><br>
+           <%= f.collection_select(:responsible_user_id, @job_offer.chair.research_assistants, :id, :email) %>
+          </div>
         </div>
-      </div>
-
       <% end %>
     </div>
     <div class="row">
@@ -109,6 +108,7 @@
 
     <div class="actions">
       <%= f.submit t("helpers.links.save"), :class => "btn btn-default" %>
+      <%= link_to t("helpers.links.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
     </div>
   </div>
 <% end %>

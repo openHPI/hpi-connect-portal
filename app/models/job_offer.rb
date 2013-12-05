@@ -102,4 +102,8 @@ class JobOffer < ActiveRecord::Base
     def self.filter_status(status)
         status.blank? ? all: where('status <= ?', status)
     end
+
+    def completed?
+        status == "completed"
+    end
 end

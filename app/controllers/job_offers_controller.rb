@@ -1,7 +1,10 @@
 class JobOffersController < ApplicationController
   before_filter :check_user_is_responsible, only: [:edit, :update]
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
+  before_filter :check_user_is_research_assistent, only: [:complete]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
+
+  helper_method :user_is_research_assistent_of_chair?
 
   # GET /job_offers
   # GET /job_offers.json
@@ -131,6 +134,22 @@ class JobOffersController < ApplicationController
 
   end
 
+  # GET /job_offers/complete
+  def complete
+    respond_to do |format|
+      if @job_offer.update(:status => "completed")
+        format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
+        format.json { head :no_content }
+      else
+        render_errors_and_redirect_to(@job_offer, 'edit', format)
+      end
+    end
+  end
+
+  def user_is_research_assistent_of_chair?(job_offer)
+    current_user.chair_id == job_offer.chair_id and current_user.research_assistant?
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
@@ -156,6 +175,14 @@ class JobOffersController < ApplicationController
       @job_offer = JobOffer.find params[:id]
 
       unless current_user == @job_offer.responsible_user
+        redirect_to @job_offer
+      end
+    end
+
+    def check_user_is_research_assistent
+      @job_offer = JobOffer.find params[:id]
+
+      unless user_is_research_assistent_of_chair?(@job_offer)
         redirect_to @job_offer
       end
     end

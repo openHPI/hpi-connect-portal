@@ -8,6 +8,9 @@ HpiHiwiPortal::Application.routes.draw do
       get "archive"
       get "find_jobs"
     end
+    member do
+      get "complete"
+    end
   end
 
   resources :students do
