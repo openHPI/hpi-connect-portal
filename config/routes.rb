@@ -6,17 +6,18 @@ HpiHiwiPortal::Application.routes.draw do
 
     root :to => "job_offers#index"
 
-    resources :chairs
 
-    resources :users, only: [:edit, :update]
-    resources :applications, only: [:create]
-    
     resources :job_offers do    
       collection do
         get "archive"
         get "find"
       end
     end
+
+    resources :chairs
+    resources :users, only: [:edit, :update]
+    resources :applications, only: [:create]
+
 
     resources :students do
       collection do

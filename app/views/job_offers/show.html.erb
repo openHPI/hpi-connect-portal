@@ -6,7 +6,7 @@
   	<span class="pull-right">
       <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
   		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
-      <%= link_to t("links.destroy"), job_offer_path(@job_offer), :confirm => t("links.confirm"), :method => :delete, :class => "btn btn-default btn-danger" %>
+      <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("helpers.links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger" %>
   	</span>
   <% end %>
 	
@@ -26,7 +26,7 @@
   <dd> <%= @job_offer.room_number %></dd>
 
   <dt><%= t("job_offer.chair") %>:</dt>
-  <dd> <%= @job_offer.chair %></dd>
+  <dd> <%= @job_offer.chair.name %></dd>
 
   <dt><%= t("job_offer.start_date") %>:</dt>
   <dd> <%= @job_offer.start_date %></dd>
@@ -39,6 +39,9 @@
 
   <dt><%= t("job_offer.compensation") %>:</dt>
   <dd> <%= @job_offer.compensation %></dd>
+
+  <dt>Contact:</dt>
+  <dd> <%= @job_offer.responsible_user.email %></dd>
 
   <dt>Student Placeholder:</dt>
   <% if @job_offer.status != "completed" %>

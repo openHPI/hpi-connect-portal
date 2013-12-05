@@ -1,7 +1,7 @@
 class JobOffersController < ApplicationController
   before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
-  before_action :set_chairs, only: [:index, :find_jobs, :archive]
+  before_action :set_chairs, only: [:index, :find, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -76,7 +76,6 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/find_jobs
   def find_jobs
-
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.find_jobs({
       search:  params[:search],
@@ -89,7 +88,6 @@ class JobOffersController < ApplicationController
                 :compensation => params[:compensation],
                 :language_ids => params[:language_ids],
                 :programming_language_ids => params[:programming_language_ids]}
-
     }) 
     
     @job_offers = @job_offers.paginate(:page => params[:page])
