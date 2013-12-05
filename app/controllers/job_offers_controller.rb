@@ -74,45 +74,9 @@ class JobOffersController < ApplicationController
     @job_offers = @job_offers.paginate(:page => params[:page])
   end
 
-  # GET /job_offers/sort
-  def sort
-     @radio_button_sort_value = {"date" => false, "chair" => false}
-     sort_value =  params.require(:sort_value)
-     logger.warn(sort_value)
-     @radio_button_sort_value[sort_value] = true
-     logger.warn(@radio_button_sort_value)
-
-     @job_offers = JobOffer.sort sort_value
-     render "index"
-  end
-
-
-  # GET /job_offers/search
-  def search
+  # GET /job_offers/find_jobs
+  def find_jobs
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.search params[:search]
-
-    render "index"
-  end
-
-  # GET /job_offers/filter
-  def filter
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = JobOffer.filter({
-                                    :chair => params[:chair], 
-                                    :start_date => params[:start_date],
-                                    :end_date => params[:end_date],
-                                    :time_effort => params[:time_effort],
-                                    :compensation => params[:compensation]})
-
-     render "index"
-  end
-
-  def find
-
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
     @job_offers = JobOffer.find_jobs({
       search:  params[:search],
       sort: params[:sort],
@@ -121,13 +85,14 @@ class JobOffersController < ApplicationController
                 :start_date => params[:start_date],
                 :end_date => params[:end_date],
                 :time_effort => params[:time_effort],
-                :compensation => params[:compensation]}
+                :compensation => params[:compensation],
+                :language_ids => params[:language_ids],
+                :programming_language_ids => params[:programming_language_ids]}
     }) 
     
     @job_offers = @job_offers.paginate(:page => params[:page])
     render "index"
-
-
+    
   end
 
   private

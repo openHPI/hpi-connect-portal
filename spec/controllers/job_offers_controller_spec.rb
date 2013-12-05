@@ -93,56 +93,20 @@ describe JobOffersController do
     end
   end
 
-  describe "GET find" do
-    it "assigns @job_offers all job offers sorted by date" do
-
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), chair: @epic)
-
-      job_offers = JobOffer.sort "date"
-      get :find, {:sort => "date"}, valid_session
-      assigns(:job_offers).should eq(job_offers)
-    end
-
-    it "assigns @job_offers all job offers sorted by chair" do
-
-      FactoryGirl.create(:joboffer, chair: @itas)
-      FactoryGirl.create(:joboffer, chair: @epic)
-      FactoryGirl.create(:joboffer, chair: @os)
-
-      job_offers = JobOffer.sort "chair"
-      get :find, {:sort => "chair"}, valid_session
-      assigns(:job_offers).should eq(job_offers)
-    end
-
-  describe "GET filter" do
+  describe "GET find_jobs" do
     it "assigns @job_offers to all job offers with the chair EPIC" do
 
       FactoryGirl.create(:joboffer, chair: @itas)
       FactoryGirl.create(:joboffer, chair: @epic)
       FactoryGirl.create(:joboffer, chair: @os)
+      FactoryGirl.create(:joboffer, chair: @epic)
 
-      job_offers = JobOffer.filter ({:chair => "EPIC"})
-      get :find, {:chair => "EPIC"}, valid_session
-      assigns(:job_offers).should eq(job_offers)
-    end
-
-    it "assigns all job_offers with relevant title as @job_offers" do
-      job_offer = JobOffer.create! valid_attributes
-      get :find, {:search => "open hpi"}, valid_session
-      assigns(:job_offers).should eq([job_offer])
-    end
-
-    it "assigns no job_offers with irrelevant title as @job_offers" do
-      job_offer = JobOffer.create! valid_attributes
-      get :find, {:search => "job hpi"}, valid_session
-      assigns(:job_offers).should eq([])
+      job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
+      get :find_jobs, ({:chair => @epic.id}), valid_session
+      assigns(:job_offers).all.should =~ (job_offers).all
     end
   end
-
+  
   describe "POST create" do
     describe "with valid params" do
       it "creates a new JobOffer" do

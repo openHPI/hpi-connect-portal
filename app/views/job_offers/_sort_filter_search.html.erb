@@ -33,6 +33,34 @@
                   <%= text_field_tag :end_date, params.fetch(:end_date, ''), :placeholder => t('job_offers.end_date'), :class => 'datepicker form-control'%>
               </div>
               <div class="form-group">
+                <%= label_tag t("job_offer.programming_languages"), nil, :class => "small" %>
+                <div class="row">
+                  <div class="field">
+                  <!--   <%= hidden_field_tag "programming_language_ids[]", nil %> -->
+                    <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
+                      <div class="col-md-6">
+                        <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids).include?(programming_language.id.to_s), id: dom_id(programming_language)%>
+                        <%= label_tag dom_id(programming_language), programming_language.name %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <%= label_tag t("job_offer.languages"), nil, :class => "small" %>
+                <div class="row">
+                  <div class="field">
+                    <!-- <%= hidden_field_tag "job_offer[language_ids][]", nil %> -->
+                    <% Language.all.each do |language| %>
+                      <div class="col-md-6">
+                        <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids).include?(language.id.to_s), id: dom_id(language) %>
+                        <%= label_tag dom_id(language), language.name %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>   
+              <div class="form-group">
                   <%= label_tag t("job_offer.time_effort"), nil, :class => "small" %>
                   <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :placeholder => t('job_offers.time_effort'), :class => "form-control" %>
                 </div>
