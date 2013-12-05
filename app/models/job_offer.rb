@@ -106,7 +106,26 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_programming_languages(programming_language_ids)
-        programming_language_ids.blank? ? all : includes(:job_offers_programming_languages).where('programming_language_id in ?', programming_language_ids)
+
+        filtered_jobs = []
+        all.each do | job_offer |
+            prog_lang_id_copy = Array.new programming_language_ids
+
+            temp = joins(:programming_languages).where('job_offers.id=?', job_offer.id).select("programming_languages.id")
+            logger.warn(temp)
+            temp.each do | job_prog_tuple |
+                logger.warn("tuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuple")
+                logger.warn(job_prog_tuple.id.to_s)
+                prog_lang_id_copy.delete(job_prog_tuple.id.to_s)
+            end 
+
+            if prog_lang_id_copy.empty?
+                filtered_jobs << job_offer
+            end
+
+        end
+        filtered_jobs
+       # programming_language_ids.blank? ? all : includes(:job_offers_programming_languages).where('programming_language_id in ?', programming_language_ids)
     end
 
     def self.filter_languages(language_ids)
