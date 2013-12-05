@@ -28,3 +28,5 @@
 # ignore public folder
 /public/system/*
 
+# .orig Files
+.orig

@@ -2,27 +2,37 @@
 #
 # Table name: job_offers
 #
-#  id          :integer          not null, primary key
-#  description :string(255)
-#  title       :string(255)
-#  created_at  :datetime
-#  updated_at  :datetime
-#  chair       :string(255)
-#  start_date  :datetime
-#  end_date    :datetime
-#  time_effort :float
-#  compensation:float
-#  room_number :string(255)
-
+#  id           :integer          not null, primary key
+#  description  :text
+#  title        :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  chair        :string(255)
+#  start_date   :date
+#  end_date     :date
+#  time_effort  :float
+#  compensation :float
+#  room_number  :string(255)
+#  status       :string(255)
+#
 
 class JobOffer < ActiveRecord::Base
+
+    has_many :applications
+    has_many :users, through: :applications
 	has_and_belongs_to_many :programming_languages
     has_and_belongs_to_many :languages
+    belongs_to :chair
+    belongs_to :responsible_user, class_name: "User"
+
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
+
 	validates :title, :description, :chair, :start_date, :time_effort, :compensation, presence: true
     validates :compensation, :time_effort, numericality: true
 	validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
+
+    self.per_page = 5
 
 
     def self.find_jobs(attributes={})
@@ -51,17 +61,18 @@ class JobOffer < ActiveRecord::Base
 		if order_attribute == "date"
 			order(:created_at)
 		elsif order_attribute == "chair"
-			order(:chair)
+			includes(:chair).order("chairs.name ASC")
 		end
 	end
 
 	def self.search(search_attribute)
 			search_string = "%" + search_attribute + "%"
 			search_string = search_string.downcase
-			includes(:programming_languages).where('lower(title) LIKE ? OR lower(description) LIKE ? OR lower(chair) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages)
+			includes(:programming_languages,:chair).where('lower(title) LIKE ? OR lower(job_offers.description) LIKE ? OR lower(chairs.name) LIKE ? OR lower(programming_languages.name) LIKE ?', search_string, search_string, search_string, search_string).references(:programming_languages,:chair)
 	end
 
 	def self.filter(options={})
+
 		filter_chair(options[:chair]).
         filter_start_date(options[:start_date]).
         filter_end_date(options[:end_date]).
@@ -72,7 +83,7 @@ class JobOffer < ActiveRecord::Base
 
 
     def self.filter_chair(chair)
-    	chair.blank? ? all : where(:chair => chair.split(',').collect(&:strip))             
+    	chair.blank? ? all : where(chair_id: chair.to_i)             
     end
 
     def self.filter_start_date(start_date)

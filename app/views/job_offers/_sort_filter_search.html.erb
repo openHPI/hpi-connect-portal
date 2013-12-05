@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-3">
     <div class="well sidebar-nav">
       <div class="container ">
         <%= form_tag( find_job_offers_url, :method => :get, :id => 'Form' ) do %> 
@@ -7,10 +7,9 @@
             <div class="form-group" id="sort">
               <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
               <%= label_tag :sort, "Date", :class => "radio-inline " %>
-              <%= radio_button_tag :sort_value, 'date' , true, :checked => @radio_button_sort_value["date"],
-              :id => "sort_by_date_RB"  %>
+              <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
               <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
-              <%= radio_button_tag :sort_value, 'chair' , false, :checked => @radio_button_sort_value["chair"] %>
+              <%= radio_button_tag :sort, 'chair' , params[:sort] == "chair" %>
             </div>
             <div class="form-group" id="search">
               <%= label_tag t("job_offers.searchLabel") %>
@@ -22,7 +21,7 @@
 
               <div class="form-group">
                 <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
-                <%= select_tag "chair", options_for_select(@chairs, params.fetch(:chair, '')), include_blank: true, :class => "form-control"%>
+                <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}), include_blank: true, :class => "form-control"%>
               </div>
 
               <div class="form-group">
