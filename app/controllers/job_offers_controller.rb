@@ -1,7 +1,7 @@
 class JobOffersController < ApplicationController
   before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
-  before_action :set_chairs, only: [:index, :find, :archive]
+  before_action :set_chairs, only: [:index, :find_jobs, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
