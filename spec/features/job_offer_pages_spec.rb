@@ -5,7 +5,7 @@ describe "Job Offer pages" do
   subject { page }
   
   describe "show page" do
-    let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user)) }
+    let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user), status: FactoryGirl.create(:job_status, :name => "open")) }
 
     before { visit job_offer_path(job_offer) }
 

@@ -72,7 +72,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.filter({:status => "completed"})
+    @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = @job_offers.paginate(:page => params[:page])
   end
@@ -137,7 +137,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/complete
   def complete
     respond_to do |format|
-      if @job_offer.update(:status => "completed")
+      if @job_offer.update(:status => JobStatus.where( :name=>"completed" ).first )
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
         format.json { head :no_content }
       else

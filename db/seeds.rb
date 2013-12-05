@@ -12,6 +12,13 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
+#Create Standart Job Status
+JobStatus.delete_all
+JobStatus.create(name: 'pending')
+JobStatus.create(name: 'open')
+JobStatus.create(name: 'working')
+JobStatus.create(name: 'completed')
+
 #Create User as an example deputy for all chairs
 User.delete_all
 User.create([{
@@ -121,7 +128,7 @@ JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
 	chair: Chair.where(:name => "Human Computer Interaction").first, 
-	status: 'completed',
+	status: JobStatus.where(:name => "completed").first,
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
@@ -134,7 +141,7 @@ JobOffer.create([{
 	title: "Website Developer", 
 	description: 'The student develops a wonderful website.', 
 	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
-	status: 'completed',
+	status: JobStatus.where(:name => "completed").first,
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,

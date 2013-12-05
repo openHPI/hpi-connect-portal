@@ -44,7 +44,7 @@
   <dd> <%= @job_offer.responsible_user.email %></dd>
 
   <dt>Student Placeholder:</dt>
-  <% if @job_offer.status != "completed" %>
+  <% unless @job_offer.completed? %>
     <dd> <%=  %></dd>
   <% end %>
 

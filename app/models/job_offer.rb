@@ -7,13 +7,14 @@
 #  title        :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
-#  chair        :string(255)
+#  chair_id     :integer
+#  responsible_user_id :integer
 #  start_date   :date
 #  end_date     :date
 #  time_effort  :float
 #  compensation :float
 #  room_number  :string(255)
-#  status       :string(255)
+#  status_id    :integer
 #
 
 class JobOffer < ActiveRecord::Base
@@ -24,6 +25,7 @@ class JobOffer < ActiveRecord::Base
     has_and_belongs_to_many :languages
     belongs_to :chair
     belongs_to :responsible_user, class_name: "User"
+    belongs_to :status, class_name: "JobStatus"
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
@@ -100,10 +102,22 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: where('status <= ?', status)
+        status.blank? ? all: where(status: status)
     end
 
     def completed?
-        status == "completed"
+        status.name == "completed"
+    end
+
+    def pending?
+        status.name == "pending"
+    end
+
+    def open?
+        status.name == "open"
+    end
+
+    def working?
+        status.name == "working"
     end
 end

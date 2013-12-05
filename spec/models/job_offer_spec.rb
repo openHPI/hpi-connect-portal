@@ -7,13 +7,13 @@
 #  title        :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
-#  chair        :string(255)
+#  chair_id     :integer
 #  start_date   :date
 #  end_date     :date
 #  time_effort  :float
 #  compensation :float
 #  room_number  :string(255)
-#  status       :string(255)
+#  status_id    :integer
 #
 
 require 'spec_helper'
@@ -183,9 +183,10 @@ describe JobOffer do
 
 
   it "returns job offers filtered by status" do
-    job_offer_with_status = FactoryGirl.create(:joboffer, status:"completed");
+    @status = FactoryGirl.create(:job_status, :name => "completed")
+    job_offer_with_status = FactoryGirl.create(:joboffer, status: @status);
     FactoryGirl.create(:joboffer, chair: @epic);
-    filtered_job_offers = JobOffer.filter({:status => "completed"})
+    filtered_job_offers = JobOffer.where(:status => @status)
     assert filtered_job_offers.include? job_offer_with_status
     assert_equal(filtered_job_offers.length, 1);
   end

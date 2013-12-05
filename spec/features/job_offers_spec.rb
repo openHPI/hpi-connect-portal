@@ -36,7 +36,12 @@ describe "a job offer entry" do
   before(:each) do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: @TestChair, responsible_user: @user)
+    @job_offer = FactoryGirl.create(:joboffer, 
+      title: "TestJob", 
+      chair: @TestChair, 
+      responsible_user: @user, 
+      status: FactoryGirl.create(:job_status, :name => "open"
+    ))
   end
 
   it "should have a title and the professorship" do
@@ -47,8 +52,8 @@ describe "a job offer entry" do
   it "should link to its detailed page" do
     visit job_offers_path
     find_link("TestJob").click
-    # we expect to be on another page
-    current_path.should_not == job_offers_path
+    # we expect to be on the detailed page
+    expect(current_path).to eq(job_offer_path(@job_offer))
   end
 end
 
@@ -56,9 +61,10 @@ describe "job_offers_history" do
   it "should have a job-offers-history" do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
+    @status = FactoryGirl.create(:job_status, :name => "completed")
     @job_offer = FactoryGirl.create(:joboffer, 
       title: "Closed Job Touch Floor", 
-      status: "completed",
+      status: @status,
       chair: @TestChair,
       responsible_user: @user
       )

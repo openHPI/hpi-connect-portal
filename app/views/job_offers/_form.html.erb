@@ -108,7 +108,9 @@
 
     <div class="actions">
       <%= f.submit t("helpers.links.save"), :class => "btn btn-default" %>
-      <%= link_to t("helpers.links.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
+      <% unless @job_offer.id.nil? %>
+        <%= link_to t("helpers.links.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
+      <% end %>
     </div>
   </div>
 <% end %>
