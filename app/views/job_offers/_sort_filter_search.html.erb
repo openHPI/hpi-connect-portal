@@ -1,14 +1,14 @@
 <div class="col-md-3">
     <div class="well sidebar-nav">
       <div class="container ">
-        <%= form_tag( "/job_offers/find_jobs", :method => :get, :id => 'Form' ) do %> 
+        <%= form_tag( find_job_offers_path, :method => :get, :id => 'Form' ) do %> 
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
               <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
-              <%= label_tag :sort, "Date", :class => "radio-inline " %>
+              <%= label_tag :sort,t("job_offers.sortDate"), :class => "radio-inline " %>
               <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
-              <%= label_tag :sort, 'Chair', :class => "radio-inline" %>
+              <%= label_tag :sort, t("job_offers.sortChair"), :class => "radio-inline" %>
               <%= radio_button_tag :sort, 'chair' , params[:sort] == "chair" %>
             </div>
             <div class="form-group" id="search">

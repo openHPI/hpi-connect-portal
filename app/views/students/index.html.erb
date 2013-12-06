@@ -1,12 +1,12 @@
-<h1>Students</h1>
+<h1><%= t("students.students_headline")%></h1>
 
 <table class="table">
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Semester</th>
-      <th>Academic program</th>
+      <th><%= t("student.first_name")%></th>
+      <th><%= t("student.last_name")%></th>
+      <th><%= t("student.semester")%></th>
+      <th><%= t("student.academic_program")%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,9 +20,9 @@
         <td><%= student.last_name %></td>
         <td><%= student.semester %></td>
         <td><%= student.academic_program %></td>
-        <td><%= link_to 'Show', student, :class => "btn btn-info" %></td>
-        <td><%= link_to 'Edit', edit_student_path(student), :class => "btn btn-warning" %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+        <td><%= link_to t("links.show"), student, :class => "btn btn-info" %></td>
+        <td><%= link_to t("links.edit"), edit_student_path(student), :class => "btn btn-warning" %></td>
+        <td><%= link_to t("links.destroy"), student, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path, :class => "btn btn-default" %>
+<%= link_to t("students.new_student"), new_student_path, :class => "btn btn-default" %>

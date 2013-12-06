@@ -102,5 +102,3 @@ gem 'simple_form'
 
 #replacement for glyphicons
 gem "font-awesome-rails"
-
-gem "debugger"
