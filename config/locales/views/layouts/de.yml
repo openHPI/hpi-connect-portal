@@ -1,0 +1,9 @@
+de:
+  layouts:
+    job_offers: "Stellenangebote"
+    students: "Studenten"
+    chairs: "Lehrstühle"
+    login: "Anmelden"
+    logged_in: "Angemeldet"
+    edit_profile: "Profil bearbeiten"
+    logout: "Abmelden"
