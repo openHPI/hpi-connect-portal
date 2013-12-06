@@ -1,6 +1,7 @@
 de:
     chairs:
         chair: "Lehrstuhl"
+        chairs: "Lehrstühle"
         chair_overview: "Lehrstuhlübersicht"
         editing_chair: "Lehrstuhl bearbeiten"
         new_chair: "Neuer Lehrstuhl"
