@@ -65,30 +65,30 @@
       <% end %>
 
         </dl>
-        <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+         <%# if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
-            <%= f.submit 'Apply', class: 'btn btn-success apply-button' %>
+            <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button' %>
           <% end %>
-        <% end %>
+        <%# end %>
       </div>
 
 
-    <% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
+    <%# if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
       <div class="clearfix"></div>
-      <h4> Applications </h4>
+      <h4><%= t("job_offers.applications_headline")%></h4>
       <table class="table">
         <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th><%= t("job_offers.applicant_first_name") %></th>
+            <th><%= t("job_offers.applicant_last_name") %></th>
+            <th><%= t("job_offers.applicant_email") %></th>
           </tr>
         </thead>
         <tbody>
           <%= render @job_offer.applications %>
         </tbody>
       </table>
-    <% end %>
+    <%# end %>
   </div>
 </div>

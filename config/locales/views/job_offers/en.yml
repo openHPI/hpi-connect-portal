@@ -23,3 +23,8 @@ en:
     enter_description: "add an description"
     compensation_description: "€/hour"
     time_effort_description: "hours/week"
+    apply: "Apply"
+    applications_headline: "Applications"
+    applicant_first_name: "First Name"
+    applicant_last_name: "Last Name"
+    applicant_email: "Email"
