@@ -11,6 +11,21 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
+#Create User as an example deputy for all chairs
+User.delete_all
+User.create([
+	{ firstname: "Chief",
+	lastname: "Smith",
+	email: "chief@smith.de",
+	role: Role.where(:name => 'Student').first }
+	])
+User.create([
+	{ firstname: "Sophie",
+	lastname: "Heuser",
+	email: "sophie_heuser@student.hpi.uni-potsdam.de",
+	role: Role.where(:name => 'Research Assistant').first }
+	])
+
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all
 
