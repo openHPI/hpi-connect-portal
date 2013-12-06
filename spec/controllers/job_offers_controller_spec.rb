@@ -93,7 +93,7 @@ describe JobOffersController do
     end
   end
 
-  describe "GET find_jobs" do
+  describe "GET find" do
     it "assigns @job_offers to all job offers with the chair EPIC" do
 
       FactoryGirl.create(:joboffer, chair: @itas)
@@ -102,7 +102,7 @@ describe JobOffersController do
       FactoryGirl.create(:joboffer, chair: @epic)
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
-      get :find_jobs, ({:chair => @epic.id}), valid_session
+      get :find, ({:chair => @epic.id}), valid_session
       assigns(:job_offers).to_a.should =~ (job_offers).to_a
     end
   end

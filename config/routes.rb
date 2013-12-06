@@ -7,7 +7,7 @@ HpiHiwiPortal::Application.routes.draw do
     resources :job_offers do    
       collection do
         get "archive"
-        get "find_jobs"
+        get "find"
       end
     end
 

@@ -75,7 +75,7 @@ class JobOffersController < ApplicationController
   end
 
   # GET /job_offers/find_jobs
-  def find_jobs
+  def find
     @radio_button_sort_value = {"date" => false, "chair" => false}
     @job_offers = JobOffer.find_jobs({
       search:  params[:search],
