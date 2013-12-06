@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202184458) do
+ActiveRecord::Schema.define(version: 20131204082315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131202184458) do
 
   create_table "chairs", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -38,18 +38,26 @@ ActiveRecord::Schema.define(version: 20131202184458) do
 
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
 
+  create_table "chairs_job_offers", id: false, force: true do |t|
+    t.integer "chair_id"
+    t.integer "job_offer_id"
+  end
+
+  add_index "chairs_job_offers", ["chair_id", "job_offer_id"], name: "index_chairs_job_offers_on_chair_id_and_job_offer_id", unique: true, using: :btree
+
   create_table "job_offers", force: true do |t|
     t.text     "description"
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "chair"
     t.date     "start_date"
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
     t.string   "room_number"
     t.string   "status"
+    t.integer  "chair_id"
+    t.integer  "responsible_user_id"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
