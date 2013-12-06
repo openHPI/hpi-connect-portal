@@ -21,7 +21,8 @@
       job_offers:
         headline: "Stellenangebote"
 
-
+Use Spaces not Tabs in yml.
+If the changes are not displayed, restart the server.
 
 **** models vs views ****
 
