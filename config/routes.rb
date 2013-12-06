@@ -1,7 +1,4 @@
 HpiHiwiPortal::Application.routes.draw do
-
-  
-
   scope "(:locale)", locale: /en|de/ do
 
     root :to => "job_offers#index"
