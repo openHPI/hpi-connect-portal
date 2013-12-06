@@ -121,7 +121,7 @@ describe JobOffersController do
 
   end
 
-  describe "GET filer" do
+  describe "GET filter" do
     it "assigns @job_offers to all job offers with the chair EPIC" do
 
       FactoryGirl.create(:joboffer, chair: @itas)
@@ -146,6 +146,16 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :search, {:search => "job hpi"}, valid_session
       assigns(:job_offers).should eq([])
+    end
+  end
+
+  describe "GET complete" do
+    it "prohibits user to mark jobs as completed when he is no research assistent of the chair" do 
+      login_as(FactoryGirl.create(:user), :scope => :user)
+
+      job_offer = JobOffer.create! valid_attributes
+      get :complete, {:id => job_offer.id}, valid_session
+      response.should redirect_to(job_offer)
     end
   end
 

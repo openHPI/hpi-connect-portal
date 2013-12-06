@@ -54,6 +54,14 @@ describe "Job Offer pages" do
 
         it { should have_button('Accept') }
         it { should have_button('Decline') }
+
+        it "is possible to mark a job as completed" do
+          should have_link 'Job completed'
+
+          visit edit_job_offer_path(job_offer)
+          should have_link 'Job completed'
+        end
+        
       end
     end
   end

@@ -147,7 +147,7 @@ class JobOffersController < ApplicationController
   end
 
   def user_is_research_assistent_of_chair?(job_offer)
-    current_user.chair_id == job_offer.chair_id and current_user.research_assistant?
+    signed_in? and current_user.chair_id == job_offer.chair_id and current_user.research_assistant?
   end
 
   private
