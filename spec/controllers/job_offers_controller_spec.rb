@@ -103,7 +103,7 @@ describe JobOffersController do
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find_jobs, ({:chair => @epic.id}), valid_session
-      assigns(:job_offers).all.should =~ (job_offers).all
+      assigns(:job_offers).to_a.should =~ (job_offers).to_a
     end
   end
   

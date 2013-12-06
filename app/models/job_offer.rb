@@ -44,7 +44,6 @@ class JobOffer < ActiveRecord::Base
         end
 
         if !attributes[:filter].blank?
-            puts attributes.inspect
             result = result.filter(attributes[:filter])
         end
 
