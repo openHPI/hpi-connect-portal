@@ -1,3 +1,6 @@
 en:
     students:
         students: "Students"
+        students_headline: "student list"
+        new_student: "create new student"
+        edit_student: "edit student"

@@ -65,16 +65,16 @@
       <% end %>
 
         </dl>
-         <%# if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+         <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
             <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button' %>
           <% end %>
-        <%# end %>
+        <% end %>
       </div>
 
 
-    <%# if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
+    <% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
       <div class="clearfix"></div>
       <h4><%= t("job_offers.applications_headline")%></h4>
       <table class="table">
@@ -89,6 +89,6 @@
           <%= render @job_offer.applications %>
         </tbody>
       </table>
-    <%# end %>
+    <% end %>
   </div>
 </div>

@@ -4,78 +4,78 @@
   <%= image_tag(@student.photo.url, size: "150") %>
 </p>
 <p>
-  <strong>First name:</strong>
+  <strong><%= t("student.first_name")%>:</strong>
   <%= @student.first_name %>
 </p>
 
 <p>
-  <strong>Last name:</strong>
+  <strong><%= t("student.last_name")%>:</strong>
   <%= @student.last_name %>
 </p>
 
 <p>
-  <strong>Semester:</strong>
+  <strong><%= t("student.semester")%>:</strong>
   <%= @student.semester %>
 </p>
 
 <p>
-  <strong>Academic program:</strong>
+  <strong><%= t("student.academic_program")%>:</strong>
   <%= @student.academic_program %>
 </p>
 
 <p>
-  <strong>Birthday:</strong>
-  <%= @student.birthday %>
+  <strong><%= t("student.birthday")%>:</strong>
+  <%= l(@student.birthday) %>
 </p>
 
 <p>
-  <strong>Education:</strong>
+  <strong><%= t("student.education")%>:</strong>
   <%= @student.education %>
 </p>
 
 <p>
-  <strong>Additional information:</strong>
+  <strong><%= t("student.additional_information")%>:</strong>
   <%= @student.additional_information %>
 </p>
 
 <p>
-  <strong>Homepage:</strong>
+  <strong><%= t("student.homepage")%>:</strong>
   <%= @student.homepage %>
 </p>
 
 <p>
-  <strong>Github:</strong>
+  <strong><%= t("student.github")%>:</strong>
   <%= @student.github %>
 </p>
 
 <p>
-  <strong>Facebook:</strong>
+  <strong><%= t("student.facebook")%>:</strong>
   <%= @student.facebook %>
 </p>
 
 <p>
-  <strong>Xing:</strong>
+  <strong><%= t("student.xing")%>:</strong>
   <%= @student.xing %>
 </p>
 
 <p>
-  <strong>Linkedin:</strong>
+  <strong><%= t("student.linkedin")%>:</strong>
   <%= @student.linkedin %>
 </p>
 <p>
-  <strong>Languages:</strong>
+  <strong><%= t("student.languages")%>:</strong>
   <% @student.languages.each do |language| %>
     <%= language.name %>
   <% end %>
 </p>
 <p>
-  <strong>Programming Languages:</strong>
+  <strong><%= t("student.programming_languages")%>:</strong>
   <% @student.programming_languages.each do |programming_language| %>
     <%= programming_language.name %>
   <% end %>
 </p>
 <p>
-  <strong>CV:</strong>
+  <strong><%= t("student.cv")%>:</strong>
   <% if (@student.cv.path).nil? %>
     <%= image_tag('file_thumbnails/missing.png', size: "16") %>
   <% else %>
@@ -84,5 +84,5 @@
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+<%= link_to t("links.edit"), edit_student_path(@student) %> |
+<%= link_to t("links.back"), students_path %>

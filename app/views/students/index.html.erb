@@ -1,20 +1,20 @@
-<h1>Listing students</h1>
+<h1><%= t("students.students_headline")%></h1>
 
 <table>
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Semester</th>
-      <th>Academic program</th>
-      <th>Birthday</th>
-      <th>Education</th>
-      <th>Additional information</th>
-      <th>Homepage</th>
-      <th>Github</th>
-      <th>Facebook</th>
-      <th>Xing</th>
-      <th>Linkedin</th>
+      <th><%= t("student.first_name")%></th>
+      <th><%= t("student.last_name")%></th>
+      <th><%= t("student.semester")%></th>
+      <th><%= t("student.academic_program")%></th>
+      <th><%= t("student.birthday")%></th>
+      <th><%= t("student.education")%></th>
+      <th><%= t("student.additional_information")%></th>
+      <th><%= t("student.homepage")%></th>
+      <th><%= t("student.github")%></th>
+      <th><%= t("student.facebook")%></th>
+      <th><%= t("student.xing")%></th>
+      <th><%= t("student.linkedin")%></th>
       <th></th>
       <th></th>
       <th></th>
@@ -28,7 +28,7 @@
         <td><%= student.last_name %></td>
         <td><%= student.semester %></td>
         <td><%= student.academic_program %></td>
-        <td><%= student.birthday %></td>
+        <td><%= l(student.birthday) %></td>
         <td><%= student.education %></td>
         <td><%= student.additional_information %></td>
         <td><%= student.homepage %></td>
@@ -36,9 +36,9 @@
         <td><%= student.facebook %></td>
         <td><%= student.xing %></td>
         <td><%= student.linkedin %></td>
-        <td><%= link_to 'Show', student %></td>
-        <td><%= link_to 'Edit', edit_student_path(student) %></td>
-        <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t("links.show"), student %></td>
+        <td><%= link_to t("links.edit"), edit_student_path(student) %></td>
+        <td><%= link_to t("links.destroy"), student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -46,4 +46,4 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path %>
+<%= link_to t("students.new_student"), new_student_path %>
