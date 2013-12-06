@@ -17,3 +17,5 @@ en:
     start_date: "starting at the earliest"
     end_date: "finishing at the latest"
     archive: "Archive"
+    overview: "Overview"
+    create_new_job_offer: "Create new Job Offer"
