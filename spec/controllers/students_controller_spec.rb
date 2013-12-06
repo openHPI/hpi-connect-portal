@@ -206,5 +206,13 @@ describe StudentsController do
       student.programming_languages_students.last.skill == 2
       student.programming_languages.last == pl.last
     end
+    it "updates the requested student with a removed programming language" do
+      pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}, {name: 'MySecondProgrammingLanguage'}])
+      pl_id = pl.first.id
+      pl2_id = pl.last.id
+      student = Student.create! :first_name => "Test", :last_name => "User", :programming_languages => pl, :programming_languages_students => ProgrammingLanguagesStudent.create([{programming_language_id: pl_id, skill: '4'},{programming_language_id: pl2_id, skill: '2'}])
+      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
+      student.programming_languages.size == 1
+    end
   end
 end
