@@ -19,3 +19,7 @@ en:
     archive: "Archive"
     overview: "Overview"
     create_new_job_offer: "Create new Job Offer"
+    select_chair: "select chair"
+    enter_description: "add an description"
+    compensation_description: "€/hour"
+    time_effort_description: "hours/week"
