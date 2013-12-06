@@ -19,3 +19,7 @@ de:
     archive: "Archiv"
     overview: "Übersicht"
     create_new_job_offer: "Neues Stellenangebot anlegen"
+    select_chair: "Lehrstuhl auswählen"
+    enter_description: "Füge eine Beschreibung hinzu"
+    compensation_description: "€/Stunde"
+    time_effort_description: "Stunden/Woche" 
