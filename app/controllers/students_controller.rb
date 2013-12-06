@@ -30,6 +30,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.save
         if params[:programming_languages]
+
           programming_languages = params[:programming_languages]
           programming_languages.each do |programming_language_id, skill|
             programming_language_student = ProgrammingLanguagesStudent.new
