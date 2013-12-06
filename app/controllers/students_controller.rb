@@ -26,6 +26,7 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
+    debugger
     @student = Student.new(student_params)
     respond_to do |format|
       if @student.save
@@ -64,7 +65,14 @@ class StudentsController < ApplicationController
           programming_language_student.programming_language_id = programming_language_id
           programming_language_student.skill = skill
           programming_language_student.save
-        end 
+        end
+      end
+      #Delete all programming languages which have been deselected (rating removed) from the form
+      ProgrammingLanguagesStudent.find_each(:conditions => "student_id ="+ params[:id]) do |pl|
+        debugger
+        if programming_languages[pl.programming_language_id.to_s].nil?
+          pl.destroy
+        end
       end
     end
     respond_to do |format|
