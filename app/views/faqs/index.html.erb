@@ -9,8 +9,12 @@
             <br>
             <p> <%= faq.answer %> </p>
             <br>
-            <%= link_to 'Edit', edit_faq_path(faq), :class => "btn btn-default" %>
-            <%= link_to 'Destroy', faq, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default" %>
+            <% if signed_in? && can?(:update, faq) %>
+              <%= link_to 'Edit', edit_faq_path(faq), :class => "btn btn-default" %>
+            <% end %>
+            <% if signed_in? && can?(:delete, faq) %>
+              <%= link_to 'Destroy', faq, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default" %>
+            <% end %>
             <br>
           </div>
         </div>
@@ -19,5 +23,7 @@
   </div> 
 
 <div>
-  <%= link_to 'New FAQ', new_faq_path, :class => "btn btn-default" %>
+  <% if signed_in? && can?(:create, @faq) %>
+    <%= link_to 'New FAQ', new_faq_path, :class => "btn btn-default" %> 
+  <% end %>
 </div>
