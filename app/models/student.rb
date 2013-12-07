@@ -28,8 +28,12 @@
 #
 
 class Student < ActiveRecord::Base
+    #equal to has_and_belongs_to_many :programming_languages
+    has_many :programming_languages_students
+    has_many :programming_languages, :through => :programming_languages_students
+    accepts_nested_attributes_for :programming_languages
 	has_and_belongs_to_many :languages
-	has_and_belongs_to_many :programming_languages
+    belongs_to :student_status
     validates :first_name, :last_name, presence: true
 
 	has_attached_file 	:photo,
@@ -73,14 +77,18 @@ class Student < ActiveRecord::Base
     def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
        matching_students = Student.all 
 
-       language_array.each do |language|
-        matching_students = matching_students & search_students_by_language(language)
-       end
+       if language_array
+            language_array.each do |language|
+                matching_students = matching_students & search_students_by_language(language)
+            end
+        end
        
-       programming_language_array.each do |programming_language|
-        matching_students = matching_students & search_students_by_programming_language(programming_language)
-       end
-
+       if programming_language_array
+            programming_language_array.each do |programming_language|
+                matching_students = matching_students & search_students_by_programming_language(programming_language)
+            end
+        end
+        
        matching_students
     end           
 end

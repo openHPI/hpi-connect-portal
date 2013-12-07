@@ -112,7 +112,7 @@ class JobOffersController < ApplicationController
      render "index"
   end
 
-  def find_jobs
+  def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
 

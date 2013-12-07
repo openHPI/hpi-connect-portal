@@ -100,11 +100,18 @@ ActiveRecord::Schema.define(version: 20131205210240) do
   create_table "programming_languages_students", force: true do |t|
     t.integer "student_id"
     t.integer "programming_language_id"
+    t.integer "skill"
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
     t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_statuses", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -132,6 +139,8 @@ ActiveRecord::Schema.define(version: 20131205210240) do
     t.string   "cv_content_type"
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
+    t.integer  "status"
+    t.integer  "student_status_id"
   end
 
   create_table "users", force: true do |t|

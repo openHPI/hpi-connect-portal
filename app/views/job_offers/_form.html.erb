@@ -21,7 +21,7 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.chair" %><br>
-          <%= f.collection_select :chair_id, Chair.all, :id, :name, {prompt: "Select a Chair"}, {class: "form-control"} %>
+          <%= f.collection_select :chair_id, Chair.all, :id, :name, {prompt: t("job_offers.select_chair")}, {class: "form-control"} %>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       <div class="col-md-11">
         <div class="field">
           <%= f.label t "job_offer.description" %><br>
-          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => "Enter the description here", :class => "form-control" %>
+          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => t("job_offers.enter_description"), :class => "form-control" %>
         </div>
       </div>
     </div>
@@ -64,13 +64,13 @@
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.time_effort" %><br>
-          <%= f.text_field :time_effort, :placeholder => "in hours/week", :class => "form-control" %>
+          <%= f.text_field :time_effort, :placeholder => t("job_offers.time_effort_description"), :class => "form-control" %>
         </div>
       </div>
       <div class="col-md-6">
         <div class="field">
           <%= f.label t "job_offer.compensation" %><br>
-          <%= f.text_field :compensation, :placeholder => "in €/hour", :class => "form-control" %>
+          <%= f.text_field :compensation, :placeholder => t("job_offers.compensation_description"), :class => "form-control" %>
         </div>
       </div>
       <% if @job_offer.persisted? && signed_in? && current_user == @job_offer.responsible_user %>
@@ -107,7 +107,7 @@
     </div>
 
     <div class="actions">
-      <%= f.submit t("helpers.links.save"), :class => "btn btn-default" %>
+      <%= f.submit t("links.save"), :class => "btn btn-default" %>
       <% unless @job_offer.id.nil? %>
         <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
       <% end %>
