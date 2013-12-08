@@ -47,6 +47,7 @@ end
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
+gem 'newrelic_rpm', group: :production
 
 # basic layouting
 gem 'twitter-bootstrap-rails'
@@ -56,7 +57,7 @@ gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
 
-gem 'devise', '~> 3.1'
+gem 'devise', '~> 3.2'
 gem 'devise_openid_authenticatable'
 
 # simple http requests
