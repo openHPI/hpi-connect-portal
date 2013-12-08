@@ -17,7 +17,6 @@
 #  lastname            :string(255)
 #  firstname           :string(255)
 #  role_id             :integer          default(1), not null
-#  chair_id            :integer
 #
 
 class User < ActiveRecord::Base

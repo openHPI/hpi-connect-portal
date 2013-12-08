@@ -24,7 +24,7 @@ describe JobOffersController do
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
-  let(:completed) {FactoryGirl.create(:job_status, :name => "completed")}
+  let(:completed) {FactoryGirl.create(:job_status, name: "completed")}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open")} }
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
@@ -138,8 +138,8 @@ describe JobOffersController do
   describe "GET complete" do
     it "marks jobs as completed when the user is research assistent of the chair" do 
       job_offer = JobOffer.create! valid_attributes
-      completed = FactoryGirl.create(:job_status, :name=>"completed")
-      sign_in FactoryGirl.create(:user,:role=>FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2), :chair => job_offer.chair)
+      completed = FactoryGirl.create(:job_status, name: "completed")
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: job_offer.chair)
       
       get :complete, {:id => job_offer.id}
       assigns(:job_offer).status.should eq(completed)      

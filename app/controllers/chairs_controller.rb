@@ -1,5 +1,6 @@
 class ChairsController < ApplicationController
   before_action :set_chair, only: [:show, :edit, :update]
+  authorize_resource only: [:new, :edit, :create, :update]
 
   # GET /chairs
   # GET /chairs.json

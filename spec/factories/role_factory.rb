@@ -11,5 +11,7 @@
 
 FactoryGirl.define do
   factory :role do
+    name 'Student'
+    level 1
   end
 end
