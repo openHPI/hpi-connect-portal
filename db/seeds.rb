@@ -19,12 +19,6 @@ User.create([
 	email: "chief@smith.de",
 	role: Role.where(:name => 'Student').first }
 	])
-User.create([
-	{ firstname: "Sophie",
-	lastname: "Heuser",
-	email: "sophie_heuser@student.hpi.uni-potsdam.de",
-	role: Role.where(:name => 'Research Assistant').first }
-	])
 
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all

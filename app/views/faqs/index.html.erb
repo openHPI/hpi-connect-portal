@@ -1,4 +1,4 @@
-<h1>FAQs</h1>
+<h1><%= t("faqs.headline") %></h1>
   
   <div class="container"> 
     <% @faqs.each do |faq| %>
@@ -13,7 +13,7 @@
               <%= link_to 'Edit', edit_faq_path(faq), :class => "btn btn-default" %>
             <% end %>
             <% if signed_in? && can?(:delete, faq) %>
-              <%= link_to 'Destroy', faq, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default" %>
+              <%= link_to 'Destroy', faq, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-default"%>
             <% end %>
             <br>
           </div>
@@ -24,6 +24,6 @@
 
 <div>
   <% if signed_in? && can?(:create, @faq) %>
-    <%= link_to 'New FAQ', new_faq_path, :class => "btn btn-default" %> 
+    <%= link_to t("faqs.new"), new_faq_path, :class => "btn btn-default" %> 
   <% end %>
 </div>
