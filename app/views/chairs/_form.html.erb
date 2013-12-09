@@ -34,6 +34,7 @@
     <%= f.file_field :avatar %>
   </div>
 
+  <%= f.label :deputy %><br />
   <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
 
   <div class="actions" style="margin-top:30px;">
