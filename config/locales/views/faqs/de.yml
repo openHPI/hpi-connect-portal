@@ -1,4 +1,6 @@
 de:
   faqs:
     headline: "Häufig gestellte Fragen"
-    new: "neue Frage anlegen"
+    new_faq: "Neue Frage"
+    back_to_faqs: "Zurück zur Übersicht"
+    edit: "Frage editieren"

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<%= link_to t("faqs.back_to_faqs"), faqs_path, :class => "btn btn-default" %> <br><br>
 
 <div class="panel panel-default panel-body">
   <div class="container">
@@ -7,8 +7,8 @@
       <br>
       <p> <%= @faq.answer %> </p>
       <br>
-      <%= link_to 'Edit', edit_faq_path(@faq), :class => "btn btn-default" %>
-      <%= link_to t("helpers.links.back"), faqs_path, :class => "btn btn-default" %>
+      <%= link_to t("links.edit"), edit_faq_path(@faq), :class => "btn btn-default btn-primary" %>
+      <%= link_to t("links.destroy"), @faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
       <br>
     </div>
   </div>

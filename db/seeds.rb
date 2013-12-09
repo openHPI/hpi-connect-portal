@@ -311,7 +311,7 @@ Faq.create([{
 }])
 Faq.create([{
 	question: "How do I log off of HPI-HiWi-Portal?", 
-	answer: 'To logout of your Monster account hover over the Sign Out option in the upper right hand corner of the page.'
+	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.'
 }])
 Faq.create([{
 	question: "How can I add a profile photo?", 

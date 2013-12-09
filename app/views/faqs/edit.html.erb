@@ -1,10 +1,10 @@
 <div class="col-md-9">
 	<span class="pull-left">
-		<%= link_to t("helpers.links.back"), faqs_path, :class => "btn btn-default"  %>
+		<%= link_to t("links.back"), faqs_path, :class => "btn btn-default"  %>
 	</span>
 	<br><br>
 	<div>
-		<h1>Editing FAQ</h1>
+		<h1><%= t("faqs.edit") %></h1>
 		<%= render 'form' %>
 	</div>
 </div>
