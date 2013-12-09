@@ -17,6 +17,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1
   # GET /job_offers/1.json
   def show
+
   end
 
   # GET /job_offers/new
@@ -36,6 +37,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
+    @job_offer.status = JobStatus.where(name: "pending").first
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save

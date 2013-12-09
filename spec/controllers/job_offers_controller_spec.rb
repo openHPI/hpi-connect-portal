@@ -179,17 +179,6 @@ describe JobOffersController do
         response.should redirect_to(JobOffer.last)
       end
 
-      it "should send mail to deputy" do
-        include EmailSpec::Helpers
-        include EmailSpec::Matchers
-
-        job_offer = JobOffer.create! valid_attributes
-        #expect
-        JobOffersMailer.should_receive(:new_job_offer_email).with( job_offer, valid_session )
-        # when
-        JobOffer.create! valid_attributes
-    
-      end
     end
 
     describe "with invalid params" do
@@ -207,7 +196,7 @@ describe JobOffersController do
         response.should render_template("new")
       end
       it "should not send mail to deputy" do
-                 job_offer = JobOffer.create! valid_attributes
+        job_offer = JobOffer.create! valid_attributes
         #expect
         JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
         # when

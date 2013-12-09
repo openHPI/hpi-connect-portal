@@ -69,7 +69,7 @@ describe "Job Offer pages" do
 
     describe "pending job offer" do
       let(:chair) { FactoryGirl.create(:chair, deputy: FactoryGirl.create(:user) ) }
-      let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user)), chair: chair }
+      let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user), chair: chair) }
       
       describe "when being a student" do 
         it "should not be visible in the job offers list" do

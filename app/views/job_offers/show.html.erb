@@ -64,6 +64,7 @@
       <% end %>
 
         </dl>
+        <%= puts current_user.applied?(@job_offer) %>
          <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
