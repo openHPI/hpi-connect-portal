@@ -25,25 +25,25 @@
     </h1>
 
     <dl>
-      <dt><%= t("job_offer.description") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.description") %>:</dt>
       <dd> <%= @job_offer.description %></dd>
 
-      <dt><%= t("job_offer.room_number") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.room_number") %>:</dt>
       <dd> <%= @job_offer.room_number %></dd>
 
-      <dt><%= t("job_offer.chair") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.chair") %>:</dt>
       <dd> <%= @job_offer.chair.name %></dd>
 
-      <dt><%= t("job_offer.start_date") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.start_date") %>:</dt>
       <dd> <%= @job_offer.start_date %></dd>
 
-      <dt><%= t("job_offer.end_date") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.end_date") %>:</dt>
       <dd> <%= @job_offer.end_date %></dd>
 
-      <dt><%= t("job_offer.time_effort") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.time_effort") %>:</dt>
       <dd> <%= @job_offer.time_effort %></dd>
 
-      <dt><%= t("job_offer.compensation") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.compensation") %>:</dt>
       <dd> <%= @job_offer.compensation %></dd>
 
       <dt>Contact:</dt>
@@ -54,12 +54,12 @@
         <dd> <%=  %></dd>
       <% end %>
 
-      <dt><%= t("job_offer.programming_languages") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.programming_languages") %>:</dt>
       <% @job_offer.programming_languages.each do |programming_language| %>
         <dd><%= programming_language.name %></dd>
       <% end %>
 
-      <dt><%= t("job_offer.languages") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.languages") %>:</dt>
       <% @job_offer.languages.each do |language| %>
         <dd><%= language.name %></dd>
       <% end %>

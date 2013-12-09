@@ -1,6 +1,8 @@
 de:
-  chair:
-    deputy: "Verantwortlicher Mitarbeiter"
-    description: "Beschreibung"
-    head_of_chair: "Leiter des Lehrstuhls"
-    name: "Name"
+  activerecord:
+    attributes:
+      chair:
+        deputy: "Verantwortlicher Mitarbeiter"
+        description: "Beschreibung"
+        head_of_chair: "Leiter des Lehrstuhls"
+        name: "Name"
