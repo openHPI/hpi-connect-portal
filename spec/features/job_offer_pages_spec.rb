@@ -60,8 +60,7 @@ describe "Job Offer pages" do
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
-          it { puts job_offer.status.to_yaml
-            should have_button('Accept') }
+          it { should have_button('Accept') }
           it { should have_button('Decline') }
 
           it "is possible to mark a job as completed" do
@@ -79,7 +78,10 @@ describe "Job Offer pages" do
       let(:deputy) { FactoryGirl.create(:user) }
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
-      
+      before(:each) do
+        deputy.update(:chair => chair)
+      end
+
       describe "when being a student" do 
         it "should not be visible in the job offers list" do
           visit job_offers_path
@@ -103,14 +105,14 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):disabled'
           should have_selector 'a:contains("Delete"):disabled'
 
-          should have_content('h4', text: 'pending')
+          should have_content('pending')
         end
 
         it "should be editable for the responsible user" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('h4', text: 'pending')
+          should have_content('pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -127,13 +129,14 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('h4', text: 'pending')
+          should have_content('pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
         end
 
         it "is possible to accept or decline the job offer" do
+          puts current_path
           should have_link('Accept')
           should have_link('Decline')
         end

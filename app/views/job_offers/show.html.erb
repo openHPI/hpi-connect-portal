@@ -21,6 +21,9 @@
     <div class="panel panel-default panel-body">
     <h1>
       <%= @job_offer.title %>
+      <% if @job_offer.pending? %>
+        <span> - pending</span>
+      <% end %>
     </h1>
 
     <dl>
