@@ -1,7 +1,16 @@
 
 <div class="row">
-
-  <div class="col-md-8"> 
+	<div class="col-md-3">
+         <div class="well sidebar-nav" id="sidebar">
+            <ul class="nav nav-list">
+              <li class="nav-header">Sidebar</li>
+              <li><%= link_to "Jobs Overview", job_offers_path  %></li>
+              <li><%= link_to "Create Job Offer", new_job_offer_path  %></li>
+              <li><%= link_to "Archive", archive_job_offers_path  %></li>
+            </ul>
+         </div><!--/.well -->
+  	</div><!--/span-->
+  <div class="col-md-6"> 
     <div class="row">
       <h1> <%= t "job_offers.headline" %> </h1> 
       <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, :class => "btn btn-success", :style => "margin-bottom: 20px"%>

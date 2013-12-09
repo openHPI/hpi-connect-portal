@@ -90,9 +90,16 @@ gem 'capybara'
 #factory girl
 gem 'factory_girl'
 
+
 gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
 #replacement for glyphicons
 gem "font-awesome-rails"
+
+# pagination
+gem 'will_paginate', '~> 3.0'
+
+# styles pagination with bootstrap
+gem 'will_paginate-bootstrap'

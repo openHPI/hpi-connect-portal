@@ -3,9 +3,9 @@
     <td><%= application.user.lastname %></td>
     <td><%= application.user.email %></td>
     
-    <%# if signed_in? && if @job_offer.chair.deputy == current_user %>
+    <% if signed_in? && @job_offer.chair.research_assistants.include?(current_user) %>
     <td><button class="btn btn-danger">Decline</button></td>
     <td><button class="btn btn-success">Accept</button></td>
-    <%# end %>
+    <% end %>
 
 </tr>
