@@ -36,6 +36,8 @@ HpiHiwiPortal::Application.routes.draw do
     resources :job_offers
     resources :users, only: [:edit, :update]
 
+    resources :faqs
+
     devise_for :users, controllers: { sessions: 'sessions' }
 
     # The priority is based upon order of creation: first created -> highest priority.
