@@ -1,6 +1,6 @@
-<h1>Student editieren</h1>
+<h1><%= t("students.edit_student") %></h1>
 
 <%= render 'form' %>
 
-<div class="pull-left"><%= link_to 'Back', students_path, class: "btn btn-default"%></div>
-<div class="pull-right"><%= link_to 'Show', @student, class: "btn btn-info" %></div>
+<div class="pull-left"><%= link_to t("links.back"), students_path, class: "btn btn-default"%></div>
+<div class="pull-right"><%= link_to t("links.save"), @student, class: "btn btn-info" %></div>

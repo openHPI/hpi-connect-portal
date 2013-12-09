@@ -34,6 +34,7 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
+    <%= javascript_include_tag "application" %>
   </head>
   <body>
 
@@ -43,34 +44,24 @@
       </div>
       <div class="container navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><%= link_to "Job Offers", job_offers_path  %></li>
-          <li><%= link_to "Students", students_path %></li>
-          <li><%= link_to "Chairs", chairs_path  %></li>
+          <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
+          <li><%= link_to t('layouts.students'), students_path %></li>
+          <li><%= link_to  t('layouts.chairs'), chairs_path  %></li>
         </ul>
         <p class="navbar-text pull-right">
           <% if user_signed_in? %>
-            Logged in as <strong><%= current_user.email %></strong>.
-            <%= link_to 'Edit profile', edit_user_path(current_user), :class => 'navbar-link' %> |
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+            <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
+            <%= link_to t("layouts.edit_profile"), edit_user_path(current_user), :class => 'navbar-link' %> |
+            <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
           <% else %>
-            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+            <%= link_to t("layouts.login"), new_user_session_path, :class => 'navbar-link'  %>
           <% end %>
       </div><!--/.navbar-collapse -->
     </div>
 
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <div class="well sidebar-nav" id="sidebar">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Jobs Overview", job_offers_path  %></li>
-              <li><%= link_to "Create Job Offer", new_job_offer_path  %></li>
-              <li><%= link_to "Archive", archive_job_offers_path  %></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="col-md-9">
+        <div class="col-md-12">
           <%= yield %>
         </div>
       </div><!--/row-->
@@ -81,6 +72,5 @@
 
     </div> <!-- /container -->
 
-    <%= javascript_include_tag "application" %>
   </body>
 </html>

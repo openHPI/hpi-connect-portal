@@ -1,11 +1,11 @@
-<h1>Listing chairs</h1>
+<h1><%= t('chairs.chair_overview') %></h1>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Name</th>
-			<th>Description</th>
-			<th>Head of Chair</th>
+      <th><%= t("chair.name") %></th>
+			<th><%= t("chair.description") %></th>
+			<th><%= t("chair.head_of_chair") %></th>
       <th></th>
     </tr>
   </thead>
@@ -16,8 +16,8 @@
         <td><%= chair.name %></td>
 				<td><%= chair.description %></td>
 				<td><%= chair.head_of_chair %></td>
-        <td><%= link_to 'Show', chair, :type => "button", :class => "btn btn-primary" %>
-            <%= link_to 'Edit', edit_chair_path(chair), :type => "button", :class => "btn btn-primary" %></td>
+        <td><%= link_to t('links.show'), chair, :type => "button", :class => "btn btn-primary" %>
+            <%= link_to t('links.edit'), edit_chair_path(chair), :type => "button", :class => "btn btn-primary" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +25,4 @@
 
 <br>
 
-<%= link_to 'New Chair', new_chair_path, :type => "button", :class => "btn btn-default" %>
+<%= link_to t('chairs.new_chair'), new_chair_path, :type => "button", :class => "btn btn-default" %>

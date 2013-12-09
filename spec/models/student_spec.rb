@@ -63,7 +63,7 @@ describe Student do
    	expect(Student.search_students_by_programming_language('Ruby')).to include @student
   	end
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.search_students_by_programming_language("Hindi")).should eq([])
+  		expect(Student.search_students_by_programming_language("Hindi")).to eq([])
   	end
   end
 
@@ -73,7 +73,7 @@ describe Student do
   	end
 
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.search_students_by_language("Hindi")).should eq([])
+  		expect(Student.search_students_by_language("Hindi")).to eq([])
   	end
   end
 
@@ -138,7 +138,7 @@ describe Student do
   	end
 
   	it "should return an empty array if anyone speaks the requested language" do
-  		expect(Student.search_student("Hindi")).should eq([])
+  		expect(Student.search_student("Hindi")).to eq([])
   	end
   end
 

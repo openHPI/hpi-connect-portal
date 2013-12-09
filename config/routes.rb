@@ -1,108 +1,96 @@
 HpiHiwiPortal::Application.routes.draw do
+  scope "(:locale)", locale: /en|de/ do
 
   resources :user_statuses
+    root :to => "job_offers#index"
 
-  resources :job_offers do    
-    collection do
-      get "sort"
-      get "search"
-      get "filter"
-      get "archive"
       get "find_jobs"
+    resources :job_offers do
+      collection do
+        get "archive"
+        get "find"
+      end
     end
-  end
+
+    resources :chairs
+    resources :users, only: [:edit, :update]
+    resources :applications, only: [:create]
 
   resources :users do
     collection do
       get "matching"
     end
-  end
-  
-  resources :programming_languages
 
-  resources :languages
+    resources :programming_languages
 
-  resources :studentsearch
+    resources :languages
 
-  resources :chairs
+    resources :student_statuses
 
-  resources :students
+    resources :studentsearch
 
-  resources :job_offers
-  resources :users, only: [:edit, :update]
-  resources :applications, only: [:create]
+    resources :chairs
 
   devise_for :users, controllers: { sessions: 'sessions'}
-  
+
   root :to => "job_offers#index"
 
-  #student routes to contain the student side without student model
-  # get 'students/' => 'students#index'
-  # get 'students/:id' => 'students#show'
-  # get 'students/new' => 'students#new'
-  # post 'students/' =>'students#create'
-  # post 'students.json' => 'students#create'
-  # patch 'students/:id' => 'students#udpate'
-  # put  'students/:id' => 'students#udpate'
 
 
 
-   # PATCH/PUT /students/1
-  # PATCH/PUT /students/1.json
+    # The priority is based upon order of creation: first created -> highest priority.
+    # See how all your routes lay out with "rake routes".
 
+    # You can have the root of your site routed with "root"
+    # root 'welcome#index'
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+    # Example of regular route:
+    #   get 'products/:id' => 'catalog#view'
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+    # Example of named route that can be invoked with purchase_url(id: product.id)
+    #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+    # Example resource route (maps HTTP verbs to controller actions automatically):
+    #   resources :products
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+    # Example resource route with options:
+    #   resources :products do
+    #     member do
+    #       get 'short'
+    #       post 'toggle'
+    #     end
+    #
+    #     collection do
+    #       get 'sold'
+    #     end
+    #   end
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+    # Example resource route with sub-resources:
+    #   resources :products do
+    #     resources :comments, :sales
+    #     resource :seller
+    #   end
 
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
+    # Example resource route with more complex sub-resources:
+    #   resources :products do
+    #     resources :comments
+    #     resources :sales do
+    #       get 'recent', on: :collection
+    #     end
+    #   end
 
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
+    # Example resource route with concerns:
+    #   concern :toggleable do
+    #     post 'toggle'
+    #   end
+    #   resources :posts, concerns: :toggleable
+    #   resources :photos, concerns: :toggleable
 
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-  
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+    # Example resource route within a namespace:
+    #   namespace :admin do
+    #     # Directs /admin/products/* to Admin::ProductsController
+    #     # (app/controllers/admin/products_controller.rb)
+    #     resources :products
+    #   end
+  end
 end

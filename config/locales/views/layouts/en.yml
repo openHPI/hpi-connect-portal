@@ -1,0 +1,9 @@
+en:
+  layouts:
+    job_offers: "Job Offers"
+    students: "Students"
+    chairs: "Chairs"
+    login: "Login"
+    logged_in: "logged in"
+    edit_profile: "edit profile"
+    logout: "log out"
