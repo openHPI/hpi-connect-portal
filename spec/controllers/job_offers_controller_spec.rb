@@ -146,6 +146,14 @@ describe JobOffersController do
     end
   end
 
+  describe "GET accept" do 
+    
+  end
+
+  describe "GET decline" do
+
+  end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new JobOffer" do
