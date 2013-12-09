@@ -136,7 +136,7 @@ describe JobOffersController do
   end
 
   describe "GET complete" do
-    it "marks jobs as completed when the user is research assistent of the chair" do 
+    it "marks jobs as completed when the user is research assistant of the chair" do 
       job_offer = JobOffer.create! valid_attributes
       completed = FactoryGirl.create(:job_status, name: "completed")
       sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: job_offer.chair)
@@ -144,7 +144,7 @@ describe JobOffersController do
       get :complete, {:id => job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
-    it "prohibits user to mark jobs as completed when he is no research assistent of the chair" do 
+    it "prohibits user to mark jobs as completed when he is no research assistant of the chair" do 
       job_offer = JobOffer.create! valid_attributes
       get :complete, {:id => job_offer.id}, valid_session
       response.should redirect_to(job_offer)
