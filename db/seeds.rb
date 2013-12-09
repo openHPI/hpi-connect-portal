@@ -26,7 +26,6 @@ ProgrammingLanguagesStudent.delete_all
 
 Language.delete_all
 Language.create([
-
 	{ name: 'Englisch'},
 	{ name: 'Deutsch'},
 	{ name: 'Spanisch'},
@@ -52,7 +51,6 @@ StudentStatus.create([
 	{ name: 'no interest'},
 	{ name: 'alumni'}
 ])
-
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
@@ -135,7 +133,7 @@ JobOffer.create([{
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
-	languages: Language.where(:name => 'German'), 
+	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
 	responsible_user: User.where(:firstname=>"Chief").first
 }])
@@ -148,7 +146,7 @@ JobOffer.create([{
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
-	languages: Language.where(:name => 'German'), 
+	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
 	responsible_user: User.where(:firstname=>"Chief").first
 }])
@@ -248,7 +246,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.where(:name => 'German'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python'])
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+	student_status: StudentStatus.where(:name => 'job-seeking').first
 }])
 
 Student.create([{
@@ -265,7 +264,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.where(:name => ['German', 'English']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
+	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
+	student_status: StudentStatus.where(:name => 'employed').first
 }])
 
 Student.create([{
