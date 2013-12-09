@@ -1,5 +1,5 @@
 class CreateJobOffersLanguages < ActiveRecord::Migration
-  def self.up
+  def up
     create_table :job_offers_languages, :id => false do |t|
     	t.integer :job_offer_id
     	t.integer :language_id
@@ -7,7 +7,7 @@ class CreateJobOffersLanguages < ActiveRecord::Migration
     add_index :job_offers_languages, [:job_offer_id, :language_id], :unique => true, :name => "jo_l_index"
   end
 
-  def self.down
+  def down
   	drop_table :job_offers_languages
   end
 end
