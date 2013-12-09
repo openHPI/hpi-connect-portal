@@ -1,0 +1,40 @@
+<%= form_for (@faq) do |f| %>
+  <% if @faq.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@faq.errors.count, "error") %> prohibited this FAQ from being saved:</h2>
+
+      <ul>
+      <% @faq.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="container"> 
+
+    <div class="row">
+      <div class="col-md-11">
+        <div class="field">
+          <%= f.label :question %><br>
+          <%= f.text_field :question, :class => "col-md-11", :class => "form-control" %>
+        </div>
+      </div>
+     </div> 
+
+    <div class="row">
+      <div class="col-md-11">
+        <div class="field">
+          <%= f.label :answer %><br>
+          <%= f.text_area :answer, :rows => 10, :class => "col-md-11", :class => "form-control"%>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="actions">
+      <%= f.submit t("helpers.links.save"), :class => "btn btn-default" %>
+    </div>
+
+  </div>
+  
+<% end %>

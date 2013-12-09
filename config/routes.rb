@@ -31,7 +31,10 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :chairs
 
-  devise_for :users, controllers: { sessions: 'sessions'}
+    resources :faqs
+
+    resources :job_offers
+    resources :users, only: [:edit, :update]
 
   root :to => "job_offers#index"
 

@@ -14,6 +14,7 @@ Role.create(name: 'Admin', level: 3)
 
 #Create User as an example deputy for all chairs
 User.delete_all
+
 User.create([{
 		firstname: "Chief",
 		lastname: "Smith",
@@ -316,4 +317,21 @@ Chair.create([{
 	description: 'Enterprise Platforms and Innovative Concepts',
 	head_of_chair: 'Prof. Dr. hc. mul Hasso James Kirk Plattner',
 	deputy_id: 1
+}])
+Faq.delete_all
+Faq.create([{
+	question: "How do I make edits to my profile?", 
+	answer: 'Log in to your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button.'
+}])
+Faq.create([{
+	question: "How do I log off of HPI-HiWi-Portal?", 
+	answer: 'To logout of your Monster account hover over the Sign Out option in the upper right hand corner of the page.'
+}])
+Faq.create([{
+	question: "How can I add a profile photo?", 
+	answer: 'Log into your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.'
+}])
+Faq.create([{
+	question: "Does HPI-HiWi-Portal have an Android app?", 
+	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
 }])

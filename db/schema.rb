@@ -38,6 +38,13 @@ ActiveRecord::Schema.define(version: 20131204082315) do
 
   add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
 
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "chairs_job_offers", id: false, force: true do |t|
     t.integer "chair_id"
     t.integer "job_offer_id"
