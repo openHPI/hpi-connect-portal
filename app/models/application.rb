@@ -11,10 +11,10 @@
 
 class Application < ActiveRecord::Base
 
-    belongs_to :user
-    belongs_to :job_offer
+  belongs_to :user
+  belongs_to :job_offer
 
-    validates_presence_of :user
-    validates_presence_of :job_offer
-    validates_uniqueness_of :user_id, scope: :job_offer_id
+  validates_presence_of :user
+  validates_presence_of :job_offer
+  validates_uniqueness_of :user_id, scope: :job_offer_id
 end

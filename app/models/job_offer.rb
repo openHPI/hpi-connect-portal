@@ -2,19 +2,19 @@
 #
 # Table name: job_offers
 #
-#  id           :integer          not null, primary key
-#  description  :text
-#  title        :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  chair_id     :integer
+#  id                  :integer          not null, primary key
+#  description         :text
+#  title               :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  start_date          :date
+#  end_date            :date
+#  time_effort         :float
+#  compensation        :float
+#  room_number         :string(255)
+#  chair_id            :integer
 #  responsible_user_id :integer
-#  start_date   :date
-#  end_date     :date
-#  time_effort  :float
-#  compensation :float
-#  room_number  :string(255)
-#  status_id    :integer
+#  status_id           :integer          default(1)
 #
 
 class JobOffer < ActiveRecord::Base
@@ -25,6 +25,7 @@ class JobOffer < ActiveRecord::Base
     has_and_belongs_to_many :languages
     belongs_to :chair
     belongs_to :responsible_user, class_name: "User"
+    belongs_to :assigned_student, class_name: "User"
     belongs_to :status, class_name: "JobStatus"
 
 	accepts_nested_attributes_for :programming_languages

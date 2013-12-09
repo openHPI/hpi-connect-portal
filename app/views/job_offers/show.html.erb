@@ -89,7 +89,7 @@
         </tbody>
       </table>
     <% end %>
-    <% if signed_in? && user_is_research_assistent_of_chair?(@job_offer) %>
+    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
     <% end %>
   </div>

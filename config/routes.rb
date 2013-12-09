@@ -18,7 +18,12 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :chairs
     resources :users, only: [:edit, :update]
-    resources :applications, only: [:create]
+    resources :applications, only: [:create] do
+      member do
+        get "accept"
+        get "decline"
+      end
+    end
 
 
     resources :students do

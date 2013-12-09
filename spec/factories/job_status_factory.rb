@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: job_status
+# Table name: job_statuses
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)

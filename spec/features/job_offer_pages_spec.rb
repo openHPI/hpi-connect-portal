@@ -98,7 +98,6 @@ describe "Job Offer pages" do
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
         end
-
       end
 
       describe "when being the deputy of the chair" do 

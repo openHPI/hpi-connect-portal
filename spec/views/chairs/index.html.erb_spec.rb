@@ -10,6 +10,7 @@ describe "chairs/index" do
         :name => "HCI", :description => "Human Computer Interaction", :head_of_chair => "Prof. Patrick Baudisch"
       )
     ])
+    view.stub(:can?) { false }
   end
 
   it "renders a list of chairs" do

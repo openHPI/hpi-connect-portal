@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131205210240) do
+ActiveRecord::Schema.define(version: 20131208175911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20131205210240) do
     t.integer  "chair_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
+    t.integer  "assigned_student_id"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
