@@ -78,16 +78,22 @@ describe "Job Offer pages" do
       let(:deputy) { FactoryGirl.create(:user) }
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
-      before(:each) do
-        deputy.update(:chair => chair)
-      end
+     
+      let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+      let(:student) { FactoryGirl.create(:user, role: student_role) }
+      
+      describe "when being a student" do
+        before(:each) do
+          login_as(student, :scope => :user)
+          deputy.update(:chair => chair)
+        end 
 
-      describe "when being a student" do 
         it "should not be visible in the job offers list" do
           visit job_offers_path
           should_not have_content(job_offer.title)
         end
         it "should be redirected to the index page" do
+
           visit job_offer_path(job_offer)
           expect(current_path).to eq(job_offers_path)
         end
