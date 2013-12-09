@@ -11,9 +11,11 @@ HpiHiwiPortal::Application.routes.draw do
     end
 
     resources :chairs
-    resources :users, only: [:edit, :update]
-    resources :applications, only: [:create]
 
+    resources :users, only: [:edit, :update]
+    devise_for :users, controllers: { sessions: 'sessions' }
+
+    resources :applications, only: [:create]
 
     resources :students do
       collection do
@@ -25,20 +27,11 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :languages
 
-    resources :students
-
     resources :student_statuses
 
     resources :studentsearch
 
-    resources :chairs
-
-    resources :job_offers
-    resources :users, only: [:edit, :update]
-
     resources :faqs
-
-    devise_for :users, controllers: { sessions: 'sessions' }
 
     # The priority is based upon order of creation: first created -> highest priority.
     # See how all your routes lay out with "rake routes".
