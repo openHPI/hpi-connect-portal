@@ -25,6 +25,9 @@ describe StudentsController do
   # adjust the attributes here as well.
   let(:valid_attributes) { { "first_name" => "Jane", "last_name" => "Doe" } }
 
+  # Programming Languages with a mapping to skill integers
+  let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # StudentsController. Be sure to keep this updated too.
@@ -176,4 +179,40 @@ describe StudentsController do
     end
   end
 
+  describe "POST create with programming languages skills" do
+    it "creates a new Student" do
+      java = ProgrammingLanguage.new(:name => 'Java')
+      php = ProgrammingLanguage.new(:name => 'PHP')
+      expect {
+        post :create, {:student => valid_attributes, :programming_languages => programming_languages_attributes}, valid_session
+      }.to change(Student, :count).by(1)
+    end
+  end
+
+  describe "PUT update with programming languages skills" do
+    it "updates the requested student with an existing programming language" do
+      pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}])
+      pl_id = pl.first.id
+      student = Student.create! :first_name => "Test", :last_name => "User", :programming_languages => pl, :programming_languages_students => ProgrammingLanguagesStudent.create([{programming_language_id: pl_id, skill: '4'}])
+      ProgrammingLanguagesStudent.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
+      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
+    end
+    it "updates the requested student with a new programming language" do
+      pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}, {name: 'MySecondProgrammingLanguage'}])
+      pl_id = pl.first.id
+      pl2_id = pl.last.id
+      student = Student.create! :first_name => "Test", :last_name => "User", :programming_languages => [pl.first], :programming_languages_students => ProgrammingLanguagesStudent.create([{programming_language_id: pl_id, skill: '4'}])
+      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl2_id.to_s => "2" }}, valid_session
+      student.programming_languages_students.last.skill == 2
+      student.programming_languages.last == pl.last
+    end
+    it "updates the requested student with a removed programming language" do
+      pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}, {name: 'MySecondProgrammingLanguage'}])
+      pl_id = pl.first.id
+      pl2_id = pl.last.id
+      student = Student.create! :first_name => "Test", :last_name => "User", :programming_languages => pl, :programming_languages_students => ProgrammingLanguagesStudent.create([{programming_language_id: pl_id, skill: '4'},{programming_language_id: pl2_id, skill: '2'}])
+      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
+      student.programming_languages.size == 1
+    end
+  end
 end

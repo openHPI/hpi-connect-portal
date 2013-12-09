@@ -6,14 +6,15 @@
           <h4><%= link_to job_offer.title, job_offer%></h4>
         </div>
         <div class="col-md-4">
-          <p class="startDate"><%= t("job_offers.starts ") %><%= l(job_offer.start_date) %></p>
+          <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-11 col-md-offset-1">
-          <p class="chair"><%= job_offer.chair %></p>
+          <p class="chair"><%= job_offer.chair.name %></p>
         </div>
       </div>
     </li>
   <%end%>
 </ul>
+<%= will_paginate @job_offers, renderer: BootstrapPagination::Rails %>

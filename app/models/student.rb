@@ -77,14 +77,18 @@ class Student < ActiveRecord::Base
     def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
        matching_students = Student.all 
 
-       language_array.each do |language|
-        matching_students = matching_students & search_students_by_language(language)
-       end
+       if language_array
+            language_array.each do |language|
+                matching_students = matching_students & search_students_by_language(language)
+            end
+        end
        
-       programming_language_array.each do |programming_language|
-        matching_students = matching_students & search_students_by_programming_language(programming_language)
-       end
-
+       if programming_language_array
+            programming_language_array.each do |programming_language|
+                matching_students = matching_students & search_students_by_programming_language(programming_language)
+            end
+        end
+        
        matching_students
     end           
 end

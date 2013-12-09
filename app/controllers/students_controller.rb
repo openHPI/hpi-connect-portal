@@ -30,6 +30,7 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @student.save
         if params[:programming_languages]
+
           programming_languages = params[:programming_languages]
           programming_languages.each do |programming_language_id, skill|
             programming_language_student = ProgrammingLanguagesStudent.new
@@ -63,7 +64,13 @@ class StudentsController < ApplicationController
           programming_language_student.programming_language_id = programming_language_id
           programming_language_student.skill = skill
           programming_language_student.save
-        end 
+        end
+      end
+      #Delete all programming languages which have been deselected (rating removed) from the form
+      ProgrammingLanguagesStudent.find_each(:conditions => "student_id ="+ params[:id]) do |pl|
+        if programming_languages[pl.programming_language_id.to_s].nil?
+          pl.destroy
+        end
       end
     end
     respond_to do |format|

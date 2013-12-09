@@ -7,6 +7,7 @@ describe "students/show" do
       :last_name => "Last Name",
       :semester => 1,
       :academic_program => "Academic Program",
+      :birthday => '2013-11-10',
       :education => "MyText",
       :additional_information => "MyText",
       :homepage => "Homepage",

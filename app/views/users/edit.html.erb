@@ -1,13 +1,13 @@
 <%= form_for @user do |f| %>
 
-    <h3>Check your information </h3>
+    <h3><%= t("users.profile_headline") %></h3>
 	
     <p><%= f.text_field :firstname %></p>
 	<p><%= f.text_field :lastname %></p>
     <p><%= f.text_field :email %></p>
 
-    <p><%= f.check_box :is_student %> I am a student </p>
+    <p><%= f.check_box :is_student %><%= t("users.is_student") %></p>
 
-	<%= f.submit "Save" %>
+	<%= f.submit t("links.save") %>
 
 <% end %>
