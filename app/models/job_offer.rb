@@ -25,6 +25,7 @@ class JobOffer < ActiveRecord::Base
     has_and_belongs_to_many :languages
     belongs_to :chair
     belongs_to :responsible_user, class_name: "User"
+    belongs_to :assigned_student, class_name: "User"
     belongs_to :status, class_name: "JobStatus"
 
 	accepts_nested_attributes_for :programming_languages

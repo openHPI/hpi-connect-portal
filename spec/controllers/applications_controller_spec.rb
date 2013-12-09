@@ -13,15 +13,17 @@ describe ApplicationsController do
   end
 
   describe "GET decline" do
-    it "application should be deleted" do
+    it "deletes application" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
       expect{
           get :decline, {:id => application.id}
-        }.to change(Applications, :count).by(-1)
+        }.to change(Application, :count).by(-1)
     end
-    it "redirect to job offer view if user don't have permissions for declining" do
+    it "redirects to job offer view if user don't have permissions for declining" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+      sign_in @student
+      
       get :decline, {:id => application.id}
       response.should redirect_to(@job_offer)
     end
@@ -29,35 +31,38 @@ describe ApplicationsController do
 
   describe "GET accept" do
 
-    it "redirect to job offer view if user don't have permissions for accepting" do
+    it "redirects to job offer view if user don't have permissions for accepting" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+      sign_in @student
+
       get :accept, {:id => application.id}
       response.should redirect_to(@job_offer)
     end
-    it "accepted student is assigned as @job_offer.assigned_student" do
+    it "accepts student is assigned as @job_offer.assigned_student" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
       
       get :accept, {:id => application.id}
-      assigned(:job_offer).assigned_student.should eq(@student)
+      assigns(:application).job_offer.assigned_student.should eq(@student)
     end
     it "declines all other students" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      application_2 = FactoryGirl.create(:application)
-      application_3 = FactoryGirl.create(:application)
+      application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
+      application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
 
       expect{
         get :accept, {:id => application.id}
-      }.to change(Applications, :count).by(-3)
+      }.to change(Application, :count).by(-3)
     end
     it "application status should be 'working' if an application is accepted" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+      working = FactoryGirl.create(:job_status, :name=>'working')
+      
       sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
 
-      expect{
-        get :accept, {:id => application.id}
-      }.to change(@job_offer, :status).to(FactoryGirl.create(:status, :name=>'working'))
+      get :accept, {:id => application.id}
+      assigns(:application).job_offer.status.should eq(working)
     end
   end
 end
