@@ -30,6 +30,7 @@ describe JobOffersController do
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => completed}}
 
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # JobOffersController. Be sure to keep this updated too.
@@ -163,6 +164,18 @@ describe JobOffersController do
         post :create, {:job_offer => valid_attributes}, valid_session
         response.should redirect_to(JobOffer.last)
       end
+
+      it "should send mail to deputy" do
+        include EmailSpec::Helpers
+        include EmailSpec::Matchers
+
+        job_offer = JobOffer.create! valid_attributes
+        #expect
+        JobOffersMailer.should_receive(:new_job_offer_email).with( job_offer, valid_session )
+        # when
+        JobOffer.create! valid_attributes
+    
+      end
     end
 
     describe "with invalid params" do
@@ -178,6 +191,13 @@ describe JobOffersController do
         JobOffer.any_instance.stub(:save).and_return(false)
         post :create, {:job_offer => { "description" => "invalid value" }}, valid_session
         response.should render_template("new")
+      end
+      it "should not send mail to deputy" do
+                 job_offer = JobOffer.create! valid_attributes
+        #expect
+        JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
+        # when
+        JobOffer.create! valid_attributes
       end
     end
   end

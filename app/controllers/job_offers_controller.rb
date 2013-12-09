@@ -39,12 +39,14 @@ class JobOffersController < ApplicationController
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
+        JobOffersMailer.new_job_offer_email(@job_offer).deliver
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
         format.json { render action: 'show', status: :created, location: @job_offer }
       else
         render_errors_and_redirect_to(@job_offer, 'new', format)
       end
     end
+
   end
 
   # PATCH/PUT /job_offers/1

@@ -25,7 +25,7 @@ class ChairsController < ApplicationController
   # POST /chairs.json
   def create
     @chair = Chair.new(chair_params)
-    
+
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
