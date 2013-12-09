@@ -75,17 +75,20 @@ describe "Job Offer pages" do
 
     describe "pending job offer" do
 
-      let(:deputy) { FactoryGirl.create(:user) }
+      let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
+
+      before do
+        deputy.update(:chair => chair)
+      end
       
       describe "when being a student" do
         before(:each) do
-          login_as(student, :scope => :user)
-          deputy.update(:chair => chair)
+          login_as(student, :scope => :user)          
         end 
 
         it "should not be visible in the job offers list" do
@@ -103,6 +106,7 @@ describe "Job Offer pages" do
         let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: chair) }
 
         before do
+          job_offer.update(responsible_user: research_assistant)
           login_as(research_assistant, :scope => :user)
           visit job_offer_path(job_offer)
         end
@@ -126,7 +130,7 @@ describe "Job Offer pages" do
       end
 
       describe "when being the deputy of the chair" do 
-        before do
+        before do          
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
         end
@@ -142,7 +146,7 @@ describe "Job Offer pages" do
         end
 
         it "is possible to accept or decline the job offer" do
-          puts current_path
+          
           should have_link('Accept')
           should have_link('Decline')
         end

@@ -193,7 +193,7 @@ class JobOffersController < ApplicationController
 
     def check_user_is_responsible      
       set_job_offer
-      unless current_user == @job_offer.responsible_user
+      unless current_user == @job_offer.responsible_user or current_user == @job_offer.chair.deputy
         redirect_to @job_offer
       end
     end
