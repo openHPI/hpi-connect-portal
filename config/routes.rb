@@ -13,6 +13,8 @@ HpiHiwiPortal::Application.routes.draw do
       end
       member do
         get "complete"
+        get "accept"
+        get "decline"
       end
     end
 

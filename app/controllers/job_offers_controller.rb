@@ -3,7 +3,8 @@ class JobOffersController < ApplicationController
 
   before_filter :check_user_is_responsible, only: [:edit, :update]
   before_filter :check_user_is_research_assistant, only: [:complete]
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete]
+  before_filter :check_user_is_deputy, only: [:accept, :decline]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
 
   # GET /job_offers
@@ -35,7 +36,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params)
+    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.where(name: 'pending').first)
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
@@ -136,7 +137,7 @@ class JobOffersController < ApplicationController
 
   end
 
-  # GET /job_offers/complete
+  # GET /job_offer/:id/complete
   def complete
     respond_to do |format|
       if @job_offer.update(:status => JobStatus.where( :name=>"completed" ).first )
@@ -147,6 +148,24 @@ class JobOffersController < ApplicationController
       end
     end
   end
+
+  # GET /job_offer/:id/accept
+  def accept  
+    if @job_offer.update(:status => JobStatus.where( :name=>"open" ).first )
+      redirect_to @job_offer, notice: 'Job offer was successfully opened.'
+    else
+      render_errors_and_redirect_to(@job_offer, format)
+    end
+  end
+
+  # GET /job_offer/:id/decline
+  def decline 
+    if @job_offer.destroy
+      redirect_to job_offers_path, notice: 'Job offer was deleted.'
+    else
+      render_errors_and_redirect_to(@job_offer, format)
+    end
+  end 
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -169,19 +188,28 @@ class JobOffersController < ApplicationController
       format.json { render json: object.errors, status: :unprocessable_entity }
     end  
 
-    def check_user_is_responsible
-      @job_offer = JobOffer.find params[:id]
-
+    def check_user_is_responsible      
+      set_job_offer
       unless current_user == @job_offer.responsible_user
         redirect_to @job_offer
       end
     end
 
-    def check_user_is_research_assistant
-      @job_offer = JobOffer.find params[:id]
-
+    def check_user_is_research_assistant    
+      set_job_offer
       unless user_is_research_assistant_of_chair?(@job_offer)
         redirect_to @job_offer
+      end
+    end
+
+    def check_user_is_deputy
+      set_job_offer
+      unless @job_offer.chair.deputy == current_user
+        if user_is_research_assistant_of_chair?(@job_offer)
+          redirect_to @job_offer 
+        else
+          redirect_to job_offers_path
+        end
       end
     end
 end

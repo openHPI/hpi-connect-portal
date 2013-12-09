@@ -137,7 +137,7 @@ describe JobOffersController do
   end
 
   describe "GET complete" do
-    it "marks jobs as completed when the user is research assistant of the chair" do 
+    it "marks jobs as completed if the user is research assistant of the chair" do 
       job_offer = JobOffer.create! valid_attributes
       completed = FactoryGirl.create(:job_status, name: "completed")
       sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: job_offer.chair)
@@ -145,7 +145,7 @@ describe JobOffersController do
       get :complete, {:id => job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
-    it "prohibits user to mark jobs as completed when he is no research assistant of the chair" do 
+    it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
       job_offer = JobOffer.create! valid_attributes
       get :complete, {:id => job_offer.id}, valid_session
       response.should redirect_to(job_offer)
@@ -153,11 +153,45 @@ describe JobOffersController do
   end
 
   describe "GET accept" do 
-    
+    let(:deputy) { FactoryGirl.create(:user, chair: chair) }
+    before(:each) do
+      chair.update(deputy: deputy)
+      @job_offer = JobOffer.create! valid_attributes
+      @job_offer.update(chair: chair, status: FactoryGirl.create(:job_status, name: "pending"))
+    end
+
+    it "prohibits user to accept job offers if he is not the deputy" do
+      get :accept, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end     
+    it "accepts job offers" do
+      sign_in deputy
+
+      get :accept, {:id => @job_offer.id}
+      assigns(:job_offer).status.should eq(JobStatus.where(name: "open").first) 
+      response.should redirect_to(@job_offer)
+    end    
   end
 
   describe "GET decline" do
+    let(:deputy) { FactoryGirl.create(:user, chair: chair) }
+    before(:each) do
+      chair.update(deputy: deputy)
+      @job_offer = JobOffer.create! valid_attributes
+      @job_offer.update(chair: chair, status: FactoryGirl.create(:job_status, name: "pending"))
+    end
 
+    it "prohibits user to decline job offers if he is not the deputy" do
+      get :decline, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end     
+    it "declines job offers" do
+      sign_in deputy
+      expect {
+        get :decline, {id: @job_offer.id}
+      }.to change(JobOffer, :count).by(-1)
+      response.should redirect_to(job_offers_path)
+    end 
   end
 
   describe "POST create" do
