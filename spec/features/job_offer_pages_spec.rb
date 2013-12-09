@@ -60,8 +60,8 @@ describe "Job Offer pages" do
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
-          it { should have_button('Accept') }
-          it { should have_button('Decline') }
+          it { should have_link('Accept') }
+          it { should have_link('Decline') }
 
           it "is possible to mark a job as completed" do
             should have_link 'Job completed'

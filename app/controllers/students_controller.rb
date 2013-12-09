@@ -67,7 +67,7 @@ class StudentsController < ApplicationController
         end
       end
       #Delete all programming languages which have been deselected (rating removed) from the form
-      ProgrammingLanguagesStudent.find_each(:conditions => "student_id ="+ params[:id]) do |pl|
+      ProgrammingLanguagesStudent.where(:student_id => params[:id]).each do |pl|
         if programming_languages[pl.programming_language_id.to_s].nil?
           pl.destroy
         end

@@ -90,6 +90,9 @@ gem 'capybara'
 #factory girl
 gem 'factory_girl'
 
+#replacement for glyphicons
+gem "font-awesome-rails"
+
 # pagination
 gem 'will_paginate', '~> 3.0'
 
@@ -106,3 +109,4 @@ gem "font-awesome-rails"
 group :test do
   gem 'email_spec'
 end
+
