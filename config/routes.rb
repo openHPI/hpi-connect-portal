@@ -13,13 +13,11 @@ HpiHiwiPortal::Application.routes.draw do
     end
 
     resources :chairs
-    resources :users, only: [:edit, :update]
-    resources :applications, only: [:create]
 
-  resources :users do
-    collection do
-      get "matching"
-    end
+    resources :users, only: [:edit, :update]
+    devise_for :users, controllers: { sessions: 'sessions' }
+
+    resources :applications, only: [:create]
 
     resources :programming_languages
 
@@ -29,14 +27,7 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :studentsearch
 
-    resources :chairs
-
     resources :faqs
-
-    resources :job_offers
-    resources :users, only: [:edit, :update]
-
-  root :to => "job_offers#index"
 
 
 

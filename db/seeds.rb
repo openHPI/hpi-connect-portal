@@ -14,7 +14,7 @@ Role.create(name: 'Admin', level: 3)
 
 #Create User as an example deputy for all chairs
 User.delete_all
-
+	role: Role.where(:name => 'Research Assistant').first }
 User.create([{
 		firstname: "Chief",
 		lastname: "Smith",
@@ -325,7 +325,7 @@ Faq.create([{
 }])
 Faq.create([{
 	question: "How do I log off of HPI-HiWi-Portal?", 
-	answer: 'To logout of your Monster account hover over the Sign Out option in the upper right hand corner of the page.'
+	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.'
 }])
 Faq.create([{
 	question: "How can I add a profile photo?", 

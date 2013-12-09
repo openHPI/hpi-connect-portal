@@ -1,9 +1,9 @@
 class ChangeDataTypeForChairDescription < ActiveRecord::Migration
-  def self.up
+  def up
    change_column :chairs, :description, :text
   end
 
-  def self.down
+  def down
    change_column :chairs, :description, :string
   end
 end
