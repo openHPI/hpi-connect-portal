@@ -21,7 +21,7 @@ require 'spec_helper'
 describe JobOffersController do
 
   # This should return the minimal set of attributes required to create a valid
-  # JobOffer. As you add validations to JobOffer, be sure to
+  # job_offer. As you add validations to job_offer, be sure to
   # adjust the attributes here as well.
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
   let(:completed) {FactoryGirl.create(:job_status, name: "completed")}
@@ -33,7 +33,7 @@ describe JobOffersController do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # JobOffersController. Be sure to keep this updated too.
+  # job_offersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   before(:each) do
@@ -98,11 +98,11 @@ describe JobOffersController do
   describe "GET sort" do
     it "assigns @job_offers all job offers sorted by date" do
 
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), chair: @epic)
-      FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), chair: @epic)
+      FactoryGirl.create(:job_offer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), chair: @epic)
+      FactoryGirl.create(:job_offer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), chair: @epic)
+      FactoryGirl.create(:job_offer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), chair: @epic)
+      FactoryGirl.create(:job_offer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), chair: @epic)
+      FactoryGirl.create(:job_offer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), chair: @epic)
 
       job_offers = JobOffer.sort "date"
       get :sort, {:sort_value => "date"}, valid_session
@@ -111,9 +111,9 @@ describe JobOffersController do
 
     it "assigns @job_offers all job offers sorted by chair" do
 
-      FactoryGirl.create(:joboffer, chair: @itas)
-      FactoryGirl.create(:joboffer, chair: @epic)
-      FactoryGirl.create(:joboffer, chair: @os)
+      FactoryGirl.create(:job_offer, chair: @itas)
+      FactoryGirl.create(:job_offer, chair: @epic)
+      FactoryGirl.create(:job_offer, chair: @os)
 
       job_offers = JobOffer.sort "chair"
       get :sort, {:sort_value => "chair"}, valid_session
@@ -125,10 +125,10 @@ describe JobOffersController do
   describe "GET find" do
     it "assigns @job_offers to all job offers with the chair EPIC" do
 
-      FactoryGirl.create(:joboffer, chair: @itas)
-      FactoryGirl.create(:joboffer, chair: @epic)
-      FactoryGirl.create(:joboffer, chair: @os)
-      FactoryGirl.create(:joboffer, chair: @epic)
+      FactoryGirl.create(:job_offer, chair: @itas)
+      FactoryGirl.create(:job_offer, chair: @epic)
+      FactoryGirl.create(:job_offer, chair: @os)
+      FactoryGirl.create(:job_offer, chair: @epic)
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find, ({:chair => @epic.id}), valid_session
@@ -196,7 +196,7 @@ describe JobOffersController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new JobOffer" do
+      it "creates a new job_offer" do
         expect {
           post :create, {:job_offer => valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
@@ -213,17 +213,6 @@ describe JobOffersController do
         response.should redirect_to(JobOffer.last)
       end
 
-      it "should send mail to deputy" do
-        include EmailSpec::Helpers
-        include EmailSpec::Matchers
-
-        job_offer = JobOffer.create! valid_attributes
-        #expect
-        JobOffersMailer.should_receive(:new_job_offer_email).with( job_offer, valid_session )
-        # when
-        JobOffer.create! valid_attributes
-    
-      end
     end
 
     describe "with invalid params" do
@@ -241,7 +230,7 @@ describe JobOffersController do
         response.should render_template("new")
       end
       it "should not send mail to deputy" do
-                 job_offer = JobOffer.create! valid_attributes
+        job_offer = JobOffer.create! valid_attributes
         #expect
         JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
         # when
@@ -255,7 +244,7 @@ describe JobOffersController do
       it "updates the requested job_offer" do
         job_offer = JobOffer.create! valid_attributes
         # Assuming there are no other job_offers in the database, this
-        # specifies that the JobOffer created on the previous line
+        # specifies that the job_offer created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         JobOffer.any_instance.should_receive(:update).with({ "description" => "MyString" })

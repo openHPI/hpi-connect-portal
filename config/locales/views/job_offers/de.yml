@@ -29,3 +29,5 @@ de:
     applicant_first_name: "Vorname"
     applicant_last_name: "Nachname"
     applicant_email: "Email"
+    accept: "Annehmen"
+    decline: "Ablehnen"

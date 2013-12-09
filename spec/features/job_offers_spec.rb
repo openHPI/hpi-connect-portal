@@ -7,9 +7,9 @@ describe "the job-offers page" do
     @epic = FactoryGirl.create(:chair, name:"EPIC")
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
-    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2", chair: @epic, responsible_user: @user)
-    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3", chair: @epic, responsible_user: @user)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user)
   end
 
   it "should include all jobs currently available" do
@@ -36,7 +36,7 @@ describe "a job offer entry" do
   before(:each) do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @job_offer = FactoryGirl.create(:joboffer, 
+    @job_offer = FactoryGirl.create(:job_offer, 
       title: "TestJob", 
       chair: @TestChair, 
       responsible_user: @user, 
@@ -62,7 +62,7 @@ describe "job_offers_history" do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
     @status = FactoryGirl.create(:job_status, :name => "completed")
-    @job_offer = FactoryGirl.create(:joboffer, 
+    @job_offer = FactoryGirl.create(:job_offer, 
       title: "Closed Job Touch Floor", 
       status: @status,
       chair: @TestChair,

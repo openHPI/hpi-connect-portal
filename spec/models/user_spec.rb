@@ -30,7 +30,7 @@ describe User do
 
   describe 'applying' do
     before do
-      @job_offer = FactoryGirl.create(:joboffer)
+      @job_offer = FactoryGirl.create(:job_offer)
       @application = Application.create(user: @user, job_offer: @job_offer)
     end
 

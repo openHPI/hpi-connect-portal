@@ -8,11 +8,11 @@
   	</span>
     <% unless @job_offer.completed? %>
     	<span class="pull-right">
-        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
+        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => @job_offer.pending? %>
 
-    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
+    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary", :disabled => @job_offer.pending? %> 
         
-        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger" %>
+        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger", :disabled => @job_offer.pending? %>
     	</span>
     <% end %>
   	
@@ -64,6 +64,11 @@
       <% end %>
 
         </dl>
+         <% if signed_in? && @job_offer.pending? && @job_offer.chair.deputy == current_user %>
+          <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success" %>
+          <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
+         <% end %>
+
          <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
@@ -89,7 +94,7 @@
         </tbody>
       </table>
     <% end %>
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) %>
+    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.open? %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
     <% end %>
   </div>

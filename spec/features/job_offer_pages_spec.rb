@@ -14,7 +14,7 @@ describe "Job Offer pages" do
   
   describe "show page" do
     describe "open job offer" do
-      let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
       before { visit job_offer_path(job_offer) }
 
@@ -60,7 +60,8 @@ describe "Job Offer pages" do
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
-          it { should have_button('Accept') }
+          it { puts job_offer.status.to_yaml
+            should have_button('Accept') }
           it { should have_button('Decline') }
 
           it "is possible to mark a job as completed" do
@@ -74,14 +75,19 @@ describe "Job Offer pages" do
     end
 
     describe "pending job offer" do
+
       let(:deputy) { FactoryGirl.create(:user) }
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:joboffer, responsible_user: FactoryGirl.create(:user), chair: chair) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
       
       describe "when being a student" do 
         it "should not be visible in the job offers list" do
+          visit job_offers_path
+          should_not have_content(job_offer.title)
+        end
+        it "should be redirected to the index page" do
           visit job_offer_path(job_offer)
-          response.should redirect_to(job_offers_path) 
+          expect(current_path).to eq(job_offers_path)
         end
       end
 
@@ -94,15 +100,15 @@ describe "Job Offer pages" do
         end
 
         it "should be visible in a read-only mode" do
-          should have_link('Edit', :disable => true)
-          should have_link('Delete', :disable => true)
+          should have_selector 'a:contains("Edit"):disabled'
+          should have_selector 'a:contains("Delete"):disabled'
 
           should have_content('h4', text: 'pending')
         end
 
         it "should be editable for the responsible user" do
-          should have_link('Edit', :disable => false)
-          should have_link('Delete', :disable => false)
+          should have_selector 'a:contains("Edit"):not(disabled)'
+          should have_selector 'a:contains("Delete"):not(disabled)'
 
           should have_content('h4', text: 'pending')
 
@@ -118,8 +124,8 @@ describe "Job Offer pages" do
         end
 
         it "should be editable for the deputy" do
-          should have_link('Edit', :disable => false)
-          should have_link('Delete', :disable => false)
+          should have_selector 'a:contains("Edit"):not(disabled)'
+          should have_selector 'a:contains("Delete"):not(disabled)'
 
           should have_content('h4', text: 'pending')
 
