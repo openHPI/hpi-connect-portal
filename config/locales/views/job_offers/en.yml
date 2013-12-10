@@ -3,7 +3,7 @@ en:
     headline: "Job Offers"
     starts: "starts"
     sortDate: "Date"
-    chair: "Chair"
+    sortChair: "Chair"
     searchLabel: "Search for:"
     sortLabel: "Sort by: "
     filterLabel: "Filter by: "

@@ -1,22 +1,22 @@
 <div class="row-fluid">
 	<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
   	<p>
-		<strong><%= t("chair.name") %>:</strong>
+		<strong><%= t("activerecord.attributes.chair.name") %>:</strong>
 		<%= @chair.name %>
 	</p>
 
 	<p>
-		<strong><%= t("chair.description") %>:</strong>
+		<strong><%= t("activerecord.attributes.chair.description") %>:</strong>
 		<%= @chair.description %>
 	</p>
 
 	<p>
-		<strong><%= t("chair.head_of_chair") %>:</strong>
+		<strong><%= t("activerecord.attributes.chair.head_of_chair") %>:</strong>
 		<%= @chair.head_of_chair %>
 	</p>
 
 	<p>
-		<strong><%= t("chair.deputy") %>:</strong>
+		<strong><%= t("activerecord.attributes.chair.deputy") %>:</strong>
 		<%= @chair.deputy.email %>
 	</p>
 

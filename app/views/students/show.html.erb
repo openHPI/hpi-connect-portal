@@ -18,11 +18,11 @@
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("student.general_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.general_information") %></h4></div>
       <table class="table">
         <tbody>
           <tr>
-            <td><%= t("student.birthday")%></td>
+            <td><%= t("activerecord.attributes.student.birthday")%></td>
             <td><%= @user.birthday %></td>
           </tr>
            <tr>
@@ -30,7 +30,7 @@
             <td><%= @user.email %></td>
           </tr>
           <tr>
-            <td><%= t("student.cv")%></td>
+            <td><%= t("activerecord.attributes.student.cv")%></td>
               <td>
                 <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
@@ -45,24 +45,24 @@
 
     <% if !(@user.semester).nil? || !(@user.academic_program).nil? || !(@user.education).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.carrier") %></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.carrier") %></h4></div>
         <table class="table">
           <tbody>
             <% if !(@user.academic_program).nil? %>
               <tr>
-                <td><%= t("student.academic_program")%></td>
+                <td><%= t("activerecord.attributes.student.academic_program")%></td>
                 <td><%= @user.academic_program %></td>
               </tr>
             <% end %>
             <% if !(@user.semester).nil? %>
               <tr>
-                <td><%= t("student.semester")%></td>
+                <td><%= t("activerecord.attributes.student.semester")%></td>
                 <td><%= @user.semester %></td>
               </tr>
             <% end %>
             <% if !(@user.education).nil? %>
               <tr>
-                <td><%= t("student.education")%></td>
+                <td><%= t("activerecord.attributes.student.education")%></td>
                 <td><%= @user.education %></td>
               </tr>
             <% end %>
@@ -74,7 +74,7 @@
     <% if !(@user.additional_information).nil? %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><h4><%= t("student.additional_information")%></h4></h3>
+          <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></h3>
         </div>
         <div class="panel-body">
           <%= @user.additional_information %>
@@ -84,7 +84,7 @@
 
     <% if !(@user.homepage).nil? || !(@user.github).nil? || !(@user.facebook).nil? || !(@user.xing).nil? || !(@user.linkedin).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.links")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
         <ul class="list-group">
           <% if !(@user.homepage).empty? %>
             <li class="list-group-item"><%= fa_icon "home 2x"%>
@@ -117,7 +117,7 @@
 
     <% if !@user.languages.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
         <table class="table">
           <tbody>
             <% @user.languages.each do |language| %>
@@ -134,7 +134,7 @@
 
     <% if !@user.programming_languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.programming_languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
         <table class="table">
           <tbody>
             <% @user.programming_languages_users.each do |programming_languages_user| %>

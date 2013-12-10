@@ -11,12 +11,12 @@
   <% end %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><h4><%= t("student.general_information") %></h4></h3>
+      <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.general_information") %></h4></h3>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :firstname, t("student.first_name"), class: "col-sm-2 control-label" %>
+          <%= f.label :firstname, t("activerecord.attributes.student.first_name"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.text_field :firstname, class: "form-control", type:"text" %>
           </div>
@@ -24,7 +24,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :lastname, t("student.last_name"), class: "col-sm-2 control-label" %>
+          <%= f.label :lastname, t("activerecord.attributes.student.last_name"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.text_field :lastname, class: "form-control", type:"text" %>
           </div>
@@ -40,7 +40,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :status, t("student.status"), class: "col-sm-2 control-label" %>
+          <%= f.label :status, t("activerecord.attributes.student.status"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
           </div>
@@ -48,7 +48,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :birthday, t("student.birthday"), class: "col-sm-2 control-label" %>
+          <%= f.label :birthday, t("activerecord.attributes.student.birthday"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.input :birthday, as: :string, label: false, input_html: { type: 'text', class: 'form-control datepicker' } %>
           </div>
@@ -56,7 +56,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :photo, t("student.photo"), class: "col-sm-2 control-label" %>
+          <%= f.label :photo, t("activerecord.attributes.student.photo"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <% if !@user.new_record? %>
               <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
@@ -67,7 +67,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :cv, t("student.cv"), class: "col-sm-2 control-label" %>
+          <%= f.label :cv, t("activerecord.attributes.student.cv"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <% if !@user.new_record? %>
               <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
@@ -85,12 +85,12 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><h4><%= t("student.carrier") %></h4></h3>
+      <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.carrier") %></h4></h3>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :academic_program, t("student.academic_program"), class: "col-sm-2 control-label" %>
+          <%= f.label :academic_program, t("activerecord.attributes.student.academic_program"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.text_field :academic_program, class: "form-control", type:"text" %>
           </div>
@@ -98,7 +98,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :semester, t("student.semester"), class: "col-sm-2 control-label" %>
+          <%= f.label :semester, t("activerecord.attributes.student.semester"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.number_field :semester, class: "form-control", type:"number" %>
           </div>
@@ -106,7 +106,7 @@
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :education, t("student.education"), class: "col-sm-2 control-label" %>
+          <%= f.label :education, t("activerecord.attributes.student.education"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
             <%= f.text_area :education, class: "form-control", rows:"3" %>
           </div>
@@ -116,7 +116,7 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><h4><%= t("student.additional_information") %></h4></h3>
+      <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.additional_information") %></h4></h3>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
@@ -176,7 +176,7 @@
     </ul>
   </div>
   <div class="panel panel-default">
-    <div class="panel-heading"><h4><%= t("student.programming_languages") %></h4></div>
+    <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages") %></h4></div>
     <ul class="list-group">
       <%= fields_for :programming_languages do |f2| %>
         <% if @all_programming_languages %>
@@ -214,7 +214,7 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><%= t("student.languages") %></h3>
+      <h3 class="panel-title"><%= t("activerecord.attributes.student.languages") %></h3>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
