@@ -12,16 +12,16 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label t("activerecord.attributes.chair.name") %><br>
     <%= f.text_field :name %>
   </div>
 	<div class="field">
-    <%= f.label :description %><br>
+    <%= f.label t("activerecord.attributes.chair.description") %><br>
     <%= f.text_area :description %>
   </div>
 
   <div class="field">
-    <%= f.label :head_of_chair %><br>
+    <%= f.label t("activerecord.attributes.chair.head_of_chair") %><br>
     <%= f.text_field :head_of_chair %>
   </div>
 
@@ -37,8 +37,8 @@
    <%= collection_select(:deputy, :deputy_id, @chair.research_assistants, :id, :email) %>
 
   <div class="actions" style="margin-top:30px;">
-    <%= f.submit :class => "btn btn-success btn-large" %>
-    <%= link_to 'Back', chairs_path, :type => "button", :class => "btn btn-default", :style => "margin-left:30px;" %>
+    <%= f.submit t("links.save"), :class => "btn btn-success btn-large" %>
+    <%= link_to t("links.back"), chairs_path, :type => "button", :class => "btn btn-default", :style => "margin-left:30px;" %>
   </div>
 
 <% end %>

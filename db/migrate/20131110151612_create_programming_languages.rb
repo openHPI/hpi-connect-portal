@@ -8,6 +8,7 @@ class CreateProgrammingLanguages < ActiveRecord::Migration
     create_table :programming_languages_students do |t|
       t.belongs_to :student
       t.belongs_to :programming_language
+      t.integer :skill
     end
   end
 end

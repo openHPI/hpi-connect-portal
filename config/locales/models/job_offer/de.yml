@@ -1,12 +1,14 @@
 de:
-  job_offer:
-    description: "Beschreibung"
-    title: "Titel"
-    chair: "Lehrstuhl"
-    start_date: "Anfangsdatum"
-    end_date: "Enddatum"
-    time_effort: "Zeitaufwand"
-    compensation: "Bezahlung"
-    room_number: "Raumnummer"
-    programming_languages: "Programmiersprachen"
-    languages: "Sprachen"
+  activerecord:
+    attributes:
+      job_offer:
+        description: "Beschreibung"
+        title: "Titel"
+        chair: "Lehrstuhl"
+        start_date: "Anfangsdatum"
+        end_date: "Enddatum"
+        time_effort: "Zeitaufwand"
+        compensation: "Bezahlung"
+        room_number: "Raumnummer"
+        programming_languages: "Programmiersprachen"
+        languages: "Sprachen"

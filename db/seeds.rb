@@ -26,23 +26,31 @@ ProgrammingLanguagesStudent.delete_all
 
 Language.delete_all
 Language.create([
-									{ name: 'English'},
-									{ name: 'German'},
-									{ name: 'Spanish'},
-									{ name: 'French'},
-									{ name: 'Chinese'}
+	{ name: 'Englisch'},
+	{ name: 'Deutsch'},
+	{ name: 'Spanisch'},
+	{ name: 'Französisch'},
+	{ name: 'Chinesisch'}
 ])
 
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
-														{ name: 'Ruby'},
-														{ name: 'Java'},
-														{ name: 'C'},
-														{ name: 'C++'},
-														{ name: 'Python'},
-														{ name: 'Smalltalk'}
+	{ name: 'Ruby'},
+	{ name: 'Java'},
+	{ name: 'C'},
+	{ name: 'C++'},
+	{ name: 'Python'},
+	{ name: 'Smalltalk'}
 ])
 
+StudentStatus.delete_all
+StudentStatus.create([
+	{ name: 'job-seeking'},
+	{ name: 'employed'},
+	{ name: 'employed (ext)'},
+	{ name: 'no interest'},
+	{ name: 'alumni'}
+])
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
@@ -125,7 +133,7 @@ JobOffer.create([{
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
-	languages: Language.where(:name => 'German'), 
+	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
 	responsible_user: User.where(:firstname=>"Chief").first
 }])
@@ -138,7 +146,7 @@ JobOffer.create([{
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
-	languages: Language.where(:name => 'German'), 
+	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
 	responsible_user: User.where(:firstname=>"Chief").first
 }])
@@ -220,7 +228,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.where(:name => 'English'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java'])
+	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+	student_status: StudentStatus.where(:name => 'employed (ext)').first
 }])
 
 Student.create([{
@@ -237,7 +246,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.where(:name => 'German'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python'])
+	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+	student_status: StudentStatus.where(:name => 'job-seeking').first
 }])
 
 Student.create([{
@@ -254,7 +264,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.where(:name => ['German', 'English']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
+	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
+	student_status: StudentStatus.where(:name => 'employed').first
 }])
 
 Student.create([{
@@ -271,7 +282,8 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all
+	programming_languages: ProgrammingLanguage.all,
+	student_status: StudentStatus.where(:name => 'employed').first
 }])
 
 Student.create([{
@@ -288,5 +300,24 @@ Student.create([{
 	xing: 'www.xing.com/dieter', 
 	linkedin: 'www.linkedin.com/dieter', 
 	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all
+	programming_languages: ProgrammingLanguage.all,
+	student_status: StudentStatus.where(:name => 'no interest').first
+}])
+
+Faq.delete_all
+Faq.create([{
+	question: "How do I make edits to my profile?", 
+	answer: 'Log in to your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button.'
+}])
+Faq.create([{
+	question: "How do I log off of HPI-HiWi-Portal?", 
+	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.'
+}])
+Faq.create([{
+	question: "How can I add a profile photo?", 
+	answer: 'Log into your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.'
+}])
+Faq.create([{
+	question: "Does HPI-HiWi-Portal have an Android app?", 
+	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
 }])

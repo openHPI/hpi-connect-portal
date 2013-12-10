@@ -21,7 +21,8 @@
       job_offers:
         headline: "Stellenangebote"
 
-
+Use Spaces not Tabs in yml.
+If the changes are not displayed, restart the server.
 
 **** models vs views ****
 
@@ -31,7 +32,7 @@
   - Example:
 
       Before: <%= label_tag :chair %>
-      After : <%= label_tag t("job_offer.chair") %>
+      After : <%= label_tag t("activerecord.attributes.job_offer.chair") %>
 
 + For each view a de.yml and en.yml file should be created in config/locales/views/VIEWNAME
   - the VIEWNAME folder name should be plural

@@ -80,56 +80,22 @@ class JobOffersController < ApplicationController
     @chairs = Chair.all
   end
 
-  # GET /job_offers/sort
-  def sort
-     @radio_button_sort_value = {"date" => false, "chair" => false}
-     sort_value =  params.require(:sort_value)
-     logger.warn(sort_value)
-     @radio_button_sort_value[sort_value] = true
-     logger.warn(@radio_button_sort_value)
-
-     @job_offers = JobOffer.sort sort_value
-     render "index"
-  end
-
-
-  # GET /job_offers/search
-  def search
+  # GET /job_offers/find_jobs
+  def find
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.search params[:search]
-
-    render "index"
-  end
-
-  # GET /job_offers/filter
-  def filter
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = JobOffer.filter({
-                                    :chair => params[:chair], 
-                                    :start_date => params[:start_date],
-                                    :end_date => params[:end_date],
-                                    :time_effort => params[:time_effort],
-                                    :compensation => params[:compensation]})
-
-     render "index"
-  end
-
-  def find_jobs
-
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = find_jobs_in_job_list(JobOffer)
-    
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = find_jobs_in_job_list(JobOffer.all) 
+    job_offers = job_offers.paginate(:page => params[:page])
+	@job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
     render "index"
 
   end
 
   def find_archived_jobs
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    job_offers = job_offers.paginate(:page => params[:page])
+	@job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
     render "archive"
   end
 

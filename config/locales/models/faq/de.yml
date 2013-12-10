@@ -1,0 +1,6 @@
+de:
+  activerecord:
+    attributes:
+      faq:
+        question: "Frage"
+        answer: "Antwort"

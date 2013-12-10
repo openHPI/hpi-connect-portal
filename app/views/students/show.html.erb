@@ -1,88 +1,158 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <%= image_tag(@student.photo.url, size: "150") %>
-</p>
-<p>
-  <strong>First name:</strong>
-  <%= @student.first_name %>
-</p>
+<div class="row">
+  <div class="col-xs-8">
+    <div class="row">
+      <div class="col-xs-8">
+        <h1><%= @student.first_name %> <%= @student.last_name %></h1>
+        <blockquote>
+          <% if !(@student.student_status).nil? %>
+            <p><%= @student.student_status.name %></p>
+          <% end %>
+        </blockquote>
+      </div>
+      <div class="col-xs-4">
+    <p>
+      <%= image_tag(@student.photo.url, size: "150", class: "img-thumbnail")  %>
+    </p>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.general_information") %></h4></div>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td><%= t("activerecord.attributes.student.birthday")%></td>
+            <td><%= @student.birthday %></td>
+          </tr>
+          <tr>
+            <td><%= t("activerecord.attributes.student.cv")%></td>
+              <td>
+                <% if (@student.cv.path).nil? %>
+                  <%= image_tag('file_thumbnails/missing.png', size: "16") %>
+                <% else %>
+                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %> <%= File.basename(@student.cv.path); %></p>
+                <% end %>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @student.last_name %>
-</p>
+    <% if !(@student.semester).nil? || !(@student.academic_program).empty? || !(@student.education).empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.carrier") %></h4></div>
+        <table class="table">
+          <tbody>
+            <% if !(@student.academic_program).empty? %>
+              <tr>
+                <td><%= t("activerecord.attributes.student.academic_program")%></td>
+                <td><%= @student.academic_program %></td>
+              </tr>
+            <% end %>
+            <% if !(@student.semester).nil? %>
+              <tr>
+                <td><%= t("activerecord.attributes.student.semester")%></td>
+                <td><%= @student.semester %></td>
+              </tr>
+            <% end %>
+            <% if !(@student.education).empty? %>
+              <tr>
+                <td><%= t("activerecord.attributes.student.education")%></td>
+                <td><%= @student.education %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
-<p>
-  <strong>Semester:</strong>
-  <%= @student.semester %>
-</p>
+    <% if !(@student.additional_information).empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></h3>
+        </div>
+        <div class="panel-body">
+          <%= @student.additional_information %>
+        </div>
+      </div>
+    <% end %>
 
-<p>
-  <strong>Academic program:</strong>
-  <%= @student.academic_program %>
-</p>
+    <% if !(@student.homepage).empty? || !(@student.github).empty? || !(@student.facebook).empty? || !(@student.xing).empty? || !(@student.linkedin).empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
+        <ul class="list-group">
+          <% if !(@student.homepage).empty? %>
+            <li class="list-group-item"><%= fa_icon "home 2x"%>
+              <%= link_to @student.homepage, @student.homepage %>
+            </li>
+          <% end %>
+          <% if !(@student.github).empty? %>
+            <li class="list-group-item"><%= fa_icon "github-square 2x"%>
+              <%= link_to @student.github, @student.github %>
+            </li>
+          <% end %>
+          <% if !(@student.facebook).empty? %>
+            <li class="list-group-item"><%= fa_icon "facebook-square 2x"%>
+              <%= link_to @student.facebook, @student.facebook %>
+            </li>
+          <% end %>
+          <% if !(@student.xing).empty? %>
+            <li class="list-group-item"><%= fa_icon "xing-square 2x"%>
+              <%= link_to @student.xing, @student.xing %>
+            </li>
+          <% end %>
+          <% if !(@student.linkedin).empty? %>
+            <li class="list-group-item"><%= fa_icon "linkedin-square 2x"%>
+              <%= link_to @student.linkedin, @student.linkedin %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<p>
-  <strong>Birthday:</strong>
-  <%= @student.birthday %>
-</p>
+    <% if !@student.languages.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
+        <table class="table">
+          <tbody>
+            <% @student.languages.each do |language| %>
+              <tr>
+                <td><%= language.name %></td>
+                <td>Placeholder for Stars
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
-<p>
-  <strong>Education:</strong>
-  <%= @student.education %>
-</p>
+    <% if !@student.programming_languages_students.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
+        <table class="table">
+          <tbody>
+            <% @student.programming_languages_students.each do |programming_languages_student| %>
+              <tr>
+                <td><%= programming_languages_student.programming_language.name %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == programming_languages_student.skill %>
+                      <%= radio_button_tag programming_languages_student.programming_language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag programming_languages_student.programming_language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
-<p>
-  <strong>Additional information:</strong>
-  <%= @student.additional_information %>
-</p>
-
-<p>
-  <strong>Homepage:</strong>
-  <%= @student.homepage %>
-</p>
-
-<p>
-  <strong>Github:</strong>
-  <%= @student.github %>
-</p>
-
-<p>
-  <strong>Facebook:</strong>
-  <%= @student.facebook %>
-</p>
-
-<p>
-  <strong>Xing:</strong>
-  <%= @student.xing %>
-</p>
-
-<p>
-  <strong>Linkedin:</strong>
-  <%= @student.linkedin %>
-</p>
-<p>
-  <strong>Languages:</strong>
-  <% @student.languages.each do |language| %>
-    <%= language.name %>
-  <% end %>
-</p>
-<p>
-  <strong>Programming Languages:</strong>
-  <% @student.programming_languages.each do |programming_language| %>
-    <%= programming_language.name %>
-  <% end %>
-</p>
-<p>
-  <strong>CV:</strong>
-  <% if (@student.cv.path).nil? %>
-    <%= image_tag('file_thumbnails/missing.png', size: "16") %>
-  <% else %>
-    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %>
-    <%= File.basename(@student.cv.path); %><br>
-  <% end %>
-</p>
-
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+    <div class="pull-left"><%= link_to t("links.back"), students_path, class: "btn btn-default"%></div>
+    <div class="pull-right"><%= link_to t("links.edit"), edit_student_path(@student), class: "btn btn-warning" %></div>
+  </div>
+</div>

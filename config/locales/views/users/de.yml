@@ -1,0 +1,7 @@
+de:
+  users:
+    login_headline: "Anmeldung"
+    open_id: "HPI OpenID"
+    sign_in: "Anmelden"
+    profile_headline: "Profil"
+    is_student: "Ich bin Student"

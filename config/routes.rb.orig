@@ -29,6 +29,8 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :chairs
 
+  resources :faqs
+
   resources :job_offers
   resources :users, only: [:edit, :update]
 

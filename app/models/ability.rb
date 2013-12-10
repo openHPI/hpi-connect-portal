@@ -9,10 +9,12 @@ class Ability
 
     if user.student?
         can :create, Application 
+        can :read, Faq
     end
 
     if user.research_assistant?
         can :read, Application
+        can :manage, Faq
     end
     # Define abilities for the passed in user here. For example:
     #

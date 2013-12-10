@@ -40,21 +40,22 @@
 
     <div class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
-        <%= link_to "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
+        <%= link_to image_tag("hpi-logo.png", :class=>"logo") + "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
       </div>
       <div class="container navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><%= link_to "Job Offers", job_offers_path  %></li>
-          <li><%= link_to "Students", students_path %></li>
-          <li><%= link_to "Chairs", chairs_path  %></li>
+          <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
+          <li><%= link_to t('layouts.students'), students_path %></li>
+          <li><%= link_to  t('layouts.chairs'), chairs_path  %></li>
+          <li><%= link_to  t('layouts.faqs'), faqs_path  %></li>
         </ul>
         <p class="navbar-text pull-right">
           <% if user_signed_in? %>
-            Logged in as <strong><%= current_user.email %></strong>.
-            <%= link_to 'Edit profile', edit_user_path(current_user), :class => 'navbar-link' %> |
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+            <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
+            <%= link_to t("layouts.edit_profile"), edit_user_path(current_user), :class => 'navbar-link' %> |
+            <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
           <% else %>
-            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+            <%= link_to t("layouts.login"), new_user_session_path, :class => 'navbar-link'  %>
           <% end %>
       </div><!--/.navbar-collapse -->
     </div>

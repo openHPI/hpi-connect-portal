@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20131204082315) do
 
   add_index "chairs_job_offers", ["chair_id", "job_offer_id"], name: "index_chairs_job_offers_on_chair_id_and_job_offer_id", unique: true, using: :btree
 
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "job_offers", force: true do |t|
     t.text     "description"
     t.string   "title"
@@ -94,11 +101,18 @@ ActiveRecord::Schema.define(version: 20131204082315) do
   create_table "programming_languages_students", force: true do |t|
     t.integer "student_id"
     t.integer "programming_language_id"
+    t.integer "skill"
   end
 
   create_table "roles", force: true do |t|
     t.string   "name"
     t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_statuses", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -126,6 +140,8 @@ ActiveRecord::Schema.define(version: 20131204082315) do
     t.string   "cv_content_type"
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
+    t.integer  "status"
+    t.integer  "student_status_id"
   end
 
   create_table "users", force: true do |t|

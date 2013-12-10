@@ -19,8 +19,8 @@ development:
   encoding: unicode
   database: hpi-hiwi-portal_development
   pool: 5
-  username: postgres
-  password: root
+  username: ror_su
+  password: us_ror
   host: localhost
   port: 5432    
 
@@ -50,8 +50,8 @@ test:
   encoding: unicode
   database: hpi-hiwi-portal_test
   pool: 5
-  username: postgres
-  password: root
+  username: ror_su
+  password: us_ror
   host: localhost
   port: 5432
 
@@ -60,7 +60,7 @@ production:
   encoding: unicode
   database: hpi-hiwi-portal_production
   pool: 5
-  username: postgres
-  password: root
+  username: ror_su
+  password: us_ror
   host: localhost
   port: 5432
