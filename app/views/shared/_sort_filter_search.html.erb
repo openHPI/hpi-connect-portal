@@ -1,5 +1,4 @@
-<div class="col-md-3">
-    <div class="well sidebar-nav">
+<div class="well sidebar-nav">
       <div class="container ">
         <%= form_tag( @find_jobs_path, :method => :get, :id => 'Form' ) do %> 
           <ul class="nav nav-list">
@@ -25,7 +24,6 @@
                   <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}, params.fetch(:chair,0)), include_blank: true, :class => "form-control"%>
                 </div>
               <% end %>
-              </div>
               <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, :class => "small" %>
                   <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :placeholder => t('job_offers.start_date'),  :class => 'datepicker form-control'%>
@@ -78,4 +76,3 @@
         <% end %> 
       </div><!--/.container -->
     </div> <!-- /sidebar -->
-  </div> <!-- /col --> 
