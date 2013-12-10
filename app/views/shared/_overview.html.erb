@@ -1,14 +1,14 @@
 <% @job_offers_list.each do |job_offers| %>
   <h2> <%= t(job_offers[:name]) %> </h2> 
   <ul class="list-group">
-    <% job_offers[:items].each_with_index do |job_offer, index| %>
+    <% job_offers[:items].each do |job_offer| %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-8">
             <h4><%= link_to job_offer.title, job_offer%></h4>
           </div>
           <div class="col-md-4">
-            <p class="startDate"><%= t("job_offers.starts ") %><%= l(job_offer.start_date) %></p>
+            <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
           </div>
         </div>
         <div class="row">

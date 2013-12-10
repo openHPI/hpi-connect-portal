@@ -49,7 +49,7 @@ describe JobOffersController do
   end
 
   describe "GET archive" do
-    it "assigns all archive job_offers as @job_offers" do
+    it "assigns all archive job_offers as @job_offerlist[:items]" do
       job_offer = JobOffer.create! valid_attributes_with_status
       get :archive, {}, valid_session
       assigns(:job_offers_list)[0][:items].should eq([job_offer])
@@ -94,7 +94,7 @@ describe JobOffersController do
   end
 
   describe "GET find" do
-    it "assigns @job_offers to all job offers with the chair EPIC" do
+    it "assigns @job_offers_list[:items] to all job offers with the chair EPIC" do
 
       FactoryGirl.create(:joboffer, chair: @itas)
       FactoryGirl.create(:joboffer, chair: @epic)
@@ -103,7 +103,7 @@ describe JobOffersController do
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find, ({:chair => @epic.id}), valid_session
-      assigns(:job_offers).to_a.should =~ (job_offers).to_a
+      assigns(:job_offers_list)[0][:items].to_a.should =~ (job_offers).to_a
     end
   end
   

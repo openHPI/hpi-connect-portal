@@ -28,5 +28,5 @@ en:
     applicant_first_name: "First Name"
     applicant_last_name: "Last Name"
     applicant_email: "Email"
-	assigned: "Assigned Job Offers"
+    assigned: "Assigned Job Offers"
     not_assigned: "Unassigned Job Offers"
