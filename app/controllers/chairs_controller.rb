@@ -11,9 +11,9 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show	
-    @job_offers_list = [{:items => find_jobs_in_job_list(JobOffer.filter(:chair => @chair.id)).paginate(:page => params[:page]),
+    @job_offers_list = [{:items => find_jobs_in_job_list(JobOffer.filter(:status => "working", :chair => @chair.id)).paginate(:page => params[:page]),
                         :name => "job_offers.assigned"}, 
-                        {:items => find_jobs_in_job_list(JobOffer.filter(:status => "completed", :chair => @chair.id)).paginate(:page => params[:page]),
+                        {:items => find_jobs_in_job_list(JobOffer.filter(:status => "open", :chair => @chair.id)).paginate(:page => params[:page]),
                          :name => "job_offers.not_assigned"}]
     @chairs=[]
   end
