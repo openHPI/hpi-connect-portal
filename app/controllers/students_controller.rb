@@ -31,29 +31,29 @@ class StudentsController < ApplicationController
 
   # POST /students
   # POST /students.json
-  def create
-    @user = user.new(user_params)
-    respond_to do |format|
-      if @user.save
-        if params[:programming_languages]
+  # def create
+  #   @user = user.new(user_params)
+  #   respond_to do |format|
+  #     if @user.save
+  #       if params[:programming_languages]
 
-          programming_languages = params[:programming_languages]
-          programming_languages.each do |programming_language_id, skill|
-            programming_language_user = ProgrammingLanguagesuser.new
-            programming_language_user.user_id = @user.userid
-            programming_language_user.programming_language_id = programming_language_id
-            programming_language_user.skill = skill
-            programming_language_user.save
-          end
-        end
-        format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #         programming_languages = params[:programming_languages]
+  #         programming_languages.each do |programming_language_id, skill|
+  #           programming_language_user = ProgrammingLanguagesuser.new
+  #           programming_language_user.user_id = @user.userid
+  #           programming_language_user.programming_language_id = programming_language_id
+  #           programming_language_user.skill = skill
+  #           programming_language_user.save
+  #         end
+  #       end
+  #       format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
+  #       format.json { render action: 'show', status: :created, location: @user }
+  #     else
+  #       format.html { render action: 'new' }
+  #       format.json { render json: @user.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json

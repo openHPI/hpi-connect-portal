@@ -4,7 +4,6 @@ HpiHiwiPortal::Application.routes.draw do
   resources :user_statuses
     root :to => "job_offers#index"
 
-      get "find_jobs"
     resources :job_offers do
       collection do
         get "archive"
@@ -14,7 +13,7 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :chairs
 
-    resources :users, only: [:edit, :update]
+    resources :users , only: [:edit, :update]
     devise_for :users, controllers: { sessions: 'sessions' }
 
     resources :applications, only: [:create]
@@ -29,6 +28,9 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :faqs
 
+    resources :students
+    get 'students/new' => 'students#new'
+    post 'students' => 'students#create'
 
 
 

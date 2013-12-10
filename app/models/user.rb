@@ -101,23 +101,23 @@ class User < ActiveRecord::Base
                 OR lower(github) LIKE ?
                 OR lower(facebook) LIKE ?
                 OR lower(xing) LIKE ?
-                OR lower(linkedin) LIKE ?
+                OR lower(linkedin) LIKE ?)
                 ",
                 string, string, string, string, string,
                 string, string, string, string, string)
         search_results += search_students_by_programming_language(string)
         search_results += search_students_by_language(string)
-        search_results.uniq.sort_by{|x| [x.last_name, x.first_name]}
+        search_results.uniq.sort_by{|x| [x.lastname, x.firstname]}
     end
 
     def self.search_students_by_programming_language(string)
-        User.joins(:programming_languages).where('lower(programming_languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.last_name, x.first_name]}
+        User.joins(:programming_languages).where('lower(programming_languages.name) LIKE ? AND is_student = true',string.downcase).
+        sort_by{|x| [x.lastname, x.firstname]}
     end
 
      def self.search_students_by_language(string)
-        User.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.last_name, x.first_name]}
+        User.joins(:languages).where('lower(languages.name) LIKE ? AND is_student = true',string.downcase).
+        sort_by{|x| [x.lastname, x.firstname]}
     end
 
     def self.search_students_by_language_and_programming_language(language_array, programming_language_array)

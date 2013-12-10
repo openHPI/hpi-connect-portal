@@ -20,9 +20,9 @@
         <td><%= user.lastname %></td>
         <td><%= user.semester %></td>
         <td><%= user.academic_program %></td>
-        <td><%= link_to t ("links.show"), student_path(user.id), :class => "btn btn-info" %></td>
-        <td><%= link_to t ("links.edit"), edit_student_path(user), :class => "btn btn-warning" %></td>
-        <td><%= link_to t ("links.destroy"), student_path(user.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+        <td><%= link_to t("links.show"), student_path(user.id), :class => "btn btn-info" %></td>
+        <td><%= link_to t("links.edit"), edit_student_path(user), :class => "btn btn-warning" %></td>
+        <td><%= link_to t("links.destroy"), student_path(user.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to t("students.new_student"), new_student_path, :class => "btn btn-default" %>
+ <%#= link_to t("students.new_student"), new_student_path, :class => "btn btn-default" %>
