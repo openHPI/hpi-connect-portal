@@ -40,7 +40,6 @@ HpiHiwiPortal::Application.configure do
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    # :domain => 'baci.lindsaar.net',
     :user_name => 'plattnerbook',
     :password => 'mtS33?U-}v2pP&VD',
     :authentication => 'plain',
