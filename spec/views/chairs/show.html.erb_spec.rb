@@ -5,6 +5,7 @@ describe "chairs/show" do
     @chair = assign(:chair, stub_model(Chair,
       :name => "HCI", :description => "Human Computer Interaction", :head_of_chair => "Prof. Patrick Baudisch", :deputy => FactoryGirl.create(:user)
     ))
+    view.stub(:can?) { false }
   end
 
   xit "renders attributes in <p>" do

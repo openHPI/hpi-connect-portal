@@ -31,12 +31,12 @@ describe ChairsController do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # ChairsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  login_user FactoryGirl.create(:role, name: 'Admin')
 
   describe "GET index" do
     it "assigns all chairs as @chairs" do
       chair = Chair.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:chairs).should eq([chair])
     end
   end
@@ -44,14 +44,14 @@ describe ChairsController do
   describe "GET show" do
     it "assigns the requested chair as @chair" do
       chair = Chair.create! valid_attributes
-      get :show, {:id => chair.to_param}, valid_session
+      get :show, {:id => chair.to_param}
       assigns(:chair).should eq(chair)
     end
   end
 
   describe "GET new" do
     it "assigns a new chair as @chair" do
-      get :new, {}, valid_session
+      get :new, {}
       assigns(:chair).should be_a_new(Chair)
     end
   end
@@ -59,7 +59,7 @@ describe ChairsController do
   describe "GET edit" do
     it "assigns the requested chair as @chair" do
       chair = Chair.create! valid_attributes
-      get :edit, {:id => chair.to_param}, valid_session
+      get :edit, {:id => chair.to_param}
       assigns(:chair).should eq(chair)
     end
   end
@@ -68,18 +68,18 @@ describe ChairsController do
     describe "with valid params" do
       it "creates a new Chair" do
         expect {
-          post :create, {:chair => valid_attributes}, valid_session
+          post :create, {:chair => valid_attributes}
         }.to change(Chair, :count).by(1)
       end
 
       it "assigns a newly created chair as @chair" do
-        post :create, {:chair => valid_attributes}, valid_session
+        post :create, {:chair => valid_attributes}
         assigns(:chair).should be_a(Chair)
         assigns(:chair).should be_persisted
       end
 
       it "redirects to the created chair" do
-        post :create, {:chair => valid_attributes}, valid_session
+        post :create, {:chair => valid_attributes}
         response.should redirect_to(Chair.last)
       end
     end
@@ -96,18 +96,18 @@ describe ChairsController do
         Chair.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", 
               "head_of_chair" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id.to_s })
         put :update, {:id => chair.to_param, :chair => { "name" => "HCI", "description" => "Human Computer Interaction", 
-              "head_of_chair" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id }}, valid_session
+              "head_of_chair" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id }}
       end
 
       it "assigns the requested chair as @chair" do
         chair = Chair.create! valid_attributes
-        put :update, {:id => chair.to_param, :chair => valid_attributes}, valid_session
+        put :update, {:id => chair.to_param, :chair => valid_attributes}
         assigns(:chair).should eq(chair)
       end
 
       it "redirects to the chair" do
         chair = Chair.create! valid_attributes
-        put :update, {:id => chair.to_param, :chair => valid_attributes}, valid_session
+        put :update, {:id => chair.to_param, :chair => valid_attributes}
         response.should redirect_to(chair)
       end
     end

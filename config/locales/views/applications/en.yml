@@ -1,0 +1,5 @@
+en:
+  applications:
+    decline: "Decline"
+    decline_confirmation: "Are you sure that you want to decline this application?"
+    accept: "Accept"

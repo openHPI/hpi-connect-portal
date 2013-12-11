@@ -16,7 +16,7 @@ describe JobOffersHelper do
   		java = ProgrammingLanguage.new(:name => 'Java')
       	php = ProgrammingLanguage.new(:name => 'php')
 
-      	@job_offer = FactoryGirl.create(:joboffer, programming_languages: [java, php])
+      	@job_offer = FactoryGirl.create(:job_offer, programming_languages: [java, php])
       	result = get_programming_language_names
       	assert_equal(result,["Java","php"])
   	end
@@ -25,7 +25,7 @@ describe JobOffersHelper do
       	german = Language.new(:name => 'German')
       	english = Language.new(:name => 'English')
 
-      	@job_offer = FactoryGirl.create(:joboffer, languages: [german, english])
+      	@job_offer = FactoryGirl.create(:job_offer, languages: [german, english])
       	result = get_language_names
       	assert_equal(result,["German","English"])
   	end

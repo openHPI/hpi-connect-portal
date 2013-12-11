@@ -17,7 +17,6 @@
 #  lastname            :string(255)
 #  firstname           :string(255)
 #  role_id             :integer          default(1), not null
-#  chair_id            :integer
 #
 
 FactoryGirl.define do
@@ -26,5 +25,6 @@ FactoryGirl.define do
     sequence(:lastname)  { |n| "the #{n} of his kind" }
     sequence(:email) { |n| "user_#{n}@example.com" } 
     sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
+    association :role
   end
 end

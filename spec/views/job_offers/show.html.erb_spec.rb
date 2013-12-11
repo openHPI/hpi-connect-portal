@@ -7,7 +7,8 @@ describe "job_offers/show" do
       :description => "Description",
       :title => "Title",
       :chair => @TestChair,
-      :responsible_user => FactoryGirl.create(:user)
+      :responsible_user => FactoryGirl.create(:user),
+      :status => FactoryGirl.create(:job_status, :name => "open")
     ))
     view.stub(:signed_in?) { false }
   end

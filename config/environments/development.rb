@@ -6,6 +6,9 @@ HpiHiwiPortal::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -26,4 +29,15 @@ HpiHiwiPortal::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    # :domain => 'baci.lindsaar.net',
+    :user_name => 'plattnerbook',
+    :password => 'mtS33?U-}v2pP&VD',
+    :authentication => 'plain',
+    :enable_starttls_auto => true }
 end

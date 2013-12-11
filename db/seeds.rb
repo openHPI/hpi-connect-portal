@@ -12,6 +12,13 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
+#Create Standart Job Status
+JobStatus.delete_all
+JobStatus.create(name: 'pending')
+JobStatus.create(name: 'open')
+JobStatus.create(name: 'working')
+JobStatus.create(name: 'completed')
+
 #Create User as an example deputy for all chairs
 User.delete_all
 User.create([{
@@ -129,7 +136,7 @@ JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
 	chair: Chair.where(:name => "Human Computer Interaction").first, 
-	status: 'open',
+	status: JobStatus.where(:name => "completed").first,
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
@@ -142,7 +149,7 @@ JobOffer.create([{
 	title: "Website Developer", 
 	description: 'The student develops a wonderful website.', 
 	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
-	status: 'completed',
+	status: JobStatus.where(:name => "completed").first,
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
@@ -156,7 +163,7 @@ JobOffer.create([{
 	description: 'The Job includes the development of new features for tele-Task', 
 	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
 	start_date: '2013-11-11', 
-	status: 'completed',
+	status: JobStatus.where(:name => "completed").first,
 	time_effort: 10,
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
@@ -196,7 +203,7 @@ JobOffer.create([{
 	chair: Chair.where(:name => "Human Computer Interaction").first, 
 	start_date: '2013-12-01', 
 	time_effort: 20,
-	status: 'working',
+	status: JobStatus.where(:name => "working").first,
 	compensation: 12.00,
 	languages: Language.where(:name => ['English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
