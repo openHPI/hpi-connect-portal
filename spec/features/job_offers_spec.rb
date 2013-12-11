@@ -64,7 +64,7 @@ describe "job_offers_history" do
       )
 
     visit job_offers_path
-    find("div#sidebar").should have_link "Archive"
+    find("div#buttons").should have_link "Archive"
     click_on "Archive"
     current_path.should == archive_job_offers_path
     page.should have_css "ul.list-group li"
