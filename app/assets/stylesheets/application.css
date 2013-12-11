@@ -15,3 +15,21 @@
  *= require_tree .
  *= require font-awesome
  */
+
+ h1, h2, h3, h4, h5, label, a, .btn-default {
+  color: #e46e26;
+}
+
+
+label.small {
+  color: #000000;
+}
+
+a:hover, a:focus, .btn-default:hover  {
+	color: #b0063a;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+	background-color: #e46e26;
+	border-color: #e46e26;
+}

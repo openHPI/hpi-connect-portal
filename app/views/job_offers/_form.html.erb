@@ -88,7 +88,7 @@
         <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
           <div class="col-md-2">
             <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
-            <%= label_tag dom_id(programming_language), programming_language.name %>
+            <%= label_tag dom_id(programming_language), programming_language.name, :class => "small" %>
           </div>
         <% end %>
       </div>
@@ -99,7 +99,7 @@
         <% Language.all.each do |language| %>
           <div class="col-md-2">
             <%= check_box_tag "job_offer[language_ids][]", language.id, @job_offer.language_ids.include?(language.id), id: dom_id(language) %>
-            <%= label_tag dom_id(language), language.name %>
+            <%= label_tag dom_id(language), language.name, :class => "small" %>
           </div>
         <% end %>
 
