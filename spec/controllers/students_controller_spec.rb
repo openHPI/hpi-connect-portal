@@ -112,7 +112,7 @@ describe StudentsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         User.any_instance.should_receive(:update).with({ "firstname" => "MyString" })
-        put :update, {:user => { "firstname" => "MyString" }}, valid_session
+        put :update, {:id => user.to_param, :user => {"firstname" => "MyString" }}, valid_session
       end
 
       it "assigns the requested student as @user" do
@@ -163,7 +163,7 @@ describe StudentsController do
   end
 
   describe "GET matching" do
-    it "finds all users with the requested programming language and language" do
+    it "finds all users with the requested programming language, and language" do
       java = ProgrammingLanguage.new(:name => 'Java')
       php = ProgrammingLanguage.new(:name => 'php')
       german = Language.new(:name => 'German')
@@ -196,25 +196,25 @@ describe StudentsController do
     it "updates the requested student with an existing programming language" do
       pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}])
       pl_id = pl.first.id
-      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => pl, :programming_languages_students => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'}])
+      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'}])
       ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
     end
     it "updates the requested student with a new programming language" do
       pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}, {name: 'MySecondProgrammingLanguage'}])
       pl_id = pl.first.id
       pl2_id = pl.last.id
-      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => [pl.first], :programming_languages_students => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'}])
-      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl2_id.to_s => "2" }}, valid_session
-      student.programming_languages_students.last.skill == 2
+      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => [pl.first], :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'}])
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :programming_languages => { pl2_id.to_s => "2" }}, valid_session
+      student.programming_languages_users.last.skill == 2
       student.programming_languages.last == pl.last
     end
     it "updates the requested student with a removed programming language" do
       pl = ProgrammingLanguage.create([{name: 'MyProgrammingLanguage'}, {name: 'MySecondProgrammingLanguage'}])
       pl_id = pl.first.id
       pl2_id = pl.last.id
-      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => pl, :programming_languages_students => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'},{programming_language_id: pl2_id, skill: '2'}])
-      put :update, {:id => student.to_param, :student => { "first_name" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
+      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl_id, skill: '4'},{programming_language_id: pl2_id, skill: '2'}])
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :programming_languages => { pl_id.to_s => "2" }}, valid_session
       student.programming_languages.size == 1
     end
   end

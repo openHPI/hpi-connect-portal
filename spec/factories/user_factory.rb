@@ -31,7 +31,7 @@ FactoryGirl.define do
     birthday '1970-12-10'
     education'Abitur'
     additional_information 'No'
-    homepage 'www.dieter.de'
+    homepage 'oracle.com'
     github 'www.github.com/dieter'
     facebook 'www.faceboook.com/dieter'
     xing 'www.xing.com/dieter'

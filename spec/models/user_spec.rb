@@ -24,7 +24,8 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @user = User.create
+    Language.create(:name=>'Englisch')
+    @user = FactoryGirl.create(:user)
     @student = FactoryGirl.create(:user, :is_student => true)
   end
 
@@ -66,7 +67,7 @@ describe User do
   end
 
   describe"#searchStudentsByLanguage" do
-    it "returns an array of students who speak a language"do
+    it "returns an array of students who speak a language" do
       expect(User.search_students_by_language('Englisch')).to include(@student)
     end
 

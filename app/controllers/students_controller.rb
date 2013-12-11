@@ -85,7 +85,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to student_path(@user.id), notice: 'user was successfully updated.' }
         format.json {head :ok }
       else
-        format.html { render edit_student_path(@user.id) }
+        format.html { render action: 'edit' }
         format.json { redirect_to student_path(@user.id), status: :unprocessable_entity }
       end
     end
