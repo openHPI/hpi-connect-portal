@@ -96,7 +96,7 @@ describe Student do
       assert_equal(matching_students.length, 3);
     end
 
-    it "should return all students who speak the language german AND" do
+    it "should return all students who speak the language german" do
       java = ProgrammingLanguage.new(:name => 'Java')
       php = ProgrammingLanguage.new(:name => 'php')
       german = Language.new(:name => 'German')

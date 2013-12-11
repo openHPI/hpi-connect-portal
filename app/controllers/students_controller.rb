@@ -98,6 +98,7 @@ class StudentsController < ApplicationController
   # GET /students/matching
   def matching 
     @students = Student.search_students_by_language_and_programming_language(params[:languages], params[:programming_languages])
+    @students = @students.paginate(:page => params[:page], :per_page => 10 )
     render "index"
   end
 
