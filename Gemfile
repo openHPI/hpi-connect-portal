@@ -43,14 +43,17 @@ group :development, :test do
   gem 'codeclimate-test-reporter', :require => nil
 end
 
-#gem 'simplecov', :group => :test, :require => nil
+gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
 
 # basic layouting
-gem 'twitter-bootstrap-rails'
+# gem 'twitter-bootstrap-rails'
+
+#bootstrap 3
+gem 'bootstrap-rails-engine'
 
 # navigation
 gem 'simple-navigation', '~> 3.11'
@@ -59,6 +62,9 @@ gem 'simple-navigation', '~> 3.11'
 
 gem 'devise', '~> 3.2'
 gem 'devise_openid_authenticatable'
+
+# authorizations in one place
+gem 'cancan'
 
 # simple http requests
 gem 'rest-client'
@@ -83,3 +89,16 @@ gem 'capybara'
 
 #factory girl
 gem 'factory_girl'
+
+#replacement for glyphicons
+gem "font-awesome-rails"
+
+# pagination
+gem 'will_paginate', '~> 3.0'
+
+# styles pagination with bootstrap
+gem 'will_paginate-bootstrap'
+
+gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
+gem 'jquery-star-rating-rails'
+gem 'simple_form'

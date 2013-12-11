@@ -1,11 +1,17 @@
 class JobOffersController < ApplicationController
+  include ApplicationHelper
+  before_filter :check_user_is_responsible, only: [:edit, :update]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
+  before_action :set_chairs, only: [:index, :find_jobs, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.order("created_at")
+    job_offers = JobOffer.order("created_at")
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+    @chairs = Chair.all
   end
 
   # GET /job_offers/1
@@ -30,6 +36,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
+    @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
@@ -63,51 +70,51 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offers/sort
-  def sort
-     @radio_button_sort_value = {"date" => false, "chair" => false}
-     sort_value =  params.require(:sort_value)
-     logger.warn(sort_value)
-     @radio_button_sort_value[sort_value] = true
-     logger.warn(@radio_button_sort_value)
-
-     @job_offers = JobOffer.sort sort_value
-     render "index"
+  # GET /job_offers/archive
+  def archive
+    job_offers = JobOffer.filter({:status => "completed"})
+    @radio_button_sort_value = {"date" => false, "chair" => false}
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.archive"}]
+    @chairs = Chair.all
   end
 
-
-  # GET /job_offers/search
-  def search
+  # GET /job_offers/find_jobs
+  def find
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.search params[:search]
+    job_offers = find_jobs_in_job_list(JobOffer.all) 
+    job_offers = job_offers.paginate(:page => params[:page])
+	  @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+
+    @chairs = Chair.all
     render "index"
+
   end
 
-  # GET /job_offers/filter
-  def filter
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = JobOffer.filter({
-                                    :title => params[:title],
-                                    :chair => params[:chair], 
-                                    :description => params[:description],
-                                    :start_date => params[:start_date],
-                                    :end_date => params[:end_date],
-                                    :time_effort => params[:time_effort],
-                                    :compensation => params[:compensation]})
-    
-     render "index"
+  def find_archived_jobs
+    job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    job_offers = job_offers.paginate(:page => params[:page])
+	@job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+    @chairs = Chair.all
+    render "archive"
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
-      @job_offer = JobOffer.find(params[:id])
+      @job_offer = JobOffer.find params[:id]
+    end
+
+    def set_chairs
+      @chairs = Chair.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
     end
     
@@ -115,4 +122,12 @@ class JobOffersController < ApplicationController
       format.html { render action: target }
       format.json { render json: object.errors, status: :unprocessable_entity }
     end  
+
+    def check_user_is_responsible
+      @job_offer = JobOffer.find params[:id]
+
+      unless current_user == @job_offer.responsible_user
+        redirect_to @job_offer
+      end
+    end
 end

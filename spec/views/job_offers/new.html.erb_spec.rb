@@ -2,10 +2,11 @@ require 'spec_helper'
 
 describe "job_offers/new" do
   before(:each) do
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     assign(:job_offer, stub_model(JobOffer,
       :description => "MyString",
       :title => "MyString",
-      :chair => 'System Analysis and Modeling',
+      :chair => @TestChair,
       :start_date => Date.new(2013, 10, 1),
       :end_date => Date.new(2014, 03, 31),
       :time_effort => 7,

@@ -11,21 +11,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131121143926) do
+ActiveRecord::Schema.define(version: 20131204082315) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "applications", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "job_offer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "chairs", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "head_of_chair"
+    t.string   "head_of_chair",       null: false
+    t.integer  "deputy_id"
+  end
+
+  add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
+
+  create_table "chairs_job_offers", id: false, force: true do |t|
+    t.integer "chair_id"
+    t.integer "job_offer_id"
+  end
+
+  add_index "chairs_job_offers", ["chair_id", "job_offer_id"], name: "index_chairs_job_offers_on_chair_id_and_job_offer_id", unique: true, using: :btree
+
+  create_table "faqs", force: true do |t|
+    t.string   "question"
+    t.text     "answer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "job_offers", force: true do |t|
@@ -33,11 +57,14 @@ ActiveRecord::Schema.define(version: 20131121143926) do
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "chair"
     t.date     "start_date"
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
+    t.string   "room_number"
+    t.string   "status"
+    t.integer  "chair_id"
+    t.integer  "responsible_user_id"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -74,6 +101,20 @@ ActiveRecord::Schema.define(version: 20131121143926) do
   create_table "programming_languages_students", force: true do |t|
     t.integer "student_id"
     t.integer "programming_language_id"
+    t.integer "skill"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "student_statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "students", force: true do |t|
@@ -99,6 +140,8 @@ ActiveRecord::Schema.define(version: 20131121143926) do
     t.string   "cv_content_type"
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
+    t.integer  "status"
+    t.integer  "student_status_id"
   end
 
   create_table "users", force: true do |t|
@@ -115,6 +158,8 @@ ActiveRecord::Schema.define(version: 20131121143926) do
     t.boolean  "is_student"
     t.string   "lastname"
     t.string   "firstname"
+    t.integer  "role_id",             default: 1,  null: false
+    t.integer  "chair_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

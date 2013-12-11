@@ -4,9 +4,12 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
-    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: "TestChair")
-    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2")
-    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3")
+    @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
+    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2", chair: @epic, responsible_user: @user)
+    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3", chair: @epic, responsible_user: @user)
   end
 
   it "should include all jobs currently available" do
@@ -31,7 +34,9 @@ end
 describe "a job offer entry" do
 
   before(:each) do
-    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: "TestChair")
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: @TestChair, responsible_user: @user)
   end
 
   it "should have a title and the professorship" do
@@ -44,5 +49,29 @@ describe "a job offer entry" do
     find_link("TestJob").click
     # we expect to be on another page
     current_path.should_not == job_offers_path
+  end
+end
+
+describe "job_offers_history" do
+  it "should have a job-offers-history" do
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @job_offer = FactoryGirl.create(:joboffer, 
+      title: "Closed Job Touch Floor", 
+      status: "completed",
+      chair: @TestChair,
+      responsible_user: @user
+      )
+
+    visit job_offers_path
+    find("div#sidebar").should have_link "Archive"
+    click_on "Archive"
+    current_path.should == archive_job_offers_path
+    page.should have_css "ul.list-group li"
+    page.should have_css "#search"
+    page.should have_css "#filter"
+    page.should have_css "#search"
+    find_button("Go").visible?
+    first("ul.list-group li").should have_content "Closed Job Touch Floor"
   end
 end

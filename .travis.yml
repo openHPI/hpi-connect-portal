@@ -15,5 +15,6 @@ deploy:
     repo: tkowark/hpi-hiwi-portal
   run: 
   - "rake db:migrate"
+  - "rake db:seed"
   - restart
 

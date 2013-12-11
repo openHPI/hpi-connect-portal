@@ -1,0 +1,14 @@
+en:
+  activerecord:
+    attributes:
+        job_offer:
+          description: "description"
+          title: "title"
+          chair: "chair"
+          start_date: "start date"
+          end_date: "end date"
+          time_effort: "time effort"
+          compensation: "compensation"
+          room_number: "room number"
+          programming_languages: "programming languages"
+          languages: "languages"

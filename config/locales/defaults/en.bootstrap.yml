@@ -1,0 +1,20 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  actions: "Actions"
+  links:
+    back: "Back"
+    cancel: "Cancel"
+    confirm: "Are you sure?"
+    destroy: "Delete"
+    new: "New"
+    edit: "Edit"
+    save: "Save"
+    show: "Show"
+    discard: "Are you sure you want to discard your changes?"
+  titles:
+    edit: "Edit %{model}"
+    save: "Save %{model}"
+    new: "New %{model}"
+    delete: "Delete %{model}"

@@ -1,16 +1,19 @@
-
-<div class="span9">
-<span class="pull-left">
-	<%= link_to 'Back', job_offers_path, :class => "btn"  %>
-</span>
-<span class="pull-right">
-<%= link_to 'Show', @job_offer, :class => "btn btn-warning", :confirm => 'Are you sure you want to discard your changes?' %> 
-</span>
-<br><br>
-<div class="panel">
-<h2>Editing Job Offer</h2>
-<%= render 'form' %>
-</div>
+<div class="row">
+  <div class="col-md-3">
+         <%= render 'sidebar'  %>  
+  </div><!--/span-->
+	<div class="col-md-9">
+		<span class="pull-left">
+			<%= link_to t("links.back"), job_offers_path, :class => "btn btn-default"  %>
+		</span>
+		<span class="pull-right">
+		<%= link_to t("links.show"), @job_offer, :class => "btn btn-default btn-warning", :confirm => t("links.discard") %> 
+		</span>
+		<br><br>
+		<div class="panel panel-default panel-body">
+		<h2><%= t("job_offers.edit_job_offer")%></h2>
+		<%= render 'form' %>
+	</div>
 </div>
 
 

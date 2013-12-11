@@ -1,9 +1,9 @@
 class AddAvatarToChairs < ActiveRecord::Migration
-  def self.up
+  def up
 		add_attachment :chairs, :avatar
   end
 
-	def self.down 
+	def down 
 		remove_attachment :chairs, :avatar
 	end
 end
