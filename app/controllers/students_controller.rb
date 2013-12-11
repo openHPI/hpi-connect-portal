@@ -1,5 +1,4 @@
 class StudentsController < ApplicationController
-  require 'will_paginate/array' 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /students
