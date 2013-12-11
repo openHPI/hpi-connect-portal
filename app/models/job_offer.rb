@@ -107,7 +107,7 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: where(status: status)
+        status.blank? ? all: joins(:status).where('name LIKE ?',status)
     end
 
     def self.filter_programming_languages(programming_language_ids)
