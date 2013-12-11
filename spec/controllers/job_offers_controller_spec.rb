@@ -40,6 +40,28 @@ describe JobOffersController do
       @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
   end
 
+  describe "Check if views are rendered" do
+        render_views
+
+    it "renders the find results" do
+      job_offer = JobOffer.create! valid_attributes
+      get :find, ({:chair => @epic.id}), valid_session
+      response.should render_template("index")
+  end
+
+    it "renders the archive" do
+      job_offer = JobOffer.create! valid_attributes
+      get :archive, {}, valid_session
+    response.should render_template("archive")
+  end
+
+    it "renders the jobs found archive" do
+      job_offer = JobOffer.create! valid_attributes
+      get :find_archived_jobs, ({:chair => @epic.id}), valid_session
+      response.should render_template("archive")
+  end
+end
+
   describe "GET index" do
     it "assigns all job_offers as @job_offer-list[:items]" do
       job_offer = JobOffer.create! valid_attributes
