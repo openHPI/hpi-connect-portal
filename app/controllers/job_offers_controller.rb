@@ -10,7 +10,8 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = JobOffer.sort("date")
+    job_offers = JobOffer.filter_status("open")
+    job_offers = job_offers.sort("date")
     job_offers = job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
@@ -41,7 +42,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.where(name: 'pending').first)
+    @job_offer = JobOffer.new(job_offer_params)
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
@@ -80,7 +81,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
+    @job_offers = JobOffer.filter_status("completed")
     @radio_button_sort_value = {"date" => false, "chair" => false}
     job_offers = @job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
@@ -92,7 +93,7 @@ class JobOffersController < ApplicationController
   def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = find_jobs_in_job_list(JobOffer.all) 
+    job_offers = find_jobs_in_job_list(JobOffer.filter_status("open")) 
     job_offers = job_offers.paginate(:page => params[:page])
 	  @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
@@ -103,7 +104,7 @@ class JobOffersController < ApplicationController
   end
 
   def find_archived_jobs
-    job_offers = find_jobs_in_job_list(JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first))
+    job_offers = find_jobs_in_job_list(JobOffer.filter_status("completed"))
     job_offers = job_offers.paginate(:page => params[:page])
 	@job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]

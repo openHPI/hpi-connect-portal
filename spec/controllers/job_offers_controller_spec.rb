@@ -40,6 +40,7 @@ describe JobOffersController do
       @epic = FactoryGirl.create(:chair, name:"EPIC")
       @os = FactoryGirl.create(:chair, name:"OS and Middleware")
       @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+      @open = FactoryGirl.create(:job_status, name:"open")
   end
 
   describe "Check if views are rendered" do
@@ -120,10 +121,10 @@ end
   describe "GET find" do
     it "assigns @job_offers_list[:items] to all job offers with the chair EPIC" do
 
-      FactoryGirl.create(:job_offer, chair: @itas)
-      FactoryGirl.create(:job_offer, chair: @epic)
-      FactoryGirl.create(:job_offer, chair: @os)
-      FactoryGirl.create(:job_offer, chair: @epic)
+      FactoryGirl.create(:job_offer, chair: @itas, status: @open)
+      FactoryGirl.create(:job_offer, chair: @epic, status: @open)
+      FactoryGirl.create(:job_offer, chair: @os, status: @open)
+      FactoryGirl.create(:job_offer, chair: @epic, status: @open)
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find, ({:chair => @epic.id}), valid_session

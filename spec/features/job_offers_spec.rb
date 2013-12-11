@@ -5,11 +5,12 @@ describe "the job-offers page" do
 
   before(:each) do
     @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @open = FactoryGirl.create(:job_status, name:"open")
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user, status: @open)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user, status: @open)
   end
 
   it "should include all jobs currently available" do
