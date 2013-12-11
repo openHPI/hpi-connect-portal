@@ -39,7 +39,7 @@ FactoryGirl.define do
     languages Language.where(:name => 'Englisch')
     programming_languages ProgrammingLanguage.where(:name => ['Ruby'])
     user_status UserStatus.where(:name => 'employed (ext)').first
-    role Role.where(:name => 'Student').first
+    role factory: :role
     is_student true
   end
 end

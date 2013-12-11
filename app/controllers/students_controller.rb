@@ -29,6 +29,7 @@ class StudentsController < ApplicationController
     @all_programming_languages = ProgrammingLanguage.all
   end
 
+  #Outdated by new design, at least till know
   # POST /students
   # POST /students.json
   # def create
@@ -61,11 +62,11 @@ class StudentsController < ApplicationController
     if params[:programming_languages]
       programming_languages = params[:programming_languages]
       programming_languages.each do |programming_language_id, skill|
-        pl = ProgrammingLanguagesuser.find_by_user_id_and_programming_language_id(params[:id],programming_language_id)
+        pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(params[:id],programming_language_id)
         if pl
           pl.update_attributes(:skill => skill)
         else
-          programming_language_user = ProgrammingLanguagesuser.new
+          programming_language_user = ProgrammingLanguagesUser.new
           programming_language_user.user_id = params[:id]
           programming_language_user.programming_language_id = programming_language_id
           programming_language_user.skill = skill
@@ -73,7 +74,7 @@ class StudentsController < ApplicationController
         end
       end
       #Delete all programming languages which have been deselected (rating removed) from the form
-      ProgrammingLanguagesStudent.where(:student_id => params[:id]).each do |pl|
+      ProgrammingLanguagesUser.where(:user_id => params[:id]).each do |pl|
         if programming_languages[pl.programming_language_id.to_s].nil?
           pl.destroy
         end
@@ -82,10 +83,10 @@ class StudentsController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to student_path(@user.id), notice: 'user was successfully updated.' }
-        format.json { head :no_content }
+        format.json {head :ok }
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { render edit_student_path(@user.id) }
+        format.json { redirect_to student_path(@user.id), status: :unprocessable_entity }
       end
     end
   end
@@ -102,7 +103,7 @@ class StudentsController < ApplicationController
 
   # GET /students/matching
   def matching 
-    @user = User.search_users_by_language_and_programming_language(params[:languages], params[:programming_languages])
+    @user = User.search_students_by_language_and_programming_language(params[:languages], params[:programming_languages])
     render "index"
   end
 

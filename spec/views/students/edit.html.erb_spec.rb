@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "students/edit" do
   before(:each) do
-    @student = assign(:student, stub_model(Student,
-      :first_name => "MyString",
-      :last_name => "MyString",
+    @user = assign(:user, stub_model(User,
+      :firstname => "MyString",
+      :lastname => "MyString",
       :semester => 1,
       :academic_program => "MyString",
       :education => "MyText",
@@ -13,7 +13,8 @@ describe "students/edit" do
       :github => "MyString",
       :facebook => "MyString",
       :xing => "MyString",
-      :linkedin => "MyString"
+      :linkedin => "MyString",
+      :is_student => true
     ))
   end
 
@@ -21,18 +22,18 @@ describe "students/edit" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form[action=?][method=?]", student_path(@student), "post" do
-      assert_select "input#student_first_name[name=?]", "student[first_name]"
-      assert_select "input#student_last_name[name=?]", "student[last_name]"
-      assert_select "input#student_semester[name=?]", "student[semester]"
-      assert_select "input#student_academic_program[name=?]", "student[academic_program]"
-      assert_select "textarea#student_education[name=?]", "student[education]"
-      assert_select "textarea#student_additional_information[name=?]", "student[additional_information]"
-      assert_select "input#student_homepage[name=?]", "student[homepage]"
-      assert_select "input#student_github[name=?]", "student[github]"
-      assert_select "input#student_facebook[name=?]", "student[facebook]"
-      assert_select "input#student_xing[name=?]", "student[xing]"
-      assert_select "input#student_linkedin[name=?]", "student[linkedin]"
+    assert_select "form[action=?][method=?]", edit_student_path(@user.id), "put" do
+      assert_select "input#user_first_name[name=?]", "user[firstname]"
+      assert_select "input#user_last_name[name=?]", "user[lastname]"
+      assert_select "input#user_semester[name=?]", "user[semester]"
+      assert_select "input#user_academic_program[name=?]", "user[academic_program]"
+      assert_select "textarea#user_education[name=?]", "user[education]"
+      assert_select "textarea#user_additional_information[name=?]", "user[additional_information]"
+      assert_select "input#user_homepage[name=?]", "user[homepage]"
+      assert_select "input#user_github[name=?]", "user[github]"
+      assert_select "input#user_facebook[name=?]", "user[facebook]"
+      assert_select "input#user_xing[name=?]", "user[xing]"
+      assert_select "input#user_linkedin[name=?]", "user[linkedin]"
     end
   end
 end

@@ -16,23 +16,26 @@ HpiHiwiPortal::Application.routes.draw do
     resources :users , only: [:edit, :update]
     devise_for :users, controllers: { sessions: 'sessions' }
 
+
     resources :applications, only: [:create]
 
     resources :programming_languages
 
     resources :languages
 
-    resources :student_statuses
+    resources :user_statuses
 
     resources :studentsearch
 
     resources :faqs
 
-    resources :students
-    get 'students/new' => 'students#new'
-    post 'students' => 'students#create'
-
-
+    resources :students do
+        collection do
+            get 'students/new' => 'students#new'
+            post 'students' => 'students#create'
+            get 'matching'
+        end
+    end
 
     # The priority is based upon order of creation: first created -> highest priority.
     # See how all your routes lay out with "rake routes".

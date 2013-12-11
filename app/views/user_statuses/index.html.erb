@@ -13,10 +13,10 @@
   <tbody>
     <% @user_statuses.each do |user_status| %>
       <tr>
-        <td><%= user_status.description %></td>
-         <td><%= link_to t ("links.show"), student_path(user.id), :class => "btn btn-info" %></td>
-        <td><%= link_to t ("links.edit"), edit_student_path(user), :class => "btn btn-warning" %></td>
-        <td><%= link_to t ("links.destroy"), student_path(user.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+        <td><%= user_status.name %></td>
+         <td><%= link_to t("links.show"), user_status, :class => "btn btn-info" %></td>
+        <td><%= link_to t("links.edit"), edit_user_status_path(user_status), :class => "btn btn-warning" %></td>
+        <td><%= link_to t("links.destroy"), user_status, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>

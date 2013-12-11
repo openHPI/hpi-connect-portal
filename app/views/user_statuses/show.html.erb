@@ -2,8 +2,8 @@
 
 <p>
   <strong>Description:</strong>
-  <%= @user_status.description %>
+  <%= @user_status.name %>
 </p>
 
-<%= link_to 'Edit', edit_user_status_path(@user_status) %> |
-<%= link_to 'Back', user_statuses_path %>
+<%= link_to t("links.edit"), edit_user_status_path(@user_status) %> |
+<%= link_to t("links.back"), user_statuses_path %>

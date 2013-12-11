@@ -1,4 +1,4 @@
-<%= simple_form_for @user, :html => { :multipart => true, class: 'form-horizontal', role: 'form' } do |f| %>
+<%= simple_form_for @user, :url => student_path(@user.id), :html => { :multipart => true, class: 'form-horizontal', role: 'form' } do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>

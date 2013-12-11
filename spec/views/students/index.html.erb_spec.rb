@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe "students/index" do
   before(:each) do
-    assign(:students, [
-      stub_model(Student,
-        :first_name => "First Name",
-        :last_name => "Last Name",
+    assign(:users, [
+      stub_model(User,
+        :firstname => "First Name",
+        :lastname => "Last Name",
         :semester => 1,
         :academic_program => "Academic Program",
         :birthday => '2013-11-10',
@@ -15,11 +15,12 @@ describe "students/index" do
         :github => "Github",
         :facebook => "Facebook",
         :xing => "Xing",
-        :linkedin => "Linkedin"
+        :linkedin => "Linkedin",
+        :is_student=> true
       ),
-      stub_model(Student,
-        :first_name => "First Name",
-        :last_name => "Last Name",
+      stub_model(User,
+        :firstname => "First Name",
+        :lastname => "Last Name",
         :semester => 1,
         :academic_program => "Academic Program",
         :birthday => '2013-11-10',
@@ -29,7 +30,8 @@ describe "students/index" do
         :github => "Github",
         :facebook => "Facebook",
         :xing => "Xing",
-        :linkedin => "Linkedin"
+        :linkedin => "Linkedin",
+        :is_student => true
       )
     ])
   end
