@@ -10,7 +10,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = JobOffer.order("created_at")
+    job_offers = JobOffer.sort("date")
     job_offers = job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
