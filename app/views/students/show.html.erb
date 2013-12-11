@@ -84,27 +84,27 @@
         <ul class="list-group">
           <% if !(@student.homepage).empty? %>
             <li class="list-group-item"><%= fa_icon "home 2x"%>
-              <%= link_to @student.homepage, @student.homepage %>
+              <%= link_to @student.homepage, url_with_protocol(@student.homepage), :target => '_blank' %>
             </li>
           <% end %>
           <% if !(@student.github).empty? %>
             <li class="list-group-item"><%= fa_icon "github-square 2x"%>
-              <%= link_to @student.github, @student.github %>
+              <%= link_to @student.github, url_with_protocol(@student.github), :target => '_blank'%>
             </li>
           <% end %>
           <% if !(@student.facebook).empty? %>
             <li class="list-group-item"><%= fa_icon "facebook-square 2x"%>
-              <%= link_to @student.facebook, @student.facebook %>
+              <%= link_to @student.facebook, url_with_protocol(@student.facebook), :target => '_blank' %>
             </li>
           <% end %>
           <% if !(@student.xing).empty? %>
             <li class="list-group-item"><%= fa_icon "xing-square 2x"%>
-              <%= link_to @student.xing, @student.xing %>
+              <%= link_to @student.xing, url_with_protocol(@student.xing), :target => '_blank' %>
             </li>
           <% end %>
           <% if !(@student.linkedin).empty? %>
             <li class="list-group-item"><%= fa_icon "linkedin-square 2x"%>
-              <%= link_to @student.linkedin, @student.linkedin %>
+              <%= link_to @student.linkedin, url_with_protocol(@student.linkedin), :target => '_blank' %>
             </li>
           <% end %>
         </ul>
