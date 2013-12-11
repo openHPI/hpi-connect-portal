@@ -82,7 +82,7 @@ class JobOffersController < ApplicationController
   def archive
     @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = job_offers.paginate(:page => params[:page])
+    job_offers = @job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.archive"}]
     @chairs = Chair.all
@@ -126,20 +126,10 @@ class JobOffersController < ApplicationController
   def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = JobOffer.find_jobs({
-      search:  params[:search],
-      sort: params[:sort],
-      filter: {
-                :chair => params[:chair], 
-                :start_date => params[:start_date],
-                :end_date => params[:end_date],
-                :time_effort => params[:time_effort],
-                :compensation => params[:compensation]}
-
-    }) 
-    
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = find_jobs_in_job_list(JobOffer.all) 
+    job_offers = job_offers.paginate(:page => params[:page])
+        @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
     render "index"
 
 

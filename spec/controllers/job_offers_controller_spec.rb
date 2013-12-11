@@ -52,7 +52,7 @@ describe JobOffersController do
 
   describe "GET archive" do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
-      job_offer = JobOffer.create! valid_attributes_with_status
+      job_offer = JobOffer.create! valid_attributes_status_completed
       get :archive, {}, valid_session
       assigns(:job_offers_list)[0][:items].should eq([job_offer])
     end
