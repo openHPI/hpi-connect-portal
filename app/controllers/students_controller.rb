@@ -103,7 +103,9 @@ class StudentsController < ApplicationController
 
   # GET /students/matching
   def matching 
-    @user = User.search_students_by_language_and_programming_language(params[:languages], params[:programming_languages])
+    @users = User.search_students_by_language_and_programming_language(
+      [params[:languages]], 
+      [params[:programming_languages]])
     render "index"
   end
 

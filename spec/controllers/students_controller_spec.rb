@@ -23,7 +23,7 @@ describe StudentsController do
   # This should return the minimal set of attributes required to create a valid
   # Student. As you add validations to Student, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Student"), "identity_url" => "af", "email" => "test@example" } }
+  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Student"), "identity_url" => "af", "email" => "test@example", :is_student => true } }
 
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
@@ -176,7 +176,7 @@ describe StudentsController do
       FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english], is_student: true)
 
       user = User.search_students_by_language_and_programming_language(["german"], ["Java"])
-      get :matching, ({:languages => ["German"], :programming_languages => ["java"]}), valid_session
+      get :matching, ({:languages => "German", :programming_languages => "java"}), valid_session
       assigns(:users).should eq(user)
     end
   end

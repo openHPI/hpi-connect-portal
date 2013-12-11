@@ -30,7 +30,7 @@ describe JobOffer do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:joboffer)
-      @user = User.create
+      @user = FactoryGirl.create(:user)
       @application = Application.create(user: @user, job_offer: @job_offer)
     end
 
