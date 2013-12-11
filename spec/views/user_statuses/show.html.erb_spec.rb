@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "student_statuses/show" do
+describe "user_statuses/show" do
   before(:each) do
-    @student_status = assign(:student_status, stub_model(StudentStatus,
-      :description => "Description"
+    @student_status = assign(:user_status, stub_model(UserStatus,
+      :name => "Description"
     ))
   end
 

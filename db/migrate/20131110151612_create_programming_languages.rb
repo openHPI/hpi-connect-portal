@@ -5,8 +5,8 @@ class CreateProgrammingLanguages < ActiveRecord::Migration
 
       t.timestamps
     end
-    create_table :programming_languages_students do |t|
-      t.belongs_to :student
+    create_table :programming_languages_users do |t|
+      t.belongs_to :user
       t.belongs_to :programming_language
       t.integer :skill
     end

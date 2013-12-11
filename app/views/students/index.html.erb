@@ -1,33 +1,28 @@
-
-
 <div class="row">
   <div class="col-md-9">
     <h1 style="display:inline"><%= t("students.students_headline")%></h1>
     <%= link_to t("students.new_student"), new_student_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px" %>
       <br><br>
       <ul class="list-group">
-      <% @students.each do |student| %>
+      <% @users.each do |student| %>
         <li class="list-group-item">
           <div class="row">
             <div class="col-md-10">
-              <%= link_to student.first_name+" "+student.last_name, student, :class => "h4" %>
+              <%= link_to student.firstname+" "+student.lastname, student, :class => "h4" %>
             </div>
             <div class="col-md-2">
               <p class="semester"><%= t("activerecord.attributes.student.semester") +": " + student.semester.to_s%></p>
             </div>
             <div class="row">
-            <div class="col-md-11 col-md-offset-1">
-               <%= student.academic_program%>
-            </div>
+            <div class="col-md-11 col-md-offset-1 ac_program"><%= student.academic_program%></div>
           </div>
+        </div>
         </li>
       <% end %>
       </ul>
-      <%= will_paginate @students, renderer: BootstrapPagination::Rails%>
+      <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
   </div>
   <div class="col-md-3">
   </div>
 
 </div>
-
-
