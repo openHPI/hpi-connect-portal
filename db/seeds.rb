@@ -28,9 +28,6 @@ User.create([{
 	   	role: Role.where(:name => 'Student').first
 	}])
 
-LanguagesStudent.delete_all
-ProgrammingLanguagesStudent.delete_all
-
 #Create some Languages
 Language.delete_all
 Language.create([
