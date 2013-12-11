@@ -85,8 +85,10 @@ class JobOffersController < ApplicationController
     @radio_button_sort_value = {"date" => false, "chair" => false}
     job_offers = find_jobs_in_job_list(JobOffer.all) 
     job_offers = job_offers.paginate(:page => params[:page])
-	@job_offers_list = [{:items => job_offers, 
+	  @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
+
+    @chairs = Chair.all
     render "index"
 
   end
@@ -96,6 +98,7 @@ class JobOffersController < ApplicationController
     job_offers = job_offers.paginate(:page => params[:page])
 	@job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
+    @chairs = Chair.all
     render "archive"
   end
 
