@@ -74,13 +74,12 @@
         </div>
       </div>
       <% if @job_offer.persisted? && signed_in? && current_user == @job_offer.responsible_user %>
-      <div class="col-md-6">
-        <div class="field">
-          <label>Responsible User</label><br>
-         <%= collection_select(:responsible_user, :responsible_user_id, @job_offer.chair.research_assistants, :id, :email) %>
+        <div class="col-md-6">
+          <div class="field">
+            <label>Responsible User</label><br>
+           <%= f.collection_select(:responsible_user_id, @job_offer.chair.research_assistants, :id, :email) %>
+          </div>
         </div>
-      </div>
-
       <% end %>
     </div>
     <div class="row">
@@ -109,6 +108,9 @@
 
     <div class="actions">
       <%= f.submit t("links.save"), :class => "btn btn-default" %>
+      <% unless @job_offer.id.nil? %>
+        <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
+      <% end %>
     </div>
   </div>
 <% end %>

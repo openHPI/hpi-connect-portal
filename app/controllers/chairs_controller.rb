@@ -1,4 +1,6 @@
 class ChairsController < ApplicationController
+  authorize_resource only: [:new, :edit, :create, :update]
+
   include ApplicationHelper
   before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
@@ -31,7 +33,7 @@ class ChairsController < ApplicationController
   # POST /chairs.json
   def create
     @chair = Chair.new(chair_params)
-    
+
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }

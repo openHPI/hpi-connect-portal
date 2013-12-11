@@ -17,7 +17,6 @@
 #  lastname            :string(255)
 #  firstname           :string(255)
 #  role_id             :integer          default(1), not null
-#  chair_id            :integer
 #
 
 require 'spec_helper'
@@ -31,7 +30,7 @@ describe User do
 
   describe 'applying' do
     before do
-      @job_offer = FactoryGirl.create(:joboffer)
+      @job_offer = FactoryGirl.create(:job_offer)
       @application = Application.create(user: @user, job_offer: @job_offer)
     end
 

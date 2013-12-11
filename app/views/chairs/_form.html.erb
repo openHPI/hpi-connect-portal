@@ -34,7 +34,8 @@
     <%= f.file_field :avatar %>
   </div>
 
-   <%= collection_select(:deputy, :deputy_id, @chair.research_assistants, :id, :email) %>
+  <%= f.label :deputy %><br />
+  <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
 
   <div class="actions" style="margin-top:30px;">
     <%= f.submit t("links.save"), :class => "btn btn-success btn-large" %>

@@ -17,7 +17,6 @@
 #  lastname            :string(255)
 #  firstname           :string(255)
 #  role_id             :integer          default(1), not null
-#  chair_id            :integer
 #
 
 class User < ActiveRecord::Base
@@ -41,7 +40,7 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true)
+        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, is_student: true, role: Role.where(name: "Student"))
     end
 
     def applied?(job_offer)

@@ -1,0 +1,5 @@
+en:
+  job_offers_mailer:
+    title: "A new job offer is pending"
+    content: "Please check the new job offer under: "
+    link: "new job offer"
