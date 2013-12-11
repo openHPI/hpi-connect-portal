@@ -18,6 +18,7 @@
 #
 
 class JobOffer < ActiveRecord::Base
+    before_save :default_values
 
     has_many :applications
     has_many :users, through: :applications
@@ -37,6 +38,9 @@ class JobOffer < ActiveRecord::Base
 
     self.per_page = 5
 
+    def default_values
+        self.status ||= JobStatus.where(:name => "pending").first
+    end
 
     def self.find_jobs(attributes={})
 

@@ -42,8 +42,10 @@
       <dt><%= t("activerecord.attributes.job_offer.compensation") %>:</dt>
       <dd> <%= @job_offer.compensation %></dd>
 
+      <% if @job_offer.responsible_user %>
       <dt>Contact:</dt>
       <dd> <%= @job_offer.responsible_user.email %></dd>
+      <% end %>
 
       <dt>Student Placeholder:</dt>
       <% unless @job_offer.completed? %>
