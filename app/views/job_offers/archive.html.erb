@@ -4,11 +4,13 @@
   </div><!--/span-->
   <div class="col-md-6"> 
     <div class="row">
-      <h1> <%= t "job_offers.headline"%> - <%= t "job_offers.archive"%></h1> 
-      <%= render 'overview' %>
+      <% @find_jobs_path = find_archived_jobs_job_offers_path %>
+      <%= render 'shared/overview' %>
     </div><!--/.row -->
   </div><!--/.span -->
-  <%= render 'sort_filter_search'  %>
+  <div class="col-md-3">
+  	<%= render 'shared/sort_filter_search'  %>
+  </div>
 </div> <!-- /row -->
 
 

@@ -1,6 +1,6 @@
 class JobOffersController < ApplicationController
   include UsersHelper
-
+  include ApplicationHelper
   before_filter :check_user_is_responsible, only: [:edit, :update]
   before_filter :check_user_is_research_assistant, only: [:complete]
   before_filter :check_user_is_deputy, only: [:accept, :decline]
@@ -10,9 +10,11 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.order("created_at")
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = JobOffer.order("created_at")
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+    @chairs = Chair.all
   end
 
   # GET /job_offers/1
@@ -80,7 +82,10 @@ class JobOffersController < ApplicationController
   def archive
     @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = @job_offers.paginate(:page => params[:page])
+    job_offers = job_offers.paginate(:page => params[:page])
+    @job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.archive"}]
+    @chairs = Chair.all
   end
 
   # GET /job_offers/sort
@@ -138,6 +143,14 @@ class JobOffersController < ApplicationController
     render "index"
 
 
+  end
+
+  def find_archived_jobs
+    job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    job_offers = job_offers.paginate(:page => params[:page])
+	@job_offers_list = [{:items => job_offers, 
+                        :name => "job_offers.headline"}]
+    render "archive"
   end
 
   # GET /job_offer/:id/complete

@@ -1,7 +1,6 @@
-<div class="col-md-3">
-    <div class="well sidebar-nav">
+<div class="well sidebar-nav">
       <div class="container ">
-        <%= form_tag( find_job_offers_path, :method => :get, :id => 'Form' ) do %> 
+        <%= form_tag( @find_jobs_path, :method => :get, :id => 'Form' ) do %> 
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
@@ -19,21 +18,22 @@
             <div id="filter">
               <%= label_tag t("job_offers.filterLabel") %>
 
+              <% unless @chairs.empty? %> 
+                <div class="form-group">
+                  <%= label_tag t("activerecord.attributes.job_offer.chair") , nil, :class => "small"%>
+                  <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}, params.fetch(:chair,0)), include_blank: true, :class => "form-control"%>
+                </div>
+              <% end %>
               <div class="form-group">
-                <%= label_tag t("job_offer.chair") , nil, :class => "small"%>
-                <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}, params.fetch(:chair,0)), include_blank: true, :class => "form-control"%>
-              </div>
-
-              <div class="form-group">
-                  <%= label_tag t("job_offer.start_date"), nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, :class => "small" %>
                   <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :placeholder => t('job_offers.start_date'),  :class => 'datepicker form-control'%>
               </div>
               <div class="form-group">
-                  <%= label_tag t("job_offer.end_date"), nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.end_date"), nil, :class => "small" %>
                   <%= text_field_tag :end_date, params.fetch(:end_date, ''), :placeholder => t('job_offers.end_date'), :class => 'datepicker form-control'%>
               </div>
               <div class="form-group">
-                <%= label_tag t("job_offer.programming_languages"), nil, :class => "small" %>
+                <%= label_tag t("activerecord.attributes.job_offer.programming_languages"), nil, :class => "small" %>
                 <div class="row">
                   <div class="field">
                   <!--   <%= hidden_field_tag "programming_language_ids[]", nil %> -->
@@ -47,7 +47,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <%= label_tag t("job_offer.languages"), nil, :class => "small" %>
+                <%= label_tag t("activerecord.attributes.job_offer.languages"), nil, :class => "small" %>
                 <div class="row">
                   <div class="field">
                     <!-- <%= hidden_field_tag "job_offer[language_ids][]", nil %> -->
@@ -61,11 +61,11 @@
                 </div>
               </div>   
               <div class="form-group">
-                  <%= label_tag t("job_offer.time_effort"), nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.time_effort"), nil, :class => "small" %>
                   <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :placeholder => t('job_offers.time_effort'), :class => "form-control" %>
                 </div>
               <div class="form-group">
-                  <%= label_tag t("job_offer.compensation"), nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.compensation"), nil, :class => "small" %>
                   <%= text_field_tag :compensation, params.fetch(:compensation, ''),:placeholder => t('job_offers.compensation'), :class => "form-control" %>
                 </div>
               <div class="form-group">
@@ -76,4 +76,3 @@
         <% end %> 
       </div><!--/.container -->
     </div> <!-- /sidebar -->
-  </div> <!-- /col -->  
