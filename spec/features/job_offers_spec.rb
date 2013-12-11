@@ -25,7 +25,7 @@ describe "the job-offers page" do
     visit job_offers_path
     # using regex for order of elements
     page.should have_content(Regexp.new("""
-      #{@job_offer_1.title}.*#{@job_offer_2.title}.*#{@job_offer_3.title}
+      #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
     """.strip))
   end
 end
