@@ -331,6 +331,7 @@ JobOffer.create([{
 	title: "Supporting the lab operations of the chair", 
 	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
 	chair: Chair.where(:name => "OS and Middleware").first,
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2014-01-01', 
 	time_effort: 8,
 	compensation: 10.00,
@@ -339,14 +340,6 @@ JobOffer.create([{
 	responsible_user: User.where(:firstname=>"Chief").first
 }])
 
-
-
-Chair.create([{
-	name: 'EPIC',
-	description: 'Enterprise Platforms and Innovative Concepts',
-	head_of_chair: 'Prof. Dr. hc. mul Hasso James Kirk Plattner',
-	deputy_id: 1
-}])
 Faq.delete_all
 Faq.create([{
 	question: "How do I make edits to my profile?", 
