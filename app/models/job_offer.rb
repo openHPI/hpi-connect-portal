@@ -18,6 +18,7 @@
 #
 
 class JobOffer < ActiveRecord::Base
+    before_save :default_values
 
     has_many :applications
     has_many :users, through: :applications
@@ -27,7 +28,6 @@ class JobOffer < ActiveRecord::Base
     belongs_to :responsible_user, class_name: "User"
     belongs_to :assigned_student, class_name: "User"
     belongs_to :status, class_name: "JobStatus"
-    before_validation :ensure_status_is_set
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
@@ -42,6 +42,10 @@ class JobOffer < ActiveRecord::Base
     scope :open, ->{ where(status: JobStatus.open) }
     scope :running, ->{ where(status: JobStatus.running) }
     scope :completed, ->{ where(status: JobStatus.completed) }
+
+    def default_values
+        self.status ||= JobStatus.pending
+    end
 
     def self.find_jobs(attributes={})
 
@@ -66,7 +70,7 @@ class JobOffer < ActiveRecord::Base
 
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
-			order(:created_at)
+			order('job_offers.created_at DESC')
 		elsif order_attribute == "chair"
 			includes(:chair).order("chairs.name ASC")
 		end
@@ -112,7 +116,7 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: where(status: status)
+        status.blank? ? all: joins(:status).where('job_statuses.name LIKE ?',status)
     end
 
     def self.filter_programming_languages(programming_language_ids)
@@ -168,11 +172,4 @@ class JobOffer < ActiveRecord::Base
     def running?
         status == JobStatus.running
     end
-
-    protected
-        def ensure_status_is_set
-          if status.nil?
-            self.status = JobStatus.pending
-          end
-        end
 end

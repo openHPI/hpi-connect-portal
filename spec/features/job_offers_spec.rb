@@ -5,11 +5,12 @@ describe "the job-offers page" do
 
   before(:each) do
     @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @open = FactoryGirl.create(:job_status, name:"open")
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user, status: @open)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user, status: @open)
   end
 
   it "should include all jobs currently available" do
@@ -25,7 +26,7 @@ describe "the job-offers page" do
     visit job_offers_path
     # using regex for order of elements
     page.should have_content(Regexp.new("""
-      #{@job_offer_1.title}.*#{@job_offer_2.title}.*#{@job_offer_3.title}
+      #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
     """.strip))
   end
 end
@@ -70,7 +71,7 @@ describe "job_offers_history" do
       )
 
     visit job_offers_path
-    find("div#sidebar").should have_link "Archive"
+    find("div#buttons").should have_link "Archive"
     click_on "Archive"
     current_path.should == archive_job_offers_path
     page.should have_css "ul.list-group li"

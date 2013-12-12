@@ -38,7 +38,7 @@
   </head>
   <body>
 
-    <div class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
         <%= link_to image_tag("hpi-logo.png", :class=>"logo") + "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
       </div>
@@ -46,8 +46,8 @@
         <ul class="nav navbar-nav">
           <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
           <li><%= link_to t('layouts.students'), students_path %></li>
-          <li><%= link_to  t('layouts.chairs'), chairs_path  %></li>
-          <li><%= link_to  t('layouts.faqs'), faqs_path  %></li>
+          <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
+          <li><%= link_to t('layouts.faqs'), faqs_path  %></li>
         </ul>
         <p class="navbar-text pull-right">
           <% if user_signed_in? %>

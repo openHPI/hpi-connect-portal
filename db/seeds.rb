@@ -35,9 +35,7 @@ User.create([{
 	role: Role.where(:name => 'Research Assistant').first	
 }])
 
-LanguagesStudent.delete_all
-ProgrammingLanguagesStudent.delete_all
-
+#Create some Languages
 Language.delete_all
 Language.create([
 	{ name: 'Englisch'},
@@ -47,6 +45,7 @@ Language.create([
 	{ name: 'Chinesisch'}
 ])
 
+#Create some ProgrammingLanguages
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
 	{ name: 'Ruby'},
@@ -57,14 +56,132 @@ ProgrammingLanguage.create([
 	{ name: 'Smalltalk'}
 ])
 
-StudentStatus.delete_all
-StudentStatus.create([
+#Create some UserStatus
+UserStatus.delete_all
+UserStatus.create([
 	{ name: 'job-seeking'},
 	{ name: 'employed'},
 	{ name: 'employed (ext)'},
 	{ name: 'no interest'},
 	{ name: 'alumni'}
 ])
+
+
+#Create User as an example deputy for all chairs
+User.delete_all
+User.create([{
+		firstname: "Chief",
+		lastname: "Smith",
+		email: "chief@smith.de",
+	   	role: Role.where(:name => 'Research Assistant').first,
+	   	is_student: false
+	}])
+
+User.create([{
+identity_url: 'openid',
+email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
+firstname: 'Dieter', 
+lastname: 'Nuhr',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Englisch'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+is_student: false,
+role: Role.where(:name => 'Admin').first}])
+
+User.create({
+identity_url: 'stress?',
+email: 'bachelor@example.com', 
+firstname: 'Dunkeler', 
+lastname: 'Himmel',
+semester: 6,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Deutsch'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+user_status: UserStatus.where(:name => 'job-seeking').first,
+role: Role.where(:name => 'Student').first,
+is_student: true})
+
+User.create({
+identity_url: 'langweilig',
+email: 'master@example.com', 
+firstname: 'wackel', 
+lastname: 'dackel',
+semester: 4,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Englisch'),
+programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+role: Role.where(:name => 'Student').first,
+is_student: true})
+
+User.create({
+identity_url: 'was?',
+email: 'jack@examlpe.com', 
+firstname: 'jack', 
+lastname: 'derDepp',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Englisch'),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'no interest').first,
+role: Role.where(:name => 'Student').first,
+is_student: true})
+
+User.create({
+identity_url: 'halo',
+email: 'test@example.com', 
+firstname: 'Hans', 
+lastname: 'Scholl',
+semester: 1,
+academic_program: 'Master',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => 'Englisch'),
+programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+role: Role.where(:name => 'Student').first,
+is_student: true})
+
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
@@ -137,8 +254,6 @@ Chair.create([{
 	deputy: User.where(:firstname=>"Chief").first
 }])
 
-
-
 JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
@@ -157,7 +272,7 @@ JobOffer.create([{
 	title: "Website Developer", 
 	description: 'The student develops a wonderful website.', 
 	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
-	status: JobStatus.where(:name => "completed").first,
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
@@ -183,6 +298,7 @@ JobOffer.create([{
 	title: "Tutor for Operating systems", 
 	description: 'You have to control the assignments for the Operating Systems I lecture.', 
 	chair: Chair.where(:name => "OS and Middleware").first, 
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-12-01', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -196,6 +312,7 @@ JobOffer.create([{
 	title: "Teleboard Developer", 
 	description: 'You have to develop the Teleboard with HTML5 and Javascript', 
 	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-12-12', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -222,103 +339,13 @@ JobOffer.create([{
 	title: "Supporting the lab operations of the chair", 
 	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
 	chair: Chair.where(:name => "OS and Middleware").first,
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2014-01-01', 
 	time_effort: 8,
 	compensation: 10.00,
 	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
 	responsible_user: User.where(:firstname=>"Chief").first
-}])
-
-Student.delete_all
-Student.create([{
-	first_name: 'Dieter', 
-	last_name: 'Nuhr', 
-	semester: '1', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => 'English'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	student_status: StudentStatus.where(:name => 'employed (ext)').first
-}])
-
-Student.create([{
-	first_name: 'Jasper', 
-	last_name: 'Schulze', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => 'German'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
-	student_status: StudentStatus.where(:name => 'job-seeking').first
-}])
-
-Student.create([{
-	first_name: 'Frank', 
-	last_name: 'Blechschmidt', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => ['German', 'English']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	student_status: StudentStatus.where(:name => 'employed').first
-}])
-
-Student.create([{
-	first_name: 'Malte', 
-	last_name: 'Mues', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all,
-	student_status: StudentStatus.where(:name => 'employed').first
-}])
-
-Student.create([{
-	first_name: 'Julia', 
-	last_name: 'Steier', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1969-12-04', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.Günther.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all,
-	student_status: StudentStatus.where(:name => 'no interest').first
 }])
 
 Faq.delete_all
