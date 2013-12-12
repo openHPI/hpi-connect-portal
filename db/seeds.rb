@@ -28,6 +28,41 @@ User.create([{
 	   	role: Role.where(:name => 'Student').first
 	}])
 
+User.create([{
+		firstname: "Tim",
+		lastname: "Specht",
+		email: "tim.specht@student.hpi.uni-potsdam.de",
+	   	role: Role.where(:name => 'Student').first
+	}])
+
+User.create([{
+		firstname: "Pascal",
+		lastname: "Reinhardt",
+		email: "pascal.reinhardt@student.hpi.uni-potsdam.de",
+	   	role: Role.where(:name => 'Student').first
+	}])
+
+User.create([{
+		firstname: "Tim",
+		lastname: "Friedrich",
+		email: "tim.friedrich@student.hpi.uni-potsdam.de",
+	   	role: Role.where(:name => 'Student').first
+	}])
+
+User.create([{
+		firstname: "Johannes",
+		lastname: "Koch",
+		email: "johannes.koch@student.hpi.uni-potsdam.de",
+	   	role: Role.where(:name => 'Student').first
+	}])
+
+User.create([{
+		firstname: "Axel",
+		lastname: "Kroschk",
+		email: "axel.kroschk@student.hpi.uni-potsdam.de",
+	   	role: Role.where(:name => 'Research Assistant').first
+	}])
+
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all
 
@@ -63,7 +98,7 @@ Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
 	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
 	head_of_chair: "Hasso Plattner",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{

@@ -108,7 +108,6 @@ ActiveRecord::Schema.define(version: 20131208175911) do
   create_table "programming_languages_students", force: true do |t|
     t.integer "student_id"
     t.integer "programming_language_id"
-    t.integer "skill"
   end
 
   create_table "roles", force: true do |t|
