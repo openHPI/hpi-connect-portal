@@ -35,6 +35,38 @@ User.create([{
 	role: Role.where(:name => 'Research Assistant').first	
 }])
 
+User.create([{
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Tim", 
+	firstname: "Specht", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Pascal", 
+	firstname: "Reinhardt", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Tim", 
+	firstname: "Friedrich", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Johannes", 
+	firstname: "Koch", 
+	role: Role.where(:name => 'Student').first	
+}])
+
 
 Language.delete_all
 Language.create([
