@@ -1,9 +1,9 @@
-<%= simple_form_for @student, :html => { :multipart => true, class: 'form-horizontal', role: 'form' } do |f| %>
-  <% if @student.errors.any? %>
+<%= simple_form_for @user, :url => student_path(@user.id), :html => { :multipart => true, class: 'form-horizontal', role: 'form' } do |f| %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
-      <% @student.errors.full_messages.each do |msg| %>
+      <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -16,17 +16,25 @@
     <ul class="list-group">
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :first_name, t("activerecord.attributes.student.first_name"), class: "col-sm-2 control-label" %>
+          <%= f.label :firstname, t("activerecord.attributes.student.first_name"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.text_field :first_name, class: "form-control", type:"text" %>
+            <%= f.text_field :firstname, class: "form-control", type:"text" %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="form-group">
-          <%= f.label :last_name, t("activerecord.attributes.student.last_name"), class: "col-sm-2 control-label" %>
+          <%= f.label :lastname, t("activerecord.attributes.student.last_name"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.text_field :last_name, class: "form-control", type:"text" %>
+            <%= f.text_field :lastname, class: "form-control", type:"text" %>
+          </div>
+        </div>
+      </li>
+       <li class="list-group-item">
+        <div class="form-group">
+          <%= f.label :email, class: "col-sm-2 control-label" %>
+          <div class="col-sm-10">
+            <%= f.text_field :email, class: "form-control", type:"text" %>
           </div>
         </div>
       </li>
@@ -34,7 +42,7 @@
         <div class="form-group">
           <%= f.label :status, t("activerecord.attributes.student.status"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.association :student_status, label: false, default: 1, input_html: { class: 'form-control' } %>
+            <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
           </div>
         </div>
       </li>
@@ -50,8 +58,8 @@
         <div class="form-group">
           <%= f.label :photo, t("activerecord.attributes.student.photo"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <% if !@student.new_record? %>
-              <%= image_tag(@student.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
+            <% if !@user.new_record? %>
+              <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
             <% end %>
             <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
           </div>
@@ -61,11 +69,11 @@
         <div class="form-group">
           <%= f.label :cv, t("activerecord.attributes.student.cv"), class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <% if !@student.new_record? %>
-              <% if (@student.cv.path).nil? || !File.file?(@student.cv.path) %>
+            <% if !@user.new_record? %>
+              <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
                 <%= image_tag('file_thumbnails/missing.png', size: "80") %>
               <% else %>
-                <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @student.cv.url) %><br><br><%= File.basename(@student.cv.path); %>
+                <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
               <% end %>
             <% end %>
             <br><br>
@@ -179,8 +187,8 @@
                 <%= f2.label programming_language.name, class: "col-sm-2 control-label" %>
                 <div class="col-sm-10">
                   <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if !@student.new_record? %>
-                    <% pl = ProgrammingLanguagesStudent.find_by_student_id_and_programming_language_id(@student.id,programming_language.id) %>
+                  <% if !@user.new_record? %>
+                    <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
                   <% end %>
                   <%# Erzeuge 5 radio buttons fuer die Sterne %>
                   <% (1..5).each do |i| %>
@@ -213,7 +221,7 @@
         <div class="form-group">
           <%= f.label :languages, class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%=  collection_check_boxes(:student, :language_ids, Language.all, :id, :name) %>
+            <%=  collection_check_boxes(:user, :language_ids, Language.all, :id, :name) %>
           </div>
         </div>
       </li>

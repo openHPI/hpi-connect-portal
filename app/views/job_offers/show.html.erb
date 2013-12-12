@@ -1,18 +1,12 @@
 <div class="row">
-  <div class="col-md-3">
-         <%= render 'sidebar'  %>  
-  </div><!--/span-->
-  <div class="col-md-9">
-  	<span class="pull-left">
-  		<%= link_to t("links.back"), job_offers_path, :class => "btn btn-default" %>
-  	</span>
+  <div class="col-md-12">
     <% unless @job_offer.completed? %>
     	<span class="pull-right">
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => @job_offer.pending? %>
 
-    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary", :disabled => @job_offer.pending? %> 
+    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => @job_offer.pending? %> 
         
-        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger", :disabled => @job_offer.pending? %>
+        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => @job_offer.pending? %>
     	</span>
     <% end %>
   	
@@ -48,8 +42,10 @@
       <dt><%= t("activerecord.attributes.job_offer.compensation") %>:</dt>
       <dd> <%= @job_offer.compensation %></dd>
 
+      <% if @job_offer.responsible_user %>
       <dt>Contact:</dt>
       <dd> <%= @job_offer.responsible_user.email %></dd>
+      <% end %>
 
       <dt>Student Placeholder:</dt>
       <% unless @job_offer.completed? %>

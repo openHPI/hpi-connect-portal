@@ -20,7 +20,7 @@
 FactoryGirl.define do
   factory :job_offer, class: JobOffer do
     title        "Awesome Job"
-    description  "Develope a website"
+    description  "Develop a website"
     start_date   Date.new(2013,1,1)
     end_date     Date.new(2013,2,1)
     compensation 10.5

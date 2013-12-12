@@ -40,7 +40,30 @@ describe JobOffersController do
       @epic = FactoryGirl.create(:chair, name:"EPIC")
       @os = FactoryGirl.create(:chair, name:"OS and Middleware")
       @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+      @open = FactoryGirl.create(:job_status, name:"open")
   end
+
+  describe "Check if views are rendered" do
+        render_views
+
+    it "renders the find results" do
+      job_offer = JobOffer.create! valid_attributes
+      get :find, ({:chair => @epic.id}), valid_session
+      response.should render_template("index")
+  end
+
+    it "renders the archive" do
+      job_offer = JobOffer.create! valid_attributes
+      get :archive, {}, valid_session
+    response.should render_template("archive")
+  end
+
+    it "renders the jobs found archive" do
+      job_offer = JobOffer.create! valid_attributes
+      get :find_archived_jobs, ({:search => "Ruby"}), valid_session
+      response.should render_template("archive")
+  end
+end
 
   describe "GET index" do
     it "assigns all job_offers as @job_offer-list[:items]" do
@@ -95,40 +118,13 @@ describe JobOffersController do
     end
   end
 
-  describe "GET sort" do
-    it "assigns @job_offers all job offers sorted by date" do
-
-      FactoryGirl.create(:job_offer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), chair: @epic)
-      FactoryGirl.create(:job_offer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), chair: @epic)
-      FactoryGirl.create(:job_offer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), chair: @epic)
-      FactoryGirl.create(:job_offer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), chair: @epic)
-      FactoryGirl.create(:job_offer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), chair: @epic)
-
-      job_offers = JobOffer.sort "date"
-      get :sort, {:sort_value => "date"}, valid_session
-      assigns(:job_offers).should eq(job_offers)
-    end
-
-    it "assigns @job_offers all job offers sorted by chair" do
-
-      FactoryGirl.create(:job_offer, chair: @itas)
-      FactoryGirl.create(:job_offer, chair: @epic)
-      FactoryGirl.create(:job_offer, chair: @os)
-
-      job_offers = JobOffer.sort "chair"
-      get :sort, {:sort_value => "chair"}, valid_session
-      assigns(:job_offers).should eq(job_offers)
-    end
-
-  end
-
   describe "GET find" do
     it "assigns @job_offers_list[:items] to all job offers with the chair EPIC" do
 
-      FactoryGirl.create(:job_offer, chair: @itas)
-      FactoryGirl.create(:job_offer, chair: @epic)
-      FactoryGirl.create(:job_offer, chair: @os)
-      FactoryGirl.create(:job_offer, chair: @epic)
+      FactoryGirl.create(:job_offer, chair: @itas, status: @open)
+      FactoryGirl.create(:job_offer, chair: @epic, status: @open)
+      FactoryGirl.create(:job_offer, chair: @os, status: @open)
+      FactoryGirl.create(:job_offer, chair: @epic, status: @open)
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find, ({:chair => @epic.id}), valid_session
@@ -168,7 +164,7 @@ describe JobOffersController do
       sign_in deputy
 
       get :accept, {:id => @job_offer.id}
-      assigns(:job_offer).status.should eq(JobStatus.where(name: "open").first) 
+      assigns(:job_offer).status.should eq(JobStatus.open) 
       response.should redirect_to(@job_offer)
     end    
   end

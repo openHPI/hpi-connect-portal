@@ -18,7 +18,7 @@ class ApplicationsController < ApplicationController
     # GET accept
     def accept
       @application = Application.find params[:id]
-      job_offer_params = {assigned_student: @application.user, status: JobStatus.where(:name => 'working').first}
+      job_offer_params = {assigned_student: @application.user, status: JobStatus.running}
       respond_to do |format|
         if @application.job_offer.update(job_offer_params) and Application.where(job_offer: @application.job_offer).delete_all
           format.html { redirect_to @application.job_offer, notice: 'Application was successfully accepted.' }

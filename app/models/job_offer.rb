@@ -18,6 +18,7 @@
 #
 
 class JobOffer < ActiveRecord::Base
+    before_save :default_values
 
     has_many :applications
     has_many :users, through: :applications
@@ -37,6 +38,14 @@ class JobOffer < ActiveRecord::Base
 
     self.per_page = 5
 
+    scope :pending, ->{ where(status: JobStatus.pending) }
+    scope :open, ->{ where(status: JobStatus.open) }
+    scope :running, ->{ where(status: JobStatus.running) }
+    scope :completed, ->{ where(status: JobStatus.completed) }
+
+    def default_values
+        self.status ||= JobStatus.pending
+    end
 
     def self.find_jobs(attributes={})
 
@@ -61,7 +70,7 @@ class JobOffer < ActiveRecord::Base
 
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
-			order(:created_at)
+			order('job_offers.created_at DESC')
 		elsif order_attribute == "chair"
 			includes(:chair).order("chairs.name ASC")
 		end
@@ -107,7 +116,7 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: where(status: status)
+        status.blank? ? all: joins(:status).where('job_statuses.name LIKE ?',status)
     end
 
     def self.filter_programming_languages(programming_language_ids)
@@ -149,18 +158,18 @@ class JobOffer < ActiveRecord::Base
     end
 
     def completed?
-        status.name == "completed"
+        status == JobStatus.completed
     end
 
     def pending?
-        status.name == "pending"
+        status == JobStatus.pending
     end
 
     def open?
-        status.name == "open"
+        status == JobStatus.open
     end
 
-    def working?
-        status.name == "working"
+    def running?
+        status == JobStatus.running
     end
 end

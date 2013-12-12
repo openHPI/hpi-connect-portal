@@ -10,7 +10,8 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = JobOffer.order("created_at")
+    job_offers = JobOffer.filter_status("open")
+    job_offers = job_offers.sort("date")
     job_offers = job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
@@ -41,7 +42,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.where(name: 'pending').first)
+    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
@@ -80,7 +81,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
+    @job_offers = JobOffer.where(:status_id => JobStatus.completed)
     @radio_button_sort_value = {"date" => false, "chair" => false}
     job_offers = @job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
@@ -88,65 +89,33 @@ class JobOffersController < ApplicationController
     @chairs = Chair.all
   end
 
-  # GET /job_offers/sort
-  def sort
-     @radio_button_sort_value = {"date" => false, "chair" => false}
-     sort_value =  params.require(:sort_value)
-     logger.warn(sort_value)
-     @radio_button_sort_value[sort_value] = true
-     logger.warn(@radio_button_sort_value)
-
-     @job_offers = JobOffer.sort sort_value
-     render "index"
-  end
-
-
-  # GET /job_offers/search
-  def search
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    @job_offers = JobOffer.search params[:search]
-
-    render "index"
-  end
-
-  # GET /job_offers/filter
-  def filter
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-
-    @job_offers = JobOffer.filter({
-                                    :chair => params[:chair], 
-                                    :start_date => params[:start_date],
-                                    :end_date => params[:end_date],
-                                    :time_effort => params[:time_effort],
-                                    :compensation => params[:compensation]})
-
-     render "index"
-  end
 
   def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = find_jobs_in_job_list(JobOffer.all) 
+    job_offers = find_jobs_in_job_list(JobOffer.filter_status("open")) 
     job_offers = job_offers.paginate(:page => params[:page])
-        @job_offers_list = [{:items => job_offers, 
+	  @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
+    @chairs = Chair.all
     render "index"
 
 
   end
 
   def find_archived_jobs
-    job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    job_offers = find_jobs_in_job_list(JobOffer.filter(status: JobStatus.completed))
     job_offers = job_offers.paginate(:page => params[:page])
 	@job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
+    @chairs = Chair.all
     render "archive"
   end
 
   # GET /job_offer/:id/complete
   def complete
     respond_to do |format|
-      if @job_offer.update(:status => JobStatus.where( :name=>"completed" ).first )
+      if @job_offer.update(status: JobStatus.completed )
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
         format.json { head :no_content }
       else
@@ -157,7 +126,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/accept
   def accept  
-    if @job_offer.update(:status => JobStatus.where( :name=>"open" ).first )
+    if @job_offer.update(status: JobStatus.open )
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
       render_errors_and_redirect_to(@job_offer, format)
