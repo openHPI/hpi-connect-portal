@@ -40,8 +40,8 @@ HpiHiwiPortal::Application.configure do
   config.action_mailer.smtp_settings = {
     :address => "smtp.gmail.com",
     :port => 587,
-    :user_name => 'plattnerbook',
-    :password => 'mtS33?U-}v2pP&VD',
+    :user_name => 'hpi.hiwi.portal',
+    :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
 end

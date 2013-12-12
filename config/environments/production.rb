@@ -86,8 +86,8 @@ HpiHiwiPortal::Application.configure do
     :address => "smtp.gmail.com",
     :port => 587,
     # :domain => 'baci.lindsaar.net',
-    :user_name => 'plattnerbook',
-    :password => 'mtS33?U-}v2pP&VD',
+    :user_name => 'hpi.hiwi.portal',
+    :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
 end
