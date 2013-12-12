@@ -16,7 +16,7 @@ Role.create(name: 'Admin', level: 3)
 JobStatus.delete_all
 JobStatus.create(name: 'pending')
 JobStatus.create(name: 'open')
-JobStatus.create(name: 'working')
+JobStatus.create(name: 'running')
 JobStatus.create(name: 'completed')
 
 #Create User as an example deputy for all chairs
@@ -27,6 +27,13 @@ User.create([{
 		email: "chief@smith.de",
 	   	role: Role.where(:name => 'Student').first
 	}])
+User.create([{
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel", 
+	role: Role.where(:name => 'Research Assistant').first	
+}])
 
 LanguagesStudent.delete_all
 ProgrammingLanguagesStudent.delete_all
@@ -63,8 +70,9 @@ Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
 	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
 	head_of_chair: "Hasso Plattner",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel").first
 }])
+User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first)
 
 Chair.create([{
 	name: "Internet Technologies and Systems",
@@ -330,3 +338,5 @@ Faq.create([{
 	question: "Does HPI-HiWi-Portal have an Android app?", 
 	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
 }])
+
+Chair.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)

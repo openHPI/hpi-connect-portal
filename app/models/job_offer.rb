@@ -27,6 +27,7 @@ class JobOffer < ActiveRecord::Base
     belongs_to :responsible_user, class_name: "User"
     belongs_to :assigned_student, class_name: "User"
     belongs_to :status, class_name: "JobStatus"
+    before_validation :ensure_status_is_set
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
@@ -37,6 +38,10 @@ class JobOffer < ActiveRecord::Base
 
     self.per_page = 5
 
+    scope :pending, ->{ where(status: JobStatus.pending) }
+    scope :open, ->{ where(status: JobStatus.open) }
+    scope :running, ->{ where(status: JobStatus.running) }
+    scope :completed, ->{ where(status: JobStatus.completed) }
 
     def self.find_jobs(attributes={})
 
@@ -149,18 +154,25 @@ class JobOffer < ActiveRecord::Base
     end
 
     def completed?
-        status.name == "completed"
+        status == JobStatus.completed
     end
 
     def pending?
-        status.name == "pending"
+        status == JobStatus.pending
     end
 
     def open?
-        status.name == "open"
+        status == JobStatus.open
     end
 
-    def working?
-        status.name == "working"
+    def running?
+        status == JobStatus.running
     end
+
+    protected
+        def ensure_status_is_set
+          if status.nil?
+            self.status = JobStatus.pending
+          end
+        end
 end

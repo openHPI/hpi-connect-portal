@@ -57,7 +57,7 @@ describe ApplicationsController do
     end
     it "application status should be 'working' if an application is accepted" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      working = FactoryGirl.create(:job_status, :name=>'working')
+      working = FactoryGirl.create(:job_status, :name=>'running')
       
       sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
 

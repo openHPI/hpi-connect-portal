@@ -168,7 +168,7 @@ describe JobOffersController do
       sign_in deputy
 
       get :accept, {:id => @job_offer.id}
-      assigns(:job_offer).status.should eq(JobStatus.where(name: "open").first) 
+      assigns(:job_offer).status.should eq(JobStatus.open) 
       response.should redirect_to(@job_offer)
     end    
   end

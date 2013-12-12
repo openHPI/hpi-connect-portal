@@ -41,7 +41,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.where(name: 'pending').first)
+    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     respond_to do |format|
       if @job_offer.save
@@ -80,7 +80,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.where(:status_id => JobStatus.where( :name=>"completed" ).first)
+    @job_offers = JobOffer.where(:status_id => JobStatus.completed)
     @radio_button_sort_value = {"date" => false, "chair" => false}
     job_offers = @job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
@@ -136,7 +136,7 @@ class JobOffersController < ApplicationController
   end
 
   def find_archived_jobs
-    job_offers = find_jobs_in_job_list(JobOffer.filter(:status => "completed"))
+    job_offers = find_jobs_in_job_list(JobOffer.filter(status: JobStatus.completed))
     job_offers = job_offers.paginate(:page => params[:page])
 	@job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]
@@ -146,7 +146,7 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/complete
   def complete
     respond_to do |format|
-      if @job_offer.update(:status => JobStatus.where( :name=>"completed" ).first )
+      if @job_offer.update(status: JobStatus.completed )
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
         format.json { head :no_content }
       else
@@ -157,7 +157,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/accept
   def accept  
-    if @job_offer.update(:status => JobStatus.where( :name=>"open" ).first )
+    if @job_offer.update(status: JobStatus.open )
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
       render_errors_and_redirect_to(@job_offer, format)
