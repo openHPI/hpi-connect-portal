@@ -16,8 +16,22 @@
  *= require font-awesome
  */
 
- h1, h2, h3, h4, h5, label, a, .btn-default {
-  color: #e46e26;
+ h1, h2, h3, h4, h5, label, a {
+  color: #e0671e;
+}
+
+.btn-default {
+	background-color: #f5f5f5; 
+	color: #000;
+}
+
+.btn-danger {
+	background-color: #e0671e; 
+	color: #FFF;
+}
+
+.btn-danger:hover {
+	background-color: #b1063a
 }
 
 
@@ -26,10 +40,10 @@ label.small {
 }
 
 a:hover, a:focus, .btn-default:hover  {
-	color: #b0063a;
+	color: #b1063a;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-	background-color: #e46e26;
-	border-color: #e46e26;
+	background-color: #e0671e;
+	border-color: #e0671e;
 }

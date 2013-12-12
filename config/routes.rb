@@ -37,6 +37,7 @@ HpiHiwiPortal::Application.routes.draw do
     resources :programming_languages
     resources :languages
 
+    resources :users
     resources :user_statuses
 
     resources :studentsearch
