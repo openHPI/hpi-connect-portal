@@ -2,18 +2,19 @@
 #
 # Table name: job_offers
 #
-#  id           :integer          not null, primary key
-#  description  :text
-#  title        :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  chair        :string(255)
-#  start_date   :date
-#  end_date     :date
-#  time_effort  :float
-#  compensation :float
-#  room_number  :string(255)
-#  status       :string(255)
+#  id                  :integer          not null, primary key
+#  description         :text
+#  title               :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  start_date          :date
+#  end_date            :date
+#  time_effort         :float
+#  compensation        :float
+#  room_number         :string(255)
+#  chair_id            :integer
+#  responsible_user_id :integer
+#  status_id           :integer          default(1)
 #
 
 require 'spec_helper'
@@ -29,8 +30,8 @@ describe JobOffer do
   describe 'applying' do
 
     before(:each) do
-      @job_offer = FactoryGirl.create(:joboffer)
-      @user = User.create
+      @job_offer = FactoryGirl.create(:job_offer)
+      @user = FactoryGirl.create(:user)
       @application = Application.create(user: @user, job_offer: @job_offer)
     end
 
@@ -66,11 +67,11 @@ describe JobOffer do
 
   it "returns job offers sorted by start_date" do
         
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), created_at: Date.new(2013, 2,1), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), created_at: Date.new(2013,10,1), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,1,1), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), created_at: Date.new(2013,7,1), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,4,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), created_at: Date.new(2013, 2,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), created_at: Date.new(2013,10,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,1,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), created_at: Date.new(2013,7,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,4,1), chair: @epic)
 
     sorted_job_offers = JobOffer.sort "date"
     (sorted_job_offers).each_with_index do |offer, index|
@@ -83,9 +84,9 @@ describe JobOffer do
 
   it "returns job offers sorted by their chair" do
         
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @itas)
-    FactoryGirl.create(:joboffer, chair: @os)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @itas)
+    FactoryGirl.create(:job_offer, chair: @os)
 
     sorted_job_offers = JobOffer.sort "chair"
     (sorted_job_offers).each_with_index do |offer, index|
@@ -99,11 +100,11 @@ describe JobOffer do
 
   it "returns job offers including the word EPIC" do
         
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @itas, description: "develop a website with an epic framework")
-    FactoryGirl.create(:joboffer, chair: @itas)
-    FactoryGirl.create(:joboffer, chair: @os)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @itas, description: "develop a website with an epic framework")
+    FactoryGirl.create(:job_offer, chair: @itas)
+    FactoryGirl.create(:job_offer, chair: @os)
 
     resulted_job_offers = JobOffer.search("EPIC")
     assert_equal(resulted_job_offers.length, 3);
@@ -111,11 +112,11 @@ describe JobOffer do
 
   it "returns job offers filtered by chair EPIC and start_date >= 20131125" do
         
-    FactoryGirl.create(:joboffer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
-    FactoryGirl.create(:joboffer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
-    FactoryGirl.create(:joboffer, chair: @epic, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
-    FactoryGirl.create(:joboffer, chair: @itas)
-    FactoryGirl.create(:joboffer, chair: @os)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
+    FactoryGirl.create(:job_offer, chair: @itas)
+    FactoryGirl.create(:job_offer, chair: @os)
 
     filtered_job_offers = JobOffer.filter({:chair => @epic.id, :start_date => "20131125"})
     assert_equal(filtered_job_offers.length, 2);
@@ -123,9 +124,9 @@ describe JobOffer do
 
   it "returns job offers filtered start_date >= 20131125" do
         
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
-    FactoryGirl.create(:joboffer, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
   
 
     filtered_job_offers = JobOffer.filter({:start_date => "20131125"})
@@ -134,11 +135,11 @@ describe JobOffer do
 
   it "returns job offers filtered by chair EPIC" do
         
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @itas)
-    FactoryGirl.create(:joboffer, chair: @os)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @itas)
+    FactoryGirl.create(:job_offer, chair: @os)
 
     filtered_job_offers = JobOffer.filter({:chair => @epic.id})
     assert_equal(filtered_job_offers.length, 3);
@@ -146,9 +147,9 @@ describe JobOffer do
 
   it "returns job offers filtered between 20131125 and 20131226" do
         
-    FactoryGirl.create(:joboffer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
-    FactoryGirl.create(:joboffer, chair: @epic,start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic,start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
 
     filtered_job_offers = JobOffer.filter({:start_date => "20131125", :end_date => "20131227"})
     assert_equal(filtered_job_offers.length, 2);
@@ -156,10 +157,10 @@ describe JobOffer do
 
   it "returns job offers filtered with compensation>=10 AND time_effort<=5" do
         
-    FactoryGirl.create(:joboffer, time_effort: 10, compensation: 20, chair: @epic)
-    FactoryGirl.create(:joboffer, time_effort: 5, compensation: 20, chair: @epic)
-    FactoryGirl.create(:joboffer, time_effort: 8, compensation: 5, chair: @epic)
-    FactoryGirl.create(:joboffer, time_effort: 4, compensation: 8, chair: @epic)
+    FactoryGirl.create(:job_offer, time_effort: 10, compensation: 20, chair: @epic)
+    FactoryGirl.create(:job_offer, time_effort: 5, compensation: 20, chair: @epic)
+    FactoryGirl.create(:job_offer, time_effort: 8, compensation: 5, chair: @epic)
+    FactoryGirl.create(:job_offer, time_effort: 4, compensation: 8, chair: @epic)
 
     filtered_job_offers = JobOffer.filter({:compensation => 10, :time_effort => 5})
     assert_equal(filtered_job_offers.length, 1);
@@ -169,10 +170,10 @@ describe JobOffer do
 
   it "returns job offers searched for programming languages filtered by time effort and sorted by chair" do
 
-    FactoryGirl.create(:joboffer, time_effort: 10, chair: @epic, description: "Ruby Programming")
-    FactoryGirl.create(:joboffer, time_effort: 8, chair: @itas, description: "Ruby Programming")
-    FactoryGirl.create(:joboffer, time_effort: 5, chair: @epic, description: "Javascript Programming")
-    FactoryGirl.create(:joboffer, time_effort: 4, chair: @os, description: "Ruby Programming")
+    FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Ruby Programming")
+    FactoryGirl.create(:job_offer, time_effort: 8, chair: @itas, description: "Ruby Programming")
+    FactoryGirl.create(:job_offer, time_effort: 5, chair: @epic, description: "Javascript Programming")
+    FactoryGirl.create(:job_offer, time_effort: 4, chair: @os, description: "Ruby Programming")
 
     filtered_job_offers = JobOffer.find_jobs({:sort => "chair", :search => "Ruby", :filter => {:time_effort => 8}})
     assert_equal(filtered_job_offers.length, 2);
@@ -183,9 +184,10 @@ describe JobOffer do
 
 
   it "returns job offers filtered by status" do
-    job_offer_with_status = FactoryGirl.create(:joboffer, status:"completed");
-    FactoryGirl.create(:joboffer, chair: @epic);
-    filtered_job_offers = JobOffer.filter({:status => "completed"})
+    @status = FactoryGirl.create(:job_status, :name => "completed")
+    job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);
+    FactoryGirl.create(:job_offer, chair: @epic);
+    filtered_job_offers = JobOffer.where(:status => @status)
     assert filtered_job_offers.include? job_offer_with_status
     assert_equal(filtered_job_offers.length, 1);
   end

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "students/show" do
   before(:each) do
-    @student = assign(:student, stub_model(Student,
-      :first_name => "First Name",
-      :last_name => "Last Name",
+    @user = assign(:user, stub_model(User,
+      :firstname => "First Name",
+      :lastname => "Last Name",
       :semester => 1,
       :academic_program => "Academic Program",
       :birthday => '2013-11-10',
