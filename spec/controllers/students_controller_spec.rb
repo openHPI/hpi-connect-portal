@@ -23,7 +23,7 @@ describe StudentsController do
   # This should return the minimal set of attributes required to create a valid
   # Student. As you add validations to Student, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Student"), "identity_url" => "af", "email" => "test@example", :is_student => true } }
+  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Student"), "identity_url" => "af", "email" => "test@example" } }
 
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
@@ -169,11 +169,11 @@ describe StudentsController do
       german = Language.new(:name => 'German')
       english = Language.new(:name => 'English')
 
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german], is_student: true)
-      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english], is_student: true)
-      FactoryGirl.create(:user, programming_languages: [php], languages: [german], is_student: true)
-      FactoryGirl.create(:user, programming_languages: [php], languages: [english], is_student: true)
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english], is_student: true)
+      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german])
+      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english])
+      FactoryGirl.create(:user, programming_languages: [php], languages: [german])
+      FactoryGirl.create(:user, programming_languages: [php], languages: [english])
+      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english])
 
       user = User.search_students_by_language_and_programming_language(["german"], ["Java"])
       get :matching, ({:languages => "German", :programming_languages => "java"}), valid_session

@@ -6,7 +6,6 @@ describe "Studentsearches" do
             :firstname => 'Alexander',
             :lastname  => 'Zeier',
             :education => 'SAP',
-            :is_student => true,
             :programming_languages => [ruby]
         )
 
@@ -14,7 +13,6 @@ describe "Studentsearches" do
             :firstname => 'Maria',
             :lastname  => 'Müller',
             :education => 'SAP',
-            :is_student => true,
             :programming_languages => [ruby]
         )
 
@@ -22,7 +20,6 @@ describe "Studentsearches" do
             :firstname => 'Rafael',
             :lastname  => 'Althofer',
             :education => 'Telekom',
-            :is_student => true,
             :programming_languages => [ruby]
         )
 
@@ -30,7 +27,6 @@ describe "Studentsearches" do
             :firstname => 'Sara',
             :lastname  => 'Müller',
             :education => 'Telekom',
-            :is_student => true,
             :programming_languages => [ruby]
         )
     end

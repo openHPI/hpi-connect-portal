@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = User.where(is_student: true)
+    @users = User.students
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
