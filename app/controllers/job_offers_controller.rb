@@ -10,7 +10,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = JobOffer.filter_status("open")
+    job_offers = JobOffer.filter_status(JobStatus.open)
     job_offers = job_offers.sort("date")
     job_offers = job_offers.paginate(:page => params[:page])
     @job_offers_list = [{:items => job_offers, 
@@ -93,7 +93,7 @@ class JobOffersController < ApplicationController
   def find
 
     @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = find_jobs_in_job_list(JobOffer.filter_status("open")) 
+    job_offers = find_jobs_in_job_list(JobOffer.filter_status(JobStatus.open)) 
     job_offers = job_offers.paginate(:page => params[:page])
 	  @job_offers_list = [{:items => job_offers, 
                         :name => "job_offers.headline"}]

@@ -116,7 +116,7 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all: joins(:status).where('job_statuses.name LIKE ?',status)
+        status.blank? ? all: where(status: status)
     end
 
     def self.filter_programming_languages(programming_language_ids)
@@ -171,5 +171,9 @@ class JobOffer < ActiveRecord::Base
 
     def running?
         status == JobStatus.running
+    end
+
+    def editable?
+        self.pending? or self.open?
     end
 end

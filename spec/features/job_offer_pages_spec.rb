@@ -111,13 +111,6 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it "should be visible in a read-only mode" do
-          should have_selector 'a:contains("Edit"):disabled'
-          should have_selector 'a:contains("Delete"):disabled'
-
-          should have_content('pending')
-        end
-
         it "should be editable for the responsible user" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
