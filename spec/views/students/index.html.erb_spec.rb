@@ -16,7 +16,6 @@ describe "students/index" do
         :facebook => "Facebook",
         :xing => "Xing",
         :linkedin => "Linkedin",
-        :is_student=> true
       ),
       stub_model(User,
         :firstname => "First Name",
@@ -31,7 +30,6 @@ describe "students/index" do
         :facebook => "Facebook",
         :xing => "Xing",
         :linkedin => "Linkedin",
-        :is_student => true
       )
     ])
   end

@@ -84,7 +84,6 @@ linkedin:'www.linkedin.com/dieter',
 languages: Language.where(:name => 'Englisch'),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
-is_student: false,
 role: Role.where(:name => 'Admin').first}])
 
 User.create({
@@ -106,7 +105,7 @@ languages: Language.where(:name => 'Deutsch'),
 programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
 user_status: UserStatus.where(:name => 'job-seeking').first,
 role: Role.where(:name => 'Student').first,
-is_student: true})
+})
 
 User.create({
 identity_url: 'langweilig',
@@ -127,7 +126,7 @@ languages: Language.where(:name => 'Englisch'),
 programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Student').first,
-is_student: true})
+})
 
 User.create({
 identity_url: 'was?',
@@ -148,7 +147,7 @@ languages: Language.where(:name => 'Englisch'),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 user_status: UserStatus.where(:name => 'no interest').first,
 role: Role.where(:name => 'Student').first,
-is_student: true})
+})
 
 User.create({
 identity_url: 'halo',
@@ -169,7 +168,7 @@ languages: Language.where(:name => 'Englisch'),
 programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Student').first,
-is_student: true})
+})
 
 
 Language.delete_all
