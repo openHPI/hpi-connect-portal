@@ -80,7 +80,7 @@
     <% if signed_in? && @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>
       <div class="clearfix"></div>
       <h4><%= t("job_offers.applications_headline")%></h4>
-      <table class="table">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th><%= t("job_offers.applicant_first_name") %></th>

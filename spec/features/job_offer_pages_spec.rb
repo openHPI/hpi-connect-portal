@@ -52,7 +52,7 @@ describe "Job Offer pages" do
           let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
 
           before do
-            FactoryGirl.create(:application, job_offer: job_offer)
+            @application = FactoryGirl.create(:application, job_offer: job_offer)
             login_as(research_assistant, :scope => :user)
             visit job_offer_path(job_offer)
           end
@@ -62,6 +62,8 @@ describe "Job Offer pages" do
 
           it { should have_link('Accept') }
           it { should have_link('Decline') }
+
+          it { should have_selector('tr[href="' + student_path(id: @application.user.id) + '"]') }
 
           it "is possible to mark a job as completed" do
             should have_link 'Job completed'
