@@ -75,6 +75,23 @@ describe "Job Offer pages" do
       end
     end
 
+    describe "working job offer" do
+      let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
+      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_working) }
+     
+      let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+      let(:student) { FactoryGirl.create(:user, role: student_role) }
+
+      describe "when being a student" do
+        before(:each) do
+          login_as(student, :scope => :user)          
+        end 
+
+        it { should_not have_button('Apply')}
+      end
+    end
+
     describe "pending job offer" do
 
       let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}

@@ -68,7 +68,7 @@
           <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
          <% end %>
 
-         <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+         <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
             <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button' %>
