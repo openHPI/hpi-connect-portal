@@ -44,7 +44,10 @@
 
       <% if @job_offer.responsible_user %>
       <dt>Contact:</dt>
-      <dd> <%= @job_offer.responsible_user.email %></dd>
+      <dd> 
+        <%= @job_offer.responsible_user.email %>
+        <%= mail_to  @job_offer.responsible_user.email, t("job_offers.contact"), :class=>"btn btn-success" %>
+      </dd>
       <% end %>
 
       <dt>Student Placeholder:</dt>
