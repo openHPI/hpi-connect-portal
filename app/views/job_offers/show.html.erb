@@ -12,6 +12,13 @@
   	
   	<br><br>
 
+    <% if signed_in? && current_user.applied?(@job_offer) %>
+      <br><br>
+       <div class="panel panel-default panel-body">
+        <%= t("job_offers.already_applied") %>
+      </div>
+    <% end %>
+
     <div class="panel panel-default panel-body">
     <h1>
       <%= @job_offer.title %>
