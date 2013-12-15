@@ -1,0 +1,8 @@
+de:
+  job_offers_email:
+    new_job_offer:
+      subject: 'Ein neues Jobangebot wartet auf Freigabe.'
+    job_offer_declined:
+      subject: "Das folgende Jobangebot wurde leider abgelehnt: "
+    job_offer_accepted:
+      subject: "Das Jobangebot wurde freigeschaltet: "
