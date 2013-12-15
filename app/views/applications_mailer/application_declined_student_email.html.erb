@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= t "applications_mailer.students.declined.title" %></h1>
+    <p>
+      <%= t "applications_mailer.students.declined.content", chair: @application.job_offer.chair, job_title: @application.job_offer.title %>
+    </p>
+  </body>
+</html>

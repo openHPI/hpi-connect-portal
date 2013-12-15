@@ -1,0 +1,11 @@
+de:
+  applications_mailer:
+    students:
+      accepted:
+        subject: "Herzlich Glückwunsch Ihre Bewerbung auf die Stelle %{job_title} wurde angenommen"
+        title: "Herzlichen Glückwunsch!"
+        content: "Ihre Bewerbung auf die Stelle %{job_title} am Lehrstuhl %{chair} wurde angenommen."
+      declined:
+        subject: "Leider wurde eine Bewerbung abgelehnt"
+        title: "Leider wurde eine Bewerbung abgelehnt"
+        content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} am Lehrstuhl %{chair} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
