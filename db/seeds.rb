@@ -34,49 +34,38 @@ User.create([{
 	firstname: "Axel", 
 	role: Role.where(:name => 'Research Assistant').first	
 }])
-
-#Create some Languages
-Language.delete_all
-Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
-])
-
-#Create some ProgrammingLanguages
-ProgrammingLanguage.delete_all
-ProgrammingLanguage.create([
-	{ name: 'Ruby'},
-	{ name: 'Java'},
-	{ name: 'C'},
-	{ name: 'C++'},
-	{ name: 'Python'},
-	{ name: 'Smalltalk'}
-])
-
-#Create some UserStatus
-UserStatus.delete_all
-UserStatus.create([
-	{ name: 'job-seeking'},
-	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
-	{ name: 'alumni'}
-])
-
-
-#Create User as an example deputy for all chairs
-User.delete_all
 User.create([{
-		firstname: "Chief",
-		lastname: "Smith",
-		email: "chief@smith.de",
-	   	role: Role.where(:name => 'Research Assistant').first,
-	   	is_student: false
-	}])
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Tim", 
+	firstname: "Specht", 
+	role: Role.where(:name => 'Student').first	
+}])
 
+User.create([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Pascal", 
+	firstname: "Reinhardt", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Tim", 
+	firstname: "Friedrich", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Johannes", 
+	firstname: "Koch", 
+	role: Role.where(:name => 'Student').first	
+}])
+#Create User as an example deputy for all chairs
 User.create([{
 identity_url: 'openid',
 email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
@@ -182,12 +171,74 @@ user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Student').first,
 is_student: true})
 
+
+Language.delete_all
+Language.create([
+	{ name: 'Englisch'},
+	{ name: 'Deutsch'},
+	{ name: 'Spanisch'},
+	{ name: 'Französisch'},
+	{ name: 'Chinesisch'}
+])
+
+#Create some ProgrammingLanguages
+ProgrammingLanguage.delete_all
+ProgrammingLanguage.create([
+	{ name: 'Ruby'},
+	{ name: 'Java'},
+	{ name: 'C'},
+	{ name: 'C++'},
+	{ name: 'Python'},
+	{ name: 'Smalltalk'}
+])
+
+#Create some UserStatus
+UserStatus.delete_all
+UserStatus.create([
+	{ name: 'job-seeking'},
+	{ name: 'employed'},
+	{ name: 'employed (ext)'},
+	{ name: 'no interest'},
+	{ name: 'alumni'}
+])
+
+#Create some Languages
+Language.delete_all
+Language.create([
+	{ name: 'Englisch'},
+	{ name: 'Deutsch'},
+	{ name: 'Spanisch'},
+	{ name: 'Französisch'},
+	{ name: 'Chinesisch'}
+])
+
+#Create some ProgrammingLanguages
+ProgrammingLanguage.delete_all
+ProgrammingLanguage.create([
+	{ name: 'Ruby'},
+	{ name: 'Java'},
+	{ name: 'C'},
+	{ name: 'C++'},
+	{ name: 'Python'},
+	{ name: 'Smalltalk'}
+])
+
+#Create some UserStatus
+UserStatus.delete_all
+UserStatus.create([
+	{ name: 'job-seeking'},
+	{ name: 'employed'},
+	{ name: 'employed (ext)'},
+	{ name: 'no interest'},
+	{ name: 'alumni'}
+])
+
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
 	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
 	head_of_chair: "Hasso Plattner",
-	deputy: User.where(:firstname=>"Axel").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first)
 

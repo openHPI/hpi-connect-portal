@@ -176,7 +176,7 @@ describe StudentsController do
       FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english], is_student: true)
 
       user = User.search_students_by_language_and_programming_language(["german"], ["Java"])
-      get :matching, ({:languages => "German", :programming_languages => "java"}), valid_session
+      get :matching, ({:languages => ["German"], :programming_languages => ["java"]}), valid_session
       assigns(:users).should eq(user)
     end
   end
