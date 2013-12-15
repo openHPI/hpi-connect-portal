@@ -14,7 +14,6 @@ describe "students/edit" do
       :facebook => "MyString",
       :xing => "MyString",
       :linkedin => "MyString",
-      :is_student => true
     ))
   end
 

@@ -29,6 +29,19 @@ describe "the job-offers page" do
       #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
     """.strip))
   end
+
+  describe "student has already applied" do
+    before(:each) do
+      @student = FactoryGirl.create(:user)
+      FactoryGirl.create(:application, user: @student, job_offer: @job_offer_1)
+      login_as(@student, :scope => :user)
+    end
+
+    it { 
+      visit job_offers_path
+      page.should have_selector('span.label-success', count: 1, text: I18n.t('job_offers.already_applied_badge'))
+    }
+  end
 end
 
 
@@ -43,15 +56,15 @@ describe "a job offer entry" do
       responsible_user: @user, 
       status: FactoryGirl.create(:job_status, :name => "open"
     ))
+
+    visit job_offers_path
   end
 
   it "should have a title and the professorship" do
-    visit job_offers_path
     page.should have_content("TestJob", "TestChair")
   end
 
   it "should link to its detailed page" do
-    visit job_offers_path
     find_link("TestJob").click
     # we expect to be on the detailed page
     expect(current_path).to eq(job_offer_path(@job_offer))

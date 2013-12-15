@@ -45,6 +45,8 @@ describe "Job Offer pages" do
 
             it { should_not have_button('Apply') }
             it { should_not have_selector('h4', text: 'Applications') }
+            it { should have_selector('div.panel', count: 2) }
+            it { should have_selector('div.panel', text: I18n.t('job_offers.already_applied')) }
           end
         end
 
@@ -52,7 +54,7 @@ describe "Job Offer pages" do
           let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
 
           before do
-            FactoryGirl.create(:application, job_offer: job_offer)
+            @application = FactoryGirl.create(:application, job_offer: job_offer)
             login_as(research_assistant, :scope => :user)
             visit job_offer_path(job_offer)
           end
@@ -63,6 +65,8 @@ describe "Job Offer pages" do
           it { should have_link('Accept') }
           it { should have_link('Decline') }
 
+          it { should have_selector('tr[href="' + student_path(id: @application.user.id) + '"]') }
+
           it "is possible to mark a job as completed" do
             should have_link 'Job completed'
 
@@ -70,6 +74,23 @@ describe "Job Offer pages" do
             should have_link 'Job completed'
           end          
         end
+      end
+    end
+
+    describe "working job offer" do
+      let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
+      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_working) }
+     
+      let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+      let(:student) { FactoryGirl.create(:user, role: student_role) }
+
+      describe "when being a student" do
+        before(:each) do
+          login_as(student, :scope => :user)          
+        end 
+
+        it { should_not have_button('Apply')}
       end
     end
 
@@ -109,13 +130,6 @@ describe "Job Offer pages" do
           job_offer.update(responsible_user: research_assistant)
           login_as(research_assistant, :scope => :user)
           visit job_offer_path(job_offer)
-        end
-
-        it "should be visible in a read-only mode" do
-          should have_selector 'a:contains("Edit"):disabled'
-          should have_selector 'a:contains("Delete"):disabled'
-
-          should have_content('pending')
         end
 
         it "should be editable for the responsible user" do

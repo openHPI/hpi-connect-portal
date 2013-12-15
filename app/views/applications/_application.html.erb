@@ -1,4 +1,4 @@
-<tr>
+<tr class='clickableRow' href='<%= student_path(id: application.user.id) %>'>
     <td><%= application.user.firstname %></td>
     <td><%= application.user.lastname %></td>
     <td><%= application.user.email %></td>
@@ -11,5 +11,4 @@
         <%= link_to t("applications.accept"), accept_application_path(application), :class=>"btn btn-success", data: {confirm: t("applications.accept_confirmation")} %>
       </td>
     <% end %>
-
 </tr>

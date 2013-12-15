@@ -65,4 +65,26 @@ describe ApplicationsController do
       assigns(:application).job_offer.status.should eq(working)
     end
   end
+
+  describe "POST create" do
+    it "does not create an application if job is not open" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'running')
+      @job_offer.save
+
+      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id} }
+        }.not_to change(Application, :count).by(1)
+    end
+
+    it "does create an application if job is open" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.save
+      
+      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id} }
+        }.to change(Application, :count).by(1)
+    end
+  end
 end
