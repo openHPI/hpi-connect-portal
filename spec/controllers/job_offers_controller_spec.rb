@@ -50,20 +50,20 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :find, ({:chair => @epic.id}), valid_session
       response.should render_template("index")
-  end
+    end
 
     it "renders the archive" do
       job_offer = JobOffer.create! valid_attributes
       get :archive, {}, valid_session
-    response.should render_template("archive")
-  end
+      response.should render_template("archive")
+    end
 
     it "renders the jobs found archive" do
       job_offer = JobOffer.create! valid_attributes
       get :find_archived_jobs, ({:search => "Ruby"}), valid_session
       response.should render_template("archive")
+    end
   end
-end
 
   describe "GET index" do
     it "assigns all job_offers as @job_offer-list[:items]" do
@@ -157,12 +157,15 @@ end
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
+
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
       get :accept, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
     end     
     it "accepts job offers" do
       sign_in deputy
-
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open) 
       response.should redirect_to(@job_offer)
@@ -178,10 +181,14 @@ end
     end
 
     it "prohibits user to decline job offers if he is not the deputy" do
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       get :decline, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
     end     
     it "declines job offers" do
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       sign_in deputy
       expect {
         get :decline, {id: @job_offer.id}

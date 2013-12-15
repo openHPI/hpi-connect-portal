@@ -29,6 +29,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
+    @job_offer.responsible_user = current_user
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
@@ -127,6 +128,7 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/accept
   def accept  
     if @job_offer.update(status: JobStatus.open )
+      JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
       render_errors_and_redirect_to(@job_offer, format)
@@ -136,6 +138,7 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/decline
   def decline 
     if @job_offer.destroy
+      JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
     else
       render_errors_and_redirect_to(@job_offer, format)
