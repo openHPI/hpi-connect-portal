@@ -33,3 +33,6 @@ en:
     decline: "Decline"
     assigned: "Assigned Job Offers"
     not_assigned: "Unassigned Job Offers"
+    contact: "Contact"
+    already_applied: "You already applied for this job. If you have any questions regarding your application please contact the responsible staff member."
+    already_applied_badge: "Applied"

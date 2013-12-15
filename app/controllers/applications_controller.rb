@@ -6,12 +6,16 @@ class ApplicationsController < ApplicationController
 
     def create
         @job_offer = JobOffer.find application_params[:job_offer_id]
-        @application = Application.new(job_offer: @job_offer, user: current_user)
-        if @application.save
-            flash[:success] = 'Applied Successfully!'
+        if not @job_offer.open?
+            flash[:error] = 'This job offer is not currently open.'
         else
-            flash[:error] = 'An error occured while applying. Please try again later.'
-        end   
+          @application = Application.new(job_offer: @job_offer, user: current_user)
+          if @application.save
+              flash[:success] = 'Applied Successfully!'
+          else
+              flash[:error] = 'An error occured while applying. Please try again later.'
+          end 
+        end
         redirect_to @job_offer
     end
 
