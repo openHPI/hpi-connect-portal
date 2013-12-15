@@ -1,0 +1,5 @@
+<%= t "job_offers_mailer.title" %>
+
+
+<%= t "job_offers_mailer.content" %>
+<%= link_to (t "job_offers_mailer.link"), url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false) %>

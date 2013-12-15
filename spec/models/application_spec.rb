@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe Application do
   before(:each) do
-    @application = Application.new(job_offer: FactoryGirl.create(:joboffer), user: FactoryGirl.create(:user))
+    @application = Application.new(job_offer: FactoryGirl.create(:job_offer), user: FactoryGirl.create(:user))
   end
 
   subject { @application }

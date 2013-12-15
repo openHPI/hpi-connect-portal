@@ -2,21 +2,24 @@
 #
 # Table name: job_offers
 #
-#  id           :integer          not null, primary key
-#  description  :text
-#  title        :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  chair        :string(255)
-#  start_date   :date
-#  end_date     :date
-#  time_effort  :float
-#  compensation :float
-#  room_number  :string(255)
-#  status       :string(255)
+#  id                  :integer          not null, primary key
+#  description         :text
+#  title               :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  start_date          :date
+#  end_date            :date
+#  time_effort         :float
+#  compensation        :float
+#  room_number         :string(255)
+#  chair_id            :integer
+#  responsible_user_id :integer
+#  status_id           :integer          default(1)
+#  assigned_student_id :integer
 #
 
 class JobOffer < ActiveRecord::Base
+    before_save :default_values
 
     has_many :applications
     has_many :users, through: :applications
@@ -24,6 +27,8 @@ class JobOffer < ActiveRecord::Base
     has_and_belongs_to_many :languages
     belongs_to :chair
     belongs_to :responsible_user, class_name: "User"
+    belongs_to :assigned_student, class_name: "User"
+    belongs_to :status, class_name: "JobStatus"
 
 	accepts_nested_attributes_for :programming_languages
     accepts_nested_attributes_for :languages
@@ -34,6 +39,14 @@ class JobOffer < ActiveRecord::Base
 
     self.per_page = 5
 
+    scope :pending, ->{ where(status: JobStatus.pending) }
+    scope :open, ->{ where(status: JobStatus.open) }
+    scope :running, ->{ where(status: JobStatus.running) }
+    scope :completed, ->{ where(status: JobStatus.completed) }
+
+    def default_values
+        self.status ||= JobStatus.pending
+    end
 
     def self.find_jobs(attributes={})
 
@@ -58,7 +71,7 @@ class JobOffer < ActiveRecord::Base
 
 	def self.sort(order_attribute) 
 		if order_attribute == "date"
-			order(:created_at)
+			order('job_offers.created_at DESC')
 		elsif order_attribute == "chair"
 			includes(:chair).order("chairs.name ASC")
 		end
@@ -104,7 +117,7 @@ class JobOffer < ActiveRecord::Base
     end
 
     def self.filter_status(status)
-        status.blank? ? all : where('status <= ?', status)
+        status.blank? ? all: where(status: status)
     end
 
     def self.filter_programming_languages(programming_language_ids)
@@ -143,5 +156,25 @@ class JobOffer < ActiveRecord::Base
             end
             all.where(id: jobs_filter)
         end
+    end
+
+    def completed?
+        status == JobStatus.completed
+    end
+
+    def pending?
+        status == JobStatus.pending
+    end
+
+    def open?
+        status == JobStatus.open
+    end
+
+    def running?
+        status == JobStatus.running
+    end
+
+    def editable?
+        self.pending? or self.open?
     end
 end

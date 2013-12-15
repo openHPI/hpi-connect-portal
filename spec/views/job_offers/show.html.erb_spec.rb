@@ -7,7 +7,8 @@ describe "job_offers/show" do
       :description => "Description",
       :title => "Title",
       :chair => @TestChair,
-      :responsible_user => FactoryGirl.create(:user)
+      :responsible_user => FactoryGirl.create(:user),
+      :status => FactoryGirl.create(:job_status, :name => "open")
     ))
     view.stub(:signed_in?) { false }
   end
@@ -23,5 +24,12 @@ describe "job_offers/show" do
     render
     rendered.should_not match(/Applications/)
     rendered.should_not match(/Apply/)
+  end
+
+  it "renders contact mailto link" do
+    render
+
+    rendered.should match(/Contact/)
+    assert_select "a[href='mailto:" + @job_offer.responsible_user.email + "']"
   end
 end

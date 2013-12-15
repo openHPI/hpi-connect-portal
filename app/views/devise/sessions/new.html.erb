@@ -1,12 +1,10 @@
 <h2><%= t("users.login_headline")%></h2>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<%= form_for resource, as: resource_name, url: session_path(resource_name), html: { id: 'sign_in_form'} do |f| %>
   <p><%= f.label :identity_url, t("users.open_id") %></p>
-  <p><%= f.text_field :identity_url, value: (resource.identity_url || 'https://openid.hpi.uni-potsdam.de/user/') %></p>
+  <p>https://openid.hpi.uni-potsdam.de/user/ <%= f.text_field :username, id: 'username_field' %></p>
 
-  <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
-  <% end -%>
+  <%= f.hidden_field :identity_url, id: 'url_field', value: "https://openid.hpi.uni-potsdam.de/user/#{resource.username}" %>
 
   <div><%= f.submit t("users.sign_in") %></div>
 <% end %>

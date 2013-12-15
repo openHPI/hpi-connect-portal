@@ -12,6 +12,13 @@ Role.create(name: 'Student', level: 1)
 Role.create(name: 'Research Assistant', level: 2)
 Role.create(name: 'Admin', level: 3)
 
+#Create Standart Job Status
+JobStatus.delete_all
+JobStatus.create(name: 'pending')
+JobStatus.create(name: 'open')
+JobStatus.create(name: 'running')
+JobStatus.create(name: 'completed')
+
 #Create User as an example deputy for all chairs
 User.delete_all
 User.create([{
@@ -20,9 +27,45 @@ User.create([{
 		email: "chief@smith.de",
 	   	role: Role.where(:name => 'Student').first
 	}])
+User.create([{
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel", 
+	role: Role.where(:name => 'Research Assistant').first	
+}])
+User.create([{
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Tim", 
+	firstname: "Specht", 
+	role: Role.where(:name => 'Student').first	
+}])
 
-LanguagesStudent.delete_all
-ProgrammingLanguagesStudent.delete_all
+User.create([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Pascal", 
+	firstname: "Reinhardt", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Tim", 
+	firstname: "Friedrich", 
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Johannes", 
+	firstname: "Koch", 
+	role: Role.where(:name => 'Student').first	
+}])
+
 
 Language.delete_all
 Language.create([
@@ -33,6 +76,7 @@ Language.create([
 	{ name: 'Chinesisch'}
 ])
 
+#Create some ProgrammingLanguages
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
 	{ name: 'Ruby'},
@@ -43,21 +87,55 @@ ProgrammingLanguage.create([
 	{ name: 'Smalltalk'}
 ])
 
-StudentStatus.delete_all
-StudentStatus.create([
+#Create some UserStatus
+UserStatus.delete_all
+UserStatus.create([
 	{ name: 'job-seeking'},
 	{ name: 'employed'},
 	{ name: 'employed (ext)'},
 	{ name: 'no interest'},
 	{ name: 'alumni'}
 ])
+
+#Create some Languages
+Language.delete_all
+Language.create([
+	{ name: 'Englisch'},
+	{ name: 'Deutsch'},
+	{ name: 'Spanisch'},
+	{ name: 'Französisch'},
+	{ name: 'Chinesisch'}
+])
+
+#Create some ProgrammingLanguages
+ProgrammingLanguage.delete_all
+ProgrammingLanguage.create([
+	{ name: 'Ruby'},
+	{ name: 'Java'},
+	{ name: 'C'},
+	{ name: 'C++'},
+	{ name: 'Python'},
+	{ name: 'Smalltalk'}
+])
+
+#Create some UserStatus
+UserStatus.delete_all
+UserStatus.create([
+	{ name: 'job-seeking'},
+	{ name: 'employed'},
+	{ name: 'employed (ext)'},
+	{ name: 'no interest'},
+	{ name: 'alumni'}
+])
+
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
 	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
 	head_of_chair: "Hasso Plattner",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
+User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first)
 
 Chair.create([{
 	name: "Internet Technologies and Systems",
@@ -122,14 +200,12 @@ Chair.create([{
 	deputy: User.where(:firstname=>"Chief").first
 }])
 
-
-
 JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
 	description: 'The student extends the functionality of the touch floor.', 
 	chair: Chair.where(:name => "Human Computer Interaction").first, 
-	status: 'completed',
+	status: JobStatus.where(:name => "completed").first,
 	start_date: '2013-11-01', 
 	time_effort: 6,
 	compensation: 11.50,
@@ -142,7 +218,7 @@ JobOffer.create([{
 	title: "Website Developer", 
 	description: 'The student develops a wonderful website.', 
 	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
-	status: 'completed',
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-10-01', 
 	time_effort: 9,
 	compensation: 13.50,
@@ -156,6 +232,7 @@ JobOffer.create([{
 	description: 'The Job includes the development of new features for tele-Task', 
 	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
 	start_date: '2013-11-11', 
+	status: JobStatus.where(:name => "completed").first,
 	time_effort: 10,
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
@@ -167,6 +244,7 @@ JobOffer.create([{
 	title: "Tutor for Operating systems", 
 	description: 'You have to control the assignments for the Operating Systems I lecture.', 
 	chair: Chair.where(:name => "OS and Middleware").first, 
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-12-01', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -180,6 +258,7 @@ JobOffer.create([{
 	title: "Teleboard Developer", 
 	description: 'You have to develop the Teleboard with HTML5 and Javascript', 
 	chair: Chair.where(:name => "Internet Technologies and Systems").first, 
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2013-12-12', 
 	time_effort: 5,
 	compensation: 12.00,
@@ -195,6 +274,7 @@ JobOffer.create([{
 	chair: Chair.where(:name => "Human Computer Interaction").first, 
 	start_date: '2013-12-01', 
 	time_effort: 20,
+	status: JobStatus.where(:name => "working").first,
 	compensation: 12.00,
 	languages: Language.where(:name => ['English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
@@ -205,103 +285,13 @@ JobOffer.create([{
 	title: "Supporting the lab operations of the chair", 
 	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
 	chair: Chair.where(:name => "OS and Middleware").first,
+	status: JobStatus.where(:name => "open").first,
 	start_date: '2014-01-01', 
 	time_effort: 8,
 	compensation: 10.00,
 	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
 	responsible_user: User.where(:firstname=>"Chief").first
-}])
-
-Student.delete_all
-Student.create([{
-	first_name: 'Dieter', 
-	last_name: 'Nuhr', 
-	semester: '1', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => 'English'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	student_status: StudentStatus.where(:name => 'employed (ext)').first
-}])
-
-Student.create([{
-	first_name: 'Jasper', 
-	last_name: 'Schulze', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => 'German'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
-	student_status: StudentStatus.where(:name => 'job-seeking').first
-}])
-
-Student.create([{
-	first_name: 'Frank', 
-	last_name: 'Blechschmidt', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.where(:name => ['German', 'English']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	student_status: StudentStatus.where(:name => 'employed').first
-}])
-
-Student.create([{
-	first_name: 'Malte', 
-	last_name: 'Mues', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1970-12-10', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.dieter.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all,
-	student_status: StudentStatus.where(:name => 'employed').first
-}])
-
-Student.create([{
-	first_name: 'Julia', 
-	last_name: 'Steier', 
-	semester: '5', 
-	academic_program: 'Bachelor', 
-	birthday: '1969-12-04', 
-	education: 'Abitur', 
-	additional_information: 'No', 
-	homepage: 'www.Günther.de', 
-	github: 'www.github.com/dieter', 
-	facebook: 'www.faceboook.com/dieter', 
-	xing: 'www.xing.com/dieter', 
-	linkedin: 'www.linkedin.com/dieter', 
-	languages: Language.all, 
-	programming_languages: ProgrammingLanguage.all,
-	student_status: StudentStatus.where(:name => 'no interest').first
 }])
 
 Faq.delete_all
@@ -321,3 +311,5 @@ Faq.create([{
 	question: "Does HPI-HiWi-Portal have an Android app?", 
 	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
 }])
+
+Chair.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)

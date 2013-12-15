@@ -1,5 +1,8 @@
 class ChairsController < ApplicationController
-  before_action :set_chair, only: [:show, :edit, :update]
+  authorize_resource only: [:new, :edit, :create, :update]
+
+  include ApplicationHelper
+  before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
   # GET /chairs
   # GET /chairs.json
@@ -10,6 +13,12 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show	
+    @job_offers_list = [{:items => find_jobs_in_job_list(JobOffer.filter(:status => "running", :chair => @chair.id)).paginate(:page => params[:page]),
+                        :name => "job_offers.assigned"}, 
+                        {:items => find_jobs_in_job_list(JobOffer.filter(:status => "open", :chair => @chair.id)).paginate(:page => params[:page]),
+                         :name => "job_offers.not_assigned"}]
+
+    @chairs=[]
   end
 
   # GET /chairs/new
@@ -25,7 +34,7 @@ class ChairsController < ApplicationController
   # POST /chairs.json
   def create
     @chair = Chair.new(chair_params)
-    
+
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
@@ -50,6 +59,11 @@ class ChairsController < ApplicationController
         format.json { render json: @chair.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def find_jobs
+    show
+    render "show"
   end
 
   private

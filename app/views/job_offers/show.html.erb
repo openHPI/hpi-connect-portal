@@ -1,71 +1,84 @@
 <div class="row">
-  <div class="col-md-3">
-         <%= render 'sidebar'  %>  
-  </div><!--/span-->
-  <div class="col-md-9">
-  	<span class="pull-left">
-  		<%= link_to t("links.back"), job_offers_path, :class => "btn btn-default" %>
-  	</span>
-    <% unless @job_offer.status == "completed" %>
+  <div class="col-md-12">
+    <% unless @job_offer.completed? %>
     	<span class="pull-right">
-        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default" %>
+        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
-    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default btn-primary" %> 
+    		<%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %> 
         
-        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-default btn-danger" %>
+        <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
     	</span>
     <% end %>
   	
   	<br><br>
 
+    <% if signed_in? && current_user.applied?(@job_offer) %>
+      <br><br>
+       <div class="panel panel-default panel-body">
+        <%= t("job_offers.already_applied") %>
+      </div>
+    <% end %>
 
     <div class="panel panel-default panel-body">
     <h1>
       <%= @job_offer.title %>
+      <% if @job_offer.pending? %>
+        <span> - pending</span>
+      <% end %>
     </h1>
 
     <dl>
-      <dt><%= t("job_offer.description") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.description") %>:</dt>
       <dd> <%= @job_offer.description %></dd>
 
-      <dt><%= t("job_offer.room_number") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.room_number") %>:</dt>
       <dd> <%= @job_offer.room_number %></dd>
 
-      <dt><%= t("job_offer.chair") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.chair") %>:</dt>
       <dd> <%= @job_offer.chair.name %></dd>
 
-      <dt><%= t("job_offer.start_date") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.start_date") %>:</dt>
       <dd> <%= @job_offer.start_date %></dd>
 
-      <dt><%= t("job_offer.end_date") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.end_date") %>:</dt>
       <dd> <%= @job_offer.end_date %></dd>
 
-      <dt><%= t("job_offer.time_effort") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.time_effort") %>:</dt>
       <dd> <%= @job_offer.time_effort %></dd>
 
-      <dt><%= t("job_offer.compensation") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.compensation") %>:</dt>
       <dd> <%= @job_offer.compensation %></dd>
 
+      <% if @job_offer.responsible_user %>
       <dt>Contact:</dt>
-      <dd> <%= @job_offer.responsible_user.email %></dd>
+      <dd> 
+        <%= @job_offer.responsible_user.email %>
+        <%= mail_to  @job_offer.responsible_user.email, t("job_offers.contact"), :class=>"btn btn-success" %>
+      </dd>
+      <% end %>
 
       <dt>Student Placeholder:</dt>
-      <% if @job_offer.status != "completed" %>
+      <% unless @job_offer.completed? %>
         <dd> <%=  %></dd>
       <% end %>
 
-      <dt><%= t("job_offer.programming_languages") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.programming_languages") %>:</dt>
       <% @job_offer.programming_languages.each do |programming_language| %>
         <dd><%= programming_language.name %></dd>
       <% end %>
 
-      <dt><%= t("job_offer.languages") %>:</dt>
+      <dt><%= t("activerecord.attributes.job_offer.languages") %>:</dt>
       <% @job_offer.languages.each do |language| %>
         <dd><%= language.name %></dd>
       <% end %>
 
         </dl>
-         <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) %>
+         <% if signed_in? && @job_offer.pending? && @job_offer.chair.deputy == current_user %>
+          <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success" %>
+          <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
+         <% end %>
+
+         <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
             <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button' %>
@@ -74,10 +87,10 @@
       </div>
 
 
-    <% if signed_in? && @job_offer.applications.any? && can?(:read, @job_offer.applications.first) %>
+    <% if signed_in? && @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>
       <div class="clearfix"></div>
       <h4><%= t("job_offers.applications_headline")%></h4>
-      <table class="table">
+      <table class="table table-hover">
         <thead>
           <tr>
             <th><%= t("job_offers.applicant_first_name") %></th>
@@ -89,6 +102,9 @@
           <%= render @job_offer.applications %>
         </tbody>
       </table>
+    <% end %>
+    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.open? %>
+      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
     <% end %>
   </div>
 </div>

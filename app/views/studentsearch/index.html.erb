@@ -47,7 +47,7 @@
   <ul>
  
     <% @students.each do |student| %>
-      <li> <%= link_to "#{student.first_name} #{student.last_name}", student %></li>
+      <li> <%= link_to "#{student.firstname} #{student.lastname}", student_path(student.id) %></li>
     <% end %>
  
  </ul>

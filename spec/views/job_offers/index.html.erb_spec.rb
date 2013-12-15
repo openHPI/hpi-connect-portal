@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "job_offers/index" do
   before(:each) do
     @TestChair = FactoryGirl.create(:chair, name:"Chair")
-    assign(:job_offers, [
-      stub_model(JobOffer,
+    assign(:chairs, [@TestChair])
+    job_offers = [stub_model(JobOffer,
         :chair => @TestChair,
         :title => "Title",
         :start_date => '2013-11-10'
@@ -13,13 +13,17 @@ describe "job_offers/index" do
         :chair => @TestChair,
         :title => "Title",
         :start_date => '2013-11-11'
-      )
-    ])
+      )]
+    assign(:job_offers_list, [{:items => job_offers, 
+                        :name => "job_offers.archive"}])
     assign(:radio_button_sort_value, {"date" => false, "chair" => false})
+
+    view.stub(:signed_in?) { false }
   end
 
   it "renders a list of job_offers" do
     view.stub(:will_paginate)
+
     render 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "h4", :text => "Title".to_s, :count => 2

@@ -1,6 +1,8 @@
 en:
-  chair:
-    deputy: "deputy"
-    description: "description"
-    head_of_chair: "Head of Chair"
-    name: "name"
+  activerecord:
+    attributes:
+      chair:
+        deputy: "deputy"
+        description: "description"
+        head_of_chair: "head of chair"
+        name: "name"
