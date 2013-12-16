@@ -2,7 +2,6 @@ require 'spec_helper'
 describe "Studentsearches" do
     before :all do
 
-
    @student1 = FactoryGirl.create(:user,
             :firstname => 'Alexander',
             :lastname  => 'Zeier',
@@ -49,6 +48,7 @@ describe "Studentsearches" do
         expect(page).to have_content "#{@student2.firstname} #{@student2.lastname}"
         expect(page).to have_no_content "#{@student1.firstname} #{@student1.lastname}"
         expect(page).to have_no_content "#{@student3.firstname} #{@student3.lastname}"
+
     end
 
     it 'returns all students' do
@@ -59,6 +59,7 @@ describe "Studentsearches" do
         expect(page).to have_content "#{@student2.firstname} #{@student2.lastname}"
         expect(page).to have_content "#{@student3.firstname} #{@student3.lastname}"
         expect(page).to have_content "#{@student4.firstname} #{@student4.lastname}"
+
     end
 
     it 'does not return a student' do
@@ -106,6 +107,7 @@ describe "Studentsearches" do
         expect(page).to have_no_content "#{@student4.firstname} #{@student4.lastname}"
         expect(page).to have_no_content "#{@student2.firstname} #{@student2.lastname}"
         expect(page).to have_no_content "#{@student3.firstname} #{@student3.lastname}"
+
     end
 
 

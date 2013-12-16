@@ -44,6 +44,7 @@ describe "the profile page" do
 
   after(:all) do
     User.delete_all
+
     Language.delete_all
     ProgrammingLanguage.delete_all
   end
@@ -105,6 +106,7 @@ describe "the students editing page" do
 
   after(:all) do
     User.delete_all
+
     Language.delete_all
     ProgrammingLanguage.delete_all
   end
@@ -124,6 +126,7 @@ describe "the students profile page" do
             :firstname => 'Maria',
             :lastname  => 'Müller',
             :role => FactoryGirl.create(:role, name: 'Student', level: 1)
+
         )
   end
 
@@ -140,6 +143,7 @@ describe "the students profile page" do
       )
   end
 
+
   it "should contain all the details of student2" do
       visit student_path(@student2)
       page.should have_content(
@@ -149,6 +153,7 @@ describe "the students profile page" do
         "Maria",
         "Müller"
       )
+
   end
 
   it "should have a Edit link which leads to the students edit page" do
@@ -162,4 +167,5 @@ describe "the students profile page" do
     Language.delete_all
     ProgrammingLanguage.delete_all
   end
+
 end
