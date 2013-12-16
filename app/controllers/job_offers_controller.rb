@@ -2,7 +2,7 @@ class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
   before_filter :check_user_is_responsible, only: [:edit, :update]
-  before_filter :check_user_is_research_assistant, only: [:complete]
+  before_filter :check_user_is_research_assistant_of_chair, only: [:complete]
   before_filter :check_user_is_deputy, only: [:accept, :decline]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
@@ -116,7 +116,7 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/complete
   def complete
     respond_to do |format|
-      if @job_offer.update(status: JobStatus.completed )
+      if @job_offer.update(status: JobStatus.completed)
         JobOffersMailer.job_closed_email(@job_offer).deliver
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
         format.json { head :no_content }
@@ -174,9 +174,9 @@ class JobOffersController < ApplicationController
       end
     end
 
-    def check_user_is_research_assistant    
+    def check_user_is_research_assistant_of_chair    
       set_job_offer
-      unless user_is_research_assistant_of_chair?(@job_offer)
+      unless user_is_research_assistant_of_chair? @job_offer
         redirect_to @job_offer
       end
     end
@@ -184,7 +184,7 @@ class JobOffersController < ApplicationController
     def check_user_is_deputy
       set_job_offer
       unless @job_offer.chair.deputy == current_user
-        if user_is_research_assistant_of_chair?(@job_offer)
+        if user_is_research_assistant_of_chair? @job_offer
           redirect_to @job_offer 
         else
           redirect_to job_offers_path

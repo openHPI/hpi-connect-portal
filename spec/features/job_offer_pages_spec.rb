@@ -8,7 +8,7 @@ describe "Job Offer pages" do
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, name:'pending')
     @status_open = FactoryGirl.create(:job_status, name:'open')
-    @status_working = FactoryGirl.create(:job_status, name:'working')
+    @status_running = FactoryGirl.create(:job_status, name:'running')
     @status_complete = FactoryGirl.create(:job_status, name:'complete')
   end
   
@@ -66,21 +66,14 @@ describe "Job Offer pages" do
           it { should have_link('Decline') }
 
           it { should have_selector('tr[href="' + student_path(id: @application.user.id) + '"]') }
-
-          it "is possible to mark a job as completed" do
-            should have_link 'Job completed'
-
-            visit edit_job_offer_path(job_offer)
-            should have_link 'Job completed'
-          end          
         end
       end
     end
 
-    describe "working job offer" do
+    describe "running job offer" do
       let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_working) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_running) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
@@ -91,6 +84,19 @@ describe "Job Offer pages" do
         end 
 
         it { should_not have_button('Apply')}
+      end
+
+      describe "when being a research assistant of the job offers chair" do
+        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
+
+        before do
+          login_as(research_assistant, :scope => :user)
+          visit job_offer_path(job_offer)
+        end
+
+        it "is possible to mark a job as completed" do
+          should have_link 'Job completed'
+        end 
       end
     end
 
