@@ -110,7 +110,7 @@ describe "Studentsearches" do
 
 
   after(:all) do
-    Student.delete_all
+    User.delete_all
     Language.delete_all
     ProgrammingLanguage.delete_all
   end

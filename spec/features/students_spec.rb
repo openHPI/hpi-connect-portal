@@ -1,9 +1,6 @@
-
 require 'spec_helper'
 
-
 describe "the profile page" do
-
 
 	before :all do
     @student1 = FactoryGirl.create(:user,
@@ -15,7 +12,6 @@ describe "the profile page" do
 
   end
 
-
   it "should view only names and status of a student on the overview" do
     visit students_path
     page.should have_content(
@@ -26,10 +22,10 @@ describe "the profile page" do
     )
   end
 
-
   it "should contain a link for showing a profile and it should lead to profile page " do
     visit students_path
     find_link(@student1.firstname).click
+    
     current_path.should_not == students_path
     current_path.should == student_path(@student1)
   end
@@ -46,17 +42,13 @@ describe "the profile page" do
     
   # end
 
-  
   after(:all) do
     User.delete_all
     Language.delete_all
     ProgrammingLanguage.delete_all
   end
 
-  
-
 end
-
 
 describe "the students editing page" do
 
@@ -71,9 +63,9 @@ describe "the students editing page" do
 
 	it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
-     page.should have_content(
-    "Carrier",
-    "General Information"
+    page.should have_content(
+      "Carrier",
+      "General Information"
     )
 
   end
@@ -88,10 +80,9 @@ describe "the students editing page" do
     current_path.should == student_path(@student1)
 
     page.should have_content(
-    "user was successfully updated",
-    "General information",
-    "www.alex@hpi.uni-potsdam.de"
-
+      "user was successfully updated",
+      "General information",
+      "www.alex@hpi.uni-potsdam.de"
     )
     
   end
@@ -112,17 +103,13 @@ describe "the students editing page" do
 
   # end
 
-
-
   after(:all) do
     User.delete_all
     Language.delete_all
     ProgrammingLanguage.delete_all
   end
 
-
 end
-
 
 describe "the students profile page" do
 
@@ -151,8 +138,7 @@ describe "the students profile page" do
         "Alexander",
         "Zeier"
       )
-    end
-
+  end
 
   it "should contain all the details of student2" do
       visit student_path(@student2)
@@ -163,8 +149,7 @@ describe "the students profile page" do
         "Maria",
         "Müller"
       )
-    end
-
+  end
 
   it "should have a Edit link which leads to the students edit page" do
       visit student_path(@student1)
@@ -172,9 +157,9 @@ describe "the students profile page" do
       page.current_path.should == edit_student_path(@student1)
   end
 
-    after(:all) do
-      User.delete_all
-      Language.delete_all
-      ProgrammingLanguage.delete_all
-    end
+  after(:all) do
+    User.delete_all
+    Language.delete_all
+    ProgrammingLanguage.delete_all
+  end
 end
