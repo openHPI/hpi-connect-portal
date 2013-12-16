@@ -71,6 +71,7 @@ class User < ActiveRecord::Base
     validates :email, uniqueness: { case_sensitive: false }
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
+    validates :role, presence: true
 
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
 
