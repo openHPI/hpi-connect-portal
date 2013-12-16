@@ -1,0 +1,14 @@
+en:
+  job_offers_email:
+    new_job_offer:
+      subject: 'A new job offer is pending'
+    job_offer_declined:
+      subject: "The following job offer has been declined through the deputy: "
+    job_offer_accepted:
+      subject: "The following job offer has been accepted through the deputy: "
+    job_offer_closed:
+      subject: "A job has been closed"
+      title: "The following job has been marked as closed:"
+    student_accepted:
+      subject: "A job has been assigned"
+      title: "The following job has been assigned to a student:"
