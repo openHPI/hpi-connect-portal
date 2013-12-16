@@ -39,10 +39,10 @@ class JobOffer < ActiveRecord::Base
 
     self.per_page = 5
 
-    scope :pending, ->{ where(status: JobStatus.pending) }
-    scope :open, ->{ where(status: JobStatus.open) }
-    scope :running, ->{ where(status: JobStatus.running) }
-    scope :completed, ->{ where(status: JobStatus.completed) }
+    scope :pending, -> { where(status: JobStatus.pending) }
+    scope :open, -> { where(status: JobStatus.open) }
+    scope :running, -> { where(status: JobStatus.running) }
+    scope :completed, -> { where(status: JobStatus.completed) }
 
     def default_values
         self.status ||= JobStatus.pending
