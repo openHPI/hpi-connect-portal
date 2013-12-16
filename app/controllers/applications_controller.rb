@@ -26,6 +26,7 @@ class ApplicationsController < ApplicationController
       respond_to do |format|
         if @application.job_offer.update(job_offer_params) and Application.where(job_offer: @application.job_offer).delete_all
           ApplicationsMailer.application_accepted_student_email(@application)
+          JobOffersMailer.job_student_accepted_email(@application.job_offer).deliver
           format.html { redirect_to @application.job_offer, notice: 'Application was successfully accepted.' }
           format.json { head :no_content }
         else

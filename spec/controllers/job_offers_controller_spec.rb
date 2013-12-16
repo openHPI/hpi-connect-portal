@@ -23,12 +23,16 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # job_offer. As you add validations to job_offer, be sure to
   # adjust the attributes here as well.
+  let(:assigned_student) { FactoryGirl.create(:user) }
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
+  let(:responsible_user) { FactoryGirl.create(:user, chair: chair) }
   let(:completed) {FactoryGirl.create(:job_status, name: "completed")}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open")} }
+  let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "running"), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed}}
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email}}
 
 
   # This should return the minimal set of values that should be in the session
@@ -133,18 +137,20 @@ describe JobOffersController do
   end
 
   describe "GET complete" do
+    before(:each) do
+      @job_offer = JobOffer.create! valid_attributes_status_running
+    end
+
     it "marks jobs as completed if the user is research assistant of the chair" do 
-      job_offer = JobOffer.create! valid_attributes
       completed = FactoryGirl.create(:job_status, name: "completed")
-      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: job_offer.chair)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: @job_offer.chair)
       
-      get :complete, {:id => job_offer.id}
+      get :complete, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
     it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
-      job_offer = JobOffer.create! valid_attributes
-      get :complete, {:id => job_offer.id}, valid_session
-      response.should redirect_to(job_offer)
+      get :complete, {:id => @job_offer.id}, valid_session
+      response.should redirect_to(@job_offer)
     end
   end
 

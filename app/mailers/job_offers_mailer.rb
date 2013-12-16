@@ -1,5 +1,5 @@
 class JobOffersMailer < ActionMailer::Base
-  default from: "hpi-hiwi-portal@hpi.uni-potsdam.de"
+  default from: "hpi.hiwi.portal@gmail.com"
 
   def new_job_offer_email(job_offer)
   	@job_offer = job_offer
@@ -16,6 +16,18 @@ class JobOffersMailer < ActionMailer::Base
   	@job_offer = job_offer
 
   	mail(to: @job_offer.responsible_user.email, subject: (t "job_offers_email.job_offer_accepted.subject")+@job_offer.title)
+  end
+
+  def job_closed_email(job_offer)
+    @job_offer = job_offer
+
+    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_email.job_offer_closed.subject"))
+  end
+
+  def job_student_accepted_email(job_offer)
+    @job_offer = job_offer
+
+    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_email.student_accepted.subject"))
   end
 
 end

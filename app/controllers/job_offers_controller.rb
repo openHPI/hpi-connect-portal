@@ -117,6 +117,7 @@ class JobOffersController < ApplicationController
   def complete
     respond_to do |format|
       if @job_offer.update(status: JobStatus.completed )
+        JobOffersMailer.job_closed_email(@job_offer).deliver
         format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
         format.json { head :no_content }
       else

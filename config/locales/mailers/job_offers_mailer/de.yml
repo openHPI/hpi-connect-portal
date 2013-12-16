@@ -6,3 +6,9 @@ de:
       subject: "Das folgende Jobangebot wurde leider abgelehnt: "
     job_offer_accepted:
       subject: "Das Jobangebot wurde freigeschaltet: "
+    job_offer_closed:
+      subject: "Ein Jobangebot wurde geschlossen"
+      title: "Das folgende Jobangebot wurde geschlossen:"
+    student_accepted:
+      subject: "Ein Jobangebot wurde vergeben"
+      title: "Das folgende Jobangebot wurde vergeben:"
