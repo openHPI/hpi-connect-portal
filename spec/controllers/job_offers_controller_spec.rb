@@ -23,12 +23,16 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # job_offer. As you add validations to job_offer, be sure to
   # adjust the attributes here as well.
+  let(:assigned_student) { FactoryGirl.create(:user) }
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
+  let(:responsible_user) { FactoryGirl.create(:user, chair: chair) }
   let(:completed) {FactoryGirl.create(:job_status, name: "completed")}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open")} }
+  let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "running"), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed}}
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email}}
 
 
   # This should return the minimal set of values that should be in the session
@@ -50,20 +54,20 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :find, ({:chair => @epic.id}), valid_session
       response.should render_template("index")
-  end
+    end
 
     it "renders the archive" do
       job_offer = JobOffer.create! valid_attributes
       get :archive, {}, valid_session
-    response.should render_template("archive")
-  end
+      response.should render_template("archive")
+    end
 
     it "renders the jobs found archive" do
       job_offer = JobOffer.create! valid_attributes
       get :find_archived_jobs, ({:search => "Ruby"}), valid_session
       response.should render_template("archive")
+    end
   end
-end
 
   describe "GET index" do
     it "assigns all job_offers as @job_offer-list[:items]" do
@@ -133,18 +137,20 @@ end
   end
 
   describe "GET complete" do
+    before(:each) do
+      @job_offer = JobOffer.create! valid_attributes_status_running
+    end
+
     it "marks jobs as completed if the user is research assistant of the chair" do 
-      job_offer = JobOffer.create! valid_attributes
       completed = FactoryGirl.create(:job_status, name: "completed")
-      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: job_offer.chair)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: @job_offer.chair)
       
-      get :complete, {:id => job_offer.id}
+      get :complete, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
     it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
-      job_offer = JobOffer.create! valid_attributes
-      get :complete, {:id => job_offer.id}, valid_session
-      response.should redirect_to(job_offer)
+      get :complete, {:id => @job_offer.id}, valid_session
+      response.should redirect_to(@job_offer)
     end
   end
 
@@ -157,12 +163,15 @@ end
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
+
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
       get :accept, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
     end     
     it "accepts job offers" do
       sign_in deputy
-
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open) 
       response.should redirect_to(@job_offer)
@@ -178,10 +187,14 @@ end
     end
 
     it "prohibits user to decline job offers if he is not the deputy" do
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       get :decline, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
     end     
     it "declines job offers" do
+      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.save
       sign_in deputy
       expect {
         get :decline, {id: @job_offer.id}

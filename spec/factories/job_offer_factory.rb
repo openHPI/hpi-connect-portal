@@ -28,5 +28,6 @@ FactoryGirl.define do
     time_effort  9
     association :chair, factory: :chair
     association :status, factory: :job_status
+    association :responsible_user, factory: :user
   end
 end

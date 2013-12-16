@@ -5,10 +5,11 @@ describe ApplicationsController do
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
   let(:research_assistant_role) {FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)}
   let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
+  let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: research_assistant_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open")} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
-    @student = FactoryGirl.create(:user, :role => student_role)
+    @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
     @job_offer = JobOffer.create! valid_attributes
   end
 
