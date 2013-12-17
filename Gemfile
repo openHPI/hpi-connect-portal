@@ -48,6 +48,7 @@ gem 'simplecov', :group => :test, :require => nil
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
+gem 'airbrake'
 
 # basic layouting
 # gem 'twitter-bootstrap-rails'
