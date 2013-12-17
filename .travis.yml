@@ -11,6 +11,9 @@ deploy:
   api_key:
     secure: IrNqyY8hWCOkdddDQrYLmVG4eGxhrGVaFskv2fTpJcR3FZLS4lNbdRlBuEbUHE6cGg7NLKSES3GmXkkLv8KBPCfT6htdHyu22SmekrVZD2TwfrIhYh7xUrRXz5A0Rl8WMbVzAIfPdPs/pQiimH/V5JOq8+Kc4VLjQ+OHPbK8T24=
   app: hpi-hiwi-portal
-  run: "rake db:migrate"
+  run:
+  -rake db:migrate
+  - rake db:seed
+  - restart
   on:
     repo: tkowark/hpi-hiwi-portal
