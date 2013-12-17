@@ -19,6 +19,7 @@
 #
 
 class JobOffer < ActiveRecord::Base
+    include Bootsy::Container
     before_save :default_values
 
     has_many :applications

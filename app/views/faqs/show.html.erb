@@ -5,10 +5,10 @@
     <div class="col-md-11">
       <h4> <%= @faq.question %> </h4>
       <br>
-      <p> <%= @faq.answer %> </p>
+      <p> <%= @faq.answer.html_safe %> </p>
       <br>
       <% if signed_in? && can?(:update, @faq) %>
-        <%= link_to t("links.edit"), edit_faq_path(@faq), :class => "btn btn-default btn-primary" %>
+        <%= link_to t("links.edit"), edit_faq_path(@faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
       <% end %>
       <% if signed_in? && can?(:delete, @faq) %>
         <%= link_to t("links.destroy"), @faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>

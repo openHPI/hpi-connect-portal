@@ -63,7 +63,7 @@
             <% if !(@user.education).nil? %>
               <tr>
                 <td><%= t("activerecord.attributes.student.education")%></td>
-                <td><%= @user.education %></td>
+                <td><%= @user.education.html_safe %></td>
               </tr>
             <% end %>
           </tbody>
@@ -77,7 +77,7 @@
           <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></h3>
         </div>
         <div class="panel-body">
-          <%= @user.additional_information %>
+          <%= @user.additional_information.html_safe %>
         </div>
       </div>
     <% end %>
@@ -156,6 +156,6 @@
       </div>
     <% end %>
     <div class="pull-left"><%= link_to t("links.back"), students_path, class: "btn btn-default"%></div>
-    <div class="pull-right"><%= link_to t("links.edit"), edit_student_path(@user.id), class: "btn btn-warning" %></div>
+    <div class="pull-right"><%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-warning" %></div>
   </div>
 </div>
