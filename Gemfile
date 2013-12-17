@@ -103,8 +103,13 @@ gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
+# WYSIWYG Text Editor
+gem 'bootsy'
+
 #replacement for glyphicons
 gem "font-awesome-rails"
+
+
 
 group :test do
   gem 'email_spec'
