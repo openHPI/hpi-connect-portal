@@ -15,7 +15,7 @@ deploy:
       secure: IuhhiuxOx7aguasw1MDK/LiqOSSu2jnTUtnxnohlV2VMQpvPCLakV9BzUyqATCsYgnSHmeezXz7TbZ/V/t6BIo+nLu6pssRY582carEnXlmLmze8dOe/bhRegxB9VVqC4XTq5dHxXDnJ4mEzQbn7cETZYQ/RrVpPMxXBFHCr8H0=
   app: 
     master: hpi-hiwi-portal
-    develop-ja: hpi-hiwi-portal
+    develop-ja: hpi-hiwi-portal-develop-ja
   on:
     repo: tkowark/hpi-hiwi-portal
   run: 
