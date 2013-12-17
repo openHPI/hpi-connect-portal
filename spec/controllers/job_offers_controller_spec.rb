@@ -73,7 +73,7 @@ describe JobOffersController do
     it "assigns all job_offers as @job_offer-list[:items]" do
       job_offer = JobOffer.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:job_offers_list)[0][:items].should eq([job_offer])
+      assigns(:job_offers_list)[:items].should eq([job_offer])
     end
   end
 
@@ -81,13 +81,13 @@ describe JobOffersController do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
       job_offer = JobOffer.create! valid_attributes_status_completed
       get :archive, {}, valid_session
-      assigns(:job_offers_list)[0][:items].should eq([job_offer])
+      assigns(:job_offers_list)[:items].should eq([job_offer])
     end
 
     it "does not assign non-completed jobs" do
       job_offer = JobOffer.create! valid_attributes
       get :archive, {}, valid_session
-      assert assigns(:job_offers_list)[0][:items].empty?
+      assert assigns(:job_offers_list)[:items].empty?
     end
   end
 
@@ -132,7 +132,7 @@ describe JobOffersController do
 
       job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
       get :find, ({:chair => @epic.id}), valid_session
-      assigns(:job_offers_list)[0][:items].to_a.should =~ (job_offers).to_a
+      assigns(:job_offers_list)[:items].to_a.should =~ (job_offers).to_a
     end
   end
 
