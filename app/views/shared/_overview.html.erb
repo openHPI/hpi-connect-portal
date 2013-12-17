@@ -1,7 +1,6 @@
-<% @job_offers_list.each do |job_offers| %>
-  <h2> <%= t(job_offers[:name]) %> </h2> 
+  <h2> <%= t(name) %> </h2> 
   <ul class="list-group">
-    <% job_offers[:items].each do |job_offer| %>
+    <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-8">
@@ -23,5 +22,4 @@
       </li>
     <%end%>
   </ul>
-  <%= will_paginate job_offers[:items], renderer: BootstrapPagination::Rails %>
-<% end %>
+  <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
