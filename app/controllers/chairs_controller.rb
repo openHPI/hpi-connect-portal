@@ -1,5 +1,8 @@
 class ChairsController < ApplicationController
-  before_action :set_chair, only: [:show, :edit, :update]
+  authorize_resource only: [:new, :edit, :create, :update]
+
+  include ApplicationHelper
+  before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
   # GET /chairs
   # GET /chairs.json
@@ -10,6 +13,11 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show	
+    @job_offers_list = [{:items => find_jobs_in_job_list(JobOffer.filter(:status => "running", :chair => @chair.id)).paginate(:page => params[:page]),
+                        :name => "job_offers.assigned"}, 
+                        {:items => find_jobs_in_job_list(JobOffer.filter(:status => "open", :chair => @chair.id)).paginate(:page => params[:page]),
+                         :name => "job_offers.not_assigned"}]
+    @chairs=[]
   end
 
   # GET /chairs/new
@@ -24,14 +32,8 @@ class ChairsController < ApplicationController
   # POST /chairs
   # POST /chairs.json
   def create
-    params_tmp = chair_params    
-    begin
-      params_tmp[:head_of_chair] = User.find(chair_params[:head_of_chair])
-    rescue
-      params_tmp[:head_of_chair] = nil
-    end   
+    @chair = Chair.new(chair_params)
 
-    @chair = Chair.new(params_tmp)
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
@@ -47,14 +49,8 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
-    params_tmp = chair_params
-    begin
-      params_tmp[:head_of_chair] = User.find(chair_params[:head_of_chair])
-    rescue
-      params_tmp[:head_of_chair] = nil
-    end   
     respond_to do |format|
-      if @chair.update(params_tmp)
+      if @chair.update(chair_params)
         format.html { redirect_to @chair, notice: 'Chair was successfully updated.' }
         format.json { head :no_content }
       else
@@ -62,6 +58,11 @@ class ChairsController < ApplicationController
         format.json { render json: @chair.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def find_jobs
+    show
+    render "show"
   end
 
   private
@@ -72,6 +73,6 @@ class ChairsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chair_params
-      params.require(:chair).permit(:name, :description, :avatar, :head_of_chair)
+      params.require(:chair).permit(:name, :description, :avatar, :head_of_chair, :deputy_id)
     end
 end

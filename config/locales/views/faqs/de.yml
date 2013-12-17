@@ -1,0 +1,8 @@
+de:
+  faqs:
+    headline: "Häufig gestellte Fragen"
+    new_faq: "Neue Frage"
+    new_faq_error: "Sie sind nicht berechtigt, einen neuen Frage anzulegen"
+    back_to_faqs: "Zurück zur Übersicht"
+    edit: "Frage editieren"
+    edit_faq_error: "Sie sind nicht berechtigt, einen Frage zu editieren"

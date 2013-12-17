@@ -1,0 +1,5 @@
+de:
+  job_offers_mailer:
+    title: "Ein neues Jobangebot wartet auf Freigabe"
+    content: "Bitte überprüfen sie das neue Jobangebot unter: "
+    content: "neues Jobangebot"

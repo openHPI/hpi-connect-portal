@@ -4,9 +4,13 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
-    @job_offer_1 = FactoryGirl.create(:joboffer, title: "TestJob1", chair: "TestChair")
-    @job_offer_2 = FactoryGirl.create(:joboffer, title: "TestJob2")
-    @job_offer_3 = FactoryGirl.create(:joboffer, title: "TestJob3")
+    @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @open = FactoryGirl.create(:job_status, name:"open")
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user, status: @open)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user, status: @open)
   end
 
   it "should include all jobs currently available" do
@@ -22,7 +26,7 @@ describe "the job-offers page" do
     visit job_offers_path
     # using regex for order of elements
     page.should have_content(Regexp.new("""
-      #{@job_offer_1.title}.*#{@job_offer_2.title}.*#{@job_offer_3.title}
+      #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
     """.strip))
   end
 end
@@ -31,7 +35,14 @@ end
 describe "a job offer entry" do
 
   before(:each) do
-    @job_offer = FactoryGirl.create(:joboffer, title: "TestJob", chair: "TestChair")
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @job_offer = FactoryGirl.create(:job_offer, 
+      title: "TestJob", 
+      chair: @TestChair, 
+      responsible_user: @user, 
+      status: FactoryGirl.create(:job_status, :name => "open"
+    ))
   end
 
   it "should have a title and the professorship" do
@@ -42,20 +53,25 @@ describe "a job offer entry" do
   it "should link to its detailed page" do
     visit job_offers_path
     find_link("TestJob").click
-    # we expect to be on another page
-    current_path.should_not == job_offers_path
+    # we expect to be on the detailed page
+    expect(current_path).to eq(job_offer_path(@job_offer))
   end
 end
 
 describe "job_offers_history" do
   it "should have a job-offers-history" do
-    @job_offer = FactoryGirl.create(:joboffer, 
+    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @user = FactoryGirl.create(:user)
+    @status = FactoryGirl.create(:job_status, :name => "completed")
+    @job_offer = FactoryGirl.create(:job_offer, 
       title: "Closed Job Touch Floor", 
-      status: "completed"
+      status: @status,
+      chair: @TestChair,
+      responsible_user: @user
       )
 
     visit job_offers_path
-    find("div#sidebar").should have_link "Archive"
+    find("div#buttons").should have_link "Archive"
     click_on "Archive"
     current_path.should == archive_job_offers_path
     page.should have_css "ul.list-group li"

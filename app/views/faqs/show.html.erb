@@ -1,0 +1,19 @@
+<%= link_to t("faqs.back_to_faqs"), faqs_path, :class => "btn btn-default" %> <br><br>
+
+<div class="panel panel-default panel-body">
+  <div class="container">
+    <div class="col-md-11">
+      <h4> <%= @faq.question %> </h4>
+      <br>
+      <p> <%= @faq.answer %> </p>
+      <br>
+      <% if signed_in? && can?(:update, @faq) %>
+        <%= link_to t("links.edit"), edit_faq_path(@faq), :class => "btn btn-default btn-primary" %>
+      <% end %>
+      <% if signed_in? && can?(:delete, @faq) %>
+        <%= link_to t("links.destroy"), @faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
+      <% end %>
+      <br>
+    </div>
+  </div>
+</div> 

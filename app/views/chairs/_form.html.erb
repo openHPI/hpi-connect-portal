@@ -12,34 +12,34 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label t("activerecord.attributes.chair.name") %><br>
     <%= f.text_field :name %>
   </div>
 	<div class="field">
-    <%= f.label :description %><br>
+    <%= f.label t("activerecord.attributes.chair.description") %><br>
     <%= f.text_area :description %>
   </div>
 
-<div class="form-group">    
-  <%= f.label :user %><br>
+  <div class="field">
+    <%= f.label t("activerecord.attributes.chair.head_of_chair") %><br>
+    <%= f.text_field :head_of_chair %>
+  </div>
 
-  <div class="">
-
-	<%= f.select :head_of_chair, User.all.collect {|u| [ "#{u.firstname} #{u.lastname}", u.id ] }, {prompt: "Select Person"} %>
-	
-  </div>  
-</div>
-
-	<div class="field">
+	<div class="field clearfix">
     <%= f.label :avatar %><br>
 		<% if !@chair.avatar.nil? %>
-				<%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail chair-thumbnail", alt: @chair.name%>
+				<%= image_tag @chair.avatar.url(:medium), class: "pull-left img-thumbnail chair-thumbnail", alt: @chair.name%>
 				<br>
 		<% end %>
     <%= f.file_field :avatar %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <%= f.label :deputy %><br />
+  <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
+
+  <div class="actions" style="margin-top:30px;">
+    <%= f.submit t("links.save"), :class => "btn btn-success btn-large" %>
+    <%= link_to t("links.back"), chairs_path, :type => "button", :class => "btn btn-default", :style => "margin-left:30px;" %>
   </div>
+
 <% end %>

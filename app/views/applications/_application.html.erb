@@ -1,0 +1,15 @@
+<tr>
+    <td><%= application.user.firstname %></td>
+    <td><%= application.user.lastname %></td>
+    <td><%= application.user.email %></td>
+    
+    <% if user_is_research_assistant_of_chair?(@job_offer) %>
+    	<td>
+        <%= link_to t("applications.decline"), decline_application_path(application), :class=>"btn btn-danger", data: {confirm: t("applications.decline_confirmation")} %>
+      </td>
+    	<td>
+        <%= link_to t("applications.accept"), accept_application_path(application), :class=>"btn btn-success", data: {confirm: t("applications.accept_confirmation")} %>
+      </td>
+    <% end %>
+
+</tr>
