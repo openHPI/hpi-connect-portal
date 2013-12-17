@@ -30,7 +30,8 @@
 <div class="row">
 	<div class="col-md-9">
 		<% @find_jobs_path = find_jobs_chairs_path %>
-		<%= render 'shared/overview' %>
+		<%= render 'shared/overview', name: "Open", job_offer_list: @open_job_offers%>
+		<%= render 'shared/overview', name: "Running", job_offer_list: @running_job_offers%>
 	</div>
 	<div class="col-md-3">
 		<%= render 'shared/sort_filter_search'  %>
