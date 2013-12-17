@@ -1,5 +1,12 @@
 en:
   job_offers_mailer:
-    title: "A new job offer is pending"
-    content: "Please check the new job offer under: "
-    link: "new job offer"
+    new_job_offer:
+      title: "A new job offer is pending"
+      content: "Please check the new job offer under: "
+      link: "new job offer"
+    deputy_declined:
+      title: "Your job offer has been declined."
+      content: "The deput has declined your job offer."
+    deputy_accept:
+      title: "Your job offer has been accepted."
+      content: "Your job offer has benn accepted through the deputy. It is now visible for the students."

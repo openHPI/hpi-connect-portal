@@ -4,10 +4,10 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><%= t "job_offers_mailer.title" %></h1>
+    <h1><%= t "job_offers_mailer.new_job_offer.title"+" ("+@job_offer.title+")" %></h1>
     <p>
-      <%= t "job_offers_mailer.content" %>
-      <%= link_to (t "job_offers_mailer.link"), url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false) %>
+      <%= t "job_offers_mailer.new_job_offer.content" %>
+      <%= link_to (t "job_offers_mailer.new_job_offer.link"), url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false) %>
     </p>
   </body>
 </html>

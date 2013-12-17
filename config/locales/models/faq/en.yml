@@ -1,6 +1,8 @@
 en:
+
   activerecord:
     attributes:
       faq:
         question: "Question"
         answer: "Answer"
+

@@ -17,6 +17,7 @@ class ChairsController < ApplicationController
                         :name => "job_offers.assigned"}, 
                         {:items => find_jobs_in_job_list(JobOffer.filter(:status => "open", :chair => @chair.id)).paginate(:page => params[:page]),
                          :name => "job_offers.not_assigned"}]
+
     @chairs=[]
   end
 

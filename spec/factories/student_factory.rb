@@ -1,10 +1,22 @@
 # == Schema Information
 #
-# Table name: students
+# Table name: users
 #
 #  id                     :integer          not null, primary key
-#  first_name             :string(255)
-#  last_name              :string(255)
+#  email                  :string(255)      default(""), not null
+#  remember_created_at    :datetime
+#  sign_in_count          :integer          default(0)
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  identity_url           :string(255)
+#  lastname               :string(255)
+#  firstname              :string(255)
+#  role_id                :integer          default(1), not null
+#  chair_id               :integer
 #  semester               :integer
 #  academic_program       :string(255)
 #  birthday               :date
@@ -15,31 +27,28 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  created_at             :datetime
-#  updated_at             :datetime
-#  photo_file_name        :string(255)
+#  photo_file_name        :date
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
-#  photo_updated_at       :datetime
+#  photo_updated_at       :date
 #  cv_file_name           :string(255)
 #  cv_content_type        :string(255)
 #  cv_file_size           :integer
-#  cv_updated_at          :datetime
+#  cv_updated_at          :date
 #  status                 :integer
-#  student_status_id      :integer
+#  user_status_id         :integer
 #
-
 FactoryGirl.define do
   factory :student do
-    first_name 'Larry'
-    last_name 'Ellison'
-    education 'Master of Sailing'
+    firstname 'Larry'
+    lastname 'Ellison'
+    role_id 1
+    semester 4
+    education 'Master'
     academic_program 'Volkswirtschaftslehre'
     homepage 'oracle.com'
-    github 'larryAwesome'
-    facebook 'larry2harry'
+    facebook 'www.facebook.com/larry'
     xing 'theLarry'
-    linkedin 'notHasso'
     languages {Language.create([{name: 'Englisch'}])}
     programming_languages  {ProgrammingLanguage.create([{ name: 'Ruby'}])}
   end
