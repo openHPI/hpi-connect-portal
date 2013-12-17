@@ -1,4 +1,5 @@
 HpiHiwiPortal::Application.routes.draw do
+  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   scope "(:locale)", locale: /en|de/ do
 
   resources :user_statuses

@@ -28,9 +28,9 @@
 
     <div class="row">
       <div class="col-md-11">
-        <div class="field">
+        <div class="field" data-no-turbolink="true">
           <%= f.label t "activerecord.attributes.job_offer.description" %><br>
-          <%= f.text_area :description, :rows => 10, :class => "col-md-11", :placeholder => t("job_offers.enter_description"), :class => "form-control" %>
+          <%= f.bootsy_area :description, :rows => 10, :class => "col-md-11", :placeholder => t("job_offers.enter_description") %>
         </div>
       </div>
     </div>
@@ -108,9 +108,6 @@
 
     <div class="actions">
       <%= f.submit t("links.save"), :class => "btn btn-default" %>
-      <% unless @job_offer.id.nil? %>
-        <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class=>"btn btn-primary", :disabled=>@job_offer.completed? %>
-      <% end %>
     </div>
   </div>
 <% end %>

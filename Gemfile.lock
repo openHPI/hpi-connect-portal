@@ -51,6 +51,10 @@ GEM
     bcrypt-ruby (3.1.2)
     bootstrap-rails-engine (3.0.0.4)
       railties (>= 3.0)
+    bootsy (2.0.5)
+      carrierwave (~> 0.9.0)
+      mini_magick (~> 3.7.0)
+      remotipart (~> 1.2.1)
     builder (3.1.4)
     cancan (1.6.10)
     capybara (2.2.0)
@@ -59,6 +63,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -119,6 +127,8 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
@@ -156,6 +166,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    remotipart (1.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-core (2.14.7)
@@ -197,6 +208,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    subexec (0.2.3)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
@@ -231,6 +243,7 @@ DEPENDENCIES
   active_enum!
   annotate (>= 2.5.0)
   bootstrap-rails-engine
+  bootsy
   cancan
   capybara
   codeclimate-test-reporter

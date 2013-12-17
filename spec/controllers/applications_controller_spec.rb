@@ -5,10 +5,11 @@ describe ApplicationsController do
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
   let(:research_assistant_role) {FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)}
   let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
+  let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: research_assistant_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open")} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
-    @student = FactoryGirl.create(:user, :role => student_role)
+    @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
     @job_offer = JobOffer.create! valid_attributes
   end
 
@@ -63,6 +64,28 @@ describe ApplicationsController do
 
       get :accept, {:id => application.id}
       assigns(:application).job_offer.status.should eq(working)
+    end
+  end
+
+  describe "POST create" do
+    it "does not create an application if job is not open" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'running')
+      @job_offer.save
+
+      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id} }
+        }.not_to change(Application, :count).by(1)
+    end
+
+    it "does create an application if job is open" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.save
+      
+      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id} }
+        }.to change(Application, :count).by(1)
     end
   end
 end

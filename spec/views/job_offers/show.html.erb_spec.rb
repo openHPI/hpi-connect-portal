@@ -25,4 +25,11 @@ describe "job_offers/show" do
     rendered.should_not match(/Applications/)
     rendered.should_not match(/Apply/)
   end
+
+  it "renders contact mailto link" do
+    render
+
+    rendered.should match(/Contact/)
+    assert_select "a[href='mailto:" + @job_offer.responsible_user.email + "']"
+  end
 end

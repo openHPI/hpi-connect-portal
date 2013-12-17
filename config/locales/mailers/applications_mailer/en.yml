@@ -1,0 +1,11 @@
+en:
+  applications_mailer:
+    students:
+      accepted:
+        subject: "Congratulations! Your application has been accepted!"
+        title: "Congratulations!"
+        content: "Your application to the job offer %{job_title} at the chair %{chair} has been accepted"
+      declined:
+        subject: "Unfortunately a application has been declined"
+        title: "Unfortunately a application has been declined"
+        content: "Sadly your application to the job offer %{job_title} has been declined."

@@ -12,6 +12,7 @@
  *= require jquery.ui.datepicker
  *= require jquery-star-rating
  *= require_self
+ *= require bootsy
  *= require_tree .
  *= require font-awesome
  */
