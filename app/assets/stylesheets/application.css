@@ -35,6 +35,9 @@
 	background-color: #b1063a
 }
 
+.wysihtml5-sandbox{
+	resize: both;
+}
 
 label.small {
   color: #000000;
