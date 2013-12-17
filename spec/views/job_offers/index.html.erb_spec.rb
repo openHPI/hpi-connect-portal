@@ -14,8 +14,8 @@ describe "job_offers/index" do
         :title => "Title",
         :start_date => '2013-11-11'
       )]
-    assign(:job_offers_list, [{:items => job_offers, 
-                        :name => "job_offers.archive"}])
+    assign(:job_offers_list, {:items => job_offers, 
+                        :name => "job_offers.archive"})
     assign(:radio_button_sort_value, {"date" => false, "chair" => false})
 
     view.stub(:signed_in?) { false }
