@@ -65,6 +65,26 @@ User.create([{
 	firstname: "Koch", 
 	role: Role.where(:name => 'Student').first	
 }])
+#Create User as an example deputy for all chairs
+User.create([{
+identity_url: 'openid',
+email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
+firstname: 'Dieter', 
+lastname: 'Nuhr',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => ['Englisch']),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+role: Role.where(:name => 'Admin').first}])
 
 
 Language.delete_all

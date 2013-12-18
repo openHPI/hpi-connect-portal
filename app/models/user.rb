@@ -51,8 +51,9 @@ class User < ActiveRecord::Base
     has_many :programming_languages_users
     has_many :programming_languages, :through => :programming_languages_users
     accepts_nested_attributes_for :programming_languages
-    has_and_belongs_to_many :languages
-    
+    has_many :languages_users
+    has_many :languages, :through => :languages_users
+    accepts_nested_attributes_for :languages
     
     belongs_to :role
     belongs_to :chair
