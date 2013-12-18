@@ -65,6 +65,26 @@ User.create([{
 	firstname: "Koch", 
 	role: Role.where(:name => 'Student').first	
 }])
+#Create User as an example deputy for all chairs
+User.create([{
+identity_url: 'openid',
+email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
+firstname: 'Dieter', 
+lastname: 'Nuhr',
+semester: 1,
+academic_program: 'Bachelor',
+birthday: '1970-12-10',
+education:'Abitur',
+additional_information: 'No',
+homepage: 'www.dieter.de',
+github: 'www.github.com/dieter',
+facebook: 'www.faceboook.com/dieter',
+xing: 'www.xing.com/dieter',
+linkedin:'www.linkedin.com/dieter',
+languages: Language.where(:name => ['english']),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+role: Role.where(:name => 'Admin').first}])
 
 
 Language.delete_all
@@ -79,43 +99,24 @@ Language.create([
 #Create some ProgrammingLanguages
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
-	{ name: 'Ruby'},
-	{ name: 'Java'},
 	{ name: 'C'},
 	{ name: 'C++'},
-	{ name: 'Python'},
-	{ name: 'Smalltalk'}
-])
-
-#Create some UserStatus
-UserStatus.delete_all
-UserStatus.create([
-	{ name: 'job-seeking'},
-	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
-	{ name: 'alumni'}
-])
-
-#Create some Languages
-Language.delete_all
-Language.create([
-	{ name: 'english'},
-	{ name: 'german'},
-	{ name: 'spanish'},
-	{ name: 'french'},
-	{ name: 'chinese'}
-])
-
-#Create some ProgrammingLanguages
-ProgrammingLanguage.delete_all
-ProgrammingLanguage.create([
-	{ name: 'Ruby'},
+	{ name: 'C#'},
 	{ name: 'Java'},
-	{ name: 'C'},
-	{ name: 'C++'},
+	{ name: 'Objective-C'},
+	{ name: 'PHP'},
 	{ name: 'Python'},
-	{ name: 'Smalltalk'}
+	{ name: 'SQL'},
+	{ name: 'JavaScript'},
+	{ name: 'Ruby'},
+	{ name: 'SmallTalk'},
+	{ name: 'Prolog'},
+	{ name: 'Scheme'},
+	{ name: 'Lisp'},
+	{ name: 'Closure'},
+	{ name: 'Django'},
+	{ name: 'Rails'},
+	{ name: 'OpenGL'}
 ])
 
 #Create some UserStatus
