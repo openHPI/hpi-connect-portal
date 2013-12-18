@@ -1,27 +1,41 @@
-<h1><%= t("faqs.headline") %></h1>
 <div>
-  <% if signed_in? && can?(:create, @faq) %>
-    <%= link_to t("faqs.new_faq"), new_faq_path,"data-no-turbolink" => true, :class => "btn btn-success", :style => "margin-bottom: 20px" %> 
-  <% end %>
+  <h1>
+    <%= t("faqs.headline") %>
+    <% if signed_in? && can?(:create, Faq) %>
+      <span class="pull-right">
+        <%= link_to t("faqs.new_faq"), new_faq_path,"data-no-turbolink" => true, :class => "btn btn-default", :style => "margin-bottom: 20px"%>
+      </span>
+    <% end %>
+  </h1> 
+  <br>  
 </div>
-<div class="container"> 
-  <% @faqs.each do |faq| %>
-    <div class="panel panel-default panel-body">
-      <div class="container">
-        <div class="col-md-11">
-          <h4> <%= faq.question %> </h4>
-          <br>
-          <p> <%= faq.answer.html_safe %> </p>
-          <br>
-          <% if signed_in? && can?(:update, faq) %>
-            <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
-          <% end %>
-          <% if signed_in? && can?(:delete, faq) %>
-            <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
-          <% end %>
-          <br>
+  
+<div class="container">
+  <% @faqs.each_with_index do |faq, index| %>
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= index.to_s %>">
+              <h4><%= faq.question %></h4>
+            </a>
+          </h4>
+        </div>
+        <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
+          <div class="panel-body">
+            <%= faq.answer.html_safe %>
+            <br><br>
+            <% if signed_in? && can?(:update, faq) %>
+              <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
+            <% end %>
+            <% if signed_in? && can?(:delete, faq) %>
+              <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
+            <% end %>
+            <br>
+          </div>
         </div>
       </div>
     </div>
+    <br>
   <% end %>
-</div>  
+</div>
