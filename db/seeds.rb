@@ -99,43 +99,24 @@ Language.create([
 #Create some ProgrammingLanguages
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
-	{ name: 'Ruby'},
-	{ name: 'Java'},
 	{ name: 'C'},
 	{ name: 'C++'},
-	{ name: 'Python'},
-	{ name: 'Smalltalk'}
-])
-
-#Create some UserStatus
-UserStatus.delete_all
-UserStatus.create([
-	{ name: 'job-seeking'},
-	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
-	{ name: 'alumni'}
-])
-
-#Create some Languages
-Language.delete_all
-Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
-])
-
-#Create some ProgrammingLanguages
-ProgrammingLanguage.delete_all
-ProgrammingLanguage.create([
-	{ name: 'Ruby'},
+	{ name: 'C#'},
 	{ name: 'Java'},
-	{ name: 'C'},
-	{ name: 'C++'},
+	{ name: 'Objective-C'},
+	{ name: 'PHP'},
 	{ name: 'Python'},
-	{ name: 'Smalltalk'}
+	{ name: 'SQL'},
+	{ name: 'JavaScript'},
+	{ name: 'Ruby'},
+	{ name: 'SmallTalk'},
+	{ name: 'Prolog'},
+	{ name: 'Scheme'},
+	{ name: 'Lisp'},
+	{ name: 'Closure'},
+	{ name: 'Django'},
+	{ name: 'Rails'},
+	{ name: 'OpenGL'}
 ])
 
 #Create some UserStatus
