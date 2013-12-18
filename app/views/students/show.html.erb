@@ -122,7 +122,7 @@
           <tbody>
             <% @user.languages.each do |language| %>
               <tr>
-                <td><%= language.name %></td>
+                <td><%= t("languages." +  language.name) %></td>
                 <td>Placeholder for Stars
                 </td>
               </tr>

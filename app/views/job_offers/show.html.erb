@@ -69,7 +69,7 @@
 
       <dt><%= t("activerecord.attributes.job_offer.languages") %>:</dt>
       <% @job_offer.languages.each do |language| %>
-        <dd><%= language.name %></dd>
+        <dd><%= t("languages." +  language.name) %></dd>
       <% end %>
 
         </dl>

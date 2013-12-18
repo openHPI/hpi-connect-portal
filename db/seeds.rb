@@ -69,11 +69,11 @@ User.create([{
 
 Language.delete_all
 Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
+	{ name: 'english'},
+	{ name: 'german'},
+	{ name: 'spanish'},
+	{ name: 'french'},
+	{ name: 'chinese'}
 ])
 
 #Create some ProgrammingLanguages
@@ -100,11 +100,11 @@ UserStatus.create([
 #Create some Languages
 Language.delete_all
 Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
+	{ name: 'english'},
+	{ name: 'german'},
+	{ name: 'spanish'},
+	{ name: 'french'},
+	{ name: 'chinese'}
 ])
 
 #Create some ProgrammingLanguages

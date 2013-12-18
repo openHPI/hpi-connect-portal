@@ -13,7 +13,7 @@
   <tbody>
     <% @languages.each do |language| %>
       <tr>
-        <td><%= language.name %></td>
+        <td><%= t("languages." +  language.name) %></td>
         <td><%= link_to 'Show', language %></td>
         <td><%= link_to 'Edit', edit_language_path(language) %></td>
         <td><%= link_to 'Destroy', language, method: :delete, data: { confirm: 'Are you sure?' } %></td>
