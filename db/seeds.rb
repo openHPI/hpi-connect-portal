@@ -99,12 +99,24 @@ Language.create([
 #Create some ProgrammingLanguages
 ProgrammingLanguage.delete_all
 ProgrammingLanguage.create([
-	{ name: 'Ruby'},
-	{ name: 'Java'},
 	{ name: 'C'},
 	{ name: 'C++'},
+	{ name: 'C#'},
+	{ name: 'Java'},
+	{ name: 'Objective-C'},
+	{ name: 'PHP'},
 	{ name: 'Python'},
-	{ name: 'Smalltalk'}
+	{ name: 'SQL'},
+	{ name: 'JavaScript'},
+	{ name: 'Ruby'},
+	{ name: 'SmallTalk'},
+	{ name: 'Prolog'},
+	{ name: 'Scheme'},
+	{ name: 'Lisp'},
+	{ name: 'Closure'},
+	{ name: 'Django'},
+	{ name: 'Rails'},
+	{ name: 'OpenGL'}
 ])
 
 #Create some UserStatus
