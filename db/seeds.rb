@@ -129,37 +129,6 @@ UserStatus.create([
 	{ name: 'alumni'}
 ])
 
-#Create some Languages
-Language.delete_all
-Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
-])
-
-#Create some ProgrammingLanguages
-ProgrammingLanguage.delete_all
-ProgrammingLanguage.create([
-	{ name: 'Ruby'},
-	{ name: 'Java'},
-	{ name: 'C'},
-	{ name: 'C++'},
-	{ name: 'Python'},
-	{ name: 'Smalltalk'}
-])
-
-#Create some UserStatus
-UserStatus.delete_all
-UserStatus.create([
-	{ name: 'job-seeking'},
-	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
-	{ name: 'alumni'}
-])
-
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
