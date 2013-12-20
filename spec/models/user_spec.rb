@@ -39,6 +39,38 @@
 #  user_status_id         :integer
 #
 
+
+# == Schema Information
+#
+# Table name: students
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)
+#  last_name              :string(255)
+#  semester               :integer
+#  academic_program       :string(255)
+#  birthday               :date
+#  education              :text
+#  additional_information :text
+#  homepage               :string(255)
+#  github                 :string(255)
+#  facebook               :string(255)
+#  xing                   :string(255)
+#  linkedin               :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  photo_file_name        :string(255)
+#  photo_content_type     :string(255)
+#  photo_file_size        :integer
+#  photo_updated_at       :datetime
+#  cv_file_name           :string(255)
+#  cv_content_type        :string(255)
+#  cv_file_size           :integer
+#  cv_updated_at          :datetime
+#  status                 :integer
+#  student_status_id      :integer
+#
+
 require 'spec_helper'
 
 describe User do
@@ -160,6 +192,25 @@ describe User do
     expect(User.search_student("Hindi")).to eq([])
     end
   end
+
+  describe "#change birthdate" do
+		it "should accept valid birthdate" do
+			FactoryGirl.build(:user, birthday: '1986-05-16').should be_valid
+		end
+
+		it "should not accept 30th of february" do
+			FactoryGirl.build(:user, birthday: '1986-02-30').should_not be_valid
+		end
+
+		it "should not accept 31th june" do
+			FactoryGirl.build(:user, birthday: '1986-06-31').should_not be_valid
+		end
+
+		it "should not accept today" do
+			FactoryGirl.build(:user, birthday: Date.today).should_not be_valid
+		end
+	end
+
 
   after(:all) do
     User.delete_all
