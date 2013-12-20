@@ -195,19 +195,15 @@ describe User do
 
   describe "#change birthdate" do
 		it "should accept valid birthdate" do
-			FactoryGirl.build(:user, birthday: '1986-05-16').should be_valid
+			FactoryGirl.build(:user, birthday: "05-06-1986").should be_valid
 		end
 
 		it "should not accept 30th of february" do
-			FactoryGirl.build(:user, birthday: '1986-02-30').should_not be_valid
+			FactoryGirl.build(:user, birthday: "30-02-1986").birthday.should be_nil
 		end
 
 		it "should not accept 31th june" do
-			FactoryGirl.build(:user, birthday: '1986-06-31').should_not be_valid
-		end
-
-		it "should not accept today" do
-			FactoryGirl.build(:user, birthday: Date.today).should_not be_valid
+			FactoryGirl.build(:user, birthday: "31-06-1986").birthday.should be_nil
 		end
 	end
 
