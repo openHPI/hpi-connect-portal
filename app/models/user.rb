@@ -91,15 +91,15 @@ class User < ActiveRecord::Base
     end
 
     def student?
-        role.name == 'Student'
+        role && role.name == 'Student'
     end
 
     def research_assistant?
-        role.name == 'Research Assistant'
+        role && role.name == 'Research Assistant'
     end
 
     def admin?
-        role.name == 'Admin'
+        role && role.name == 'Admin'
     end
 
     def self.search_student(string)

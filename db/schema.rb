@@ -108,9 +108,10 @@ ActiveRecord::Schema.define(version: 20131217080553) do
     t.datetime "updated_at"
   end
 
-  create_table "languages_users", id: false, force: true do |t|
+  create_table "languages_users", force: true do |t|
     t.integer "user_id"
     t.integer "language_id"
+    t.integer "skill"
   end
 
   create_table "programming_languages", force: true do |t|

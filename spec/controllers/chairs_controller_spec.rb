@@ -22,6 +22,8 @@ describe ChairsController do
 
   let(:deputy) { FactoryGirl.create(:user) }
 
+  let(:admin) { FactoryGirl.create(:role, name: 'Admin') }
+
   # This should return the minimal set of attributes required to create a valid
   # Chair. As you add validations to Chair, be sure to
   # adjust the attributes here as well.
@@ -42,6 +44,7 @@ describe ChairsController do
   end
 
   describe "GET show" do
+
     it "assigns the requested chair as @chair" do
       chair = Chair.create! valid_attributes
       get :show, {:id => chair.to_param}
@@ -66,6 +69,7 @@ describe ChairsController do
 
   describe "POST create" do
     describe "with valid params" do
+
       it "creates a new Chair" do
         expect {
           post :create, {:chair => valid_attributes}
@@ -73,6 +77,7 @@ describe ChairsController do
       end
 
       it "assigns a newly created chair as @chair" do
+
         post :create, {:chair => valid_attributes}
         assigns(:chair).should be_a(Chair)
         assigns(:chair).should be_persisted
