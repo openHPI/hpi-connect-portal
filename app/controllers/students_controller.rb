@@ -22,12 +22,14 @@ class StudentsController < ApplicationController
   # GET /students/new
   def new
     @all_programming_languages = ProgrammingLanguage.all
+    @all_languages = Language.all
     @user = User.new
   end
 
   # GET /students/1/edit
   def edit
     @all_programming_languages = ProgrammingLanguage.all
+    @all_languages = Language.all
   end
 
   #Outdated by new design, at least till know
@@ -80,6 +82,33 @@ class StudentsController < ApplicationController
           pl.destroy
         end
       end
+    else
+      #If the User deselects alls programming languages, they have to be destroyed
+      ProgrammingLanguagesUser.destroy_all(:user_id => params[:id])
+    end
+    if params[:languages]
+      languages = params[:languages]
+      languages.each do |language_id, skill|
+        l = LanguagesUser.find_by_user_id_and_language_id(params[:id],language_id)
+        if l
+          l.update_attributes(:skill => skill)
+        else
+          language_user = LanguagesUser.new
+          language_user.user_id = params[:id]
+          language_user.language_id = language_id
+          language_user.skill = skill
+          language_user.save
+        end
+      end
+      #Delete all programming languages which have been deselected (rating removed) from the form
+      LanguagesUser.where(:user_id => params[:id]).each do |l|
+        if languages[l.language_id.to_s].nil?
+          l.destroy
+        end
+      end
+    else
+      #If the User deselects alls  languages, they have to be destroyed
+      LanguagesUser.destroy_all(:user_id => params[:id])
     end
     respond_to do |format|
       if @user.update(user_params)
