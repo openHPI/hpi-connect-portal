@@ -1,4 +1,5 @@
 HpiHiwiPortal::Application.routes.draw do
+  get "imprint/index"
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   scope "(:locale)", locale: /en|de/ do
 

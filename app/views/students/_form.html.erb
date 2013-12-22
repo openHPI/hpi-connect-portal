@@ -217,14 +217,38 @@
       <h3 class="panel-title"><%= t("activerecord.attributes.student.languages") %></h3>
     </div>
     <ul class="list-group">
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :languages, class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%=  collection_check_boxes(:user, :language_ids, Language.all, :id, :name) %>
-          </div>
-        </div>
-      </li>
+      <%= fields_for :languages do |f3| %>
+        <% if @all_languages %>
+          <% @all_languages.each do |language| %>
+            <li class="list-group-item">
+              <div class="form-group">
+                <%# Erstelle ein Label fuer jede Programmiersprache %>
+                <%= f3.label language.name, class: "col-sm-2 control-label" %>
+                <div class="col-sm-10">
+                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                  <% if !@user.new_record? %>
+                    <% l = LanguagesUser.find_by_user_id_and_language_id(@user.id,language.id) %>
+                  <% end %>
+                  <%# Erzeuge 5 radio buttons fuer die Sterne %>
+                  <% (1..5).each do |i| %>
+                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                    <% if l %>
+                      <% if i == l.skill %>
+                        <%= f3.radio_button language.id, i, :checked => "checked", :class=>"star" %>
+                      <% else %>
+                        <%= f3.radio_button language.id, i, :class=>"star" %>
+                      <% end %>
+                    <%# Erzeuge sonst einen unchecked radio button %>
+                    <% else %>
+                      <%= f3.radio_button language.id, i, :class=>"star" %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      <% end %>
     </ul>
   </div>
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
