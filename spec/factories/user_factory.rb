@@ -56,7 +56,7 @@ FactoryGirl.define do
     facebook 'www.faceboook.com/dieter'
     xing 'www.xing.com/dieter'
     linkedin'www.linkedin.com/dieter'
-    languages Language.where(:name => 'Englisch')
+    languages Language.where(:name => 'english')
     programming_languages ProgrammingLanguage.where(:name => ['Ruby'])
     user_status UserStatus.where(:name => 'employed (ext)').first
   end

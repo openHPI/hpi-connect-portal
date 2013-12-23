@@ -81,7 +81,7 @@ github: 'www.github.com/dieter',
 facebook: 'www.faceboook.com/dieter',
 xing: 'www.xing.com/dieter',
 linkedin:'www.linkedin.com/dieter',
-languages: Language.where(:name => ['Englisch']),
+languages: Language.where(:name => ['english']),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Admin').first}])
@@ -89,11 +89,11 @@ role: Role.where(:name => 'Admin').first}])
 
 Language.delete_all
 Language.create([
-	{ name: 'Englisch'},
-	{ name: 'Deutsch'},
-	{ name: 'Spanisch'},
-	{ name: 'Französisch'},
-	{ name: 'Chinesisch'}
+	{ name: 'english'},
+	{ name: 'german'},
+	{ name: 'spanish'},
+	{ name: 'french'},
+	{ name: 'chinese'}
 ])
 
 #Create some ProgrammingLanguages

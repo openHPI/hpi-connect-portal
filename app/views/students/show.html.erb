@@ -122,7 +122,7 @@
           <tbody>
             <% @user.languages_users.each do |languages_user| %>
               <tr>
-                <td><%= languages_user.language.name %></td>
+                <td><%= t("languages." + languages_user.language.name) %></td>
                 <td>
                   <% (1..5).each do |i| %>
                     <% if i == languages_user.skill %>

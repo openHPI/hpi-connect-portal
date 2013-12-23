@@ -39,11 +39,43 @@
 #  user_status_id         :integer
 #
 
+
+# == Schema Information
+#
+# Table name: students
+#
+#  id                     :integer          not null, primary key
+#  first_name             :string(255)
+#  last_name              :string(255)
+#  semester               :integer
+#  academic_program       :string(255)
+#  birthday               :date
+#  education              :text
+#  additional_information :text
+#  homepage               :string(255)
+#  github                 :string(255)
+#  facebook               :string(255)
+#  xing                   :string(255)
+#  linkedin               :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  photo_file_name        :string(255)
+#  photo_content_type     :string(255)
+#  photo_file_size        :integer
+#  photo_updated_at       :datetime
+#  cv_file_name           :string(255)
+#  cv_content_type        :string(255)
+#  cv_file_size           :integer
+#  cv_updated_at          :datetime
+#  status                 :integer
+#  student_status_id      :integer
+#
+
 require 'spec_helper'
 
 describe User do
   before(:each) do
-    @english = Language.create(:name=>'Englisch')
+    @english = Language.create(:name=>'english')
     @user = FactoryGirl.create(:user)
     @student = FactoryGirl.create(:user, :languages=>[@english],
       :programming_languages=>[ProgrammingLanguage.create(:name=>'Ruby')])
@@ -88,7 +120,7 @@ describe User do
 
   describe"#searchStudentsByLanguage" do
     it "returns an array of students who speak a language" do
-      expect(User.search_students_by_language('Englisch')).to include(@student)
+      expect(User.search_students_by_language('english')).to include(@student)
     end
 
     it "should return an empty array if anyone speaks the requested language" do
@@ -150,7 +182,7 @@ describe User do
 
   describe"#searchStudent" do
   it "returns an array of students whos description contain a queryed string"do
-    expect(User.search_student('Englisch')).to include(@student)
+    expect(User.search_student('english')).to include(@student)
   end
   it "returns an array of students whos description contain a queryed string"do
       expect(User.search_student('Master')).to include(@student)
@@ -160,6 +192,21 @@ describe User do
     expect(User.search_student("Hindi")).to eq([])
     end
   end
+
+  describe "#change birthdate" do
+		it "should accept valid birthdate" do
+			FactoryGirl.build(:user, birthday: "05-06-1986").should be_valid
+		end
+
+		it "should not accept 30th of february" do
+			FactoryGirl.build(:user, birthday: "30-02-1986").birthday.should be_nil
+		end
+
+		it "should not accept 31th june" do
+			FactoryGirl.build(:user, birthday: "31-06-1986").birthday.should be_nil
+		end
+	end
+
 
   after(:all) do
     User.delete_all

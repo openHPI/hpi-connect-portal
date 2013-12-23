@@ -110,7 +110,8 @@ gem 'bootsy'
 #replacement for glyphicons
 gem "font-awesome-rails"
 
-
+#Birthdate validation
+gem "chronic"
 
 group :test do
   gem 'email_spec'

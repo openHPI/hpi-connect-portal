@@ -2,7 +2,7 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @language.name %>
+  <%= t("languages." + @language.name) %>
 </p>
 
 <%= link_to 'Edit', edit_language_path(@language) %> |

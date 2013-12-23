@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
     validates :role, presence: true
+    validate :birthday_is_valid
 
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
 
@@ -150,4 +151,9 @@ class User < ActiveRecord::Base
         
        matching_students
     end 
+
+    def birthday_is_valid
+        !Chronic.parse(:birthday).nil?
+    end
+
 end
