@@ -1,33 +1,27 @@
-<h1><%= t("students.students_headline")%></h1>
+<div class="row">
+  <div class="col-md-9">
+    <h1><%= t("students.students_headline")%></h1>
+      <br><br>
+      <ul class="list-group">
+      <% @users.each do |student| %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-10">
+              <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
+            </div>
+            <div class="col-md-2">
+              <p class="semester"><%= t("activerecord.attributes.student.semester") +": " + student.semester.to_s%></p>
+            </div>
+            <div class="row">
+            <div class="col-md-11 col-md-offset-1 ac_program"><%= student.academic_program%></div>
+          </div>
+        </div>
+        </li>
+      <% end %>
+      </ul>
+      <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
+  </div>
+  <div class="col-md-3">
+  </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t("student.first_name")%></th>
-      <th><%= t("student.last_name")%></th>
-      <th><%= t("student.semester")%></th>
-      <th><%= t("student.academic_program")%></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.first_name %></td>
-        <td><%= student.last_name %></td>
-        <td><%= student.semester %></td>
-        <td><%= student.academic_program %></td>
-        <td><%= link_to t("links.show"), student, :class => "btn btn-info" %></td>
-        <td><%= link_to t("links.edit"), edit_student_path(student), :class => "btn btn-warning" %></td>
-        <td><%= link_to t("links.destroy"), student, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to t("students.new_student"), new_student_path, :class => "btn btn-default" %>
+</div>

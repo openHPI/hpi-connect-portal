@@ -1,5 +1,8 @@
 class ChairsController < ApplicationController
-  before_action :set_chair, only: [:show, :edit, :update]
+  authorize_resource only: [:new, :edit, :create, :update]
+
+  include ApplicationHelper
+  before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
   # GET /chairs
   # GET /chairs.json
@@ -9,7 +12,11 @@ class ChairsController < ApplicationController
 
   # GET /chairs/1
   # GET /chairs/1.json
-  def show	
+  def show
+    @running_job_offers = @chair.job_offers.running.paginate(:page => params[:page])
+    @open_job_offers = @chair.job_offers.open.paginate(:page => params[:page])
+
+    @chairs = []
   end
 
   # GET /chairs/new
@@ -19,13 +26,20 @@ class ChairsController < ApplicationController
 
   # GET /chairs/1/edit
   def edit
+    if !current_user.admin? && @chair.deputy != current_user
+      redirect_to @chair, notice: 'You are not allowed to edit this chair.'
+    end
   end
 
   # POST /chairs
   # POST /chairs.json
   def create
+    if !current_user.admin?
+      redirect_to @chair, notice: 'You are not allowed to create a new chair.'
+    end
+
     @chair = Chair.new(chair_params)
-    
+
     respond_to do |format|
       if @chair.save
         format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
@@ -41,6 +55,10 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
+    if !current_user.admin? && @chair.deputy != current_user
+      redirect_to @chair, notice: 'You are not allowed to update this chair.'
+    end
+    
     respond_to do |format|
       if @chair.update(chair_params)
         format.html { redirect_to @chair, notice: 'Chair was successfully updated.' }
@@ -50,6 +68,11 @@ class ChairsController < ApplicationController
         format.json { render json: @chair.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def find_jobs
+    show
+    render "show"
   end
 
   private

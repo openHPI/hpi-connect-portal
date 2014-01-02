@@ -4,34 +4,38 @@
   <div class="col-xs-8">
     <div class="row">
       <div class="col-xs-8">
-        <h1><%= @student.first_name %> <%= @student.last_name %></h1>
+        <h1><%= @user.firstname %> <%= @user.lastname %></h1>
         <blockquote>
-          <% if !(@student.student_status).nil? %>
-            <p><%= @student.student_status.name %></p>
+          <% if !(@user.user_status).nil? %>
+            <p><%= @user.user_status.name %></p>
           <% end %>
         </blockquote>
       </div>
       <div class="col-xs-4">
     <p>
-      <%= image_tag(@student.photo.url, size: "150", class: "img-thumbnail")  %>
+      <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
     </p>
       </div>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("student.general_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.general_information") %></h4></div>
       <table class="table">
         <tbody>
           <tr>
-            <td><%= t("student.birthday")%></td>
-            <td><%= @student.birthday %></td>
+            <td><%= t("activerecord.attributes.student.birthday")%></td>
+            <td><%= @user.birthday %></td>
+          </tr>
+           <tr>
+            <td>email</td>
+            <td><%= @user.email %></td>
           </tr>
           <tr>
-            <td><%= t("student.cv")%></td>
+            <td><%= t("activerecord.attributes.student.cv")%></td>
               <td>
-                <% if (@student.cv.path).nil? %>
+                <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
                 <% else %>
-                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @student.cv.url) %> <%= File.basename(@student.cv.path); %></p>
+                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @user.cv.url) %> <%= File.basename(@user.cv.path); %></p>
                 <% end %>
               </td>
           </tr>
@@ -39,27 +43,27 @@
       </table>
     </div>
 
-    <% if !(@student.semester).nil? || !(@student.academic_program).empty? || !(@student.education).empty? %>
+    <% if !(@user.semester).nil? || !(@user.academic_program).nil? || !(@user.education).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.carrier") %></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.carrier") %></h4></div>
         <table class="table">
           <tbody>
-            <% if !(@student.academic_program).empty? %>
+            <% if !(@user.academic_program).nil? %>
               <tr>
-                <td><%= t("student.academic_program")%></td>
-                <td><%= @student.academic_program %></td>
+                <td><%= t("activerecord.attributes.student.academic_program")%></td>
+                <td><%= @user.academic_program %></td>
               </tr>
             <% end %>
-            <% if !(@student.semester).nil? %>
+            <% if !(@user.semester).nil? %>
               <tr>
-                <td><%= t("student.semester")%></td>
-                <td><%= @student.semester %></td>
+                <td><%= t("activerecord.attributes.student.semester")%></td>
+                <td><%= @user.semester %></td>
               </tr>
             <% end %>
-            <% if !(@student.education).empty? %>
+            <% if !(@user.education).nil? %>
               <tr>
-                <td><%= t("student.education")%></td>
-                <td><%= @student.education %></td>
+                <td><%= t("activerecord.attributes.student.education")%></td>
+                <td><%= @user.education.html_safe %></td>
               </tr>
             <% end %>
           </tbody>
@@ -67,81 +71,64 @@
       </div>
     <% end %>
 
-    <% if !(@student.additional_information).empty? %>
+    <% if !(@user.additional_information).nil? %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><h4><%= t("student.additional_information")%></h4></h3>
+          <h3 class="panel-title"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></h3>
         </div>
         <div class="panel-body">
-          <%= @student.additional_information %>
+          <%= @user.additional_information.html_safe %>
         </div>
       </div>
     <% end %>
 
-    <% if !(@student.homepage).empty? || !(@student.github).empty? || !(@student.facebook).empty? || !(@student.xing).empty? || !(@student.linkedin).empty? %>
+    <% if !(@user.homepage).nil? || !(@user.github).nil? || !(@user.facebook).nil? || !(@user.xing).nil? || !(@user.linkedin).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.links")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
         <ul class="list-group">
-          <% if !(@student.homepage).empty? %>
+          <% if !(@user.homepage).empty? %>
             <li class="list-group-item"><%= fa_icon "home 2x"%>
-              <%= link_to @student.homepage, @student.homepage %>
+              <%= link_to @user.homepage, url_with_protocol(@user.homepage), :target => '_blank' %>
             </li>
           <% end %>
-          <% if !(@student.github).empty? %>
+          <% if !(@user.github).empty? %>
             <li class="list-group-item"><%= fa_icon "github-square 2x"%>
-              <%= link_to @student.github, @student.github %>
+              <%= link_to @user.github, url_with_protocol(@user.github), :target => '_blank'%>
             </li>
           <% end %>
-          <% if !(@student.facebook).empty? %>
+          <% if !(@user.facebook).empty? %>
             <li class="list-group-item"><%= fa_icon "facebook-square 2x"%>
-              <%= link_to @student.facebook, @student.facebook %>
+              <%= link_to @user.facebook, url_with_protocol(@user.facebook), :target => '_blank' %>
             </li>
           <% end %>
-          <% if !(@student.xing).empty? %>
+          <% if !(@user.xing).empty? %>
             <li class="list-group-item"><%= fa_icon "xing-square 2x"%>
-              <%= link_to @student.xing, @student.xing %>
+              <%= link_to @user.xing, url_with_protocol(@user.xing), :target => '_blank' %>
             </li>
           <% end %>
-          <% if !(@student.linkedin).empty? %>
+          <% if !(@user.linkedin).empty? %>
             <li class="list-group-item"><%= fa_icon "linkedin-square 2x"%>
-              <%= link_to @student.linkedin, @student.linkedin %>
+              <%= link_to @user.linkedin, url_with_protocol(@user.linkedin), :target => '_blank' %>
             </li>
           <% end %>
         </ul>
       </div>
     <% end %>
 
-    <% if !@student.languages.empty? %>
+    <% if !@user.languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
         <table class="table">
           <tbody>
-            <% @student.languages.each do |language| %>
+            <% @user.languages_users.each do |languages_user| %>
               <tr>
-                <td><%= language.name %></td>
-                <td>Placeholder for Stars
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
-
-    <% if !@student.programming_languages_students.empty? %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("student.programming_languages")%></h4></div>
-        <table class="table">
-          <tbody>
-            <% @student.programming_languages_students.each do |programming_languages_student| %>
-              <tr>
-                <td><%= programming_languages_student.programming_language.name %></td>
+                <td><%= languages_user.language.name %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <% if i == programming_languages_student.skill %>
-                      <%= radio_button_tag programming_languages_student.programming_language.name, i, true, disabled: true, class: "star" %>
+                    <% if i == languages_user.skill %>
+                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
                     <% else %>
-                      <%= radio_button_tag programming_languages_student.programming_language.name, i, false, disabled: true, class: "star" %>
+                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
                     <% end %>
                   <% end %>
                 </td>
@@ -152,7 +139,30 @@
       </div>
     <% end %>
 
+    <% if !@user.programming_languages_users.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
+        <table class="table">
+          <tbody>
+            <% @user.programming_languages_users.each do |programming_languages_user| %>
+              <tr>
+                <td><%= programming_languages_user.programming_language.name %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == programming_languages_user.skill %>
+                      <%= radio_button_tag programming_languages_user.programming_language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag programming_languages_user.programming_language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
     <div class="pull-left"><%= link_to t("links.back"), students_path, class: "btn btn-default"%></div>
-    <div class="pull-right"><%= link_to t("links.edit"), edit_student_path(@student), class: "btn btn-warning" %></div>
+    <div class="pull-right"><%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-warning" %></div>
   </div>
 </div>

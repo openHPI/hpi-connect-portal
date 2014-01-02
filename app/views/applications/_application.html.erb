@@ -1,11 +1,14 @@
-<tr>
+<tr class='clickableRow' href='<%= student_path(id: application.user.id) %>'>
     <td><%= application.user.firstname %></td>
     <td><%= application.user.lastname %></td>
     <td><%= application.user.email %></td>
     
-    <% if signed_in? && @job_offer.chair.research_assistants.include?(current_user) %>
-    <td><button class="btn btn-danger">Decline</button></td>
-    <td><button class="btn btn-success">Accept</button></td>
+    <% if user_is_research_assistant_of_chair?(@job_offer) %>
+    	<td>
+        <%= link_to t("applications.decline"), decline_application_path(application), :class=>"btn btn-danger", data: {confirm: t("applications.decline_confirmation")} %>
+      </td>
+    	<td>
+        <%= link_to t("applications.accept"), accept_application_path(application), :class=>"btn btn-success", data: {confirm: t("applications.accept_confirmation")} %>
+      </td>
     <% end %>
-
 </tr>

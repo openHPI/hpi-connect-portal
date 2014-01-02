@@ -3,26 +3,18 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= t("chair.name") %></th>
-			<th><%= t("chair.description") %></th>
-			<th><%= t("chair.head_of_chair") %></th>
+      <th><%= t("activerecord.attributes.chair.name") %></th>
+			<th><%= t("activerecord.attributes.chair.description") %></th>
+			<th><%= t("activerecord.attributes.chair.head_of_chair") %></th>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @chairs.each do |chair| %>
-      <tr>
-        <td><%= chair.name %></td>
-				<td><%= chair.description %></td>
-				<td><%= chair.head_of_chair %></td>
-        <td><%= link_to t('links.show'), chair, :type => "button", :class => "btn btn-primary" %>
-            <%= link_to t('links.edit'), edit_chair_path(chair), :type => "button", :class => "btn btn-primary" %></td>
-      </tr>
-    <% end %>
+    <%= render @chairs %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to t('chairs.new_chair'), new_chair_path, :type => "button", :class => "btn btn-default" %>
+<%= link_to t('chairs.new_chair'), new_chair_path, "data-no-turbolink" => true, :type => "button", :class => "btn btn-default" %>

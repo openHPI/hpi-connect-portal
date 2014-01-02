@@ -48,6 +48,7 @@ gem 'simplecov', :group => :test, :require => nil
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 gem 'newrelic_rpm', group: :production
+gem 'airbrake'
 
 # basic layouting
 # gem 'twitter-bootstrap-rails'
@@ -102,3 +103,16 @@ gem 'will_paginate-bootstrap'
 gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
+
+# WYSIWYG Text Editor
+gem 'bootsy'
+
+#replacement for glyphicons
+gem "font-awesome-rails"
+
+
+
+group :test do
+  gem 'email_spec'
+end
+

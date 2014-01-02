@@ -42,14 +42,22 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.5)
+    airbrake (3.1.14)
+      builder
+      json
     annotate (2.6.0)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
-    bootstrap-rails-engine (3.0.0.4)
+    bootstrap-rails-engine (3.0.3.0)
       railties (>= 3.0)
+    bootsy (2.0.5)
+      carrierwave (~> 0.9.0)
+      mini_magick (~> 3.7.0)
+      remotipart (~> 1.2.1)
     builder (3.1.4)
     cancan (1.6.10)
     capybara (2.2.0)
@@ -58,6 +66,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (0.9.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -82,6 +94,9 @@ GEM
       rack-openid (>= 1.2.0)
     diff-lcs (1.2.5)
     docile (1.1.1)
+    email_spec (1.5.0)
+      launchy (~> 2.1)
+      mail (~> 2.2)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.3.0)
@@ -105,19 +120,23 @@ GEM
     jquery-turbolinks (2.0.1)
       railties (>= 3.1.0)
       turbolinks
-    jquery-ui-rails (4.1.0)
+    jquery-ui-rails (4.1.1)
       railties (>= 3.1.0)
     json (1.8.1)
+    launchy (2.4.2)
+      addressable (~> 2.3)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
-    newrelic_rpm (3.6.9.171)
-    nokogiri (1.6.0)
+    newrelic_rpm (3.7.0.177)
+    nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
     pg (0.17.0)
@@ -150,6 +169,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    remotipart (1.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-core (2.14.7)
@@ -191,6 +211,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    subexec (0.2.3)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
@@ -202,10 +223,10 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (1.3.1)
+    turbolinks (2.0.0)
       coffee-rails
     tzinfo (0.3.38)
-    uglifier (2.3.2)
+    uglifier (2.3.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     validates_timeliness (3.0.14)
@@ -223,14 +244,17 @@ PLATFORMS
 
 DEPENDENCIES
   active_enum!
+  airbrake
   annotate (>= 2.5.0)
   bootstrap-rails-engine
+  bootsy
   cancan
   capybara
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   devise (~> 3.2)
   devise_openid_authenticatable
+  email_spec
   factory_girl
   factory_girl_rails
   font-awesome-rails

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204082315) do
+ActiveRecord::Schema.define(version: 20131217080553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 20131204082315) do
   create_table "applications", force: true do |t|
     t.integer  "user_id"
     t.integer  "job_offer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bootsy_image_galleries", force: true do |t|
+    t.integer  "bootsy_resource_id"
+    t.string   "bootsy_resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bootsy_images", force: true do |t|
+    t.string   "image_file"
+    t.integer  "image_gallery_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -62,9 +76,10 @@ ActiveRecord::Schema.define(version: 20131204082315) do
     t.float    "time_effort"
     t.float    "compensation"
     t.string   "room_number"
-    t.string   "status"
     t.integer  "chair_id"
     t.integer  "responsible_user_id"
+    t.integer  "status_id",           default: 1
+    t.integer  "assigned_student_id"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -81,15 +96,22 @@ ActiveRecord::Schema.define(version: 20131204082315) do
 
   add_index "job_offers_programming_languages", ["job_offer_id", "programming_language_id"], name: "jo_pl_index", unique: true, using: :btree
 
+  create_table "job_statuses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "languages", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "languages_students", force: true do |t|
-    t.integer "student_id"
+  create_table "languages_users", force: true do |t|
+    t.integer "user_id"
     t.integer "language_id"
+    t.integer "skill"
   end
 
   create_table "programming_languages", force: true do |t|
@@ -98,8 +120,8 @@ ActiveRecord::Schema.define(version: 20131204082315) do
     t.datetime "updated_at"
   end
 
-  create_table "programming_languages_students", force: true do |t|
-    t.integer "student_id"
+  create_table "programming_languages_users", force: true do |t|
+    t.integer "user_id"
     t.integer "programming_language_id"
     t.integer "skill"
   end
@@ -111,15 +133,27 @@ ActiveRecord::Schema.define(version: 20131204082315) do
     t.datetime "updated_at"
   end
 
-  create_table "student_statuses", force: true do |t|
+  create_table "user_statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "students", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "identity_url"
+    t.string   "lastname"
+    t.string   "firstname"
+    t.integer  "role_id",                default: 1,  null: false
+    t.integer  "chair_id"
     t.integer  "semester"
     t.string   "academic_program"
     t.date     "birthday"
@@ -130,36 +164,16 @@ ActiveRecord::Schema.define(version: 20131204082315) do
     t.string   "facebook"
     t.string   "xing"
     t.string   "linkedin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "photo_file_name"
+    t.date     "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
+    t.date     "photo_updated_at"
     t.string   "cv_file_name"
     t.string   "cv_content_type"
     t.integer  "cv_file_size"
-    t.datetime "cv_updated_at"
+    t.date     "cv_updated_at"
     t.integer  "status"
-    t.integer  "student_status_id"
-  end
-
-  create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "identity_url"
-    t.boolean  "is_student"
-    t.string   "lastname"
-    t.string   "firstname"
-    t.integer  "role_id",             default: 1,  null: false
-    t.integer  "chair_id"
+    t.integer  "user_status_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

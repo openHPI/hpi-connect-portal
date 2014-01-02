@@ -1,0 +1,11 @@
+<tr>
+    <td><%= chair.name %></td>
+    <td><%= chair.description.html_safe %></td>
+    <td><%= chair.head_of_chair %></td>
+    <td>
+        <%= link_to t('links.show'), chair, :type => "button", :class => "btn btn-primary" %>
+        <% if can? :edit, chair %>
+            <%= link_to t('links.edit'), edit_chair_path(chair), "data-no-turbolink" => true, :type => "button", :class => "btn btn-primary" %>
+        <% end %>
+    </td>
+</tr>

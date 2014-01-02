@@ -5,9 +5,10 @@ class CreateLanguages < ActiveRecord::Migration
 
       t.timestamps
     end
-    create_table :languages_students do |t|
-      t.belongs_to :student
+    create_table :languages_users do |t|
+      t.belongs_to :user
       t.belongs_to :language
+      t.integer :skill
     end
   end
 end
