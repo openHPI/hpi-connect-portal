@@ -150,7 +150,8 @@ class JobOffersController < ApplicationController
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update(status: JobStatus.completed)
       @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
-      redirect_to edit_job_offer_path, notice: 'New job offer was created.'    
+      @job_offer.responsible_user = current_user
+      render "new", notice: 'New job offer was created.'  
     else
       render_errors_and_redirect_to(@job_offer, format)
     end

@@ -222,7 +222,7 @@ describe JobOffersController do
       it "assigns a new job_offer as @job_offer" do
         get :reopen, {:id => @job_offer}, valid_session
         assigns(:job_offer).should be_a_new(JobOffer)
-        response.should redirect_to(edit_job_offer_path)
+        response.should render_template("new")
       end
 
       it "has same values as the original job offer" do

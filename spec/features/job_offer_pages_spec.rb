@@ -65,7 +65,7 @@ describe "Job Offer pages" do
           it { should have_link('Accept') }
           it { should have_link('Decline') }
 
-          it { should have_selector('tr[href="' + student_path(id: @application.user.id) + '"]') }
+          it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
         end
       end
     end
