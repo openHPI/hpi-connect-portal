@@ -1,8 +1,8 @@
 class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
-  before_filter :check_user_is_responsible, only: [:edit, :update]
-  before_filter :check_user_is_research_assistant_of_chair, only: [:complete]
+  before_filter :check_user_is_responsible, only: [:edit, :update, :destroy]
+  before_filter :check_user_is_research_assistant_of_chair, only: [:complete, :reopen]
   before_filter :check_user_is_deputy, only: [:accept, :decline]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
   before_action :set_chairs, only: [:index, :find_jobs, :archive]
@@ -92,7 +92,6 @@ class JobOffersController < ApplicationController
 
 
   def find
-
     @radio_button_sort_value = {"date" => false, "chair" => false}
     job_offers = find_jobs_in_job_list(JobOffer.filter_status(JobStatus.open)) 
     job_offers = job_offers.paginate(:page => params[:page])
@@ -107,7 +106,7 @@ class JobOffersController < ApplicationController
   def find_archived_jobs
     job_offers = find_jobs_in_job_list(JobOffer.filter(status: JobStatus.completed))
     job_offers = job_offers.paginate(:page => params[:page])
-	@job_offers_list = {:items => job_offers, 
+	  @job_offers_list = {:items => job_offers, 
                         :name => "job_offers.headline"}
     @chairs = Chair.all
     render "archive"
@@ -141,6 +140,18 @@ class JobOffersController < ApplicationController
     if @job_offer.destroy
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
+    else
+      render_errors_and_redirect_to(@job_offer, format)
+    end
+  end 
+
+  # GET /job_offer/:id/reopen
+  def reopen 
+    old_job_offer = JobOffer.find params[:id]
+    if old_job_offer.update(status: JobStatus.completed)
+      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
+      @job_offer.responsible_user = current_user
+      render "new", notice: 'New job offer was created.'  
     else
       render_errors_and_redirect_to(@job_offer, format)
     end

@@ -54,8 +54,8 @@ describe "a job offer entry" do
       title: "TestJob", 
       chair: @TestChair, 
       responsible_user: @user, 
-      status: FactoryGirl.create(:job_status, :name => "open"
-    ))
+      status: FactoryGirl.create(:job_status, :open)
+    )
 
     visit job_offers_path
   end
@@ -75,7 +75,7 @@ describe "job_offers_history" do
   it "should have a job-offers-history" do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
-    @status = FactoryGirl.create(:job_status, :name => "completed")
+    @status = FactoryGirl.create(:job_status, :completed)
     @job_offer = FactoryGirl.create(:job_offer, 
       title: "Closed Job Touch Floor", 
       status: @status,
@@ -86,7 +86,9 @@ describe "job_offers_history" do
     visit job_offers_path
     find("div#buttons").should have_link "Archive"
     click_on "Archive"
-    current_path.should == archive_job_offers_path
+    
+    expect(current_path).to eq(archive_job_offers_path)
+    
     page.should have_css "ul.list-group li"
     page.should have_css "#search"
     page.should have_css "#filter"

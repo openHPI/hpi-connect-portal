@@ -2,7 +2,6 @@ class ApplicationsController < ApplicationController
     include UsersHelper
 
     before_filter :signed_in_user
-    before_filter :check_user_is_research_assistant, only: [:complete]
 
     def create
         @job_offer = JobOffer.find application_params[:job_offer_id]
@@ -50,13 +49,5 @@ class ApplicationsController < ApplicationController
 
         def application_params
             params.require(:application).permit(:job_offer_id)
-        end
-
-        def check_user_is_research_assistant
-          @job_offer = JobOffer.find params[:id]
-
-          unless user_is_research_assistant_of_chair?(@job_offer)
-            redirect_to @job_offer
-          end
         end
 end

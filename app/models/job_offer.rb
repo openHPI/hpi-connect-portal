@@ -125,18 +125,7 @@ class JobOffer < ActiveRecord::Base
         if programming_language_ids.blank?
             all
         else
-            jobs_filter = []
-            all.each do | job_offer |
-                prog_lang_id_copy = Array.new programming_language_ids
-                temp = joins(:programming_languages).where('job_offers.id=?', job_offer.id).select("programming_languages.id")
-                temp.each do | job_prog_tuple |
-                    prog_lang_id_copy.delete(job_prog_tuple.id.to_s)
-                end 
-                if prog_lang_id_copy.empty?
-                    jobs_filter << job_offer.id
-                end
-            end
-            all.where(id: jobs_filter)
+            joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct job_offers.*")
         end
     end
 
@@ -144,18 +133,7 @@ class JobOffer < ActiveRecord::Base
         if language_ids.blank?
             all
         else
-            jobs_filter = []
-            all.each do | job_offer |
-                lang_id_copy = Array.new language_ids
-                temp = joins(:languages).where('job_offers.id=?', job_offer.id).select("languages.id")
-                temp.each do | job_lang_tuple |
-                    lang_id_copy.delete(job_lang_tuple.id.to_s)
-                end 
-                if lang_id_copy.empty?
-                    jobs_filter << job_offer.id
-                end
-            end
-            all.where(id: jobs_filter)
+             joins(:languages).where('languages.id IN (?)', language_ids).select("distinct job_offers.*")
         end
     end
 

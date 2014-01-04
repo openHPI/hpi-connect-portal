@@ -4,6 +4,10 @@ class ChairsController < ApplicationController
   include ApplicationHelper
   before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
+  rescue_from CanCan::AccessDenied do |exception| 
+    redirect_to chairs_path, :notice => exception.message
+  end
+
   # GET /chairs
   # GET /chairs.json
   def index
@@ -26,17 +30,11 @@ class ChairsController < ApplicationController
 
   # GET /chairs/1/edit
   def edit
-    if !current_user.admin? && @chair.deputy != current_user
-      redirect_to @chair, notice: 'You are not allowed to edit this chair.'
-    end
   end
 
   # POST /chairs
   # POST /chairs.json
   def create
-    if !current_user.admin?
-      redirect_to @chair, notice: 'You are not allowed to create a new chair.'
-    end
 
     @chair = Chair.new(chair_params)
 
@@ -46,6 +44,7 @@ class ChairsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @chair }
       else
 				@users = User.all
+        flash[:error] = 'Invalid content.'
         format.html { render action: 'new' }
         format.json { render json: @chair.errors, status: :unprocessable_entity }
       end
@@ -55,9 +54,6 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
-    if !current_user.admin? && @chair.deputy != current_user
-      redirect_to @chair, notice: 'You are not allowed to update this chair.'
-    end
     
     respond_to do |format|
       if @chair.update(chair_params)
