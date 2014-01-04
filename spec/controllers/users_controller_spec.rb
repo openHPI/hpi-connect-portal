@@ -75,7 +75,16 @@ describe UsersController do
       user = User.create! valid_attributes
       put :update, { :id => user.id, :user => valid_attributes }, valid_session
       response.should redirect_to(user)
-	end
+	  end
+
+    it "handles a failing update call" do
+      troubling_user = FactoryGirl.create(:user)
+
+      user = User.create! valid_attributes
+      sign_in user
+      patch :update, { :id => user.id, :user => { 'email' => troubling_user.email} }, valid_session
+      flash[:error].should eql("Error while updating profile.")
+    end
 
   end
 
