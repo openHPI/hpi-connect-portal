@@ -106,7 +106,7 @@ class JobOffersController < ApplicationController
   def find_archived_jobs
     job_offers = find_jobs_in_job_list(JobOffer.filter(status: JobStatus.completed))
     job_offers = job_offers.paginate(:page => params[:page])
-	@job_offers_list = {:items => job_offers, 
+	  @job_offers_list = {:items => job_offers, 
                         :name => "job_offers.headline"}
     @chairs = Chair.all
     render "archive"
