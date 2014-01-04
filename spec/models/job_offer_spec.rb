@@ -183,7 +183,49 @@ describe JobOffer do
   end
 
 
+  it "return job offers which only have the specified programming languages" do
+    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Python Programming")
 
+    language_one = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
+    language_two = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
+    language_three = FactoryGirl.create(:programming_language, job_offer: [offer_not_matched])
+
+    filtered_jobs = JobOffer.filter_programming_languages([language_one.id, language_two.id])
+    assert_equal(filtered_jobs.length, 1)
+
+    filtered_jobs = JobOffer.filter_programming_languages([language_one.id, language_two.id, language_three.id])
+    assert_equal(filtered_jobs.length, 2)
+
+    filtered_jobs = JobOffer.filter_programming_languages([])
+    assert_equal(filtered_jobs.length, 2)
+  end
+
+  it "return job offers which only have the specified programming languages" do
+    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Python Programming")
+
+    language_one = FactoryGirl.create(:language)
+    language_two = FactoryGirl.create(:language)
+    language_three = FactoryGirl.create(:language)
+
+    offer_matched.languages = [language_one, language_two]
+    offer_matched.save
+
+    offer_not_matched.languages = [language_three]
+    offer_not_matched.save
+
+    filtered_jobs = JobOffer.filter_languages([language_one.id, language_two.id])
+    assert_equal(filtered_jobs.length, 1)
+
+    filtered_jobs = JobOffer.filter_languages([language_one.id, language_two.id, language_three.id])
+    assert_equal(filtered_jobs.length, 2)
+
+    filtered_jobs = JobOffer.filter_languages([])
+    assert_equal(filtered_jobs.length, 2)
+  end
+
+ 
   it "returns job offers filtered by status" do
     @status = FactoryGirl.create(:job_status, :name => "completed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);

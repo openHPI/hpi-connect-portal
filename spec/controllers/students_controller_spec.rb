@@ -218,4 +218,31 @@ describe StudentsController do
       student.programming_languages.size == 1
     end
   end
+
+  describe "PUT update with  languages skills" do
+    it "updates the requested student with an existing language" do
+      l = ProgrammingLanguage.create([{name: 'MyLanguage'}])
+      l_id = l.first.id
+      student = User.create! :firstname => "Test", :lastname => "User", :programming_languages => l, :languages_users => LanguagesUser.create([{language_id: l_id, skill: '4'}])
+      LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :languages => { l_id.to_s => "2" }}, valid_session
+    end
+    it "updates the requested student with a new language" do
+      l = Language.create([{name: 'MyLanguage'}, {name: 'MySecondLanguage'}])
+      l_id = l.first.id
+      l2_id = l.last.id
+      student = User.create! :firstname => "Test", :lastname => "User", :languages => [l.first], :languages_users => LanguagesUser.create([{language_id: l_id, skill: '4'}])
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :languages => { l2_id.to_s => "2" }}, valid_session
+      student.languages_users.last.skill == 2
+      student.languages.last == l.last
+    end
+    it "updates the requested student with a removed language" do
+      l = Language.create([{name: 'MyLanguage'}, {name: 'MySecondLanguage'}])
+      l_id = l.first.id
+      l2_id = l.last.id
+      student = User.create! :firstname => "Test", :lastname => "User", :languages => l, :languages_users => LanguagesUser.create([{language_id: l_id, skill: '4'},{language_id: l2_id, skill: '2'}])
+      put :update, {:id => student.to_param, :user => { "firstname" => "Test2" }, :languages => { l_id.to_s => "2" }}, valid_session
+      student.languages.size == 1
+    end
+  end
 end

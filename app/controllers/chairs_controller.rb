@@ -4,6 +4,10 @@ class ChairsController < ApplicationController
   include ApplicationHelper
   before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
+  rescue_from CanCan::AccessDenied do |exception| 
+    redirect_to chairs_path, :notice => exception.message
+  end
+
   # GET /chairs
   # GET /chairs.json
   def index
@@ -31,6 +35,7 @@ class ChairsController < ApplicationController
   # POST /chairs
   # POST /chairs.json
   def create
+
     @chair = Chair.new(chair_params)
 
     respond_to do |format|
@@ -39,6 +44,7 @@ class ChairsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @chair }
       else
 				@users = User.all
+        flash[:error] = 'Invalid content.'
         format.html { render action: 'new' }
         format.json { render json: @chair.errors, status: :unprocessable_entity }
       end
@@ -48,6 +54,7 @@ class ChairsController < ApplicationController
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
+    
     respond_to do |format|
       if @chair.update(chair_params)
         format.html { redirect_to @chair, notice: 'Chair was successfully updated.' }

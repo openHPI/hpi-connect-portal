@@ -1,4 +1,5 @@
 HpiHiwiPortal::Application.routes.draw do
+  get "imprint/index"
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   scope "(:locale)", locale: /en|de/ do
 
@@ -18,6 +19,7 @@ HpiHiwiPortal::Application.routes.draw do
         get "complete"
         get "accept"
         get "decline"
+        get "reopen"
       end
     end
 
