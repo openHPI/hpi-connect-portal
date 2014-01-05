@@ -111,6 +111,17 @@ describe ChairsController do
         flash[:error].should eql("Invalid content.")
       end
     end
+
+    describe "with insufficient access rights" do
+      login_user FactoryGirl.create(:role, name: 'Student')
+
+      it "redirects to requested chair" do
+        chair = Chair.create! valid_attributes
+        post :create, {:id => chair.to_param}
+        response.should redirect_to(chairs_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
+      end
+    end
   end
 
   describe "PUT update" do
