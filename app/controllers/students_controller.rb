@@ -110,14 +110,12 @@ class StudentsController < ApplicationController
       #If the User deselects alls  languages, they have to be destroyed
       LanguagesUser.destroy_all(:user_id => params[:id])
     end
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to student_path(@user.id), notice: 'user was successfully updated.' }
-        format.json {head :ok }
-      else
-        format.html { render action: 'edit' }
-        format.json { redirect_to student_path(@user.id), status: :unprocessable_entity }
-      end
+
+
+    if @user.update(user_params)
+      respond_and_redirect_to(student_path(@user), 'user was successfully updated.')
+    else
+      render_errors_and_redirect_to(student_path(@user), 'edit')
     end
   end
 
@@ -125,10 +123,7 @@ class StudentsController < ApplicationController
   # DELETE /students/1.json
   def destroy
     @user.destroy
-    respond_to do |format|
-      format.html { redirect_to students_url }
-      format.json { head :no_content }
-    end
+    respond_and_redirect_to(students_url, 'Student has been successfully deleted.')
   end
 
   # GET /students/matching
