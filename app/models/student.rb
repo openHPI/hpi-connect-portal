@@ -36,7 +36,7 @@ class Student < ActiveRecord::Base
     accepts_nested_attributes_for :programming_languages
 	has_and_belongs_to_many :languages
     belongs_to :student_status
-    validates :first_name, :last_name, presence: true
+    validates :first_name, :last_name, :status, presence: true
 
 	has_attached_file 	:photo,
 						:url  => "/assets/students/:id/:style/:basename.:extension",

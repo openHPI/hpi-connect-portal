@@ -58,6 +58,6 @@ FactoryGirl.define do
     linkedin'www.linkedin.com/dieter'
     languages Language.where(:name => 'Englisch')
     programming_languages ProgrammingLanguage.where(:name => ['Ruby'])
-    user_status UserStatus.where(:name => 'employed (ext)').first
+    status UserStatus.where(:name => 'employed (ext)').first
   end
 end

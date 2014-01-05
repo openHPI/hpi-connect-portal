@@ -110,8 +110,6 @@ gem 'bootsy'
 #replacement for glyphicons
 gem "font-awesome-rails"
 
-
-
 group :test do
   gem 'email_spec'
 end
