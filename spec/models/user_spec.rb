@@ -79,71 +79,56 @@ describe User do
   describe "#searchStudentsByProgrammingLanguage" do
 
     it "returns an array of students who speak a ProgrammingLanguage" do
-    expect(User.search_students_by_programming_language('Ruby')).to include @student
+    expect(User.search_students_by_language_identifier(:programming_languages, 'Ruby')).to include @student
     end
     it "should return an empty array if anyone speaks the requested language" do
-      expect(User.search_students_by_programming_language("Hindi")).to eq([])
+      expect(User.search_students_by_language_identifier(:programming_languages, "Hindi")).to eq([])
     end
   end
 
   describe"#searchStudentsByLanguage" do
     it "returns an array of students who speak a language" do
-      expect(User.search_students_by_language('Englisch')).to include(@student)
+      expect(User.search_students_by_language_identifier(:languages, 'Englisch')).to include(@student)
     end
 
     it "should return an empty array if anyone speaks the requested language" do
-      expect(User.search_students_by_language("Hindi")).to eq([])
+      expect(User.search_students_by_language_identifier(:languages, "Hindi")).to eq([])
     end
   end
 
   describe"#search_students_by_language_and_programming_language" do
+
+    before do
+      @java = FactoryGirl.create(:programming_language, name: "Java")
+      @php = FactoryGirl.create(:programming_language, name: "PHP")
+      @german = FactoryGirl.create(:language, name: "German")
+      @english = FactoryGirl.create(:language, name: "English")
+
+      FactoryGirl.create(:user, programming_languages: [@java, @php], languages: [@german])
+      FactoryGirl.create(:user, programming_languages: [@java], languages: [@german, @english])
+      FactoryGirl.create(:user, programming_languages: [@php], languages: [@german])
+      FactoryGirl.create(:user, programming_languages: [@php], languages: [@english])
+      FactoryGirl.create(:user, programming_languages: [@java, @php], languages: [@german, @english])
+    end
+
     it "should return all students who speak the language german AND know the programming language php" do
-      java = ProgrammingLanguage.new(:name => 'Java')
-      php = ProgrammingLanguage.new(:name => 'php')
-      german = Language.new(:name => 'German')
-      english = Language.new(:name => 'English')
-
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [english])
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english])
-
       matching_students = User.search_students_by_language_and_programming_language(["german"], ["php"])
       assert_equal(matching_students.length, 3);
     end
 
     it "should return all students who speak the language german AND" do
-      java = ProgrammingLanguage.new(:name => 'Java')
-      php = ProgrammingLanguage.new(:name => 'php')
-      german = Language.new(:name => 'German')
-      english = Language.new(:name => 'English')
-
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [english])
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english])
-
-
       matching_students = User.search_students_by_language_and_programming_language(["german"], [])
       assert_equal(matching_students.length, 4);
     end
 
     it "should return all students who know the languages php AND java" do
-      java = ProgrammingLanguage.new(:name => 'Java')
-      php = ProgrammingLanguage.new(:name => 'php')
-      german = Language.new(:name => 'German')
-      english = Language.new(:name => 'English')
-
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [english])
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english])
-
       matching_students = User.search_students_by_language_and_programming_language([], ["php", "java"])
       assert_equal(matching_students.length, 2);
+    end
+
+    it "returns no students for Python" do
+      matching_students = User.search_students_by_language_and_programming_language([], ["Python"])
+      assert_equal(matching_students.length, 0);
     end
 
   end
