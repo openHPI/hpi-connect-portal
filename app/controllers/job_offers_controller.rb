@@ -45,28 +45,22 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
-    respond_to do |format|
-      if @job_offer.save
-        JobOffersMailer.new_job_offer_email(@job_offer).deliver
-        format.html { redirect_to @job_offer, notice: 'Job offer was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @job_offer }
-      else
-        render_errors_and_redirect_to(@job_offer, 'new', format)
-      end
+    
+    if @job_offer.save
+      JobOffersMailer.new_job_offer_email(@job_offer).deliver
+      respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
+    else
+      render_errors_and_redirect_to(@job_offer, 'new')
     end
-
   end
 
   # PATCH/PUT /job_offers/1
   # PATCH/PUT /job_offers/1.json
   def update
-    respond_to do |format|
-      if @job_offer.update(job_offer_params)
-        format.html { redirect_to @job_offer, notice: 'Job offer was successfully updated.' }
-        format.json { head :no_content }
-      else
-        render_errors_and_redirect_to(@job_offer, 'edit', format)
-      end
+    if @job_offer.update(job_offer_params)
+      respond_and_redirect_to(@job_offer, 'Job offer was successfully updated.')
+    else
+      render_errors_and_redirect_to(@job_offer, 'edit')
     end
   end
 
@@ -74,10 +68,7 @@ class JobOffersController < ApplicationController
   # DELETE /job_offers/1.json
   def destroy
     @job_offer.destroy
-    respond_to do |format|
-      format.html { redirect_to job_offers_url }
-      format.json { head :no_content }
-    end
+    respond_and_redirect_to(job_offers_url, 'Job offer has been successfully deleted.')
   end
 
   # GET /job_offers/archive
@@ -114,14 +105,11 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/complete
   def complete
-    respond_to do |format|
-      if @job_offer.update(status: JobStatus.completed)
-        JobOffersMailer.job_closed_email(@job_offer).deliver
-        format.html { redirect_to @job_offer, notice: 'Job offer was successfully marked as completed.' }
-        format.json { head :no_content }
-      else
-        render_errors_and_redirect_to(@job_offer, 'edit', format)
-      end
+    if @job_offer.update(status: JobStatus.completed)
+      JobOffersMailer.job_closed_email(@job_offer).deliver
+      respond_and_redirect_to(@job_offer, 'Job offer was successfully marked as completed.')
+    else
+      render_errors_and_redirect_to(@job_offer, 'edit')
     end
   end
 
@@ -131,7 +119,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
-      render_errors_and_redirect_to(@job_offer, format)
+      render_errors_and_redirect_to(@job_offer)
     end
   end
 
@@ -141,7 +129,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
     else
-      render_errors_and_redirect_to(@job_offer, format)
+      render_errors_and_redirect_to(@job_offer)
     end
   end 
 
@@ -153,7 +141,7 @@ class JobOffersController < ApplicationController
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'  
     else
-      render_errors_and_redirect_to(@job_offer, format)
+      render_errors_and_redirect_to(@job_offer)
     end
   end 
 
@@ -171,12 +159,7 @@ class JobOffersController < ApplicationController
     def job_offer_params
       params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
-    end
-    
-    def render_errors_and_redirect_to(object, target, format)
-      format.html { render action: target }
-      format.json { render json: object.errors, status: :unprocessable_entity }
-    end  
+    end 
 
     def check_user_is_responsible      
       set_job_offer
