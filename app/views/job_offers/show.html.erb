@@ -81,7 +81,7 @@
          <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
-            <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button' %>
+            <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button', data: {confirm: t("job_offers.apply_confirmation") } %>
           <% end %>
         <% end %>
       </div>
