@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe UsersController do
   let(:user) { FactoryGirl.create(:user) }
+  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
 
-  let(:valid_attributes) { { "firstname" => "Mister", "lastname" => "Awesome", "email" => "test@example.com" } }
+  let(:valid_attributes) { { "firstname" => "Mister", "lastname" => "Awesome", "email" => "test@example.com", "role" => student_role } }
   let(:false_attributes) { { "firstname" => 123 } }
   let(:valid_session) { {} }
 
