@@ -10,14 +10,8 @@ class StudentsearchController < ApplicationController
         @students = @students.concat(find_and_add_users(params["Language"], :languages)).uniq {|s| s.id}
         @students = @students.concat(find_and_add_users(params["ProgrammingLanguage"], :programming_languages)).uniq {|s| s.id}
         
-
-        if params.include?(:semester) and params[:semester] != ''
-            @semester = params[:semester]
-
-            # possibly vulnerable to sql injection!
-            @students = @students.concat(User.where("semester IN (?)", @semester.split(',').map(&:to_i))).uniq {|s| s.id}
-            
-        end
+        @semester = params[:semester] || ''
+        @students = @students.concat(User.where("semester IN (?)", @semester.split(',').map(&:to_i))).uniq {|s| s.id}
 
         @no_search = @students.length == 0
     end
