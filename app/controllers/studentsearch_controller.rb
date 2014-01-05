@@ -7,8 +7,8 @@ class StudentsearchController < ApplicationController
                 @students = User.search_student(param)
         end
 
-        @students = @students.concat(find_and_add_users(params["Language"], User.method(:search_students_by_language))).uniq {|s| s.id}
-        @students = @students.concat(find_and_add_users(params["ProgrammingLanguage"], User.method(:search_students_by_programming_language))).uniq {|s| s.id}
+        @students = @students.concat(find_and_add_users(params["Language"], :languages)).uniq {|s| s.id}
+        @students = @students.concat(find_and_add_users(params["ProgrammingLanguage"], :programming_languages)).uniq {|s| s.id}
         
 
         if params.include?(:semester) and params[:semester] != ''
@@ -25,14 +25,14 @@ class StudentsearchController < ApplicationController
 
     private
 
-        def find_and_add_users(names, function)
+        def find_and_add_users(names, language_identifier)
             res = []
             if names.nil?
                 return res
             end
 
             names.each do |name|
-                res.concat(function.call(name))
+                res.concat(User.search_students_by_language_identifier(language_identifier, name))
             end
 
             return res

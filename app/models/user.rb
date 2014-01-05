@@ -76,6 +76,14 @@ class User < ActiveRecord::Base
 
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
 
+    def eql?(other)
+     other.kind_of?(self.class) && self.id == other.id
+    end
+
+    def hash
+        self.id.hash
+    end
+
     def self.build_from_identity_url(identity_url)
         username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
 
@@ -118,36 +126,27 @@ class User < ActiveRecord::Base
                 ",
                 string, string, string, string, string,
                 string, string, string, string, string)
-        search_results += search_students_by_programming_language(string)
-        search_results += search_students_by_language(string)
+        search_results += search_students_by_language_identifier(:programming_languages, string)
+        search_results += search_students_by_language_identifier(:languages, string)
         search_results.uniq.sort_by{|x| [x.lastname, x.firstname]}
     end
 
-    def self.search_students_by_programming_language(string)
-        User.joins(:programming_languages).where('lower(programming_languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.lastname, x.firstname]}
-    end
-
-     def self.search_students_by_language(string)
-        User.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.lastname, x.firstname]}
+    def self.search_students_by_language_identifier(language_identifier, string)
+        key = language_identifier.to_s + ".name"
+        User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|x| [x.lastname, x.firstname]}
     end
 
     def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
-       matching_students = User.all 
+        search_students_for_mulitple_languages_and_identifiers(:languages, language_array) & search_students_for_mulitple_languages_and_identifiers(:programming_languages, programming_language_array)
+    end
 
-       if language_array
-            language_array.each do |language|
-                matching_students = matching_students & search_students_by_language(language)
-            end
+    def self.search_students_for_mulitple_languages_and_identifiers(language_identifier, languages)
+        result = User.all
+
+        languages.each do |language|
+            result = result & search_students_by_language_identifier(language_identifier, language)
         end
-       
-       if programming_language_array
-            programming_language_array.each do |programming_language|
-                matching_students = matching_students & search_students_by_programming_language(programming_language)
-            end
-        end
-        
-       matching_students
-    end 
+
+        result
+    end
 end
