@@ -38,31 +38,22 @@ class ChairsController < ApplicationController
 
     @chair = Chair.new(chair_params)
 
-    respond_to do |format|
-      if @chair.save
-        format.html { redirect_to @chair, notice: 'Chair was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @chair }
-      else
-				@users = User.all
-        flash[:error] = 'Invalid content.'
-        format.html { render action: 'new' }
-        format.json { render json: @chair.errors, status: :unprocessable_entity }
-      end
+    if @chair.save
+      respond_and_redirect_to(@chair, 'Chair was successfully created.', 'show', :created)
+    else
+			@users = User.all
+      flash[:error] = 'Invalid content.'
+      render_errors_and_redirect_to(@chair, 'new')
     end
   end
 
   # PATCH/PUT /chairs/1
   # PATCH/PUT /chairs/1.json
   def update
-    
-    respond_to do |format|
-      if @chair.update(chair_params)
-        format.html { redirect_to @chair, notice: 'Chair was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @chair.errors, status: :unprocessable_entity }
-      end
+    if @chair.update(chair_params)
+      respond_and_redirect_to(@chair, 'Chair was successfully updated.')
+    else
+      render_errors_and_redirect_to(@chair, 'edit')
     end
   end
 
