@@ -63,22 +63,14 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1.json
   def update
     if params[:programming_languages]
-      programming_languages = params[:programming_languages]
-      programming_languages.each do |programming_language_id, skill|
-        pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(params[:id],programming_language_id)
-        if pl
-          pl.update_attributes(:skill => skill)
-        else
-          programming_language_user = ProgrammingLanguagesUser.new
-          programming_language_user.user_id = params[:id]
-          programming_language_user.programming_language_id = programming_language_id
-          programming_language_user.skill = skill
-          programming_language_user.save
-        end
+      params[:programming_languages].each do |id, skill|
+        pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(params[:id], id) || ProgrammingLanguagesUser.create!(user_id: params[:id], programming_language_id: id)
+        pl.update_attributes(:skill => skill)
       end
+
       #Delete all programming languages which have been deselected (rating removed) from the form
       ProgrammingLanguagesUser.where(:user_id => params[:id]).each do |pl|
-        if programming_languages[pl.programming_language_id.to_s].nil?
+        if params[:programming_languages][pl.programming_language_id.to_s].nil?
           pl.destroy
         end
       end
@@ -86,23 +78,16 @@ class StudentsController < ApplicationController
       #If the User deselects alls programming languages, they have to be destroyed
       ProgrammingLanguagesUser.destroy_all(:user_id => params[:id])
     end
+
+
     if params[:languages]
-      languages = params[:languages]
-      languages.each do |language_id, skill|
-        l = LanguagesUser.find_by_user_id_and_language_id(params[:id],language_id)
-        if l
-          l.update_attributes(:skill => skill)
-        else
-          language_user = LanguagesUser.new
-          language_user.user_id = params[:id]
-          language_user.language_id = language_id
-          language_user.skill = skill
-          language_user.save
-        end
+      params[:languages].each do |id, skill|
+        l = LanguagesUser.find_by_user_id_and_language_id(params[:id], id) || LanguagesUser.create!(user_id: params[:id], language_id: id)
+        l.update_attributes(:skill => skill)
       end
       #Delete all programming languages which have been deselected (rating removed) from the form
       LanguagesUser.where(:user_id => params[:id]).each do |l|
-        if languages[l.language_id.to_s].nil?
+        if params[:languages][l.language_id.to_s].nil?
           l.destroy
         end
       end
@@ -113,7 +98,7 @@ class StudentsController < ApplicationController
 
 
     if @user.update(user_params)
-      respond_and_redirect_to(student_path(@user), 'user was successfully updated.')
+      respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
     else
       render_errors_and_redirect_to(student_path(@user), 'edit')
     end
