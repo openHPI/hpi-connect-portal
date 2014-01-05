@@ -1,12 +1,12 @@
 class StudentsearchController < ApplicationController
     def index
         @students = []
-        if params.include?(:q) and params[:q] != ''
-                @query = params[:q]
-                param = "%#{@query.downcase}%"
-                @students = User.search_student(param)
+        
+        @query = params[:q] || ''
+        if @query != ''
+            @students = User.search_student("%#{@query.downcase}%")
         end
-
+        
         @students = @students.concat(find_and_add_users(params["Language"], :languages)).uniq {|s| s.id}
         @students = @students.concat(find_and_add_users(params["ProgrammingLanguage"], :programming_languages)).uniq {|s| s.id}
         
