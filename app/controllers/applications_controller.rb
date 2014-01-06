@@ -10,6 +10,7 @@ class ApplicationsController < ApplicationController
         else
           @application = Application.new(job_offer: @job_offer, user: current_user)
           if @application.save
+              ApplicationsMailer.new_application_notification_email(@application).deliver
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'
