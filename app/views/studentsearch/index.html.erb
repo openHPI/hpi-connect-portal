@@ -13,7 +13,7 @@
     <h2>Sprachen</h2><br>
     <% for language in Language.all%>
     <div>
-        <%= check_box_tag  "Language[]", t("languages." +  language.name), if params.include?('Language')
+        <%= check_box_tag  "Language[]", language.name, if params.include?('Language')
                                                         !!params["Language"].include?(t("languages." +  language.name))
                                                         else 
                                                         false

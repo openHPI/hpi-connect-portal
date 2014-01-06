@@ -87,5 +87,19 @@ describe ApplicationsController do
           post :create, { :application => {:job_offer_id => @job_offer.id} }
         }.to change(Application, :count).by(1)
     end
+
+    it "handles failing save call" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.save
+
+      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      
+      sign_in user
+      post :create, { :application => {:job_offer_id => @job_offer.id} }
+      response.should redirect_to(job_offer_path(@job_offer))
+      assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
+    end
   end
 end

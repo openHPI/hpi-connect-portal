@@ -70,7 +70,11 @@
       </div><!--/row-->
 
       <footer>
-        <p>&copy; <%= t("layouts.swt2course") %></p>
+        <tr>
+          <td>&copy; <%= t("layouts.project") %></td>
+          <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+          <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+        </tr>
       </footer>
 
     </div> <!-- /container -->
