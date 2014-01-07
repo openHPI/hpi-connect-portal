@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe "the job-offers page" do
 
   before(:each) do
