@@ -6,8 +6,13 @@
       <% @users.each do |student| %>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
               <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
+            </div>
+            <div class="col-md-2">
+              <% if can? :update, student %>
+                <button class="btn btn-primary change-role" data-id="<%= student.id %>" data-toggle="modal" data-target="#myModal"><%= t('students.promote_button')%></button>
+              <%end%>
             </div>
             <div class="col-md-2">
               <p class="semester"><%= t("activerecord.attributes.student.semester") +": " + student.semester.to_s%></p>
@@ -25,3 +30,35 @@
   </div>
 
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
+      </div>
+      <div class="modal-body">
+      <%= form_tag update_role_students_path do %>
+        <%= text_field_tag "student_id", nil %>
+        <%= select_tag :role, options_for_select([Role.find(2).name, "tralala"], Role.find(2).name) %>
+      <%= submit_tag t('students.promote_button'), :confirm => t("students.promote_confirm_question"), class: "btn btn-large btn-primary promote" %>
+      <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+  $(document).on("click", ".change-role", function () {
+     var myBookId = $(this).data('id');
+     $("#student_id").val( myBookId );
+     // As pointed out in comments, 
+     // it is superfluous to have to manually call the modal.
+     // $('#addBookDialog').modal('show');
+});
+</script>

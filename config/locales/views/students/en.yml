@@ -4,3 +4,6 @@ en:
         students_headline: "student list"
         new_student: "create new student"
         edit_student: "edit student"
+        promote_button: "Promote"
+        promote_title: "Change Role"
+        promote_confirm_question: "Are you sure to change role?"

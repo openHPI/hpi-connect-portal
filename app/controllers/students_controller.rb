@@ -88,6 +88,13 @@ class StudentsController < ApplicationController
     render "index"
   end
 
+  def update_role
+    @user = User.find(params[:student_id])
+    @user.role_id = Role.find_by_name(params[:role]).level
+    @user.save
+    redirect_to(students_path)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
