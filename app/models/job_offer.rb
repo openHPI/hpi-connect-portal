@@ -40,10 +40,10 @@ class JobOffer < ActiveRecord::Base
 
   self.per_page = 5
 
-  scope :pending, -> { where(status: JobStatus.pending) }
-  scope :open, -> { where(status: JobStatus.open) }
-  scope :running, -> { where(status: JobStatus.running) }
-  scope :completed, -> { where(status: JobStatus.completed) }
+  scope :pending, -> { where(status_id: JobStatus.pending.id) }
+  scope :open, -> { where(status_id: JobStatus.open.id) }
+  scope :running, -> { where(status_id: JobStatus.running.id) }
+  scope :completed, -> { where(status_id: JobStatus.completed.id) }
 
   scope :filter_chair, -> chair { where(chair_id: chair) }
   scope :filter_start_date, -> start_date { where('start_date >= ?', Date.parse(start_date)) }
