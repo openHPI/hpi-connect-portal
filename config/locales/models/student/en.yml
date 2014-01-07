@@ -9,6 +9,7 @@ en:
         birthday: "birthdate"
         education: "graduation"
         additional_information: "additional information"
+        general_information: "general information"
         homepage: "homepage"
         github: "Github"
         facebook: "Facebook"

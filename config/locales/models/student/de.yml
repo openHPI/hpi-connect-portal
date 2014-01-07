@@ -8,6 +8,7 @@ de:
         academic_program: "Studiengang"
         birthday: "Geburtsdatum"
         education: "Abschluss"
+        general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Information"
         homepage: "Homepage"
         github: "Github"
