@@ -37,32 +37,32 @@ User.create([{
 User.create([{
 	email: "tim.specht@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Tim", 
-	firstname: "Specht", 
+	lastname: "Specht", 
+	firstname: "Tim", 
 	role: Role.where(:name => 'Student').first	
 }])
 
 User.create([{
 	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
-	lastname: "Pascal", 
-	firstname: "Reinhardt", 
+	lastname: "Reinhardt", 
+	firstname: "Pascal", 
 	role: Role.where(:name => 'Student').first	
 }])
 
 User.create([{
 	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
-	lastname: "Tim", 
-	firstname: "Friedrich", 
+	lastname: "Friedrich", 
+	firstname: "Tim", 
 	role: Role.where(:name => 'Student').first	
 }])
 
 User.create([{
 	email: "johannes.koch@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
-	lastname: "Johannes", 
-	firstname: "Koch", 
+	lastname: "Koch", 
+	firstname: "Johannes", 
 	role: Role.where(:name => 'Student').first	
 }])
 #Create User as an example deputy for all chairs
@@ -81,7 +81,7 @@ github: 'www.github.com/dieter',
 facebook: 'www.faceboook.com/dieter',
 xing: 'www.xing.com/dieter',
 linkedin:'www.linkedin.com/dieter',
-languages: Language.where(:name => ['english']),
+languages: Language.where(:name => ['Englisch']),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Admin').first}])
@@ -89,11 +89,11 @@ role: Role.where(:name => 'Admin').first}])
 
 Language.delete_all
 Language.create([
-	{ name: 'english'},
-	{ name: 'german'},
-	{ name: 'spanish'},
-	{ name: 'french'},
-	{ name: 'chinese'}
+	{ name: 'Englisch'},
+	{ name: 'Deutsch'},
+	{ name: 'Spanisch'},
+	{ name: 'Französisch'},
+	{ name: 'Chinesisch'}
 ])
 
 #Create some ProgrammingLanguages
