@@ -11,5 +11,15 @@ require 'spec_helper'
 #   end
 # end
 describe SessionsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+    helper.stub(:current_user).and_return(@user)
+  end
+
+  it "returns correct results for current_user" do
+    assert_equal(true, helper.current_user?(@user))
+    assert_equal(false, helper.current_user?(FactoryGirl.create(:user)))
+  end
+
 end

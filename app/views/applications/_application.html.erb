@@ -1,7 +1,7 @@
-<tr class='clickableRow' href='<%= student_path(id: application.user.id) %>'>
-    <td><%= application.user.firstname %></td>
-    <td><%= application.user.lastname %></td>
-    <td><%= application.user.email %></td>
+<tr>
+    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.firstname %></td>
+    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.lastname %></td>
+    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.email %></td>
     
     <% if user_is_research_assistant_of_chair?(@job_offer) %>
     	<td>

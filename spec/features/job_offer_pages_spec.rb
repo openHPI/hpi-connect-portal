@@ -6,10 +6,10 @@ describe "Job Offer pages" do
 
   let(:research_assistant_role) { FactoryGirl.create(:role, name: 'Research Assistant', level: 2) }
   before(:each) do
-    @status_pending = FactoryGirl.create(:job_status, name:'pending')
-    @status_open = FactoryGirl.create(:job_status, name:'open')
-    @status_running = FactoryGirl.create(:job_status, name:'running')
-    @status_complete = FactoryGirl.create(:job_status, name:'complete')
+    @status_pending = FactoryGirl.create(:job_status, :pending)
+    @status_open = FactoryGirl.create(:job_status, :open)
+    @status_running = FactoryGirl.create(:job_status, :running)
+    @status_completed = FactoryGirl.create(:job_status, :completed)
   end
   
   describe "show page" do
@@ -27,7 +27,7 @@ describe "Job Offer pages" do
           it { should_not have_selector('h4', text: 'Applications') }
         end
 
-        describe "when being a student" do
+        describe "as a student" do
           before do 
             login_as(student, :scope => :user)
             visit job_offer_path(job_offer)
@@ -50,7 +50,7 @@ describe "Job Offer pages" do
           end
         end
 
-        describe "when being a research assistant of the job offers chair" do
+        describe "as a research assistant of the job offers chair" do
           let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
 
           before do
@@ -65,7 +65,7 @@ describe "Job Offer pages" do
           it { should have_link('Accept') }
           it { should have_link('Decline') }
 
-          it { should have_selector('tr[href="' + student_path(id: @application.user.id) + '"]') }
+          it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
         end
       end
     end
@@ -78,7 +78,7 @@ describe "Job Offer pages" do
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
 
-      describe "when being a student" do
+      describe "as a student" do
         before(:each) do
           login_as(student, :scope => :user)          
         end 
@@ -86,7 +86,7 @@ describe "Job Offer pages" do
         it { should_not have_button('Apply')}
       end
 
-      describe "when being a research assistant of the job offers chair" do
+      describe "as a research assistant of the job offers chair" do
         let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
 
         before do
@@ -94,9 +94,8 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it "is possible to mark a job as completed" do
-          should have_link 'Job completed'
-        end 
+        it { should have_link 'Job completed' }
+        it { should have_link 'reopen Job Offer'} 
       end
     end
 
@@ -113,7 +112,7 @@ describe "Job Offer pages" do
         deputy.update(:chair => chair)
       end
       
-      describe "when being a student" do
+      describe "as a student" do
         before(:each) do
           login_as(student, :scope => :user)          
         end 
@@ -129,7 +128,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "when being a research assistant of the job offers chair" do
+      describe "as a research assistant of the job offers chair" do
         let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: chair) }
 
         before do
@@ -149,7 +148,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "when being the deputy of the chair" do 
+      describe "as the deputy of the chair" do 
         before do          
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
@@ -171,6 +170,24 @@ describe "Job Offer pages" do
           should have_link('Decline')
         end
       end
+    end
+  
+    describe "completed job offer" do
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_completed) }
+
+      before { visit job_offer_path(job_offer) }
+    
+      describe "as a research assistant of the job offers chair" do
+        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
+
+        before do
+          login_as(research_assistant, :scope => :user)
+          visit job_offer_path(job_offer)
+        end
+
+        it { should have_link('reopen Job Offer') }
+
+      end      
     end
   end
 end

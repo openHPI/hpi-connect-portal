@@ -13,7 +13,7 @@ class UsersController < ApplicationController
             flash[:success] = 'Information updated.'
             redirect_to root_path
         else
-            flash[:error] = 'Error when updating profile.'
+            flash[:error] = 'Error while updating profile.'
             render 'edit'
         end
     end
