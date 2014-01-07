@@ -28,6 +28,9 @@ gem 'turbolinks', '~> 2.1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0.2'
 
+# Create filters Easily with scopes
+gem 'has_scope'
+
 # Annotate database fields to model files
 gem 'annotate', '>=2.6.1'
 
