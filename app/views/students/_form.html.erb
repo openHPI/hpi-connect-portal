@@ -120,7 +120,6 @@
               <% end %>
             <% end %>
           <% end %>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -139,7 +138,7 @@
             </td>
             <td><%= f.text_field :academic_program, class: "form-control", type:"text" %></td>
           </tr>
-           <tr>
+          <tr>
             <td><%= f.label :semester, t("activerecord.attributes.student.semester"), class: "control-label" %></td>
             <td><%= f.number_field :semester, class: "form-control", type:"number" %></td>
           </tr>
@@ -147,9 +146,9 @@
             <td>
               <%= f.label :education, t("activerecord.attributes.student.education"), class: "control-label" %>
             </td>
-              <td>
+            <td>
                 <%= f.bootsy_area :education, rows:"5", class: "form-control", type:"text" %>
-              </td>
+            </td>
           </tr>
         </tbody>
       </table>
