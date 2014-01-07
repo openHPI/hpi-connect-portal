@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<div class="row">
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
     <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
@@ -136,7 +137,7 @@
   <div class="col-sm-6">
     <% if !(@user.semester).nil? || !(@user.academic_program).nil? || !(@user.education).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.carrier") %></h4></div>
+        <div class="panel-heading"><h4><%= t("students.carrier") %></h4></div>
           <table class="table">
             <thead></thead>
             <tbody>
