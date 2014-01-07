@@ -5,17 +5,22 @@ class JobOffersController < ApplicationController
   before_filter :check_user_is_research_assistant_of_chair, only: [:complete, :reopen]
   before_filter :check_user_is_deputy, only: [:accept, :decline]
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
-  before_action :set_chairs, only: [:index, :find_jobs, :archive]
+  before_action :set_chairs, only: [:index, :find_archived_jobs, :archive]
+
+  has_scope :filter_chair, only: [:index, :archive], as: :chair
+  has_scope :filter_start_date, only: [:index, :archive], as: :start_date
+  has_scope :filter_end_date, only: [:index, :archive], as: :end_date
+  has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort
+  has_scope :filter_compensation, only: [:index, :archive], as: :compensation
+  has_scope :filter_programming_languages, only: [:index, :archive], as: :programming_languages
+  has_scope :filter_languages, only: [:index, :archive], as: :languages
+  has_scope :search, only: [:index, :archive]
 
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = JobOffer.filter_status(JobStatus.open)
-    job_offers = job_offers.sort("date")
-    job_offers = job_offers.paginate(:page => params[:page])
-    @job_offers_list = {:items => job_offers, 
-                        :name => "job_offers.headline"}
-    @chairs = Chair.all
+    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
+    @job_offers_list = { :items => job_offers, :name => "job_offers.headline" }
   end
 
   # GET /job_offers/1
@@ -73,34 +78,8 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/archive
   def archive
-    @job_offers = JobOffer.where(:status_id => JobStatus.completed)
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = @job_offers.paginate(:page => params[:page])
-    @job_offers_list = {:items => job_offers, 
-                        :name => "job_offers.archive"}
-    @chairs = Chair.all
-  end
-
-
-  def find
-    @radio_button_sort_value = {"date" => false, "chair" => false}
-    job_offers = find_jobs_in_job_list(JobOffer.filter_status(JobStatus.open)) 
-    job_offers = job_offers.paginate(:page => params[:page])
-	  @job_offers_list = {:items => job_offers, 
-                        :name => "job_offers.headline"}
-    @chairs = Chair.all
-    render "index"
-
-
-  end
-
-  def find_archived_jobs
-    job_offers = find_jobs_in_job_list(JobOffer.filter(status: JobStatus.completed))
-    job_offers = job_offers.paginate(:page => params[:page])
-	  @job_offers_list = {:items => job_offers, 
-                        :name => "job_offers.headline"}
-    @chairs = Chair.all
-    render "archive"
+    job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(:page => params[:page])
+    @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
   end
 
   # GET /job_offer/:id/complete
@@ -115,7 +94,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/accept
   def accept  
-    if @job_offer.update(status: JobStatus.open )
+    if @job_offer.update(status: JobStatus.open)
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
@@ -155,7 +134,6 @@ class JobOffersController < ApplicationController
       @chairs = Chair.all
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
       params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
