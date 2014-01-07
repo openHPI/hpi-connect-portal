@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-9">
+    <h1><%= t("research_assistants.research_assistants_headline")%></h1>
+      <br><br>
+      <ul class="list-group">
+      <% @users.each do |research_assistant| %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-10">
+              <%= link_to research_assistant.firstname+" "+research_assistant.lastname, research_assistant_path(research_assistant), :class => "h4" %>
+            </div>
+        </div>
+        </li>
+      <% end %>
+      </ul>
+      <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
+  </div>
+  <div class="col-md-3">
+  </div>
+
+</div>
