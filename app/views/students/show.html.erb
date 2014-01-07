@@ -115,15 +115,22 @@
       </div>
     <% end %>
 
-    <% if !@user.languages.empty? %>
+    <% if !@user.languages_users.empty? %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
         <table class="table">
           <tbody>
-            <% @user.languages.each do |language| %>
+            <% @user.languages_users.each do |languages_user| %>
               <tr>
-                <td><%= language.name %></td>
-                <td>Placeholder for Stars
+                <td><%= languages_user.language.name %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == languages_user.skill %>
+                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

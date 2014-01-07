@@ -26,26 +26,20 @@ class FaqsController < ApplicationController
   def create
     @faq = Faq.new(faq_params)
 
-    respond_to do |format|
-      if @faq.save
-        format.html { redirect_to @faq, notice: 'FAQ was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @faq }
-      else
-        render_errors_and_redirect_to(@faq, 'new', format)
-      end
+    if @faq.save
+      respond_and_redirect_to(@faq, 'FAQ was successfully created.', 'show', :created)
+    else
+      render_errors_and_redirect_to(@faq, 'new')
     end
   end
 
   # PATCH/PUT /faqs/1
   # PATCH/PUT /faqs/1.json
   def update
-    respond_to do |format|
-      if @faq.update(faq_params)
-        format.html { redirect_to @faq, notice: 'FAQ was successfully updated.' }
-        format.json { head :no_content }
-      else
-        render_errors_and_redirect_to(@faq, 'edit', format)
-      end
+    if @faq.update(faq_params)
+      respond_and_redirect_to(@faq, 'FAQ was successfully updated.')
+    else
+      render_errors_and_redirect_to(@faq, 'edit')
     end
   end
 
@@ -53,10 +47,7 @@ class FaqsController < ApplicationController
   # DELETE /faqs/1.json
   def destroy
     @faq.destroy
-    respond_to do |format|
-      format.html { redirect_to faqs_url }
-      format.json { head :no_content }
-    end
+    respond_and_redirect_to(faqs_url, 'FAQ has been successfully deleted.')
   end
 
   private
@@ -69,10 +60,5 @@ class FaqsController < ApplicationController
     def faq_params
       params.require(:faq).permit(
         :question, :answer)
-    end
-
-    def render_errors_and_redirect_to(object, target, format)
-      format.html { render action: target }
-      format.json { render json: object.errors, status: :unprocessable_entity }
     end
 end

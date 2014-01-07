@@ -22,4 +22,20 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     edit_user_path(resource)
   end
+
+  def render_errors_and_redirect_to(object, target)
+      respond_to do |format|
+        format.html { render action: target }
+        format.json { render json: object.errors, status: :unprocessable_entity }
+      end
+  end 
+
+  def respond_and_redirect_to(url, notice, action=nil, status=nil)
+    respond_to do |format|
+      format.html { redirect_to url, notice: notice }
+      if action && status
+        format.json { render action: action, status: status, location: object }
+      end
+    end
+  end
 end

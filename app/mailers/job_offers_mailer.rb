@@ -3,7 +3,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
   	@job_offer = job_offer
-  	mail(to: @job_offer.chair.deputy.email, subject: (t "job_offers_email.new_job_offer_subject"))
+  	mail(to: @job_offer.chair.deputy.email, subject: (t "job_offers_email.new_job_offer.subject"))
   end
 
   def deputy_accepted_job_offer_email(job_offer)

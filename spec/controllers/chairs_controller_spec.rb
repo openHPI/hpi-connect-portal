@@ -22,11 +22,15 @@ describe ChairsController do
 
   let(:deputy) { FactoryGirl.create(:user) }
 
+  let(:admin) { FactoryGirl.create(:role, name: 'Admin') }
+
   # This should return the minimal set of attributes required to create a valid
   # Chair. As you add validations to Chair, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", 
       "head_of_chair" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
+
+  let(:false_attributes) { { "name" => "HCI"} }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -42,6 +46,7 @@ describe ChairsController do
   end
 
   describe "GET show" do
+
     it "assigns the requested chair as @chair" do
       chair = Chair.create! valid_attributes
       get :show, {:id => chair.to_param}
@@ -57,15 +62,29 @@ describe ChairsController do
   end
 
   describe "GET edit" do
-    it "assigns the requested chair as @chair" do
-      chair = Chair.create! valid_attributes
-      get :edit, {:id => chair.to_param}
-      assigns(:chair).should eq(chair)
+    describe "with sufficient access rights" do
+      it "assigns the requested chair as @chair" do
+        chair = Chair.create! valid_attributes
+        get :edit, {:id => chair.to_param}
+        assigns(:chair).should eq(chair)
+      end
+    end
+
+    describe "with insufficient access rights" do
+      login_user FactoryGirl.create(:role, name: 'Student')
+
+      it "redirects to requested chair" do
+        chair = Chair.create! valid_attributes
+        get :edit, {:id => chair.to_param}
+        response.should redirect_to(chairs_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
+      end
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
+
       it "creates a new Chair" do
         expect {
           post :create, {:chair => valid_attributes}
@@ -73,6 +92,7 @@ describe ChairsController do
       end
 
       it "assigns a newly created chair as @chair" do
+
         post :create, {:chair => valid_attributes}
         assigns(:chair).should be_a(Chair)
         assigns(:chair).should be_persisted
@@ -81,6 +101,25 @@ describe ChairsController do
       it "redirects to the created chair" do
         post :create, {:chair => valid_attributes}
         response.should redirect_to(Chair.last)
+      end
+    end
+
+    describe "with invalid params" do
+      it "renders new again" do
+        post :create, {:chair => false_attributes}
+        response.should render_template("new")
+        flash[:error].should eql("Invalid content.")
+      end
+    end
+
+    describe "with insufficient access rights" do
+      login_user FactoryGirl.create(:role, name: 'Student')
+
+      it "redirects to requested chair" do
+        chair = Chair.create! valid_attributes
+        post :create, {:id => chair.to_param}
+        response.should redirect_to(chairs_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
       end
     end
   end
@@ -109,6 +148,16 @@ describe ChairsController do
         chair = Chair.create! valid_attributes
         put :update, {:id => chair.to_param, :chair => valid_attributes}
         response.should redirect_to(chair)
+      end
+    end
+
+    describe "with missing permission" do
+      login_user FactoryGirl.create(:role, name: 'Student')
+
+      it "redirects to the chair index page" do
+        chair = Chair.create! valid_attributes
+        patch :update, {:id => chair.to_param, :chair => valid_attributes}
+        response.should redirect_to(chairs_path)
       end
     end
 
