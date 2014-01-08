@@ -15,108 +15,125 @@
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.general_information") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td> <%= f.label :firstname, t("activerecord.attributes.student.first_name"), class: "control-label" %></td>
-            <td><%= f.text_field :firstname, class: "form-control", type:"text" %></td>
-          </tr>
-           <tr>
-            <td> 
-              <%= f.label :lastname, t("activerecord.attributes.student.last_name"), class: "control-label" %>
-            </td>
-            <td><%= f.text_field :lastname, class: "form-control", type:"text" %></td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.label :email, class: "control-label" %>
-            </td>
-            <td>
-              <%= f.text_field :email, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-          <tr>
-            <td>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :firstname, t("activerecord.attributes.student.first_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :firstname, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :lastname, t("activerecord.attributes.student.last_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :lastname, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :email, class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :email, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
                 <%= f.label :user_status, t("activerecord.attributes.student.status"), class: "control-label" %>
-            </td>
-            <td>
+              </div>
+              <div class="col-sm-9">
                <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.label :birthday, t("activerecord.attributes.student.birthday"), class: "control-label" %>
-            </td>
-            <td>
-              <%= f.date_select(:birthday ,  {start_year: 1940},{ :class => 'birthdate_select form-control col-sm-3'})%>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.label :photo, t("activerecord.attributes.student.photo"), class: "control-label" %>
-            </td>
-            <td>
-              <% if !@user.new_record? %>
-                <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
-              <% end %>
-              <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= f.label :cv, t("activerecord.attributes.student.cv"), class: "control-label" %>
-            </td>
-            <td>
-              <% if !@user.new_record? %>
-                <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
-                  <%= image_tag('file_thumbnails/missing.png', size: "80") %>
-                <% else %>
-                  <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :birthday, t("activerecord.attributes.student.birthday"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.date_select(:birthday ,  {start_year: 1940},{ :class => 'birthdate_select form-control col-sm-3'})%>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :photo, t("activerecord.attributes.student.photo"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <% if !@user.new_record? %>
+                  <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
                 <% end %>
-              <% end %>
-              <br><br>
-              <%= f.file_field :cv, accept: 'application/pdf' %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :cv, t("activerecord.attributes.student.cv"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <% if !@user.new_record? %>
+                  <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
+                    <%= image_tag('file_thumbnails/missing.png', size: "80") %>
+                  <% else %>
+                    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
+                  <% end %>
+                <% end %>
+                <br><br>
+                <%= f.file_field :cv, accept: 'application/pdf' %>
+              </div>
+            </div>
+          </li>
+        </ul>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
+        <ul class="list-group">
           <%= fields_for :programming_languages do |f2| %>
           <% if @all_programming_languages %>
             <% @all_programming_languages.each do |programming_language| %>
-              <tr>
-                <td>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
                   <%# Erstelle ein Label fuer jede Programmiersprache %>
                   <%= f2.label programming_language.name, class: "control-label" %>
-                </td>
-                <td>
-                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if !@user.new_record? %>
-                    <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
-                  <% end %>
-                  <%# Erzeuge 5 radio buttons fuer die Sterne %>
-                  <% (1..5).each do |i| %>
-                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                      <% if pl %>
-                        <% if i == pl.skill %>
-                          <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                    <% if !@user.new_record? %>
+                      <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
+                    <% end %>
+                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
+                    <% (1..5).each do |i| %>
+                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                        <% if pl %>
+                          <% if i == pl.skill %>
+                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+                          <% else %>
+                            <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+                          <% end %>
+                        <%# Erzeuge sonst einen unchecked radio button %>
                         <% else %>
                           <%= f2.radio_button programming_language.id, i, :class=>"star" %>
                         <% end %>
-                      <%# Erzeuge sonst einen unchecked radio button %>
-                      <% else %>
-                        <%= f2.radio_button programming_language.id, i, :class=>"star" %>
                       <% end %>
-                    <% end %>
-                  </td>    
-                </tr>
+                    </div>
+                  </div>    
+                </li>
               <% end %>
             <% end %>
           <% end %>
@@ -129,45 +146,53 @@
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("students.carrier") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
               <%= f.label :academic_program, t("activerecord.attributes.student.academic_program"), class: "control-label" %>
-            </td>
-            <td><%= f.text_field :academic_program, class: "form-control", type:"text" %></td>
-          </tr>
-          <tr>
-            <td><%= f.label :semester, t("activerecord.attributes.student.semester"), class: "control-label" %></td>
-            <td><%= f.number_field :semester, class: "form-control", type:"number" %></td>
-          </tr>
-          <tr>
-            <td>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :academic_program, class: "form-control", type:"text" %></td>
+            </div>
+          </div> 
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= f.label :semester, t("activerecord.attributes.student.semester"), class: "control-label" %>
+            </div>
+            <div class="col-sm-9">
+              <%= f.number_field :semester, class: "form-control", type:"number" %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
               <%= f.label :education, t("activerecord.attributes.student.education"), class: "control-label" %>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
                 <%= f.bootsy_area :education, rows:"5", class: "form-control", type:"text" %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </li>
+      </ule>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <%= fields_for :languages do |f3| %>
-            <% if @all_languages %>
-              <% @all_languages.each do |language| %>
-                <tr>
-                  <td>
+      <ul class="list-group">
+        <%= fields_for :languages do |f3| %>
+          <% if @all_languages %>
+            <% @all_languages.each do |language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
                     <%# Erstelle ein Label fuer jede Programmiersprache %>
                     <%= f3.label language.name, class: "control-label" %>
-                  </td>
-                  <td>
+                  </div>
+                  <div class="col-sm-9">
                     <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                     <% if !@user.new_record? %>
                       <% l = LanguagesUser.find_by_user_id_and_language_id(@user.id,language.id) %>
@@ -186,76 +211,82 @@
                         <%= f3.radio_button language.id, i, :class=>"star" %>
                       <% end %>
                     <% end %>
-                  </td>
-                </tr>
-              <% end %>
+                  </div>
+                </div>
+              </li>
             <% end %>
           <% end %>
-        </tbody>
-      </table>
+        <% end %>
+      </ul>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4>Links</h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
                <%= fa_icon "home 2x", class: "control-label"%>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
               <%= f.text_field :homepage, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-          <tr>
-            <td>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
                <%= fa_icon "github-square 2x", class: "control-label"%>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
               <%= f.text_field :github, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-          <tr>
-            <td>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
                <%= fa_icon "facebook-square 2x", class: "control-label"%>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
               <%= f.text_field :facebook, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-          <tr>
-            <td>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
                <%= fa_icon "xing-square 2x", class: "control-label"%>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
               <%= f.text_field :xing, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-          <tr>
-            <td>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
                <%= fa_icon "linkedin-square 2x", class: "control-label"%>
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-9">
               <%= f.text_field :linkedin, class: "form-control", type:"text" %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.additional_information") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
               <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
