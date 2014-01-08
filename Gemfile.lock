@@ -45,7 +45,7 @@ GEM
     addressable (2.3.5)
     airbrake (3.1.15)
       builder
-      multi_json
+      json
     annotate (2.6.1)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -70,6 +70,7 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
+    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -253,6 +254,7 @@ DEPENDENCIES
   bootsy
   cancan
   capybara
+  chronic (~> 0.10.2)
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
   database_cleaner

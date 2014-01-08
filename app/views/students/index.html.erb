@@ -6,16 +6,11 @@
       <% @users.each do |student| %>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
               <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
+              <%= link_to "Promote", student_path(student), :class => "btn btn-default", style: "float:right; " %>
             </div>
-            <div class="col-md-2">
-              <p class="semester"><%= t("activerecord.attributes.student.semester") +": " + student.semester.to_s%></p>
-            </div>
-            <div class="row">
-            <div class="col-md-11 col-md-offset-1 ac_program"><%= student.academic_program%></div>
           </div>
-        </div>
         </li>
       <% end %>
       </ul>

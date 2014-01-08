@@ -110,6 +110,9 @@ gem 'simple_form'
 # WYSIWYG Text Editor
 gem 'bootsy'
 
+#Birthdate validation
+gem "chronic", '~> 0.10.2'
+
 group :test do
   gem 'email_spec'
   gem 'database_cleaner'

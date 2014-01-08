@@ -46,7 +46,6 @@ describe "Job Offer pages" do
 
             it { should_not have_button('Apply') }
             it { should_not have_selector('h4', text: 'Applications') }
-            it { should have_selector('div.panel', count: 2) }
             it { should have_selector('div.panel', text: I18n.t('job_offers.already_applied')) }
           end
         end
