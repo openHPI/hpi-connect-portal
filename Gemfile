@@ -74,7 +74,7 @@ gem 'cancan'
 gem 'rest-client'
 
 # command line parsing for project registration
-gem "highline"
+gem 'highline'
 
 #For picture Upload
 gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
