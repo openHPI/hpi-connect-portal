@@ -12,10 +12,6 @@ describe JobOffersMailer do
 		ActionMailer::Base.deliveries = []
 	end
 
-	after(:each) do
-  		ActionMailer::Base.deliveries.clear
-	end
-
 	describe "new job offer" do
 		before(:each) do
 			@email = JobOffersMailer.new_job_offer_email(@job_offer).deliver
