@@ -93,7 +93,17 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, role: Role.where(name: "Student").first)
+        # semester, academic_program and education are required to create a user with the role student
+        # If another role is chosen, these attributes are still present, but it does not matter
+        User.new(
+            identity_url: identity_url, 
+            email: email, 
+            firstname: first_name, 
+            lastname: last_name, 
+            semester: 1,
+            academic_program: "unknown",
+            education: "unknown",
+            role: Role.where(name: "Student").first)
     end
 
     def applied?(job_offer)
