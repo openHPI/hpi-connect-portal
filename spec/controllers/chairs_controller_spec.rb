@@ -109,11 +109,20 @@ describe ChairsController do
     end
 
     describe "with invalid params" do
+      
       it "renders new again" do
         post :create, {:chair => false_attributes}
         response.should render_template("new")
         flash[:error].should eql("Invalid content.")
       end
+
+      it "does not create a new chair without deputy" do
+        post :create, {:chair =>  {"name" => "HCI", "description" => "Human Computer Interaction", 
+      "head_of_chair" => "Prof. Patrick Baudisch"}}
+        response.should render_template("new")
+        flash[:error].should eql("Invalid content.")
+      end
+
     end
 
     describe "with insufficient access rights" do
