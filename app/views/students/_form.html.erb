@@ -73,7 +73,7 @@
               <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
                 <%= image_tag('file_thumbnails/missing.png', size: "80") %>
               <% else %>
-                <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
+                <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.path) %><br><br><%= File.basename(@user.cv.path); %>
               <% end %>
             <% end %>
             <br><br>
