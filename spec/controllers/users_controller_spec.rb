@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe UsersController do
   let(:user) { FactoryGirl.create(:user) }
+  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
 
-  let(:valid_attributes) { { "firstname" => "Mister", "lastname" => "Awesome", "email" => "test@example.com" } }
+  let(:valid_attributes) { { "firstname" => "Mister", "lastname" => "Awesome", "email" => "test@example.com", :semester => "1", :education => "Master", :academic_program => "Volkswirtschaftslehre", "role" => student_role } }
   let(:false_attributes) { { "firstname" => 123 } }
   let(:valid_session) { {} }
 
@@ -75,7 +76,16 @@ describe UsersController do
       user = User.create! valid_attributes
       put :update, { :id => user.id, :user => valid_attributes }, valid_session
       response.should redirect_to(user)
-	end
+	  end
+
+    it "handles a failing update call" do
+      troubling_user = FactoryGirl.create(:user)
+
+      user = User.create! valid_attributes
+      sign_in user
+      patch :update, { :id => user.id, :user => { 'email' => troubling_user.email} }, valid_session
+      flash[:error].should eql("Error while updating profile.")
+    end
 
   end
 

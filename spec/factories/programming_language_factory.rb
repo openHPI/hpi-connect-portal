@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :programming_language do
-    name "Awesome programming language"
+    sequence(:name)  { |n| "Programming language #{n}" }
   end
 end

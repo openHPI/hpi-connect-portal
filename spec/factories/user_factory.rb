@@ -42,7 +42,7 @@
 FactoryGirl.define do
   factory :user do
     sequence(:firstname)  { |n| "User #{n}" }
-    sequence(:lastname)  { |n| "the #{n} of his kind" }
+    sequence(:lastname)  { |n| "the #{n}th of his kind" }
     sequence(:email) { |n| "user_#{n}@example.com" } 
     sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
     association :role
@@ -56,8 +56,11 @@ FactoryGirl.define do
     facebook 'www.faceboook.com/dieter'
     xing 'www.xing.com/dieter'
     linkedin'www.linkedin.com/dieter'
-    languages Language.where(:name => 'Englisch')
-    programming_languages ProgrammingLanguage.where(:name => ['Ruby'])
     status UserStatus.where(:name => 'employed (ext)').first
+
+    after(:create) do |user, evaluator|
+        create_list(:language, 1)
+        create_list(:programming_language, 1)
+    end
   end
 end
