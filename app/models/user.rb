@@ -143,8 +143,10 @@ class User < ActiveRecord::Base
     def self.search_students_for_mulitple_languages_and_identifiers(language_identifier, languages)
         result = User.all
 
-        languages.each do |language|
-            result = result & search_students_by_language_identifier(language_identifier, language)
+        if !languages.nil?
+            languages.each do |language|
+                result = result & search_students_by_language_identifier(language_identifier, language)
+            end
         end
 
         result

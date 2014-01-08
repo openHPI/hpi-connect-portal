@@ -134,21 +134,22 @@ describe User do
   end
 
   describe"#searchStudent" do
-  it "returns an array of students whos description contain a queryed string"do
-    expect(User.search_student('Englisch')).to include(@student)
-  end
-  it "returns an array of students whos description contain a queryed string"do
-      expect(User.search_student('Master')).to include(@student)
-  end
-
-  it "should return an empty array if anyone speaks the requested language" do
-    expect(User.search_student("Hindi")).to eq([])
+    it "returns an array of students whos description contain a queryed string"do
+      expect(User.search_student('Englisch')).to include(@student)
     end
+    it "returns an array of students whos description contain a queryed string"do
+        expect(User.search_student('Master')).to include(@student)
+    end
+
+    it "should return an empty array if anyone speaks the requested language" do
+      expect(User.search_student("Hindi")).to eq([])
+      end
   end
 
-  after(:all) do
-    User.delete_all
-    Language.delete_all
-    ProgrammingLanguage.delete_all
+  describe "search_students_for_mulitple_languages_and_identifiers" do
+    it "should handle nil input" do
+      matching_students = User.search_students_for_mulitple_languages_and_identifiers(:languages, nil)
+      assert_equal(matching_students.length, User.all.length);
+    end
   end
 end
