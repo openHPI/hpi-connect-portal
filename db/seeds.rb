@@ -201,6 +201,13 @@ Chair.create([{
 	deputy: User.where(:firstname=>"Chief").first
 }])
 
+Chair.create([{
+	name: "Verwaltung",
+	description: "to be done",
+	head_of_chair: "to be done",
+	deputy: User.where(:firstname=>"Chief").first
+}])
+
 JobOffer.delete_all
 JobOffer.create([{
 	title: "Touch floor", 
