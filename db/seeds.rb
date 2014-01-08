@@ -64,8 +64,8 @@ User.create([{
 User.create([{
 	email: "tim.specht@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Tim", 
-	firstname: "Specht",
+	lastname: "Specht", 
+	firstname: "Tim",
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
@@ -75,8 +75,8 @@ User.create([{
 User.create([{
 	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
-	lastname: "Pascal", 
-	firstname: "Reinhardt", 
+	lastname: "Reinhardt", 
+	firstname: "Pascal", 
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
@@ -86,8 +86,8 @@ User.create([{
 User.create([{
 	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
-	lastname: "Tim", 
-	firstname: "Friedrich",
+	lastname: "Friedrich", 
+	firstname: "Tim",
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
@@ -97,14 +97,14 @@ User.create([{
 User.create([{
 	email: "johannes.koch@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
-	lastname: "Johannes", 
-	firstname: "Koch", 
+	lastname: "Koch", 
+	firstname: "Johannes", 
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
 	role: Role.where(:name => 'Student').first	
 }])
-#Create User as an example deputy for all chairs
+
 User.create([{
 identity_url: 'openid',
 email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
