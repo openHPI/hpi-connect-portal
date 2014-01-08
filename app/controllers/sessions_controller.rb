@@ -1,4 +1,5 @@
 class SessionsController < Devise::SessionsController
+  skip_before_filter :require_login
   skip_before_filter :verify_authenticity_token
   before_filter :update_sanitized_params
 

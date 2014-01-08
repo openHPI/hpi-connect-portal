@@ -112,7 +112,7 @@ describe "Studentsearches" do
     end
 
     it 'should return Alexander Zeier when searching for languages' do       
-        find(:css, "#Language_[value='"+@language.name+"']").set(true)
+        find(:css, "#Language_[value='"+@language.name+"']").set(true)  
 
         find('input[type="submit"]').click
         expect(page).to have_content "#{@student1.firstname} #{@student1.lastname}"

@@ -30,19 +30,21 @@ describe ProgrammingLanguagesController do
   # ProgrammingLanguagesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before do
+    @programming_language = FactoryGirl.create(:programming_language)
+  end
+
   describe "GET index" do
     it "assigns all programming_languages as @programming_languages" do
-      programming_language = ProgrammingLanguage.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:programming_languages).should eq([programming_language])
+      assigns(:programming_languages).should eq(ProgrammingLanguage.all)
     end
   end
 
   describe "GET show" do
     it "assigns the requested programming_language as @programming_language" do
-      programming_language = ProgrammingLanguage.create! valid_attributes
-      get :show, {:id => programming_language.to_param}, valid_session
-      assigns(:programming_language).should eq(programming_language)
+      get :show, {:id => @programming_language.to_param}, valid_session
+      assigns(:programming_language).should eq(@programming_language)
     end
   end
 
@@ -55,9 +57,8 @@ describe ProgrammingLanguagesController do
 
   describe "GET edit" do
     it "assigns the requested programming_language as @programming_language" do
-      programming_language = ProgrammingLanguage.create! valid_attributes
-      get :edit, {:id => programming_language.to_param}, valid_session
-      assigns(:programming_language).should eq(programming_language)
+      get :edit, {:id => @programming_language.to_param}, valid_session
+      assigns(:programming_language).should eq(@programming_language)
     end
   end
 
@@ -101,42 +102,37 @@ describe ProgrammingLanguagesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested programming_language" do
-        programming_language = ProgrammingLanguage.create! valid_attributes
         # Assuming there are no other programming_languages in the database, this
         # specifies that the ProgrammingLanguage created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         ProgrammingLanguage.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => programming_language.to_param, :programming_language => { "name" => "MyString" }}, valid_session
+        put :update, {:id => @programming_language.to_param, :programming_language => { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested programming_language as @programming_language" do
-        programming_language = ProgrammingLanguage.create! valid_attributes
-        put :update, {:id => programming_language.to_param, :programming_language => valid_attributes}, valid_session
-        assigns(:programming_language).should eq(programming_language)
+        put :update, {:id => @programming_language.to_param, :programming_language => valid_attributes}, valid_session
+        assigns(:programming_language).should eq(@programming_language)
       end
 
       it "redirects to the programming_language" do
-        programming_language = ProgrammingLanguage.create! valid_attributes
-        put :update, {:id => programming_language.to_param, :programming_language => valid_attributes}, valid_session
-        response.should redirect_to(programming_language)
+        put :update, {:id => @programming_language.to_param, :programming_language => valid_attributes}, valid_session
+        response.should redirect_to(@programming_language)
       end
     end
 
     describe "with invalid params" do
       it "assigns the programming_language as @programming_language" do
-        programming_language = ProgrammingLanguage.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         ProgrammingLanguage.any_instance.stub(:save).and_return(false)
-        put :update, {:id => programming_language.to_param, :programming_language => { "name" => "invalid value" }}, valid_session
-        assigns(:programming_language).should eq(programming_language)
+        put :update, {:id => @programming_language.to_param, :programming_language => { "name" => "invalid value" }}, valid_session
+        assigns(:programming_language).should eq(@programming_language)
       end
 
       it "re-renders the 'edit' template" do
-        programming_language = ProgrammingLanguage.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         ProgrammingLanguage.any_instance.stub(:save).and_return(false)
-        put :update, {:id => programming_language.to_param, :programming_language => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => @programming_language.to_param, :programming_language => { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -144,15 +140,13 @@ describe ProgrammingLanguagesController do
 
   describe "DELETE destroy" do
     it "destroys the requested programming_language" do
-      programming_language = ProgrammingLanguage.create! valid_attributes
       expect {
-        delete :destroy, {:id => programming_language.to_param}, valid_session
+        delete :destroy, {:id => @programming_language.to_param}, valid_session
       }.to change(ProgrammingLanguage, :count).by(-1)
     end
 
     it "redirects to the programming_languages list" do
-      programming_language = ProgrammingLanguage.create! valid_attributes
-      delete :destroy, {:id => programming_language.to_param}, valid_session
+      delete :destroy, {:id => @programming_language.to_param}, valid_session
       response.should redirect_to(programming_languages_url)
     end
   end
