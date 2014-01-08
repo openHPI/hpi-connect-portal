@@ -147,6 +147,34 @@ describe StudentsController do
     end
   end
 
+  describe "PATCH update" do
+    before do
+      @student = FactoryGirl.create(:user)
+    end
+
+    it "handles nil strings" do
+      patch :update, { :id => @student.id, :user => {
+        "academic_program" => nil,
+        "additional_information" => nil,
+        "birthday" => nil,
+        "education" => nil,
+        "email" => "alexander.zeier@accenture.com",
+        "facebook" => nil,
+        "firstname" => "Alexander",
+        "github" => nil,
+        "homepage" => nil,
+        "lastname" => "Zeier",
+        "linkedin" => nil,
+        "photo" => nil,
+        "semester" => nil,
+        "user_status_id" => "1",
+        "xing" => nil
+      }}
+      
+    response.should redirect_to(student_path(@student))
+    end
+  end
+
   describe "DELETE destroy" do
     it "destroys the requested student" do
       user = User.create! valid_attributes
