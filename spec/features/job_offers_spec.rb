@@ -71,17 +71,21 @@ describe "a job offer entry" do
 end
 
 describe "job_offers_history" do
-  it "should have a job-offers-history" do
+  before do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
     @status = FactoryGirl.create(:job_status, :completed)
+    @open = FactoryGirl.create(:job_status, name:"open")
+    @running = FactoryGirl.create(:job_status, name:"running")
     @job_offer = FactoryGirl.create(:job_offer, 
       title: "Closed Job Touch Floor", 
       status: @status,
       chair: @TestChair,
       responsible_user: @user
       )
+  end
 
+  it "should have a job-offers-history" do
     visit job_offers_path
     find("div#buttons").should have_link "Archive"
     click_on "Archive"

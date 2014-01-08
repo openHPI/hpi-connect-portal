@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  before_filter :require_login
-
   protect_from_forgery with: :exception
 
   before_action :set_locale
@@ -40,12 +38,5 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-
-  private
-    def require_login
-      unless current_user
-        redirect_to new_user_session_path
-      end
-    end
 
 end

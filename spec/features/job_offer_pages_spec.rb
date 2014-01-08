@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe "Job Offer pages" do
 
   subject { page }

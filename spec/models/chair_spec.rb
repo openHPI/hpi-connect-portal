@@ -51,7 +51,4 @@ describe Chair do
 			@chair.should be_invalid
 		end
 	end
-	after(:each) do
-		@chair = nil
-	end
 end

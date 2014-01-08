@@ -57,9 +57,6 @@ describe ApplicationsMailer do
 			@email.body.should have_content(@job_offer.title)
 		end
 	end
-	after(:each) do
-  		ActionMailer::Base.deliveries.clear
-	end
 
 	describe "application created" do
 		before(:each) do
