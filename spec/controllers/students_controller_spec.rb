@@ -153,7 +153,8 @@ describe StudentsController do
     end
 
     it "handles nil strings" do
-      patch :update, { :id => @student.id, :user => {
+
+      params = {
         "academic_program" => nil,
         "additional_information" => nil,
         "birthday" => nil,
@@ -169,9 +170,11 @@ describe StudentsController do
         "semester" => nil,
         "user_status_id" => "1",
         "xing" => nil
-      }}
-      
-    response.should redirect_to(student_path(@student))
+      }
+
+      patch :update, { :id => @student.id, :user => params}
+
+      response.should render_template("edit")
     end
   end
 
