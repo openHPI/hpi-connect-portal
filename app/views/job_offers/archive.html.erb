@@ -1,12 +1,11 @@
 <div class="row">
   <div class="col-md-9"> 
     <div class="row">
-      <% @find_jobs_path = find_archived_jobs_job_offers_path %>
       <%= render 'shared/overview', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
     </div><!--/.row -->
   </div><!--/.span -->
   <div class="col-md-3">
-  	<%= render 'shared/sort_filter_search'  %>
+    <%= render 'shared/sort_filter_search', find_path: archive_job_offers_path %>
   </div>
 </div> <!-- /row -->
 

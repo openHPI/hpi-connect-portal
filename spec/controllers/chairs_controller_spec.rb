@@ -21,7 +21,6 @@ require 'spec_helper'
 describe ChairsController do
 
   let(:deputy) { FactoryGirl.create(:user) }
-
   let(:admin) { FactoryGirl.create(:role, name: 'Admin') }
 
   # This should return the minimal set of attributes required to create a valid
@@ -36,6 +35,11 @@ describe ChairsController do
   # in order to pass any filters (e.g. authentication) defined in
   # ChairsController. Be sure to keep this updated too.
   login_user FactoryGirl.create(:role, name: 'Admin')
+
+  before(:each) do 
+    FactoryGirl.create(:job_status, :running)
+    FactoryGirl.create(:job_status, :open)
+  end
 
   describe "GET index" do
     it "assigns all chairs as @chairs" do
@@ -105,11 +109,20 @@ describe ChairsController do
     end
 
     describe "with invalid params" do
+      
       it "renders new again" do
         post :create, {:chair => false_attributes}
         response.should render_template("new")
         flash[:error].should eql("Invalid content.")
       end
+
+      it "does not create a new chair without deputy" do
+        post :create, {:chair =>  {"name" => "HCI", "description" => "Human Computer Interaction", 
+      "head_of_chair" => "Prof. Patrick Baudisch"}}
+        response.should render_template("new")
+        flash[:error].should eql("Invalid content.")
+      end
+
     end
 
     describe "with insufficient access rights" do
@@ -160,7 +173,5 @@ describe ChairsController do
         response.should redirect_to(chairs_path)
       end
     end
-
   end
-
 end

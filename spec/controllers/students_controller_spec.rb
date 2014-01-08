@@ -37,7 +37,7 @@ describe StudentsController do
     it "assigns all user as @users" do
       user = User.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:users).should eq([user])
+      assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
     end
   end
 
@@ -144,6 +144,34 @@ describe StudentsController do
         put :update, {:id => student.to_param, :user => { "firstname" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
+    end
+  end
+
+  describe "PATCH update" do
+    before do
+      @student = FactoryGirl.create(:user)
+    end
+
+    it "handles nil strings" do
+      patch :update, { :id => @student.id, :user => {
+        "academic_program" => nil,
+        "additional_information" => nil,
+        "birthday" => nil,
+        "education" => nil,
+        "email" => "alexander.zeier@accenture.com",
+        "facebook" => nil,
+        "firstname" => "Alexander",
+        "github" => nil,
+        "homepage" => nil,
+        "lastname" => "Zeier",
+        "linkedin" => nil,
+        "photo" => nil,
+        "semester" => nil,
+        "user_status_id" => "1",
+        "xing" => nil
+      }}
+      
+    response.should redirect_to(student_path(@student))
     end
   end
 
