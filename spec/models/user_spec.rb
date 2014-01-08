@@ -45,8 +45,8 @@ describe User do
   before(:each) do
     @english = Language.create(:name=>'Englisch')
     @user = FactoryGirl.create(:user)
-    @student = FactoryGirl.create(:user, :languages=>[@english],
-      :programming_languages=>[ProgrammingLanguage.create(:name=>'Ruby')])
+    @programming_language = FactoryGirl.create(:programming_language)
+    @student = FactoryGirl.create(:user, :languages=>[@english], :programming_languages => [@programming_language])
   end
 
   subject { @user }
@@ -79,7 +79,7 @@ describe User do
   describe "#searchStudentsByProgrammingLanguage" do
 
     it "returns an array of students who speak a ProgrammingLanguage" do
-    expect(User.search_students_by_language_identifier(:programming_languages, 'Ruby')).to include @student
+    expect(User.search_students_by_language_identifier(:programming_languages, @programming_language.name)).to include @student
     end
     it "should return an empty array if anyone speaks the requested language" do
       expect(User.search_students_by_language_identifier(:programming_languages, "Hindi")).to eq([])
@@ -88,7 +88,7 @@ describe User do
 
   describe"#searchStudentsByLanguage" do
     it "returns an array of students who speak a language" do
-      expect(User.search_students_by_language_identifier(:languages, 'Englisch')).to include(@student)
+      expect(User.search_students_by_language_identifier(:languages, @english.name)).to include(@student)
     end
 
     it "should return an empty array if anyone speaks the requested language" do

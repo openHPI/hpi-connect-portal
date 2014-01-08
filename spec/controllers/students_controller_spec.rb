@@ -37,7 +37,7 @@ describe StudentsController do
     it "assigns all user as @users" do
       user = User.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:users).should eq([user])
+      assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
     end
   end
 

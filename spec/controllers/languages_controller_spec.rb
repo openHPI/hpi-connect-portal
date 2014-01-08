@@ -30,19 +30,21 @@ describe LanguagesController do
   # LanguagesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before do
+    @language = FactoryGirl.create(:language)
+  end
+
   describe "GET index" do
     it "assigns all languages as @languages" do
-      language = Language.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:languages).should eq([language])
+      assigns(:languages).should eq(Language.all)
     end
   end
 
   describe "GET show" do
     it "assigns the requested language as @language" do
-      language = Language.create! valid_attributes
-      get :show, {:id => language.to_param}, valid_session
-      assigns(:language).should eq(language)
+      get :show, {:id => @language.to_param}, valid_session
+      assigns(:language).should eq(@language)
     end
   end
 
@@ -55,9 +57,8 @@ describe LanguagesController do
 
   describe "GET edit" do
     it "assigns the requested language as @language" do
-      language = Language.create! valid_attributes
-      get :edit, {:id => language.to_param}, valid_session
-      assigns(:language).should eq(language)
+      get :edit, {:id => @language.to_param}, valid_session
+      assigns(:language).should eq(@language)
     end
   end
 
@@ -101,42 +102,37 @@ describe LanguagesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested language" do
-        language = Language.create! valid_attributes
         # Assuming there are no other languages in the database, this
         # specifies that the Language created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Language.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => language.to_param, :language => { "name" => "MyString" }}, valid_session
+        put :update, {:id => @language.to_param, :language => { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested language as @language" do
-        language = Language.create! valid_attributes
-        put :update, {:id => language.to_param, :language => valid_attributes}, valid_session
-        assigns(:language).should eq(language)
+        put :update, {:id => @language.to_param, :language => valid_attributes}, valid_session
+        assigns(:language).should eq(@language)
       end
 
       it "redirects to the language" do
-        language = Language.create! valid_attributes
-        put :update, {:id => language.to_param, :language => valid_attributes}, valid_session
-        response.should redirect_to(language)
+        put :update, {:id => @language.to_param, :language => valid_attributes}, valid_session
+        response.should redirect_to(@language)
       end
     end
 
     describe "with invalid params" do
       it "assigns the language as @language" do
-        language = Language.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Language.any_instance.stub(:save).and_return(false)
-        put :update, {:id => language.to_param, :language => { "name" => "invalid value" }}, valid_session
-        assigns(:language).should eq(language)
+        put :update, {:id => @language.to_param, :language => { "name" => "invalid value" }}, valid_session
+        assigns(:language).should eq(@language)
       end
 
       it "re-renders the 'edit' template" do
-        language = Language.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Language.any_instance.stub(:save).and_return(false)
-        put :update, {:id => language.to_param, :language => { "name" => "invalid value" }}, valid_session
+        put :update, {:id => @language.to_param, :language => { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -144,15 +140,13 @@ describe LanguagesController do
 
   describe "DELETE destroy" do
     it "destroys the requested language" do
-      language = Language.create! valid_attributes
       expect {
-        delete :destroy, {:id => language.to_param}, valid_session
+        delete :destroy, {:id => @language.to_param}, valid_session
       }.to change(Language, :count).by(-1)
     end
 
     it "redirects to the languages list" do
-      language = Language.create! valid_attributes
-      delete :destroy, {:id => language.to_param}, valid_session
+      delete :destroy, {:id => @language.to_param}, valid_session
       response.should redirect_to(languages_url)
     end
   end
