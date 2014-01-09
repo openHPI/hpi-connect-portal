@@ -6,10 +6,10 @@
       <% @users.each do |research_assistant| %>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
               <%= link_to research_assistant.firstname+" "+research_assistant.lastname, research_assistant_path(research_assistant), :class => "h4" %>
             </div>
-        </div>
+          </div>
         </li>
       <% end %>
       </ul>

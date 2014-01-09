@@ -9,216 +9,249 @@
       </ul>
     </div>
   <% end %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><h4><%= t("activerecord.attributes.research_assistant.general_information") %></h4></h3>
+
+<div class="row">
+  <!--   Left -->
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.general_information") %></h4></div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :firstname, t("activerecord.attributes.research_assistant.first_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :firstname, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :lastname, t("activerecord.attributes.research_assistant.last_name"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :lastname, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :email, class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :email, class: "form-control", type:"text" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :user_status, t("activerecord.attributes.research_assistant.status"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+               <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :birthday, t("activerecord.attributes.research_assistant.birthday"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.date_select(:birthday ,  {start_year: 1940},{ :class => 'birthdate_select form-control col-sm-3'})%>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :photo, t("activerecord.attributes.research_assistant.photo"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <% if !@user.new_record? %>
+                  <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
+                <% end %>
+                <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :cv, t("activerecord.attributes.research_assistant.cv"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <% if !@user.new_record? %>
+                  <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
+                    <%= image_tag('file_thumbnails/missing.png', size: "80") %>
+                  <% else %>
+                    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
+                  <% end %>
+                <% end %>
+                <br><br>
+                <%= f.file_field :cv, accept: 'application/pdf' %>
+              </div>
+            </div>
+          </li>
+        </ul>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :firstname, t("activerecord.attributes.research_assistant.first_name"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%= f.label @user.firstname, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :lastname, t("activerecord.attributes.research_assistant.last_name"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%= f.label @user.lastname, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-       <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :email, class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%= f.text_field :email, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :status, t("activerecord.attributes.research_assistant.status"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :birthday, t("activerecord.attributes.research_assistant.birthday"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <%= f.input :birthday, as: :string, label: false, input_html: { type: 'text', class: 'form-control datepicker' } %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :photo, t("activerecord.attributes.research_assistant.photo"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <% if !@user.new_record? %>
-              <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
-            <% end %>
-            <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= f.label :cv, t("activerecord.attributes.research_assistant.cv"), class: "col-sm-2 control-label" %>
-          <div class="col-sm-10">
-            <% if !@user.new_record? %>
-              <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
-                <%= image_tag('file_thumbnails/missing.png', size: "80") %>
-              <% else %>
-                <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.programming_languages") %></h4></div>
+        <ul class="list-group">
+          <%= fields_for :programming_languages do |f2| %>
+          <% if @all_programming_languages %>
+            <% @all_programming_languages.each do |programming_language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                  <%# Erstelle ein Label fuer jede Programmiersprache %>
+                  <%= f2.label programming_language.name, class: "control-label" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                    <% if !@user.new_record? %>
+                      <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
+                    <% end %>
+                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
+                    <% (1..5).each do |i| %>
+                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                        <% if pl %>
+                          <% if i == pl.skill %>
+                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+                          <% else %>
+                            <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+                          <% end %>
+                        <%# Erzeuge sonst einen unchecked radio button %>
+                        <% else %>
+                          <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>    
+                </li>
               <% end %>
             <% end %>
-            <br><br>
-            <%= f.file_field :cv, accept: 'application/pdf' %>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><h4><%= t("activerecord.attributes.research_assistant.additional_information") %></h4></h3>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="form-group">
-          <div class="col-sm-12">
-            <%= f.bootsy_area :additional_information, rows:"3" %>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4><%= t("activerecord.attributes.research_assistant.links") %></h4>
-    </div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= fa_icon "home 2x", class: "col-sm-2 control-label"%>
-          <div class="col-sm-10">
-            <%= f.text_field :homepage, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= fa_icon "github-square 2x", class: "col-sm-2 control-label"%>
-          <div class="col-sm-10">
-            <%= f.text_field :github, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= fa_icon "facebook-square 2x", class: "col-sm-2 control-label"%>
-          <div class="col-sm-10">
-            <%= f.text_field :facebook, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= fa_icon "xing-square 2x", class: "col-sm-2 control-label"%>
-          <div class="col-sm-10">
-            <%= f.text_field :xing, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="form-group">
-          <%= fa_icon "linkedin-square 2x", class: "col-sm-2 control-label"%>
-          <div class="col-sm-10">
-            <%= f.text_field :linkedin, class: "form-control", type:"text" %>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.programming_languages") %></h4></div>
-    <ul class="list-group">
-      <%= fields_for :programming_languages do |f2| %>
-        <% if @all_programming_languages %>
-          <% @all_programming_languages.each do |programming_language| %>
-            <li class="list-group-item">
-              <div class="form-group">
-                <%# Erstelle ein Label fuer jede Programmiersprache %>
-                <%= f2.label programming_language.name, class: "col-sm-2 control-label" %>
-                <div class="col-sm-10">
-                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if !@user.new_record? %>
-                    <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
-                  <% end %>
-                  <%# Erzeuge 5 radio buttons fuer die Sterne %>
-                  <% (1..5).each do |i| %>
-                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                    <% if pl %>
-                      <% if i == pl.skill %>
-                        <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
-                      <% else %>
-                        <%= f2.radio_button programming_language.id, i, :class=>"star" %>
-                      <% end %>
-                    <%# Erzeuge sonst einen unchecked radio button %>
-                    <% else %>
-                      <%= f2.radio_button programming_language.id, i, :class=>"star" %>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-            </li>
           <% end %>
-        <% end %>
-      <% end %>
-    </ul>
+        </ul>
+      </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4><%= t("activerecord.attributes.research_assistant.languages") %></h4>
-    </div>
-    <ul class="list-group">
-      <%= fields_for :languages do |f3| %>
-        <% if @all_languages %>
-          <% @all_languages.each do |language| %>
-            <li class="list-group-item">
-              <div class="form-group">
-                <%# Erstelle ein Label fuer jede Programmiersprache %>
-                <%= f3.label language.name, class: "col-sm-2 control-label" %>
-                <div class="col-sm-10">
-                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if !@user.new_record? %>
-                    <% l = LanguagesUser.find_by_user_id_and_language_id(@user.id,language.id) %>
-                  <% end %>
-                  <%# Erzeuge 5 radio buttons fuer die Sterne %>
-                  <% (1..5).each do |i| %>
-                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                    <% if l %>
-                      <% if i == l.skill %>
-                        <%= f3.radio_button language.id, i, :checked => "checked", :class=>"star" %>
+
+<!--     Right -->
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.languages") %></h4></div>
+      <ul class="list-group">
+        <%= fields_for :languages do |f3| %>
+          <% if @all_languages %>
+            <% @all_languages.each do |language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%# Erstelle ein Label fuer jede Programmiersprache %>
+                    <%= f3.label language.name, class: "control-label" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                    <% if !@user.new_record? %>
+                      <% l = LanguagesUser.find_by_user_id_and_language_id(@user.id,language.id) %>
+                    <% end %>
+                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
+                    <% (1..5).each do |i| %>
+                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                      <% if l %>
+                        <% if i == l.skill %>
+                          <%= f3.radio_button language.id, i, :checked => "checked", :class=>"star" %>
+                        <% else %>
+                          <%= f3.radio_button language.id, i, :class=>"star" %>
+                        <% end %>
+                      <%# Erzeuge sonst einen unchecked radio button %>
                       <% else %>
                         <%= f3.radio_button language.id, i, :class=>"star" %>
                       <% end %>
-                    <%# Erzeuge sonst einen unchecked radio button %>
-                    <% else %>
-                      <%= f3.radio_button language.id, i, :class=>"star" %>
                     <% end %>
-                  <% end %>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Links</h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= fa_icon "home 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :homepage, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= fa_icon "github-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :github, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= fa_icon "facebook-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :facebook, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= fa_icon "xing-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :xing, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= fa_icon "linkedin-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= f.text_field :linkedin, class: "form-control", type:"text" %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.additional_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
+</div>
+
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
 <% end %>

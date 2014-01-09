@@ -1,33 +1,45 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  <div class="col-xs-8">
-    <div class="row">
-      <div class="col-xs-8">
-        <h1><%= @user.firstname %> <%= @user.lastname %></h1>
+  <div class="col-sm-6">
+    <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
+    <%= link_to t("links.edit"),  edit_research_assistant_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+    style: "float:right; display:inline;" %>
         <blockquote>
           <% if !(@user.user_status).nil? %>
             <p><%= @user.user_status.name %></p>
           <% end %>
         </blockquote>
-      </div>
-      <div class="col-xs-4">
+  </div>
+  <div class="col-sm-6 text-center">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
     </p>
-      </div>
-    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.general_information") %></h4></div>
       <table class="table">
+        <thead></thead>
         <tbody>
           <tr>
-            <td><%= t("activerecord.attributes.research_assistant.birthday")%></td>
+            <td><%= t("activerecord.attributes.research_assistant.birthday") %></td>
             <td><%= @user.birthday %></td>
           </tr>
            <tr>
-            <td>email</td>
+            <td><%= t("activerecord.attributes.research_assistant.email") %></td>
             <td><%= @user.email %></td>
+          </tr>
+           <tr>
+            <td><%= t("activerecord.attributes.research_assistant.chair") %></td>
+            <td>
+              <% if @user.chair %>
+                <%= link_to @user.chair.name, chair_path(@user.chair) %>
+              <% end %>
+              </td>
           </tr>
           <tr>
             <td><%= t("activerecord.attributes.research_assistant.cv")%></td>
@@ -43,78 +55,11 @@
       </table>
     </div>
 
-    <% if !(@user.additional_information).nil? %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><h4><%= t("activerecord.attributes.research_assistant.additional_information")%></h4></h3>
-        </div>
-        <div class="panel-body">
-          <%= @user.additional_information.html_safe %>
-        </div>
-      </div>
-    <% end %>
-
-    <% if !(@user.homepage).nil? || !(@user.github).nil? || !(@user.facebook).nil? || !(@user.xing).nil? || !(@user.linkedin).nil? %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.links")%></h4></div>
-        <ul class="list-group">
-          <% if !(@user.homepage).empty? %>
-            <li class="list-group-item"><%= fa_icon "home 2x"%>
-              <%= link_to @user.homepage, url_with_protocol(@user.homepage), :target => '_blank' %>
-            </li>
-          <% end %>
-          <% if !(@user.github).empty? %>
-            <li class="list-group-item"><%= fa_icon "github-square 2x"%>
-              <%= link_to @user.github, url_with_protocol(@user.github), :target => '_blank'%>
-            </li>
-          <% end %>
-          <% if !(@user.facebook).empty? %>
-            <li class="list-group-item"><%= fa_icon "facebook-square 2x"%>
-              <%= link_to @user.facebook, url_with_protocol(@user.facebook), :target => '_blank' %>
-            </li>
-          <% end %>
-          <% if !(@user.xing).empty? %>
-            <li class="list-group-item"><%= fa_icon "xing-square 2x"%>
-              <%= link_to @user.xing, url_with_protocol(@user.xing), :target => '_blank' %>
-            </li>
-          <% end %>
-          <% if !(@user.linkedin).empty? %>
-            <li class="list-group-item"><%= fa_icon "linkedin-square 2x"%>
-              <%= link_to @user.linkedin, url_with_protocol(@user.linkedin), :target => '_blank' %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <% if !@user.languages_users.empty? %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.languages")%></h4></div>
-        <table class="table">
-          <tbody>
-            <% @user.languages_users.each do |languages_user| %>
-              <tr>
-                <td><%= languages_user.language.name %></td>
-                <td>
-                  <% (1..5).each do |i| %>
-                    <% if i == languages_user.skill %>
-                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
-                    <% else %>
-                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
-                    <% end %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
-
     <% if !@user.programming_languages_users.empty? %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.programming_languages")%></h4></div>
         <table class="table">
+          <thead></thead>
           <tbody>
             <% @user.programming_languages_users.each do |programming_languages_user| %>
               <tr>
@@ -134,7 +79,111 @@
         </table>
       </div>
     <% end %>
-    <div class="pull-left"><%= link_to t("links.back"), research_assistants_path, class: "btn btn-default"%></div>
-    <div class="pull-right"><%= link_to t("links.edit"),  edit_research_assistant_path(@user.id), "data-no-turbolink" => true, class: "btn btn-warning" %></div>
-  </div>
+
+    <% if !(@user.homepage).nil? || !(@user.github).nil? || !(@user.facebook).nil? || !(@user.xing).nil? || !(@user.linkedin).nil? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.links")%></h4></div>
+          <table class="table">
+            <thead></thead>
+            <tbody>
+              <% if !(@user.homepage).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "home 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to @user.homepage, url_with_protocol(@user.homepage), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(@user.github).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "github-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to @user.github, url_with_protocol(@user.github), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(@user.facebook).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "facebook-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to @user.facebook, url_with_protocol(@user.facebook), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(@user.xing).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "xing-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to @user.xing, url_with_protocol(@user.xing), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(@user.linkedin).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "linkedin-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to @user.linkedin, url_with_protocol(@user.linkedin), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+  </div> 
+
+  <div class="col-sm-6">
+    <% if !@user.languages_users.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.languages")%></h4></div>
+        <table class="table">
+          <thead></thead>
+          <tbody>
+            <% @user.languages_users.each do |languages_user| %>
+              <tr>
+                <td><%= t("languages." + languages_user.language.name) %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == languages_user.skill %>
+                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <% if !(@user.additional_information).nil? && !(@user.additional_information).empty?%>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><%= t("activerecord.attributes.research_assistant.additional_information")%></h4>
+        </div>
+          <table class="table">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>
+                  <%= @user.additional_information.html_safe %>
+                </td>
+               </tr>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+  </div> 
 </div>
