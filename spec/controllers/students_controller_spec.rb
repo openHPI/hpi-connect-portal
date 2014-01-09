@@ -263,4 +263,15 @@ describe StudentsController do
       student.languages.size == 1
     end
   end
+
+  describe "PUT update_role" do
+    it "updates role if student_id and role name are correct" do
+      student_role = FactoryGirl.create(:role)
+      student = FactoryGirl.create(:user, :role_id => student_role.id)
+      staff_role = FactoryGirl.create(:role, :name => "staff")
+      assert_equal(User.find(student.id).role_id, student_role.id)
+      put :update_role, {:student_id => student.to_param, :role => staff_role.name}, valid_session
+      assert_equal(User.find(student.id).role_id, staff_role.id)
+    end
+  end
 end

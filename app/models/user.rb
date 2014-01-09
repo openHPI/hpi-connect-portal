@@ -110,6 +110,10 @@ class User < ActiveRecord::Base
         role && role.name == 'Admin'
     end
 
+    def deputy?
+        role && role.name == 'Deputy'
+    end
+
     def self.search_student(string)
         string = string.downcase
         search_results = User.where("

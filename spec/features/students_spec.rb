@@ -3,9 +3,8 @@ require 'spec_helper'
 describe "the students page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-  let(:research_assistant_role) { FactoryGirl.create(:role, name: 'Research Assistant', level: 2) }
   let(:chair){FactoryGirl.create(:chair)}
-  let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: chair) }
+
 	before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
 
@@ -13,9 +12,16 @@ describe "the students page" do
             :role => student_role,
             :programming_languages =>[@programming_language]
             )
+    create_necessary_roles
 
     visit students_path
 
+  end
+
+  def create_necessary_roles
+    FactoryGirl.create(:role, name: 'Research Assistant', level: 2)
+    FactoryGirl.create(:role, name: 'Admin', level: 3)
+    FactoryGirl.create(:role, name: 'Deputy', level: 4)
   end
 
   it "should view only names and status of a student on the overview" do
@@ -33,14 +39,14 @@ describe "the students page" do
     current_path.should == student_path(@student1)
   end
 
-  xit "should contain a button to change role of student to staff" do
-    login_as(research_assistant, :scope => :user)
-    visit students_path
-    page.should have_css "button.change-role"
-    first("button.change-role").click
-    find(".promote").click
-    assert(@student1.role!=student_role)
-  end
+  # xit "should contain a button to change role of student to staff" do
+  #   login_as(research_assistant, :scope => :user)
+  #   visit students_path
+  #   page.should have_css "button.change-role"
+  #   first("button.change-role").click
+  #   find(".promote").click
+  #   assert(@student1.role!=student_role)
+  # end
 
   # it "should delete the first student if Delete is clicked " do
   #   visit students_path

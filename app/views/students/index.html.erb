@@ -41,8 +41,8 @@
       <div class="modal-body">
       <%= form_tag update_role_students_path do %>
         <%= text_field_tag "student_id", nil %>
-        <%= select_tag :role, options_for_select([Role.find(2).name, "tralala"], Role.find(2).name) %>
-      <%= submit_tag t('students.promote_button'), :confirm => t("students.promote_confirm_question"), class: "btn btn-large btn-primary promote" %>
+        <%= select_tag :role, options_for_select([Role.find_by_level(2).name, Role.find_by_level(4).name, Role.find_by_level(3).name], Role.find_by_name("Research Assistant").name) %>
+      <%= submit_tag t('students.promote_button'), :data => {confirm: t("students.promote_confirm_question")}, class: "btn btn-large btn-primary promote" %>
       <% end %>
       </div>
       <div class="modal-footer">

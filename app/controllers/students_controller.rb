@@ -89,10 +89,20 @@ class StudentsController < ApplicationController
   end
 
   def update_role
+    role = Role.find_by_name(params[:role])
     @user = User.find(params[:student_id])
-    @user.role_id = Role.find_by_name(params[:role]).level
-    @user.save
-    redirect_to(students_path)
+    @user.update(:role_id => role.id) 
+    case role.level
+      when 2
+        @user.update(:chair_id => current_user.chair_id)
+      when 3
+      when 4
+        @user.update(:chair_id => current_user.chair_id)
+        Chair.find(current_user.chair_id).update(:deputy_id => @user.id)
+        current_user.update(:role_id => Role.find_by_level(2).id)
+    end 
+      redirect_to(students_path)
+
   end
 
   private
