@@ -224,14 +224,14 @@ describe StudentsController do
   # end
 
   describe "PUT update with programming languages skills" do
-    it "updates the requested research assistant with an existing programming language" do
+    it "updates the requested student with an existing programming language" do
       pl = ProgrammingLanguage.create([{name: 'Ruby'}])
       student = User.create! valid_attributes
       student.assign_attributes(:programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'}]))
       ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
       put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { pl.first.id.to_s => "2" }}, valid_session
     end
-    it "updates the requested research assistant with a new programming language" do
+    it "updates the requested student with a new programming language" do
       pl = ProgrammingLanguage.create([{name: 'Ruby'}, {name: 'Go'}])
       student = User.create! valid_attributes
       student.assign_attributes(:programming_languages => [pl.first], :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'}]))
@@ -239,7 +239,7 @@ describe StudentsController do
       student.programming_languages_users.last.skill == 2
       student.programming_languages.last == pl.last
     end
-    it "updates the requested research assistant with a removed programming language" do
+    it "updates the requested student with a removed programming language" do
       pl = ProgrammingLanguage.create([{name: 'Ruby'}, {name: 'Go'}])
       student = User.create! valid_attributes
       student.assign_attributes(:programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'},{programming_language_id: pl.last.id, skill: '2'}]))
@@ -249,14 +249,14 @@ describe StudentsController do
   end
 
   describe "PUT update with  languages skills" do
-    it "updates the requested research assistant with an existing language" do
+    it "updates the requested student with an existing language" do
       l = Language.create([{name: 'English'}])
       student = User.create! valid_attributes
       student.assign_attributes(:languages => l, :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'}]))
       LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
       put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :languages => { l.first.id.to_s => "2" }}, valid_session
     end
-    it "updates the requested research assistant with a new language" do
+    it "updates the requested student with a new language" do
       l = Language.create([{name: 'English'}, {name: 'German'}])
       student = User.create! valid_attributes
       student.assign_attributes(:languages => [l.first], :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'}]))
@@ -264,7 +264,7 @@ describe StudentsController do
       student.languages_users.last.skill == 2
       student.languages.last == l.last
     end
-    it "updates the requested research assistant with a removed language" do
+    it "updates the requested student with a removed language" do
       l = Language.create([{name: 'English'}, {name: 'German'}])
       student = User.create! valid_attributes
       student.assign_attributes(:languages => l, :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'},{language_id: l.last.id, skill: '2'}]))
