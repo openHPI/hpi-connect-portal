@@ -12,8 +12,8 @@ class JobOffersController < ApplicationController
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort
   has_scope :filter_compensation, only: [:index, :archive], as: :compensation
-  has_scope :filter_programming_languages, only: [:index, :archive], as: :programming_languages
-  has_scope :filter_languages, only: [:index, :archive], as: :languages
+  has_scope :filter_programming_languages, type: :array, only: [:index, :archive], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index, :archive], as: :language_ids
   has_scope :search, only: [:index, :archive]
 
   # GET /job_offers
