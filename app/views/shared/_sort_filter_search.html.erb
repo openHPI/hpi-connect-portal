@@ -1,5 +1,4 @@
 <div class="well sidebar-nav">
-      <div class="">
         <%= form_tag find_path, :method => :get, :id => 'Form' do %> 
           <ul class="nav nav-list">
 
@@ -42,7 +41,7 @@
                       <div class="panel-body row">
                         <div class="field">
                         <!--   <%= hidden_field_tag "programming_language_ids[]", nil %> -->
-                          <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
+                          <% ProgrammingLanguage.all.each_with_index do |programming_language| %>
                             <div class="col-md-6">
                               <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids, "").include?(programming_language.id.to_s), id: dom_id(programming_language)%>
                               <%= label_tag dom_id(programming_language), programming_language.name , :class => "small"%>
@@ -88,5 +87,4 @@
             </div>
          </ul>
         <% end %> 
-      </div><!--/.container -->
     </div> <!-- /sidebar -->

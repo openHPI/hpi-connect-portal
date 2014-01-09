@@ -1,10 +1,14 @@
 class StudentsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
+  has_scope :filter_semester, only: [:index],  as: :semester
 
   # GET /students
   # GET /students.json
   def index
-    @users = User.students
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
