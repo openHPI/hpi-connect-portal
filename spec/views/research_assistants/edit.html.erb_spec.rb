@@ -24,7 +24,9 @@ describe "research_assistants/edit" do
     assert_select "form[action=?][method=?]", research_assistant_path(@user.id), "post" do
       assert_select "input#user_email[name=?]", "user[email]"
       assert_select "select#user_user_status_id[name=?]", "user[user_status_id]"
-      assert_select "input#user_birthday[name=?]", "user[birthday]"
+      assert_select "select#user_birthday_1i[name=?]", "user[birthday(1i)]"
+      assert_select "select#user_birthday_2i[name=?]", "user[birthday(2i)]"
+      assert_select "select#user_birthday_3i[name=?]", "user[birthday(3i)]"
       assert_select "input#user_photo[name=?]", "user[photo]"
       assert_select "input#user_cv[name=?]", "user[cv]"
       assert_select "textarea#user_additional_information[name=?]", "user[additional_information]"

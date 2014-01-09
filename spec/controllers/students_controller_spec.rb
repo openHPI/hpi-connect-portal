@@ -224,52 +224,50 @@ describe StudentsController do
   # end
 
   describe "PUT update with programming languages skills" do
+    before(:each) do
+      @student = FactoryGirl.create(:user, valid_attributes)
+      @programming_language_1 = FactoryGirl.create(:programming_language, name: 'Ruby')
+      @programming_language_2 = FactoryGirl.create(:programming_language, name: 'Go')
+    end
     it "updates the requested student with an existing programming language" do
-      pl = ProgrammingLanguage.create([{name: 'Ruby'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'}]))
+      @student.assign_attributes(:programming_languages => [@programming_language_1], :programming_languages_users => [FactoryGirl.create(:programming_languages_user, user: @student, programming_language: @programming_language_1, skill: '4')])
       ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { pl.first.id.to_s => "2" }}, valid_session
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { @programming_language_1.id.to_s => "2" }}, valid_session
     end
     it "updates the requested student with a new programming language" do
-      pl = ProgrammingLanguage.create([{name: 'Ruby'}, {name: 'Go'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:programming_languages => [pl.first], :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'}]))
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { pl.last.id.to_s => "2" }}, valid_session
-      student.programming_languages_users.last.skill == 2
-      student.programming_languages.last == pl.last
+      @student.assign_attributes(:programming_languages => [@programming_language_1], :programming_languages_users => [FactoryGirl.create(:programming_languages_user, user: @student, programming_language: @programming_language_1, skill: '4')])
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { @programming_language_2.id.to_s => "2" }}, valid_session
+      @student.programming_languages_users.last.skill == 2
+      @student.programming_languages.last == @programming_language_2
     end
     it "updates the requested student with a removed programming language" do
-      pl = ProgrammingLanguage.create([{name: 'Ruby'}, {name: 'Go'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:programming_languages => pl, :programming_languages_users => ProgrammingLanguagesUser.create([{programming_language_id: pl.first.id, skill: '4'},{programming_language_id: pl.last.id, skill: '2'}]))
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { pl.first.id.to_s => "2" }}, valid_session
-      student.programming_languages.size == 1
+      @student.assign_attributes(:programming_languages => [@programming_language_1, @programming_language_2], :programming_languages_users => [FactoryGirl.create(:programming_languages_user, user: @student, programming_language: @programming_language_1, skill: '4'), FactoryGirl.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :programming_languages => { @programming_language_1.id.to_s => "2" }}, valid_session
+      @student.programming_languages.size == 1
     end
   end
 
-  describe "PUT update with  languages skills" do
+  describe "PUT update with languages skills" do
+    before(:each) do
+      @student = FactoryGirl.create(:user, valid_attributes)
+      @language_1 = FactoryGirl.create(:language, name: 'English')
+      @language_2 = FactoryGirl.create(:language, name: 'German')
+    end
     it "updates the requested student with an existing language" do
-      l = Language.create([{name: 'English'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:languages => l, :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'}]))
+      @student.assign_attributes(:languages => [@language_1], :languages_users => [FactoryGirl.create(:languages_user, user: @student, language: @language_1, skill: '4')])
       LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :languages => { l.first.id.to_s => "2" }}, valid_session
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :languages => { @language_1.id.to_s => "2" }}, valid_session
     end
     it "updates the requested student with a new language" do
-      l = Language.create([{name: 'English'}, {name: 'German'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:languages => [l.first], :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'}]))
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :languages => { l.last.id.to_s => "2" }}, valid_session
-      student.languages_users.last.skill == 2
-      student.languages.last == l.last
+      @student.assign_attributes(:languages => [@language_1], :languages_users => [FactoryGirl.create(:languages_user, user: @student, language: @language_1, skill: '4')])
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :languages => { @language_2.id.to_s => "2" }}, valid_session
+      @student.languages_users.last.skill == 2
+      @student.languages.last == @language_2
     end
     it "updates the requested student with a removed language" do
-      l = Language.create([{name: 'English'}, {name: 'German'}])
-      student = User.create! valid_attributes
-      student.assign_attributes(:languages => l, :languages_users => LanguagesUser.create([{language_id: l.first.id, skill: '4'},{language_id: l.last.id, skill: '2'}]))
-      put :update, {:id => student.to_param, :user => { "firstname" => "Max" }, :languages => { l.first.id.to_s => "2" }}, valid_session
-      student.languages.size == 1
+      @student.assign_attributes(:languages => [@language_1, @language_2], :languages_users => [FactoryGirl.create(:languages_user, user: @student, language: @language_1, skill: '4'), FactoryGirl.create(:languages_user, language_id: @language_2.id, skill: '2')])
+      put :update, {:id => @student.to_param, :user => { "firstname" => "Max" }, :languages => { @language_1.id.to_s => "2" }}, valid_session
+      @student.languages.size == 1
     end
   end
 end
