@@ -115,7 +115,7 @@ User.create([{
 }])
 
 User.create([{
-identity_url: 'openid',
+identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
 email: 'frank.blechschmidt@student.hpi.uni-potsdam.de', 
 firstname: 'Frank', 
 lastname: 'Blechschmidt',
@@ -134,7 +134,8 @@ languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['E
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
-role: Role.where(:name => 'Student').first}])
+role: Role.where(:name => 'Student').first
+}])
 
 Chair.delete_all
 Chair.create([{
