@@ -58,9 +58,9 @@ FactoryGirl.define do
     linkedin'www.linkedin.com/dieter'
     status UserStatus.where(:name => 'employed (ext)').first
 
-    #after(:create) do |user, evaluator|
-    #    create_list(:language, 1)
-    #    create_list(:programming_language, 1)
-    #end
+    after(:create) do |user, evaluator|
+       create_list(:language, 1)
+       create_list(:programming_language, 1)
+    end
   end
 end
