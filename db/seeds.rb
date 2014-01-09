@@ -144,7 +144,7 @@ Chair.create([{
 	head_of_chair: "Hasso Plattner",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first)
+User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
 
 Chair.create([{
 	name: "Internet Technologies and Systems",
@@ -152,7 +152,6 @@ Chair.create([{
 	head_of_chair: "Christoph Meinel",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Internet Technologies and Systems").first)
 
 Chair.create([{
 	name: "Human Computer Interaction",
@@ -160,7 +159,6 @@ Chair.create([{
 	head_of_chair: "Patrick Baudisch",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Human Computer Interaction").first)
 
 Chair.create([{
 	name: "Computer Graphic Systems",
@@ -168,7 +166,6 @@ Chair.create([{
 	head_of_chair: "Jürgen Döllner",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Computer Graphic Systems").first)
 
 Chair.create([{
 	name: "OS and Middleware",
@@ -176,7 +173,6 @@ Chair.create([{
 	head_of_chair: "Andreas Polze",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "OS and Middleware").first)
 
 Chair.create([{
 	name: "Business Process Technology",
@@ -184,7 +180,6 @@ Chair.create([{
 	head_of_chair: "Mathias Weske",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Business Process Technology").first)
 
 Chair.create([{
 	name: "Software Architecture",
@@ -192,7 +187,6 @@ Chair.create([{
 	head_of_chair: "Robert Hirschfeld",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Software Architecture").first)
 
 Chair.create([{
 	name: "Information Systems",
@@ -200,7 +194,6 @@ Chair.create([{
 	head_of_chair: "Felix Naumann",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Information Systems").first)
 
 Chair.create([{
 	name: "Systems Analysis and Modeling",
@@ -208,7 +201,6 @@ Chair.create([{
 	head_of_chair: "Holger Giese",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Systems Analysis and Modeling").first)
 
 Chair.create([{
 	name: "Verwaltung",
@@ -216,7 +208,6 @@ Chair.create([{
 	head_of_chair: "to be done",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Verwaltung").first)
 
 JobOffer.delete_all
 JobOffer.create([{
