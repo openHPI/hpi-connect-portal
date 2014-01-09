@@ -5,13 +5,13 @@ ruby '2.0.0'
 gem 'rails', '~> 4.0.0'
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 2.3.0'
+gem 'uglifier', '~> 2.4.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -23,13 +23,16 @@ gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '~> 2.1.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.5'
+gem 'jbuilder', '~> 2.0.2'
+
+# Create filters Easily with scopes
+gem 'has_scope'
 
 # Annotate database fields to model files
-gem 'annotate', '>=2.5.0'
+gem 'annotate', '>=2.6.1'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -47,8 +50,8 @@ gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
-gem 'newrelic_rpm', group: :production
-gem 'airbrake'
+gem 'newrelic_rpm', '~> 3.7.1.182', group: :production
+gem 'airbrake', '~> 3.1.15'
 
 # basic layouting
 # gem 'twitter-bootstrap-rails'
@@ -62,7 +65,7 @@ gem 'simple-navigation', '~> 3.11'
 # authentication including support for oauth
 
 gem 'devise', '~> 3.2'
-gem 'devise_openid_authenticatable'
+gem 'devise_openid_authenticatable', '~> 1.1.5'
 
 # authorizations in one place
 gem 'cancan'
@@ -71,7 +74,7 @@ gem 'cancan'
 gem 'rest-client'
 
 # command line parsing for project registration
-gem "highline"
+gem 'highline'
 
 #For picture Upload
 gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
@@ -92,7 +95,7 @@ gem 'capybara'
 gem 'factory_girl'
 
 #replacement for glyphicons
-gem "font-awesome-rails"
+gem "font-awesome-rails", '~> 4.0.3.1'
 
 # pagination
 gem 'will_paginate', '~> 3.0'
@@ -107,10 +110,11 @@ gem 'simple_form'
 # WYSIWYG Text Editor
 gem 'bootsy'
 
-#replacement for glyphicons
-gem "font-awesome-rails"
+#Birthdate validation
+gem "chronic", '~> 0.10.2'
 
 group :test do
   gem 'email_spec'
+  gem 'database_cleaner'
 end
 

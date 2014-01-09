@@ -80,9 +80,4 @@ describe "Studentsearches" do
         expect(page).to have_no_content "#{@student3.firstname} #{@student3.lastname}"
         expect(page).to have_no_content "#{@student4.firstname} #{@student4.lastname}"
     end
-  after(:all) do
-    User.delete_all
-    Language.delete_all
-    ProgrammingLanguage.delete_all
-  end
 end

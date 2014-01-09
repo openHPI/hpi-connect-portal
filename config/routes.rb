@@ -8,12 +8,7 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :job_offers do
       collection do
-        get "sort"
-        get "search"
-        get "filter"
         get "archive"
-        get "find"
-		get "find_archived_jobs"
       end
       member do
         get "complete"

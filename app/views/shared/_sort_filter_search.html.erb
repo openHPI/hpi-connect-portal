@@ -1,6 +1,6 @@
 <div class="well sidebar-nav">
       <div class="">
-        <%= form_tag( @find_jobs_path, :method => :get, :id => 'Form' ) do %> 
+        <%= form_tag find_path, :method => :get, :id => 'Form' do %> 
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
@@ -54,7 +54,7 @@
                     <% Language.all.each do |language| %>
                       <div class="col-md-6">
                         <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids, "").include?(language.id.to_s), id: dom_id(language) %>
-                        <%= label_tag dom_id(language), language.name, :class => "small" %>
+                        <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
                       </div>
                     <% end %>
                   </div>

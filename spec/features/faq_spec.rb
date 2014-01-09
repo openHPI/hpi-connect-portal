@@ -22,10 +22,6 @@ describe Faq do
 		end
 
 	end
-
-	after(:each) do
-		@chair = nil
-	end
 end
 
 

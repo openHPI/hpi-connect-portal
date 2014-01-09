@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/thoughtbot/paperclip.git
-  revision: 6ac2509923ebad5a8c2caf23891d4d1bd99e6cdc
+  revision: 6a6f8552819596fe0596e8d1edbdb47159a8d74b
   specs:
     paperclip (3.5.2)
       activemodel (>= 3.0.0)
@@ -43,7 +43,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    airbrake (3.1.14)
+    airbrake (3.1.15)
       builder
       json
     annotate (2.6.1)
@@ -70,6 +70,7 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
+    chronic (0.10.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.3)
@@ -83,6 +84,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    database_cleaner (1.2.0)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -104,12 +106,13 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
-    font-awesome-rails (4.0.3.0)
+    font-awesome-rails (4.0.3.1)
       railties (>= 3.2, < 5.0)
+    has_scope (0.5.1)
     highline (1.6.20)
     hike (1.2.3)
     i18n (0.6.9)
-    jbuilder (1.5.3)
+    jbuilder (2.0.2)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
     jquery-rails (3.0.4)
@@ -227,7 +230,7 @@ GEM
     turbolinks (2.1.0)
       coffee-rails
     tzinfo (0.3.38)
-    uglifier (2.3.3)
+    uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     validates_timeliness (3.0.14)
@@ -245,29 +248,32 @@ PLATFORMS
 
 DEPENDENCIES
   active_enum!
-  airbrake
-  annotate (>= 2.5.0)
+  airbrake (~> 3.1.15)
+  annotate (>= 2.6.1)
   bootstrap-rails-engine
   bootsy
   cancan
   capybara
+  chronic (~> 0.10.2)
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
+  database_cleaner
   devise (~> 3.2)
-  devise_openid_authenticatable
+  devise_openid_authenticatable (~> 1.1.5)
   email_spec
   factory_girl
   factory_girl_rails
-  font-awesome-rails
+  font-awesome-rails (~> 4.0.3.1)
+  has_scope
   highline
-  jbuilder (~> 1.5)
+  jbuilder (~> 2.0.2)
   jquery-rails
   jquery-star-rating-rails
   jquery-turbolinks
   jquery-ui-rails
-  newrelic_rpm
+  newrelic_rpm (~> 3.7.1.182)
   paperclip!
-  pg
+  pg (~> 0.17.1)
   rails (~> 4.0.0)
   rails_12factor
   rake
@@ -279,8 +285,8 @@ DEPENDENCIES
   simple_form
   simplecov
   therubyracer (~> 0.12.0)
-  turbolinks
-  uglifier (~> 2.3.0)
+  turbolinks (~> 2.1.0)
+  uglifier (~> 2.4.0)
   validates_timeliness (~> 3.0)
   will_paginate (~> 3.0)
   will_paginate-bootstrap

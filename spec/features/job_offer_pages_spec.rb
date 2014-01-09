@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 describe "Job Offer pages" do
 
   subject { page }
@@ -45,7 +46,6 @@ describe "Job Offer pages" do
 
             it { should_not have_button('Apply') }
             it { should_not have_selector('h4', text: 'Applications') }
-            it { should have_selector('div.panel', count: 2) }
             it { should have_selector('div.panel', text: I18n.t('job_offers.already_applied')) }
           end
         end
@@ -121,8 +121,8 @@ describe "Job Offer pages" do
           visit job_offers_path
           should_not have_content(job_offer.title)
         end
-        it "should be redirected to the index page" do
 
+        it "should be redirected to the index page" do
           visit job_offer_path(job_offer)
           expect(current_path).to eq(job_offers_path)
         end

@@ -37,3 +37,4 @@ en:
     already_applied: "You already applied for this job. If you have any questions regarding your application please contact the responsible staff member."
     already_applied_badge: "Applied"
     reopen_job: "reopen Job Offer"
+    apply_confirmation: "Are you sure you want to apply for this job?"

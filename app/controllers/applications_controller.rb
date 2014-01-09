@@ -10,6 +10,7 @@ class ApplicationsController < ApplicationController
         else
           @application = Application.new(job_offer: @job_offer, user: current_user)
           if @application.save
+              ApplicationsMailer.new_application_notification_email(@application).deliver
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'
@@ -21,16 +22,12 @@ class ApplicationsController < ApplicationController
     # GET accept
     def accept
       @application = Application.find params[:id]
-      job_offer_params = {assigned_student: @application.user, status: JobStatus.running}
-      respond_to do |format|
-        if @application.job_offer.update(job_offer_params) and Application.where(job_offer: @application.job_offer).delete_all
-          ApplicationsMailer.application_accepted_student_email(@application)
-          JobOffersMailer.job_student_accepted_email(@application.job_offer).deliver
-          format.html { redirect_to @application.job_offer, notice: 'Application was successfully accepted.' }
-          format.json { head :no_content }
-        else
-          render_errors_and_redirect_to(@application.job_offer)
-        end
+      if @application.job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @application.job_offer).delete_all
+        ApplicationsMailer.application_accepted_student_email(@application).deliver
+        JobOffersMailer.job_student_accepted_email(@application.job_offer).deliver
+        respond_and_redirect_to(@application.job_offer, 'Application was successfully accepted.')
+      else
+        render_errors_and_redirect_to(@application.job_offer)
       end
     end
 

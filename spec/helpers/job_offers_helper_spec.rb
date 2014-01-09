@@ -22,12 +22,12 @@ describe JobOffersHelper do
   	end
 
   	it "gets all languages names that belong to job offer" do
-      	german = Language.new(:name => 'German')
-      	english = Language.new(:name => 'English')
+      	german = Language.new(:name => 'german')
+      	english = Language.new(:name => 'english')
 
       	@job_offer = FactoryGirl.create(:job_offer, languages: [german, english])
       	result = get_language_names
-      	assert_equal(result,["German","English"])
+      	assert_equal(result,["German", "English"])
   	end
   end
 end

@@ -48,18 +48,23 @@ describe JobOffersController do
   end
 
   before(:each) do
-      @epic = FactoryGirl.create(:chair, name:"EPIC")
-      @os = FactoryGirl.create(:chair, name:"OS and Middleware")
-      @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
-      @open = FactoryGirl.create(:job_status, name:"open")
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :open)
+    FactoryGirl.create(:job_status, :running)
+    FactoryGirl.create(:job_status, :completed)
+    
+    @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @os = FactoryGirl.create(:chair, name:"OS and Middleware")
+    @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+    @open = FactoryGirl.create(:job_status, name:"open")
   end
 
   describe "Check if views are rendered" do
-        render_views
+    render_views
 
     it "renders the find results" do
       job_offer = JobOffer.create! valid_attributes
-      get :find, ({:chair => @epic.id}), valid_session
+      get :index, ({:chair => @epic.id}), valid_session
       response.should render_template("index")
     end
 
@@ -71,7 +76,7 @@ describe JobOffersController do
 
     it "renders the jobs found archive" do
       job_offer = JobOffer.create! valid_attributes
-      get :find_archived_jobs, ({:search => "Ruby"}), valid_session
+      get :archive, ({:search => "Ruby"}), valid_session
       response.should render_template("archive")
     end
   end
@@ -137,8 +142,8 @@ describe JobOffersController do
       FactoryGirl.create(:job_offer, chair: @os, status: @open)
       FactoryGirl.create(:job_offer, chair: @epic, status: @open)
 
-      job_offers = JobOffer.find_jobs ({:filter => {:chair => @epic.id}})
-      get :find, ({:chair => @epic.id}), valid_session
+      job_offers = JobOffer.filter_chair(@epic.id)
+      get :index, ({:chair => @epic.id}), valid_session
       assigns(:job_offers_list)[:items].to_a.should =~ (job_offers).to_a
     end
   end

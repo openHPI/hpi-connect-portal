@@ -94,7 +94,17 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, role: Role.where(name: "Student").first)
+        # semester, academic_program and education are required to create a user with the role student
+        # If another role is chosen, these attributes are still present, but it does not matter
+        User.new(
+            identity_url: identity_url, 
+            email: email, 
+            firstname: first_name, 
+            lastname: last_name, 
+            semester: 1,
+            academic_program: "unknown",
+            education: "unknown",
+            role: Role.where(name: "Student").first)
     end
 
     def applied?(job_offer)
@@ -146,8 +156,10 @@ class User < ActiveRecord::Base
     def self.search_students_for_mulitple_languages_and_identifiers(language_identifier, languages)
         result = User.all
 
-        languages.each do |language|
-            result = result & search_students_by_language_identifier(language_identifier, language)
+        if !languages.nil?
+            languages.each do |language|
+                result = result & search_students_by_language_identifier(language_identifier, language)
+            end
         end
 
         result

@@ -11,11 +11,17 @@ class UsersController < ApplicationController
 
         if @user.update_attributes(user_params)
             flash[:success] = 'Information updated.'
-            redirect_to root_path
+            if @user.role.name == "Student"
+                redirect_to edit_student_path(@user) 
+            else
+                redirect_to root_path
+            end
         else
             flash[:error] = 'Error while updating profile.'
             render 'edit'
         end
+
+        
     end
 
     private
