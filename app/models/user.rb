@@ -77,7 +77,8 @@ class User < ActiveRecord::Base
     validates_inclusion_of :semester, :in => 1..12, :if => :student?
    
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
-
+    scope :research_assistants, -> { joins(:role).where('roles.name = ?', 'Research Assistant')}
+    
     def eql?(other)
      other.kind_of?(self.class) && self.id == other.id
     end
