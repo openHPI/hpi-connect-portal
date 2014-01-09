@@ -51,6 +51,15 @@ ProgrammingLanguage.create([
 	{ name: 'OpenGL'}
 ])
 
+UserStatus.delete_all
+UserStatus.create([
+	{ name: 'job-seeking'},
+	{ name: 'employed'},
+	{ name: 'employed (ext)'},
+	{ name: 'no interest'},
+	{ name: 'alumni'}
+])
+
 #Create User as an example deputy for all chairs
 User.delete_all
 User.create([{
@@ -107,33 +116,25 @@ User.create([{
 
 User.create([{
 identity_url: 'openid',
-email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
-firstname: 'Dieter', 
-lastname: 'Nuhr',
-semester: 1,
+email: 'frank.blechschmidt@student.hpi.uni-potsdam.de', 
+firstname: 'Frank', 
+lastname: 'Blechschmidt',
+semester: 5,
 academic_program: 'Bachelor',
-birthday: '1970-12-10',
+birthday: '1990-12-30',
 education:'Abitur',
-additional_information: 'No',
-homepage: 'www.dieter.de',
-github: 'www.github.com/dieter',
-facebook: 'www.faceboook.com/dieter',
-xing: 'www.xing.com/dieter',
-linkedin:'www.linkedin.com/dieter',
+additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+homepage: 'https://twitter.com/FraBle90',
+github: 'https://github.com/FraBle',
+facebook: 'https://www.facebook.com/FraBle90',
+xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
 languages: Language.where(:name => ['Englisch']),
+languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['Englisch']).first.id, skill: '4'}]),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
 user_status: UserStatus.where(:name => 'employed (ext)').first,
 role: Role.where(:name => 'Student').first}])
-
-#Create some UserStatus
-UserStatus.delete_all
-UserStatus.create([
-	{ name: 'job-seeking'},
-	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
-	{ name: 'alumni'}
-])
 
 Chair.delete_all
 Chair.create([{
