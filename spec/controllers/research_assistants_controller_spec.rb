@@ -28,6 +28,7 @@ describe ResearchAssistantsController do
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # ResearchAssistantsController. Be sure to keep this updated too.
@@ -36,6 +37,7 @@ describe ResearchAssistantsController do
   describe "GET index" do
     it "assigns all research_assistants as @research_assistants" do
       research_assistant = User.create! valid_attributes
+      sign_in research_assistant
       get :index, {}, valid_session
       assigns(:users).should eq([research_assistant])
     end

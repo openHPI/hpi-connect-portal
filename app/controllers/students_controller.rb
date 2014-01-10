@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   include UsersHelper
   
+  before_filter :check_user_can_index_students, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -139,6 +140,12 @@ class StudentsController < ApplicationController
       set_user
       unless current_user? @user or user_is_admin?
         redirect_to student_path(@user)
+      end
+    end
+
+    def check_user_can_index_students
+      unless can?(:index, User)
+        redirect_to root_path
       end
     end
 end

@@ -33,8 +33,13 @@ describe StudentsController do
   # StudentsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:research_assistant_role) { FactoryGirl.create(:role, name: 'Research Assistant', level: 2) }
+  let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role) }
+
   describe "GET index" do
     it "assigns all user as @users" do
+      sign_in research_assistant
+
       user = User.create! valid_attributes
       get :index, {}, valid_session
       assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
