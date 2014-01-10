@@ -1,13 +1,10 @@
 en:
   activerecord:
     attributes:
-      student:
+      research_assistant:
         first_name: "First name"
         last_name: "Last name"
-        semester: "Semester"
-        academic_program: "Academic program"
         birthday: "Birthdate"
-        education: "Graduation"
         additional_information: "Additional information"
         links: "Links"
         general_information: "General information"

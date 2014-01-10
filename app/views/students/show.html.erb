@@ -7,7 +7,7 @@
     style: "float:right; display:inline;" %>
         <blockquote>
           <% if !(@user.user_status).nil? %>
-            <p><%= @user.user_status.name %></p>
+            <p><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
           <% end %>
         </blockquote>
   </div>
@@ -30,7 +30,7 @@
             <td><%= @user.birthday %></td>
           </tr>
            <tr>
-            <td>email</td>
+            <td><%= t("activerecord.attributes.student.email") %></td>
             <td><%= @user.email %></td>
           </tr>
           <tr>

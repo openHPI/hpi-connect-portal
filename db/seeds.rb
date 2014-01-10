@@ -53,10 +53,10 @@ ProgrammingLanguage.create([
 
 UserStatus.delete_all
 UserStatus.create([
-	{ name: 'job-seeking'},
+	{ name: 'jobseeking'},
 	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
+	{ name: 'employedext'},
+	{ name: 'nointerest'},
 	{ name: 'alumni'}
 ])
 
@@ -133,7 +133,7 @@ languages: Language.where(:name => ['Englisch']),
 languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['Englisch']).first.id, skill: '4'}]),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-user_status: UserStatus.where(:name => 'employed (ext)').first,
+user_status: UserStatus.where(:name => 'employedext').first,
 role: Role.where(:name => 'Student').first
 }])
 
