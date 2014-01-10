@@ -16,7 +16,7 @@ class Ability
         end
 
         if user.research_assistant?
-            can :read, Application
+            can :read, Application, User
             can :manage, Faq
         end
     end
