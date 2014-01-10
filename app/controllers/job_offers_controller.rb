@@ -29,6 +29,10 @@ class JobOffersController < ApplicationController
     if @job_offer.pending? and signed_in? and !user_is_research_assistant_of_chair?(@job_offer)
       redirect_to job_offers_path
     end
+
+    if signed_in?
+      @application = current_user.applied? @job_offer
+    end
   end
 
   # GET /job_offers/new
