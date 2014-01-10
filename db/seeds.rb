@@ -220,7 +220,7 @@ JobOffer.create([{
 	compensation: 11.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 JobOffer.create([{
@@ -233,7 +233,7 @@ JobOffer.create([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 JobOffer.create([{
@@ -246,7 +246,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Frank").first
 }])
 
 JobOffer.create([{
@@ -259,7 +259,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 
@@ -273,7 +273,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 
@@ -287,7 +287,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 JobOffer.create([{
@@ -300,7 +300,7 @@ JobOffer.create([{
 	compensation: 10.00,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 Faq.delete_all
