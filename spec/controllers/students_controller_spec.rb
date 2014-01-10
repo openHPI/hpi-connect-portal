@@ -148,7 +148,7 @@ describe StudentsController do
 
     it "saves uploaded images" do
       patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
-      response.response_code.should == 200
+      response.should redirect_to(student_path(@student))
     end
   end
 
