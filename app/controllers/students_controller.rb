@@ -70,8 +70,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
-        :language_ids => [])
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
     end
 
 end
