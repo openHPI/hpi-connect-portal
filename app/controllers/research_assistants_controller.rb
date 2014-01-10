@@ -1,4 +1,7 @@
 class ResearchAssistantsController < ApplicationController
+  include UsersHelper
+
+  before_filter :check_current_user_or_admin, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /research_assistants
@@ -104,6 +107,13 @@ class ResearchAssistantsController < ApplicationController
         if params[l.attributes[language_id_attribute].to_s].nil?
           l.destroy
         end
+      end
+    end
+
+    def check_current_user_or_admin
+      set_user
+      unless current_user? @user or user_is_admin?
+        redirect_to research_assistant_path(@user)
       end
     end
 

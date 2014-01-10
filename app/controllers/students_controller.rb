@@ -1,4 +1,8 @@
 class StudentsController < ApplicationController
+  include UsersHelper
+  
+  before_filter :check_current_user_or_admin, only: [:edit]
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   has_scope :search_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -131,4 +135,10 @@ class StudentsController < ApplicationController
       end
     end
 
+    def check_current_user_or_admin
+      set_user
+      unless current_user? @user or user_is_admin?
+        redirect_to student_path(@user)
+      end
+    end
 end

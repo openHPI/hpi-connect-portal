@@ -11,7 +11,7 @@ describe "the students page" do
             :role => student_role,
             :programming_languages =>[@programming_language]
             )
-
+    
     visit students_path
 
   end
@@ -53,7 +53,7 @@ describe "the students editing page" do
     @student1 = FactoryGirl.create(:user,
             :role => student_role
             )
-
+    login_as(@student1, :scope => :user)
   end
 
 	it "should contain all attributes of a student" do
@@ -131,10 +131,17 @@ describe "the students profile page" do
 
   end
 
-  it "should have a Edit link which leads to the students edit page" do
+  it "should have an edit link on the show page of the own profile which leads to the students edit page" do
+      login_as(@student1, :scope => :user)
       visit student_path(@student1)
       page.find_link('Edit').click
       page.current_path.should == edit_student_path(@student1)
+  end
+
+  it "should not have an edit link on the show page of someone elses profile" do
+      login_as(@student1, :scope => :user)
+      visit student_path(@student2)
+      should_not have_link('Edit')
   end
 
 end

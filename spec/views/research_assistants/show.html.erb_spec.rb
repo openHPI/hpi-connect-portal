@@ -13,6 +13,8 @@ describe "research_assistants/show" do
       :xing => "Xing",
       :linkedin => "Linkedin"
     ))
+
+    view.stub(:signed_in?) { false }
   end
 
   it "renders attributes in <p>" do

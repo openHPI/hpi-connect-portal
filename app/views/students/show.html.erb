@@ -3,8 +3,10 @@
 <div class="row">
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
-    <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+    <% if signed_in? && (current_user?(@user) || user_is_admin?)%>
+      <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
     style: "float:right; display:inline;" %>
+    <% end %>
         <blockquote>
           <% if !(@user.user_status).nil? %>
             <p><%= @user.user_status.name %></p>
