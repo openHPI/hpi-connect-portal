@@ -1,6 +1,7 @@
 class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
+  before_filter :check_user_can_create_jobs, only: [:new]
   before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy]
   before_filter :check_user_is_research_assistant_of_chair_or_admin, only: [:complete, :reopen]
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
@@ -139,6 +140,12 @@ class JobOffersController < ApplicationController
       params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
     end 
+
+    def check_user_can_create_jobs      
+      unless can?(:new, JobOffer)
+        redirect_to job_offers_path
+      end
+    end
 
     def check_user_is_responsible_or_admin      
       set_job_offer

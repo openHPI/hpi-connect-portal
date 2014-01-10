@@ -17,7 +17,7 @@ class Ability
 
         if user.research_assistant?
             can :read, Application
-            can :create, JobOffer
+            can [:create, :new], JobOffer
             can :manage, Faq
         end
     end
