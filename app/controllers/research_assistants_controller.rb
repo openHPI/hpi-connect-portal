@@ -80,7 +80,7 @@ class ResearchAssistantsController < ApplicationController
         :email,
         :firstname, :lastname,
         :birthday, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id,
         :language_ids => [],:programming_language_ids => [])
     end
 
