@@ -1,3 +1,5 @@
+include UsersHelper
+
 class StudentsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -11,12 +13,7 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    user = User.find(params[:id])
-    if user.student?
-      @user = user
-    else
-      not_found
-    end
+    @user = User.students.find params[:id]
   end
 
   # GET /students/new
@@ -31,33 +28,6 @@ class StudentsController < ApplicationController
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
   end
-
-  #Outdated by new design, at least till know
-  # POST /students
-  # POST /students.json
-  # def create
-  #   @user = user.new(user_params)
-  #   respond_to do |format|
-  #     if @user.save
-  #       if params[:programming_languages]
-
-  #         programming_languages = params[:programming_languages]
-  #         programming_languages.each do |programming_language_id, skill|
-  #           programming_language_user = ProgrammingLanguagesuser.new
-  #           programming_language_user.user_id = @user.userid
-  #           programming_language_user.programming_language_id = programming_language_id
-  #           programming_language_user.skill = skill
-  #           programming_language_user.save
-  #         end
-  #       end
-  #       format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
-  #       format.json { render action: 'show', status: :created, location: @user }
-  #     else
-  #       format.html { render action: 'new' }
-  #       format.json { render json: @user.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
@@ -102,29 +72,6 @@ class StudentsController < ApplicationController
         :birthday, :education, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
         :language_ids => [])
-    end
-
-    def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
-      if params
-        params.each do |id, skill|
-          l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-          l.update_attributes(:skill => skill)
-        end
-
-        remove_for_language(params, user_id, language_class, language_id_attribute)
-      else
-        #If the User deselects all languages, they have to be destroyed
-        language_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
-      end
     end
 
 end

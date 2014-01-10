@@ -1,3 +1,5 @@
+include UsersHelper
+
 class ResearchAssistantsController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -11,12 +13,7 @@ class ResearchAssistantsController < ApplicationController
   # GET /research_assistants/1
   # GET /research_assistants/1.json
   def show
-    user = User.find(params[:id])
-    if user.research_assistant?
-      @user = user
-    else
-      not_found
-    end
+    @user = User.research_assistants.find params[:id]
   end
 
   # GET /research_assistants/new
@@ -31,22 +28,6 @@ class ResearchAssistantsController < ApplicationController
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
   end
-
-  # POST /research_assistants
-  # POST /research_assistants.json
-  # def create
-  #  @research_assistant = ResearchAssistant.new(research_assistant_params)
-
-  #  respond_to do |format|
-  #    if @research_assistant.save
-  #      format.html { redirect_to @research_assistant, notice: 'Research assistant was successfully created.' }
-  #      format.json { render action: 'show', status: :created, location: @research_assistant }
-  #    else
-  #      format.html { render action: 'new' }
-  #      format.json { render json: @research_assistant.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  # end
 
   # PATCH/PUT /research_assistants/1
   # PATCH/PUT /research_assistants/1.json
@@ -82,29 +63,6 @@ class ResearchAssistantsController < ApplicationController
         :birthday, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
         :language_ids => [],:programming_language_ids => [])
-    end
-
-    def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
-      if params
-        params.each do |id, skill|
-          l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-          l.update_attributes(:skill => skill)
-        end
-
-        remove_for_language(params, user_id, language_class, language_id_attribute)
-      else
-        #If the User deselects all languages, they have to be destroyed
-        language_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
-      end
     end
 
 end

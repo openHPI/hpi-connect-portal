@@ -47,6 +47,13 @@ describe StudentsController do
       get :show, {:id => user.to_param}, valid_session
       assigns(:user).should eq(user)
     end
+
+    it "checks if the user is a student" do
+      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: "Research Assistant"))
+      expect {
+        get :show, {:id => user.to_param}, valid_session
+        }.to raise_error(ActionController::RoutingError)
+    end
   end
 
   #caused by OpenID we cannot create new students anymore by Urls
@@ -64,44 +71,6 @@ describe StudentsController do
       assigns(:user).should eq(student)
     end
   end
-
-  #removed create Student button from webpage. Caused by OpenID
-  # describe "POST create" do
-  #   describe "with valid params" do
-  #     it "creates a new Student" do
-  #       expect {
-  #         post :create, {:student => valid_attributes}, valid_session
-  #       }.to change(Student, :count).by(1)
-  #     end
-
-  #     it "assigns a newly created student as @student" do
-  #       post :create, {:student => valid_attributes}, valid_session
-  #       assigns(:student).should be_a(Student)
-  #       assigns(:student).should be_persisted
-  #     end
-
-  #     it "redirects to the created student" do
-  #       post :create, {:student => valid_attributes}, valid_session
-  #       response.should redirect_to(Student.last)
-  #     end
-  #   end
-
-  #   describe "with invalid params" do
-  #     it "assigns a newly created but unsaved student as @student" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Student.any_instance.stub(:save).and_return(false)
-  #       post :create, {:student => { "first_name" => "invalid value" }}, valid_session
-  #       assigns(:student).should be_a_new(Student)
-  #     end
-
-  #     it "re-renders the 'new' template" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Student.any_instance.stub(:save).and_return(false)
-  #       post :create, {:student => { "first_name" => "invalid value" }}, valid_session
-  #       response.should render_template("new")
-  #     end
-  #   end
-  # end
 
   describe "PUT update" do
     describe "with valid params" do
