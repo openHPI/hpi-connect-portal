@@ -27,7 +27,7 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
 #  photo_updated_at       :date
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
     validates :role, presence: true
-    validates  :semester, :academic_program, :education, presence: true, :if => :student?
+    validates :semester, :academic_program, :education, presence: true, :if => :student?
     validates_inclusion_of :semester, :in => 1..12, :if => :student?
    
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
