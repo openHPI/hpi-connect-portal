@@ -116,7 +116,7 @@ User.create([{
 
 User.create([{
 identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
-email: 'frank.blechschmidt@student.hpi.uni-potsdam.de', 
+email: 'frank.blechschmidt@example.com', 
 firstname: 'Frank', 
 lastname: 'Blechschmidt',
 semester: 5,
