@@ -62,10 +62,22 @@ describe "Job Offer pages" do
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
-          it { should have_link('Accept') }
-          it { should have_link('Decline') }
-
           it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
+
+          it { should_not have_link('Accept') }
+          it { should_not have_link('Decline') }
+
+          describe "as a responsible user of the job" do
+
+            before do
+              job_offer.update(responsible_user: research_assistant)
+              login_as(research_assistant, :scope => :user)
+              visit job_offer_path(job_offer)
+            end
+
+            it { should have_link('Accept') }
+            it { should have_link('Decline') }
+          end
         end
       end
     end

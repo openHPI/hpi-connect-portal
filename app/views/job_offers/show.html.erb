@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-12">
 
-    <% if @job_offer.pending? && user_is_deputy_of_chair?(@job_offer.chair) %>
+    <% if @job_offer.pending? && (user_is_deputy_of_chair?(@job_offer.chair) || user_is_admin?) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success" %>
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
     <% end %>
 
-    <% if !@job_offer.completed? && (user_is_responsible_user?(@job_offer) || user_is_deputy_of_chair?(@job_offer.chair)) %>
+    <% if !@job_offer.completed? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?)%>
       <span class="pull-right">
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
@@ -16,9 +16,13 @@
       </span>
     <% end %>
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
+    <% if signed_in? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
           <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
           <% end %>
+
+    <% if signed_in? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?) && @job_offer.running? %>
+      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
+    <% end %>
   	
   	<br><br>
     
@@ -119,16 +123,18 @@
             </div>
           </div>
         </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= t("activerecord.attribute.job_offer.contact") %>
+        <% if !(@job_offer.responsible_user).nil? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attribute.job_offer.contact") %>
+              </div>
+              <div class="col-sm-9">
+                <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
+              </div>
             </div>
-            <div class="col-sm-9">
-              <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
-            </div>
-          </div>
-        </li>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
@@ -199,9 +205,7 @@
       </table>
     <% end %>
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.running? %>
-      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
-    <% end %>
+
     <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
       <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>

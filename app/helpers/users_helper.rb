@@ -11,4 +11,8 @@ module UsersHelper
   def user_is_deputy_of_chair?(chair)
     signed_in? && current_user == @job_offer.chair.deputy
   end
+
+  def user_is_admin?
+  	signed_in? && current_user.admin?
+  end
 end

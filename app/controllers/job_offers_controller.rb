@@ -1,9 +1,10 @@
 class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
-  before_filter :check_user_is_responsible, only: [:edit, :update, :destroy]
-  before_filter :check_user_is_research_assistant_of_chair, only: [:complete, :reopen]
-  before_filter :check_user_is_deputy, only: [:accept, :decline]
+  before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy]
+  before_filter :check_user_is_research_assistant_of_chair_or_admin, only: [:complete, :reopen]
+  before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
+
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
   before_action :set_chairs, only: [:index, :find_archived_jobs, :archive]
 
@@ -26,7 +27,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1
   # GET /job_offers/1.json
   def show
-    if @job_offer.pending? and signed_in? and !user_is_research_assistant_of_chair?(@job_offer)
+    if @job_offer.pending? and signed_in? and (!user_is_research_assistant_of_chair?(@job_offer) and !user_is_admin?)
       redirect_to job_offers_path
     end
   end
@@ -139,23 +140,23 @@ class JobOffersController < ApplicationController
         {:language_ids => []})
     end 
 
-    def check_user_is_responsible      
+    def check_user_is_responsible_or_admin      
       set_job_offer
-      unless current_user == @job_offer.responsible_user or current_user == @job_offer.chair.deputy
+      unless current_user == @job_offer.responsible_user or current_user == @job_offer.chair.deputy or user_is_admin?
         redirect_to @job_offer
       end
     end
 
-    def check_user_is_research_assistant_of_chair    
+    def check_user_is_research_assistant_of_chair_or_admin    
       set_job_offer
-      unless user_is_research_assistant_of_chair? @job_offer
+      unless user_is_research_assistant_of_chair? @job_offer or user_is_admin?
         redirect_to @job_offer
       end
     end
 
-    def check_user_is_deputy
+    def check_user_is_deputy_or_admin
       set_job_offer
-      unless @job_offer.chair.deputy == current_user
+      unless @job_offer.chair.deputy == current_user or user_is_admin?
         if user_is_research_assistant_of_chair? @job_offer
           redirect_to @job_offer 
         else
@@ -163,4 +164,5 @@ class JobOffersController < ApplicationController
         end
       end
     end
+
 end
