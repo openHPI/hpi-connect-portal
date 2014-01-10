@@ -220,7 +220,7 @@ JobOffer.create([{
 	compensation: 11.50,
 	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	responsible_user: User.where(:firstname=>'Frank').first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -233,7 +233,7 @@ JobOffer.create([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>'Frank').first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -259,7 +259,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>'Frank').first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
@@ -273,7 +273,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>'Frank').first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
