@@ -145,6 +145,11 @@ describe StudentsController do
 
       response.should render_template("edit")
     end
+
+    it "saves uploaded images" do
+      patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
+      response.response_code.should == 200
+    end
   end
 
   describe "DELETE destroy" do

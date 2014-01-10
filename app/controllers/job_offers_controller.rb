@@ -55,7 +55,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
       respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
     else
-      render_errors_and_redirect_to(@job_offer, 'new')
+      render_errors_and_action(@job_offer, 'new')
     end
   end
 
@@ -65,7 +65,7 @@ class JobOffersController < ApplicationController
     if @job_offer.update(job_offer_params)
       respond_and_redirect_to(@job_offer, 'Job offer was successfully updated.')
     else
-      render_errors_and_redirect_to(@job_offer, 'edit')
+      render_errors_and_action(@job_offer, 'edit')
     end
   end
 
@@ -88,7 +88,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.job_closed_email(@job_offer).deliver
       respond_and_redirect_to(@job_offer, 'Job offer was successfully marked as completed.')
     else
-      render_errors_and_redirect_to(@job_offer, 'edit')
+      render_errors_and_action(@job_offer, 'edit')
     end
   end
 
@@ -98,7 +98,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
-      render_errors_and_redirect_to(@job_offer)
+      render_errors_and_action(@job_offer)
     end
   end
 
@@ -108,7 +108,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
     else
-      render_errors_and_redirect_to(@job_offer)
+      render_errors_and_action(@job_offer)
     end
   end 
 
@@ -120,7 +120,7 @@ class JobOffersController < ApplicationController
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'  
     else
-      render_errors_and_redirect_to(@job_offer)
+      render_errors_and_action(@job_offer)
     end
   end 
 

@@ -38,7 +38,7 @@ class ResearchAssistantsController < ApplicationController
     if @user.update(user_params)
       respond_and_redirect_to(research_assistant_path(@user), 'User was successfully updated.')
     else
-      render_errors_and_redirect_to(research_assistant_path(@user), 'edit')
+      render_errors_and_action(research_assistant_path(@user), 'edit')
     end
   end
 

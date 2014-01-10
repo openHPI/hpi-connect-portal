@@ -38,7 +38,7 @@ class StudentsController < ApplicationController
     if @user.update(user_params)
       respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
     else
-      render_errors_and_redirect_to(student_path(@user), 'edit')
+      render_errors_and_action(student_path(@user), 'edit')
     end
   end
 
