@@ -164,39 +164,28 @@ describe StudentsController do
 
   describe "GET matching" do
     it "finds all users with the requested programming language, and language" do
-      java = ProgrammingLanguage.new(:name => 'Java')
-      php = ProgrammingLanguage.new(:name => 'php')
-      german = Language.new(:name => 'German')
-      english = Language.new(:name => 'English')
+      @programming_language_1 = FactoryGirl.create(:programming_language)
+      @programming_language_2 = FactoryGirl.create(:programming_language)
+      @language_1 = FactoryGirl.create(:language)
+      @language_2 = FactoryGirl.create(:language)
 
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [java], languages: [german, english])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [german])
-      FactoryGirl.create(:user, programming_languages: [php], languages: [english])
-      FactoryGirl.create(:user, programming_languages: [java, php], languages: [german, english])
+      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
+      FactoryGirl.create(:user, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
+      FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_1])
+      FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_2])
+      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
 
-      user = User.search_students_by_language_and_programming_language(["german"], ["Java"])
-      get :matching, ({:languages => ["German"], :programming_languages => ["java"]}), valid_session
+      user = User.search_students_by_language_and_programming_language([@language_1.name], [@programming_language_1.name])
+      get :matching, ({:languages => [@language_1.name.capitalize], :programming_languages => [@programming_language_1.name.capitalize]}), valid_session
       assigns(:users).should eq(user)
     end
   end
 
-  #Creating Students is diabled
-  # describe "POST create with programming languages skills" do
-  #   it "creates a new Student" do
-  #     java = ProgrammingLanguage.new(:name => 'Java')
-  #     php = ProgrammingLanguage.new(:name => 'PHP')
-  #     expect {
-  #       post :create, {:student => valid_attributes, :programming_languages => programming_languages_attributes}, valid_session
-  #     }.to change(Student, :count).by(1)
-  #   end
-  # end
-
   describe "PUT update with programming languages skills" do
     before(:each) do
       @student = FactoryGirl.create(:user, valid_attributes)
-      @programming_language_1 = FactoryGirl.create(:programming_language, name: 'Java')
-      @programming_language_2 = FactoryGirl.create(:programming_language, name: 'Go')
+      @programming_language_1 = FactoryGirl.create(:programming_language)
+      @programming_language_2 = FactoryGirl.create(:programming_language)
     end
     it "updates the requested student with an existing programming language" do
       @student.assign_attributes(:programming_languages_users => [FactoryGirl.create(:programming_languages_user, user: @student, programming_language: @programming_language_1, skill: '4')])
@@ -224,8 +213,8 @@ describe StudentsController do
   describe "PUT update with languages skills" do
     before(:each) do
       @student = FactoryGirl.create(:user, valid_attributes)
-      @language_1 = FactoryGirl.create(:language, name: 'English')
-      @language_2 = FactoryGirl.create(:language, name: 'German')
+      @language_1 = FactoryGirl.create(:language)
+      @language_2 = FactoryGirl.create(:language)
     end
     it "updates the requested student with an existing language" do
       @student.assign_attributes(:languages_users => [FactoryGirl.create(:languages_user, user: @student, language: @language_1, skill: '4')])
