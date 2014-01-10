@@ -29,7 +29,7 @@ class FaqsController < ApplicationController
     if @faq.save
       respond_and_redirect_to(@faq, 'FAQ was successfully created.', 'show', :created)
     else
-      render_errors_and_redirect_to(@faq, 'new')
+      render_errors_and_action(@faq, 'new')
     end
   end
 
@@ -39,7 +39,7 @@ class FaqsController < ApplicationController
     if @faq.update(faq_params)
       respond_and_redirect_to(@faq, 'FAQ was successfully updated.')
     else
-      render_errors_and_redirect_to(@faq, 'edit')
+      render_errors_and_action(@faq, 'edit')
     end
   end
 

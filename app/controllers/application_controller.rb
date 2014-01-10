@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
   { locale: I18n.locale }
@@ -23,11 +25,11 @@ class ApplicationController < ActionController::Base
     edit_user_path(resource)
   end
 
-  def render_errors_and_redirect_to(object, target)
-      respond_to do |format|
-        format.html { render action: target }
+  def render_errors_and_action(object, action)
+    respond_to do |format|
+        format.html { render action: action }
         format.json { render json: object.errors, status: :unprocessable_entity }
-      end
+    end
   end 
 
   def respond_and_redirect_to(url, notice, action=nil, status=nil)

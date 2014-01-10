@@ -29,7 +29,7 @@ class UserStatusesController < ApplicationController
     if @user_status.save
       respond_and_redirect_to(@user_status, 'Student status was successfully created.', 'show', :created)
     else
-      render_errors_and_redirect_to(@user_status, 'new')
+      render_errors_and_action(@user_status, 'new')
     end
   end
 
@@ -39,7 +39,7 @@ class UserStatusesController < ApplicationController
     if @user_status.update(user_status_params)
       respond_and_redirect_to(@user_status, 'Student status was successfully updated.')
     else
-      render_errors_and_redirect_to(@user_status, 'edit')
+      render_errors_and_action(@user_status, 'edit')
     end
   end
 

@@ -46,12 +46,14 @@
         <ul class="nav navbar-nav">
           <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
           <li><%= link_to t('layouts.students'), students_path %></li>
+          <li><%= link_to t('layouts.research_assistants'), research_assistants_path %></li>
           <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
           <li><%= link_to t('layouts.faqs'), faqs_path  %></li>
           <li><%= link_to t('layouts.imprint'), imprint_index_path  %></li>
         </ul>
         <p class="navbar-text pull-right">
           <% if user_signed_in? %>
+            <%= image_tag(current_user.photo.url, size: "40", class: "img-thumbnail")  %>
             <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
             <%= link_to t("layouts.edit_profile"), edit_user_path(current_user), :class => 'navbar-link' %> |
             <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
@@ -71,7 +73,9 @@
       <footer>
         <tr>
           <td>&copy; <%= t("layouts.project") %></td>
+          <td>|</td>
           <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+          <td>|</td>
           <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
         </tr>
       </footer>
