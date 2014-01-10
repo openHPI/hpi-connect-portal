@@ -105,8 +105,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
-        :language_ids => [])
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
     end
 
     def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
