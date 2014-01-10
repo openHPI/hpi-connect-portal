@@ -27,7 +27,7 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
 #  photo_updated_at       :date
@@ -73,9 +73,12 @@ class User < ActiveRecord::Base
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
     validates :role, presence: true
-
+    validates :semester, :academic_program, :education, presence: true, :if => :student?
+    validates_inclusion_of :semester, :in => 1..12, :if => :student?
+   
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
-
+    scope :research_assistants, -> { joins(:role).where('roles.name = ?', 'Research Assistant')}
+    
     def eql?(other)
      other.kind_of?(self.class) && self.id == other.id
     end
@@ -91,7 +94,17 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, role: Role.where(name: "Student").first)
+        # semester, academic_program and education are required to create a user with the role student
+        # If another role is chosen, these attributes are still present, but it does not matter
+        User.new(
+            identity_url: identity_url, 
+            email: email, 
+            firstname: first_name, 
+            lastname: last_name, 
+            semester: 1,
+            academic_program: "unknown",
+            education: "unknown",
+            role: Role.where(name: "Student").first)
     end
 
     def applied?(job_offer)

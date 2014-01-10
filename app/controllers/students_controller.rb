@@ -11,11 +11,11 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-     user = User.find(params[:id])
+    user = User.find(params[:id])
     if user.student?
       @user = user
     else
-      nil
+      not_found
     end
   end
 
@@ -100,8 +100,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
-        :language_ids => [])
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
     end
 
     def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)

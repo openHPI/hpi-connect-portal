@@ -12,3 +12,6 @@ en:
           room_number: "Room number"
           programming_languages: "Programming languages"
           languages: "Languages"
+          additional_information: "Additional Information"
+          general_information: "General Information"
+

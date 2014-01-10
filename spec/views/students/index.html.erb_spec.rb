@@ -39,7 +39,5 @@ describe "students/index" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "a", :text => "First Name Last Name", :count => 2
-    assert_select "p", :text => "semester: " + 1.to_s, :count => 2
-    assert_select ".ac_program", :text => "Academic Program", :count => 2
   end
 end

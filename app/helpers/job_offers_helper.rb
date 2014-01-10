@@ -11,7 +11,7 @@ module JobOffersHelper
   def get_language_names
       result = []
       @job_offer.languages.each do |language|
-        result.push(language.name)
+        result.push(t("languages." +  language.name))
       end
       
       result

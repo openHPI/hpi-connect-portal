@@ -49,7 +49,7 @@ FactoryGirl.define do
     homepage 'oracle.com'
     facebook 'www.facebook.com/larry'
     xing 'theLarry'
-    languages {Language.create([{name: 'Englisch'}])}
+    languages {Language.create([{name: 'english'}])}
     programming_languages  {ProgrammingLanguage.create([{ name: 'Ruby'}])}
   end
 end
