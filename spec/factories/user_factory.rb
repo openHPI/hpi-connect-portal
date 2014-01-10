@@ -59,8 +59,8 @@ FactoryGirl.define do
     status UserStatus.where(:name => 'employed (ext)').first
 
     after(:create) do |user, evaluator|
-        create_list(:language, 1)
-        create_list(:programming_language, 1)
+       create_list(:language, 1)
+       create_list(:programming_language, 1)
     end
   end
 end

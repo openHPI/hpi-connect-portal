@@ -2,6 +2,7 @@ de:
   layouts:
     job_offers: "Stellenangebote"
     students: "Studenten"
+    research_assistants: "Wissenschaftliche Mitarbeiter"
     chairs: "Lehrstühle"
     login: "Anmelden"
     logged_in: "Angemeldet"
