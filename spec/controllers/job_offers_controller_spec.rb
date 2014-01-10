@@ -113,6 +113,7 @@ describe JobOffersController do
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
+      sign_in responsible_user
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
     end
