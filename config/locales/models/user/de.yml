@@ -1,7 +1,7 @@
 de:
   activerecord:
     attributes:
-      student:
+      user:
         first_name: "Vorname"
         last_name: "Nachname"
         semester: "Semester"
@@ -20,4 +20,5 @@ de:
         programming_languages: "Programmierkenntnisse"
         cv: "Lebenslauf"
         photo: "Bild"
-        email: "Email"
+        employment_start_date: "Beginn der Anstellung"
+        chair: "Lehrstuhl"
