@@ -199,6 +199,12 @@
       </table>
     <% end %>
 
+    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) %>
+      <div class="col-md-9">
+        <%= render 'shared/user_list', name: "job_offers.students", user_list: @job_offer.assigned_student %>
+      </div>
+    <%end%>
+
     <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.running? %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>
