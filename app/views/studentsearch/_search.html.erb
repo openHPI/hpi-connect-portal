@@ -1,13 +1,16 @@
 <div class="well sidebar-nav">
-  <%= form_tag('',:method => :get,:class => "form-inline") do %>
+  <%= form_tag('',:method => :get) do %>
     <ul class="nav nav-list">
       <div class="form-group">
         <%= label_tag t("job_offers.searchLabel") %>
         <%= text_field_tag(:q, params[:q], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
-        <%= text_field_tag(:semester, params[:semester], :placeholder => t('students.semester'), :class => "form-control") %>
       </div>
       <%= label_tag t("job_offers.filterLabel") %>
+      <div class="form-group">
+        <%= text_field_tag(:semester, params[:semester], :placeholder => t('students.semester'), :class => "form-control") %>
+      </div>
       <div class="panel-group" id="languages_accordion">
+        <div class="form-group">
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-target="#programming_language_panel" data-parent="#languages_accordion">
              <%= label_tag t("activerecord.attributes.job_offer.programming_languages"), nil, :class => "small panel-title" %>
@@ -17,7 +20,7 @@
                 <div class="field">
                 <!--   <%= hidden_field_tag "programming_language_ids[]", nil %> -->
                   <% ProgrammingLanguage.all.each_with_index do |programming_language| %>
-                    <div class="col-md-6">
+                    <div class="col-md-6 languageDIV">
                       <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids, "").include?(programming_language.id.to_s), id: dom_id(programming_language)%>
                       <%= label_tag dom_id(programming_language), programming_language.name , :class => "small"%>
                     </div>
@@ -26,6 +29,8 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="form-group">
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-target="#language_panel" data-parent="#languages_accordion">
               <%= label_tag t("activerecord.attributes.job_offer.languages"), nil, :class => "small panel-title" %>
@@ -35,7 +40,7 @@
                 <div class="field">
                   <!-- <%= hidden_field_tag "job_offer[language_ids][]", nil %> -->
                   <% Language.all.each do |language| %>
-                    <div class="col-md-6">
+                    <div class="col-md-6 languageDIV">
                       <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids, "").include?(language.id.to_s), id: dom_id(language) %>
                       <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
                     </div>
@@ -44,6 +49,7 @@
               </div>
             </div>
           </div>
+        </div>
       </div>   
       <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
     </ul>
