@@ -4,6 +4,7 @@ class ResearchAssistantsController < ApplicationController
   # GET /research_assistants
   # GET /research_assistants.json
   def index
+    authorize! :index, User
     @users = User.research_assistants
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end

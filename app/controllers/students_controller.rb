@@ -4,7 +4,9 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    authorize! :read, User
+    unless current_user.nil?
+      authorize! :index, User
+    end
     @users = User.students
     # if can? :read, User
       @users = @users.paginate(:page => params[:page], :per_page => 5 )
@@ -17,6 +19,9 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     user = User.find(params[:id])
+    unless user == current_user
+      authorize! :read_student, User
+    end
     if user.student?
       @user = user
     else

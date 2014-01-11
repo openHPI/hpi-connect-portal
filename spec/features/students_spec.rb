@@ -12,8 +12,17 @@ describe "the students page" do
             :programming_languages =>[@programming_language]
             )
 
+    login_as(@admin, :scope => :user)
     visit students_path
 
+  end
+
+  before :all do
+    FactoryGirl.create(:role,
+          :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+        :role => Role.where(name: "Admin").first
+    )
   end
 
   it "should view only names and status of a student on the overview" do
@@ -53,7 +62,15 @@ describe "the students editing page" do
     @student1 = FactoryGirl.create(:user,
             :role => student_role
             )
+    login_as(@admin, :scope => :user)
+  end
 
+  before :all do
+    FactoryGirl.create(:role,
+          :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+        :role => Role.where(name: "Admin").first
+    )
   end
 
 	it "should contain all attributes of a student" do
@@ -110,6 +127,16 @@ describe "the students profile page" do
 
      @student2 = FactoryGirl.create(:user,
             :role => student_role)
+
+     login_as(@admin, :scope => :user)
+  end
+
+  before :all do
+    FactoryGirl.create(:role,
+          :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+        :role => Role.where(name: "Admin").first
+    )
   end
 
 

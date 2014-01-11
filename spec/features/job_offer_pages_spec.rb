@@ -11,26 +11,37 @@ describe "Job Offer pages" do
     @status_open = FactoryGirl.create(:job_status, :open)
     @status_running = FactoryGirl.create(:job_status, :running)
     @status_completed = FactoryGirl.create(:job_status, :completed)
+
+    FactoryGirl.create(:role,
+        :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+        :role => Role.where(name: "Admin").first
+    )
   end
   
   describe "show page" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
-      before { visit job_offer_path(job_offer) }
+      
+
+      before do
+        login_as(@admin, :scope => :user)
+        visit job_offer_path(job_offer)
+      end
 
       describe "application button and list" do
-        let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-        let(:student) { FactoryGirl.create(:user, role: student_role) }
 
-        describe "without being signed in" do
-          it { should_not have_button('Apply') }
-          it { should_not have_selector('h4', text: 'Applications') }
-        end
+        # let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+        # let(:student) { FactoryGirl.create(:user, :role => Role.where(name: "Student").first) }
 
         describe "as a student" do
           before do 
-            login_as(student, :scope => :user)
+            FactoryGirl.create(:role,
+              :name => "Student"
+            )
+            @student = FactoryGirl.create(:user, :role => Role.where(name: "Student").first)
+            login_as(@student, :scope => :user)
             visit job_offer_path(job_offer)
           end
 
@@ -39,8 +50,8 @@ describe "Job Offer pages" do
 
           describe "and having applied already" do
             before do 
-              FactoryGirl.create(:application, user: student, job_offer: job_offer)
-              login_as(student, :scope => :user)
+              FactoryGirl.create(:application, user: @student, job_offer: job_offer)
+              login_as(@student, :scope => :user)
               visit job_offer_path(job_offer)
             end
 
@@ -175,7 +186,11 @@ describe "Job Offer pages" do
     describe "completed job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_completed) }
 
-      before { visit job_offer_path(job_offer) }
+
+      before do
+        login_as(@admin, :scope => :user)
+        visit job_offer_path(job_offer)
+      end
     
       describe "as a research assistant of the job offers chair" do
         let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }

@@ -33,8 +33,17 @@ describe ResearchAssistantsController do
   # ResearchAssistantsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before :all do
+    FactoryGirl.create(:role,
+      :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+      :role => Role.where(name: "Admin").first
+    )
+  end
+
   describe "GET index" do
     it "assigns all research_assistants as @research_assistants" do
+      login_as(@admin, :scope => :user)
       research_assistant = User.create! valid_attributes
       get :index, {}, valid_session
       assigns(:users).should eq([research_assistant])

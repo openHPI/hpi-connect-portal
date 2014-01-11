@@ -3,7 +3,16 @@ require 'spec_helper'
 describe Faq do
 	before(:each) do
     	@faq = Faq.new("question" => "How do I make edits to my profile?", "answer" => "Log in to your account. Then hover over My Profile at the top right of the page. Choose the Edit-Button.")
+	    login_as(@admin, :scope => :user)
 	end 
+
+	before :all do
+		FactoryGirl.create(:role,
+            :name => "Admin")
+        @admin = FactoryGirl.create(:user,
+            :role => Role.where(name: "Admin").first
+        )
+    end
 
 	describe "validation of parameters" do
 		
@@ -27,6 +36,17 @@ end
 
 describe "FAQ page" do
 
+	before :each do
+        login_as(@admin, :scope => :user)
+    end
+
+	before :all do
+		FactoryGirl.create(:role,
+            :name => "Admin")
+        @admin = FactoryGirl.create(:user,
+            :role => Role.where(name: "Admin").first
+        )
+    end
 
 
 	it 'should return a page for FAQ' do

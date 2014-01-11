@@ -10,6 +10,16 @@ describe "the job-offers page" do
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user, status: @open)
     @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user, status: @open)
     @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user, status: @open)
+
+    login_as(@admin, :scope => :user)
+  end
+
+  before :all do
+    FactoryGirl.create(:role,
+            :name => "Admin")
+        @admin = FactoryGirl.create(:user,
+            :role => Role.where(name: "Admin").first
+        )
   end
 
   it "should include all jobs currently available" do
@@ -46,6 +56,14 @@ end
 
 describe "a job offer entry" do
 
+  before :all do
+    FactoryGirl.create(:role,
+            :name => "Admin")
+        @admin = FactoryGirl.create(:user,
+            :role => Role.where(name: "Admin").first
+        )
+  end
+
   before(:each) do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
@@ -56,6 +74,7 @@ describe "a job offer entry" do
       status: FactoryGirl.create(:job_status, :open)
     )
 
+    login_as(@admin, :scope => :user)
     visit job_offers_path
   end
 
@@ -71,6 +90,15 @@ describe "a job offer entry" do
 end
 
 describe "job_offers_history" do
+
+  before :all do
+    FactoryGirl.create(:role,
+            :name => "Admin")
+        @admin = FactoryGirl.create(:user,
+            :role => Role.where(name: "Admin").first
+        )
+  end
+
   before do
     @TestChair = FactoryGirl.create(:chair, name:"TestChair")
     @user = FactoryGirl.create(:user)
@@ -83,6 +111,15 @@ describe "job_offers_history" do
       chair: @TestChair,
       responsible_user: @user
       )
+    FactoryGirl.create(:role,
+            :name => "Admin")
+    @admin = FactoryGirl.create(:user,
+        :role => Role.where(name: "Admin").first
+    )
+  end
+
+  before :each do
+    login_as(@admin, :scope => :user)
   end
 
   it "should have a job-offers-history" do
