@@ -35,6 +35,11 @@ describe StudentsController do
 
   describe "GET index" do
     it "assigns all user as @users" do
+      admin = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Admin")
+      )
+      login_as(admin, :scope => :user)
       user = User.create! valid_attributes
       get :index, {}, valid_session
       assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))

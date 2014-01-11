@@ -8,6 +8,8 @@ class Ability
     if user.role
         if user.admin?
             can :manage, :all
+            can :index, :all
+            can :read_student, :all
         end
 
         if user.student?

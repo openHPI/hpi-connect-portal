@@ -4,15 +4,11 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    unless current_user.nil?
-      authorize! :index, User
-    end
-    @users = User.students
-    # if can? :read, User
-      @users = @users.paginate(:page => params[:page], :per_page => 5 )
-    #else
-    #  respond_and_redirect_to(root_path, 'Access denied')
+    #unless current_user.nil?
+    authorize! :index, User
     #end
+    @users = User.students
+    @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1

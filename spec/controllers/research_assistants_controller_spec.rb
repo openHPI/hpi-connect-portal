@@ -48,6 +48,35 @@ describe ResearchAssistantsController do
       get :index, {}, valid_session
       assigns(:users).should eq([research_assistant])
     end
+
+    it "shows index when logged in as wimi" do
+      wimi = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Research Assistant")
+      )
+      login_as(wimi, :scope => :user)
+      get :index, {}, valid_session
+      assert_template :index
+    end
+
+    it "shows index when logged in as admin" do
+      admin = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Admin")
+      )
+      login_as(admin, :scope => :user)
+      get :index, {}, valid_session
+      assert_template :index
+    end
+
+    # it "redirects to the root_path when logged in as student" do
+    #   student = FactoryGirl.create(
+    #     :user,
+    #     :role => Role.create(:name => "Student")
+    #   )
+    #   login_as(student, :scope => :user)
+    #   response.should redirect_to(root_path)
+    # end
   end
 
   describe "GET show" do
