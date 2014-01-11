@@ -17,6 +17,7 @@ class ChairsController < ApplicationController
   # GET /chairs/1
   # GET /chairs/1.json
   def show
+    @research_assistants = @chair.research_assistants.paginate(:page => params[:page])
     @running_job_offers = @chair.job_offers.running.paginate(:page => params[:page])
     @open_job_offers = @chair.job_offers.open.paginate(:page => params[:page])
 

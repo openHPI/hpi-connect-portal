@@ -26,7 +26,11 @@
     <%= link_to t('links.back'), chairs_path, :type => "button", :class => "btn btn-default" %>
 
 </div>
-
+<div class="row">
+    <div class="col-md-9">
+        <%= render 'shared/user_list', name: "Staff", user_list: @research_assistants %>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-9">
         <%= render 'shared/overview', name: "Open", job_offer_list: @open_job_offers %>
