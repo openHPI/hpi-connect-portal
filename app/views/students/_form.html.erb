@@ -72,7 +72,7 @@
                 <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
-                <% if !@user.new_record? %>
+                <% if !@user.new_record? && !@user.photo.nil? %>
                   <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
                 <% end %>
                 <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
