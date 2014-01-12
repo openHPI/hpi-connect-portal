@@ -279,12 +279,12 @@ describe StudentsController do
 
       it "updates role to Research Assistant" do
         assert_equal(User.find(@student.id).role_id, @student_role.id)
-        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name, :chair_name => @chair.name}, valid_session
+        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name}, valid_session
         assert_equal(@staff_role, User.find(@student.id).role)
       end
 
       it "updates role to Deputy" do
-        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy", :chair_name => @chair.name}, valid_session
+        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy"}, valid_session
         assert_equal(@student, Chair.find(@chair.id).deputy)
       end
     end
@@ -303,8 +303,8 @@ describe StudentsController do
 
       it "updates role to Deputy" do
         put :update_role, {:student_id => @student.to_param, :role_name => "Deputy", :chair_name => @chair.name}, valid_session
-        assert_equal(User.find(@student.id), @chair.deputy)
-        assert_equal(staff_role, User.find(@student.id).role)
+        assert_equal(User.find(@student.id), Chair.find(@chair.id).deputy)
+        assert_equal(@staff_role, User.find(@student.id).role)
       end
 
       it "updates role to Admin" do

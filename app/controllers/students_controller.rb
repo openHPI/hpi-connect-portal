@@ -110,9 +110,8 @@ class StudentsController < ApplicationController
   end
 
   def promote_to_deputy(student_id, chair)
-    #chair = Chair.find(current_user.chair_id)
     chair.update(:deputy_id => student_id)
-    User.find(student_id).update(:chair => chair)
+    User.find(student_id).update(:chair => chair, :role => Role.find_by_level(2))
   end
 
   def promote_to_admin(student_id)
@@ -122,8 +121,7 @@ class StudentsController < ApplicationController
 
   def promote_to_research_assistant(student_id, chair)
     student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2))
-    student.update(:chair => chair)
+    student.update(:role => Role.find_by_level(2), :chair => chair)
   end
 
   private
