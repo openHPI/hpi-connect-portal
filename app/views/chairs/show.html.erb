@@ -30,10 +30,10 @@
     <div class="col-sm-6">
 
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("activerecord.attributes.chair.general_information") %></h4></div>
+          <div class="panel-heading"><h4><%= t("chairs.general_information") %></h4></div>
           <ul class="list-group">
             <li class="list-group-item">
-              <div class="row">
+              <div class="row field">
                 <div class="col-sm-4">
                   <%= t("activerecord.attributes.chair.head_of_chair") %>
                 </div>
@@ -59,14 +59,14 @@
     <div class="col-sm-6">
         <% unless @open_job_offers.empty? %>
             <div class="panel panel-default">
-              <div class="panel-heading"><h4>Open Jobs</h4></div>
+              <div class="panel-heading"><h4><%= t("chairs.open_job_offers") %></h4></div>
               <%= render 'shared/overview', job_offer_list: @open_job_offers %>
             </div>
         <% end %>
 
         <% unless @running_job_offers.empty? %>
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Running Jobs</h4></div>
+                <div class="panel-heading"><h4><%= t("chairs.running_job_offers") %></h4></div>
                 <%= render 'shared/overview', job_offer_list: @running_job_offers %>
             </div>
         <% end %>

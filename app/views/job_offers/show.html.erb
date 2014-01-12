@@ -105,7 +105,7 @@
               <%= t("activerecord.attributes.job_offer.time_effort") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.time_effort %> h/week
+              <%= @job_offer.time_effort %> <%= t("job_offers.time_effort_description") %>
             </div>
           </div>
         </li>
@@ -115,7 +115,7 @@
               <%= t("activerecord.attributes.job_offer.compensation") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.compensation %> €/h
+              <%= @job_offer.compensation %> <%= t("job_offers.compensation_description") %>
             </div>
           </div>
         </li>
