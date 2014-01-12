@@ -40,13 +40,6 @@ describe JobOffersController do
   # job_offersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  before(:all) do 
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
-  end
-
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :open)
@@ -108,6 +101,16 @@ describe JobOffersController do
       job_offer = JobOffer.create! valid_attributes
       get :show, {:id => job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(job_offer)
+    end
+
+    it "assigns a possible applications as @application" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+      job_offer = JobOffer.create! valid_attributes
+      application = FactoryGirl.create(:application, user: user, job_offer: job_offer)
+      get :show, {:id => job_offer.to_param}, valid_session
+      assigns(:application).should eq(application)
     end
   end
 

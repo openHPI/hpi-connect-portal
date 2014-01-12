@@ -85,6 +85,13 @@ describe ResearchAssistantsController do
       get :show, {:id => user.to_param}, valid_session
       assigns(:user).should eq(user)
     end
+
+    it "checks if the user is a research assistant" do
+      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: "Student"))
+      expect {
+        get :show, {:id => user.to_param}, valid_session
+        }.to raise_error(ActionController::RoutingError)
+    end
   end
 
   #describe "GET new" do
