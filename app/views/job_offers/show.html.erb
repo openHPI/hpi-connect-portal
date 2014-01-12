@@ -15,14 +15,13 @@
         <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
       </span>
     <% end %>
-    
-    <h1>
-      <%= @job_offer.title %>
-      <% if @job_offer.pending? %>
-        <span> - pending</span>
-      <% end %>
-    </h1>
 
+    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
+          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
+          <% end %>
+  	
+  	<br><br>
+    
     <% if signed_in? && current_user.applied?(@job_offer) %>
       <br><br>
        <div class="panel panel-default panel-body">
@@ -30,67 +29,161 @@
       </div>
     <% end %>
 
-    <div class="panel panel-default panel-body">
+<br>
+<div class="row">
+  <div class="col-sm-12">
+    <h1 style="display:inline">
+      <%= @job_offer.title %>
+        <% if @job_offer.pending? %>
+          <span> - pending</span>
+      <% end %>
+    </h1>
+    <blockquote>
+        <p><%= @job_offer.chair.name %></p>
+    </blockquote>
+  </div>
+</div>
 
-      <table class="table">
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.description") %></b></td>
-          <td><%= @job_offer.description %></td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.room_number") %></b></td>
-          <td><%= @job_offer.room_number %></td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.chair") %></b></td>
-          <td><%= @job_offer.chair.name %></td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.start_date") %></b></td>
-          <td><%= @job_offer.start_date %></td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.end_date") %></b></td>
-          <td><%= @job_offer.end_date %></td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.time_effort") %></b></td>
-          <td><%= @job_offer.time_effort %> h/week</td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.compensation") %></b></td>
-          <td><%= @job_offer.compensation %> €/h</td>
-        </tr>
-        <% if @job_offer.responsible_user %>
-          <tr>
-            <td><b><%= t("job_offers.contact") %></b></td>
-            <td>
-              <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email %>
-            </td>
-          </tr>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= @job_offer.description.html_safe %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-6">
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
+      <ul class="list-group">
+        <% if !(@job_offer.room_number).nil? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attributes.job_offer.room_number") %>
+              </div>
+              <div class="col-sm-9">
+                <%= @job_offer.room_number %>
+              </div>
+            </div>
+          </li>
         <% end %>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.programming_languages") %></b></td>
-          <td>
-            <% @job_offer.programming_languages.each do |programming_language| %>
-              <%= programming_language.name %><br />
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <td><b><%= t("activerecord.attributes.job_offer.languages") %></b></td>
-          <td>
-            <% @job_offer.languages.each do |language| %>
-              <%= language.name %><br />
-            <% end %>
-          </td>
-        </tr>
-    
-      </table>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.job_offer.start_date") %>
+            </div>
+            <div class="col-sm-9">
+              <%= @job_offer.start_date %>
+            </div>
+          </div>
+        </li>
+        <% if !(@job_offer.end_date).nil? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attributes.job_offer.end_date") %>
+              </div>
+              <div class="col-sm-9">
+                <%= @job_offer.end_date %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.job_offer.time_effort") %>
+            </div>
+            <div class="col-sm-9">
+              <%= @job_offer.time_effort %> h/week
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.job_offer.compensation") %>
+            </div>
+            <div class="col-sm-9">
+              <%= @job_offer.compensation %> €/h
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attribute.job_offer.contact") %>
+            </div>
+            <div class="col-sm-9">
+              <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <% unless (@job_offer.programming_languages).empty? %>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4></div>
+        <ul class="list-group">
+          <% @job_offer.programming_languages.each do |programming_language| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= programming_language.name %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <% unless (@job_offer.languages).empty? %>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.languages") %></h4></div>
+        <ul class="list-group">
+          <% @job_offer.languages.each do |language| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= t("languages." +  language.name) %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
 
       <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
         <div class="pull-right">
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-success apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
+        </div>
+      <% end %>
+
+      <% unless @application.nil? %>
+        <div class="pull-right">
+          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
+            <div><%= f.hidden_field :application_id %></div>
+            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -139,6 +232,7 @@
         </tbody>
       </table>
     <% end %>
+
     <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.running? %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>

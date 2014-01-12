@@ -13,21 +13,21 @@ require 'spec_helper'
 describe JobOffersHelper do
   describe "get names of habtm attributes of a job offer" do
   	it "gets all programming languages names that belong to job offer" do
-  		java = ProgrammingLanguage.new(:name => 'Java')
-      	php = ProgrammingLanguage.new(:name => 'php')
+  		@programming_language_1 = FactoryGirl.create(:programming_language)
+    	@programming_language_2 = FactoryGirl.create(:programming_language)
 
-      	@job_offer = FactoryGirl.create(:job_offer, programming_languages: [java, php])
-      	result = get_programming_language_names
-      	assert_equal(result,["Java","php"])
+      @job_offer = FactoryGirl.create(:job_offer, programming_languages: [@programming_language_1, @programming_language_2])
+      result = get_programming_language_names
+      assert_equal(result,[@programming_language_1.name,@programming_language_2.name])
   	end
 
   	it "gets all languages names that belong to job offer" do
-      	german = Language.new(:name => 'German')
-      	english = Language.new(:name => 'English')
+    	@language_1 = FactoryGirl.create(:language)
+      @language_2 = FactoryGirl.create(:language)
 
-      	@job_offer = FactoryGirl.create(:job_offer, languages: [german, english])
-      	result = get_language_names
-      	assert_equal(result,["German","English"])
+      @job_offer = FactoryGirl.create(:job_offer, languages: [@language_1, @language_2])
+      result = get_language_names
+      assert_equal(result,[t("languages."+@language_1.name), t("languages."+@language_2.name)])
   	end
   end
 end

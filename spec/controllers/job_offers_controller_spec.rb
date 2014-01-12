@@ -102,6 +102,16 @@ describe JobOffersController do
       get :show, {:id => job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(job_offer)
     end
+
+    it "assigns a possible applications as @application" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+      job_offer = JobOffer.create! valid_attributes
+      application = FactoryGirl.create(:application, user: user, job_offer: job_offer)
+      get :show, {:id => job_offer.to_param}, valid_session
+      assigns(:application).should eq(application)
+    end
   end
 
   describe "GET new" do

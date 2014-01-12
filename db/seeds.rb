@@ -19,74 +19,6 @@ JobStatus.create(name: 'open')
 JobStatus.create(name: 'running')
 JobStatus.create(name: 'completed')
 
-#Create User as an example deputy for all chairs
-User.delete_all
-User.create([{
-		firstname: "Chief",
-		lastname: "Smith",
-		email: "chief@smith.de",
-	   	role: Role.where(:name => 'Student').first
-	}])
-User.create([{
-	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
-	lastname: "Kroschk", 
-	firstname: "Axel", 
-	role: Role.where(:name => 'Research Assistant').first	
-}])
-User.create([{
-	email: "tim.specht@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Tim", 
-	firstname: "Specht", 
-	role: Role.where(:name => 'Student').first	
-}])
-
-User.create([{
-	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
-	lastname: "Pascal", 
-	firstname: "Reinhardt", 
-	role: Role.where(:name => 'Student').first	
-}])
-
-User.create([{
-	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
-	lastname: "Tim", 
-	firstname: "Friedrich", 
-	role: Role.where(:name => 'Student').first	
-}])
-
-User.create([{
-	email: "johannes.koch@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
-	lastname: "Johannes", 
-	firstname: "Koch", 
-	role: Role.where(:name => 'Student').first	
-}])
-#Create User as an example deputy for all chairs
-User.create([{
-identity_url: 'openid',
-email: 'dieter.nuhr@student.hpi.uni-potsdam.de', 
-firstname: 'Dieter', 
-lastname: 'Nuhr',
-semester: 1,
-academic_program: 'Bachelor',
-birthday: '1970-12-10',
-education:'Abitur',
-additional_information: 'No',
-homepage: 'www.dieter.de',
-github: 'www.github.com/dieter',
-facebook: 'www.faceboook.com/dieter',
-xing: 'www.xing.com/dieter',
-linkedin:'www.linkedin.com/dieter',
-languages: Language.where(:name => ['Englisch']),
-programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-user_status: UserStatus.where(:name => 'employed (ext)').first,
-role: Role.where(:name => 'Admin').first}])
-
-
 Language.delete_all
 Language.create([
 	{ name: 'Englisch'},
@@ -119,7 +51,6 @@ ProgrammingLanguage.create([
 	{ name: 'OpenGL'}
 ])
 
-#Create some UserStatus
 UserStatus.delete_all
 UserStatus.create([
 	{ name: 'job-seeking'},
@@ -129,6 +60,83 @@ UserStatus.create([
 	{ name: 'alumni'}
 ])
 
+#Create User as an example deputy for all chairs
+User.delete_all
+User.create([{
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel", 
+	role: Role.where(:name => 'Research Assistant').first	
+}])
+
+User.create([{
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Specht", 
+	firstname: "Tim",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Reinhardt", 
+	firstname: "Pascal", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Friedrich", 
+	firstname: "Tim",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Koch", 
+	firstname: "Johannes", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
+email: 'frank.blechschmidt@student.hpi.uni-potsdam.de', 
+firstname: 'Frank', 
+lastname: 'Blechschmidt',
+semester: 5,
+academic_program: 'Bachelor',
+birthday: '1990-12-30',
+education:'Abitur',
+additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+homepage: 'https://twitter.com/FraBle90',
+github: 'https://github.com/FraBle',
+facebook: 'https://www.facebook.com/FraBle90',
+xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+languages: Language.where(:name => ['Englisch']),
+languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['Englisch']).first.id, skill: '4'}]),
+programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+user_status: UserStatus.where(:name => 'employed (ext)').first,
+role: Role.where(:name => 'Student').first
+}])
+
 Chair.delete_all
 Chair.create([{
 	name: "Enterprise Platform and Integration Concepts",
@@ -136,69 +144,69 @@ Chair.create([{
 	head_of_chair: "Hasso Plattner",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
-User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first)
+User.where(:firstname=>"Axel").first.update(chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
 
 Chair.create([{
 	name: "Internet Technologies and Systems",
 	description: "The research at the chair of Prof. Dr. Christoph Meinel focuses on investigation of scientific principles, methodes and technologies to design and implement novel Internet technologies and innovative Internet-based IT-systems",
 	head_of_chair: "Christoph Meinel",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Human Computer Interaction",
 	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
 	head_of_chair: "Patrick Baudisch",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Computer Graphic Systems",
 	description: "The Computer Graphics Systems group headed by Prof. Dr. Jürgen Döllner is concerned with the analysis, planning and construction of computer graphics and multimedia systems. Human-computer communication is the overall context of the group’s work.",
 	head_of_chair: "Jürgen Döllner",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "OS and Middleware",
 	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
 	head_of_chair: "Andreas Polze",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Business Process Technology",
 	description: "The Business Process Technology group headed by Prof. Dr. Mathias Weske is engaged in research on the development of innovative models, methods and techniques and the design and construction of software systems to support knowledge-intensive and flexible business processes. The particular focus is on languages and concepts for modeling such processes.",
 	head_of_chair: "Mathias Weske",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Software Architecture",
 	description: "The Software Architecture Group, led by Prof. Dr. Robert Hirschfeld, is concerned with fundamental elements and structures of software. Methods and tools are developed for improving the comprehension and design of large complex systems.",
 	head_of_chair: "Robert Hirschfeld",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Information Systems",
 	description: "Prof. Dr. Felix Naumann is head of the Information Systems Research Group. The group's research goals are the efficient and effective management of heterogeneous information in large, autonomous systems. These include information integration methods, approaches to information quality and data cleansing, directed information searches and metadata management.",
 	head_of_chair: "Felix Naumann",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
 	name: "Systems Analysis and Modeling",
 	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
 	head_of_chair: "Holger Giese",
-	deputy: User.where(:firstname=>"Chief").first
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Chair.create([{
-	name: "Systems Analysis and Modeling",
-	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
-	head_of_chair: "Holger Giese",
-	deputy: User.where(:firstname=>"Chief").first
+	name: "Verwaltung",
+	description: "to be done",
+	head_of_chair: "to be done",
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.delete_all
@@ -212,7 +220,7 @@ JobOffer.create([{
 	compensation: 11.50,
 	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -225,7 +233,7 @@ JobOffer.create([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'Deutsch'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -238,7 +246,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -251,7 +259,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
@@ -265,7 +273,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['German', 'English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
@@ -279,7 +287,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['English']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -292,7 +300,7 @@ JobOffer.create([{
 	compensation: 10.00,
 	languages: Language.where(:name => 'German'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 Faq.delete_all
