@@ -9,12 +9,19 @@ module UsersHelper
   end
 
   def user_is_deputy?
-    Chair.all.each do |chair|
-      if chair.deputy_id == current_user.id
-        current_user.chair_id = chair.id
-        return true
+    if(signed_in?)
+      Chair.all.each do |chair|
+        if chair.deputy_id == current_user.id
+          current_user.chair_id = chair.id
+          return true
+        end
       end
     end
     return false
   end
+
+  def user_is_admin?
+    return signed_in? && current_user.admin?
+  end
+
 end

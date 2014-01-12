@@ -6,4 +6,4 @@ en:
         edit_student: "edit student"
         promote_button: "Promote"
         promote_title: "Change Role"
-        promote_confirm_question: "Are you sure to change role?"
+        promote_confirm_question: "Do you really want to change the user's role?"

@@ -89,20 +89,28 @@ class StudentsController < ApplicationController
   end
 
   def update_role
-    role_name = params[:role]
+    role_name = params[:role_name]
+    chair_name = params[:chair_name]
+
+    if chair_name
+      chair = Chair.find_by_name(chair_name)
+    else
+      chair = current_user.chair
+    end
+
     case role_name
       when "Deputy"
-        promote_to_deputy(params[:student_id])
+        promote_to_deputy(params[:student_id], chair)
       when "Admin"
         promote_to_admin(params[:student_id])
       when "Research Assistant"
-        promote_to_staff(params[:student_id], current_user.chair)
+        promote_to_research_assistant(params[:student_id], chair)
     end
     redirect_to(students_path)
   end
 
-  def promote_to_deputy(student_id)
-    chair = Chair.find(current_user.chair_id)
+  def promote_to_deputy(student_id, chair)
+    #chair = Chair.find(current_user.chair_id)
     chair.update(:deputy_id => student_id)
     User.find(student_id).update(:chair => chair)
   end
@@ -112,7 +120,7 @@ class StudentsController < ApplicationController
     student.update(:role => Role.find_by_level(3))
   end
 
-  def promote_to_staff(student_id, chair)
+  def promote_to_research_assistant(student_id, chair)
     student = User.find(student_id)
     student.update(:role => Role.find_by_level(2))
     student.update(:chair => chair)
