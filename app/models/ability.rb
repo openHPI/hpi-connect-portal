@@ -8,6 +8,7 @@ class Ability
     if user.role
         if user.admin?
             can :manage, :all
+            cannot :create, Application
         end
 
         if user.student?
@@ -15,7 +16,7 @@ class Ability
             can :read, Faq
         end
 
-        if user.research_assistant?
+        if user.staff?
             can :read, Application
             can [:create, :new], JobOffer
             can :manage, Faq

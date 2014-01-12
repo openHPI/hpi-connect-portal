@@ -9,7 +9,7 @@
 # Create Standard Roles
 Role.delete_all
 Role.create(name: 'Student', level: 1)
-Role.create(name: 'Research Assistant', level: 2)
+Role.create(name: 'Staff', level: 2)
 Role.create(name: 'Admin', level: 3)
 
 #Create Standart Job Status
@@ -67,7 +67,7 @@ User.create([{
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
 	lastname: "Kroschk", 
 	firstname: "Axel", 
-	role: Role.where(:name => 'Research Assistant').first	
+	role: Role.where(:name => 'Staff').first	
 }])
 
 User.create([{

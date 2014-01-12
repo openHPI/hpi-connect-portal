@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "the students page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-  let(:research_assistant_role) { FactoryGirl.create(:role, name: 'Research Assistant', level: 2) }
-  let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role) }
+  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role) }
 
 	before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
@@ -14,7 +14,7 @@ describe "the students page" do
             :programming_languages =>[@programming_language]
             )
 
-    login_as(research_assistant, :scope => :user)
+    login_as(staff, :scope => :user)
     visit students_path
 
   end

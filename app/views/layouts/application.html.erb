@@ -48,7 +48,7 @@
               <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
               <% if signed_in? && can?(:index, User) %>
                 <li><%= link_to t('layouts.students'), students_path %></li>
-                <li><%= link_to t('layouts.research_assistants'), research_assistants_path %></li>
+                <li><%= link_to t('layouts.staff'), staff_index_path %></li>
               <%end %>
         </ul>
         <p class="navbar-text pull-right">

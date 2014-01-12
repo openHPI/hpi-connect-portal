@@ -6,7 +6,7 @@
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
     <% end %>
 
-    <% if !@job_offer.completed? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?)%>
+    <% if !@job_offer.completed? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?)%>
       <span class="pull-right">
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
@@ -16,11 +16,11 @@
       </span>
     <% end %>
 
-    <% if signed_in? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
+    <% if signed_in? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
           <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
           <% end %>
 
-    <% if signed_in? && (user_is_research_assistant_of_chair?(@job_offer) || user_is_admin?) && @job_offer.running? %>
+    <% if signed_in? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?) && @job_offer.running? %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>
   	
@@ -206,7 +206,7 @@
     <% end %>
 
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
+    <% if signed_in? && user_is_staff_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
       <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>
   </div>

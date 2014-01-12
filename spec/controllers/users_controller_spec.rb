@@ -108,14 +108,14 @@ describe UsersController do
   #     @job_offer = JobOffer.create! valid_attributes_status_running
   #   end
 
-  #   it "marks jobs as completed if the user is research assistant of the chair" do 
+  #   it "marks jobs as completed if the user is staff of the chair" do 
   #     completed = FactoryGirl.create(:job_status, name: "completed")
-  #     sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: @job_offer.chair)
+  #     sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: @job_offer.chair)
       
   #     get :complete, {:id => @job_offer.id}
   #     assigns(:job_offer).status.should eq(completed)      
   #   end
-  #   it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
+  #   it "prohibits user to mark jobs as completed if he is no staff of the chair" do 
   #     get :complete, {:id => @job_offer.id}, valid_session
   #     response.should redirect_to(@job_offer)
   #   end

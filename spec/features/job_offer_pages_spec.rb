@@ -5,7 +5,7 @@ describe "Job Offer pages" do
 
   subject { page }
 
-  let(:research_assistant_role) { FactoryGirl.create(:role, name: 'Research Assistant', level: 2) }
+  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
     @status_open = FactoryGirl.create(:job_status, :open)
@@ -50,12 +50,12 @@ describe "Job Offer pages" do
           end
         end
 
-        describe "as a research assistant of the job offers chair" do
-          let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
+        describe "as a staff of the job offers chair" do
+          let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
 
           before do
             @application = FactoryGirl.create(:application, job_offer: job_offer)
-            login_as(research_assistant, :scope => :user)
+            login_as(staff, :scope => :user)
             visit job_offer_path(job_offer)
           end
 
@@ -70,8 +70,8 @@ describe "Job Offer pages" do
           describe "as a responsible user of the job" do
 
             before do
-              job_offer.update(responsible_user: research_assistant)
-              login_as(research_assistant, :scope => :user)
+              job_offer.update(responsible_user: staff)
+              login_as(staff, :scope => :user)
               visit job_offer_path(job_offer)
             end
 
@@ -83,7 +83,7 @@ describe "Job Offer pages" do
     end
 
     describe "running job offer" do
-      let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
+      let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_running) }
      
@@ -98,11 +98,11 @@ describe "Job Offer pages" do
         it { should_not have_button('Apply')}
       end
 
-      describe "as a research assistant of the job offers chair" do
-        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers chair" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
 
         before do
-          login_as(research_assistant, :scope => :user)
+          login_as(staff, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
@@ -113,7 +113,7 @@ describe "Job Offer pages" do
 
     describe "pending job offer" do
 
-      let(:deputy) { FactoryGirl.create(:user, role: research_assistant_role)}
+      let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
       let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
      
@@ -140,12 +140,12 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as a research assistant of the job offers chair" do
-        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: chair) }
+      describe "as a staff of the job offers chair" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: chair) }
 
         before do
-          job_offer.update(responsible_user: research_assistant)
-          login_as(research_assistant, :scope => :user)
+          job_offer.update(responsible_user: staff)
+          login_as(staff, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
@@ -189,11 +189,11 @@ describe "Job Offer pages" do
 
       before { visit job_offer_path(job_offer) }
     
-      describe "as a research assistant of the job offers chair" do
-        let(:research_assistant) { FactoryGirl.create(:user, role: research_assistant_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers chair" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
 
         before do
-          login_as(research_assistant, :scope => :user)
+          login_as(staff, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
