@@ -20,8 +20,6 @@ class ChairsController < ApplicationController
   def show
     @running_job_offers = @chair.job_offers.running.paginate(:page => params[:page])
     @open_job_offers = @chair.job_offers.open.paginate(:page => params[:page])
-
-    @chairs = []
   end
 
   # GET /chairs/new

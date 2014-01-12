@@ -1,38 +1,82 @@
 <div class="row">
-    <%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
-    <p>
-        <strong><%= t("activerecord.attributes.chair.name") %>:</strong>
-        <%= @chair.name %>
-    </p>
+    <div class="col-sm-9">
+         <h1 style="display:inline">
+            <%= @chair.name %>
+        </h1>
+        <% if can? :edit, @chair %>
+            <%= link_to t('links.edit'), edit_chair_path(@chair), :type => "button", :class => "btn btn-default pull-right" %>
+        <% end %>
+    </div>
+    <div class="col-sm-3">
+        <%= image_tag @chair.avatar.url(:medium), class: "img-thumbnail pull-left chair-thumbnail", alt: "Picture: "+@chair.name%>
+    </div>
+</div>    
 
-    <p>
-        <strong><%= t("activerecord.attributes.chair.description") %>:</strong>
-        <%= @chair.description %>
-    </p>
+<br><br>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("activerecord.attributes.chair.description") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= @chair.description.html_safe %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-    <p>
-        <strong><%= t("activerecord.attributes.chair.head_of_chair") %>:</strong>
-        <%= @chair.head_of_chair %>
-    </p>
+<div class="row">
+    <div class="col-sm-6">
 
-    <p>
-        <strong><%= t("activerecord.attributes.chair.deputy") %>:</strong>
-        <%= @chair.deputy.email %>
-    </p>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("activerecord.attributes.chair.general_information") %></h4></div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.chair.head_of_chair") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @chair.head_of_chair %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.chair.deputy") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @chair.deputy.email %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </div>
 
-    <% if can? :edit, @chair %>
-        <%= link_to t('links.edit'), edit_chair_path(@chair), :type => "button", :class => "btn btn-default" %>
-    <% end %>
-    <%= link_to t('links.back'), chairs_path, :type => "button", :class => "btn btn-default" %>
+    <div class="col-sm-6">
+        <% unless @open_job_offers.empty? %>
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4>Open Jobs</h4></div>
+              <%= render 'shared/overview', job_offer_list: @open_job_offers %>
+            </div>
+        <% end %>
+
+        <% unless @running_job_offers.empty? %>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Running Jobs</h4></div>
+                <%= render 'shared/overview', job_offer_list: @running_job_offers %>
+            </div>
+        <% end %>
+    </div>
 
 </div>
 
 <div class="row">
     <div class="col-md-9">
-        <%= render 'shared/overview', name: "Open", job_offer_list: @open_job_offers %>
-        <%= render 'shared/overview', name: "Running", job_offer_list: @running_job_offers %>
-    </div>
-    <div class="col-md-3">
-        <%= render 'shared/sort_filter_search', find_path: find_jobs_chairs_path %>
+
+        
     </div>
 </div>
