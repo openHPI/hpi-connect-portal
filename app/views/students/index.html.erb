@@ -10,7 +10,7 @@
               <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
             </div>
             <div class="col-md-2">
-              <% if can? :update, student %>
+              <% if user_can_promote_students? %>
                 <button class="btn btn-primary change-role" data-id="<%= student.id %>" data-toggle="modal" data-target="#myModal"><%= t('students.promote_button')%></button>
               <%end%>
             </div>
