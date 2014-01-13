@@ -8,7 +8,6 @@ class Ability
     if user.role
         if user.admin?
             can :manage, :all
-            cannot :create, Application
         end
 
         if user.student?

@@ -6,6 +6,7 @@ describe "Job Offer pages" do
   subject { page }
 
   let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
+  let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
     @status_open = FactoryGirl.create(:job_status, :open)
@@ -35,6 +36,7 @@ describe "Job Offer pages" do
           end
 
           it { should have_button('Apply') }
+          it { should_not have_link('Edit')}
           it { should_not have_selector('h4', text: 'Applications') }
 
           describe "and having applied already" do
@@ -59,6 +61,7 @@ describe "Job Offer pages" do
             visit job_offer_path(job_offer)
           end
 
+          it { should have_link('Edit')}
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
@@ -78,6 +81,25 @@ describe "Job Offer pages" do
             it { should have_link('Accept') }
             it { should have_link('Decline') }
           end
+        end
+
+        describe "as admin" do
+          let(:admin) { FactoryGirl.create(:user, role: admin_role) }
+          before do
+            @application = FactoryGirl.create(:application, job_offer: job_offer)
+            login_as(admin, :scope => :user)
+            visit job_offer_path(job_offer)
+          end
+
+          it { should have_link('Edit')}
+          it { should have_button('Apply') }
+
+          it { should have_link('Accept') }
+          it { should have_link('Decline') }
+
+          it { should have_selector('h4', text: 'Applications') }
+          it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
+
         end
       end
     end
@@ -103,6 +125,18 @@ describe "Job Offer pages" do
 
         before do
           login_as(staff, :scope => :user)
+          visit job_offer_path(job_offer)
+        end
+
+        it { should have_link 'Job completed' }
+        it { should have_link 'reopen Job Offer'} 
+      end
+
+      describe "as a admin" do
+        let(:admin) { FactoryGirl.create(:user, role: admin_role) }
+
+        before do
+          login_as(admin, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
@@ -182,6 +216,31 @@ describe "Job Offer pages" do
           should have_link('Decline')
         end
       end
+
+      describe "as admin" do 
+        let(:admin) { FactoryGirl.create(:user, role: admin_role) }
+
+        before do          
+          login_as(admin, :scope => :user)
+          visit job_offer_path(job_offer)
+        end
+
+        it "should be editable for the deputy" do
+          should have_selector 'a:contains("Edit"):not(disabled)'
+          should have_selector 'a:contains("Delete"):not(disabled)'
+
+          should have_content('pending')
+
+          click_on "Edit"
+          expect(current_path).to eq(edit_job_offer_path(job_offer))
+        end
+
+        it "is possible to accept or decline the job offer" do
+          
+          should have_link('Accept')
+          should have_link('Decline')
+        end
+      end
     end
   
     describe "completed job offer" do
@@ -199,7 +258,19 @@ describe "Job Offer pages" do
 
         it { should have_link('reopen Job Offer') }
 
-      end      
+      end   
+
+      describe "as admin" do
+        let(:admin) { FactoryGirl.create(:user, role: admin_role, chair: job_offer.chair) }
+
+        before do
+          login_as(admin, :scope => :user)
+          visit job_offer_path(job_offer)
+        end
+
+        it { should have_link('reopen Job Offer') }
+
+      end     
     end
   end
 end
