@@ -9,6 +9,8 @@ de:
         subject: "Leider wurde eine Bewerbung abgelehnt"
         title: "Leider wurde eine Bewerbung abgelehnt"
         content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} am Lehrstuhl %{chair} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
+      apply:
+        application: "Hallo, Ich möchte mich auf die Stelle bewerben."  
     wimi:
       new_application:
         subject: "Neue Bewerbung"

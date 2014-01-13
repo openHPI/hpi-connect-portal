@@ -8,5 +8,8 @@
     <p>
       <%= link_to(@application.user.firstname.to_s+" "+@application.user.lastname.to_s, url_for(controller:"users", action: "show", id: @application.user.id, only_path: false)) %> <%= t "applications_mailer.wimi.new_application.content", job_offer: @application.job_offer.title %> 
     </p>
+    <p>
+		  <%= @message %>    	
+    </p>
   </body>
 </html>
