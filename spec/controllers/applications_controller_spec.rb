@@ -116,27 +116,4 @@ describe ApplicationsController do
       assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
     end
   end
-
-  describe "DELETE destroy" do
-    it "destroys the requested application" do
-      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
-
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-      
-      sign_in user
-      expect {
-        delete :destroy, {:id => application.to_param}
-      }.to change(Application, :count).by(-1)
-    end
-
-    it "redirects to the job_offers page" do
-      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
-
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-      
-      sign_in user
-      delete :destroy, {:id => application.to_param}
-      response.should redirect_to(job_offer_path(@job_offer))
-    end
-  end
 end

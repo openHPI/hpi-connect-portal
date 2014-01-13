@@ -23,7 +23,7 @@ HpiHiwiPortal::Application.routes.draw do
     
     resources :users, only: [:edit, :update]
 
-    resources :applications, only: [:create, :destroy] do
+    resources :applications, only: [:create] do
       member do
         get "accept"
         get "decline"
