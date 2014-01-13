@@ -1,7 +1,20 @@
 <tr>
-    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.firstname %></td>
-    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.lastname %></td>
-    <td class='clickableRow' href='<%= student_path(id: application.user.id) %>'><%= application.user.email %></td>
+    <% if application.user.admin? %>
+        <td class='Row'><%= application.user.firstname %></td>
+        <td class='Row'><%= application.user.lastname %></td>
+        <td class='Row'><%= application.user.email %></td> 
+    <% else %>
+
+        <% if application.user.staff? %>
+            <% path_to_user = staff_path(id: application.user.id) %>
+        <% else %>
+            <% path_to_user = student_path(id: application.user.id) %>
+        <% end %>
+                
+        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.firstname %></td>
+        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.lastname %></td>
+        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.email %></td>
+    <% end %>
     
     <% if user_is_responsible_user?(@job_offer) or user_is_admin? %>
     	<td>
