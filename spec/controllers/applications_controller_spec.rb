@@ -3,9 +3,9 @@ require 'spec_helper'
 describe ApplicationsController do
 
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
-  let(:research_assistant_role) {FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)}
+  let(:staff_role) {FactoryGirl.create(:role, :name => 'Staff', :level => 2)}
   let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
-  let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: research_assistant_role)}
+  let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
@@ -16,7 +16,7 @@ describe ApplicationsController do
   describe "GET decline" do
     it "deletes application" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
       expect{
           get :decline, {:id => application.id}
         }.to change(Application, :count).by(-1)
@@ -39,31 +39,45 @@ describe ApplicationsController do
       get :accept, {:id => application.id}
       response.should redirect_to(@job_offer)
     end
+
     it "accepts student is assigned as @job_offer.assigned_student" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
       
       get :accept, {:id => application.id}
       assigns(:application).job_offer.assigned_student.should eq(@student)
     end
+
     it "declines all other students" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
       expect{
         get :accept, {:id => application.id}
       }.to change(Application, :count).by(-3)
     end
+
     it "application status should be 'working' if an application is accepted" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       working = FactoryGirl.create(:job_status, :name=>'running')
       
-      sign_in FactoryGirl.create(:user,:role=>research_assistant_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
       get :accept, {:id => application.id}
       assigns(:application).job_offer.status.should eq(working)
+    end
+
+    it "sends two emails" do
+      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      
+      old_count = ActionMailer::Base.deliveries.count
+
+      get :accept, {:id => application.id}
+
+      ActionMailer::Base.deliveries.count.should == old_count + 2
     end
   end
 
@@ -100,6 +114,29 @@ describe ApplicationsController do
       post :create, { :application => {:job_offer_id => @job_offer.id} }
       response.should redirect_to(job_offer_path(@job_offer))
       assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested application" do
+      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      
+      sign_in user
+      expect {
+        delete :destroy, {:id => application.to_param}
+      }.to change(Application, :count).by(-1)
+    end
+
+    it "redirects to the job_offers page" do
+      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      
+      sign_in user
+      delete :destroy, {:id => application.to_param}
+      response.should redirect_to(job_offer_path(@job_offer))
     end
   end
 end

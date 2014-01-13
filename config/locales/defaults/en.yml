@@ -230,3 +230,9 @@ en:
   activerecord:
     errors:
       <<: *errors
+  languages:
+    english: "English"
+    german: "German"
+    spanish: "Spanish"
+    chinese: "Chinese"
+    french: "French"

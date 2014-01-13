@@ -2,8 +2,11 @@ de:
     students:
         students: "Studenten"
         students_headline: "Studentenübersicht"
-        new_student: "Neuen Studenten anlegen"#
+        new_student: "Neuen Studenten anlegen"
         edit_student: "Studenten bearbeiten"
-        promote_button: "Rolle ändern"
+        carrier: "Karriere"
+        name: Name
+        semester: Semester
+		promote_button: "Rolle ändern"
         promote_title: "Rolle ändern"
         promote_confirm_question: "Sind Sie sich sicher, dass sie Rolle von ändern wollen?"

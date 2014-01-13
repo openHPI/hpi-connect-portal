@@ -4,6 +4,8 @@ en:
         students_headline: "student list"
         new_student: "create new student"
         edit_student: "edit student"
+        carrier: "Carrier"
+        name: Name
+        semester: Semester
         promote_button: "Promote"
         promote_title: "Change Role"
-        promote_confirm_question: "Do you really want to change the user's role?"

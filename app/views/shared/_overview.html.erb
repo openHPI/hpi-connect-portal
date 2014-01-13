@@ -1,4 +1,6 @@
-  <h2> <%= t(name) %> </h2> 
+<% if defined?(name) %>  
+  <h2> <%= t(name) %> </h2>
+<% end %> 
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
