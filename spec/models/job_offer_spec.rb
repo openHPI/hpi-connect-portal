@@ -119,7 +119,7 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, chair: @itas)
     FactoryGirl.create(:job_offer, chair: @os)
 
-    filtered_job_offers = JobOffer.filter({:chair => @epic.id, :start_date => "20131125"})
+    filtered_job_offers = JobOffer.filter_chair(@epic.id).filter_start_date("20131125")
     assert_equal(filtered_job_offers.length, 2);
   end
 
@@ -130,7 +130,7 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
   
 
-    filtered_job_offers = JobOffer.filter({:start_date => "20131125"})
+    filtered_job_offers = JobOffer.filter_start_date("20131125")
     assert_equal(filtered_job_offers.length, 2);
   end
 
@@ -142,7 +142,7 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, chair: @itas)
     FactoryGirl.create(:job_offer, chair: @os)
 
-    filtered_job_offers = JobOffer.filter({:chair => @epic.id})
+    filtered_job_offers = JobOffer.filter_chair(@epic.id)
     assert_equal(filtered_job_offers.length, 3);
   end
 
@@ -152,7 +152,7 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
     FactoryGirl.create(:job_offer, chair: @epic,start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
 
-    filtered_job_offers = JobOffer.filter({:start_date => "20131125", :end_date => "20131227"})
+    filtered_job_offers = JobOffer.filter_start_date("20131125").filter_end_date("20131227")
     assert_equal(filtered_job_offers.length, 2);
   end
 
@@ -163,11 +163,9 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, time_effort: 8, compensation: 5, chair: @epic)
     FactoryGirl.create(:job_offer, time_effort: 4, compensation: 8, chair: @epic)
 
-    filtered_job_offers = JobOffer.filter({:compensation => 10, :time_effort => 5})
+    filtered_job_offers = JobOffer.filter_compensation(10).filter_time_effort(5)
     assert_equal(filtered_job_offers.length, 1);
   end
-
-
 
   it "returns job offers searched for programming languages filtered by time effort and sorted by chair" do
 
@@ -176,14 +174,55 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, time_effort: 5, chair: @epic, description: "Javascript Programming")
     FactoryGirl.create(:job_offer, time_effort: 4, chair: @os, description: "Ruby Programming")
 
-    filtered_job_offers = JobOffer.find_jobs({:sort => "chair", :search => "Ruby", :filter => {:time_effort => 8}})
+    filtered_job_offers = JobOffer.sort("chair").search("Ruby").filter_time_effort(8)
     assert_equal(filtered_job_offers.length, 2);
     assert_equal(filtered_job_offers[0].chair, @itas);
     assert_equal(filtered_job_offers[1].chair, @os);
   end
 
+  it "return job offers which only have the specified programming languages" do
+    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Python Programming")
 
+    language_one = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
+    language_two = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
+    language_three = FactoryGirl.create(:programming_language, job_offer: [offer_not_matched])
 
+    filtered_jobs = JobOffer.filter_programming_languages([language_one.id, language_two.id])
+    assert_equal(filtered_jobs.length, 1)
+
+    filtered_jobs = JobOffer.filter_programming_languages([language_one.id, language_two.id, language_three.id])
+    assert_equal(filtered_jobs.length, 2)
+
+    filtered_jobs = JobOffer.filter_programming_languages([])
+    assert_equal(filtered_jobs.length, 0)
+  end
+
+  it "return job offers which only have the specified programming languages" do
+    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, chair: @epic, description: "Python Programming")
+
+    language_one = FactoryGirl.create(:language)
+    language_two = FactoryGirl.create(:language)
+    language_three = FactoryGirl.create(:language)
+
+    offer_matched.languages = [language_one, language_two]
+    offer_matched.save
+
+    offer_not_matched.languages = [language_three]
+    offer_not_matched.save
+
+    filtered_jobs = JobOffer.filter_languages([language_one.id, language_two.id])
+    assert_equal(filtered_jobs.length, 1)
+
+    filtered_jobs = JobOffer.filter_languages([language_one.id, language_two.id, language_three.id])
+    assert_equal(filtered_jobs.length, 2)
+
+    filtered_jobs = JobOffer.filter_languages([])
+    assert_equal(filtered_jobs.length, 0)
+  end
+
+ 
   it "returns job offers filtered by status" do
     @status = FactoryGirl.create(:job_status, :name => "completed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);

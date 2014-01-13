@@ -1,0 +1,19 @@
+  <!-- <h2> <%= t(name) %> </h2>  -->
+  <% if !user_list.nil? %>
+    <ul class="list-group">
+      <% user_list.each do |user| %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-9">
+              <% if user.student? %>
+                <%= link_to user.firstname+" "+user.lastname, student_path(user), :class => "h4" %>
+              <% else %>
+                <%= link_to user.firstname+" "+user.lastname, staff_path(user), :class => "h4" %>
+              <%end%>
+            </div>
+          </div>
+        </li>
+      <%end%>
+    </ul>
+    <%= will_paginate user_list, renderer: BootstrapPagination::Rails %>
+  <%end%>

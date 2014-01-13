@@ -26,28 +26,20 @@ class UserStatusesController < ApplicationController
   def create
     @user_status = UserStatus.new(user_status_params)
 
-    respond_to do |format|
-      if @user_status.save
-        format.html { redirect_to @user_status, notice: 'Student status was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user_status }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user_status.errors, status: :unprocessable_entity }
-      end
+    if @user_status.save
+      respond_and_redirect_to(@user_status, 'Student status was successfully created.', 'show', :created)
+    else
+      render_errors_and_action(@user_status, 'new')
     end
   end
 
   # PATCH/PUT /user_statuses/1
   # PATCH/PUT /user_statuses/1.json
   def update
-    respond_to do |format|
-      if @user_status.update(user_status_params)
-        format.html { redirect_to @user_status, notice: 'Student status was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user_status.errors, status: :unprocessable_entity }
-      end
+    if @user_status.update(user_status_params)
+      respond_and_redirect_to(@user_status, 'Student status was successfully updated.')
+    else
+      render_errors_and_action(@user_status, 'edit')
     end
   end
 
@@ -55,10 +47,7 @@ class UserStatusesController < ApplicationController
   # DELETE /user_statuses/1.json
   def destroy
     @user_status.destroy
-    respond_to do |format|
-      format.html { redirect_to user_statuses_url }
-      format.json { head :no_content }
-    end
+    respond_and_redirect_to(user_statuses_url, 'User status has been successfully deleted.')
   end
 
   private

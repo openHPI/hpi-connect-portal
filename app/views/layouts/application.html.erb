@@ -44,11 +44,14 @@
       </div>
       <div class="container navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
-          <li><%= link_to t('layouts.students'), students_path %></li>
-          <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
-          <li><%= link_to t('layouts.faqs'), faqs_path  %></li>
-          <li><%= link_to t('layouts.imprint'), imprint_index_path  %></li>
+              <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
+              <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
+              <% if user_is_staff? || user_is_admin? %>
+                <li><%= link_to t('layouts.students'), students_path %></li>
+              <%end %>
+              <% if user_is_admin? %>
+                <li><%= link_to t('layouts.staff'), staff_index_path %></li>
+              <%end %>
         </ul>
         <p class="navbar-text pull-right">
           <% if user_signed_in? %>
@@ -70,7 +73,13 @@
       </div><!--/row-->
 
       <footer>
-        <p>&copy; <%= t("layouts.swt2course") %></p>
+        <tr>
+          <td>&copy; <%= t("layouts.project") %></td>
+          <td>|</td>
+          <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+          <td>|</td>
+          <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+        </tr>
       </footer>
 
     </div> <!-- /container -->

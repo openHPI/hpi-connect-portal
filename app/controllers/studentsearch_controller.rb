@@ -1,59 +1,34 @@
 class StudentsearchController < ApplicationController
-    def index
-        result = nil
-        if params.include?(:q) and params[:q] != ''
-                @query = params[:q]
-                param = "%#{@query.downcase}%"
-                result = User.search_student(param)
-        end
+  def index
+    @students = []
+    
+    @query = params[:q] || ''
+    if @query != ''
+      @students = User.search_student("%#{@query.downcase}%")
+    end
+    
+    @students = @students.concat(find_and_add_users(params["Language"], :languages)).uniq {|s| s.id}
+    @students = @students.concat(find_and_add_users(params["ProgrammingLanguage"], :programming_languages)).uniq {|s| s.id}
+    
+    @semester = params[:semester] || ''
+    @students = @students.concat(User.where("semester IN (?)", @semester.split(',').map(&:to_i))).uniq {|s| s.id}
 
-        if params.include?("Language")
-            params["Language"].each{
-                |name|
+    @no_search = @students.length == 0
+  end
 
-                    if result
-                        result = result & User.search_students_by_language(name)
-                    else
-                        result = User.search_students_by_language(name)
-                    end
-            }
-        end
 
-        if params.include?("ProgrammingLanguage")
-            params["ProgrammingLanguage"].each{
-                |name|
-                    if result
-                        result = result & User.search_students_by_programming_language(name)
-                    else
-                        result = User.search_students_by_programming_language(name)
-                    end
-            }
-        end
+  private
 
-        if params.include?(:semester) and params[:semester] != ''
-            @semester = params[:semester]
-            tmp = params[:semester]
-                studentForSemester = []
-                tmp = tmp.split(',')
-                tmp.each{
-                    |str|
-                        int = str.to_i
-                        if int > 0 and int < 20
-                            student_for_semester = student_for_semester + User.where(semester: int)
-                        end
-                }
-            if result    
-                result = result & student_for_semester  
-            else
-                result = student_for_semester
-            end
-        end
-        if not result
-            @no_search = true
-            @students = []
-        else
-            @no_search = false
-            @students = result  
-        end
+    def find_and_add_users(names, language_identifier)
+      res = []
+      if names.nil?
+        return res
+      end
+
+      names.each do |name|
+        res.concat(User.search_students_by_language_identifier(language_identifier, name))
+      end
+
+      return res
     end
 end

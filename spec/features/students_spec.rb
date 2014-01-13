@@ -1,29 +1,33 @@
 require 'spec_helper'
 
-describe "the profile page" do
+describe "the students page" do
 
-	before :all do
+  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role) }
+
+	before(:each) do
+    @programming_language = FactoryGirl.create(:programming_language)
+
     @student1 = FactoryGirl.create(:user,
-            :firstname => 'Alexander',
-            :lastname  => 'Zeier',
-            :role => FactoryGirl.create(:role, name: 'Student', level: 1),
-            :programming_languages =>[FactoryGirl.create(:programming_language, name: 'Python')]
+            :role => student_role,
+            :programming_languages =>[@programming_language]
             )
+
+    login_as(staff, :scope => :user)
+    visit students_path
 
   end
 
   it "should view only names and status of a student on the overview" do
-    visit students_path
     page.should have_content(
       @student1.firstname,
       @student1.lastname,
-      # @student1.status
       @student1.semester
     )
   end
 
   it "should contain a link for showing a profile and it should lead to profile page " do
-    visit students_path
     find_link(@student1.firstname).click
     
     current_path.should_not == students_path
@@ -42,30 +46,23 @@ describe "the profile page" do
     
   # end
 
-  after(:all) do
-    User.delete_all
-
-    Language.delete_all
-    ProgrammingLanguage.delete_all
-  end
-
 end
 
 describe "the students editing page" do
 
-  before :all do
-    @student1 = FactoryGirl.create(:user,
-            :firstname => 'Alexander',
-            :lastname  => 'Zeier',
-            :role => FactoryGirl.create(:role, name: 'Student', level: 1)
-            )
+  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
 
+  before(:each) do
+    @student1 = FactoryGirl.create(:user,
+            :role => student_role
+            )
+    login_as(@student1, :scope => :user)
   end
 
 	it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
     page.should have_content(
-      "Carrier",
+      "Career",
       "General Information"
     )
 
@@ -81,12 +78,12 @@ describe "the students editing page" do
     current_path.should == student_path(@student1)
 
     page.should have_content(
-      "user was successfully updated",
+      "User was successfully updated",
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
     
-  end
+end
 
 # to implement:
   # it "should not be possible to change the name of  a student " do
@@ -104,30 +101,18 @@ describe "the students editing page" do
 
   # end
 
-  after(:all) do
-    User.delete_all
-
-    Language.delete_all
-    ProgrammingLanguage.delete_all
-  end
-
 end
 
 describe "the students profile page" do
 
-  before :all do
+  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+
+  before(:each) do
     @student1 = FactoryGirl.create(:user,
-            :firstname => 'Alexander',
-            :lastname  => 'Zeier',
-            :role => FactoryGirl.create(:role, name: 'Student', level: 1)
-                        )
+            :role => student_role)
 
      @student2 = FactoryGirl.create(:user,
-            :firstname => 'Maria',
-            :lastname  => 'Müller',
-            :role => FactoryGirl.create(:role, name: 'Student', level: 1)
-
-        )
+            :role => student_role)
   end
 
 
@@ -135,11 +120,7 @@ describe "the students profile page" do
       visit student_path(@student1)
       page.should have_content(
         @student1.firstname,
-        @student1.lastname,
-      
-        # @student1.programming_languages,
-        "Alexander",
-        "Zeier"
+        @student1.lastname
       )
   end
 
@@ -148,24 +129,22 @@ describe "the students profile page" do
       visit student_path(@student2)
       page.should have_content(
         @student2.firstname,
-        @student2.lastname,
-        # @student2.programming_languages,
-        "Maria",
-        "Müller"
+        @student2.lastname
       )
 
   end
 
-  it "should have a Edit link which leads to the students edit page" do
+  it "should have an edit link on the show page of the own profile which leads to the students edit page" do
+      login_as(@student1, :scope => :user)
       visit student_path(@student1)
       page.find_link('Edit').click
       page.current_path.should == edit_student_path(@student1)
   end
 
-  after(:all) do
-    User.delete_all
-    Language.delete_all
-    ProgrammingLanguage.delete_all
+  it "should not have an edit link on the show page of someone elses profile" do
+      login_as(@student1, :scope => :user)
+      visit student_path(@student2)
+      should_not have_link('Edit')
   end
 
 end

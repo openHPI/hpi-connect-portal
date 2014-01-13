@@ -26,39 +26,28 @@ class LanguagesController < ApplicationController
   def create
     @language = Language.new(language_params)
 
-    respond_to do |format|
-      if @language.save
-        format.html { redirect_to @language, notice: 'Language was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @language }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @language.errors, status: :unprocessable_entity }
-      end
+    if @language.save
+      respond_and_redirect_to(@language, 'Language was successfully created.', 'show', :created)
+    else
+      render_errors_and_action(@language, 'new')
     end
   end
 
   # PATCH/PUT /languages/1
   # PATCH/PUT /languages/1.json
   def update
-    respond_to do |format|
-      if @language.update(language_params)
-        format.html { redirect_to @language, notice: 'Language was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @language.errors, status: :unprocessable_entity }
-      end
+    if @language.update(language_params)
+      respond_and_redirect_to(@language, 'Language was successfully updated.')
+    else
+      render_errors_and_action(@language, 'edit')
     end
   end
 
   # DELETE /languages/1
   # DELETE /languages/1.json
   def destroy
-    @language.destroy
-    respond_to do |format|
-      format.html { redirect_to languages_url }
-      format.json { head :no_content }
-    end
+    @language.destroy#
+    respond_and_redirect_to(languages_url, 'Language has been successfully deleted.')
   end
 
   private

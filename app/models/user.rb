@@ -27,7 +27,7 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
 #  photo_updated_at       :date
@@ -61,7 +61,8 @@ class User < ActiveRecord::Base
 
     has_attached_file   :photo,
                         :url  => "/assets/students/:id/:style/:basename.:extension",
-                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension",
+                        :styles => { :medium => "300x300>", :thumb => "100x100>" }
     validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
     has_attached_file   :cv,
@@ -73,9 +74,37 @@ class User < ActiveRecord::Base
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
     validates :role, presence: true
-    validate :birthday_is_valid
-
+    validates :semester, :academic_program, :education, presence: true, :if => :student?
+    validates_inclusion_of :semester, :in => 1..12, :if => :student?
+   
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
+    scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff')}
+
+    scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
+    scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+    scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+    scope :search_students, -> string { where("
+                (lower(firstname) LIKE ?
+                OR lower(lastname) LIKE ?
+                OR lower(email) LIKE ?
+                OR lower(academic_program) LIKE ?
+                OR lower(education) LIKE ?
+                OR lower(homepage) LIKE ?
+                OR lower(github) LIKE ?
+                OR lower(facebook) LIKE ?
+                OR lower(xing) LIKE ?
+                OR lower(linkedin) LIKE ?)
+                ",
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
+
+    def eql?(other)
+        other.kind_of?(self.class) && self.id == other.id
+    end
+
+    def hash
+        self.id.hash
+    end
 
     def self.build_from_identity_url(identity_url)
         username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
@@ -84,7 +113,17 @@ class User < ActiveRecord::Base
         last_name = username.split('.').second.capitalize
         email = username + '@student.hpi.uni-potsdam.de'
 
-        User.new(identity_url: identity_url, email: email, firstname: first_name, lastname: last_name, role: Role.where(name: "Student").first)
+        # semester, academic_program and education are required to create a user with the role student
+        # If another role is chosen, these attributes are still present, but it does not matter
+        User.new(
+            identity_url: identity_url, 
+            email: email, 
+            firstname: first_name, 
+            lastname: last_name, 
+            semester: 1,
+            academic_program: "unknown",
+            education: "unknown",
+            role: Role.where(name: "Student").first)
     end
 
     def applied?(job_offer)
@@ -95,8 +134,8 @@ class User < ActiveRecord::Base
         role && role.name == 'Student'
     end
 
-    def research_assistant?
-        role && role.name == 'Research Assistant'
+    def staff?
+        role && role.name == 'Staff'
     end
 
     def admin?
@@ -119,41 +158,29 @@ class User < ActiveRecord::Base
                 ",
                 string, string, string, string, string,
                 string, string, string, string, string)
-        search_results += search_students_by_programming_language(string)
-        search_results += search_students_by_language(string)
+        search_results += search_students_by_language_identifier(:programming_languages, string)
+        search_results += search_students_by_language_identifier(:languages, string)
         search_results.uniq.sort_by{|x| [x.lastname, x.firstname]}
     end
 
-    def self.search_students_by_programming_language(string)
-        User.joins(:programming_languages).where('lower(programming_languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.lastname, x.firstname]}
-    end
-
-     def self.search_students_by_language(string)
-        User.joins(:languages).where('lower(languages.name) LIKE ?',string.downcase).
-        sort_by{|x| [x.lastname, x.firstname]}
+    def self.search_students_by_language_identifier(language_identifier, string)
+        key = language_identifier.to_s + ".name"
+        User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|x| [x.lastname, x.firstname]}
     end
 
     def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
-       matching_students = User.all 
-
-       if language_array
-            language_array.each do |language|
-                matching_students = matching_students & search_students_by_language(language)
-            end
-        end
-       
-       if programming_language_array
-            programming_language_array.each do |programming_language|
-                matching_students = matching_students & search_students_by_programming_language(programming_language)
-            end
-        end
-        
-       matching_students
-    end 
-
-    def birthday_is_valid
-        !Chronic.parse(:birthday).nil?
+        search_students_for_mulitple_languages_and_identifiers(:languages, language_array) & search_students_for_mulitple_languages_and_identifiers(:programming_languages, programming_language_array)
     end
 
+    def self.search_students_for_mulitple_languages_and_identifiers(language_identifier, languages)
+        result = User.all
+
+        if !languages.nil?
+            languages.each do |language|
+                result = result & search_students_by_language_identifier(language_identifier, language)
+            end
+        end
+
+        result
+    end
 end

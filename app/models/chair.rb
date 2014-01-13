@@ -30,7 +30,7 @@ class Chair < ActiveRecord::Base
   validates :head_of_chair, presence: true
   validates :deputy, presence: true
 
-  def research_assistants
+  def staff
     User.where :chair => self
   end
 end

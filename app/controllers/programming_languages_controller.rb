@@ -26,28 +26,20 @@ class ProgrammingLanguagesController < ApplicationController
   def create
     @programming_language = ProgrammingLanguage.new(programming_language_params)
 
-    respond_to do |format|
-      if @programming_language.save
-        format.html { redirect_to @programming_language, notice: 'Programming language was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @programming_language }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @programming_language.errors, status: :unprocessable_entity }
-      end
+    if @programming_language.save
+      respond_and_redirect_to(@programming_language, 'Programming language was successfully created.', 'show', :created)
+    else
+      render_errors_and_action(@programming_language, 'new')
     end
   end
 
   # PATCH/PUT /programming_languages/1
   # PATCH/PUT /programming_languages/1.json
   def update
-    respond_to do |format|
-      if @programming_language.update(programming_language_params)
-        format.html { redirect_to @programming_language, notice: 'Programming language was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @programming_language.errors, status: :unprocessable_entity }
-      end
+    if @programming_language.update(programming_language_params)
+      respond_and_redirect_to(@programming_language, 'Programming language was successfully updated.')
+    else
+      render_errors_and_action(@programming_language, 'edit')
     end
   end
 
@@ -55,10 +47,7 @@ class ProgrammingLanguagesController < ApplicationController
   # DELETE /programming_languages/1.json
   def destroy
     @programming_language.destroy
-    respond_to do |format|
-      format.html { redirect_to programming_languages_url }
-      format.json { head :no_content }
-    end
+    respond_and_redirect_to(programming_languages_url, 'Programming language has been successfully deleted.')
   end
 
   private
