@@ -1,12 +1,21 @@
 include UsersHelper
 
 class StudentsController < ApplicationController
+  include UsersHelper
+  
+  before_filter :check_user_can_index_students, only: [:index]
+  before_filter :check_current_user_or_admin, only: [:edit]
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
+  has_scope :filter_semester, only: [:index],  as: :semester
 
   # GET /students
   # GET /students.json
   def index
-    @users = User.students
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
@@ -73,4 +82,16 @@ class StudentsController < ApplicationController
         :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
     end
 
+    def check_current_user_or_admin
+      set_user
+      unless current_user? @user or user_is_admin?
+        redirect_to student_path(@user)
+      end
+    end
+
+    def check_user_can_index_students
+      unless user_is_admin? || user_is_staff?
+        redirect_to root_path
+      end
+    end
 end

@@ -41,7 +41,7 @@ HpiHiwiPortal::Application.routes.draw do
     resources :studentsearch
     resources :faqs
 
-    resources :research_assistants, except: [:new, :create]
+    resources :staff, except: [:new, :create]
 
     resources :students do
         collection do

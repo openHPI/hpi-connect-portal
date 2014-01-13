@@ -1,20 +1,16 @@
-<h1><%= t('chairs.chair_overview') %></h1>
+<h1 style="display:inline" ><%= t('chairs.chair_overview') %></h1>
+<%= link_to t('chairs.new_chair'), new_chair_path, "data-no-turbolink" => true, :type => "button", :class => "btn btn-default pull-right" %>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= t("activerecord.attributes.chair.name") %></th>
-			<th><%= t("activerecord.attributes.chair.description") %></th>
-			<th><%= t("activerecord.attributes.chair.head_of_chair") %></th>
-      <th></th>
-    </tr>
-  </thead>
+<br><br>
+<div class="row"> 
+  <ul class="list-group">
+    <div class="row">
+      <div class="col-md-12">
+        <%= render @chairs %>
+      </div>
+    </div>
+  </ul>
+</div>
 
-  <tbody>
-    <%= render @chairs %>
-  </tbody>
-</table>
+<%= will_paginate @users, renderer: BootstrapPagination::Rails%>
 
-<br>
-
-<%= link_to t('chairs.new_chair'), new_chair_path, "data-no-turbolink" => true, :type => "button", :class => "btn btn-default" %>

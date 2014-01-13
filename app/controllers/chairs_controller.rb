@@ -12,15 +12,15 @@ class ChairsController < ApplicationController
   # GET /chairs.json
   def index
     @chairs = Chair.all
+    @chairs = @chairs.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /chairs/1
   # GET /chairs/1.json
   def show
+    @staff = @chair.staff.paginate(:page => params[:page])
     @running_job_offers = @chair.job_offers.running.paginate(:page => params[:page])
     @open_job_offers = @chair.job_offers.open.paginate(:page => params[:page])
-
-    @chairs = []
   end
 
   # GET /chairs/new
