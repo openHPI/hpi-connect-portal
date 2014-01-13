@@ -199,8 +199,8 @@ describe ResearchAssistantsController do
   describe "PUT update with languages skills" do
     before(:each) do
       @research_assistant = FactoryGirl.create(:user, valid_attributes)
-      @language_1 = FactoryGirl.create(:language, name: 'English')
-      @language_2 = FactoryGirl.create(:language, name: 'German')
+      @language_1 = FactoryGirl.create(:language, name: 'english')
+      @language_2 = FactoryGirl.create(:language, name: 'german')
     end
     it "updates the requested research assistant with an existing language" do
       @research_assistant.assign_attributes(:languages_users => [FactoryGirl.create(:languages_user, user: @research_assistant, language: @language_1, skill: '4')])
