@@ -7,6 +7,6 @@ de:
         carrier: "Karriere"
         name: Name
         semester: Semester
-		promote_button: "Rolle ändern"
+        promote_button: "Rolle ändern"
         promote_title: "Rolle ändern"
         promote_confirm_question: "Sind Sie sich sicher, dass sie Rolle von ändern wollen?"
