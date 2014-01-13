@@ -8,10 +8,9 @@
           <div class="row">
             <div class="col-md-12">
               <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
-			  <% if user_can_promote_students? %>
+              <% if user_can_promote_students? %>
                 <button class="btn btn btn-default change-role" style="float:right" data-id="<%= student.id %>" data-toggle="modal" data-target="#myModal"><%= t('students.promote_button')%></button>
               <%end%>
-              <%= link_to "Promote", student_path(student), :class => "btn btn-default", style: "float:right; " %>
             </div>
           </div>
         </li>
@@ -43,11 +42,11 @@
            <% promotion_roles = [Role.find_by_level(2).name , Role.find_by_level(3).name, "Deputy"] %>
         <%end%>
 
-        <%= select_tag :role_name, options_for_select(promotion_roles, Role.find_by_name("Research Assistant").name) %>
+        <%= select_tag :role_name, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
         <% if user_is_admin? %>
         <%= select_tag :chair_name, options_for_select(Chair.all.collect{|c| c.name}, :selected => nil) %>
         <% end %>
-        <%= submit_tag t('students.promote_button'), :data => {confirm: t("students.promote_confirm_question")}, class: "btn btn-large btn-primary promote" %>
+        <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default promote" %>
       <% end %>
       </div>
     </div><!-- /.modal-content -->

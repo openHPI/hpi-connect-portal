@@ -11,8 +11,6 @@ Role.delete_all
 Role.create(name: 'Student', level: 1)
 Role.create(name: 'Staff', level: 2)
 Role.create(name: 'Admin', level: 3)
-Role.create(name: 'Deputy')
-
 
 #Create Standart Job Status
 JobStatus.delete_all

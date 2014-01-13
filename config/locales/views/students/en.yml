@@ -9,3 +9,4 @@ en:
         semester: Semester
         promote_button: "Promote"
         promote_title: "Change Role"
+        promote_confirm_question: "Are you sure to change the role of the user?"

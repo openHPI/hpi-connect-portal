@@ -80,9 +80,9 @@ class StudentsController < ApplicationController
     case role_name
       when "Deputy"
         promote_to_deputy(params[:student_id], chair)
-      when "Admin"
+      when Role.find_by_level(3).name
         promote_to_admin(params[:student_id])
-      when "Research Assistant"
+      when Role.find_by_level(2).name
         promote_to_research_assistant(params[:student_id], chair)
     end
     redirect_to(students_path)
