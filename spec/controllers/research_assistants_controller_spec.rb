@@ -43,7 +43,7 @@ describe ResearchAssistantsController do
 
   describe "GET index" do
     it "assigns all research_assistants as @research_assistants" do
-      login_as(@admin, :scope => :user)
+      sign_in(@admin)
       research_assistant = User.create! valid_attributes
       get :index, {}, valid_session
       assigns(:users).should eq([research_assistant])
@@ -54,7 +54,7 @@ describe ResearchAssistantsController do
         :user,
         :role => Role.create(:name => "Research Assistant")
       )
-      login_as(wimi, :scope => :user)
+      sign_in(wimi)
       get :index, {}, valid_session
       assert_template :index
     end
@@ -64,19 +64,20 @@ describe ResearchAssistantsController do
         :user,
         :role => Role.create(:name => "Admin")
       )
-      login_as(admin, :scope => :user)
+      sign_in(admin)
       get :index, {}, valid_session
       assert_template :index
     end
 
-    # it "redirects to the root_path when logged in as student" do
-    #   student = FactoryGirl.create(
-    #     :user,
-    #     :role => Role.create(:name => "Student")
-    #   )
-    #   login_as(student, :scope => :user)
-    #   response.should redirect_to(root_path)
-    # end
+    it "redirects to the root_path when logged in as student" do
+      student = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Student")
+      )
+      sign_in(student)
+      get :index, {}, valid_session
+      response.should redirect_to(root_path)
+    end
   end
 
   describe "GET show" do
@@ -91,6 +92,39 @@ describe ResearchAssistantsController do
       expect {
         get :show, {:id => user.to_param}, valid_session
         }.to raise_error(ActionController::RoutingError)
+    end
+
+    it "shows the research assistant when logged in as research assistant" do
+      wimi = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Research Assistant")
+      )
+      sign_in(wimi)
+      user = User.create! valid_attributes
+      get :show, {:id => user.to_param}, valid_session
+      expect(response.status).to eq(200)
+    end
+
+    it "shows the research assistant when logged in as admin" do
+      admin = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Admin")
+      )
+      sign_in(admin)
+      user = User.create! valid_attributes
+      get :show, {:id => user.to_param}, valid_session
+      expect(response.status).to eq(200)
+    end
+
+    it "shows research assistant when logged in as student" do
+      student = FactoryGirl.create(
+        :user,
+        :role => Role.create(:name => "Student")
+      )
+      sign_in(student)
+      user = User.create! valid_attributes
+      get :show, {:id => user.to_param}, valid_session
+      expect(response.status).to eq(200)
     end
   end
 
