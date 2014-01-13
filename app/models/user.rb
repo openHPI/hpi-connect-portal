@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     has_many :languages_users
     has_many :languages, :through => :languages_users
     accepts_nested_attributes_for :languages
-    
+
     belongs_to :role
     belongs_to :chair
     belongs_to :user_status
@@ -78,6 +78,8 @@ class User < ActiveRecord::Base
    
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
     scope :research_assistants, -> { joins(:role).where('roles.name = ?', 'Research Assistant')}
+
+    scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
     
     def eql?(other)
      other.kind_of?(self.class) && self.id == other.id

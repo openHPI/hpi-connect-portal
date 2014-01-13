@@ -21,7 +21,7 @@ class Chair < ActiveRecord::Base
   has_many :users
   has_many :job_offers
   belongs_to :deputy, class_name: "User"
-
+  
   validates_attachment_size :avatar, :less_than => 5.megabytes
   validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
 

@@ -138,6 +138,38 @@
           <% end %>
         </ul>
       </div>
+
+      <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("students.programming_language_newsletter") %></h4></div>
+        <ul class="list-group">
+          <%= fields_for :programming_languages_newsletter_information do |f2| %>
+          <% if @all_programming_languages %>
+            <% @all_programming_languages.each do |programming_language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                  <%# Erstelle ein Label fuer jede Programmiersprache %>
+                  <%= f2.label programming_language.name, class: "control-label" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                    <% if !@user.new_record? %>
+                      <% pl = ProgrammingLanguagesNewsletterInformation.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
+                    <% end %>
+                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                        <% if pl %>
+                          <%= f2.check_box programming_language.id, :checked => "checked" %>
+                          <% else %>
+                            <%= f2.check_box programming_language.id %>
+                          <% end %>
+                      <% end %>
+                    </div>
+                  </div>    
+                </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
   </div>
 
 <!--     Right -->
@@ -286,8 +318,53 @@
         </li>
       </ul>
     </div>
-  </div>
-</div>
 
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.frequency") %> </h4></div>
+        <ul class="list-group">
+          <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+            <%= f.collection_radio_buttons :frequency, [[1,(t "students.direct")], [2, ( t"students.daily")], [3,(t "students.weekly")], [4, ( t"students.quart")]], :first, :last %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div> 
+   
+    <div class="panel panel-default">
+    <div class="panel-heading"><h4><%= t("students.chairs_newsletter") %></h4></div>
+      <ul class="list-group">
+        <%= fields_for :chairs_newsletter_information do |f2| %>
+        <% if @all_chairs %>
+          <% @all_chairs.each do |chair| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                <%# Erstelle ein Label fuer jede Programmiersprache %>
+                <%= f2.label chair.name, class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                  <% if !@user.new_record? %>
+                    <% pl = ChairsNewsletterInformation.find_by_user_id_and_chair_id(@user.id,chair.id) %>
+                  <% end %>
+                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                      <% if pl %>
+                        <%= f2.check_box chair.id, :checked => "checked"%>
+                        <% else %>
+                          <%= f2.check_box chair.id %>
+                        <% end %>
+                    <% end %>
+                  </div>
+                </div>    
+              </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    </div>
+  </div>
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
 <% end %>

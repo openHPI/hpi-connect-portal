@@ -224,7 +224,7 @@ JobOffer.create([{
 }])
 
 JobOffer.create([{
-	title: "Website Developer", 
+	title: "Touch floor", 
 	description: 'The student develops a wonderful website.', 
 	chair: Chair.where(:name => "Enterprise Platform and Integration Concepts").first, 
 	status: JobStatus.where(:name => "open").first,

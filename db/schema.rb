@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140110115809) do
+ActiveRecord::Schema.define(version: 20140113000421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,11 @@ ActiveRecord::Schema.define(version: 20140110115809) do
   end
 
   add_index "chairs_job_offers", ["chair_id", "job_offer_id"], name: "index_chairs_job_offers_on_chair_id_and_job_offer_id", unique: true, using: :btree
+
+  create_table "chairs_newsletter_informations", force: true do |t|
+    t.integer "user_id"
+    t.integer "chair_id"
+  end
 
   create_table "faqs", force: true do |t|
     t.string   "question"
@@ -120,6 +125,11 @@ ActiveRecord::Schema.define(version: 20140110115809) do
     t.datetime "updated_at"
   end
 
+  create_table "programming_languages_newsletter_informations", force: true do |t|
+    t.integer "user_id"
+    t.integer "programming_language_id"
+  end
+
   create_table "programming_languages_users", force: true do |t|
     t.integer "user_id"
     t.integer "programming_language_id"
@@ -175,6 +185,7 @@ ActiveRecord::Schema.define(version: 20140110115809) do
     t.integer  "status"
     t.integer  "user_status_id"
     t.date     "employment_start_date"
+    t.integer  "frequency",              default: 1,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

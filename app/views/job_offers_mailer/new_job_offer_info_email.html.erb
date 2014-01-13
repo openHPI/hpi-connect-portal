@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3><%= t "job_offers_mailer.new_job_offer_info.title" %></h3>
+    <% @job_offers.each do |job| %>
+    <ul>
+      <li><%= (t "job_offers_mailer.general.title") + job.title %></li>
+      <li><%= (t "job_offers_mailer.general.chair") + job.chair.name %></li>
+      <li><%= (t "job_offers_mailer.general.room") + job.room_number.to_s %></li>
+      <li><%= (t "job_offers_mailer.general.duration") + job.start_date.to_s %> - <%= job.end_date.to_s %></li>
+      <li><%= (t "job_offers_mailer.general.salary") + job.compensation.to_s %></li>
+      <li><%= (t "job_offers_mailer.general.description") + job.description %></li>
+    </ul>
+    <% end %>
+  </body>
+</html>

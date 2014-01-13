@@ -12,3 +12,5 @@ de:
     student_accepted:
       subject: "Ein Jobangebot wurde vergeben"
       title: "Das folgende Jobangebot wurde vergeben:"
+    new_job_offer_info:
+      subject: 'Wir haben neue Jobangebote für Sie'

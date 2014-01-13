@@ -20,7 +20,7 @@
 
 FactoryGirl.define do
   factory :job_offer, class: JobOffer do
-    title        "Awesome Job"
+    sequence(:title)  { |n| "Awesome Job #{n}" }
     description  "Develop a website"
     start_date   Date.new(2013,1,1)
     end_date     Date.new(2013,2,1)

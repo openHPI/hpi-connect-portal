@@ -79,8 +79,7 @@ describe "the students editing page" do
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
-    
-end
+    end
 
 # to implement:
   # it "should not be possible to change the name of  a student " do
@@ -134,7 +133,7 @@ describe "the students profile page" do
   it "should have a Edit link which leads to the students edit page" do
       visit student_path(@student1)
       page.find_link('Edit').click
-      page.current_path.should == edit_student_path(@student1)
+      current_path.should == edit_student_path(@student1)
   end
 
 end

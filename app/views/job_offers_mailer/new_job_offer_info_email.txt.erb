@@ -1,0 +1,9 @@
+<%= t "job_offers_mailer.new_job_offer.title"%>
+
+<%= @job_offers.each do |job| %>
+•<%= (t "job_offers_mailer.general.title") + job.title %>
+•<%= (t "job_offers_mailer.general.chair") + job.chair.name %>
+•<%= (t "job_offers_mailer.general.room") + job.room_number.to_s %>
+•<%= (t "job_offers_mailer.general.duration") + job.start_date.to_s %> - <%= job.end_date.to_s %>
+•<%= (t "job_offers_mailer.general.salary") + job.compensation.to_s %>
+<% end %>

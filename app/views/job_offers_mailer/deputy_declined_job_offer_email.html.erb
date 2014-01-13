@@ -4,9 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><%= t "job_offers_mailer.deputy_decline.title"+" ("+@job_offer.title+")" %></h1>
+    <h1><%= (t "job_offers_mailer.deputy_declined.title")+" ("+@job_offer.title+")" %></h1>
     <p>
-      <%= t "job_offers_mailer.deputy_decline.content" %>
+      <%= t "job_offers_mailer.deputy_declined.content" %>
     </p>
   </body>
 </html>

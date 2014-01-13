@@ -30,6 +30,7 @@ class StudentsController < ApplicationController
   def edit
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
+    @all_chairs = Chair.all
   end
 
   #Outdated by new design, at least till know
@@ -64,6 +65,9 @@ class StudentsController < ApplicationController
   def update
     update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
+    
+    update_and_remove_for_newsletter(params[:chairs_newsletter_information], params[:id], ChairsNewsletterInformation, "chair_id")
+    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
 
     if @user.update(user_params)
       respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
@@ -100,7 +104,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id, :frequency)
     end
 
     def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
@@ -125,5 +129,25 @@ class StudentsController < ApplicationController
         end
       end
     end
+    
+    def update_and_remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+      if params
+        params.each do |id, boolean|
+          if boolean.to_i == 1
+          newsletter_class.where(:user_id => user_id, attributes_id.to_sym => id).first_or_create
+         end
+        end
+         remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+      else
+        newsletter_class.destroy_all(:user_id => user_id)
+      end
+    end
 
+    def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+      newsletter_class.where(:user_id => user_id).each do |n|
+        if params[n.attributes[attributes_id].to_s].to_i == 0
+          n.delete
+        end
+      end
+    end  
 end

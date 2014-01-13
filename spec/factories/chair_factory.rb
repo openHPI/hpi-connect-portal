@@ -17,7 +17,7 @@
 
 FactoryGirl.define do
   factory :chair do
-    name "Awesome Chair"
+    sequence(:name)  { |n| "EPIC #{n}" }
     head_of_chair "Mr. Boss"
     description "Makes beautiful websites"
     association :deputy, factory: :user

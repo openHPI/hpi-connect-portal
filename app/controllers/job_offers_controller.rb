@@ -53,6 +53,7 @@ class JobOffersController < ApplicationController
     
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
+      notify_students
       respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
     else
       render_errors_and_redirect_to(@job_offer, 'new')
@@ -161,6 +162,12 @@ class JobOffersController < ApplicationController
         else
           redirect_to job_offers_path
         end
+      end
+    end
+
+    def notify_students
+      User.update_immediately.each do |student|
+        JobOffersMailer.new_job_offer_info_email([@job_offer], student)
       end
     end
 end

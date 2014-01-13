@@ -7,6 +7,17 @@ en:
     deputy_declined:
       title: "Your job offer has been declined."
       content: "The deput has declined your job offer."
-    deputy_accept:
+    deputy_accepted:
       title: "Your job offer has been accepted."
       content: "Your job offer has benn accepted through the deputy. It is now visible for the students."
+    new_job_offer_info:
+      title: "New job offers are avaible"
+    general:
+      title: "Title: "
+      student: "Student name: "
+      chair: "Chair: "
+      staff: "Responsable staff member: "
+      room: "Room: "
+      duration: "Duration: "
+      salary: "Salary: " 
+      description: "Description: "
