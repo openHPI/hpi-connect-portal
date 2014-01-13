@@ -41,13 +41,14 @@ HpiHiwiPortal::Application.routes.draw do
     resources :studentsearch
     resources :faqs
 
-    resources :research_assistants, except: [:new, :create]
+    resources :staff, except: [:new, :create]
 
     resources :students do
         collection do
             get 'students/new' => 'students#new'
             post 'students' => 'students#create'
             get 'matching'
+            post 'update_role'
         end
     end
 

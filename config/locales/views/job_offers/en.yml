@@ -38,6 +38,7 @@ en:
     already_applied_badge: "Applied"
     reopen_job: "reopen Job Offer"
     apply_confirmation: "Are you sure you want to apply for this job?"
+    students: "Students"
     send_application_headline: "Application Email"
     add_cv_application: "Add CV to Application?"
     send_application: "Send Application"

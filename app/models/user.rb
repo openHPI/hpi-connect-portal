@@ -78,8 +78,26 @@ class User < ActiveRecord::Base
     validates_inclusion_of :semester, :in => 1..12, :if => :student?
    
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
-    scope :research_assistants, -> { joins(:role).where('roles.name = ?', 'Research Assistant')}
-    
+    scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff')}
+
+    scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
+    scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+    scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+    scope :search_students, -> string { where("
+                (lower(firstname) LIKE ?
+                OR lower(lastname) LIKE ?
+                OR lower(email) LIKE ?
+                OR lower(academic_program) LIKE ?
+                OR lower(education) LIKE ?
+                OR lower(homepage) LIKE ?
+                OR lower(github) LIKE ?
+                OR lower(facebook) LIKE ?
+                OR lower(xing) LIKE ?
+                OR lower(linkedin) LIKE ?)
+                ",
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
+
     def eql?(other)
         other.kind_of?(self.class) && self.id == other.id
     end
@@ -116,12 +134,16 @@ class User < ActiveRecord::Base
         role && role.name == 'Student'
     end
 
-    def research_assistant?
-        role && role.name == 'Research Assistant'
+    def staff?
+        role && role.name == 'Staff'
     end
 
     def admin?
         role && role.name == 'Admin'
+    end
+
+    def deputy?
+        role && role.name == 'Deputy'
     end
 
     def self.search_student(string)

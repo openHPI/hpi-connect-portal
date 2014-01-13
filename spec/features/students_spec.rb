@@ -3,6 +3,8 @@ require 'spec_helper'
 describe "the students page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: FactoryGirl.create(:chair)) }
 
 	before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
@@ -11,9 +13,15 @@ describe "the students page" do
             :role => student_role,
             :programming_languages =>[@programming_language]
             )
-
+    initialize_roles
+    login_as(staff, :scope => :user)
     visit students_path
 
+  end
+
+  def initialize_roles
+    FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)
+    FactoryGirl.create(:role, :name => 'Admin', :level => 3)
   end
 
   it "should view only names and status of a student on the overview" do
@@ -53,7 +61,7 @@ describe "the students editing page" do
     @student1 = FactoryGirl.create(:user,
             :role => student_role
             )
-
+    login_as(@student1, :scope => :user)
   end
 
 	it "should contain all attributes of a student" do
@@ -131,10 +139,17 @@ describe "the students profile page" do
 
   end
 
-  it "should have a Edit link which leads to the students edit page" do
+  it "should have an edit link on the show page of the own profile which leads to the students edit page" do
+      login_as(@student1, :scope => :user)
       visit student_path(@student1)
       page.find_link('Edit').click
       page.current_path.should == edit_student_path(@student1)
+  end
+
+  it "should not have an edit link on the show page of someone elses profile" do
+      login_as(@student1, :scope => :user)
+      visit student_path(@student2)
+      should_not have_link('Edit')
   end
 
 end

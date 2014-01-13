@@ -25,7 +25,7 @@ describe JobOffersController do
   # adjust the attributes here as well.
   let(:assigned_student) { FactoryGirl.create(:user) }
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
-  let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Research Assistant")) }
+  let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Staff")) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open)} }
@@ -116,6 +116,7 @@ describe JobOffersController do
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
+      sign_in responsible_user
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
     end
@@ -156,14 +157,14 @@ describe JobOffersController do
       @job_offer = JobOffer.create! valid_attributes_status_running
     end
 
-    it "marks jobs as completed if the user is research assistant of the chair" do 
+    it "marks jobs as completed if the user is staff of the chair" do 
       completed = FactoryGirl.create(:job_status, :completed)
-      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: @job_offer.chair)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: @job_offer.chair)
       
       get :complete, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
-    it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
+    it "prohibits user to mark jobs as completed if he is no staff of the chair" do 
       get :complete, {:id => @job_offer.id}, valid_session
       response.should redirect_to(@job_offer)
     end

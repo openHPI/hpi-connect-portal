@@ -11,35 +11,75 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label t("activerecord.attributes.chair.name") %><br>
-    <%= f.text_field :name %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t("chairs.general_information") %></h4>
   </div>
-	<div class="field">
-    <%= f.label t("activerecord.attributes.chair.description") %><br>
-    <%= f.bootsy_area :description %>
-  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label t "activerecord.attributes.chair.name", class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :name, :class => "form-control"%>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="row">
+              <div class="col-sm-3">
+                <%= f.label t "activerecord.attributes.chair.head_of_chair", class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :head_of_chair, :class => "form-control"%>
+              </div>
+            </div>         
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+              <div class="col-sm-3">
+                <%= f.label t "activerecord.attributes.chair.deputy", class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
+              </div>
+            </div>         
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= f.label :avatar, class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <% unless @chair.avatar.nil? %>
+                    <%= image_tag @chair.avatar.url(:medium), class: " chair-thumbnail", alt: @chair.name%>
+                <% end %>
+                <br><br>
+                <%= f.file_field :avatar %>
+              </div>
+            </div>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12" data-no-turbolink="true">
+          <%= f.label t "activerecord.attributes.chair.description", class: "control-label" %>
+          <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-  <div class="field">
-    <%= f.label t("activerecord.attributes.chair.head_of_chair") %><br>
-    <%= f.text_field :head_of_chair %>
-  </div>
 
-	<div class="field clearfix">
-    <%= f.label :avatar %><br>
-		<% if !@chair.avatar.nil? %>
-				<%= image_tag @chair.avatar.url(:medium), class: "pull-left img-thumbnail chair-thumbnail", alt: @chair.name%>
-				<br>
-		<% end %>
-    <%= f.file_field :avatar %>
-  </div>
-
-  <%= f.label :deputy %><br />
-  <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
-
-  <div class="actions" style="margin-top:30px;">
-    <%= f.submit t("links.save"), :class => "btn btn-success btn-large" %>
-    <%= link_to t("links.back"), chairs_path, :type => "button", :class => "btn btn-default", :style => "margin-left:30px;" %>
-  </div>
+<%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 
 <% end %>

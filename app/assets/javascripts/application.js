@@ -29,6 +29,8 @@
     $('.field_with_errors').addClass('form-group has-error');
 });
 
-  $(function(){
+$(function(){
     $('#error_explanation').addClass('alert alert-danger block-message');
 });
+
+

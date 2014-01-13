@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "research_assistants/show" do
+describe "staff/show" do
   before(:each) do
     @user = assign(:users, stub_model(User,
       :firstname => "First Name",
@@ -13,6 +13,8 @@ describe "research_assistants/show" do
       :xing => "Xing",
       :linkedin => "Linkedin"
     ))
+
+    view.stub(:signed_in?) { false }
   end
 
   it "renders attributes in <p>" do
