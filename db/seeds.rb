@@ -204,8 +204,8 @@ Chair.create([{
 
 Chair.create([{
 	name: "Verwaltung",
-	description: "to be done",
-	head_of_chair: "to be done",
+	description: "Verwaltung/Organization contains:<br>- Admins<br>- Medientechnik<br>- Haustechnik<br>- Empfang<br>- ÖA",
+	head_of_chair: "Illona Pamperin",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
