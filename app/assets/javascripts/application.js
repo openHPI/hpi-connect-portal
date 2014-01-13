@@ -32,3 +32,5 @@
 $(function(){
     $('#error_explanation').addClass('alert alert-danger block-message');
 });
+
+
