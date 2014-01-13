@@ -201,7 +201,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= @user.additional_information.html_safe %>
+                  <%= escape_javascript(@user.additional_information.html_safe) %>
                 </td>
                </tr>
             </tbody>

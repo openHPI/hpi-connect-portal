@@ -5,6 +5,6 @@
     </div>
     <br><br>
     <p class="desciption"> 
-    	<%= chair.description.html_safe %>
+    	<%= escape_javascript(chair.description.html_safe) %>
 	</p>
 </li>

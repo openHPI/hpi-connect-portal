@@ -19,7 +19,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12">
-          <%= @chair.description.html_safe %>
+          <%= escape_javascript(@chair.description.html_safe) %>
         </div>
       </div>
     </li>
