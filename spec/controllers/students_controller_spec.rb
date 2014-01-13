@@ -34,45 +34,15 @@ describe StudentsController do
   let(:valid_session) { {} }
 
   describe "GET index" do
-    it "assigns all users as @users" do
+    it "assigns all user as @users" do
       admin = FactoryGirl.create(
         :user,
         :role => Role.create(:name => "Admin")
       )
-      sign_in(admin)
+      login_as(admin, :scope => :user)
       user = User.create! valid_attributes
-      get :index, {:page => 1}, valid_session
+      get :index, {}, valid_session
       assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
-    end
-
-    it "shows index when logged in as wimi" do
-      wimi = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Research Assistant")
-      )
-      sign_in(wimi)
-      get :index, {}, valid_session
-      assert_template :index
-    end
-
-    it "shows index when logged in as admin" do
-      admin = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Admin")
-      )
-      sign_in(admin)
-      get :index, {}, valid_session
-      assert_template :index
-    end
-
-    it "redirects to the root_path when logged in as student" do
-      student = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Student")
-      )
-      sign_in(student)
-      get :index, {}, valid_session
-      response.should redirect_to(root_path)
     end
   end
 
@@ -85,53 +55,9 @@ describe StudentsController do
 
     it "checks if the user is a student" do
       user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: "Research Assistant"))
-      sign_in(user)
       expect {
         get :show, {:id => user.to_param}, valid_session
         }.to raise_error(ActionController::RoutingError)
-    end
-
-    it "shows the student when logged in as wimi" do
-      wimi = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Research Assistant")
-      )
-      sign_in(wimi)
-      user = User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
-      expect(response.status).to eq(200)
-    end
-
-    it "shows the student when logged in as admin" do
-      admin = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Admin")
-      )
-      sign_in(admin)
-      user = User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
-      expect(response.status).to eq(200)
-    end
-
-    it "redirects to the root_path when student requests different student" do
-      student = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Student")
-      )
-      sign_in(student)
-      user = User.create! valid_attributes
-      get :show, {:id => user.to_param}, valid_session
-      response.should redirect_to(root_path)
-    end
-
-    it "shows student when student requests his own page" do
-      student = FactoryGirl.create(
-        :user,
-        :role => Role.create(:name => "Student")
-      )
-      sign_in(student)
-      get :show, {:id => student.to_param}, valid_session
-      expect(response.status).to eq(200)
     end
   end
 
@@ -226,7 +152,6 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      sign_in(@student)
       patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
       response.should redirect_to(student_path(@student))
     end
