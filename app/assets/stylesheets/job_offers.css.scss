@@ -15,3 +15,12 @@
 btn-default {
   color: #e46e26;
 }
+
+#applicationEmailModal{
+	.modal-footer{
+		margin-top:0px;
+	}
+	#mail_body{
+		margin-bottom:0px;
+	}
+}
