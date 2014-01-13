@@ -3,6 +3,7 @@ class StaffController < ApplicationController
 
   before_filter :check_user_can_index_staff, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /staff
@@ -15,12 +16,7 @@ class StaffController < ApplicationController
   # GET /staff/1
   # GET /staff/1.json
   def show
-    user = User.find(params[:id])
-    if user.staff?
-      @user = user
-    else
-      not_found
-    end
+    @user = User.staff.find params[:id]
   end
 
   # GET /staff/new
@@ -36,22 +32,6 @@ class StaffController < ApplicationController
     @all_languages = Language.all
   end
 
-  # POST /staff
-  # POST /staff.json
-  # def create
-  #  @staff = Staff.new(staff_params)
-
-  #  respond_to do |format|
-  #    if @staff.save
-  #      format.html { redirect_to @staff, notice: 'Staff was successfully created.' }
-  #      format.json { render action: 'show', status: :created, location: @staff }
-  #    else
-  #      format.html { render action: 'new' }
-  #      format.json { render json: @staff.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  # end
-
   # PATCH/PUT /staff/1
   # PATCH/PUT /staff/1.json
   def update
@@ -61,7 +41,7 @@ class StaffController < ApplicationController
     if @user.update(user_params)
       respond_and_redirect_to(staff_path(@user), 'User was successfully updated.')
     else
-      render_errors_and_redirect_to(staff_path(@user), 'edit')
+      render_errors_and_action(staff_path(@user), 'edit')
     end
   end
 
@@ -84,31 +64,8 @@ class StaffController < ApplicationController
         :email,
         :firstname, :lastname,
         :birthday, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :status,
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id,
         :language_ids => [],:programming_language_ids => [])
-    end
-
-    def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
-      if params
-        params.each do |id, skill|
-          l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-          l.update_attributes(:skill => skill)
-        end
-
-        remove_for_language(params, user_id, language_class, language_id_attribute)
-      else
-        #If the User deselects all languages, they have to be destroyed
-        language_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
-      end
     end
 
     def check_current_user_or_admin
@@ -123,5 +80,4 @@ class StaffController < ApplicationController
         redirect_to root_path
       end
     end
-
 end

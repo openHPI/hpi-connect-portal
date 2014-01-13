@@ -109,7 +109,7 @@
               <%= t("activerecord.attributes.job_offer.time_effort") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.time_effort %> h/week
+              <%= @job_offer.time_effort %> <%= t("job_offers.time_effort_description") %>
             </div>
           </div>
         </li>
@@ -119,7 +119,7 @@
               <%= t("activerecord.attributes.job_offer.compensation") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.compensation %> €/h
+              <%= @job_offer.compensation %> <%= t("job_offers.compensation_description") %>
             </div>
           </div>
         </li>
@@ -183,6 +183,15 @@
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
             <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button', data: {confirm: t("job_offers.apply_confirmation") } %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% unless @application.nil? %>
+        <div class="pull-right">
+          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
+            <div><%= f.hidden_field :application_id %></div>
+            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
           <% end %>
         </div>
       <% end %>

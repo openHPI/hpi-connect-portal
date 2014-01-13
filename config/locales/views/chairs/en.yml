@@ -4,4 +4,7 @@ en:
         chairs: "Chairs"
         chair_overview: "Listing of Chairs"
         editing_chair: "Editing Chair"
-        new_chair: "New Chair"   
+        new_chair: "New Chair"
+        general_information: "general information"
+        open_job_offers: "Open Job offers"
+        running_job_offers: "Running Job offers"   

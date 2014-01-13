@@ -43,7 +43,7 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @english = Language.create(:name=>'Englisch')
+    @english = Language.create(:name=>'english')
     @user = FactoryGirl.create(:user)
     @programming_language = FactoryGirl.create(:programming_language)
     @student = FactoryGirl.create(:user, :languages=>[@english], :programming_languages => [@programming_language])
@@ -101,8 +101,8 @@ describe User do
     before do
       @java = FactoryGirl.create(:programming_language, name: "Java")
       @php = FactoryGirl.create(:programming_language, name: "PHP")
-      @german = FactoryGirl.create(:language, name: "German")
-      @english = FactoryGirl.create(:language, name: "English")
+      @german = FactoryGirl.create(:language, name: "german")
+      #@english = FactoryGirl.create(:language, name: "english")
 
       FactoryGirl.create(:user, programming_languages: [@java, @php], languages: [@german])
       FactoryGirl.create(:user, programming_languages: [@java], languages: [@german, @english])
@@ -135,7 +135,7 @@ describe User do
 
   describe"#searchStudent" do
     it "returns an array of students whos description contain a queryed string"do
-      expect(User.search_student('Englisch')).to include(@student)
+      expect(User.search_student('english')).to include(@student)
     end
     it "returns an array of students whos description contain a queryed string"do
         expect(User.search_student('Master')).to include(@student)
