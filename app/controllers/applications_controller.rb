@@ -6,11 +6,11 @@ class ApplicationsController < ApplicationController
     def create
         @job_offer = JobOffer.find application_params[:job_offer_id]
         if not @job_offer.open?
-            flash[:error] = 'This job offer is not currently open.'
+            flash[:error] = 'This job offer is currently not open.'
         else
           @application = Application.new(job_offer: @job_offer, user: current_user)
           if @application.save
-              ApplicationsMailer.new_application_notification_email(@application).deliver
+              ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv]).deliver
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'

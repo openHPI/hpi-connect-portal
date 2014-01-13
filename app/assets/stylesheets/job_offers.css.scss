@@ -20,4 +20,14 @@
 .languageDIV {
 	padding-left: 10px;
 	padding-right: 10px;
+
+}
+
+#applicationEmailModal{
+	.modal-footer{
+		margin-top:0px;
+	}
+	#mail_body{
+		margin-bottom:0px;
+	}
 }
