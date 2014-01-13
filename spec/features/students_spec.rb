@@ -4,7 +4,7 @@ describe "the students page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
   let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: FactoryGirl.create(:chair)) }
 
 	before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
@@ -13,10 +13,15 @@ describe "the students page" do
             :role => student_role,
             :programming_languages =>[@programming_language]
             )
-
+    initialize_roles
     login_as(staff, :scope => :user)
     visit students_path
 
+  end
+
+  def initialize_roles
+    FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)
+    FactoryGirl.create(:role, :name => 'Admin', :level => 3)
   end
 
   it "should view only names and status of a student on the overview" do

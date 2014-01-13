@@ -48,6 +48,7 @@ HpiHiwiPortal::Application.routes.draw do
             get 'students/new' => 'students#new'
             post 'students' => 'students#create'
             get 'matching'
+            post 'update_role'
         end
     end
 
