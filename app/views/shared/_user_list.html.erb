@@ -1,4 +1,4 @@
-  <h2> <%= t(name) %> </h2> 
+  <!-- <h2> <%= t(name) %> </h2>  -->
   <% if !user_list.nil? %>
     <ul class="list-group">
       <% user_list.each do |user| %>
@@ -8,7 +8,7 @@
               <% if user.student? %>
                 <%= link_to user.firstname+" "+user.lastname, student_path(user), :class => "h4" %>
               <% else %>
-                <%= link_to user.firstname+" "+user.lastname, research_assistant_path(user), :class => "h4" %>
+                <%= link_to user.firstname+" "+user.lastname, staff_path(user), :class => "h4" %>
               <%end%>
             </div>
           </div>

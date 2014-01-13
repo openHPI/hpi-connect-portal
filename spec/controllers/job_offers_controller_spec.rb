@@ -25,7 +25,7 @@ describe JobOffersController do
   # adjust the attributes here as well.
   let(:assigned_student) { FactoryGirl.create(:user) }
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
-  let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Research Assistant")) }
+  let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Staff")) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open)} }
@@ -39,13 +39,6 @@ describe JobOffersController do
   # in order to pass any filters (e.g. authentication) defined in
   # job_offersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
-
-  before(:all) do 
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
-  end
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
@@ -109,10 +102,21 @@ describe JobOffersController do
       get :show, {:id => job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(job_offer)
     end
+
+    it "assigns a possible applications as @application" do
+      user = FactoryGirl.create(:user)
+      sign_in user
+
+      job_offer = JobOffer.create! valid_attributes
+      application = FactoryGirl.create(:application, user: user, job_offer: job_offer)
+      get :show, {:id => job_offer.to_param}, valid_session
+      assigns(:application).should eq(application)
+    end
   end
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
+      sign_in responsible_user
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
     end
@@ -153,14 +157,14 @@ describe JobOffersController do
       @job_offer = JobOffer.create! valid_attributes_status_running
     end
 
-    it "marks jobs as completed if the user is research assistant of the chair" do 
+    it "marks jobs as completed if the user is staff of the chair" do 
       completed = FactoryGirl.create(:job_status, :completed)
-      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Research Assistant', level: 2), chair: @job_offer.chair)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: @job_offer.chair)
       
       get :complete, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(completed)      
     end
-    it "prohibits user to mark jobs as completed if he is no research assistant of the chair" do 
+    it "prohibits user to mark jobs as completed if he is no staff of the chair" do 
       get :complete, {:id => @job_offer.id}, valid_session
       response.should redirect_to(@job_offer)
     end

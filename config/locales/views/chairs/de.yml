@@ -8,3 +8,6 @@ de:
         staff: Mitarbeiter
         open: Offen
         running: Laufend
+        general_information: "Allgemeine Informationen"
+        open_job_offers: "Offene Stellenangebote"
+        running_job_offers: "Vergebene Stellenangebote"

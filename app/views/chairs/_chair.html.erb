@@ -1,11 +1,10 @@
-<tr>
-    <td><%= chair.name %></td>
-    <td><%= chair.description.html_safe %></td>
-    <td><%= chair.head_of_chair %></td>
-    <td>
-        <%= link_to t('links.show'), chair, :type => "button", :class => "btn btn-primary" %>
-        <% if can? :edit, chair %>
-            <%= link_to t('links.edit'), edit_chair_path(chair), "data-no-turbolink" => true, :type => "button", :class => "btn btn-primary" %>
-        <% end %>
-    </td>
-</tr>
+<li class="list-group-item">
+    <%= link_to chair.name, chair, :class => "h4" %>
+    <div class="pull-right">
+    	<%= t("activerecord.attributes.chair.head_of_chair") %>: <%= chair.head_of_chair %>
+    </div>
+    <br><br>
+    <p class="desciption"> 
+    	<%= chair.description.html_safe %>
+	</p>
+</li>

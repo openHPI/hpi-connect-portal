@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-md-12">
 
-    <% if @job_offer.pending? && user_is_deputy_of_chair?(@job_offer.chair) %>
+    <% if @job_offer.pending? && (user_is_deputy_of_chair?(@job_offer.chair) || user_is_admin?) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success" %>
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
     <% end %>
 
-    <% if !@job_offer.completed? && (user_is_responsible_user?(@job_offer) || user_is_deputy_of_chair?(@job_offer.chair)) %>
+    <% if !@job_offer.completed? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?)%>
       <span class="pull-right">
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
@@ -16,9 +16,13 @@
       </span>
     <% end %>
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
+    <% if signed_in? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
           <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
           <% end %>
+
+    <% if signed_in? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?) && @job_offer.running? %>
+      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
+    <% end %>
   	
   	<br><br>
     
@@ -105,7 +109,7 @@
               <%= t("activerecord.attributes.job_offer.time_effort") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.time_effort %> h/week
+              <%= @job_offer.time_effort %> <%= t("job_offers.time_effort_description") %>
             </div>
           </div>
         </li>
@@ -115,20 +119,22 @@
               <%= t("activerecord.attributes.job_offer.compensation") %>
             </div>
             <div class="col-sm-9">
-              <%= @job_offer.compensation %> €/h
+              <%= @job_offer.compensation %> <%= t("job_offers.compensation_description") %>
             </div>
           </div>
         </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= t("activerecord.attribute.job_offer.contact") %>
+        <% if !(@job_offer.responsible_user).nil? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attribute.job_offer.contact") %>
+              </div>
+              <div class="col-sm-9">
+                <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
+              </div>
             </div>
-            <div class="col-sm-9">
-              <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
-            </div>
-          </div>
-        </li>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
@@ -170,6 +176,16 @@
       </div>
     </div>
   <% end %>
+
+  <%# if signed_in? && user_is_staff_of_chair?(@job_offer) %>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
+        <%= render 'shared/user_list', name: "job_offers.students", user_list: @job_offer.assigned_student %>  
+      </div>
+    </div>
+  <%#end%>
+
 </div>
 
       <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
@@ -177,6 +193,15 @@
           <%= form_for current_user.applications.build(job_offer_id: @job_offer.id) do |f| %>
             <div><%= f.hidden_field :job_offer_id %></div>
             <%= f.submit t("job_offers.apply"), class: 'btn btn-success apply-button', data: {confirm: t("job_offers.apply_confirmation") } %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% unless @application.nil? %>
+        <div class="pull-right">
+          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
+            <div><%= f.hidden_field :application_id %></div>
+            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
           <% end %>
         </div>
       <% end %>
@@ -199,16 +224,8 @@
       </table>
     <% end %>
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) %>
-      <div class="col-md-9">
-        <%= render 'shared/user_list', name: "job_offers.students", user_list: @job_offer.assigned_student %>
-      </div>
-    <%end%>
 
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && @job_offer.running? %>
-      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
-    <% end %>
-    <% if signed_in? && user_is_research_assistant_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
+    <% if signed_in? && user_is_staff_of_chair?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
       <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>
   </div>

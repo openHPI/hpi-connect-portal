@@ -27,7 +27,7 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
 #  photo_updated_at       :date
@@ -61,7 +61,8 @@ class User < ActiveRecord::Base
 
     has_attached_file   :photo,
                         :url  => "/assets/students/:id/:style/:basename.:extension",
-                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension",
+                        :styles => { :medium => "300x300>", :thumb => "100x100>" }
     validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
     has_attached_file   :cv,
@@ -73,11 +74,11 @@ class User < ActiveRecord::Base
     validates :identity_url, uniqueness: true
     validates :firstname, :lastname, presence: true
     validates :role, presence: true
-    validates  :semester, :academic_program, :education, presence: true, :if => :student?
+    validates :semester, :academic_program, :education, presence: true, :if => :student?
     validates_inclusion_of :semester, :in => 1..12, :if => :student?
    
     scope :students, -> { joins(:role).where('roles.name = ?', 'Student')}
-    scope :research_assistants, -> { joins(:role).where('roles.name = ?', 'Research Assistant')}
+    scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff')}
 
     scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
     scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
@@ -98,7 +99,7 @@ class User < ActiveRecord::Base
                 string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
 
     def eql?(other)
-     other.kind_of?(self.class) && self.id == other.id
+        other.kind_of?(self.class) && self.id == other.id
     end
 
     def hash
@@ -133,8 +134,8 @@ class User < ActiveRecord::Base
         role && role.name == 'Student'
     end
 
-    def research_assistant?
-        role && role.name == 'Research Assistant'
+    def staff?
+        role && role.name == 'Staff'
     end
 
     def admin?

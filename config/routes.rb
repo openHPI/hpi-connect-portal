@@ -23,7 +23,7 @@ HpiHiwiPortal::Application.routes.draw do
     
     resources :users, only: [:edit, :update]
 
-    resources :applications, only: [:create] do
+    resources :applications, only: [:create, :destroy] do
       member do
         get "accept"
         get "decline"
@@ -41,7 +41,7 @@ HpiHiwiPortal::Application.routes.draw do
     resources :studentsearch
     resources :faqs
 
-    resources :research_assistants, except: [:new, :create]
+    resources :staff, except: [:new, :create]
 
     resources :students do
         collection do

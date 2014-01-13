@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "research_assistants/edit" do
+describe "staff/edit" do
   before(:each) do
     @user = assign(:users, stub_model(User,
       :firstname => "MyString",
@@ -17,11 +17,11 @@ describe "research_assistants/edit" do
     ))
   end
 
-  it "renders the edit research_assistant form" do
+  it "renders the edit staff form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form[action=?][method=?]", research_assistant_path(@user.id), "post" do
+    assert_select "form[action=?][method=?]", staff_path(@user.id), "post" do
       assert_select "input#user_email[name=?]", "user[email]"
       assert_select "select#user_user_status_id[name=?]", "user[user_status_id]"
       assert_select "select#user_birthday_1i[name=?]", "user[birthday(1i)]"

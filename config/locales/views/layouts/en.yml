@@ -2,7 +2,7 @@ en:
   layouts:
     job_offers: "Job Offers"
     students: "Students"
-    research_assistants: "Research assistants"
+    staff: "Staff"
     chairs: "Chairs"
     login: "Login"
     logged_in: "logged in"

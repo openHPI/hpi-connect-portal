@@ -56,11 +56,10 @@ FactoryGirl.define do
     facebook 'www.faceboook.com/dieter'
     xing 'www.xing.com/dieter'
     linkedin'www.linkedin.com/dieter'
-    status UserStatus.where(:name => 'employed (ext)').first
-
     after(:create) do |user, evaluator|
-       create_list(:language, 1)
-       create_list(:programming_language, 1)
+      create_list(:language, 1)
+      create_list(:programming_language, 1)
+      user.status = UserStatus.where(:name => 'employed (ext)').first || UserStatus.create(:name => 'employed (ext)')
     end
   end
 end

@@ -12,16 +12,15 @@ class ChairsController < ApplicationController
   # GET /chairs.json
   def index
     @chairs = Chair.all
+    @chairs = @chairs.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /chairs/1
   # GET /chairs/1.json
   def show
-    @research_assistants = @chair.research_assistants.paginate(:page => params[:page])
+    @staff = @chair.staff.paginate(:page => params[:page])
     @running_job_offers = @chair.job_offers.running.paginate(:page => params[:page])
     @open_job_offers = @chair.job_offers.open.paginate(:page => params[:page])
-
-    @chairs = []
   end
 
   # GET /chairs/new
@@ -44,7 +43,7 @@ class ChairsController < ApplicationController
     else
 			@users = User.all
       flash[:error] = 'Invalid content.'
-      render_errors_and_redirect_to(@chair, 'new')
+      render_errors_and_action(@chair, 'new')
     end
   end
 
@@ -54,7 +53,7 @@ class ChairsController < ApplicationController
     if @chair.update(chair_params)
       respond_and_redirect_to(@chair, 'Chair was successfully updated.')
     else
-      render_errors_and_redirect_to(@chair, 'edit')
+      render_errors_and_action(@chair, 'edit')
     end
   end
 

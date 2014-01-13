@@ -2,7 +2,9 @@
   <div class="col-md-9"> 
     <div class="row">
       <div id="buttons">
-      <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"%>
+      <% if signed_in? && can?(:new, JobOffer) %>
+        <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"%>
+      <% end %>
       <%= link_to t("job_offers.archive"), archive_job_offers_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"  %>
        <%= render 'shared/overview', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
      </div>
