@@ -9,3 +9,10 @@ en:
         subject: "Unfortunately a application has been declined"
         title: "Unfortunately a application has been declined"
         content: "Sadly your application to the job offer %{job_title} has been declined."
+      apply:
+        application: "Hello, i want to apply on the offered job."
+    wimi:
+      new_application:
+        subject: "New application"
+        title: "A new application for the job offer %{job_offer} is pending" 
+        content: "has applied for the job offer %{job_offer}."

@@ -8,12 +8,7 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :job_offers do
       collection do
-        get "sort"
-        get "search"
-        get "filter"
         get "archive"
-        get "find"
-		get "find_archived_jobs"
       end
       member do
         get "complete"
@@ -28,7 +23,7 @@ HpiHiwiPortal::Application.routes.draw do
     
     resources :users, only: [:edit, :update]
 
-    resources :applications, only: [:create] do
+    resources :applications, only: [:create, :destroy] do
       member do
         get "accept"
         get "decline"
@@ -45,6 +40,8 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :studentsearch
     resources :faqs
+
+    resources :staff, except: [:new, :create]
 
     resources :students do
         collection do

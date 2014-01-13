@@ -57,7 +57,32 @@ describe ApplicationsMailer do
 			@email.body.should have_content(@job_offer.title)
 		end
 	end
-	after(:each) do
-  		ActionMailer::Base.deliveries.clear
+
+	describe "application created" do
+		before(:each) do
+			@email = ApplicationsMailer.new_application_notification_email(@application).deliver
+		end
+		it "should send an email" do
+			ActionMailer::Base.deliveries.count.should == 1
+		end
+
+		it "should have be send to the responsible wimi" do
+			@email.to.should eq([@job_offer.responsible_user.email])
+		end
+
+		it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+			@email.from.should eq(['hpi-hiwi-portal@hpi.uni-potsdam.de'])
+		end
+
+		it "should have the title of the joboffer in the body" do
+			@email.body.should have_content(@job_offer.title)
+		end
+		it "should have the name of the student in the body" do
+			@email.body.should have_content(@student.firstname)
+			@email.body.should have_content(@student.lastname)
+		end
+		it "should include the link to the students profile page" do
+			@email.should have_body_text(url_for(controller:"users", action: "show", id: @student.id, only_path: false))
+		end
 	end
 end

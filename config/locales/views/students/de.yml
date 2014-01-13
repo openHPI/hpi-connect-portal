@@ -2,5 +2,8 @@ de:
     students:
         students: "Studenten"
         students_headline: "Studentenübersicht"
-        new_student: "Neuen Studenten anlegen"#
+        new_student: "Neuen Studenten anlegen"
         edit_student: "Studenten bearbeiten"
+        carrier: "Karriere"
+        name: Name
+        semester: Semester

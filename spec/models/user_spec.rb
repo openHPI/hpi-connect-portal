@@ -43,10 +43,10 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @english = Language.create(:name=>'Englisch')
+    @english = Language.create(:name=>'english')
     @user = FactoryGirl.create(:user)
-    @student = FactoryGirl.create(:user, :languages=>[@english],
-      :programming_languages=>[ProgrammingLanguage.create(:name=>'Ruby')])
+    @programming_language = FactoryGirl.create(:programming_language)
+    @student = FactoryGirl.create(:user, :languages=>[@english], :programming_languages => [@programming_language])
   end
 
   subject { @user }
@@ -79,7 +79,7 @@ describe User do
   describe "#searchStudentsByProgrammingLanguage" do
 
     it "returns an array of students who speak a ProgrammingLanguage" do
-    expect(User.search_students_by_language_identifier(:programming_languages, 'Ruby')).to include @student
+    expect(User.search_students_by_language_identifier(:programming_languages, @programming_language.name)).to include @student
     end
     it "should return an empty array if anyone speaks the requested language" do
       expect(User.search_students_by_language_identifier(:programming_languages, "Hindi")).to eq([])
@@ -88,7 +88,7 @@ describe User do
 
   describe"#searchStudentsByLanguage" do
     it "returns an array of students who speak a language" do
-      expect(User.search_students_by_language_identifier(:languages, 'Englisch')).to include(@student)
+      expect(User.search_students_by_language_identifier(:languages, @english.name)).to include(@student)
     end
 
     it "should return an empty array if anyone speaks the requested language" do
@@ -101,8 +101,8 @@ describe User do
     before do
       @java = FactoryGirl.create(:programming_language, name: "Java")
       @php = FactoryGirl.create(:programming_language, name: "PHP")
-      @german = FactoryGirl.create(:language, name: "German")
-      @english = FactoryGirl.create(:language, name: "English")
+      @german = FactoryGirl.create(:language, name: "german")
+      #@english = FactoryGirl.create(:language, name: "english")
 
       FactoryGirl.create(:user, programming_languages: [@java, @php], languages: [@german])
       FactoryGirl.create(:user, programming_languages: [@java], languages: [@german, @english])
@@ -134,21 +134,22 @@ describe User do
   end
 
   describe"#searchStudent" do
-  it "returns an array of students whos description contain a queryed string"do
-    expect(User.search_student('Englisch')).to include(@student)
-  end
-  it "returns an array of students whos description contain a queryed string"do
-      expect(User.search_student('Master')).to include(@student)
-  end
-
-  it "should return an empty array if anyone speaks the requested language" do
-    expect(User.search_student("Hindi")).to eq([])
+    it "returns an array of students whos description contain a queryed string"do
+      expect(User.search_student('english')).to include(@student)
     end
+    it "returns an array of students whos description contain a queryed string"do
+        expect(User.search_student('Master')).to include(@student)
+    end
+
+    it "should return an empty array if anyone speaks the requested language" do
+      expect(User.search_student("Hindi")).to eq([])
+      end
   end
 
-  after(:all) do
-    User.delete_all
-    Language.delete_all
-    ProgrammingLanguage.delete_all
+  describe "search_students_for_mulitple_languages_and_identifiers" do
+    it "should handle nil input" do
+      matching_students = User.search_students_for_mulitple_languages_and_identifiers(:languages, nil)
+      assert_equal(matching_students.length, User.all.length);
+    end
   end
 end
