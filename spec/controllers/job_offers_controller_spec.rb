@@ -45,11 +45,6 @@ describe JobOffersController do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
-    FactoryGirl.create(:role,
-        :name => "Admin")
-    @admin = FactoryGirl.create(:user,
-        :role => Role.where(name: "Admin").first
-    )
   end
 
   before(:each) do
@@ -62,8 +57,6 @@ describe JobOffersController do
     @os = FactoryGirl.create(:chair, name:"OS and Middleware")
     @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
     @open = FactoryGirl.create(:job_status, name:"open")
-
-    login_as(@admin, :scope => :user)
   end
 
   describe "Check if views are rendered" do

@@ -113,8 +113,6 @@ gem 'bootsy'
 #Birthdate validation
 gem "chronic", '~> 0.10.2'
 
-gem 'debugger'
-
 group :test do
   gem 'email_spec'
   gem 'database_cleaner'

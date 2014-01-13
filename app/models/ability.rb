@@ -16,10 +16,8 @@ class Ability
         end
 
         if user.research_assistant?
-            can :read, Application
-            can :index, User
+            can :read, Application, User
             can :manage, Faq
-            can :read_student, User
         end
     end
     # Define abilities for the passed in user here. For example:

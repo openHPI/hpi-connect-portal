@@ -2,17 +2,10 @@ require 'spec_helper'
 describe "Studentsearches" do
     before :all do
         ruby = ProgrammingLanguage.new(:name => 'Ruby')
-        FactoryGirl.create(:role)
-        FactoryGirl.create(:role,
-            :name => "Admin")
-        @admin = FactoryGirl.create(:user,
-            :role => Role.where(name: "Admin").first
-        )
         @student1 = FactoryGirl.create(:user,
             :firstname => 'Alexander',
             :lastname  => 'Zeier',
             :education => 'SAP',
-            :role => Role.where(name: "Student").first,
             :programming_languages => [ruby]
         )
 
@@ -20,7 +13,6 @@ describe "Studentsearches" do
             :firstname => 'Maria',
             :lastname  => 'Müller',
             :education => 'SAP',
-            :role => Role.where(name: "Student").first,
             :programming_languages => [ruby]
         )
 
@@ -28,7 +20,6 @@ describe "Studentsearches" do
             :firstname => 'Rafael',
             :lastname  => 'Althofer',
             :education => 'Telekom',
-            :role => Role.where(name: "Student").first,
             :programming_languages => [ruby]
         )
 
@@ -36,13 +27,8 @@ describe "Studentsearches" do
             :firstname => 'Sara',
             :lastname  => 'Müller',
             :education => 'Telekom',
-            :role => Role.where(name: "Student").first,
             :programming_languages => [ruby]
         )
-    end
-
-    before :each do
-        login_as(@admin, :scope => :user)
     end
 
     it 'returns Alexander Zeier' do

@@ -6,12 +6,6 @@ describe "Studentsearches" do
         @prog_language2 = FactoryGirl.create(:programming_language)
         @language = FactoryGirl.create(:language)
 
-        FactoryGirl.create(:role,
-            :name => "Admin")
-        @admin = FactoryGirl.create(:user,
-            :role => Role.where(name: "Admin").first
-        )
-
         @student1 = FactoryGirl.create(:user,
             :firstname => 'Alexander',
             :lastname  => 'Zeier',
@@ -40,12 +34,8 @@ describe "Studentsearches" do
             :lastname  => 'Müller',
             :role => FactoryGirl.create(:role, name: 'Student', level: 1)
         )
-        login_as(@admin, :scope => :user)
-        visit studentsearch_index_path
-    end
 
-    before :each do
-        login_as(@admin, :scope => :user)
+        visit studentsearch_index_path
     end
 
     it 'returns student Alexander Zeier' do

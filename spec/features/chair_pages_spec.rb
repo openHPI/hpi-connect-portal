@@ -15,18 +15,7 @@ describe "the chair page" do
     @job_offer_open = FactoryGirl.create(:job_offer, chair: chair, status: FactoryGirl.create(:job_status, name: 'open'))
     @job_offer_running = FactoryGirl.create(:job_offer, chair: chair, status: FactoryGirl.create(:job_status, name: 'running'))
 
-    FactoryGirl.create(:role,
-        :name => "Admin")
-    @admin = FactoryGirl.create(:user,
-        :role => Role.where(name: "Admin").first
-    )
-
-    login_as(@admin, :scope => :user)
     visit chair_path(chair)
-  end
-
-  before :each do
-      login_as(@admin, :scope => :user)
   end
 
   describe "should show the basic information of the chair" do
