@@ -29,7 +29,7 @@ class LanguagesController < ApplicationController
     if @language.save
       respond_and_redirect_to(@language, 'Language was successfully created.', 'show', :created)
     else
-      render_errors_and_action(@language, 'new')
+      render_errors_and_redirect_to(@language, 'new')
     end
   end
 
@@ -39,7 +39,7 @@ class LanguagesController < ApplicationController
     if @language.update(language_params)
       respond_and_redirect_to(@language, 'Language was successfully updated.')
     else
-      render_errors_and_action(@language, 'edit')
+      render_errors_and_redirect_to(@language, 'edit')
     end
   end
 

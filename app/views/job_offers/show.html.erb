@@ -180,15 +180,6 @@
           <% end %>
         </div>
       <% end %>
-
-      <% unless @application.nil? %>
-        <div class="pull-right">
-          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
-            <div><%= f.hidden_field :application_id %></div>
-            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
-          <% end %>
-        </div>
-      <% end %>
     </div>
 
     <% if signed_in? && @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>

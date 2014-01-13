@@ -43,7 +43,7 @@ class ChairsController < ApplicationController
     else
 			@users = User.all
       flash[:error] = 'Invalid content.'
-      render_errors_and_action(@chair, 'new')
+      render_errors_and_redirect_to(@chair, 'new')
     end
   end
 
@@ -53,7 +53,7 @@ class ChairsController < ApplicationController
     if @chair.update(chair_params)
       respond_and_redirect_to(@chair, 'Chair was successfully updated.')
     else
-      render_errors_and_action(@chair, 'edit')
+      render_errors_and_redirect_to(@chair, 'edit')
     end
   end
 

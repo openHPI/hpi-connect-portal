@@ -76,7 +76,7 @@ describe "the students editing page" do
 	it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
     page.should have_content(
-      "Career",
+      "Carrier",
       "General Information"
     )
 

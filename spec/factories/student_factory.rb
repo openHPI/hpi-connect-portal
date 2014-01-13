@@ -38,29 +38,18 @@
 #  status                 :integer
 #  user_status_id         :integer
 #
-
 FactoryGirl.define do
-  factory :user do
-    sequence(:firstname)  { |n| "User #{n}" }
-    sequence(:lastname)  { |n| "the #{n}th of his kind" }
-    sequence(:email) { |n| "user_#{n}@example.com" } 
-    sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
-    association :role
-    semester 1
-    academic_program 'Master'
-    birthday '1970-12-10'
-    education'Abitur'
-    additional_information 'No'
+  factory :student do
+    firstname 'Larry'
+    lastname 'Ellison'
+    role_id 1
+    semester 4
+    education 'Master'
+    academic_program 'Volkswirtschaftslehre'
     homepage 'oracle.com'
-    github 'www.github.com/dieter'
-    facebook 'www.faceboook.com/dieter'
-    xing 'www.xing.com/dieter'
-    linkedin'www.linkedin.com/dieter'
-    status UserStatus.where(:name => 'employed (ext)').first
-
-    after(:create) do |user, evaluator|
-       create_list(:language, 1)
-       create_list(:programming_language, 1)
-    end
+    facebook 'www.facebook.com/larry'
+    xing 'theLarry'
+    languages {Language.create([{name: 'english'}])}
+    programming_languages  {ProgrammingLanguage.create([{ name: 'Ruby'}])}
   end
 end

@@ -29,7 +29,7 @@ class ProgrammingLanguagesController < ApplicationController
     if @programming_language.save
       respond_and_redirect_to(@programming_language, 'Programming language was successfully created.', 'show', :created)
     else
-      render_errors_and_action(@programming_language, 'new')
+      render_errors_and_redirect_to(@programming_language, 'new')
     end
   end
 
@@ -39,7 +39,7 @@ class ProgrammingLanguagesController < ApplicationController
     if @programming_language.update(programming_language_params)
       respond_and_redirect_to(@programming_language, 'Programming language was successfully updated.')
     else
-      render_errors_and_action(@programming_language, 'edit')
+      render_errors_and_redirect_to(@programming_language, 'edit')
     end
   end
 

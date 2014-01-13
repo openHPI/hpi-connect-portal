@@ -27,7 +27,7 @@ class ApplicationsController < ApplicationController
         JobOffersMailer.job_student_accepted_email(@application.job_offer).deliver
         respond_and_redirect_to(@application.job_offer, 'Application was successfully accepted.')
       else
-        render_errors_and_action(@application.job_offer)
+        render_errors_and_redirect_to(@application.job_offer)
       end
     end
 
@@ -38,15 +38,8 @@ class ApplicationsController < ApplicationController
         ApplicationsMailer.application_declined_student_email(@application)
         redirect_to @application.job_offer      
       else
-        render_errors_and_action(@application.job_offer)
+        render_errors_and_redirect_to(@application.job_offer)
       end        
-    end
-
-    #DELETE destroy
-    def destroy
-      @application = Application.find params[:id]
-      @application.destroy
-      respond_and_redirect_to(@application.job_offer, 'Application has been successfully deleted.')
     end
 
     private

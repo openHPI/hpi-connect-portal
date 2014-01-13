@@ -34,7 +34,7 @@ describe UserStatusesController do
     it "assigns all user_statuses as @user_statuses" do
       user_status = UserStatus.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:user_statuses).should eq(UserStatus.all)
+      assigns(:user_statuses).should eq([user_status])
     end
   end
 
