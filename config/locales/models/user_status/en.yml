@@ -1,9 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      user_status:
-        jobseeking: "Job-seeking"
-        employed: "Employed"
-        employedext: "Externally employed"
-        nointerest: "No interest"
-        alumni: "Alumni"
