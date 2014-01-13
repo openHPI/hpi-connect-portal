@@ -248,4 +248,54 @@ describe StudentsController do
       @student.languages.first.should eq(@language_1)
     end
   end
+
+  describe "PUT update_role" do
+    before(:each) do
+        @student_role = FactoryGirl.create(:role)
+        @student = FactoryGirl.create(:user, :role_id => @student_role.id)
+        @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
+        @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
+        @chair = FactoryGirl.create(:chair)
+    end
+
+    describe "current user is deputy" do
+      before(:each) do
+        sign_in FactoryGirl.create(:user, role: @staff_role, chair: @chair)
+      end
+
+      it "updates role to Staff" do
+        assert_equal(User.find(@student.id).role_id, @student_role.id)
+        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name}, valid_session
+        assert_equal(@staff_role, User.find(@student.id).role)
+      end
+
+      it "updates role to Deputy" do
+        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy"}, valid_session
+        assert_equal(@student, Chair.find(@chair.id).deputy)
+      end
+    end
+
+    describe "current user is Admin" do
+      before(:each) do
+        sign_in FactoryGirl.create(:user, role: @admin_role)
+      end
+
+      it "updates role to Research Assistant" do
+        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name, :chair_name => @chair.name}, valid_session
+        assert_equal(@staff_role, User.find(@student.id).role)
+        assert_equal(@chair, User.find(@student.id).chair)
+      end
+
+      it "updates role to Deputy" do
+        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy", :chair_name => @chair.name}, valid_session
+        assert_equal(User.find(@student.id), Chair.find(@chair.id).deputy)
+        assert_equal(@staff_role, User.find(@student.id).role)
+      end
+
+      it "updates role to Admin" do
+        put :update_role, {:student_id => @student.to_param, :role_name => @admin_role.name}, valid_session
+        assert_equal(@admin_role, User.find(@student.id).role)
+      end
+    end
+  end
 end
