@@ -46,8 +46,10 @@
         <ul class="nav navbar-nav">
               <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
               <li><%= link_to t('layouts.chairs'), chairs_path  %></li>
-              <% if signed_in? && can?(:index, User) %>
+              <% if user_is_staff? || user_is_admin? %>
                 <li><%= link_to t('layouts.students'), students_path %></li>
+              <%end %>
+              <% if user_is_admin? %>
                 <li><%= link_to t('layouts.staff'), staff_index_path %></li>
               <%end %>
         </ul>

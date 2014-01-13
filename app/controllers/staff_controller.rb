@@ -76,7 +76,7 @@ class StaffController < ApplicationController
     end
 
     def check_user_can_index_staff
-      unless can?(:index, User)
+      unless user_is_admin?
         redirect_to root_path
       end
     end

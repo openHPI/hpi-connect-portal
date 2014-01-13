@@ -90,7 +90,7 @@ class StudentsController < ApplicationController
     end
 
     def check_user_can_index_students
-      unless can?(:index, User)
+      unless user_is_admin? || user_is_staff?
         redirect_to root_path
       end
     end

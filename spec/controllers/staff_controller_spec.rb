@@ -24,7 +24,7 @@ describe StaffController do
   # Staff. As you add validations to Staff, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Staff"), "identity_url" => "af", "email" => "test@example"} }
-
+  let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
@@ -36,9 +36,13 @@ describe StaffController do
 
   describe "GET index" do
     it "assigns all staff as @staff" do
+      admin = FactoryGirl.create(:user)  
+      admin.role = admin_role
+      sign_in admin
+
       staff = User.create! valid_attributes
-      sign_in staff
       get :index, {}, valid_session
+
       assigns(:users).should eq([staff])
     end
   end

@@ -19,7 +19,6 @@ class Ability
             can :read, Application
             can [:create, :new], JobOffer
             can :manage, Faq
-            can :index, User
         end
     end
     # Define abilities for the passed in user here. For example:
