@@ -77,8 +77,8 @@ describe "the students editing page" do
     visit edit_student_path(@student1)
     fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
     fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
-   
-    find('input[type="submit"]').click
+    
+    page.find('input[type="submit"]').click
   
     current_path.should == student_path(@student1)
 

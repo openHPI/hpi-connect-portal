@@ -162,10 +162,10 @@
                           <% else %>
                             <%= f2.check_box programming_language.id %>
                           <% end %>
-                      <% end %>
-                    </div>
+                         </div>
                   </div>    
                 </li>
+            <% end %>
             <% end %>
           <% end %>
         </ul>
@@ -352,13 +352,13 @@
                     <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                       <% if pl %>
                         <%= f2.check_box chair.id, :checked => "checked"%>
-                        <% else %>
+                      <% else %>
                           <%= f2.check_box chair.id %>
-                        <% end %>
-                    <% end %>
+                      <% end %>
                   </div>
                 </div>    
               </li>
+            <% end %>
           <% end %>
         <% end %>
       </ul>
@@ -366,5 +366,5 @@
 
     </div>
   </div>
-  <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
+  <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning', id: "findme" %></div>
 <% end %>
