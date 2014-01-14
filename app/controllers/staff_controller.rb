@@ -1,71 +1,54 @@
-class ResearchAssistantsController < ApplicationController
+class StaffController < ApplicationController
+  include UsersHelper
+
+  before_filter :check_user_can_index_staff, only: [:index]
+  before_filter :check_current_user_or_admin, only: [:edit]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  # GET /research_assistants
-  # GET /research_assistants.json
+  # GET /staff
+  # GET /staff.json
   def index
-    @users = User.research_assistants
+    @users = User.staff
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
-  # GET /research_assistants/1
-  # GET /research_assistants/1.json
+  # GET /staff/1
+  # GET /staff/1.json
   def show
-    user = User.find(params[:id])
-    if user.research_assistant?
-      @user = user
-    else
-      not_found
-    end
+    @user = User.staff.find params[:id]
   end
 
-  # GET /research_assistants/new
+  # GET /staff/new
   def new
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
     @user = User.new
   end
 
-  # GET /research_assistants/1/edit
+  # GET /staff/1/edit
   def edit
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
   end
 
-  # POST /research_assistants
-  # POST /research_assistants.json
-  # def create
-  #  @research_assistant = ResearchAssistant.new(research_assistant_params)
-
-  #  respond_to do |format|
-  #    if @research_assistant.save
-  #      format.html { redirect_to @research_assistant, notice: 'Research assistant was successfully created.' }
-  #      format.json { render action: 'show', status: :created, location: @research_assistant }
-  #    else
-  #      format.html { render action: 'new' }
-  #      format.json { render json: @research_assistant.errors, status: :unprocessable_entity }
-  #    end
-  #  end
-  # end
-
-  # PATCH/PUT /research_assistants/1
-  # PATCH/PUT /research_assistants/1.json
+  # PATCH/PUT /staff/1
+  # PATCH/PUT /staff/1.json
   def update
     update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
 
     if @user.update(user_params)
-      respond_and_redirect_to(research_assistant_path(@user), 'User was successfully updated.')
+      respond_and_redirect_to(staff_path(@user), 'User was successfully updated.')
     else
-      render_errors_and_redirect_to(research_assistant_path(@user), 'edit')
+      render_errors_and_action(staff_path(@user), 'edit')
     end
   end
 
-  # DELETE /research_assistants/1
-  # DELETE /research_assistants/1.json
+  # DELETE /staff/1
+  # DELETE /staff/1.json
   def destroy
     @user.destroy
-    respond_and_redirect_to(research_assistants_url, 'Research assistant has been successfully deleted.')
+    respond_and_redirect_to(staff_index_path, 'Staff has been successfully deleted.')
   end
 
   private
@@ -82,6 +65,19 @@ class ResearchAssistantsController < ApplicationController
         :birthday, :additional_information, :homepage,
         :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id,
         :language_ids => [],:programming_language_ids => [])
+    end
+
+    def check_current_user_or_admin
+      set_user
+      unless current_user? @user or user_is_admin?
+        redirect_to staff_path(@user)
+      end
+    end
+
+    def check_user_can_index_staff
+      unless user_is_admin?
+        redirect_to root_path
+      end
     end
 
     def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
@@ -106,5 +102,4 @@ class ResearchAssistantsController < ApplicationController
         end
       end
     end
-
 end

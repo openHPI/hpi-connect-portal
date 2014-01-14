@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "research_assistants/index" do
+describe "staff/index" do
   before(:each) do
     assign(:users, [
       stub_model(User,

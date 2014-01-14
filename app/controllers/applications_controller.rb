@@ -6,11 +6,11 @@ class ApplicationsController < ApplicationController
     def create
         @job_offer = JobOffer.find application_params[:job_offer_id]
         if not @job_offer.open?
-            flash[:error] = 'This job offer is not currently open.'
+            flash[:error] = 'This job offer is currently not open.'
         else
           @application = Application.new(job_offer: @job_offer, user: current_user)
           if @application.save
-              ApplicationsMailer.new_application_notification_email(@application).deliver
+              ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv]).deliver
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'
@@ -27,7 +27,7 @@ class ApplicationsController < ApplicationController
         JobOffersMailer.job_student_accepted_email(@application.job_offer).deliver
         respond_and_redirect_to(@application.job_offer, 'Application was successfully accepted.')
       else
-        render_errors_and_redirect_to(@application.job_offer)
+        render_errors_and_action(@application.job_offer)
       end
     end
 
@@ -38,7 +38,7 @@ class ApplicationsController < ApplicationController
         ApplicationsMailer.application_declined_student_email(@application)
         redirect_to @application.job_offer      
       else
-        render_errors_and_redirect_to(@application.job_offer)
+        render_errors_and_action(@application.job_offer)
       end        
     end
 

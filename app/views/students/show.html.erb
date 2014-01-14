@@ -3,8 +3,10 @@
 <div class="row">
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
-    <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+    <% if signed_in? && (current_user?(@user) || user_is_admin?)%>
+      <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
     style: "float:right; display:inline;" %>
+    <% end %>
         <blockquote>
           <% if !(@user.user_status).nil? %>
             <p><%= @user.user_status.name %></p>
@@ -39,7 +41,7 @@
                 <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
                 <% else %>
-                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @user.cv.url) %> <%= File.basename(@user.cv.path); %></p>
+                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @user.cv.path) %> <%= File.basename(@user.cv.path); %></p>
                 <% end %>
               </td>
           </tr>
@@ -199,7 +201,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= @user.additional_information.html_safe %>
+                  <%= escape_javascript(@user.additional_information.html_safe) %>
                 </td>
                </tr>
             </tbody>

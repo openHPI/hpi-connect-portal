@@ -8,7 +8,9 @@
           <div class="row">
             <div class="col-md-12">
               <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
-              <%= link_to "Promote", student_path(student), :class => "btn btn-default", style: "float:right; " %>
+              <% if user_can_promote_students? %>
+                <button class="btn btn btn-default change-role" style="float:right" data-id="<%= student.id %>" data-toggle="modal" data-target="#myModal"><%= t('students.promote_button')%></button>
+              <%end%>
             </div>
           </div>
         </li>
@@ -17,6 +19,38 @@
       <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
   </div>
   <div class="col-md-3">
+    <%= render 'studentsearch/search'%>
   </div>
 
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
+      </div>
+      <div class="modal-body">
+      <%= form_tag update_role_students_path do %>
+        <%= text_field_tag "student_id", nil %>
+        <% promotion_rules = [] %>
+        <% if user_is_deputy? %>
+           <% promotion_roles = [Role.find_by_level(2).name, "Deputy"] %>
+        <% else %>
+           <% chairs = Chair.all %>
+           <% promotion_roles = [Role.find_by_level(2).name , Role.find_by_level(3).name, "Deputy"] %>
+        <%end%>
+
+        <%= select_tag :role_name, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
+        <% if user_is_admin? %>
+        <%= select_tag :chair_name, options_for_select(Chair.all.collect{|c| c.name}, :selected => nil) %>
+        <% end %>
+        <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default promote" %>
+      <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

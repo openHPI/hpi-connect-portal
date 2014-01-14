@@ -38,3 +38,7 @@ de:
     already_applied_badge: "Beworben"
     reopen_job: "Stellenangebot erneut einstellen"
     apply_confirmation: "Sind Sie sicher, dass Sie sich für dieses Job bewerben möchten?"
+    students: "Studenten"
+    send_application_headline: "Bewerbungsemail"  
+    add_cv_application: "Lebenslauf der Bewerbung beilegen?"  
+    send_application: "Bewerbung abschicken"

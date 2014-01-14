@@ -86,6 +86,15 @@ describe UsersController do
       patch :update, { :id => user.id, :user => { 'email' => troubling_user.email} }, valid_session
       flash[:error].should eql("Error while updating profile.")
     end
+    describe "beeing a student" do
+      it "redirects to the student path on success" do
+        student = FactoryGirl.create(:user, role: student_role)
+        sign_in student
+        put :update, { :id => student.id, :user => valid_attributes }, valid_session
+        flash[:error].should be_nil
+        response.should redirect_to edit_student_path(student)
+      end
+    end
 
   end
 
@@ -274,12 +283,5 @@ describe UsersController do
   #       delete :destroy, {:id => job_offer.to_param}, valid_session
   #     }.to change(JobOffer, :count).by(-1)
   #   end
-
-  #   it "redirects to the job_offers list" do
-  #     job_offer = JobOffer.create! valid_attributes
-  #     delete :destroy, {:id => job_offer.to_param}, valid_session
-  #     response.should redirect_to(job_offers_url)
-  #   end
-  # end
 
 end
