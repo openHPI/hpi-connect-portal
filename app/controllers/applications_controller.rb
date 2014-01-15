@@ -42,13 +42,6 @@ class ApplicationsController < ApplicationController
       end        
     end
 
-    #DELETE destroy
-    def destroy
-      @application = Application.find params[:id]
-      @application.destroy
-      respond_and_redirect_to(@application.job_offer, 'Application has been successfully deleted.')
-    end
-
     private
 
         def application_params

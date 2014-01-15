@@ -4,5 +4,3 @@ en:
     decline_confirmation: "Are you sure that you want to decline this application?"
     accept: "Accept"
     accept_confirmation: "Are you sure that you want to accept this application?"
-    delete: "Cancel application"
-    delete_confirmation: "Are you sure that you want to cancel your application?"

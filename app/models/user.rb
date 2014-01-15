@@ -61,8 +61,7 @@ class User < ActiveRecord::Base
 
     has_attached_file   :photo,
                         :url  => "/assets/students/:id/:style/:basename.:extension",
-                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension",
-                        :styles => { :medium => "300x300>", :thumb => "100x100>" }
+                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
     validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
     has_attached_file   :cv,
@@ -99,7 +98,7 @@ class User < ActiveRecord::Base
                 string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
 
     def eql?(other)
-        other.kind_of?(self.class) && self.id == other.id
+     other.kind_of?(self.class) && self.id == other.id
     end
 
     def hash
