@@ -174,13 +174,4 @@ class StudentsController < ApplicationController
         language_class.destroy_all(:user_id => user_id)
       end
     end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
-      end
-    end
 end
