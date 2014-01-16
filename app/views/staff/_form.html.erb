@@ -14,12 +14,12 @@
   <!--   Left -->
   <div class="col-sm-6">
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.general_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
         <ul class="list-group">
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :firstname, t("activerecord.attributes.research_assistant.first_name"), class: "control-label" %>
+                <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :firstname, class: "form-control", type:"text" %>
@@ -29,7 +29,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :lastname, t("activerecord.attributes.research_assistant.last_name"), class: "control-label" %>
+                <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :lastname, class: "form-control", type:"text" %>
@@ -49,7 +49,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :user_status, t("activerecord.attributes.research_assistant.status"), class: "control-label" %>
+                <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
@@ -59,7 +59,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :birthday, t("activerecord.attributes.research_assistant.birthday"), class: "control-label" %>
+                <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= f.date_select(:birthday ,  {start_year: 1940},{ :class => 'birthdate_select form-control col-sm-3'})%>
@@ -69,7 +69,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :photo, t("activerecord.attributes.research_assistant.photo"), class: "control-label" %>
+                <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                 <% if !@user.new_record? %>
@@ -82,7 +82,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :cv, t("activerecord.attributes.research_assistant.cv"), class: "control-label" %>
+                <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
                 <% if !@user.new_record? %>
@@ -100,7 +100,7 @@
         </ul>
     </div>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.programming_languages") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
         <ul class="list-group">
           <%= fields_for :programming_languages do |f2| %>
           <% if @all_programming_languages %>
@@ -143,7 +143,7 @@
 <!--     Right -->
   <div class="col-sm-6">
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.languages") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages") %></h4></div>
       <ul class="list-group">
         <%= fields_for :languages do |f3| %>
           <% if @all_languages %>
@@ -239,7 +239,7 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.additional_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
