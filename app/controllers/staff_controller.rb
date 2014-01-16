@@ -8,7 +8,7 @@ class StaffController < ApplicationController
   # GET /staff
   # GET /staff.json
   def index
-    @users = User.staff
+    @users = apply_scopes(User.staff).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
