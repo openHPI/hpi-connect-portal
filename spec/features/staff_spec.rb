@@ -35,7 +35,7 @@ describe "the staff page" do
   # end
 
   it "should not be visible for a member of the staff " do
-    visit job_offers_path
+    visit chairs_path
     login_as(@staff1, :scope => :user)
     visit staff_index_path
     current_path.should_not == staff_index_path
