@@ -1,7 +1,7 @@
 de:
   activerecord:
     attributes:
-      student:
+      user:
         first_name: "Vorname"
         last_name: "Nachname"
         semester: "Semester"
@@ -9,7 +9,7 @@ de:
         birthday: "Geburtsdatum"
         education: "Abschluss"
         general_information: "Allgemeine Informationen"
-        additional_information: "Zusätzliche Information"
+        additional_information: "Zusätzliche Informationen"
         links: "Links"
         homepage: "Homepage"
         github: "Github"
@@ -20,3 +20,5 @@ de:
         programming_languages: "Programmierkenntnisse"
         cv: "Lebenslauf"
         photo: "Bild"
+        employment_start_date: "Beginn der Anstellung"
+        chair: "Lehrstuhl"
