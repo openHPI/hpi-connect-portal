@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    attributes:
+      user_status:
+        jobseeking: "Jobsuchend"
+        employed: "Angestellt"
+        employedext: "Extern angestellt"
+        nointerest: "Kein Interesse"
+        alumni: "Alumni"

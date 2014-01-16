@@ -53,10 +53,10 @@ ProgrammingLanguage.create([
 
 UserStatus.delete_all
 UserStatus.create([
-	{ name: 'job-seeking'},
+	{ name: 'jobseeking'},
 	{ name: 'employed'},
-	{ name: 'employed (ext)'},
-	{ name: 'no interest'},
+	{ name: 'employedext'},
+	{ name: 'nointerest'},
 	{ name: 'alumni'}
 ])
 
@@ -116,7 +116,7 @@ User.create([{
 
 User.create([{
 identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
-email: 'frank.blechschmidt@student.hpi.uni-potsdam.de', 
+email: 'frank.blechschmidt@example.com', 
 firstname: 'Frank', 
 lastname: 'Blechschmidt',
 semester: 5,
@@ -133,7 +133,7 @@ languages: Language.where(:name => ['english']),
 languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
 programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-user_status: UserStatus.where(:name => 'employed (ext)').first,
+user_status: UserStatus.where(:name => 'employedext').first,
 role: Role.where(:name => 'Student').first
 }])
 
@@ -204,8 +204,8 @@ Chair.create([{
 
 Chair.create([{
 	name: "Verwaltung",
-	description: "Verwaltung/Organization contains:<br>- Admins<br>- Medientechnik<br>- Haustechnik<br>- Empfang<br>- ÖA",
-	head_of_chair: "Illona Pamperin",
+	description: "to be done",
+	head_of_chair: "to be done",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
@@ -220,7 +220,7 @@ JobOffer.create([{
 	compensation: 11.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -233,7 +233,7 @@ JobOffer.create([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create([{
@@ -246,7 +246,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Frank").first
 }])
 
 JobOffer.create([{
@@ -259,7 +259,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
@@ -273,7 +273,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 
@@ -287,7 +287,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 JobOffer.create([{
@@ -300,7 +300,7 @@ JobOffer.create([{
 	compensation: 10.00,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
-	responsible_user: User.where(:firstname=>"Chief").first
+	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
 Faq.delete_all
