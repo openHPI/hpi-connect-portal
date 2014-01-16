@@ -59,8 +59,4 @@ module UsersHelper
     return false
   end
 
-  def user_is_admin?
-    return signed_in? && current_user.admin?
-  end
-
 end
