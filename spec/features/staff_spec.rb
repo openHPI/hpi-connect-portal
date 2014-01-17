@@ -63,6 +63,8 @@ describe "the staffs profile page" do
       login_as(@staff1, :scope => :user)
       visit staff_path(@staff2)
       should_not have_link('Edit')
+      visit edit_staff_path(@staff2)
+      current_path.should ==  staff_path(@staff2)
   end
 
 end
