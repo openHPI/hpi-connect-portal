@@ -254,6 +254,11 @@ describe JobOffersController do
   end
 
   describe "POST create" do
+
+    before(:each) do
+      sign_in responsible_user
+    end
+    
     describe "with valid params" do
       it "creates a new job_offer" do
         expect {

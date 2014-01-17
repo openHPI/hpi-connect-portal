@@ -3,6 +3,7 @@ class JobOffersController < ApplicationController
   include ApplicationHelper
   before_filter :check_user_can_create_jobs, only: [:new]
   before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy]
+  before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_user_is_staff_of_chair_or_admin, only: [:complete, :reopen]
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
 
@@ -55,6 +56,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
+    @job_offer.responsible_user = current_user
     
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
@@ -172,6 +174,13 @@ class JobOffersController < ApplicationController
         else
           redirect_to job_offers_path
         end
+      end
+    end
+
+    def check_job_is_in_editable_state
+      set_job_offer
+      unless @job_offer.open? || @job_offer.pending?
+        redirect_to @job_offer
       end
     end
 
