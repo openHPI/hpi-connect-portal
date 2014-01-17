@@ -67,7 +67,23 @@ User.create([{
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
 	lastname: "Kroschk", 
 	firstname: "Axel", 
-	role: Role.where(:name => 'Staff').first	
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create([{
+	email: "johanna.appel@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
+	lastname: "Appel", 
+	firstname: "Johanna", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create([{
+	email: "julia.steier@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
+	lastname: "Steier", 
+	firstname: "Julia", 
+	role: Role.where(:name => 'Admin').first	
 }])
 
 User.create([{
@@ -115,26 +131,26 @@ User.create([{
 }])
 
 User.create([{
-identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
-email: 'frank.blechschmidt@example.com', 
-firstname: 'Frank', 
-lastname: 'Blechschmidt',
-semester: 5,
-academic_program: 'Bachelor',
-birthday: '1990-12-30',
-education:'Abitur',
-additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
-homepage: 'https://twitter.com/FraBle90',
-github: 'https://github.com/FraBle',
-facebook: 'https://www.facebook.com/FraBle90',
-xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
-linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
-languages: Language.where(:name => ['english']),
-languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
-programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-user_status: UserStatus.where(:name => 'employedext').first,
-role: Role.where(:name => 'Student').first
+	identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
+	email: 'frank.blechschmidt@example.com', 
+	firstname: 'Frank', 
+	lastname: 'Blechschmidt',
+	semester: 5,
+	academic_program: 'Bachelor',
+	birthday: '1990-12-30',
+	education:'Abitur',
+	additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+	homepage: 'https://twitter.com/FraBle90',
+	github: 'https://github.com/FraBle',
+	facebook: 'https://www.facebook.com/FraBle90',
+	xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+	linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+	languages: Language.where(:name => ['english']),
+	languages_users: LanguagesUser.create([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
+	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+	programming_languages_users: ProgrammingLanguagesUser.create([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+	user_status: UserStatus.where(:name => 'employedext').first,
+	role: Role.where(:name => 'Student').first
 }])
 
 Chair.delete_all
@@ -320,5 +336,3 @@ Faq.create([{
 	question: "Does HPI-HiWi-Portal have an Android app?", 
 	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
 }])
-
-Chair.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)
