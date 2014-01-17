@@ -144,7 +144,7 @@
   <% unless (@job_offer.programming_languages).empty? %>
     <div class="col-sm-6">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offers.required_programming_languages") %></h4></div>
         <ul class="list-group">
           <% @job_offer.programming_languages.each do |programming_language| %>
             <li class="list-group-item">
@@ -163,7 +163,7 @@
   <% unless (@job_offer.languages).empty? %>
     <div class="col-sm-6">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.languages") %></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offers.required_languages") %></h4></div>
         <ul class="list-group">
           <% @job_offer.languages.each do |language| %>
             <li class="list-group-item">
