@@ -18,23 +18,37 @@ describe "the chair page" do
     visit chair_path(chair)
   end
 
+  describe "can be edited" do
+    it "by staff members of the chair" do
+      staff = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: chair)
+      login_as(staff)
+      visit chair_path(chair)
+
+      should have_link 'Edit'
+    end
+
+    it "by an admin" do
+        admin = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Admin', level: 3))
+        login_as(admin)
+        visit chair_path(chair)
+        
+        should have_link 'Edit'
+    end
+
+    it "not by student" do
+        login_as(user)
+        visit chair_path(chair)
+        
+        should_not have_link 'Edit'
+    end
+  end
+
   describe "should show the basic information of the chair" do
     it { should have_content(chair.name) }
     it { should have_content(chair.description) }
     it { should have_content(chair.head_of_chair) }
     it { should have_content(chair.deputy.email) }
   end
-
-  describe "being the deputy or an admin" do
-      before do
-        @admin = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Student', level: 1))
-        login_as(@admin)
-        visit chair_path(chair)
-        
-      end
-
-      # it { should have_link 'Edit' }
-    end
 
   describe "shows job offers for the chair" do
 

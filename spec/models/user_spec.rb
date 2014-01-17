@@ -62,6 +62,23 @@ describe User do
     its(:job_offers) { should include(@job_offer) }
   end
 
+  describe 'build from identity_url' do
+
+    it "should return the user with the corrent email and name" do
+      url = "https://openid.hpi.uni-potsdam.de/user/max.meier"
+      user =  User.new(
+              identity_url: url, 
+              email: "max.meier@student.hpi.uni-potsdam.de", 
+              firstname: "Max", 
+              lastname: "Meier", 
+              semester: 1,
+              academic_program: "unknown",
+              education: "unknown",
+              role: Role.where(name: "Student").first)
+      expect(User.build_from_identity_url(url)).to eql(user)
+    end 
+  end
+
   describe "#checkTypeOfPhoto" do
 
     it "accepts a jpeg image" do
