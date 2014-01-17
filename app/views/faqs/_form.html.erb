@@ -14,7 +14,7 @@
     <div class="row">
       <div class="col-md-11">
         <div class="field">
-          <%= f.label t("activerecord.attributes.faq.question") %><br>
+          <%= f.label t("activerecord.attributes.faq.question") %><%= mark_if_required(@faq, :question) %><br>
           <%= f.text_field :question, :class => "col-md-11" %>
         </div>
       </div>
@@ -23,11 +23,21 @@
     <div class="row">
       <div class="col-md-11">
         <div class="field">
-          <%= f.label t("activerecord.attributes.faq.answer") %><br>
+          <%= f.label t("activerecord.attributes.faq.answer") %><%= mark_if_required(@faq, :answer) %><br>
           <%= f.bootsy_area :answer, :rows => 10, :class => "col-md-11"%>
         </div>
       </div>
     </div>
+    <% if Faq.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+      <br>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>
+            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+          </h5>
+        </div>
+      </div>
+    <% end %>
     <br>
     <div class="actions">
       <%= f.submit t("links.save"), :class => "btn btn-default" %>

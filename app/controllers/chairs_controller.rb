@@ -1,4 +1,5 @@
 class ChairsController < ApplicationController
+  include ApplicationHelper
   authorize_resource only: [:new, :edit, :create, :update]
 
   include ApplicationHelper

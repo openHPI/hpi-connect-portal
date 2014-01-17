@@ -19,7 +19,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %>
+                <%= f.label :firstname, t("activerecord.attributes.user.first_name"),  class: "control-label" %><%= mark_if_required(@user, :firstname) %>
               </div>
               <div class="col-sm-9">
                 <%= f.label @user.firstname, class: "form-control", type:"text" %>
@@ -29,7 +29,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %>
+                <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %><%= mark_if_required(@user, :lastname) %>
               </div>
               <div class="col-sm-9">
                 <%= f.label @user.lastname, class: "form-control", type:"text" %>
@@ -39,7 +39,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :email, class: "control-label" %>
+                <%= f.label :email, class: "control-label" %><%= mark_if_required(@user, :email) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :email, class: "form-control", type:"text" %>
@@ -49,7 +49,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %>
+                <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(@user, :user_status) %>
               </div>
               <div class="col-sm-9">
                <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
@@ -59,7 +59,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
+                <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(@user, :birthday) %>
               </div>
               <div class="col-sm-9">
                 <%= f.date_select(:birthday ,  {start_year: 1940},{ :class => 'birthdate_select form-control col-sm-3'})%>
@@ -69,7 +69,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
+                <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %><%= mark_if_required(@user, :photo) %>
               </div>
               <div class="col-sm-9">
                 <% if !@user.new_record? && !@user.photo.nil? %>
@@ -82,7 +82,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %>
+                <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %><%= mark_if_required(@user, :cv) %>
               </div>
               <div class="col-sm-9">
                 <% if !@user.new_record? %>
@@ -148,7 +148,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %>
+              <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(@user, :academic_program) %>
             </div>
             <div class="col-sm-9">
               <%= f.text_field :academic_program, class: "form-control", type:"text" %>
@@ -158,7 +158,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= f.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %>
+              <%= f.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %><%= mark_if_required(@user, :semester) %>
             </div>
             <div class="col-sm-9">
               <%= f.number_field :semester, class: "form-control", type:"number" %>
@@ -168,7 +168,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= f.label :education, t("activerecord.attributes.user.education"), class: "control-label" %>
+              <%= f.label :education, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(@user, :education) %>
             </div>
             <div class="col-sm-9">
                 <%= f.bootsy_area :education, rows:"5", class: "form-control", type:"text" %>
@@ -286,6 +286,15 @@
         </li>
       </ul>
     </div>
+    <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>
+            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+          </h5>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

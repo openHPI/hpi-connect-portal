@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    include ApplicationHelper
 
     before_filter :check_user, :only => [:update, :edit]
 

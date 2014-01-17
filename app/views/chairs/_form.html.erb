@@ -21,7 +21,7 @@
         <div class="col-sm-6">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.chair.name", class: "control-label" %>
+                <%= f.label t "activerecord.attributes.chair.name", class: "control-label" %><%= mark_if_required(@chair, :name) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :name, :class => "form-control"%>
@@ -31,7 +31,7 @@
         <div class="col-sm-6">
           <div class="row">
               <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.chair.head_of_chair", class: "control-label" %>
+                <%= f.label t "activerecord.attributes.chair.head_of_chair", class: "control-label" %><%= mark_if_required(@chair, :head_of_chair) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :head_of_chair, :class => "form-control"%>
@@ -45,7 +45,7 @@
         <div class="col-sm-6">
           <div class="row">
               <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.chair.deputy", class: "control-label" %>
+                <%= f.label t "activerecord.attributes.chair.deputy", class: "control-label" %><%= mark_if_required(@chair, :deputy) %>
               </div>
               <div class="col-sm-9">
                 <%= f.collection_select :deputy_id, @chair.users, :id, :email %>
@@ -55,7 +55,7 @@
         <div class="col-sm-6">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :avatar, class: "control-label" %>
+                <%= f.label :avatar, class: "control-label" %><%= mark_if_required(@chair, :avatar) %>
               </div>
               <div class="col-sm-9">
                 <% unless @chair.avatar.nil? %>
@@ -71,12 +71,21 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12" data-no-turbolink="true">
-          <%= f.label t "activerecord.attributes.chair.description", class: "control-label" %>
+          <%= f.label t "activerecord.attributes.chair.description", class: "control-label" %><%= mark_if_required(@chair, :description) %>
           <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
         </div>
       </div>
     </li>
   </ul>
+  <% if Chair.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>
+            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+          </h5>
+        </div>
+      </div>
+    <% end %>
 </div>
 
 

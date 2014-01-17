@@ -1,5 +1,6 @@
 class StaffController < ApplicationController
   include UsersHelper
+  include ApplicationHelper
 
   before_filter :check_user_can_index_staff, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
