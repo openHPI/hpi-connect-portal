@@ -35,10 +35,11 @@ describe "the staff page" do
   # end
 
   it "should not be visible for a member of the staff " do
-    visit chairs_path
     login_as(@staff1, :scope => :user)
+    FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: 'open')) #see Issue 205
     visit staff_index_path
     current_path.should_not == staff_index_path
+    current_path.should == root_path
   end
 
 
