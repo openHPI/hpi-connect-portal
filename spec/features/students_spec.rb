@@ -39,6 +39,14 @@ describe "the students page" do
     current_path.should == student_path(@student1)
   end
 
+  it "is not available for students" do
+    FactoryGirl.create(:job_status, name: 'open')
+    login_as(@student1, :scope => :user)
+    visit students_path
+    current_path.should_not == students_path
+    current_path.should == root_path
+  end
+
   # it "should delete the first student if Delete is clicked " do
   #   visit students_path
   #   #find_link("Destroy").click
