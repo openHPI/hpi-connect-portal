@@ -61,14 +61,6 @@ describe StudentsController do
     end
   end
 
-  #caused by OpenID we cannot create new students anymore by Urls
-  # describe "GET new" do
-  #   it "assigns a new student as @student" do
-  #     get :new, {}, valid_session
-  #     assigns(:).should be_a_new(Student)
-  #   endstudent
-  # end
-
   describe "GET edit" do
     it "assigns the requested student as @user" do
       student = User.create! valid_attributes

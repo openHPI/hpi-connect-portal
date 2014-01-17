@@ -36,8 +36,7 @@ describe StaffController do
 
   describe "GET index" do
     it "assigns all staff as @staff" do
-      admin = FactoryGirl.create(:user)  
-      admin.role = admin_role
+      admin = FactoryGirl.create(:user, role: admin_role)  
       sign_in admin
 
       staff = User.create! valid_attributes
@@ -55,16 +54,10 @@ describe StaffController do
     end
   end
 
-  #describe "GET new" do
-  #  it "assigns a new staff as @staff" do
-  #    get :new, {}, valid_session
-  #    assigns(:staff).should be_a_new(Staff)
-  #  end
-  #end
-
   describe "GET edit" do
     it "assigns the requested staff as @staff" do
       staff = User.create! valid_attributes
+      sign_in staff
       get :edit, {:id => staff.to_param}, valid_session
       assigns(:user).should eq(staff)
     end
