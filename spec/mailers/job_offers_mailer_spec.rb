@@ -133,6 +133,7 @@ describe JobOffersMailer do
 			@email.body.should have_content(@job_offer.start_date)
 			@email.body.should have_content(@job_offer.end_date)
 			@email.body.should have_content(@job_offer.compensation)
+			@email.body.should have_content(@job_offer.time_effort)
 		end
 	end
 end
