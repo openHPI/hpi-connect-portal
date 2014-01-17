@@ -26,6 +26,7 @@ describe JobOffer do
       @epic = FactoryGirl.create(:chair, name:"EPIC")
       @os = FactoryGirl.create(:chair, name:"OS and Middleware")
       @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+      @responsible_user = FactoryGirl.create(:user)
   end
 
   describe 'applying' do
@@ -48,7 +49,7 @@ describe JobOffer do
 
   it "does create a joboffer if all required attributes are set and valid" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
-      start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9).valid?
+      start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
   end
 
   it "does not create a joboffer if start_date is after end_date" do
@@ -58,12 +59,17 @@ describe JobOffer do
 
   it "does create a joboffer if end_date is after start_date" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
-      start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9).valid?
+      start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
   end
 
   it "does not create a joboffer if compensation is not a number" do
     assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
       start_date: Date.new(2013,11,1), compensation: "i gonna be rich", time_effort: 9).valid?
+  end
+
+  it "does not create a joboffer without a responsible user" do
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
+      start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9).valid?
   end
 
   it "returns job offers sorted by start_date" do

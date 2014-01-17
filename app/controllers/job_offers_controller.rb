@@ -55,7 +55,6 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
-    @job_offer.responsible_user = current_user
     
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
@@ -141,7 +140,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
     end 
 
