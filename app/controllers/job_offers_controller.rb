@@ -57,6 +57,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
+    @job_offer.chair = current_user.chair
     
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
