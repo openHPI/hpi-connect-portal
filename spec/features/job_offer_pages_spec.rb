@@ -125,12 +125,20 @@ describe "Job Offer pages" do
         let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
 
         before do
+          job_offer.assigned_students = [student]
           login_as(staff, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'} 
+        it { should have_link 'reopen Job Offer'}
+
+        it "shows the assigned students" do
+          page.should have_content(
+                student.firstname,
+                student.lastname
+              )
+        end
       end
 
       describe "as a admin" do

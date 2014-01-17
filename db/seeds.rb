@@ -255,7 +255,8 @@ JobOffer.create([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	assigned_students: [User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first, User.where(:firstname=>"Max", :lastname=>"Mustermann").first]
 }])
 
 JobOffer.create([{
@@ -282,7 +283,8 @@ JobOffer.create([{
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
 	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
-	assigned_students: [User.where(:firstname=>'Frank', :lastname => 'Blechschmidt').first]
+	assigned_students: User.where(:firstname=>['Frank', 'Tim']),
+	vacant_posts: 3
 }])
 
 

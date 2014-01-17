@@ -34,6 +34,7 @@ class JobOffersController < ApplicationController
 
     if signed_in?
       @application = current_user.applied? @job_offer
+      @assigned_students = @job_offer.assigned_students.paginate(:page => params[:page])
     end
   end
 
