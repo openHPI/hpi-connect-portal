@@ -27,16 +27,17 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
-#  photo_updated_at       :date
+#  photo_updated_at       :datetime
 #  cv_file_name           :string(255)
 #  cv_content_type        :string(255)
 #  cv_file_size           :integer
-#  cv_updated_at          :date
+#  cv_updated_at          :datetime
 #  status                 :integer
 #  user_status_id         :integer
+#  employment_start_date  :date
 #
 
 require 'spec_helper'
@@ -163,9 +164,9 @@ describe User do
       end
   end
 
-  describe "search_students_for_mulitple_languages_and_identifiers" do
+  describe "search_students_for_multiple_languages_and_identifiers" do
     it "should handle nil input" do
-      matching_students = User.search_students_for_mulitple_languages_and_identifiers(:languages, nil)
+      matching_students = User.search_students_for_multiple_languages_and_identifiers(:languages, nil)
       assert_equal(matching_students.length, User.all.length);
     end
   end
