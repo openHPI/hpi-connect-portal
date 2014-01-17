@@ -15,8 +15,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1
