@@ -20,15 +20,14 @@ describe "the students page" do
   end
 
   def initialize_roles
-    FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)
+    FactoryGirl.create(:role, :name => 'Staff', :level => 2)
     FactoryGirl.create(:role, :name => 'Admin', :level => 3)
   end
 
-  it "should view only names and status of a student on the overview" do
+  it "should view only names of a student on the overview" do
     page.should have_content(
       @student1.firstname,
-      @student1.lastname,
-      @student1.semester
+      @student1.lastname
     )
   end
 
