@@ -115,6 +115,28 @@ User.create([{
 }])
 
 User.create([{
+	email: "max.mustermann@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/max.mustermann", 
+	lastname: "Mustermann", 
+	firstname: "Max", 
+	semester: 3,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
+	email: "erika.mustermann@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/erika.mustermann", 
+	lastname: "Mustermann", 
+	firstname: "Erika", 
+	semester: 3,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create([{
 identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
 email: 'frank.blechschmidt@example.com', 
 firstname: 'Frank', 
@@ -246,7 +268,7 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Frank").first
+	responsible_user: User.where(:firstname=>"Frank").first,
 }])
 
 JobOffer.create([{
@@ -259,7 +281,8 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	assigned_students: [User.where(:firstname=>'Frank', :lastname => 'Blechschmidt').first]
 }])
 
 
@@ -273,7 +296,8 @@ JobOffer.create([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	vacant_posts: 2
 }])
 
 
@@ -301,6 +325,22 @@ JobOffer.create([{
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
 	responsible_user: User.where(:firstname=>'Frank').first
+}])
+
+Application.delete_all
+Application.create([{
+	:user => User.where(:firstname=>'Frank', :lastname => 'Blechschmidt').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
+}])
+
+Application.create([{
+	:user => User.where(:firstname=>'Max', :lastname => 'Mustermann').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
+}])
+
+Application.create([{
+	:user => User.where(:firstname=>'Erika', :lastname => 'Mustermann').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
 }])
 
 Faq.delete_all
