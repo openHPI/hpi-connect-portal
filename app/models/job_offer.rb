@@ -15,8 +15,7 @@
 #  chair_id            :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  assigned_student_id :integer
-#
+#  vacant_posts        :integer          default(1)
 
 class JobOffer < ActiveRecord::Base
   include Bootsy::Container
@@ -24,11 +23,11 @@ class JobOffer < ActiveRecord::Base
 
   has_many :applications
   has_many :users, through: :applications
+  has_and_belongs_to_many :assigned_students, class_name: "User"
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :chair
   belongs_to :responsible_user, class_name: "User"
-  belongs_to :assigned_student, class_name: "User"
   belongs_to :status, class_name: "JobStatus"
 
   accepts_nested_attributes_for :programming_languages
@@ -56,6 +55,7 @@ class JobOffer < ActiveRecord::Base
 
   def default_values
     self.status ||= JobStatus.pending
+    self.vacant_posts ||= 1
   end
 
   def self.sort(order_attribute)

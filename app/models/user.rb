@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
 
     has_many :applications
     has_many :job_offers, through: :applications
+    has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
     has_many :programming_languages_users
     has_many :programming_languages, :through => :programming_languages_users
     accepts_nested_attributes_for :programming_languages
