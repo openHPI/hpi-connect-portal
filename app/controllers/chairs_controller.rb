@@ -11,8 +11,8 @@ class ChairsController < ApplicationController
   # GET /chairs
   # GET /chairs.json
   def index
-    @chairs = Chair.all
-    @chairs = @chairs.paginate(:page => params[:page], :per_page => 5 )
+    @chairs = Chair.all.sort_by{|x| x.name}
+    @chairs = @chairs.paginate(:page => params[:page], :per_page => 15 )
   end
 
   # GET /chairs/1

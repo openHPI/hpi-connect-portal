@@ -19,6 +19,5 @@ describe "chairs/index" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "a", :text => "HCI".to_s, :count => 2
     assert_select "li>div", :text => t("activerecord.attributes.chair.head_of_chair") + ": " + "Prof. Patrick Baudisch".to_s, :count => 2
-    assert_select "p", :text => "Human Computer Interaction".to_s, :count => 2
   end
 end

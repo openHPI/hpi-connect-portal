@@ -181,7 +181,6 @@
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-        <%= render 'shared/user_list', name: "job_offers.students", user_list: @job_offer.assigned_student %>  
       </div>
     </div>
   <%end%>
@@ -192,15 +191,6 @@
         <div class="pull-right">
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-success apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
         </div>
-
-      <% unless @application.nil? %>
-        <div class="pull-right">
-          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
-            <div><%= f.hidden_field :application_id %></div>
-            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
-          <% end %>
-        </div>
-      <% end %>
     </div>
 
 
@@ -232,6 +222,15 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
     <% end %>
+
+    <% unless @application.nil? %>
+        <div class="pull-right">
+          <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
+            <div><%= f.hidden_field :application_id %></div>
+            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
+          <% end %>
+        </div>
+      <% end %>
   </div>
 
     <% if signed_in? && @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>

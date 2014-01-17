@@ -41,14 +41,7 @@ class StudentsController < ApplicationController
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
-
-    if @user.update(user_params)
-      respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
-    else
-      render_errors_and_action(student_path(@user), 'edit')
-    end
+    update_from_params_for_languages(params, student_path(@user))
   end
 
   # DELETE /students/1

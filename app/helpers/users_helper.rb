@@ -43,6 +43,17 @@ module UsersHelper
     end
   end
 
+  def update_from_params_for_languages(params, redirect_to)
+    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
+    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
+
+    if @user.update(user_params)
+      respond_and_redirect_to(redirect_to, 'User was successfully updated.')
+    else
+      render_errors_and_action(redirect_to, 'edit')
+    end
+  end
+
   def user_can_promote_students?
     return signed_in? && (current_user.admin? || user_is_deputy?)
   end
@@ -57,10 +68,6 @@ module UsersHelper
       end
     end
     return false
-  end
-
-  def user_is_admin?
-    return signed_in? && current_user.admin?
   end
 
 end

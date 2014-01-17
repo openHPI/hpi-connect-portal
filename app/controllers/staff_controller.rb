@@ -9,7 +9,7 @@ class StaffController < ApplicationController
   # GET /staff
   # GET /staff.json
   def index
-    @users = User.staff
+    @users = apply_scopes(User.staff).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
   end
 
@@ -35,14 +35,7 @@ class StaffController < ApplicationController
   # PATCH/PUT /staff/1
   # PATCH/PUT /staff/1.json
   def update
-    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
-
-    if @user.update(user_params)
-      respond_and_redirect_to(staff_path(@user), 'User was successfully updated.')
-    else
-      render_errors_and_action(staff_path(@user), 'edit')
-    end
+    update_from_params_for_languages(params, staff_path(@user))
   end
 
   # DELETE /staff/1
