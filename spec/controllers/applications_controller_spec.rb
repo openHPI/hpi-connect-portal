@@ -48,25 +48,34 @@ describe ApplicationsController do
       assigns(:application).job_offer.assigned_students.should include(@student)
     end
 
-    it "declines all other students" do
+    it "declines all other students after accepting the last possible application" do
+      @job_offer.vacant_posts = 2
+      @job_offer.save
+      student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
+
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
+      application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
+      get :accept, {:id => application.id}
+
       expect{
-        get :accept, {:id => application.id}
-      }.to change(Application, :count).by(-3)
+        get :accept, {:id => application_2.id}
+      }.to change(Application, :count).by(-2)
     end
 
-    it "application status should be 'working' if an application is accepted" do
+    it "job status should be 'running' if the last possible application is accepted" do
+      @job_offer.vacant_posts = 1
+      @job_offer.save
+      
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      working = FactoryGirl.create(:job_status, :name=>'running')
+      running = FactoryGirl.create(:job_status, :name=>'running')
       
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
       get :accept, {:id => application.id}
-      assigns(:application).job_offer.status.should eq(working)
+      assigns(:application).job_offer.status.should eq(running)
     end
 
     it "sends two emails" do
