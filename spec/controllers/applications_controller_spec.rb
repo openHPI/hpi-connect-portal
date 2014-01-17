@@ -40,12 +40,12 @@ describe ApplicationsController do
       response.should redirect_to(@job_offer)
     end
 
-    it "accepts student is assigned as @job_offer.assigned_student" do
+    it "accepts a student and he/her is included in @job_offer.assigned_students" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
       
       get :accept, {:id => application.id}
-      assigns(:application).job_offer.assigned_student.should eq(@student)
+      assigns(:application).job_offer.assigned_students.should include(@student)
     end
 
     it "declines all other students" do

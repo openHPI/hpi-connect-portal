@@ -10,8 +10,9 @@ en:
           time_effort: "Time effort"
           compensation: "Compensation"
           room_number: "Room number"
-          programming_languages: "Programming languages"
+          programming_languages: "Programming Languages"
           languages: "Languages"
           additional_information: "Additional Information"
           general_information: "General Information"
+          vacant_posts: "number of applicants"
 

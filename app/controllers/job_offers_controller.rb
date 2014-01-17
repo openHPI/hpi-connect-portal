@@ -122,7 +122,7 @@ class JobOffersController < ApplicationController
   def reopen 
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update(status: JobStatus.completed)
-      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
+      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id))
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'  
     else

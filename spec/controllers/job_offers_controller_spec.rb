@@ -23,16 +23,15 @@ describe JobOffersController do
   # This should return the minimal set of attributes required to create a valid
   # job_offer. As you add validations to job_offer, be sure to
   # adjust the attributes here as well.
-  let(:assigned_student) { FactoryGirl.create(:user) }
   let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
   let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Staff")) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open)} }
   let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email}}
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed}}
 
 
   # This should return the minimal set of values that should be in the session
@@ -242,7 +241,7 @@ describe JobOffersController do
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil
         reopend_job_offer.end_date.should be_nil
-        reopend_job_offer.assigned_student_id.should be_nil
+        reopend_job_offer.assigned_students.should be_empty
       end
 
       it "is pending and old job offer changes to completed" do
