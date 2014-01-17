@@ -95,10 +95,16 @@ describe ApplicationsController do
     it "does create an application if job is open" do
       @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
       @job_offer.save
+
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_cv.pdf',
+        :type => 'application/pdf',
+        :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
+      })
       
       sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
       expect{
-          post :create, { :application => {:job_offer_id => @job_offer.id} }
+          post :create, { :application => {:job_offer_id => @job_offer.id}, :attached_files => {:file_attributes => [:file => test_file] }}
         }.to change(Application, :count).by(1)
     end
 
