@@ -22,7 +22,7 @@
                 <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
-                <%= f.text_field :firstname, class: "form-control", type:"text" %>
+                <%= f.label @user.firstname, class: "form-control", type:"text" %>
               </div>
             </div>
           </li>
@@ -32,7 +32,7 @@
                 <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %>
               </div>
               <div class="col-sm-9">
-                <%= f.text_field :lastname, class: "form-control", type:"text" %>
+                <%= f.label @user.lastname, class: "form-control", type:"text" %>
               </div>
             </div>
           </li>
