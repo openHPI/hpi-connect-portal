@@ -1,3 +1,5 @@
+include UsersHelper
+
 class StudentsController < ApplicationController
   include UsersHelper
   
@@ -39,44 +41,10 @@ class StudentsController < ApplicationController
     @all_languages = Language.all
   end
 
-  #Outdated by new design, at least till know
-  # POST /students
-  # POST /students.json
-  # def create
-  #   @user = user.new(user_params)
-  #   respond_to do |format|
-  #     if @user.save
-  #       if params[:programming_languages]
-
-  #         programming_languages = params[:programming_languages]
-  #         programming_languages.each do |programming_language_id, skill|
-  #           programming_language_user = ProgrammingLanguagesuser.new
-  #           programming_language_user.user_id = @user.userid
-  #           programming_language_user.programming_language_id = programming_language_id
-  #           programming_language_user.skill = skill
-  #           programming_language_user.save
-  #         end
-  #       end
-  #       format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
-  #       format.json { render action: 'show', status: :created, location: @user }
-  #     else
-  #       format.html { render action: 'new' }
-  #       format.json { render json: @user.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
-
-    if @user.update(user_params)
-      respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
-    else
-      render_errors_and_action(student_path(@user), 'edit')
-    end
+    update_from_params_for_languages(params, student_path(@user))
   end
 
   # DELETE /students/1
@@ -156,29 +124,6 @@ class StudentsController < ApplicationController
     def check_user_can_index_students
       unless user_is_admin? || user_is_staff?
         redirect_to root_path
-      end
-    end
-
-    def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
-      if params
-        params.each do |id, skill|
-          l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-          l.update_attributes(:skill => skill)
-        end
-
-        remove_for_language(params, user_id, language_class, language_id_attribute)
-      else
-        #If the User deselects all languages, they have to be destroyed
-        language_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
       end
     end
 end

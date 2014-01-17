@@ -12,10 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %><br><%= mark_if_required(@language, :name) %>
     <%= f.text_field :name %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+  <% if Language.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div>
+      <%= f.label t("layouts.asterisk_description") %>
+    </div>
+  <% end %>
 <% end %>

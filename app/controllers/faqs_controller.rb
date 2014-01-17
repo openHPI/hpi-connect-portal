@@ -1,4 +1,5 @@
 class FaqsController < ApplicationController
+  include ApplicationsHelper
   before_action :set_faq, only: [:show, :edit, :update, :destroy]
 
   # GET /faqs
