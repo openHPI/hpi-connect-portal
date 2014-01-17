@@ -208,5 +208,16 @@
           </table>
       </div>
     <% end %>
+
+    <% if signed_in? && (current_user?(@user) || user_is_admin? || user_is_staff?) && !@job_offers.empty?%>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><%= t("activerecord.attributes.user.jobs")%></h4>
+        </div>
+           <%= render 'shared/overview', job_offer_list: @job_offers %>
+        </div>
+
+      </div>
+    <% end %>
   </div> 
 </div>

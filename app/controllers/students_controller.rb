@@ -23,6 +23,7 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     @user = User.students.find params[:id]
+    @job_offers = @user.assigned_job_offers.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1/edit

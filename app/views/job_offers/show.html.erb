@@ -177,7 +177,7 @@
     </div>
   <% end %>
 
-  <% if signed_in? && (user_is_staff_of_chair?(@job_offer) or user_is_admin?) && !@assigned_students.empty? %>
+  <% if signed_in? && (user_is_staff? or user_is_admin?) && !@assigned_students.empty? %>
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>

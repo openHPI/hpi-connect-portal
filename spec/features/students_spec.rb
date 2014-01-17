@@ -118,45 +118,61 @@ end
 describe "the students profile page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+  let(:job_offer) { FactoryGirl.create(:job_offer) }
 
   before(:each) do
     @student1 = FactoryGirl.create(:user,
-            :role => student_role)
+            :role => student_role,
+            :assigned_job_offers => [job_offer])
 
      @student2 = FactoryGirl.create(:user,
-            :role => student_role)
+            :role => student_role,
+            :assigned_job_offers => [job_offer])
+     login_as(@student1, :scope => :user)
   end
 
 
-  it "should contain all the details of student1" do
-      visit student_path(@student1)
+  describe "of myself" do
+    before(:each) do
+        visit student_path(@student1)
+    end
+
+    it "should contain all the details of student1" do
       page.should have_content(
         @student1.firstname,
         @student1.lastname
       )
+    end
+
+    it "should contain all jobs i am assigned to" do
+      page.should have_content(job_offer.title)
+    end
+
+    it "should have an edit link which leads to the students edit page" do
+      visit student_path(@student1)
+      page.find_link('Edit').click
+      page.current_path.should == edit_student_path(@student1)
+    end
   end
 
-
-  it "should contain all the details of student2" do
+  describe "of another students" do
+    before(:each) do
       visit student_path(@student2)
+    end
+
+    it "should contain all the details of student1" do
       page.should have_content(
         @student2.firstname,
         @student2.lastname
       )
+    end
 
-  end
+    it "should not contain the job the other student is assigned to" do
+      page.should_not have_content(job_offer.title)
+    end
 
-  it "should have an edit link on the show page of the own profile which leads to the students edit page" do
-      login_as(@student1, :scope => :user)
-      visit student_path(@student1)
-      page.find_link('Edit').click
-      page.current_path.should == edit_student_path(@student1)
-  end
-
-  it "should not have an edit link on the show page of someone elses profile" do
-      login_as(@student1, :scope => :user)
-      visit student_path(@student2)
+    it "should not have an edit link on the show page of someone elses profile" do
       should_not have_link('Edit')
+    end
   end
-
 end
