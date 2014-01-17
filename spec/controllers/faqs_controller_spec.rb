@@ -40,14 +40,6 @@ describe FaqsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested faq as @faq" do
-      faq = Faq.create! valid_attributes
-      get :show, {:id => faq.to_param}, valid_session
-      assigns(:faq).should eq(faq)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new faq as @faq" do
       get :new, {}, valid_session
@@ -77,9 +69,9 @@ describe FaqsController do
         assigns(:faq).should be_persisted
       end
 
-      it "redirects to the created faq" do
+      it "redirects to faqs index" do
         post :create, {:faq => valid_attributes}, valid_session
-        response.should redirect_to(Faq.last)
+        response.should redirect_to(faqs_path)
       end
     end
 
@@ -118,10 +110,10 @@ describe FaqsController do
         assigns(:faq).should eq(faq)
       end
 
-      it "redirects to the faq" do
+      it "redirects to the faqs index" do
         faq = Faq.create! valid_attributes
         put :update, {:id => faq.to_param, :faq => valid_attributes}, valid_session
-        response.should redirect_to(faq)
+        response.should redirect_to(faqs_path)
       end
 
       describe "with invalid params" do
