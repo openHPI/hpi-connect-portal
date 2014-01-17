@@ -6,7 +6,7 @@ describe ApplicationsController do
   let(:staff_role) {FactoryGirl.create(:role, :name => 'Staff', :level => 2)}
   let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
   let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: staff_role)}
-	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.new(2013,11,1),
+	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.current + 1,
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
