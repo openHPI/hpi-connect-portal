@@ -2,8 +2,8 @@
   <div class="col-md-12">
 
     <% if @job_offer.pending? && (user_is_deputy_of_chair?(@job_offer.chair) || user_is_admin?) %>
-      <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success" %>
-      <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: "Are you sure?"} %>
+      <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
+      <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
     <% end %>
 
     <% if !@job_offer.completed? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?)%>
