@@ -54,6 +54,8 @@ class User < ActiveRecord::Base
     has_many :languages_users
     has_many :languages, :through => :languages_users
     accepts_nested_attributes_for :languages
+
+    attr_accessor :should_redirect_to_profile
     
     belongs_to :role
     belongs_to :chair
@@ -115,7 +117,7 @@ class User < ActiveRecord::Base
 
         # semester, academic_program and education are required to create a user with the role student
         # If another role is chosen, these attributes are still present, but it does not matter
-        User.new(
+        new_user = User.new(
             identity_url: identity_url, 
             email: email, 
             firstname: first_name, 
@@ -124,6 +126,10 @@ class User < ActiveRecord::Base
             academic_program: "unknown",
             education: "unknown",
             role: Role.where(name: "Student").first)
+
+        new_user.should_redirect_to_profile = true
+
+        new_user
     end
 
     def applied?(job_offer)

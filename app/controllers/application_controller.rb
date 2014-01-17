@@ -22,7 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    edit_user_path(resource)
+    if resource.should_redirect_to_profile
+      student_path(resource)
+    else
+      job_offers_path
+    end
   end
 
   def render_errors_and_action(object, action)
