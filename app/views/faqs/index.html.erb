@@ -23,7 +23,7 @@
         </div>
         <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
           <div class="panel-body">
-            <%= escape_javascript (faq.answer.html_safe) %>
+            <%=  faq.answer.html_safe %>
             <br><br>
             <% if signed_in? && can?(:update, faq) %>
               <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
