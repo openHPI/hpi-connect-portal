@@ -20,15 +20,14 @@ describe "the students page" do
   end
 
   def initialize_roles
-    FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)
+    FactoryGirl.create(:role, :name => 'Staff', :level => 2)
     FactoryGirl.create(:role, :name => 'Admin', :level => 3)
   end
 
-  it "should view only names and status of a student on the overview" do
+  it "should view only names of a student on the overview" do
     page.should have_content(
       @student1.firstname,
-      @student1.lastname,
-      @student1.semester
+      @student1.lastname
     )
   end
 
@@ -37,6 +36,14 @@ describe "the students page" do
     
     current_path.should_not == students_path
     current_path.should == student_path(@student1)
+  end
+
+  it "is not available for students" do
+    FactoryGirl.create(:job_status, name: 'open')
+    login_as(@student1, :scope => :user)
+    visit students_path
+    current_path.should_not == students_path
+    current_path.should == root_path
   end
 
   # it "should delete the first student if Delete is clicked " do
@@ -111,45 +118,61 @@ end
 describe "the students profile page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
+  let(:job_offer) { FactoryGirl.create(:job_offer) }
 
   before(:each) do
     @student1 = FactoryGirl.create(:user,
-            :role => student_role)
+            :role => student_role,
+            :assigned_job_offers => [job_offer])
 
      @student2 = FactoryGirl.create(:user,
-            :role => student_role)
+            :role => student_role,
+            :assigned_job_offers => [job_offer])
+     login_as(@student1, :scope => :user)
   end
 
 
-  it "should contain all the details of student1" do
-      visit student_path(@student1)
+  describe "of myself" do
+    before(:each) do
+        visit student_path(@student1)
+    end
+
+    it "should contain all the details of student1" do
       page.should have_content(
         @student1.firstname,
         @student1.lastname
       )
+    end
+
+    it "should contain all jobs i am assigned to" do
+      page.should have_content(job_offer.title)
+    end
+
+    it "should have an edit link which leads to the students edit page" do
+      visit student_path(@student1)
+      page.find_link('Edit').click
+      page.current_path.should == edit_student_path(@student1)
+    end
   end
 
-
-  it "should contain all the details of student2" do
+  describe "of another students" do
+    before(:each) do
       visit student_path(@student2)
+    end
+
+    it "should contain all the details of student1" do
       page.should have_content(
         @student2.firstname,
         @student2.lastname
       )
+    end
 
-  end
+    it "should not contain the job the other student is assigned to" do
+      page.should_not have_content(job_offer.title)
+    end
 
-  it "should have an edit link on the show page of the own profile which leads to the students edit page" do
-      login_as(@student1, :scope => :user)
-      visit student_path(@student1)
-      page.find_link('Edit').click
-      page.current_path.should == edit_student_path(@student1)
-  end
-
-  it "should not have an edit link on the show page of someone elses profile" do
-      login_as(@student1, :scope => :user)
-      visit student_path(@student2)
+    it "should not have an edit link on the show page of someone elses profile" do
       should_not have_link('Edit')
+    end
   end
-
 end

@@ -108,6 +108,16 @@
               </div>
             </div>
           </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3"> 
+                <%= f.label t("activerecord.attributes.job_offer.vacant_posts"), class: "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= f.text_field :time_effort, :placeholder => t("job_offers.vacant_posts_description"), :class => "form-control" %>
+              </div>
+            </div>
+          </li>
         <ul>
       </div>
   </div>

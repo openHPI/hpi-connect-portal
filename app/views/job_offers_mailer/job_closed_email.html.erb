@@ -7,7 +7,11 @@
     <h3>The following job has been marked as completed:</h3>
     <ul>
       <li>Title: <%= @job_offer.title %></li>
-      <li>Student name: <%= @job_offer.assigned_student.email %></li>
+      <li>Student names:
+        <% @job_offer.assigned_students.each do |student| %>
+          <%= student.email %>, 
+        <% end %>
+      </li>
       <li>Chair: <%= @job_offer.chair.name %></li>
       <li>Responsible staff member: <%= @job_offer.responsible_user.email %></li>
       <li>Room: <%= @job_offer.room_number %></li>
