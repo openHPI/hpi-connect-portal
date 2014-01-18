@@ -16,13 +16,10 @@ class Ability
         end
 
         if user.staff?
+            can :edit, Chair, :id => user.chair_id
             can :read, Application
             can [:create, :new], JobOffer
             can :manage, Faq
-        end
-
-        if user.deputy?
-            can :update, User
         end
 
     end

@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
 
     has_many :applications
     has_many :job_offers, through: :applications
+    has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
     has_many :programming_languages_users
     has_many :programming_languages, :through => :programming_languages_users
     accepts_nested_attributes_for :programming_languages
@@ -61,7 +62,8 @@ class User < ActiveRecord::Base
 
     has_attached_file   :photo,
                         :url  => "/assets/students/:id/:style/:basename.:extension",
-                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+                        :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension",
+                        :styles => { :medium => "300x300>", :thumb => "100x100>" }
     validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
     has_attached_file   :cv,
@@ -98,7 +100,7 @@ class User < ActiveRecord::Base
                 string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
 
     def eql?(other)
-     other.kind_of?(self.class) && self.id == other.id
+        other.kind_of?(self.class) && self.id == other.id
     end
 
     def hash
@@ -139,10 +141,6 @@ class User < ActiveRecord::Base
 
     def admin?
         role && role.name == 'Admin'
-    end
-
-    def deputy?
-        role && role.name == 'Deputy'
     end
 
     def self.search_student(string)

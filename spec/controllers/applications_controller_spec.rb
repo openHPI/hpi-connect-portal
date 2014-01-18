@@ -40,33 +40,42 @@ describe ApplicationsController do
       response.should redirect_to(@job_offer)
     end
 
-    it "accepts student is assigned as @job_offer.assigned_student" do
+    it "accepts a student and he/her is included in @job_offer.assigned_students" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
       
       get :accept, {:id => application.id}
-      assigns(:application).job_offer.assigned_student.should eq(@student)
+      assigns(:application).job_offer.assigned_students.should include(@student)
     end
 
-    it "declines all other students" do
+    it "declines all other students after accepting the last possible application" do
+      @job_offer.vacant_posts = 2
+      @job_offer.save
+      student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
+
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
+      application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
+      get :accept, {:id => application.id}
+
       expect{
-        get :accept, {:id => application.id}
-      }.to change(Application, :count).by(-3)
+        get :accept, {:id => application_2.id}
+      }.to change(Application, :count).by(-2)
     end
 
-    it "application status should be 'working' if an application is accepted" do
+    it "job status should be 'running' if the last possible application is accepted" do
+      @job_offer.vacant_posts = 1
+      @job_offer.save
+      
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      working = FactoryGirl.create(:job_status, :name=>'running')
+      running = FactoryGirl.create(:job_status, :name=>'running')
       
       sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
 
       get :accept, {:id => application.id}
-      assigns(:application).job_offer.status.should eq(working)
+      assigns(:application).job_offer.status.should eq(running)
     end
 
     it "sends two emails" do
@@ -114,6 +123,29 @@ describe ApplicationsController do
       post :create, { :application => {:job_offer_id => @job_offer.id} }
       response.should redirect_to(job_offer_path(@job_offer))
       assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
+    end
+  end
+
+  describe "DELETE destroy" do
+    it "destroys the requested application" do
+      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      
+      sign_in user
+      expect {
+        delete :destroy, {:id => application.to_param}
+      }.to change(Application, :count).by(-1)
+    end
+
+    it "redirects to the job_offers page" do
+      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      
+      sign_in user
+      delete :destroy, {:id => application.to_param}
+      response.should redirect_to(job_offer_path(@job_offer))
     end
   end
 end
