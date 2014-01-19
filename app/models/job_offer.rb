@@ -51,7 +51,7 @@ class JobOffer < ActiveRecord::Base
   scope :filter_compensation, -> compensation { where('compensation >= ?', compensation.to_f) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct job_offers.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct job_offers.*") }
-  scope :search, -> search_string { includes(:programming_languages, :chair).where('lower(title) LIKE ? OR lower(job_offers.description) LIKE ? OR lower(chairs.name) LIKE ? OR lower(programming_languages.name) LIKE ?', "%#{search_string}%".downcase, "%#{search_string}%".downcase, "%#{search_string}%".downcase, "%#{search_string}%".downcase).references(:programming_languages,:chair) }
+  scope :search, -> search_string { joins(:programming_languages, :chair).where('lower(title) LIKE ? OR lower(job_offers.description) LIKE ? OR lower(chairs.name) LIKE ? OR lower(programming_languages.name) LIKE ?', "%#{search_string}%".downcase, "%#{search_string}%".downcase, "%#{search_string}%".downcase, "%#{search_string}%".downcase).references(:programming_languages,:chair)}
 
   def default_values
     self.status ||= JobStatus.pending
