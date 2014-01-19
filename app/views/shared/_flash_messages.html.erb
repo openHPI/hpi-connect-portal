@@ -1,0 +1,15 @@
+<% if flash[:error] %>
+  <div class="alert alert-error" style="<%= style if defined? style %>">
+    <%= raw flash[:error] %>
+  </div>
+<% end %>
+<% if flash[:success] %>
+  <div class="alert alert-success" style="<%= style if defined? style %>">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+<% if flash[:notice] %>
+  <div class="alert alert-warning" style="<%= style if defined? style %>">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
