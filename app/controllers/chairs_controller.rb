@@ -1,7 +1,7 @@
 class ChairsController < ApplicationController
-  authorize_resource only: [:new, :edit, :create, :update]
-
   include ApplicationHelper
+  
+  authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
 
   rescue_from CanCan::AccessDenied do |exception| 
