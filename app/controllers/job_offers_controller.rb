@@ -99,7 +99,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/prolong
   def prolong
-    if @job_offer.end_date < params[:job_offer][:end_date]
+    if @job_offer.end_date < Date.parse(params[:job_offer][:end_date])
       if @job_offer.update prolong_job_offer_params
         flash[:success] = 'Job offer successfully prolonged'
 
