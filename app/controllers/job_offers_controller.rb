@@ -101,10 +101,14 @@ class JobOffersController < ApplicationController
   def prolong
     if @job_offer.end_date < params[:job_offer][:end_date]
       if @job_offer.update prolong_job_offer_params
+        flash[:success] = 'Job offer successfully prolonged'
+      else
+        flash[:error] = 'Error when prolonging job offer. Please enter valid data and try again.'
       end
     else
       flash[:error] = 'You can only prolong the job offer.'
     end
+    redirect_to @job_offer
   end
 
   # GET /job_offer/:id/complete
