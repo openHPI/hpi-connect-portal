@@ -1,12 +1,12 @@
 <div class="col-md-9">
-	<% if signed_in? && can?(:create, @faq) %>
-		<div class="panel panel-default panel-body">
-			<h1><%= t("faqs.new_faq") %></h1>
-			<%= render 'form' %>
-		</div>
-	<% else %>
-		<div class="alert alert-danger">
-	      <h2><%= t("faqs.new_faq_error") %></h2>
-	    </div>
-	<% end %>
+  <% if signed_in? && can?(:create, @faq) %>
+    <div class="panel panel-default panel-body">
+      <h1><%= t("faqs.new_faq") %></h1>
+      <%= render 'form', faq: @faq %>
+    </div>
+  <% else %>
+    <div class="alert alert-danger">
+        <h2><%= t("faqs.new_faq_error") %></h2>
+      </div>
+  <% end %>
 </div>

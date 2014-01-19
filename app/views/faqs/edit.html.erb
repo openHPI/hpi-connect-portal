@@ -2,7 +2,7 @@
 	<% if signed_in? && can?(:update, @faq) %>
 		<div>
 			<h1><%= t("faqs.edit") %></h1>
-			<%= render 'form' %>
+			<%= render 'form', faq: @faq %>
 		</div>
 	<% else %>
 		<div class="alert alert-danger">
