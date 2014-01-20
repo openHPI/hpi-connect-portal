@@ -51,7 +51,11 @@
                 <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
                 <% else %>
-                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @user.cv.url) %> <%= File.basename(@user.cv.path); %></p>
+                   <p class="text-muted">
+                    <%= link_to(@user.cv.url) do %>
+                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= File.basename(@user.cv.path); %>
+                    <% end %>
+                  </p>
                 <% end %>
               </td>
           </tr>
