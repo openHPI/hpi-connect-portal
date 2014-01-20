@@ -62,7 +62,6 @@ describe "Job Offer pages" do
             visit job_offer_path(job_offer)
           end
 
-          it { should have_link('Edit')}
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
@@ -81,6 +80,18 @@ describe "Job Offer pages" do
 
             it { should have_link('Accept') }
             it { should have_link('Decline') }
+            it { should have_link('Edit')}
+
+
+            describe "the job should be prolongable" do
+
+              before do
+                job_offer.update(end_date: Date.current + 20)
+                visit job_offer_path(job_offer)
+              end
+
+              it { should have_button('Prolong') }
+            end
           end
         end
 

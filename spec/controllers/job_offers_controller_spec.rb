@@ -28,11 +28,11 @@ describe JobOffersController do
   let(:responsible_user) { FactoryGirl.create(:user, chair: chair, role: FactoryGirl.create(:role, :name => "Staff")) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
   let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email, "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email, "responsible_user_id" => responsible_user.id }}
 
 
   # This should return the minimal set of values that should be in the session
@@ -152,6 +152,20 @@ describe JobOffersController do
     end
   end
 
+  describe "PUT prolong" do
+    before(:each) do
+      @job_offer = JobOffer.create! valid_attributes_status_running
+      @user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: @job_offer.chair)
+      @job_offer.update({ responsible_user_id: @user.id, end_date: Date.current + 10 })
+      sign_in @user
+    end
+
+    it "should prolong the job" do
+      put :prolong, {id: @job_offer.id, job_offer: { end_date: Date.current + 100 } }
+      assigns(:job_offer).end_date.should eq(Date.current + 100)
+    end
+  end
+
   describe "GET complete" do
     before(:each) do
       @job_offer = JobOffer.create! valid_attributes_status_running
@@ -162,7 +176,7 @@ describe JobOffersController do
       sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: @job_offer.chair)
       
       get :complete, {:id => @job_offer.id}
-      assigns(:job_offer).status.should eq(completed)      
+      assigns(:job_offer).status.should eq(completed)
     end
     it "prohibits user to mark jobs as completed if he is no staff of the chair" do 
       get :complete, {:id => @job_offer.id}, valid_session

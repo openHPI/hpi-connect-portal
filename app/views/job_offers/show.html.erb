@@ -2,11 +2,11 @@
   <div class="col-md-12">
 
     <% if @job_offer.pending? && (user_is_deputy_of_chair?(@job_offer.chair) || user_is_admin?) %>
-      <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class=>"btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
-      <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class=>"btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
+      <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
+      <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
     <% end %>
 
-    <% if can?(:update, @job_offer) && !@job_offer.completed? %>
+    <% if signed_in? && (can?(:update, @job_offer) || user_is_deputy_of_chair?(@job_offer.chair)) && !@job_offer.completed? %>
       <span class="pull-right">
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
@@ -194,41 +194,39 @@
   </div>
 
   <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
-      <div class="pull-right">
-        <%= submit_tag t("job_offers.apply"), class: 'btn btn-success apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
-      </div>
+    <div class="pull-right">
+      <%= submit_tag t("job_offers.apply"), class: 'btn btn-success apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
+    </div>
+
+    <!-- Modal for sending an application email-->
+    <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
+          </div>
+          <%= form_for current_user.applications.build(job_offer_id: @job_offer.id), :html => { :multipart => true } do |f| %>      
+            <div class="modal-body clearfix" data-no-turbolink="true">        
+              <%= f.hidden_field :job_offer_id %> 
+              <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, :rows => 10, :class => "col-md-12"  %>
+              <% unless (current_user.cv.path).nil? %>
+                <br/>
+                <%= check_box_tag :add_cv, nil, true %>
+                <%= label_tag :add_cv, t("job_offers.add_cv_application") %>
+                <small style="margin-left:10px;"><%= File.basename(current_user.cv.path) %></small>
+              <% end %>
+              <%= file_field_tag('attached_files', multiple: true, name: "attached_files[file_attributes][][file]") %>
+            </div>
+            <div class="modal-footer">
+              <%= f.button t("links.cancel"), class: 'btn btn-default', data: {dismiss: 'modal'} %> 
+              <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>          
+            </div>
+          <% end %>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   <% end %>
-  </div>
-
-
-  <!-- Modal for sending an application email-->
-  <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
-        </div>
-        <%= form_for current_user.applications.build(job_offer_id: @job_offer.id), :html => { :multipart => true } do |f| %>      
-          <div class="modal-body clearfix" data-no-turbolink="true">        
-            <%= f.hidden_field :job_offer_id %> 
-            <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, :rows => 10, :class => "col-md-12"  %>
-            <% unless (current_user.cv.path).nil? %>
-              <br/>
-              <%= check_box_tag :add_cv, nil, true %>
-              <%= label_tag :add_cv, t("job_offers.add_cv_application") %>
-              <small style="margin-left:10px;"><%= File.basename(current_user.cv.path) %></small>
-            <% end %>
-            <%= file_field_tag('attached_files', multiple: true, name: "attached_files[file_attributes][][file]") %>
-          </div>
-          <div class="modal-footer">
-            <%= f.button t("links.cancel"), class: 'btn btn-default', data: {dismiss: 'modal'} %> 
-            <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>          
-          </div>
-        <% end %>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
 
   <% unless @application.nil? %>
     <div class="pull-right">

@@ -2,16 +2,10 @@ class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
 
-  authorize_resource only: [:new, :edit, :create, :update, :destroy, :complete, :reopen, :prolong]
-
-  rescue_from CanCan::AccessDenied do |exception| 
-    redirect_to exception.subject, :notice => exception.message
-  end
-
-  # before_filter :check_user_can_create_jobs, only: [:new]
-  # before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy]
+  before_filter :check_user_can_create_jobs, only: [:new]
+  before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy, :prolong]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
-  # before_filter :check_user_is_staff_of_chair_or_admin, only: [:complete, :reopen]
+  before_filter :check_user_is_staff_of_chair_or_admin, only: [:complete, :reopen]
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
@@ -100,13 +94,9 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/prolong
   def prolong
     if @job_offer.end_date < Date.parse(params[:job_offer][:end_date])
-      if @job_offer.update prolong_job_offer_params
-        flash[:success] = 'Job offer successfully prolonged'
-
-        # send emails
-      else
-        flash[:error] = 'Error when prolonging job offer. Please enter valid data and try again.'
-      end
+      @job_offer.update_column :end_date, params[:job_offer][:end_date]
+      flash[:success] = 'Job offer successfully prolonged'
+      JobOffersMailer.job_prolonged_email(@job_offer).deliver
     else
       flash[:error] = 'You can only prolong the job offer.'
     end
@@ -167,31 +157,27 @@ class JobOffersController < ApplicationController
     def job_offer_params
       params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
-    end 
-
-    def prolong_job_offer_params
-      params.require(:job_offer).permit(:end_date)
     end
 
-    # def check_user_can_create_jobs      
-    #   unless can?(:create, JobOffer)
-    #     redirect_to job_offers_path
-    #   end
-    # end
+    def check_user_can_create_jobs      
+      unless can?(:create, JobOffer)
+        redirect_to job_offers_path
+      end
+    end
 
-    # def check_user_is_responsible_or_admin      
-    #   set_job_offer
-    #   unless current_user == @job_offer.responsible_user or current_user == @job_offer.chair.deputy or user_is_admin?
-    #     redirect_to @job_offer
-    #   end
-    # end
+    def check_user_is_responsible_or_admin      
+      set_job_offer
+      unless can?(:update, @job_offer) || current_user == @job_offer.chair.deputy
+        redirect_to @job_offer
+      end
+    end
 
-    # def check_user_is_staff_of_chair_or_admin    
-    #   set_job_offer
-    #   unless user_is_staff_of_chair? @job_offer or user_is_admin?
-    #     redirect_to @job_offer
-    #   end
-    # end
+    def check_user_is_staff_of_chair_or_admin    
+      set_job_offer
+      unless user_is_staff_of_chair? @job_offer or user_is_admin?
+        redirect_to @job_offer
+      end
+    end
 
     def check_user_is_deputy_or_admin
       set_job_offer

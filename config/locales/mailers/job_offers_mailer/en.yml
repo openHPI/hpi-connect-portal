@@ -9,6 +9,9 @@ en:
     job_offer_closed:
       subject: "A job has been closed"
       title: "The following job has been marked as closed:"
+    job_offer_prolonged:
+      subject: "A job has been prolonged"
+      title: "The following job offer has been prolonged and will end "
     student_accepted:
       subject: "A job has been assigned"
       title: "The following job has been assigned to a student:"
