@@ -333,6 +333,8 @@ Faq.create([{
 	answer: 'Log into your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.'
 }])
 Faq.create([{
-	question: "Does HPI-HiWi-Portal have an Android app?", 
-	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
+	question: "Does HPI-HiWi-Portal have an Android app?",
+	answer: "No, the HPI-HiWi-Portal does not have an Android app."
 }])
+
+Chair.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)
