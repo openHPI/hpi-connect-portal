@@ -67,6 +67,9 @@ User.create([{
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
 	lastname: "Kroschk", 
 	firstname: "Axel", 
+	semester: 1,
+	education: "unknown",
+	academic_program: "unknow",
 	role: Role.where(:name => 'Staff').first	
 }])
 
