@@ -26,6 +26,7 @@ describe JobOffer do
       @epic = FactoryGirl.create(:chair, name:"EPIC")
       @os = FactoryGirl.create(:chair, name:"OS and Middleware")
       @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
+      @responsible_user = FactoryGirl.create(:user)
   end
 
   describe 'applying' do
@@ -48,31 +49,41 @@ describe JobOffer do
 
   it "does create a joboffer if all required attributes are set and valid" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
-      start_date: Date.new(2013,11,1), compensation: 10.5, time_effort: 9).valid?
+      start_date: Date.current + 1, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
+  end
+
+  it "does not create a joboffer if the start_date is in the past" do
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", 
+      chair: @epic, start_date: Date.current - 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if start_date is after end_date" do
     assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", 
-      chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,10,1), compensation: 10.5, time_effort: 9).valid?
+      chair: @epic, start_date: Date.current + 2, end_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does create a joboffer if end_date is after start_date" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
-      start_date: Date.new(2013,11,1), end_date: Date.new(2013,12,1), compensation: 10.5, time_effort: 9).valid?
+      start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
   end
 
   it "does not create a joboffer if compensation is not a number" do
     assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
-      start_date: Date.new(2013,11,1), compensation: "i gonna be rich", time_effort: 9).valid?
+      start_date: Date.current + 1, compensation: "i gonna be rich", time_effort: 9).valid?
   end
 
-  it "returns job offers sorted by start_date" do
+  it "does not create a joboffer without a responsible user" do
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", chair: @epic, 
+      start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
+  end
+
+  it "returns job offers sorted by created_at" do
         
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,2,1), end_date: Date.new(2013,3,1), created_at: Date.new(2013, 2,1), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,10,1), end_date: Date.new(2013,11,2), created_at: Date.new(2013,10,1), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,1,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,1,1), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,7,1), end_date: Date.new(2013,8,1), created_at: Date.new(2013,7,1), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,4,1), end_date: Date.new(2013,5,1), created_at: Date.new(2013,4,1), chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 10, end_date: Date.current + 11, created_at: Date.current + 10, chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 2, created_at: Date.current + 1, chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 7, end_date: Date.current + 8, created_at: Date.current + 7, chair: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 4, end_date: Date.current + 5, created_at: Date.current + 4, chair: @epic)
 
     sorted_job_offers = JobOffer.sort "date"
     (sorted_job_offers).each_with_index do |offer, index|
@@ -111,26 +122,25 @@ describe JobOffer do
     assert_equal(resulted_job_offers.length, 3);
   end
 
-  it "returns job offers filtered by chair EPIC and start_date >= 20131125" do
+  it "returns job offers filtered by chair EPIC and start_date >= specified_date" do
         
-    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26))
-    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26))
-    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26))
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
     FactoryGirl.create(:job_offer, chair: @itas)
     FactoryGirl.create(:job_offer, chair: @os)
 
-    filtered_job_offers = JobOffer.filter_chair(@epic.id).filter_start_date("20131125")
+    filtered_job_offers = JobOffer.filter_chair(@epic.id).filter_start_date((Date.current + 3).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
   end
 
-  it "returns job offers filtered start_date >= 20131125" do
+  it "returns job offers filtered start_date >= specified_date" do
         
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
-  
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
 
-    filtered_job_offers = JobOffer.filter_start_date("20131125")
+    filtered_job_offers = JobOffer.filter_start_date((Date.current + 3).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
   end
 
@@ -146,13 +156,13 @@ describe JobOffer do
     assert_equal(filtered_job_offers.length, 3);
   end
 
-  it "returns job offers filtered between 20131125 and 20131226" do
+  it "returns job offers filtered between start_date and end_date" do
         
-    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,26), end_date: Date.new(2013,12,26), chair: @epic)
-    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.new(2013,11,1), end_date: Date.new(2013,11,26), chair: @epic)
-    FactoryGirl.create(:job_offer, chair: @epic,start_date: Date.new(2013,12,1), end_date: Date.new(2013,12,26), chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 6, end_date: Date.current + 8, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 1, end_date: Date.current + 8, chair: @epic)
+    FactoryGirl.create(:job_offer, chair: @epic, start_date: Date.current + 5, end_date: Date.current + 8, chair: @epic)
 
-    filtered_job_offers = JobOffer.filter_start_date("20131125").filter_end_date("20131227")
+    filtered_job_offers = JobOffer.filter_start_date((Date.current + 3).strftime("%Y%m%d")).filter_end_date((Date.current + 9).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
   end
 

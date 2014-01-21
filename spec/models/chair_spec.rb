@@ -44,6 +44,12 @@ describe Chair do
 			@chair.should be_invalid
 		end
 
+		it "with deputies chair is not the chair itself" do
+			@chair.deputy.chair = nil
+			@chair.should be_valid
+			@chair.deputy.should be_valid
+		end
+
 		it "with name is not unique" do
 			chair_with_same_name = @chair.dup
 			chair_with_same_name.save

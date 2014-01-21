@@ -36,7 +36,9 @@ class JobOffer < ActiveRecord::Base
 
   validates :title, :description, :chair, :start_date, :time_effort, :compensation, presence: true
   validates :compensation, :time_effort, numericality: true
-  validates_datetime :end_date, :on_or_after => :start_date, :allow_blank => :end_date
+  validates :responsible_user, presence: true
+  validates_datetime :start_date, on_or_after: lambda { Time.now }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
+  validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
   self.per_page = 5
 

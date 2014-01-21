@@ -1,14 +1,6 @@
-<%= form_for (@faq) do |f| %>
-  <% if @faq.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@faq.errors.count, "error") %> prohibited this FAQ from being saved:</h2>
-      <ul>
-      <% @faq.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for faq do |f| %>
+  
+  <%= render 'shared/object_errors', object: faq %>
   
   <div class="panel panel-default">
     <ul class="list-group">

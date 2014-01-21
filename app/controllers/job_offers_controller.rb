@@ -1,12 +1,14 @@
 class JobOffersController < ApplicationController
   include UsersHelper
   include ApplicationHelper
+
   before_filter :check_user_can_create_jobs, only: [:new]
-  before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy]
+  before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy, :prolong]
+  before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_user_is_staff_of_chair_or_admin, only: [:complete, :reopen]
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
 
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
   before_action :set_chairs, only: [:index, :find_archived_jobs, :archive]
 
   has_scope :filter_chair, only: [:index, :archive], as: :chair
@@ -56,6 +58,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
+    @job_offer.chair = current_user.chair
     
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
@@ -88,9 +91,21 @@ class JobOffersController < ApplicationController
     @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
   end
 
+  # GET /job_offer/:id/prolong
+  def prolong
+    if @job_offer.end_date < Date.parse(params[:job_offer][:end_date])
+      @job_offer.update_column :end_date, params[:job_offer][:end_date]
+      flash[:success] = 'Job offer successfully prolonged'
+      JobOffersMailer.job_prolonged_email(@job_offer).deliver
+    else
+      flash[:error] = 'You can only prolong the job offer.'
+    end
+    redirect_to @job_offer
+  end
+
   # GET /job_offer/:id/complete
   def complete
-    if @job_offer.update(status: JobStatus.completed)
+    if @job_offer.update status: JobStatus.completed
       JobOffersMailer.job_closed_email(@job_offer).deliver
       respond_and_redirect_to(@job_offer, 'Job offer was successfully marked as completed.')
     else
@@ -100,7 +115,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/accept
   def accept  
-    if @job_offer.update(status: JobStatus.open)
+    if @job_offer.update status: JobStatus.open
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
@@ -121,7 +136,7 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/reopen
   def reopen 
     old_job_offer = JobOffer.find params[:id]
-    if old_job_offer.update(status: JobStatus.completed)
+    if old_job_offer.update status: JobStatus.completed
       @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'  
@@ -131,7 +146,6 @@ class JobOffersController < ApplicationController
   end 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
       @job_offer = JobOffer.find params[:id]
     end
@@ -141,19 +155,19 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :time_effort, {:programming_language_ids => []},
+      params.require(:job_offer).permit(:description, :title, :chair_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
-    end 
+    end
 
     def check_user_can_create_jobs      
-      unless can?(:new, JobOffer)
+      unless can?(:create, JobOffer)
         redirect_to job_offers_path
       end
     end
 
     def check_user_is_responsible_or_admin      
       set_job_offer
-      unless current_user == @job_offer.responsible_user or current_user == @job_offer.chair.deputy or user_is_admin?
+      unless can?(:update, @job_offer) || current_user == @job_offer.chair.deputy
         redirect_to @job_offer
       end
     end
@@ -173,6 +187,13 @@ class JobOffersController < ApplicationController
         else
           redirect_to job_offers_path
         end
+      end
+    end
+
+    def check_job_is_in_editable_state
+      set_job_offer
+      unless @job_offer.open? || @job_offer.pending?
+        redirect_to @job_offer
       end
     end
 

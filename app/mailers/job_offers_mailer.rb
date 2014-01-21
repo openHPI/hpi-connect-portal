@@ -30,4 +30,10 @@ class JobOffersMailer < ActionMailer::Base
     mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_email.student_accepted.subject"))
   end
 
+  def job_prolonged_email(job_offer)
+    @job_offer = job_offer
+
+    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_email.job_offer_prolonged.subject"))
+  end
+
 end

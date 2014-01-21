@@ -1,15 +1,6 @@
-<%= form_for(@programming_language) do |f| %>
-  <% if @programming_language.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@programming_language.errors.count, "error") %> prohibited this programming_language from being saved:</h2>
-
-      <ul>
-      <% @programming_language.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for programming_language do |f| %>
+  
+  <%= render 'shared/object_errors', object: programming_language %>
 
   <div class="field">
     <%= f.label :name %><br>

@@ -22,8 +22,8 @@ FactoryGirl.define do
   factory :job_offer, class: JobOffer do
     title        "Awesome Job"
     description  "Develop a website"
-    start_date   Date.new(2013,1,1)
-    end_date     Date.new(2013,2,1)
+    start_date   Date.current + 1
+    end_date     Date.current + 2
     compensation 10.5
     time_effort  9
     association :chair, factory: :chair

@@ -15,3 +15,6 @@ de:
         general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Information"
         requirements: "Anforderungen"
+    errors:
+      messages:
+        in_future: "muss in der Zukunft liegen."

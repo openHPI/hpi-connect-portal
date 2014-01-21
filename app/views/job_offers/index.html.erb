@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-9"> 
       <div id="buttons">
-      <% if signed_in? && can?(:new, JobOffer) %>
+      <% if signed_in? && can?(:create, JobOffer) %>
         <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"%>
       <% end %>
       <%= link_to t("job_offers.archive"), archive_job_offers_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"  %>

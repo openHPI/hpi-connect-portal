@@ -4,16 +4,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h3>The following job has been assigned to a student:</h3>
+    <h3><%= t("job_offers_email.job_offer_prolonged.title") %> <%= @job_offer.end_date %>:</h3>
     <ul>
       <li>Title: <%= @job_offer.title %></li>
-      <li>Student name: <%= @job_offer.assigned_student.email %></li>
       <li>Chair: <%= @job_offer.chair.name %></li>
       <li>Responsible staff member: <%= @job_offer.responsible_user.email %></li>
       <li>Room: <%= @job_offer.room_number %></li>
       <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
-      <li><%= t("activerecord.attributes.job_offer.time_effort") %>: <%= @job_offer.time_effort %> <%= t("job_offers.time_effort_description") %></li>
-      <li><%= t("activerecord.attributes.job_offer.compensation") %>: <%= @job_offer.compensation %> <%= t("job_offers.compensation_description") %></li>
+      <li>Salary: <%= @job_offer.compensation %></li>
     </ul>
   </body>
 </html>
