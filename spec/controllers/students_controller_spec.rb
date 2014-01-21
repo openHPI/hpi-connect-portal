@@ -16,7 +16,7 @@ describe StudentsController do
     it "assigns all user as @users" do
       sign_in staff
 
-      user = User.create! valid_attributes
+      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :name => "Student"))
       get :index, {}, valid_session
       assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
     end

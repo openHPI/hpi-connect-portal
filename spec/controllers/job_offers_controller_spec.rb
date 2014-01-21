@@ -283,11 +283,11 @@ describe JobOffersController do
         response.should render_template("new")
       end
       it "should not send mail to deputy" do
-        job_offer = JobOffer.create! valid_attributes
+        job_offer = FactoryGirl.create(:job_offer)
         #expect
         JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
         # when
-        JobOffer.create! valid_attributes
+        FactoryGirl.create(:job_offer)
       end
     end
   end
@@ -295,7 +295,7 @@ describe JobOffersController do
   describe "PUT update" do
 
     before(:each) do
-      @job_offer = JobOffer.create! valid_attributes
+      @job_offer = FactoryGirl.create(:job_offer)
 
       sign_in @job_offer.responsible_user
     end
@@ -347,7 +347,7 @@ describe JobOffersController do
 
   describe "DELETE destroy" do
     before(:each) do
-      @job_offer = JobOffer.create! valid_attributes
+      @job_offer = FactoryGirl.create(:job_offer)
 
       sign_in @job_offer.responsible_user
     end

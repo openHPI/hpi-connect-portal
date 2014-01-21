@@ -10,7 +10,7 @@ describe ApplicationsController do
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
-    @job_offer = JobOffer.create! valid_attributes
+    @job_offer = FactoryGirl.create(:job_offer)
   end
 
   describe "GET decline" do
