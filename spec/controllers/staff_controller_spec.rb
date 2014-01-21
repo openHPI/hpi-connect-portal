@@ -216,4 +216,37 @@ describe StaffController do
       @staff.languages.first.should eq(@language_1)
     end
   end
+
+  describe "PUT update_role" do
+    before(:each) do
+        @student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
+        @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
+        @chair = FactoryGirl.create(:chair)
+        @staff_member = FactoryGirl.create(:user, :role => @staff_role, :chair => @chair)
+        @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
+    end
+
+
+    describe "current user is Admin" do
+      before(:each) do
+        sign_in FactoryGirl.create(:user, role: @admin_role)
+      end
+
+      it "updates role of staff_member to student" do 
+        put :set_role_to_student, {:user_id => @staff_member.to_param}
+        assert_equal(@student_role, User.find(@staff_member.id).role)
+        assert_equal(nil, User.find(@staff_member.id).chair)
+      end
+
+      it "updates role of deputy to student" do 
+        @chair.deputy = @staff_member
+        new_deputy = FactoryGirl.create(:user, :role => @student_role)
+        put :set_role_to_student, {:user_id => @staff_member.to_param, :new_deputy_id => new_deputy.to_param}
+        assert_equal(@student_role, User.find(@staff_member.id).role)
+        assert_equal(nil, User.find(@staff_member.id).chair)
+        assert_equal(new_deputy, Chair.find(@chair).deputy)
+      end
+
+    end
+  end
 end

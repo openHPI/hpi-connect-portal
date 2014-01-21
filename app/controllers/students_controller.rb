@@ -54,40 +54,10 @@ class StudentsController < ApplicationController
     render "index"
   end
 
+  #POST /students/update_role
   def update_role
-    role_name = params[:role_name]
-    chair_name = params[:chair_name]
-
-    if chair_name
-      chair = Chair.find_by_name(chair_name)
-    else
-      chair = current_user.chair
-    end
-
-    case role_name
-      when "Deputy"
-        promote_to_deputy(params[:student_id], chair)
-      when Role.find_by_level(3).name
-        promote_to_admin(params[:student_id])
-      when Role.find_by_level(2).name
-        promote_to_research_assistant(params[:student_id], chair)
-    end
+    set_role(params[:role_name], params[:chair_name], params[:student_id])
     redirect_to(students_path)
-  end
-
-  def promote_to_deputy(student_id, chair)
-    chair.update(:deputy_id => student_id)
-    User.find(student_id).update(:chair => chair, :role => Role.find_by_level(2))
-  end
-
-  def promote_to_admin(student_id)
-    student = User.find(student_id)
-    student.update(:role => Role.find_by_level(3))
-  end
-
-  def promote_to_research_assistant(student_id, chair)
-    student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2), :chair => chair)
   end
 
   private

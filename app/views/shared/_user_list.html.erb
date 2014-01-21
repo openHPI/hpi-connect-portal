@@ -9,6 +9,9 @@
               <% else %>
                 <%= link_to user.firstname+" "+user.lastname, staff_path(user), :class => "h4" %>
               <%end%>
+              <% if (defined?(show_demote_button) && show_demote_button) %>
+                <button class="btn btn btn-default change-role" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= change_role_button_title %></button>
+              <%end%>
             </div>
           </div>
         </li>

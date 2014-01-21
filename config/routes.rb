@@ -18,9 +18,11 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    resources :chairs
-		get "chairs/:id/find_jobs", to: "chairs#find_jobs", as: "find_jobs_chairs"
-    
+    resources :chairs do
+        collection do 
+            post 'update_staff'
+        end
+    end
     resources :users, only: [:edit, :update]
 
     resources :applications, only: [:create, :destroy] do
@@ -41,7 +43,12 @@ HpiHiwiPortal::Application.routes.draw do
     resources :studentsearch
     resources :faqs
 
-    resources :staff, except: [:new, :create]
+    resources :staff, except: [:new, :create] do
+        collection do
+            post 'update_role'
+            post 'set_role_to_student'
+        end
+    end
 
     resources :students do
         collection do

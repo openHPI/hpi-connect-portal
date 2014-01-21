@@ -21,6 +21,7 @@ require 'spec_helper'
 describe ChairsController do
 
   let(:deputy) { FactoryGirl.create(:user) }
+  let(:valid_session) { {} }
   let(:admin) { FactoryGirl.create(:role, name: 'Admin') }
 
   # This should return the minimal set of attributes required to create a valid
@@ -174,4 +175,21 @@ describe ChairsController do
       end
     end
   end
+
+  describe "PUT update_staff_to_student" do
+  
+    it "demotes staff to student" do
+      student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
+      staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
+      chair = FactoryGirl.create(:chair)
+      staff_member = FactoryGirl.create(:user, :role => staff_role, :chair => chair)
+      user = FactoryGirl.create(:user, role: staff_role, :chair => chair)
+      sign_in user
+      chair.update(:deputy => user)
+      put :update_staff, {:student_id => staff_member.to_param, :new_deputy_id => nil, :id => chair.id}, valid_session
+      assert_equal(student_role, User.find(staff_member.id).role)
+      assert_equal(nil, User.find(staff_member.id).chair)
+    end
+  end
+
 end

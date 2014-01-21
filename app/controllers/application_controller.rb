@@ -41,4 +41,52 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_role(role_name, chair_name, user_id)
+    if chair_name
+      chair = Chair.find_by_name(chair_name)
+    else
+      chair = current_user.chair
+    end
+
+    case role_name
+      when "Deputy"
+        set_role_to_deputy(user_id, chair)
+      when Role.find_by_level(3).name
+        set_role_to_admin(user_id)
+      when Role.find_by_level(2).name
+        set_role_to_staff(user_id, chair)
+      when Role.find_by_level(1).name
+        set_role_to_student(user_id)
+    end
+  end
+
+    def set_role_to_deputy(user_id, chair)
+    chair.update(:deputy_id => user_id)
+    User.find(user_id).update(:chair => chair, :role => Role.find_by_level(2))
+  end
+
+  def set_role_to_admin(user_id)
+    student = User.find(user_id)
+    student.update(:role => Role.find_by_level(3))
+  end
+
+  def set_role_to_staff(user_id, chair)
+    student = User.find(user_id)
+    student.update(:role => Role.find_by_level(2), :chair => chair)
+  end
+
+  def set_role_to_student(user_id)
+    user = User.find(user_id)
+    user.update(:role => Role.find_by_level(1), :chair => nil)
+  end
+
+  def set_role_from_staff_to_student(user_id, deputy_id)
+    user = User.find(user_id)
+    if deputy_id
+      user.chair.update(:deputy_id => deputy_id)
+    end   
+    user.update(:role_id => Role.find_by_level(1).id, :chair => nil)
+
+  end
+
 end

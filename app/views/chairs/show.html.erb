@@ -58,7 +58,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
               <div class="panel-heading"><h4><%= t("chairs.staff") %></h4></div>
-        <%= render 'shared/user_list', name: "chairs.staff", user_list: @staff %>  
+        <%= render 'shared/user_list', name: "chairs.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('chairs.demote_button') %>  
         </div>
     </div>
 
@@ -79,5 +79,8 @@
     </div>
 
 </div>
+
+<% roles = [Role.find_by_level(1).name] %>
+<%= render 'shared/change_role_dialog', path: update_staff_chairs_path, button_title: t('chairs.demote_button'), render_chairs: false, roles: roles, confirm_question: t('chairs.demote_confirm_question') %>
 
 

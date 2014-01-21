@@ -11,3 +11,5 @@ en:
         general_information: "general information"
         open_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
+        demote_confirm_question: "Really"
+        demote_button: "demote"

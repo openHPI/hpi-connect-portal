@@ -2,7 +2,7 @@ class ChairsController < ApplicationController
   authorize_resource only: [:new, :edit, :create, :update]
 
   include ApplicationHelper
-  before_action :set_chair, only: [:show, :edit, :update, :find_jobs]
+  before_action :set_chair, only: [:show, :edit, :update, :find_jobs, :update_staff]
 
   rescue_from CanCan::AccessDenied do |exception| 
     redirect_to chairs_path, :notice => exception.message
@@ -57,9 +57,9 @@ class ChairsController < ApplicationController
     end
   end
 
-  def find_jobs
-    show
-    render "show"
+  def update_staff
+    set_role_from_staff_to_student(params[:student_id], params[:new_deputy_id])
+    redirect_to(chair_path(@chair))
   end
 
   private
