@@ -16,7 +16,7 @@
 #  lastname               :string(255)
 #  firstname              :string(255)
 #  role_id                :integer          default(1), not null
-#  chair_id               :integer
+#  employer_id            :integer
 #  semester               :integer
 #  academic_program       :string(255)
 #  birthday               :date
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   attr_accessor :should_redirect_to_profile
   
   belongs_to :role
-  belongs_to :chair
+  belongs_to :employer
   belongs_to :user_status
 
   has_attached_file   :photo,

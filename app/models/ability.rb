@@ -17,9 +17,9 @@ class Ability
       end
 
       if user.staff?
-        can :edit, Chair, id: user.chair_id
+        can :edit, Employer, id: user.employer_id
         can :read, Application
-        can [:create, :complete, :reopen], JobOffer, chair_id: user.chair_id
+        can [:create, :complete, :reopen], JobOffer, employer_id: user.employer_id
         can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
         can :manage, Faq
       end

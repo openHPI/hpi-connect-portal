@@ -4,7 +4,7 @@ en:
       job_offer:
         description: "Description"
         title: "Title"
-        chair: "Chair"
+        employer: "Employer"
         start_date: "Start date"
         end_date: "End date"
         time_effort: "Time effort"

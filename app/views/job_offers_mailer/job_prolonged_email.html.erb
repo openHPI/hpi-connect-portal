@@ -7,7 +7,7 @@
     <h3><%= t("job_offers_email.job_offer_prolonged.title") %> <%= @job_offer.end_date %>:</h3>
     <ul>
       <li>Title: <%= @job_offer.title %></li>
-      <li>Chair: <%= @job_offer.chair.name %></li>
+      <li>Employer: <%= @job_offer.employer.name %></li>
       <li>Responsible staff member: <%= @job_offer.responsible_user.email %></li>
       <li>Room: <%= @job_offer.room_number %></li>
       <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>

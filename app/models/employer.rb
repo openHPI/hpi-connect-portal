@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: chairs
+# Table name: employers
 #
 #  id                  :integer          not null, primary key
 #  name                :string(255)
@@ -11,11 +11,12 @@
 #  avatar_content_type :string(255)
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
-#  head_of_chair       :string(255)      not null
+#  head                :string(255)      not null
 #  deputy_id           :integer
+#  external            :boolean          default(FALSE)
 #
 
-class Chair < ActiveRecord::Base
+class Employer < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "200x200" }, :default_url => "/images/:style/missing.png"
 
   has_many :users
@@ -27,10 +28,10 @@ class Chair < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
-  validates :head_of_chair, presence: true
+  validates :head, presence: true
   validates :deputy, presence: true
 
   def staff
-    User.where :chair => self
+    User.where :employer => self
   end
 end

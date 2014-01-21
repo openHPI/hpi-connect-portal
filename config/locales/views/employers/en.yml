@@ -1,10 +1,10 @@
 en:
-    chairs:
-        chair: "Chair"
-        chairs: "Chairs"
-        chair_overview: "Listing of Chairs"
-        editing_chair: "Editing Chair"
-        new_chair: "New Chair"  
+    employers:
+        employer: "Employer"
+        employers: "Employers"
+        employer_overview: "Listing of Employers"
+        editing_employer: "Editing Employer"
+        new_employer: "New Employer"  
         staff: Staff
         open: Open
         running: Running

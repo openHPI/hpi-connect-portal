@@ -31,8 +31,8 @@ If the changes are not displayed, restart the server.
   - the en.yml and de.yml files should contain all the model attributes with their corresponding names
   - Example:
 
-      Before: <%= label_tag :chair %>
-      After : <%= label_tag t("activerecord.attributes.job_offer.chair") %>
+      Before: <%= label_tag :employer %>
+      After : <%= label_tag t("activerecord.attributes.job_offer.employer") %>
 
 + For each view a de.yml and en.yml file should be created in config/locales/views/VIEWNAME
   - the VIEWNAME folder name should be plural

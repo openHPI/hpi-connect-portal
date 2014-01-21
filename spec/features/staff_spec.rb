@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "the staff page" do
 
   let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: FactoryGirl.create(:chair)) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: FactoryGirl.create(:employer)) }
 
   let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
   let(:admin) { FactoryGirl.create(:user, role: admin_role) }

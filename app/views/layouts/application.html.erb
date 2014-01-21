@@ -47,11 +47,11 @@
               <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
               <% if not user_is_admin? %>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.chairs') %> <b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.employers') %> <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <% @chairs = Chair.all %>
-                      <% @chairs.each do |chair| %>
-                      <li><%= link_to chair.name, chair %></li>
+                    <% @employers = Employer.all %>
+                      <% @employers.each do |employer| %>
+                      <li><%= link_to employer.name, employer %></li>
                     <% end %>
                   </ul>
                 </li>
@@ -65,7 +65,7 @@
                   <ul class="dropdown-menu">
                     <li><%= link_to t('layouts.students'), students_path %></li>
                     <li><%= link_to t('layouts.staff'), staff_index_path %></li>
-                    <li><%= link_to t('layouts.chairs'), chairs_path %></li>
+                    <li><%= link_to t('layouts.employers'), employers_path %></li>
                   </ul>
                 </li>
               <%end %>
@@ -75,9 +75,9 @@
             <%= image_tag(current_user.photo.url, size: "40", class: "img-thumbnail")  %>
             <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
             <%= link_to t("layouts.my_profile"), edit_user_path(current_user), :class => 'navbar-link' %>
-            <% if user_is_staff? && current_user.chair_id%>
-              <% @chair = Chair.find(current_user.chair_id) %>
-              <%= link_to t('layouts.my_chair'), @chair, :class => 'navbar-link' %>
+            <% if user_is_staff? && current_user.employer_id%>
+              <% @employer = Employer.find(current_user.employer_id) %>
+              <%= link_to t('layouts.my_employer'), @employer, :class => 'navbar-link' %>
             <% end %> |
             <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
           <% else %>

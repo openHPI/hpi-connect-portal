@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "chairs/show" do
+describe "employers/show" do
   before(:each) do
-    @chair = assign(:chair, stub_model(Chair,
-      :name => "HCI", :description => "Human Computer Interaction", :head_of_chair => "Prof. Patrick Baudisch", :deputy => FactoryGirl.create(:user)
+    @employer = assign(:employer, stub_model(Employer,
+      :name => "HCI", :description => "Human Computer Interaction", :head => "Prof. Patrick Baudisch", :deputy => FactoryGirl.create(:user)
     ))
     view.stub(:can?) { false }
   end
@@ -14,6 +14,6 @@ describe "chairs/show" do
     rendered.should match(/HCI/)
     rendered.should match(/Human Computer Interaction/)
     rendered.should match(/Prof. Patrick Baudisch/)
-    rendered.should match(@chair.deputy.email)
+    rendered.should match(@employer.deputy.email)
   end
 end

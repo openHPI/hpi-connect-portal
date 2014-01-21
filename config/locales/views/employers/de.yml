@@ -1,10 +1,10 @@
 de:
-    chairs:
-        chair: "Lehrstuhl"
-        chairs: "Lehrstühle"
-        chair_overview: "Lehrstuhlübersicht"
-        editing_chair: "Lehrstuhl bearbeiten"
-        new_chair: "Neuer Lehrstuhl"
+    employers:
+        employer: "Arbeitgeber"
+        employers: "Arbeitgeber"
+        employer_overview: "Arbeitgeberübersicht"
+        editing_employer: "Arbeitgeber bearbeiten"
+        new_employer: "Neuer Arbeitgeber"
         staff: Mitarbeiter
         open: Offen
         running: Laufend

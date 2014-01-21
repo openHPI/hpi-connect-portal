@@ -53,8 +53,8 @@ describe "Job Offer pages" do
           end
         end
 
-        describe "as a staff of the job offers chair" do
-          let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+        describe "as a staff of the job offers employer" do
+          let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
           before do
             @application = FactoryGirl.create(:application, job_offer: job_offer)
@@ -118,8 +118,8 @@ describe "Job Offer pages" do
 
     describe "running job offer" do
       let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
-      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_running) }
+      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), employer: employer, status: @status_running) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
@@ -132,8 +132,8 @@ describe "Job Offer pages" do
         it { should_not have_button('Apply')}
       end
 
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
         before do
           login_as(staff, :scope => :user)
@@ -172,14 +172,14 @@ describe "Job Offer pages" do
     describe "pending job offer" do
 
       let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
-      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_pending) }
+      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), employer: employer, status: @status_pending) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
 
       before do
-        deputy.update(:chair => chair)
+        deputy.update(:employer => employer)
       end
       
       describe "as a student" do
@@ -198,8 +198,8 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: employer) }
 
         before do
           job_offer.update(responsible_user: staff)
@@ -218,7 +218,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the chair" do 
+      describe "as the deputy of the employer" do 
         before do          
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
@@ -272,8 +272,8 @@ describe "Job Offer pages" do
 
       before { visit job_offer_path(job_offer) }
     
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
         before do
           login_as(staff, :scope => :user)
@@ -285,7 +285,7 @@ describe "Job Offer pages" do
       end   
 
       describe "as admin" do
-        let(:admin) { FactoryGirl.create(:user, role: admin_role, chair: job_offer.chair) }
+        let(:admin) { FactoryGirl.create(:user, role: admin_role, employer: job_offer.employer) }
 
         before do
           login_as(admin, :scope => :user)

@@ -30,8 +30,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([@student.email])
 		end
 
-		it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
-			@email.from.should eq(['hpi-hiwi-portal@hpi.uni-potsdam.de'])
+		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
+			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
 		end
 
 		it "should have the title of the joboffer in the body" do
@@ -51,8 +51,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([@student.email])
 		end
 
-		it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
-			@email.from.should eq(['hpi-hiwi-portal@hpi.uni-potsdam.de'])
+		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
+			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
 		end
 
 		it "should have the title of the joboffer in the body" do
@@ -82,8 +82,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([@job_offer.responsible_user.email])
 		end
 
-		it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
-			@email.from.should eq(['hpi-hiwi-portal@hpi.uni-potsdam.de'])
+		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
+			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
 		end
 
 		it "should have the title of the joboffer in the body" do

@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
-    @epic = FactoryGirl.create(:chair, name:"EPIC")
+    @epic = FactoryGirl.create(:employer, name:"EPIC")
     @open = FactoryGirl.create(:job_status, name:"open")
-    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @test_employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", chair: @TestChair, responsible_user: @user, status: @open)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", chair: @epic, responsible_user: @user, status: @open)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", chair: @epic, responsible_user: @user, status: @open)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @user, status: @open)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @user, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", employer: @epic, responsible_user: @user, status: @open)
   end
 
   it "should include all jobs currently available" do
@@ -47,11 +47,11 @@ end
 describe "a job offer entry" do
 
   before(:each) do
-    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
     @job_offer = FactoryGirl.create(:job_offer, 
       title: "TestJob", 
-      chair: @TestChair, 
+      employer: @employer, 
       responsible_user: @user, 
       status: FactoryGirl.create(:job_status, :open)
     )
@@ -60,7 +60,7 @@ describe "a job offer entry" do
   end
 
   it "should have a title and the professorship" do
-    page.should have_content("TestJob", "TestChair")
+    page.should have_content(@job_offer.title, @employer.name)
   end
 
   it "should link to its detailed page" do
@@ -72,7 +72,7 @@ end
 
 describe "job_offers_history" do
   before do
-    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
     @status = FactoryGirl.create(:job_status, :completed)
     @open = FactoryGirl.create(:job_status, name:"open")
@@ -80,7 +80,7 @@ describe "job_offers_history" do
     @job_offer = FactoryGirl.create(:job_offer, 
       title: "Closed Job Touch Floor", 
       status: @status,
-      chair: @TestChair,
+      employer: @employer,
       responsible_user: @user
       )
   end
