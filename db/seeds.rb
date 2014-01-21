@@ -360,7 +360,7 @@ Faq.create([{
 }])
 Faq.create([{
 	question: "Does HPI-HiWi-Portal have an Android app?", 
-	answer: 'Yes, the HPI-HiWi-Portal Android app allows you to stay connected to the premier job search website to discover the latest jobs that meet your needs.'
+	answer: "No, the HPI-HiWi-Portal does not have an Android app."
 }])
 
 Chair.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)
