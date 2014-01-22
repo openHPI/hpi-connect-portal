@@ -47,9 +47,19 @@
               <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
               <% if not user_is_admin? %>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.employers') %> <b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.internal_employers') %> <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <% @employers = Employer.all %>
+                    <% @employers = Employer.internal %>
+                      <% @employers.each do |employer| %>
+                      <li><%= link_to employer.name, employer %></li>
+                    <% end %>
+                  </ul>
+                </li>
+
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.external_employers') %> <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <% @employers = Employer.external %>
                       <% @employers.each do |employer| %>
                       <li><%= link_to employer.name, employer %></li>
                     <% end %>

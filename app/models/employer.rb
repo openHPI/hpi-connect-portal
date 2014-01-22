@@ -31,6 +31,9 @@ class Employer < ActiveRecord::Base
   validates :head, presence: true
   validates :deputy, presence: true
 
+  scope :internal, -> { where(external: false) }
+  scope :external, -> { where(external: true) }
+
   def staff
     User.where :employer => self
   end
