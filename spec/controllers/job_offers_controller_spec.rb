@@ -4,7 +4,7 @@ describe JobOffersController do
 
   let(:assigned_student) { FactoryGirl.create(:user) }
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) { FactoryGirl.create(:user, employer: employer, role: FactoryGirl.create(:role, :name => "Staff")) }
+  let(:responsible_user) { FactoryGirl.create(:user, employer: employer, role: FactoryGirl.create(:role, :staff)) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
@@ -130,7 +130,7 @@ describe JobOffersController do
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
-      @user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), employer: @job_offer.employer)
+      @user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: @job_offer.employer)
       @job_offer.update({ responsible_user_id: @user.id, end_date: Date.current + 10 })
       sign_in @user
     end
@@ -148,13 +148,13 @@ describe JobOffersController do
 
     it "marks jobs as completed if the user is staff of the employer" do 
       completed = FactoryGirl.create(:job_status, :completed)
-      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), employer: @job_offer.employer)
+      sign_in FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
       
-      get :complete, {:id => @job_offer.id}
+      get :complete, { id: @job_offer.id }
       assigns(:job_offer).status.should eq(completed)
     end
     it "prohibits user to mark jobs as completed if he is no staff of the employer" do 
-      get :complete, {:id => @job_offer.id}, valid_session
+      get :complete, { id: @job_offer.id}, valid_session
       response.should redirect_to(@job_offer)
     end
   end
@@ -170,7 +170,7 @@ describe JobOffersController do
     it "prohibits user to accept job offers if he is not the deputy" do
 
       @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
-      get :accept, {id: @job_offer.id}
+      get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end     
     it "accepts job offers" do

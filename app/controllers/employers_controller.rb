@@ -45,8 +45,8 @@ class EmployersController < ApplicationController
   # POST /employers
   # POST /employers.json
   def create
-
     @employer = Employer.new(employer_params)
+    @employer.deputy.employer = @employer if @employer.deputy
 
     if @employer.save
       respond_and_redirect_to(@employer, 'Employer was successfully created.', 'show', :created)

@@ -175,14 +175,14 @@ class JobOffersController < ApplicationController
 
     def check_user_is_staff_of_employer_or_admin
       set_job_offer
-      unless user_is_staff_of_employer? @job_offer or user_is_admin?
+      unless user_is_staff_of_employer?(@job_offer) || user_is_admin?
         redirect_to @job_offer
       end
     end
 
     def check_user_is_deputy_or_admin
       set_job_offer
-      unless @job_offer.employer.deputy == current_user or user_is_admin?
+      unless (@job_offer.employer.deputy == current_user) || user_is_admin?
         if user_is_staff_of_employer? @job_offer
           redirect_to @job_offer
         else
@@ -197,5 +197,4 @@ class JobOffersController < ApplicationController
         redirect_to @job_offer
       end
     end
-
 end

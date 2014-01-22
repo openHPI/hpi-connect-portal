@@ -1,5 +1,5 @@
-<%= form_for(employer, :html => { :multipart => true }) do |f| %>
-
+<%= form_for employer, html: { multipart: true } do |f| %>
+  
   <%= render 'shared/object_errors', object: employer %>
 
   <div class="panel panel-default">
@@ -45,9 +45,9 @@
                 </div>
                 <div class="col-sm-9">
                   <% if employer.users.any? %>
-                  <%= f.collection_select :deputy_id, employer.users, :id, :email %>
+                    <%= f.collection_select :deputy_id, employer.users, :id, :email %>
                   <% else %>
-                  <%= f.collection_select :deputy_id, User.staff, :id, :email %>
+                    <%= f.collection_select :deputy_id, User.staff, :id, :email %>
                   <% end %>
                 </div>
               </div>
@@ -78,7 +78,6 @@
       </li>
     </ul>
   </div>
-
 
   <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 

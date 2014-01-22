@@ -1,27 +1,27 @@
 require 'spec_helper'
 
 describe Faq do
-	before(:each) do
-    	@faq = Faq.new("question" => "How do I make edits to my profile?", "answer" => "Log in to your account. Then hover over My Profile at the top right of the page. Choose the Edit-Button.")
-	end 
+  before(:each) do
+    @faq = Faq.new("question" => "How do I make edits to my profile?", "answer" => "Log in to your account. Then hover over My Profile at the top right of the page. Choose the Edit-Button.")
+  end 
 
-	describe "validation of parameters" do
-		
-		it "with question not present" do
-			@faq.question = nil
-			@faq.should be_invalid
-		end
+  describe "validation of parameters" do
+    
+    it "with question not present" do
+      @faq.question = nil
+      @faq.should be_invalid
+    end
 
-		it "with answer not present" do
-			@faq.answer = nil
-			@faq.should be_invalid
-		end
+    it "with answer not present" do
+      @faq.answer = nil
+      @faq.should be_invalid
+    end
 
-		it "with all necessary parameters present" do
-			@faq.should be_valid
-		end
+    it "with all necessary parameters present" do
+      @faq.should be_valid
+    end
 
-	end
+  end
 end
 
 
@@ -29,12 +29,12 @@ describe "FAQ page" do
 
 
 
-	it 'should return a page for FAQ' do
+  it 'should return a page for FAQ' do
 
-	  	# @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Student', level: 1)) 
-		# login_as(student, :scope => :user)
-	    visit faqs_path
-		expect(page).to have_content "FAQ"
+    # @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) 
+    # login_as(student, :scope => :user)
+    visit faqs_path
+    expect(page).to have_content "FAQ"
     end
 
 
