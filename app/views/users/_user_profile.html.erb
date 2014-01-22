@@ -1,0 +1,160 @@
+<% if !user.programming_languages_users.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages")%></h4></div>
+        <table class="table">
+          <thead></thead>
+          <tbody>
+            <% user.programming_languages_users.each do |programming_languages_user| %>
+              <tr>
+                <td><%= programming_languages_user.programming_language.name %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == programming_languages_user.skill %>
+                      <%= radio_button_tag programming_languages_user.programming_language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag programming_languages_user.programming_language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <% if !(user.homepage).nil? || !(user.github).nil? || !(user.facebook).nil? || !(user.xing).nil? || !(user.linkedin).nil? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.links")%></h4></div>
+          <table class="table">
+            <thead></thead>
+            <tbody>
+              <% if !(user.homepage).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "home 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to user.homepage, url_with_protocol(user.homepage), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(user.github).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "github-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to user.github, url_with_protocol(user.github), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(user.facebook).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "facebook-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to user.facebook, url_with_protocol(user.facebook), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(user.xing).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "xing-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to user.xing, url_with_protocol(user.xing), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if !(user.linkedin).empty? %>
+                <tr>
+                  <td>
+                    <%= fa_icon "linkedin-square 2x"%>
+                  </td>
+                  <td>
+                    <%= link_to user.linkedin, url_with_protocol(user.linkedin), :target => '_blank' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+  </div> 
+
+  <div class="col-sm-6">
+    <% if !user.staff? && (!(user.semester).nil? || !(user.academic_program).nil? || !(user.education).nil?) %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("users.carrier") %></h4></div>
+          <table class="table">
+            <thead></thead>
+            <tbody>
+              <% if !(user.academic_program).nil? %>
+                <tr>
+                  <td><%= t("activerecord.attributes.user.academic_program")%></td>
+                  <td><%= user.academic_program %></td>
+                </tr>
+              <% end %>
+              <% if !(user.semester).nil? %>
+                <tr>
+                  <td><%= t("activerecord.attributes.user.semester")%></td>
+                  <td><%= user.semester %></td>
+                </tr>
+              <% end %>
+              <% if !(user.education).nil? %>
+                <tr>
+                  <td><%= t("activerecord.attributes.user.education")%></td>
+                  <td><%= user.education.html_safe %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+
+    <% if !user.languages_users.empty? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages")%></h4></div>
+        <table class="table">
+          <thead></thead>
+          <tbody>
+            <% user.languages_users.each do |languages_user| %>
+              <tr>
+                <td><%= t("languages." + languages_user.language.name) %></td>
+                <td>
+                  <% (1..5).each do |i| %>
+                    <% if i == languages_user.skill %>
+                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
+                    <% else %>
+                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <% if !(user.additional_information).nil? && !(user.additional_information).empty?%>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><%= t("activerecord.attributes.user.additional_information")%></h4>
+        </div>
+          <table class="table">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>
+                  <%= escape_javascript(user.additional_information.html_safe) %>
+                </td>
+               </tr>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+  </div> 
