@@ -1,8 +1,8 @@
 de:
   activerecord:
     attributes:
-      chair:
+      employer:
         deputy: "Verantwortlicher Mitarbeiter"
         description: "Beschreibung"
-        head_of_chair: "Leiter des Lehrstuhls"
+        head: "Leiter"
         name: "Name"

@@ -19,8 +19,8 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
-  resources :chairs
-    get "chairs/:id/find_jobs", to: "chairs#find_jobs", as: "find_jobs_chairs"
+  resources :employers
+    get "employers/:id/find_jobs", to: "employers#find_jobs", as: "find_jobs_employers"
   
   resources :users, only: [:edit, :update]
 

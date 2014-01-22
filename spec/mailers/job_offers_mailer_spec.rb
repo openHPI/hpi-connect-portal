@@ -8,7 +8,7 @@ describe JobOffersMailer do
       ActionMailer::Base.perform_deliveries = true
       @user = FactoryGirl.create(:user, email:'test@example.com')
       @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_student: FactoryGirl.create(:user))
-    @job_offer.chair.deputy = FactoryGirl.create(:user)
+    @job_offer.employer.deputy = FactoryGirl.create(:user)
     ActionMailer::Base.deliveries = []
   end
 
@@ -26,7 +26,7 @@ describe JobOffersMailer do
     end
 
     it "should be send to the deputy" do
-      @email.to.should eq([@job_offer.chair.deputy.email]) 
+      @email.to.should eq([@job_offer.employer.deputy.email]) 
     end
 
     it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
@@ -116,7 +116,7 @@ describe JobOffersMailer do
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
       @email.body.should have_content(@job_offer.assigned_student.email)
-      @email.body.should have_content(@job_offer.chair.name)
+      @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)
       @email.body.should have_content(@job_offer.start_date)
@@ -145,7 +145,7 @@ describe JobOffersMailer do
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
       @email.body.should have_content(@job_offer.assigned_student.email)
-      @email.body.should have_content(@job_offer.chair.name)
+      @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)
       @email.body.should have_content(@job_offer.start_date)

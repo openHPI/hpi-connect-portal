@@ -1,10 +1,10 @@
-<%= form_for(chair, :html => { :multipart => true }) do |f| %>
+<%= form_for(employer, :html => { :multipart => true }) do |f| %>
   
-  <%= render 'shared/object_errors', object: chair %>
+  <%= render 'shared/object_errors', object: employer %>
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h4><%= t("chairs.general_information") %></h4>
+      <h4><%= t("employers.general_information") %></h4>
     </div>
     <ul class="list-group">
       <li class="list-group-item">
@@ -12,7 +12,7 @@
           <div class="col-sm-6">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.chair.name", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.name", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.text_field :name, :class => "form-control"%>
@@ -22,10 +22,10 @@
           <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.chair.head_of_chair", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.head", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.text_field :head_of_chair, :class => "form-control"%>
+                  <%= f.text_field :head, :class => "form-control"%>
                 </div>
               </div>         
           </div>
@@ -36,10 +36,10 @@
           <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.chair.deputy", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.collection_select :deputy_id, chair.users, :id, :email %>
+                  <%= f.collection_select :deputy_id, employer.users, :id, :email %>
                 </div>
               </div>         
           </div>
@@ -49,8 +49,8 @@
                   <%= f.label :avatar, class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <% unless chair.avatar.nil? %>
-                      <%= image_tag chair.avatar.url(:medium), class: " chair-thumbnail", alt: chair.name %>
+                  <% unless employer.avatar.nil? %>
+                      <%= image_tag employer.avatar.url(:medium), class: " employer-thumbnail", alt: employer.name %>
                   <% end %>
                   <br><br>
                   <%= f.file_field :avatar %>
@@ -62,7 +62,7 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-12" data-no-turbolink="true">
-            <%= f.label t "activerecord.attributes.chair.description", class: "control-label" %>
+            <%= f.label t "activerecord.attributes.employer.description", class: "control-label" %>
             <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
           </div>
         </div>

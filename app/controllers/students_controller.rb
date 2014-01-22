@@ -61,28 +61,28 @@ class StudentsController < ApplicationController
 
   def update_role
     role_name = params[:role_name]
-    chair_name = params[:chair_name]
+    employer_name = params[:employer_name]
 
-    if chair_name
-      chair = Chair.find_by_name(chair_name)
+    if employer_name
+      employer = Employer.find_by_name(employer_name)
     else
-      chair = current_user.chair
+      employer = current_user.employer
     end
 
     case role_name
       when "Deputy"
-        promote_to_deputy(params[:student_id], chair)
+        promote_to_deputy(params[:student_id], employer)
       when Role.find_by_level(3).name
         promote_to_admin(params[:student_id])
       when Role.find_by_level(2).name
-        promote_to_research_assistant(params[:student_id], chair)
+        promote_to_research_assistant(params[:student_id], employer)
     end
     redirect_to(students_path)
   end
 
-  def promote_to_deputy(student_id, chair)
-    chair.update(:deputy_id => student_id)
-    User.find(student_id).update(:chair => chair, :role => Role.find_by_level(2))
+  def promote_to_deputy(student_id, employer)
+    employer.update(:deputy_id => student_id)
+    User.find(student_id).update(:employer => employer, :role => Role.find_by_level(2))
   end
 
   def promote_to_admin(student_id)
@@ -90,9 +90,9 @@ class StudentsController < ApplicationController
     student.update(:role => Role.find_by_level(3))
   end
 
-  def promote_to_research_assistant(student_id, chair)
+  def promote_to_research_assistant(student_id, employer)
     student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2), :chair => chair)
+    student.update(:role => Role.find_by_level(2), :employer => employer)
   end
 
   private

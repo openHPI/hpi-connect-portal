@@ -4,7 +4,7 @@ en:
       accepted:
         subject: "Congratulations! Your application has been accepted!"
         title: "Congratulations!"
-        content: "Your application to the job offer %{job_title} at the chair %{chair} has been accepted"
+        content: "Your application to the job offer %{job_title} offered by %{employer} has been accepted"
       declined:
         subject: "Unfortunately a application has been declined"
         title: "Unfortunately a application has been declined"

@@ -16,7 +16,7 @@
 #  lastname               :string(255)
 #  firstname              :string(255)
 #  role_id                :integer          default(1), not null
-#  chair_id               :integer
+#  employer_id            :integer
 #  semester               :integer
 #  academic_program       :string(255)
 #  birthday               :date

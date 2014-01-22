@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe ApplicationsController do
 
-  let(:chair) { FactoryGirl.create(:chair, name: "Chair") }
+  let(:employer) { FactoryGirl.create(:employer) }
   let(:staff_role) {FactoryGirl.create(:role, :name => 'Staff', :level => 2)}
   let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
-  let(:responsible_user) {  FactoryGirl.create(:user, chair: chair, role: staff_role)}
-	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "chair_id" => chair.id, "start_date" => Date.current + 1,
+  let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
+	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
-    @job_offer = JobOffer.create! valid_attributes
+    @job_offer = FactoryGirl.create(:job_offer)
   end
 
   describe "GET decline" do
     it "deletes application" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       expect{
           get :decline, {:id => application.id}
         }.to change(Application, :count).by(-1)
@@ -42,7 +42,7 @@ describe ApplicationsController do
 
     it "accepts student is assigned as @job_offer.assigned_student" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       
       get :accept, {:id => application.id}
       assigns(:application).job_offer.assigned_student.should eq(@student)
@@ -52,7 +52,7 @@ describe ApplicationsController do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       expect{
         get :accept, {:id => application.id}
@@ -63,7 +63,7 @@ describe ApplicationsController do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       working = FactoryGirl.create(:job_status, :name=>'running')
       
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       get :accept, {:id => application.id}
       assigns(:application).job_offer.status.should eq(working)
@@ -71,7 +71,7 @@ describe ApplicationsController do
 
     it "sends two emails" do
       application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       
       old_count = ActionMailer::Base.deliveries.count
 
@@ -86,7 +86,7 @@ describe ApplicationsController do
       @job_offer.status = FactoryGirl.create(:job_status, name: 'running')
       @job_offer.save
 
-      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
       expect{
           post :create, { :application => {:job_offer_id => @job_offer.id} }
         }.not_to change(Application, :count).by(1)
@@ -102,7 +102,7 @@ describe ApplicationsController do
         :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
       })
       
-      sign_in FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      sign_in FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
       expect{
           post :create, { :application => {:job_offer_id => @job_offer.id}, :attached_files => {:file_attributes => [:file => test_file] }}
         }.to change(Application, :count).by(1)
@@ -112,7 +112,7 @@ describe ApplicationsController do
       @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
       @job_offer.save
 
-      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
       
@@ -125,7 +125,7 @@ describe ApplicationsController do
 
   describe "DELETE destroy" do
     it "destroys the requested application" do
-      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
       
@@ -136,7 +136,7 @@ describe ApplicationsController do
     end
 
     it "redirects to the job_offers page" do
-      user = FactoryGirl.create(:user,:role=>student_role, :chair => @job_offer.chair)
+      user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
       

@@ -1,0 +1,14 @@
+de:
+    employers:
+        employer: "Arbeitgeber"
+        employers: "Arbeitgeber"
+        employer_overview: "Arbeitgeberübersicht"
+        editing_employer: "Arbeitgeber bearbeiten"
+        new_employer: "Neuer Arbeitgeber"
+        staff: "Mitarbeiter"
+        open: "Offen"
+        running: "Laufend"
+        general_information: "Allgemeine Informationen"
+        open_job_offers: "Offene Stellenangebote"
+        running_job_offers: "Vergebene Stellenangebote"
+        external: "Extern"

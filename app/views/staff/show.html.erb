@@ -34,10 +34,10 @@
             <td><%= @user.email %></td>
           </tr>
            <tr>
-            <td><%= t("activerecord.attributes.user.chair") %></td>
+            <td><%= t("activerecord.attributes.user.employer") %></td>
             <td>
-              <% if @user.chair %>
-                <%= link_to @user.chair.name, chair_path(@user.chair) %>
+              <% if @user.employer %>
+                <%= link_to @user.employer.name, employer_path(@user.employer) %>
               <% end %>
               </td>
           </tr>
