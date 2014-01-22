@@ -55,13 +55,6 @@ describe StaffController do
     end
   end
 
-  #describe "GET new" do
-  #  it "assigns a new staff as @staff" do
-  #    get :new, {}, valid_session
-  #    assigns(:staff).should be_a_new(Staff)
-  #  end
-  #end
-
   describe "GET edit" do
     it "assigns the requested staff as @staff" do
       staff = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :name => "Staff"))

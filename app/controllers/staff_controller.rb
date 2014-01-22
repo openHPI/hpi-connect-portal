@@ -18,13 +18,6 @@ class StaffController < ApplicationController
     @user = User.staff.find params[:id]
   end
 
-  # GET /staff/new
-  def new
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-    @user = User.new
-  end
-
   # GET /staff/1/edit
   def edit
     @all_programming_languages = ProgrammingLanguage.all

@@ -308,12 +308,13 @@ describe JobOffersController do
 
     describe "with valid params" do
       it "updates the requested job_offer" do
-        # Assuming there are no other job_offers in the database, this
-        # specifies that the job_offer created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         JobOffer.any_instance.should_receive(:update).with({ "description" => "MyString" })
         put :update, {:id => @job_offer.to_param, :job_offer => { "description" => "MyString" }}, valid_session
+      end
+
+      it "redirects to the job_offer page if the job is already running" do
+        put :update, {:id => @job_offer.to_param, :job_offer => valid_attributes}, valid_session
+        response.should redirect_to(@job_offer)
       end
 
       it "assigns the requested job_offer as @job_offer" do

@@ -29,9 +29,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_errors_and_action(object, action)
+  def render_errors_and_action(object, action=nil)
     respond_to do |format|
-        format.html { render action: action }
+        if action.nil?
+          format.html { redirect_to object }
+        else
+          format.html { render action: action }
+        end
         format.json { render json: object.errors, status: :unprocessable_entity }
     end
   end 
