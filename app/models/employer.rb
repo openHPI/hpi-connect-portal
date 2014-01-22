@@ -17,21 +17,22 @@
 #
 
 class Employer < ActiveRecord::Base
-  has_attached_file :avatar, :styles => { :medium => "200x200" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
 
-  has_many :users
+  has_many :staff, foreign_key: 'employer_id', class_name: 'User'
   has_many :job_offers
   belongs_to :deputy, class_name: "User"
 
-  validates_attachment_size :avatar, :less_than => 5.megabytes
-  validates_attachment_content_type :avatar, :content_type => ['image/jpeg', 'image/png']
+  validates_attachment_size :avatar, less_than: 5.megabytes
+  validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
   validates :head, presence: true
   validates :deputy, presence: true
-
-  def staff
-    User.where :employer => self
+  validate  :check_deputys_employer
+  
+  def check_deputys_employer
+    errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
   end
 end

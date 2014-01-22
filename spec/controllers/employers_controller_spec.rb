@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe EmployersController do
 
-  let(:deputy) { FactoryGirl.create(:user) }
-  let(:admin) { FactoryGirl.create(:role, name: 'Admin') }
+  let(:deputy) { FactoryGirl.create(:user, :staff) }
+  let(:admin) { FactoryGirl.create(:role, :admin) }
 
   let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", 
       "head" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
 
   let(:false_attributes) { { "name" => "HCI"} }
   
-  login_user FactoryGirl.create(:role, name: 'Admin')
+  login_user FactoryGirl.create(:role, :admin)
 
   before(:each) do 
     FactoryGirl.create(:job_status, :running)
@@ -51,7 +51,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-      login_user FactoryGirl.create(:role, name: 'Student')
+      login_user FactoryGirl.create(:role, :student)
 
       it "redirects to requested employer" do
         employer = FactoryGirl.create(:employer)
@@ -67,19 +67,19 @@ describe EmployersController do
 
       it "creates a new Employer" do
         expect {
-          post :create, {:employer => valid_attributes}
-        }.to change(Employer, :count).by(1)
+          post :create, { employer: valid_attributes}
+        }.to change(Employer, :count).by(2)
       end
 
       it "assigns a newly created employer as @employer" do
 
-        post :create, {:employer => valid_attributes}
+        post :create, { employer: valid_attributes }
         assigns(:employer).should be_a(Employer)
         assigns(:employer).should be_persisted
       end
 
       it "redirects to the created employer" do
-        post :create, {:employer => valid_attributes}
+        post :create, { employer: valid_attributes }
         response.should redirect_to(Employer.last)
       end
     end
@@ -87,13 +87,13 @@ describe EmployersController do
     describe "with invalid params" do
       
       it "renders new again" do
-        post :create, {:employer => false_attributes}
+        post :create, { employer: false_attributes}
         response.should render_template("new")
         flash[:error].should eql("Invalid content.")
       end
 
       it "does not create a new employer without deputy" do
-        post :create, {:employer =>  {"name" => "HCI", "description" => "Human Computer Interaction", 
+        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction", 
       "head" => "Prof. Patrick Baudisch"}}
         response.should render_template("new")
         flash[:error].should eql("Invalid content.")
@@ -102,7 +102,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-      login_user FactoryGirl.create(:role, name: 'Student')
+      login_user FactoryGirl.create(:role, :student)
 
       it "redirects to requested employer" do
         employer = FactoryGirl.create(:employer)
@@ -119,30 +119,32 @@ describe EmployersController do
         employer = FactoryGirl.create(:employer)
 
         Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", 
-              "head" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id.to_s })
-        put :update, {:id => employer.to_param, :employer => { "name" => "HCI", "description" => "Human Computer Interaction", 
-              "head" => "Prof. Patrick Baudisch", "deputy_id" => deputy.id }}
+              "head" => "Prof. Patrick Baudisch" } )
+        put :update, { id: employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction", 
+              "head" => "Prof. Patrick Baudisch" } }
       end
 
       it "assigns the requested employer as @employer" do
         employer = FactoryGirl.create(:employer)
-        put :update, {:id => employer.to_param, :employer => valid_attributes}
+        deputy.update(employer: employer)
+        put :update, { id: employer.id, employer: valid_attributes }
         assigns(:employer).should eq(employer)
       end
 
       it "redirects to the employer" do
         employer = FactoryGirl.create(:employer)
-        put :update, {:id => employer.to_param, :employer => valid_attributes}
+        deputy.update(employer: employer)
+        put :update, { id: employer.id, employer: valid_attributes }
         response.should redirect_to(employer)
       end
     end
 
     describe "with missing permission" do
-      login_user FactoryGirl.create(:role, name: 'Student')
+      login_user FactoryGirl.create(:role, :student)
 
       it "redirects to the employer index page" do
         employer = FactoryGirl.create(:employer)
-        patch :update, {:id => employer.to_param, :employer => valid_attributes}
+        patch :update, { id: employer.id, employer: valid_attributes }
         response.should redirect_to(employers_path)
       end
     end

@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ApplicationsController do
 
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:staff_role) {FactoryGirl.create(:role, :name => 'Staff', :level => 2)}
-  let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
+  let(:staff_role) {FactoryGirl.create(:role, :staff)}
+  let(:student_role) {FactoryGirl.create(:role, :student)}
   let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }

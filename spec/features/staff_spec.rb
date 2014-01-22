@@ -2,15 +2,11 @@ require 'spec_helper'
 
 describe "the staff page" do
 
-  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: FactoryGirl.create(:employer)) }
-
-  let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
-  let(:admin) { FactoryGirl.create(:user, role: admin_role) }
+  let(:staff) { FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer)) }
+  let(:admin) { FactoryGirl.create(:user, :admin) }
 
 	before(:each) do
-    @staff1 = FactoryGirl.create(:user,
-            :role => staff_role)
+    @staff1 = FactoryGirl.create(:user, :staff)
     login_as(admin, :scope => :user)
     visit staff_index_path
 

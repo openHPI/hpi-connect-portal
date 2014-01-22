@@ -2,31 +2,36 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     user ||= User.new
 
     if user.role
+      can :manage, :all if user.admin?
 
-      if user.admin?
-        can :manage, :all
-      end
+      initialize_student user if user.student?
+      initialize_staff user, user.employer_id if user.staff?  
+    end 
+  end
 
-      if user.student?
-        can :create, Application 
-        can :read, Faq
-      end
+  def initialize_student(user)
+    can :create, Application
+    can :read, Faq
+    can :read, User, role: { name: 'Staff' }
+  end
 
-      if user.staff?
-        can :edit, Employer, id: user.employer_id
-        can :read, Application
-        can [:create, :complete, :reopen], JobOffer, employer_id: user.employer_id
-        can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
-        can :manage, Faq
-      end
+  def initialize_staff(user, employer_id)
+    can :edit, Employer, id: user.employer_id
+    can :read, Application
+    can :read, User, role: { name: 'Student' }
+    can :read, User, role: { name: 'Staff' }
+    can :manage, Faq
 
-      if user.deputy?
-        can :update, User
-      end
-    end
+    can [:create, :complete, :reopen], JobOffer, employer_id: employer_id
+
+    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
+    can [:accept, :decline], Application, responsible_user_id: user.id
+
+    can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user.id }
+    can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user.id }
+    can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end
 end
