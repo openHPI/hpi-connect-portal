@@ -5,9 +5,10 @@ en:
         employer_overview: "Listing of Employers"
         editing_employer: "Editing Employer"
         new_employer: "New Employer"  
-        staff: Staff
-        open: Open
-        running: Running
+        staff: "Staff"
+        open: "Open"
+        running: "Running"
         general_information: "general information"
         open_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
+        external: "External"

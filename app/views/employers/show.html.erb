@@ -2,6 +2,9 @@
     <div class="col-sm-9">
          <h1 style="display:inline">
             <%= @employer.name %>
+            <% if @employer.external %>
+            <span class="label label-warning"><%= t("employers.external")%></span>
+            <% end %>
         </h1>
         <% if can? :edit, @employer %>
             <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>

@@ -48,6 +48,15 @@ describe "the employer page" do
     it { should have_content(employer.description) }
     it { should have_content(employer.head) }
     it { should have_content(employer.deputy.email) }
+
+    describe "for an external employer" do
+      before do
+        @external = FactoryGirl.create(:employer, external: true)
+        visit employer_path(@external)
+      end
+
+      it { should have_content(I18n.t("employers.external")) }
+    end
   end
 
   describe "shows job offers for the employer" do
