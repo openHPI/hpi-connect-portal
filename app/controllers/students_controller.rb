@@ -77,7 +77,6 @@ class StudentsController < ApplicationController
     
     update_and_remove_for_newsletter(params[:chairs_newsletter_information], params[:id], ChairsNewsletterInformation, "chair_id")
     update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
-
     if @user.update(user_params)
       respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
     else

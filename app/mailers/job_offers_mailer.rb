@@ -50,7 +50,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def students_by_programming_language(job_offer, students)
     job_offer.programming_languages.each do |programming_language|
-      studetns = extract_students(ProgrammingLanguagesNewsletterInfortmation.where("programming_language_id = ?", @programming_language.id), students)
+      studetns = extract_students(ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id), students)
     end
     students
   end

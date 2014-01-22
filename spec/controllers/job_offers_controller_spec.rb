@@ -40,23 +40,20 @@ describe JobOffersController do
   # job_offersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  before(:all) do 
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
-  end
-
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
     
+    FactoryGirl.create(:chairs_newsletter_information, chair: chair.id)
     @epic = FactoryGirl.create(:chair, name:"EPIC")
     @os = FactoryGirl.create(:chair, name:"OS and Middleware")
     @itas = FactoryGirl.create(:chair, name:"Internet and Systems Technologies")
     @open = FactoryGirl.create(:job_status, name:"open")
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
   end
 
   describe "Check if views are rendered" do
@@ -269,6 +266,11 @@ describe JobOffersController do
         response.should redirect_to(JobOffer.last)
       end
 
+      it "sends some emails" do
+        post :create, {:job_offer => valid_attributes}, valid_session
+        puts ActionMailer::Base.deliveries
+        ActionMailer::Base.deliveries.count.should > 1
+      end
     end
 
     describe "with invalid params" do
