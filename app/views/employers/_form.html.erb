@@ -16,6 +16,11 @@
                 </div>
                 <div class="col-sm-9">
                   <%= f.text_field :name, :class => "form-control"%>
+                  <br>
+                  <%= f.label :external do %>
+                    <%= f.check_box :external %>
+                    External employer
+                  <% end %>
                 </div>
               </div>
           </div>
@@ -39,7 +44,11 @@
                   <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
+                  <% if employer.users.any? %>
                   <%= f.collection_select :deputy_id, employer.users, :id, :email %>
+                  <% else %>
+                  <%= f.collection_select :deputy_id, User.staff, :id, :email %>
+                  <% end %>
                 </div>
               </div>         
           </div>

@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-md-12">
+  	<% if can?(:create, Employer) %>
   	<%= link_to t('employers.new_employer'), new_employer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-top: 20px" %>
+  	<% end %>
 	<h1>
 		<% if @internal %>
 		<%= t('employers.employer_overview_internal') %>
