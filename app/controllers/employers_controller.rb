@@ -2,7 +2,7 @@ class EmployersController < ApplicationController
   include ApplicationHelper
   
   authorize_resource only: [:new, :edit, :create, :update]
-  before_action :set_employer, only: [:show, :edit, :update, :find_jobs]
+  before_action :set_employer, only: [:show, :edit, :update]
 
   rescue_from CanCan::AccessDenied do |exception| 
     redirect_to employers_path, :notice => exception.message
@@ -11,8 +11,18 @@ class EmployersController < ApplicationController
   # GET /employers
   # GET /employers.json
   def index
-    @employers = Employer.all.sort_by{|x| x.name}
+    @employers = Employer.internal.sort_by{|x| x.name}
     @employers = @employers.paginate(:page => params[:page], :per_page => 15 )
+    @internal = true
+  end
+
+  # GET /employers/external
+  # GET /employers/external.json
+  def index_external
+    @employers = Employer.external.sort_by{|x| x.name}
+    @employers = @employers.paginate(:page => params[:page], :per_page => 15 )
+    @internal = false
+    render 'index'
   end
 
   # GET /employers/1
@@ -55,11 +65,6 @@ class EmployersController < ApplicationController
     else
       render_errors_and_action(@employer, 'edit')
     end
-  end
-
-  def find_jobs
-    show
-    render "show"
   end
 
   private

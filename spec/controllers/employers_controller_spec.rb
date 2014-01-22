@@ -18,10 +18,22 @@ describe EmployersController do
   end
 
   describe "GET index" do
-    it "assigns all employers as @employers" do
-      employer = FactoryGirl.create(:employer)
+    it "assigns all internal employers as @employers" do
+      internal_employer = FactoryGirl.create(:employer)
+      external_employer = FactoryGirl.create(:employer, external: true)
       get :index, {}
-      assigns(:employers).should eq([employer])
+      assigns(:employers).should eq([internal_employer])
+      assigns(:internal).should eq(true)
+    end
+  end
+
+  describe "GET index_external" do
+    it "assigns all external employers as @employers" do
+      internal_employer = FactoryGirl.create(:employer)
+      external_employer = FactoryGirl.create(:employer, external: true)
+      get :index_external, {}
+      assigns(:employers).should eq([external_employer])
+      assigns(:internal).should eq(false)
     end
   end
 

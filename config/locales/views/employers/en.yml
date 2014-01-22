@@ -2,7 +2,8 @@ en:
     employers:
         employer: "Employer"
         employers: "Employers"
-        employer_overview: "Listing of Employers"
+        employer_overview_internal: "Listing of chairs"
+        employer_overview_external: "Listing of external employers"
         editing_employer: "Editing Employer"
         new_employer: "New Employer"  
         staff: "Staff"
