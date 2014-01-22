@@ -17,17 +17,17 @@ class ApplicationsMailer < ActionMailer::Base
         attachments[file[:file].original_filename] = file[:file].tempfile
       end
     end
-    
+
     send_mail_for_application_to_wimi(application, message, (t "applications_mailer.wimi.new_application.subject"))
   end
 
   private
     def send_mail_for_application_to_user(application, subject)
-        @application = application    
+        @application = application
         mail(to: @application.user.email, subject: subject)
     end
         def send_mail_for_application_to_wimi(application, message, subject)
-        @application = application    
+        @application = application
         @message = message
         mail(to: @application.job_offer.responsible_user.email, subject: subject)
     end

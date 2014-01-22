@@ -15,7 +15,7 @@ class ApplicationsController < ApplicationController
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'
-          end 
+          end
         end
         redirect_to @job_offer
     end
@@ -37,10 +37,10 @@ class ApplicationsController < ApplicationController
       @application = Application.find params[:id]
       if @application.delete
         ApplicationsMailer.application_declined_student_email(@application)
-        redirect_to @application.job_offer      
+        redirect_to @application.job_offer
       else
         render_errors_and_action(@application.job_offer)
-      end        
+      end
     end
 
     #DELETE destroy

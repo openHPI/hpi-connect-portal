@@ -13,7 +13,7 @@
     <div class="col-sm-3">
         <%= image_tag @employer.avatar.url(:medium), class: "img-thumbnail pull-left employer-thumbnail", alt: "Picture: "+@employer.name%>
     </div>
-</div>    
+</div>
 
 <br><br>
 <div class="panel panel-default">
@@ -61,7 +61,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
               <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
-        <%= render 'shared/user_list', name: "employers.staff", user_list: @staff %>  
+        <%= render 'shared/user_list', name: "employers.staff", user_list: @staff %>
         </div>
     </div>
 

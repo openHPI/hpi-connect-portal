@@ -40,7 +40,7 @@
           <ul class="list-group">
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3"> 
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -50,7 +50,7 @@
             </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3"> 
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -60,7 +60,7 @@
             </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3"> 
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -70,7 +70,7 @@
             </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3"> 
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -80,7 +80,7 @@
             </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3"> 
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -97,7 +97,7 @@
           <h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4>
         </div>
         <ul class="list-group">
-          <li class="list-group-item"> 
+          <li class="list-group-item">
             <div class="row">
               <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
               <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
@@ -105,7 +105,7 @@
                 <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
                 <%= label_tag dom_id(programming_language), programming_language.name, :class => "small" %>
               </div>
-              <% end %> 
+              <% end %>
             </div>
           </li>
         <ul>
@@ -116,7 +116,7 @@
             <h4><%= t("activerecord.attributes.job_offer.languages") %></h4>
           </div>
           <ul class="list-group">
-            <li class="list-group-item"> 
+            <li class="list-group-item">
               <div class="row">
                 <%= hidden_field_tag "job_offer[language_ids][]", nil %>
                 <% Language.all.each_with_index do |language, index| %>
@@ -124,7 +124,7 @@
                   <%= check_box_tag "job_offer[language_ids][]", language.id, job_offer.language_ids.include?(language.id), id: dom_id(language) %>
                   <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
                 </div>
-                <% end %> 
+                <% end %>
               </div>
             </li>
           <ul>

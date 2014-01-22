@@ -2,7 +2,7 @@ include UsersHelper
 
 class StudentsController < ApplicationController
   include UsersHelper
-  
+
   before_filter :check_user_can_index_students, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
 
@@ -51,7 +51,7 @@ class StudentsController < ApplicationController
   end
 
   # GET /students/matching
-  def matching 
+  def matching
     #XXX should be a list of strings not [string]
     @users = User.search_students_by_language_and_programming_language(
       params[:languages], params[:programming_languages])

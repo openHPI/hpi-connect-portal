@@ -12,7 +12,7 @@ class Ability
       end
 
       if user.student?
-        can :create, Application 
+        can :create, Application
         can :read, Faq
       end
 

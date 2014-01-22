@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
-  
+
   belongs_to :role
   belongs_to :employer
   belongs_to :user_status
@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   validates :semester, :academic_program, :education, presence: true, :if => :student?
   validates_inclusion_of :semester, :in => 1..12, :if => :student?
-   
+
   scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
   scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
 
@@ -119,10 +119,10 @@ class User < ActiveRecord::Base
     # semester, academic_program and education are required to create a user with the role student
     # If another role is chosen, these attributes are still present, but it does not matter
     new_user = User.new(
-      identity_url: identity_url, 
-      email: email, 
-      firstname: first_name, 
-      lastname: last_name, 
+      identity_url: identity_url,
+      email: email,
+      firstname: first_name,
+      lastname: last_name,
       semester: 1,
       academic_program: "unknown",
       education: "unknown",

@@ -1,10 +1,10 @@
 class EmployersController < ApplicationController
   include ApplicationHelper
-  
+
   authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_employer, only: [:show, :edit, :update]
 
-  rescue_from CanCan::AccessDenied do |exception| 
+  rescue_from CanCan::AccessDenied do |exception|
     redirect_to employers_path, :notice => exception.message
   end
 
