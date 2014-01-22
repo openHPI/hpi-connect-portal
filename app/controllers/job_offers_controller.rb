@@ -18,6 +18,7 @@ class JobOffersController < ApplicationController
   has_scope :filter_compensation, only: [:index, :archive], as: :compensation
   has_scope :filter_programming_languages, type: :array, only: [:index, :archive], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :archive], as: :language_ids
+  has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
 
   # GET /job_offers
