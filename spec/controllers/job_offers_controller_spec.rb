@@ -266,6 +266,12 @@ describe JobOffersController do
         response.should redirect_to(JobOffer.last)
       end
 
+      it "automatically assigns the users employer as the new job offers employer" do
+        post :create, {:job_offer => valid_attributes}, valid_session
+        offer = JobOffer.last
+        expect(offer.employer).to eq(responsible_user.employer)
+      end
+
     end
 
     describe "with invalid params" do
