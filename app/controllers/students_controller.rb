@@ -7,10 +7,10 @@ class StudentsController < ApplicationController
   before_filter :check_current_user_or_admin, only: [:edit]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  has_scope :search_students, only: [:index], as: :q
-  has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
-  has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
-  has_scope :filter_semester, only: [:index],  as: :semester
+  has_scope :search_students, only: [:index, :matching], as: :q
+  has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
+  has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
   # GET /students
   # GET /students.json
@@ -48,9 +48,8 @@ class StudentsController < ApplicationController
   # GET /students/matching
   def matching 
     #XXX should be a list of strings not [string]
-    @users = User.search_students_by_language_and_programming_language(
-      params[:languages], params[:programming_languages])
-    @users = @users.paginate(:page => params[:page], :per_page => 10 )
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
+    @users = @users.paginate(:page => params[:page], :per_page => 5 )
     render "index"
   end
 
