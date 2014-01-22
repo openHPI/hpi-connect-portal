@@ -4,6 +4,6 @@ class SessionsController < Devise::SessionsController
   before_filter :update_sanitized_params
 
   def update_sanitized_params
-    devise_parameter_sanitizer.for(:sign_in) {|u| u.permit(:identity_url)}
+    devise_parameter_sanitizer.for(:sign_in) {|params| params.permit(:identity_url)}
   end
 end
