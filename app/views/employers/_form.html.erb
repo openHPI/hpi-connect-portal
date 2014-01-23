@@ -44,8 +44,8 @@
                   <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <% if employer.users.any? %>
-                    <%= f.collection_select :deputy_id, employer.users, :id, :email %>
+                  <% if employer.staff.any? %>
+                    <%= f.collection_select :deputy_id, employer.staff, :id, :email %>
                   <% else %>
                     <%= f.collection_select :deputy_id, User.staff, :id, :email %>
                   <% end %>

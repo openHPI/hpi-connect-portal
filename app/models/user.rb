@@ -110,33 +110,8 @@ class User < ActiveRecord::Base
     self.id.hash
   end
 
-<<<<<<< HEAD
-  def self.build_from_identity_url(identity_url)
-    username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
-
-    first_name = username.split('.').first.capitalize
-    last_name = username.split('.').second.capitalize
-    email = username + '@student.hpi.uni-potsdam.de'
-
-    # semester, academic_program and education are required to create a user with the role student
-    # If another role is chosen, these attributes are still present, but it does not matter
-    new_user = User.new(
-      identity_url: identity_url,
-      email: email,
-      firstname: first_name,
-      lastname: last_name,
-      semester: 1,
-      academic_program: "unknown",
-      education: "unknown",
-      role: Role.where(name: "Student").first)
-
-    new_user.should_redirect_to_profile = true
-
-    new_user
-=======
   def name
     "#{firstname} #{lastname}"
->>>>>>> develop-ak-cancan
   end
 
   def applied?(job_offer)
