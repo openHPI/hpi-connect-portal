@@ -11,9 +11,9 @@
             <% path_to_user = student_path(id: application.user.id) %>
         <% end %>
                 
-        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.firstname %></td>
-        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.lastname %></td>
-        <td class='clickableRow' href='<%= path_to_user %>'><%= application.user.email %></td>
+        <td class='clickable' href='<%= path_to_user %>'><%= application.user.firstname %></td>
+        <td class='clickable' href='<%= path_to_user %>'><%= application.user.lastname %></td>
+        <td class='clickable' href='<%= path_to_user %>'><%= application.user.email %></td>
     <% end %>
     
     <% if user_is_responsible_user?(@job_offer) or user_is_admin? %>

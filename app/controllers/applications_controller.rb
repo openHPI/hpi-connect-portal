@@ -5,12 +5,13 @@ class ApplicationsController < ApplicationController
 
     def create
         @job_offer = JobOffer.find application_params[:job_offer_id]
+
         if not @job_offer.open?
             flash[:error] = 'This job offer is currently not open.'
         else
           @application = Application.new(job_offer: @job_offer, user: current_user)
           if @application.save
-              ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv]).deliver
+              ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv], params[:attached_files]).deliver
               flash[:success] = 'Applied Successfully!'
           else
               flash[:error] = 'An error occured while applying. Please try again later.'
@@ -42,9 +43,20 @@ class ApplicationsController < ApplicationController
       end        
     end
 
+    #DELETE destroy
+    def destroy
+      @application = Application.find params[:id]
+      @application.destroy
+      respond_and_redirect_to(@application.job_offer, 'Application has been successfully deleted.')
+    end
+
     private
 
         def application_params
             params.require(:application).permit(:job_offer_id)
+        end
+
+        def file_params
+          params.require(:attached_files).permit([file_attributes: :file])
         end
 end

@@ -1,38 +1,30 @@
-<%= form_for (@faq) do |f| %>
-  <% if @faq.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@faq.errors.count, "error") %> prohibited this FAQ from being saved:</h2>
-      <ul>
-      <% @faq.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_for faq do |f| %>
   
-  <div class="container"> 
-    <div class="row">
-      <div class="col-md-11">
-        <div class="field">
-          <%= f.label t("activerecord.attributes.faq.question") %><br>
-          <%= f.text_field :question, :class => "col-md-11" %>
+  <%= render 'shared/object_errors', object: faq %>
+  
+  <div class="panel panel-default">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12">
+                <%= f.label t("activerecord.attributes.faq.question", class: "control-label") %>
+                <%= f.text_field :question, :class => "form-control" %>
+          </div>
         </div>
-      </div>
-    </div> 
-    <br>
-    <div class="row">
-      <div class="col-md-11">
-        <div class="field">
-          <%= f.label t("activerecord.attributes.faq.answer") %><br>
-          <%= f.bootsy_area :answer, :rows => 10, :class => "col-md-11"%>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12" data-no-turbolink="true">
+            <%= f.label t("activerecord.attributes.faq.answer", class: "control-label") %>
+            <%= f.bootsy_area :answer, :rows => 10, :class => "col-md-12 form-control" %>
+          </div>
         </div>
-      </div>
-    </div>
-    <br>
-    <div class="actions">
-      <%= f.submit t("links.save"), :class => "btn btn-default" %>
-    </div>
-
+      </li>
+    </ul>
   </div>
-  
+
+  <div class="actions">
+    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+  </div>
+
 <% end %>

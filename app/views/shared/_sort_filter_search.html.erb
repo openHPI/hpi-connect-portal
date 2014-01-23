@@ -6,8 +6,8 @@
               <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
               <%= label_tag :sort,t("job_offers.sortDate"), :class => "radio-inline small" %>
               <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
-              <%= label_tag :sort, t("job_offers.sortChair"), :class => "radio-inline small" %>
-              <%= radio_button_tag :sort, 'chair' , params[:sort] == "chair" %>
+              <%= label_tag :sort, t("job_offers.sortEmployer"), :class => "radio-inline small" %>
+              <%= radio_button_tag :sort, 'employer' , params[:sort] == "employer" %>
             </div>
             <div class="form-group" id="search">
               <%= label_tag t("job_offers.searchLabel") %>
@@ -17,12 +17,17 @@
             <div id="filter">
               <%= label_tag t("job_offers.filterLabel") %>
 
-              <% unless @chairs.empty? %> 
+              <% unless @employers.empty? %> 
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.chair") , nil, :class => "small"%>
-                  <%= select_tag "chair", options_for_select(Chair.all.collect {|p| [p.name, p.id]}, params.fetch(:chair,0)), include_blank: true, :class => "form-control"%>
+                  <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, :class => "small"%>
+                  <%= select_tag "employer", options_for_select(Employer.all.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control"%>
                 </div>
               <% end %>
+              
+              <div class="form-group">
+                <%= check_box_tag :external_only, true, params.has_key?('external_only')  %> Show external employers only
+              </div>
+
               <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, :class => "small" %>
                   <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :placeholder => t('job_offers.start_date'),  :class => 'datepicker form-control'%>
@@ -35,7 +40,7 @@
                 <div class="form-group">
                   <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-target="#programming_language_panel" data-parent="#languages_accordion">
-                     <%= label_tag t("activerecord.attributes.job_offer.programming_languages"), nil, :class => "small panel-title" %>
+                     <%= label_tag t("job_offers.required_programming_languages"), nil, :class => "small panel-title" %>
                     </div>
                     <div id="programming_language_panel" class="panel-collapse collapse">
                       <div class="panel-body row">
@@ -55,7 +60,7 @@
                 <div class="form-group">
                   <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-target="#language_panel" data-parent="#languages_accordion">
-                      <%= label_tag t("activerecord.attributes.job_offer.languages"), nil, :class => "small panel-title" %>
+                      <%= label_tag t("job_offers.required_languages"), nil, :class => "small panel-title" %>
                     </div>
                     <div id="language_panel" class="panel-collapse collapse">
                       <div class="panel-body row">

@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe "job_offers/show" do
   before(:each) do
-    @TestChair = FactoryGirl.create(:chair, name:"TestChair")
+    @employer = FactoryGirl.create(:employer)
     @job_offer = assign(:job_offer, stub_model(JobOffer,
       :description => "Description",
       :title => "Title",
-      :chair => @TestChair,
+      :employer => @employer,
       :responsible_user => FactoryGirl.create(:user),
       :status => FactoryGirl.create(:job_status, :name => "open")
     ))
@@ -30,5 +30,14 @@ describe "job_offers/show" do
 
     rendered.should match(/Contact/)
     assert_select "a[href='mailto:" + @job_offer.responsible_user.email + "']"
+  end
+
+  it "hides the edit button if the job is running" do
+    @job_offer.status = FactoryGirl.create(:job_status, :name => "running")
+    @job_offer.save
+
+    render
+
+    rendered.should_not match(/Edit/)
   end
 end

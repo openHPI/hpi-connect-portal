@@ -1,0 +1,24 @@
+en:
+  activerecord:
+    attributes:
+      user:
+        first_name: "First name"
+        last_name: "Last name"
+        semester: "Semester"
+        academic_program: "Academic program"
+        birthday: "Birthdate"
+        education: "Graduation"
+        additional_information: "Additional information"
+        links: "Links"
+        general_information: "General information"
+        homepage: "Homepage"
+        github: "Github"
+        facebook: "Facebook"
+        xing: "Xing"
+        linkedin: "LinkedIn"
+        languages: "Language skills"
+        programming_languages: "Programming language skills"
+        cv: "CV"
+        photo: "Picture"
+        employment_start_date: "Employment start date"
+        employer: "Employer"

@@ -48,12 +48,13 @@ describe "Job Offer pages" do
 
             it { should_not have_button('Apply') }
             it { should_not have_selector('h4', text: 'Applications') }
+            it { should have_button(I18n.t("applications.delete")) }
             it { should have_selector('div.panel', text: I18n.t('job_offers.already_applied')) }
           end
         end
 
-        describe "as a staff of the job offers chair" do
-          let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+        describe "as a staff of the job offers employer" do
+          let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
           before do
             @application = FactoryGirl.create(:application, job_offer: job_offer)
@@ -61,7 +62,6 @@ describe "Job Offer pages" do
             visit job_offer_path(job_offer)
           end
 
-          it { should have_link('Edit')}
           it { should_not have_button('Apply') }
           it { should have_selector('h4', text: 'Applications') }
 
@@ -80,6 +80,18 @@ describe "Job Offer pages" do
 
             it { should have_link('Accept') }
             it { should have_link('Decline') }
+            it { should have_link('Edit')}
+
+
+            describe "the job should be prolongable" do
+
+              before do
+                job_offer.update(end_date: Date.current + 20)
+                visit job_offer_path(job_offer)
+              end
+
+              it { should have_button('Prolong') }
+            end
           end
         end
 
@@ -106,8 +118,8 @@ describe "Job Offer pages" do
 
     describe "running job offer" do
       let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
-      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair, status: @status_running) }
+      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), employer: employer, status: @status_running) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
@@ -120,8 +132,8 @@ describe "Job Offer pages" do
         it { should_not have_button('Apply')}
       end
 
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
         before do
           login_as(staff, :scope => :user)
@@ -129,7 +141,19 @@ describe "Job Offer pages" do
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'} 
+        it { should have_link 'reopen Job Offer'}
+      end
+
+      describe "as the responsible user" do
+
+        before do
+          login_as(job_offer.responsible_user, :scope => :user)
+          visit edit_job_offer_path(job_offer)
+        end
+
+        it "should not be editable" do
+          expect(current_path).to eq(job_offer_path(job_offer))
+        end
       end
 
       describe "as a admin" do
@@ -148,14 +172,14 @@ describe "Job Offer pages" do
     describe "pending job offer" do
 
       let(:deputy) { FactoryGirl.create(:user, role: staff_role)}
-      let(:chair) { FactoryGirl.create(:chair, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), chair: chair) }
+      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), employer: employer, status: @status_pending) }
      
       let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
       let(:student) { FactoryGirl.create(:user, role: student_role) }
 
       before do
-        deputy.update(:chair => chair)
+        deputy.update(:employer => employer)
       end
       
       describe "as a student" do
@@ -174,8 +198,8 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: employer) }
 
         before do
           job_offer.update(responsible_user: staff)
@@ -194,7 +218,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the chair" do 
+      describe "as the deputy of the employer" do 
         before do          
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
@@ -248,8 +272,8 @@ describe "Job Offer pages" do
 
       before { visit job_offer_path(job_offer) }
     
-      describe "as a staff of the job offers chair" do
-        let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: job_offer.chair) }
+      describe "as a staff of the job offers employer" do
+        let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: job_offer.employer) }
 
         before do
           login_as(staff, :scope => :user)
@@ -261,7 +285,7 @@ describe "Job Offer pages" do
       end   
 
       describe "as admin" do
-        let(:admin) { FactoryGirl.create(:user, role: admin_role, chair: job_offer.chair) }
+        let(:admin) { FactoryGirl.create(:user, role: admin_role, employer: job_offer.employer) }
 
         before do
           login_as(admin, :scope => :user)

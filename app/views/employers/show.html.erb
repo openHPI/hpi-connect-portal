@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-sm-9">
+         <h1 style="display:inline">
+            <%= @employer.name %>
+            <% if @employer.external %>
+            <span class="label label-warning"><%= t("employers.external")%></span>
+            <% end %>
+        </h1>
+        <% if can? :edit, @employer %>
+            <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
+        <% end %>
+    </div>
+    <div class="col-sm-3">
+        <%= image_tag @employer.avatar.url(:medium), class: "img-thumbnail pull-left employer-thumbnail", alt: "Picture: "+@employer.name%>
+    </div>
+</div>    
+
+<br><br>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= escape_javascript(@employer.description.html_safe) %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row field">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.head") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.head %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.deputy") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.deputy.email %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+              <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
+        <%= render 'shared/user_list', name: "employers.staff", user_list: @staff %>  
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <% unless @open_job_offers.empty? %>
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4><%= t("employers.open_job_offers") %></h4></div>
+              <%= render 'shared/overview', job_offer_list: @open_job_offers %>
+            </div>
+        <% end %>
+
+        <% unless @running_job_offers.empty? %>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4><%= t("employers.running_job_offers") %></h4></div>
+                <%= render 'shared/overview', job_offer_list: @running_job_offers %>
+            </div>
+        <% end %>
+    </div>
+
+</div>
+
+

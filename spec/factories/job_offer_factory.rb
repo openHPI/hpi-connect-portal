@@ -12,7 +12,7 @@
 #  time_effort         :float
 #  compensation        :float
 #  room_number         :string(255)
-#  chair_id            :integer
+#  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
 #  assigned_student_id :integer
@@ -20,14 +20,19 @@
 
 FactoryGirl.define do
   factory :job_offer, class: JobOffer do
-    sequence(:title)  { |n| "Awesome Job #{n}" }
+    sequence(:title)  { |n| "Title #{n}" }
     description  "Develop a website"
-    start_date   Date.new(2013,1,1)
-    end_date     Date.new(2013,2,1)
+    start_date   Date.current + 1
+    end_date     Date.current + 2
     compensation 10.5
     time_effort  9
-    association :chair, factory: :chair
+    association :employer, factory: :employer
     association :status, factory: :job_status
     association :responsible_user, factory: :user
+    after(:create) do |job_offer, evaluator|
+      job_offer.responsible_user.role = FactoryGirl.create(:role, name: "Staff")
+      job_offer.responsible_user.save!
+    end
+
   end
 end

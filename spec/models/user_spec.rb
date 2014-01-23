@@ -16,7 +16,7 @@
 #  lastname               :string(255)
 #  firstname              :string(255)
 #  role_id                :integer          default(1), not null
-#  chair_id               :integer
+#  employer_id            :integer
 #  semester               :integer
 #  academic_program       :string(255)
 #  birthday               :date
@@ -27,16 +27,17 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  photo_file_name        :date
+#  photo_file_name        :string(255)
 #  photo_content_type     :string(255)
 #  photo_file_size        :integer
-#  photo_updated_at       :date
+#  photo_updated_at       :datetime
 #  cv_file_name           :string(255)
 #  cv_content_type        :string(255)
 #  cv_file_size           :integer
-#  cv_updated_at          :date
+#  cv_updated_at          :datetime
 #  status                 :integer
 #  user_status_id         :integer
+#  employment_start_date  :date
 #
 
 require 'spec_helper'
@@ -60,6 +61,23 @@ describe User do
     it { should be_applied(@job_offer) }
     its(:applications) { should include(@application) }
     its(:job_offers) { should include(@job_offer) }
+  end
+
+  describe 'build from identity_url' do
+
+    it "should return the user with the corrent email and name" do
+      url = "https://openid.hpi.uni-potsdam.de/user/max.meier"
+      user =  User.new(
+              identity_url: url, 
+              email: "max.meier@student.hpi.uni-potsdam.de", 
+              firstname: "Max", 
+              lastname: "Meier", 
+              semester: 1,
+              academic_program: "unknown",
+              education: "unknown",
+              role: Role.where(name: "Student").first)
+      expect(User.build_from_identity_url(url)).to eql(user)
+    end 
   end
 
   describe "#checkTypeOfPhoto" do
@@ -146,9 +164,9 @@ describe User do
       end
   end
 
-  describe "search_students_for_mulitple_languages_and_identifiers" do
+  describe "search_students_for_multiple_languages_and_identifiers" do
     it "should handle nil input" do
-      matching_students = User.search_students_for_mulitple_languages_and_identifiers(:languages, nil)
+      matching_students = User.search_students_for_multiple_languages_and_identifiers(:languages, nil)
       assert_equal(matching_students.length, User.all.length);
     end
   end

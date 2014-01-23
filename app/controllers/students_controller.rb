@@ -1,3 +1,5 @@
+include UsersHelper
+
 class StudentsController < ApplicationController
   include UsersHelper
   
@@ -13,19 +15,13 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1
   # GET /students/1.json
   def show
-    user = User.find(params[:id])
-    if user.student?
-      @user = user
-    else
-      not_found
-    end
+    @user = User.students.find params[:id]
   end
 
   # GET /students/new
@@ -42,46 +38,10 @@ class StudentsController < ApplicationController
     @all_chairs = Chair.all
   end
 
-  #Outdated by new design, at least till know
-  # POST /students
-  # POST /students.json
-  # def create
-  #   @user = user.new(user_params)
-  #   respond_to do |format|
-  #     if @user.save
-  #       if params[:programming_languages]
-
-  #         programming_languages = params[:programming_languages]
-  #         programming_languages.each do |programming_language_id, skill|
-  #           programming_language_user = ProgrammingLanguagesuser.new
-  #           programming_language_user.user_id = @user.userid
-  #           programming_language_user.programming_language_id = programming_language_id
-  #           programming_language_user.skill = skill
-  #           programming_language_user.save
-  #         end
-  #       end
-  #       format.html { redirect_to student_path(@user.id), notice: 'user was successfully created.' }
-  #       format.json { render action: 'show', status: :created, location: @user }
-  #     else
-  #       format.html { render action: 'new' }
-  #       format.json { render json: @user.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
-    
-    update_and_remove_for_newsletter(params[:chairs_newsletter_information], params[:id], ChairsNewsletterInformation, "chair_id")
-    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
-    if @user.update(user_params)
-      respond_and_redirect_to(student_path(@user), 'User was successfully updated.')
-    else
-      render_errors_and_action(student_path(@user), 'edit')
-    end
+    update_from_params_for_languages_and_newsletters(params, student_path(@user))
   end
 
   # DELETE /students/1
@@ -102,28 +62,28 @@ class StudentsController < ApplicationController
 
   def update_role
     role_name = params[:role_name]
-    chair_name = params[:chair_name]
+    employer_name = params[:employer_name]
 
-    if chair_name
-      chair = Chair.find_by_name(chair_name)
+    if employer_name
+      employer = Employer.find_by_name(employer_name)
     else
-      chair = current_user.chair
+      employer = current_user.employer
     end
 
     case role_name
       when "Deputy"
-        promote_to_deputy(params[:student_id], chair)
+        promote_to_deputy(params[:student_id], employer)
       when Role.find_by_level(3).name
         promote_to_admin(params[:student_id])
       when Role.find_by_level(2).name
-        promote_to_research_assistant(params[:student_id], chair)
+        promote_to_research_assistant(params[:student_id], employer)
     end
     redirect_to(students_path)
   end
 
-  def promote_to_deputy(student_id, chair)
-    chair.update(:deputy_id => student_id)
-    User.find(student_id).update(:chair => chair, :role => Role.find_by_level(2))
+  def promote_to_deputy(student_id, employer)
+    employer.update(:deputy_id => student_id)
+    User.find(student_id).update(:employer => employer, :role => Role.find_by_level(2))
   end
 
   def promote_to_admin(student_id)
@@ -131,9 +91,9 @@ class StudentsController < ApplicationController
     student.update(:role => Role.find_by_level(3))
   end
 
-  def promote_to_research_assistant(student_id, chair)
+  def promote_to_research_assistant(student_id, employer)
     student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2), :chair => chair)
+    student.update(:role => Role.find_by_level(2), :employer => employer)
   end
 
   private
@@ -163,48 +123,4 @@ class StudentsController < ApplicationController
         redirect_to root_path
       end
     end
-
-    def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
-      if params
-        params.each do |id, skill|
-          l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-          l.update_attributes(:skill => skill)
-        end
-
-        remove_for_language(params, user_id, language_class, language_id_attribute)
-      else
-        #If the User deselects all languages, they have to be destroyed
-        language_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_language(params, user_id, language_class, language_id_attribute)
-      #Delete all programming languages which have been deselected (rating removed) from the form
-      language_class.where(:user_id => user_id).each do |l|
-        if params[l.attributes[language_id_attribute].to_s].nil?
-          l.destroy
-        end
-      end
-    end
-    
-    def update_and_remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
-      if params
-        params.each do |id, boolean|
-          if boolean.to_i == 1
-          newsletter_class.where(:user_id => user_id, attributes_id.to_sym => id).first_or_create
-         end
-        end
-         remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
-      else
-        newsletter_class.destroy_all(:user_id => user_id)
-      end
-    end
-
-    def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
-      newsletter_class.where(:user_id => user_id).each do |n|
-        if params[n.attributes[attributes_id].to_s].to_i == 0
-          n.delete
-        end
-      end
-    end  
 end

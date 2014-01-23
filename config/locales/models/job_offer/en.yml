@@ -1,17 +1,20 @@
 en:
   activerecord:
     attributes:
-        job_offer:
-          description: "Description"
-          title: "Title"
-          chair: "Chair"
-          start_date: "Start date"
-          end_date: "End date"
-          time_effort: "Time effort"
-          compensation: "Compensation"
-          room_number: "Room number"
-          programming_languages: "Programming languages"
-          languages: "Languages"
-          additional_information: "Additional Information"
-          general_information: "General Information"
+      job_offer:
+        description: "Description"
+        title: "Title"
+        employer: "Employer"
+        start_date: "Start date"
+        end_date: "End date"
+        time_effort: "Time effort"
+        compensation: "Compensation"
+        room_number: "Room number"
+        programming_languages: "Programming languages"
+        languages: "Languages"
+        additional_information: "Additional Information"
+        general_information: "General Information"
+    errors:
+      messages:
+        in_future: "has to be in the future."
 

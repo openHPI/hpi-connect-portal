@@ -21,32 +21,32 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.general_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
       <table class="table">
         <thead></thead>
         <tbody>
           <tr>
-            <td><%= t("activerecord.attributes.research_assistant.birthday") %></td>
+            <td><%= t("activerecord.attributes.user.birthday") %></td>
             <td><%= @user.birthday %></td>
           </tr>
            <tr>
-            <td><%= t("activerecord.attributes.research_assistant.email") %></td>
+            <td><%= t("activerecord.attributes.user.email") %></td>
             <td><%= @user.email %></td>
           </tr>
            <tr>
-            <td><%= t("activerecord.attributes.research_assistant.chair") %></td>
+            <td><%= t("activerecord.attributes.user.employer") %></td>
             <td>
-              <% if @user.chair %>
-                <%= link_to @user.chair.name, chair_path(@user.chair) %>
+              <% if @user.employer %>
+                <%= link_to @user.employer.name, employer_path(@user.employer) %>
               <% end %>
               </td>
           </tr>
           <tr>
-            <td><%= t("activerecord.attributes.research_assistant.employment_start_date") %></td>
+            <td><%= t("activerecord.attributes.user.employment_start_date") %></td>
             <td><%= @user.employment_start_date %></td>
           </tr>
           <tr>
-            <td><%= t("activerecord.attributes.research_assistant.cv")%></td>
+            <td><%= t("activerecord.attributes.user.cv")%></td>
               <td>
                 <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
@@ -61,7 +61,7 @@
 
     <% if !@user.programming_languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.programming_languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages")%></h4></div>
         <table class="table">
           <thead></thead>
           <tbody>
@@ -86,7 +86,7 @@
 
     <% if !(@user.homepage).nil? || !(@user.github).nil? || !(@user.facebook).nil? || !(@user.xing).nil? || !(@user.linkedin).nil? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.links")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.links")%></h4></div>
           <table class="table">
             <thead></thead>
             <tbody>
@@ -149,7 +149,7 @@
   <div class="col-sm-6">
     <% if !@user.languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.research_assistant.languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages")%></h4></div>
         <table class="table">
           <thead></thead>
           <tbody>
@@ -175,7 +175,7 @@
     <% if !(@user.additional_information).nil? && !(@user.additional_information).empty?%>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.research_assistant.additional_information")%></h4>
+          <h4><%= t("activerecord.attributes.user.additional_information")%></h4>
         </div>
           <table class="table">
             <thead></thead>

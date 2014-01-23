@@ -4,7 +4,7 @@ describe "the students page" do
 
   let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
   let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role, chair: FactoryGirl.create(:chair)) }
+  let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: FactoryGirl.create(:employer)) }
 
 	before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
@@ -67,7 +67,7 @@ describe "the students editing page" do
 	it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
     page.should have_content(
-      "Carrier",
+      "Career",
       "General Information"
     )
 

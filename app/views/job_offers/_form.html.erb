@@ -1,159 +1,150 @@
-<%= form_for(@job_offer) do |f| %>
-  <% if @job_offer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@job_offer.errors.count, "error") %> prohibited this job_offer from being saved:</h2>
-      <ul>
-      <% @job_offer.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for job_offer do |f| %>
+  <%= render 'shared/object_errors', object: job_offer %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.job_offer.general_information") %></h4>
     </div>
-  <% end %>
-
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4><%= t("activerecord.attributes.job_offer.general_information") %></h4>
-  </div>
-  <ul class="list-group">
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-sm-6">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.text_field :title, :class => "form-control"%>
+                </div>
+              </div>
+          </div>
+          <div class="col-sm-6">
             <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                <%= f.text_field :title, :class => "form-control"%>
-              </div>
-            </div>
+                <div class="col-sm-12" style="text-align:right;">                
+                  <% if !current_user.employer.nil? %>
+                    <%= current_user.employer.name %>
+                  <% else %> <%# only for admin %>
+                    <%= f.collection_select :employer_id, Employer.all, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
+                  <% end %>
+                </div>
+              </div>         
+          </div>
         </div>
-        <div class="col-sm-6">
-          <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.chair", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                <%= f.collection_select :chair_id, Chair.all, :id, :name, {prompt: t("job_offers.select_chair")}, {class: "form-control"} %>
-              </div>
-            </div>         
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12" data-no-turbolink="true">
+            <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %>
+            <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
+          </div>
         </div>
-      </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-sm-12" data-no-turbolink="true">
-          <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %>
-          <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+      </li>
+    </ul>
+  </div>
 
-<div class="row">
-  <div class="col-sm-6">
+  <div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3"> 
+                  <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.text_field :room_number, :class => "form-control" %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3"> 
+                  <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field  :start_date, :class => 'datepicker form-control', :value => (job_offer.start_date.blank? ? '' : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3"> 
+                  <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field :end_date, :class => 'datepicker form-control', :value => (job_offer.end_date.blank? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3"> 
+                  <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field :time_effort, :placeholder => t("job_offers.time_effort_description"), :class => "form-control" %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3"> 
+                  <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field :compensation, :placeholder => t("job_offers.compensation_description"), :class => "form-control" %>
+                </div>
+              </div>
+            </li>
+          <ul>
+        </div>
+    </div>
+    <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4>
-        </div>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3"> 
-                <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                <%= f.text_field :room_number, :class => "form-control" %>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3"> 
-                <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field  :start_date, :class => 'datepicker form-control', :value => (@job_offer.start_date.blank? ? '' : @job_offer.start_date.strftime('%d-%m-%Y'))%>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3"> 
-                <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field :end_date, :class => 'datepicker form-control', :value => (@job_offer.end_date.blank? ? '' : @job_offer.end_date.strftime('%d-%m-%Y'))%>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3"> 
-                <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field :time_effort, :placeholder => t("job_offers.time_effort_description"), :class => "form-control" %>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3"> 
-                <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field :compensation, :placeholder => t("job_offers.compensation_description"), :class => "form-control" %>
-              </div>
-            </div>
-          </li>
-        <ul>
-      </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4>
-      </div>
-      <ul class="list-group">
-        <li class="list-group-item"> 
-          <div class="row">
-            <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
-            <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
-            <div class="col-sm-4">
-              <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, @job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
-              <%= label_tag dom_id(programming_language), programming_language.name, :class => "small" %>
-            </div>
-            <% end %> 
-          </div>
-        </li>
-      <ul>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.job_offer.languages") %></h4>
+          <h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4>
         </div>
         <ul class="list-group">
           <li class="list-group-item"> 
             <div class="row">
-              <%= hidden_field_tag "job_offer[language_ids][]", nil %>
-              <% Language.all.each_with_index do |language, index| %>
+              <%= hidden_field_tag "job_offer[programming_language_ids][]", nil %>
+              <% ProgrammingLanguage.all.each_with_index do |programming_language, index| %>
               <div class="col-sm-4">
-                <%= check_box_tag "job_offer[language_ids][]", language.id, @job_offer.language_ids.include?(language.id), id: dom_id(language) %>
-                <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
+                <%= check_box_tag "job_offer[programming_language_ids][]", programming_language.id, job_offer.programming_language_ids.include?(programming_language.id), id: dom_id(programming_language)%>
+                <%= label_tag dom_id(programming_language), programming_language.name, :class => "small" %>
               </div>
               <% end %> 
             </div>
           </li>
         <ul>
       </div>
-    </div>
-</div>
 
-<div class="actions">
-  <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
-</div>
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4><%= t("activerecord.attributes.job_offer.languages") %></h4>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item"> 
+              <div class="row">
+                <%= hidden_field_tag "job_offer[language_ids][]", nil %>
+                <% Language.all.each_with_index do |language, index| %>
+                <div class="col-sm-4">
+                  <%= check_box_tag "job_offer[language_ids][]", language.id, job_offer.language_ids.include?(language.id), id: dom_id(language) %>
+                  <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
+                </div>
+                <% end %> 
+              </div>
+            </li>
+          <ul>
+        </div>
+      </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+  </div>
 
 <% end %>

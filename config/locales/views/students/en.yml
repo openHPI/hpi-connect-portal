@@ -5,10 +5,6 @@ en:
         new_student: "create new student"
         edit_student: "edit student"
         carrier: "Carrier"
-        direct: "instantly  "
-        daily: "daily   "
-        weekly: "weekly "
-        quart: "quarterly   "
         programming_language_newsletter: "In which languages you are interested as part of a job offer?"
         chairs_newsletter: "Where would it be a pleasure to work?"
         name: Name

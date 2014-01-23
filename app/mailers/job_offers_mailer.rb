@@ -3,7 +3,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
   	@job_offer = job_offer
-  	mail(to: @job_offer.chair.deputy.email, subject: (t "job_offers_email.new_job_offer.subject"))
+  	mail(to: @job_offer.employer.deputy.email, subject: (t "job_offers_email.new_job_offer.subject"))
   end
 
   def new_job_offer_info_email(job_offers, user)
@@ -60,5 +60,11 @@ class JobOffersMailer < ActionMailer::Base
       students = students & User.find(id => entry.user_id)
     end
     students
+  end
+
+  def job_prolonged_email(job_offer)
+    @job_offer = job_offer
+
+    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_email.job_offer_prolonged.subject"))
   end
 end

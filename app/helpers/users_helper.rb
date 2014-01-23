@@ -1,15 +1,15 @@
 module UsersHelper
 
-  def user_is_staff_of_chair?(job_offer)
-    signed_in? and current_user.chair == job_offer.chair and current_user.staff?
+  def user_is_staff_of_employer?(job_offer)
+    signed_in? and current_user.employer == job_offer.employer and current_user.staff?
   end
 
   def user_is_responsible_user?(job_offer)
     signed_in? && current_user == @job_offer.responsible_user
   end
 
-  def user_is_deputy_of_chair?(chair)
-    signed_in? && current_user == @job_offer.chair.deputy
+  def user_is_deputy_of_employer?(employer)
+    signed_in? && current_user == @job_offer.employer.deputy
   end
 
   def user_is_staff?
@@ -43,24 +43,54 @@ module UsersHelper
     end
   end
 
+  def update_from_params_for_languages_and_newsletters(params, redirect_to)
+    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
+    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
+
+    update_and_remove_for_newsletter(params[:chairs_newsletter_information], params[:id], ChairsNewsletterInformation, "chair_id")
+    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
+    if @user.update(user_params)
+      respond_and_redirect_to(redirect_to, 'User was successfully updated.')
+    else
+      render_errors_and_action(redirect_to, 'edit')
+    end
+  end
+
+  def update_and_remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    if params
+      params.each do |id, boolean|
+        if boolean.to_i == 1
+        newsletter_class.where(:user_id => user_id, attributes_id.to_sym => id).first_or_create
+       end
+      end
+       remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    else
+      newsletter_class.destroy_all(:user_id => user_id)
+    end
+  end
+
+  def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    newsletter_class.where(:user_id => user_id).each do |n|
+      if params[n.attributes[attributes_id].to_s].to_i == 0
+        n.delete
+      end
+    end
+  end  
+
   def user_can_promote_students?
     return signed_in? && (current_user.admin? || user_is_deputy?)
   end
 
   def user_is_deputy?
     if(signed_in?)
-      Chair.all.each do |chair|
-        if chair.deputy_id == current_user.id
-          current_user.chair_id = chair.id
+      Employer.all.each do |employer|
+        if employer.deputy_id == current_user.id
+          current_user.employer_id = employer.id
           return true
         end
       end
     end
     return false
-  end
-
-  def user_is_admin?
-    return signed_in? && current_user.admin?
   end
 
 end

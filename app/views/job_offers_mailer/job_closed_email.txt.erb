@@ -1,8 +1,8 @@
-<%= t "job_offers_mailer.job_offer_closed.title"+" ("+@job_offer.title+")" %>
+<%= t "job_offers_email.job_offer_closed.title"+" ("+@job_offer.title+")" %>
 
 •Title: <%= @job_offer.title %>
 •Student name: <%= @job_offer.assigned_student.email %>
-•Chair: <%= @job_offer.chair.name %>
+•Employer: <%= @job_offer.employer.name %>
 •Responsible staff member: <%= @job_offer.responsible_user.email %>
 •Room: <%= @job_offer.room_number %>
 •Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %>
