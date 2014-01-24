@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe StudentsController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :name => "Student"), "identity_url" => "af", "email" => "test@example", "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
 
   # Programming Languages with a mapping to skill integers

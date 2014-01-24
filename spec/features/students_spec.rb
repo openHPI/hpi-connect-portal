@@ -116,8 +116,11 @@ describe "the students profile page" do
     @student1 = FactoryGirl.create(:user,
             :role => student_role)
 
-     @student2 = FactoryGirl.create(:user,
+    @student2 = FactoryGirl.create(:user,
             :role => student_role)
+
+    @student3 = FactoryGirl.create(:user)
+    login_as(@student3, :scope => :user)
   end
 
 
