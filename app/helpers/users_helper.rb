@@ -5,7 +5,7 @@ module UsersHelper
   end
 
   def user_is_responsible_user?(job_offer)
-    signed_in? && current_user == @job_offer.responsible_user
+    signed_in? && current_user == job_offer.responsible_user
   end
 
   def user_is_deputy_of_employer?(employer)
@@ -23,8 +23,8 @@ module UsersHelper
   def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
     if params
       params.each do |id, skill|
-        l = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-        l.update_attributes(:skill => skill)
+        language = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
+        language.update_attributes(:skill => skill)
       end
 
       remove_for_language(params, user_id, language_class, language_id_attribute)
@@ -36,9 +36,9 @@ module UsersHelper
 
   def remove_for_language(params, user_id, language_class, language_id_attribute)
     #Delete all programming languages which have been deselected (rating removed) from the form
-    language_class.where(:user_id => user_id).each do |l|
-      if params[l.attributes[language_id_attribute].to_s].nil?
-        l.destroy
+    language_class.where(:user_id => user_id).each do |lang|
+      if params[lang.attributes[language_id_attribute].to_s].nil?
+        lang.destroy
       end
     end
   end

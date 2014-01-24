@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
   { locale: I18n.locale }
   end
- 
+
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
@@ -29,12 +29,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_errors_and_action(object, action)
+  def render_errors_and_action(object, action=nil)
     respond_to do |format|
-        format.html { render action: action }
+        if action.nil?
+          format.html { redirect_to object }
+        else
+          format.html { render action: action }
+        end
         format.json { render json: object.errors, status: :unprocessable_entity }
     end
-  end 
+  end
 
   def respond_and_redirect_to(url, notice, action=nil, status=nil)
     respond_to do |format|

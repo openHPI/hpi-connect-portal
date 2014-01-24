@@ -11,9 +11,9 @@
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
         <% unless @job_offer.running? %>
-          <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), "data-no-turbolink" => true, :class => "btn btn-default", :disabled => !@job_offer.editable? %> 
+          <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), "data-no-turbolink" => true, :class => "btn btn-default", :disabled => !@job_offer.editable? %>
         <% end %>
-        
+
         <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
       </span>
     <% end %>
@@ -25,9 +25,9 @@
     <% if signed_in? && (user_is_staff_of_employer?(@job_offer) || user_is_admin?) && @job_offer.running? %>
       <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
     <% end %>
-  	
+
   	<br><br>
-    
+
     <% if signed_in? && current_user.applied?(@job_offer) %>
       <br><br>
        <div class="panel panel-default panel-body">
@@ -206,9 +206,9 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
           </div>
-          <%= form_for current_user.applications.build(job_offer_id: @job_offer.id), :html => { :multipart => true } do |f| %>      
-            <div class="modal-body clearfix" data-no-turbolink="true">        
-              <%= f.hidden_field :job_offer_id %> 
+          <%= form_for current_user.applications.build(job_offer_id: @job_offer.id), :html => { :multipart => true } do |f| %>
+            <div class="modal-body clearfix" data-no-turbolink="true">
+              <%= f.hidden_field :job_offer_id %>
               <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, :rows => 10, :class => "col-md-12"  %>
               <% unless (current_user.cv.path).nil? %>
                 <br/>
@@ -219,8 +219,8 @@
               <%= file_field_tag('attached_files', multiple: true, name: "attached_files[file_attributes][][file]") %>
             </div>
             <div class="modal-footer">
-              <%= f.button t("links.cancel"), class: 'btn btn-default', data: {dismiss: 'modal'} %> 
-              <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>          
+              <%= f.button t("links.cancel"), class: 'btn btn-default', data: {dismiss: 'modal'} %>
+              <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>
             </div>
           <% end %>
         </div><!-- /.modal-content -->

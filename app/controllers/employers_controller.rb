@@ -1,18 +1,28 @@
 class EmployersController < ApplicationController
   include ApplicationHelper
-  
-  authorize_resource only: [:new, :edit, :create, :update]
-  before_action :set_employer, only: [:show, :edit, :update, :find_jobs]
 
-  rescue_from CanCan::AccessDenied do |exception| 
+  authorize_resource only: [:new, :edit, :create, :update]
+  before_action :set_employer, only: [:show, :edit, :update]
+
+  rescue_from CanCan::AccessDenied do |exception|
     redirect_to employers_path, :notice => exception.message
   end
 
   # GET /employers
   # GET /employers.json
   def index
-    @employers = Employer.all.sort_by{|x| x.name}
+    @employers = Employer.internal.sort_by{|employer| employer.name}
     @employers = @employers.paginate(:page => params[:page], :per_page => 15 )
+    @internal = true
+  end
+
+  # GET /employers/external
+  # GET /employers/external.json
+  def index_external
+    @employers = Employer.external.sort_by{|employer| employer.name}
+    @employers = @employers.paginate(:page => params[:page], :per_page => 15 )
+    @internal = false
+    render 'index'
   end
 
   # GET /employers/1
@@ -35,8 +45,8 @@ class EmployersController < ApplicationController
   # POST /employers
   # POST /employers.json
   def create
-
     @employer = Employer.new(employer_params)
+    @employer.deputy.employer = @employer if @employer.deputy
 
     if @employer.save
       respond_and_redirect_to(@employer, 'Employer was successfully created.', 'show', :created)
@@ -57,11 +67,6 @@ class EmployersController < ApplicationController
     end
   end
 
-  def find_jobs
-    show
-    render "show"
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employer
@@ -70,6 +75,6 @@ class EmployersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id)
+      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external)
     end
 end

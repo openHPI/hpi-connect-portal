@@ -37,7 +37,6 @@
         <% if user_is_deputy? %>
            <% promotion_roles = [Role.find_by_level(2).name, "Deputy"] %>
         <% else %>
-           <% employers = Employer.all %>
            <% promotion_roles = [Role.find_by_level(2).name , Role.find_by_level(3).name, "Deputy"] %>
         <%end%>
 

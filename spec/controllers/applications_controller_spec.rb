@@ -3,8 +3,8 @@ require 'spec_helper'
 describe ApplicationsController do
 
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:staff_role) {FactoryGirl.create(:role, :name => 'Staff', :level => 2)}
-  let(:student_role) {FactoryGirl.create(:role, :name => "Student")}
+  let(:staff_role) {FactoryGirl.create(:role, :staff)}
+  let(:student_role) {FactoryGirl.create(:role, :student)}
   let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
@@ -14,70 +14,92 @@ describe ApplicationsController do
   end
 
   describe "GET decline" do
+    before do
+      @application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+    end
+
     it "deletes application" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       expect{
-          get :decline, {:id => application.id}
+          get :decline, {:id => @application.id}
         }.to change(Application, :count).by(-1)
     end
+
     it "redirects to job offer view if user don't have permissions for declining" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in @student
       
-      get :decline, {:id => application.id}
+      get :decline, {:id => @application.id}
       response.should redirect_to(@job_offer)
+    end
+
+    it "redirects to job offer view if saving fails" do
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+
+      Application.any_instance.stub(:delete).and_return(false)
+
+      get :decline, {:id => @application.id}
+      response.should redirect_to(@application.job_offer)
     end
   end
 
   describe "GET accept" do
 
+    before do
+      @application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
+    end
+
     it "redirects to job offer view if user don't have permissions for accepting" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in @student
 
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
       response.should redirect_to(@job_offer)
     end
 
     it "accepts student is assigned as @job_offer.assigned_student" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
       assigns(:application).job_offer.assigned_student.should eq(@student)
     end
 
     it "declines all other students" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       expect{
-        get :accept, {:id => application.id}
+        get :accept, {:id => @application.id}
       }.to change(Application, :count).by(-3)
     end
 
     it "application status should be 'working' if an application is accepted" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       working = FactoryGirl.create(:job_status, :name=>'running')
       
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
       assigns(:application).job_offer.status.should eq(working)
     end
 
     it "sends two emails" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       
       old_count = ActionMailer::Base.deliveries.count
 
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
 
       ActionMailer::Base.deliveries.count.should == old_count + 2
+    end
+
+    it "renders errors if updating all objects failed" do
+      working = FactoryGirl.create(:job_status, :name=>'running')
+      
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+
+      JobOffer.any_instance.stub(:save).and_return(false)
+
+      get :accept, {:id => @application.id}
+      response.should redirect_to(@application.job_offer)
     end
   end
 

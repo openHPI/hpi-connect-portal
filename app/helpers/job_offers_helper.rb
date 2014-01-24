@@ -4,7 +4,7 @@ module JobOffersHelper
       @job_offer.programming_languages.each do |programming_language|
         result.push(programming_language.name)
       end
-      
+
       result
   end
 
@@ -13,7 +13,7 @@ module JobOffersHelper
       @job_offer.languages.each do |language|
         result.push(t("languages." +  language.name))
       end
-      
+
       result
   end
 end

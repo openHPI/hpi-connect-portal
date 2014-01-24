@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     before_filter :check_user, :only => [:update, :edit]
 
     def edit
-        @user = User.find(params[:id])     
+        @user = User.find(params[:id])
     end
 
     def update
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
         if @user.update_attributes(user_params)
             flash[:success] = 'Information updated.'
             if @user.student?
-                redirect_to edit_student_path(@user) 
+                redirect_to edit_student_path(@user)
             else
                 redirect_to root_path
             end
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
             render 'edit'
         end
 
-        
+
     end
 
     private

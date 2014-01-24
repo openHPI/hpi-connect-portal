@@ -2,7 +2,7 @@
     <% if application.user.admin? %>
         <td class='Row'><%= application.user.firstname %></td>
         <td class='Row'><%= application.user.lastname %></td>
-        <td class='Row'><%= application.user.email %></td> 
+        <td class='Row'><%= application.user.email %></td>
     <% else %>
 
         <% if application.user.staff? %>
@@ -10,12 +10,12 @@
         <% else %>
             <% path_to_user = student_path(id: application.user.id) %>
         <% end %>
-                
+
         <td class='clickable' href='<%= path_to_user %>'><%= application.user.firstname %></td>
         <td class='clickable' href='<%= path_to_user %>'><%= application.user.lastname %></td>
         <td class='clickable' href='<%= path_to_user %>'><%= application.user.email %></td>
     <% end %>
-    
+
     <% if user_is_responsible_user?(@job_offer) or user_is_admin? %>
     	<td>
         <%= link_to t("applications.decline"), decline_application_path(application), :class=>"btn btn-danger", data: {confirm: t("applications.decline_confirmation")} %>

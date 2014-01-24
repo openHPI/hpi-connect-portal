@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Staff" do
   describe "GET /staff" do
-  	let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
+  	let(:admin_role) { FactoryGirl.create(:role, :admin) }
  	let(:admin) { FactoryGirl.create(:user, role: admin_role) }
 
     it "works! (now write some real specs)" do

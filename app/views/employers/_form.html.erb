@@ -1,4 +1,4 @@
-<%= form_for(employer, :html => { :multipart => true }) do |f| %>
+<%= form_for employer, html: { multipart: true } do |f| %>
   
   <%= render 'shared/object_errors', object: employer %>
 
@@ -16,6 +16,11 @@
                 </div>
                 <div class="col-sm-9">
                   <%= f.text_field :name, :class => "form-control"%>
+                  <br>
+                  <%= f.label :external do %>
+                    <%= f.check_box :external %>
+                    External employer
+                  <% end %>
                 </div>
               </div>
           </div>
@@ -27,7 +32,7 @@
                 <div class="col-sm-9">
                   <%= f.text_field :head, :class => "form-control"%>
                 </div>
-              </div>         
+              </div>
           </div>
         </div>
       </li>
@@ -39,9 +44,13 @@
                   <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.collection_select :deputy_id, employer.users, :id, :email %>
+                  <% if employer.staff.any? %>
+                    <%= f.collection_select :deputy_id, employer.staff, :id, :email %>
+                  <% else %>
+                    <%= f.collection_select :deputy_id, User.staff, :id, :email %>
+                  <% end %>
                 </div>
-              </div>         
+              </div>
           </div>
           <div class="col-sm-6">
               <div class="row">
@@ -69,7 +78,6 @@
       </li>
     </ul>
   </div>
-
 
   <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 
