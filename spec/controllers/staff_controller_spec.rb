@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe StaffController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+  
   # This should return the minimal set of attributes required to create a valid
   # Staff. As you add validations to Staff, be sure to
   # adjust the attributes here as well.

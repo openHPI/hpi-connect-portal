@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  before_filter :signed_in_user
+
   rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
   def default_url_options(options={})
@@ -44,5 +46,5 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-
+  
 end

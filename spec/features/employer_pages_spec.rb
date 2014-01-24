@@ -9,6 +9,8 @@ describe "the employer page" do
   let(:deputy) { employer.deputy }
 
   before do
+    @student1 = FactoryGirl.create(:user)
+    login_as(@student1, :scope => :user)
     @running = FactoryGirl.create(:job_status, name: 'running')
     @open = FactoryGirl.create(:job_status, name: 'open')
 
