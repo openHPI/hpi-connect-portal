@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe FaqsController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   let(:deputy) { FactoryGirl.create(:user) }
 
   let(:valid_attributes) { { "question" => "Is this a question?", "answer" => "Yes"} }

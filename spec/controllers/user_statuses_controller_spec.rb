@@ -3,6 +3,8 @@ require 'spec_helper'
 
 describe UserStatusesController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   let(:valid_attributes) { { "name" => "MyString" } }
 
   let(:valid_session) { {} }

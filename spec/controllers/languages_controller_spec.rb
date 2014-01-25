@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe LanguagesController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   # This should return the minimal set of attributes required to create a valid
   # Language. As you add validations to Language, be sure to
   # adjust the attributes here as well.

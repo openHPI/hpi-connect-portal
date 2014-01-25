@@ -98,8 +98,13 @@ end
 describe "the students profile page" do
 
   before(:each) do
+
     @student1 = FactoryGirl.create(:user, :student)
     @student2 = FactoryGirl.create(:user, :student)
+
+    @student3 = FactoryGirl.create(:user)
+    login_as(@student3, :scope => :user)
+    
   end
 
 
