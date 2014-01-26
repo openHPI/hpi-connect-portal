@@ -1,5 +1,5 @@
 <%= simple_form_for user, :url => student_path(user.id), :html => { :multipart => true, class: 'form-horizontal', role: 'form' } do |f| %>
-  
+
   <%= render 'shared/object_errors', object: user %>
 
   <div class="row">
@@ -123,7 +123,7 @@
                           <% end %>
                         <% end %>
                       </div>
-                    </div>    
+                    </div>
                   </li>
                 <% end %>
               <% end %>
@@ -179,7 +179,7 @@
               <div class="col-sm-9">
                 <%= f.text_field :academic_program, class: "form-control", type:"text" %>
               </div>
-            </div> 
+            </div>
           </li>
           <li class="list-group-item">
             <div class="row">

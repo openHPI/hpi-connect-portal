@@ -2,26 +2,17 @@ require 'spec_helper'
 
 describe "the students page" do
 
-  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role, employer: FactoryGirl.create(:employer)) }
+  let(:staff) { FactoryGirl.create(:user, :staff) }
 
-	before(:each) do
+  before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
 
-    @student1 = FactoryGirl.create(:user,
-            :role => student_role,
-            :programming_languages =>[@programming_language]
-            )
-    initialize_roles
+    @student1 = FactoryGirl.create(:user, :student, :programming_languages =>[@programming_language])
     login_as(staff, :scope => :user)
+
+    FactoryGirl.create(:role, :student)
+    FactoryGirl.create(:role, :admin)
     visit students_path
-
-  end
-
-  def initialize_roles
-    FactoryGirl.create(:role, :name => 'Research Assistant', :level => 2)
-    FactoryGirl.create(:role, :name => 'Admin', :level => 3)
   end
 
   it "should view only names and status of a student on the overview" do
@@ -55,16 +46,12 @@ end
 
 describe "the students editing page" do
 
-  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-
   before(:each) do
-    @student1 = FactoryGirl.create(:user,
-            :role => student_role
-            )
+    @student1 = FactoryGirl.create(:user, :student)
     login_as(@student1, :scope => :user)
   end
 
-	it "should contain all attributes of a student" do
+  it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
     page.should have_content(
       "Career",
@@ -109,14 +96,14 @@ end
 
 describe "the students profile page" do
 
-  let(:student_role) { FactoryGirl.create(:role, name: 'Student', level: 1) }
-
   before(:each) do
-    @student1 = FactoryGirl.create(:user,
-            :role => student_role)
 
-     @student2 = FactoryGirl.create(:user,
-            :role => student_role)
+    @student1 = FactoryGirl.create(:user, :student)
+    @student2 = FactoryGirl.create(:user, :student)
+
+    @student3 = FactoryGirl.create(:user)
+    login_as(@student3, :scope => :user)
+    
   end
 
 

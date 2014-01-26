@@ -2,21 +2,22 @@ require 'spec_helper'
 
 describe StudentsController do
 
-  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :name => "Student"), "identity_url" => "af", "email" => "test@example", "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
+  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :student), "identity_url" => "af", "email" => "test@example", "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
+  login_user FactoryGirl.create(:role, name: 'Student')
+
 
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
   let(:valid_session) { {} }
 
-  let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
-  let(:staff) { FactoryGirl.create(:user, role: staff_role) }
+  let(:staff) { FactoryGirl.create(:user, :staff) }
 
   describe "GET index" do
     it "assigns all user as @users" do
       sign_in staff
 
-      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :name => "Student"))
+      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
       get :index, {}, valid_session
       assigns(:users).should eq(User.students.paginate(:page => 1, :per_page => 5))
     end
@@ -30,7 +31,7 @@ describe StudentsController do
     end
 
     it "checks if the user is a student" do
-      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: "Research Assistant"))
+      user = FactoryGirl.create(:user, :staff)
       expect {
         get :show, {:id => user.to_param}, valid_session
         }.to raise_error(ActionController::RoutingError)
@@ -228,49 +229,49 @@ describe StudentsController do
   describe "PUT update_role" do
     before(:each) do
         @student_role = FactoryGirl.create(:role)
-        @student = FactoryGirl.create(:user, :role_id => @student_role.id)
-        @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
-        @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
+        @student = FactoryGirl.create(:user, :student)
+        @staff_role = FactoryGirl.create(:role, :staff)
+        @admin_role = FactoryGirl.create(:role, :admin)
         @employer = FactoryGirl.create(:employer)
     end
 
     describe "current user is deputy" do
       before(:each) do
-        sign_in FactoryGirl.create(:user, role: @staff_role, employer: @employer)
+        sign_in FactoryGirl.create(:user, :staff, employer: @employer)
       end
 
       it "updates role to Staff" do
-        assert_equal(User.find(@student.id).role_id, @student_role.id)
-        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name}, valid_session
-        assert_equal(@staff_role, User.find(@student.id).role)
+        assert_equal(@student.role, @student_role)
+        put :update_role, { student_id: @student.id, role_name: @staff_role.name }, valid_session
+        assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Deputy" do
-        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy"}, valid_session
-        assert_equal(@student, Employer.find(@employer.id).deputy)
+        put :update_role, { student_id: @student.id, role_name: "Deputy" }, valid_session
+        assert_equal(@student, @employer.deputy)
       end
     end
-
+ 
     describe "current user is Admin" do
       before(:each) do
-        sign_in FactoryGirl.create(:user, role: @admin_role)
+        sign_in FactoryGirl.create(:user, :admin)
       end
 
-      it "updates role to Research Assistant" do
-        put :update_role, {:student_id => @student.to_param, :role_name => @staff_role.name, :employer_name => @employer.name}, valid_session
-        assert_equal(@staff_role, User.find(@student.id).role)
-        assert_equal(@employer, User.find(@student.id).employer)
+      it "updates role to Staff" do
+        put :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_name: @employer.name }, valid_session
+        assert_equal(@staff_role, @student.reload.role)
+        assert_equal(@employer, @student.reload.employer)
       end
 
       it "updates role to Deputy" do
-        put :update_role, {:student_id => @student.to_param, :role_name => "Deputy", :employer_name => @employer.name}, valid_session
-        assert_equal(User.find(@student.id), Employer.find(@employer.id).deputy)
-        assert_equal(@staff_role, User.find(@student.id).role)
+        put :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        assert_equal(@student.reload, @employer.reload.deputy)
+        assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Admin" do
-        put :update_role, {:student_id => @student.to_param, :role_name => @admin_role.name}, valid_session
-        assert_equal(@admin_role, User.find(@student.id).role)
+        put :update_role, { student_id: @student.reload.id, role_name: @admin_role.name }, valid_session
+        assert_equal(@admin_role, @student.reload.role)
       end
     end
   end

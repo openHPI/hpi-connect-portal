@@ -42,21 +42,35 @@
 
 FactoryGirl.define do
   factory :user do
-    sequence(:firstname)  { |n| "User #{n}" }
-    sequence(:lastname)  { |n| "the #{n}th of his kind" }
-    sequence(:email) { |n| "user_#{n}@example.com" } 
+    sequence(:firstname)    { |n| "User #{n}" }
+    sequence(:lastname)     { |n| "the #{n}th of his kind" }
+    sequence(:email)        { |n| "user_#{n}@example.com" } 
     sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
-    association :role
-    semester 1
-    academic_program 'Master'
-    birthday '1970-12-10'
-    education'Abitur'
-    additional_information 'No'
-    homepage 'oracle.com'
-    github 'www.github.com/dieter'
-    facebook 'www.faceboook.com/dieter'
-    xing 'www.xing.com/dieter'
-    linkedin'www.linkedin.com/dieter'
+    association             :role
+    semester                1
+    academic_program        'Master'
+    birthday                '1970-12-10'
+    education               'Abitur'
+    additional_information  'No'
+    homepage                'oracle.com'
+    github                  'www.github.com/dieter'
+    facebook                'www.faceboook.com/dieter'
+    xing                    'www.xing.com/dieter'
+    linkedin                'www.linkedin.com/dieter'
+
+    trait :student do
+      association :role, :student
+    end
+
+    trait :staff do
+      association :role, :staff
+      association :employer
+    end
+
+    trait :admin do
+      association :role, :admin
+    end
+
     after(:create) do |user, evaluator|
       create_list(:language, 1)
       create_list(:programming_language, 1)

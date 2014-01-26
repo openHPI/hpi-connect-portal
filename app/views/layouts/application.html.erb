@@ -56,15 +56,7 @@
                   </ul>
                 </li>
 
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.external_employers') %> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <% @employers = Employer.external %>
-                      <% @employers.each do |employer| %>
-                      <li><%= link_to employer.name, employer %></li>
-                    <% end %>
-                  </ul>
-                </li>
+                <li><%= link_to t('layouts.external_employers'), external_employers_path %></li>
               <%end %>
               <% if user_is_staff? %>
                 <li><%= link_to t('layouts.students'), students_path %></li>
@@ -85,9 +77,8 @@
             <%= image_tag(current_user.photo.url, size: "40", class: "img-thumbnail")  %>
             <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
             <%= link_to t("layouts.my_profile"), edit_user_path(current_user), :class => 'navbar-link' %>
-            <% if user_is_staff? && current_user.employer_id%>
-              <% @employer = Employer.find(current_user.employer_id) %>
-              <%= link_to t('layouts.my_employer'), @employer, :class => 'navbar-link' %>
+            <% if user_is_staff? && current_user.employer%>
+              <%= link_to t('layouts.my_employer'), current_user.employer, :class => 'navbar-link' %>
             <% end %> |
             <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
           <% else %>

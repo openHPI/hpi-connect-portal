@@ -2,7 +2,8 @@ de:
     employers:
         employer: "Arbeitgeber"
         employers: "Arbeitgeber"
-        employer_overview: "Arbeitgeberübersicht"
+        employer_overview_internal: "Lehrstuhlübersicht"
+        employer_overview_external: "Arbeitgeberübersicht"
         editing_employer: "Arbeitgeber bearbeiten"
         new_employer: "Neuer Arbeitgeber"
         staff: "Mitarbeiter"

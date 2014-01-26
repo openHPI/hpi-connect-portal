@@ -1,8 +1,6 @@
-include UsersHelper
-
 class StudentsController < ApplicationController
   include UsersHelper
-  
+
   before_filter :check_user_can_index_students, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
 
@@ -15,7 +13,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.students).sort_by{|user| [user.lastname, user.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1
@@ -52,7 +50,7 @@ class StudentsController < ApplicationController
   end
 
   # GET /students/matching
-  def matching 
+  def matching
     #XXX should be a list of strings not [string]
     @users = User.search_students_by_language_and_programming_language(
       params[:languages], params[:programming_languages])
@@ -73,27 +71,27 @@ class StudentsController < ApplicationController
     case role_name
       when "Deputy"
         promote_to_deputy(params[:student_id], employer)
-      when Role.find_by_level(3).name
+      when "Admin"
         promote_to_admin(params[:student_id])
-      when Role.find_by_level(2).name
-        promote_to_research_assistant(params[:student_id], employer)
+      else
+        promote_to_staff(params[:student_id], employer)
     end
     redirect_to(students_path)
   end
 
   def promote_to_deputy(student_id, employer)
-    employer.update(:deputy_id => student_id)
-    User.find(student_id).update(:employer => employer, :role => Role.find_by_level(2))
+    User.find(student_id).update!(employer: employer, role: Role.find_by_level(2))
+    employer.update!(deputy_id: student_id)
   end
 
   def promote_to_admin(student_id)
     student = User.find(student_id)
-    student.update(:role => Role.find_by_level(3))
+    student.update!(role: Role.find_by_level(3))
   end
 
-  def promote_to_research_assistant(student_id, employer)
+  def promote_to_staff(student_id, employer)
     student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2), :employer => employer)
+    student.update!(role: Role.find_by_level(2), employer: employer)
   end
 
   private

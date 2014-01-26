@@ -6,9 +6,9 @@
           <div class="row">
             <div class="col-md-9">
               <% if user.student? %>
-                <%= link_to user.firstname+" "+user.lastname, student_path(user), :class => "h4" %>
+                <%= link_to user.name, student_path(user), :class => "h4" %>
               <% else %>
-                <%= link_to user.firstname+" "+user.lastname, staff_path(user), :class => "h4" %>
+                <%= link_to user.name, staff_path(user), :class => "h4" %>
               <%end%>
             </div>
           </div>

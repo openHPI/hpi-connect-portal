@@ -23,9 +23,9 @@ require 'spec_helper'
 describe JobOffer do
 
   before(:each) do
-      @epic = FactoryGirl.create(:employer, name:"EPIC")
-      @os = FactoryGirl.create(:employer, name:"OS and Middleware")
-      @itas = FactoryGirl.create(:employer, name:"Internet and Systems Technologies")
+      @epic = FactoryGirl.create(:employer, name: "EPIC")
+      @os = FactoryGirl.create(:employer, name: "OS and Middleware")
+      @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
       @responsible_user = FactoryGirl.create(:user)
   end
 

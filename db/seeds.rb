@@ -87,7 +87,7 @@ User.create!([{
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
-	role: Role.where(:name => 'Student').first	
+	role: Role.where(:name => 'Staff').first	
 }])
 
 User.create!([{
@@ -98,7 +98,7 @@ User.create!([{
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
-	role: Role.where(:name => 'Student').first	
+	role: Role.where(:name => 'Staff').first	
 }])
 
 User.create!([{
@@ -217,6 +217,14 @@ Employer.create!([{
 	description: "to be done",
 	head: "to be done",
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+}])
+
+Employer.create!([{
+	name: "SAP",
+	description: "SAP",
+	head: "Hasso Plattner",
+	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	external: true
 }])
 
 JobOffer.delete_all

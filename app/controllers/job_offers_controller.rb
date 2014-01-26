@@ -60,7 +60,7 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     @job_offer.employer = current_user.employer
-    
+
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
       JobOffersMailer.inform_interested_students_immediately(@job_offer)
@@ -116,7 +116,7 @@ class JobOffersController < ApplicationController
   end
 
   # GET /job_offer/:id/accept
-  def accept  
+  def accept
     if @job_offer.update status: JobStatus.open
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
@@ -126,26 +126,26 @@ class JobOffersController < ApplicationController
   end
 
   # GET /job_offer/:id/decline
-  def decline 
+  def decline
     if @job_offer.destroy
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
     else
       render_errors_and_action(@job_offer)
     end
-  end 
+  end
 
   # GET /job_offer/:id/reopen
-  def reopen 
+  def reopen
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.completed
       @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
       @job_offer.responsible_user = current_user
-      render "new", notice: 'New job offer was created.'  
+      render "new", notice: 'New job offer was created.'
     else
       render_errors_and_action(@job_offer)
     end
-  end 
+  end
 
   private
     def set_job_offer
@@ -161,31 +161,31 @@ class JobOffersController < ApplicationController
         {:language_ids => []})
     end
 
-    def check_user_can_create_jobs      
+    def check_user_can_create_jobs
       unless can?(:create, JobOffer)
         redirect_to job_offers_path
       end
     end
 
-    def check_user_is_responsible_or_admin      
+    def check_user_is_responsible_or_admin
       set_job_offer
       unless can?(:update, @job_offer) || current_user == @job_offer.employer.deputy
         redirect_to @job_offer
       end
     end
 
-    def check_user_is_staff_of_employer_or_admin    
+    def check_user_is_staff_of_employer_or_admin
       set_job_offer
-      unless user_is_staff_of_employer? @job_offer or user_is_admin?
+      unless user_is_staff_of_employer?(@job_offer) || user_is_admin?
         redirect_to @job_offer
       end
     end
 
     def check_user_is_deputy_or_admin
       set_job_offer
-      unless @job_offer.employer.deputy == current_user or user_is_admin?
+      unless (@job_offer.employer.deputy == current_user) || user_is_admin?
         if user_is_staff_of_employer? @job_offer
-          redirect_to @job_offer 
+          redirect_to @job_offer
         else
           redirect_to job_offers_path
         end
@@ -198,5 +198,4 @@ class JobOffersController < ApplicationController
         redirect_to @job_offer
       end
     end
-
 end

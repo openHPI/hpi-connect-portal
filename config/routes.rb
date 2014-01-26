@@ -19,9 +19,10 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
+  get "employers/external", to: "employers#index_external", as: "external_employers"
+
   resources :employers
-    get "employers/:id/find_jobs", to: "employers#find_jobs", as: "find_jobs_employers"
-  
+
   resources :users, only: [:edit, :update]
 
   resources :applications, only: [:create, :destroy] do

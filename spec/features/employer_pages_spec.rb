@@ -4,23 +4,25 @@ describe "the employer page" do
 
   subject { page }
 
-  let(:employer) { FactoryGirl.create(:employer, name:"EPIC") }
+  let(:employer) { FactoryGirl.create(:employer, name: 'EPIC' ) }
   let(:user) { FactoryGirl.create(:user) }
   let(:deputy) { employer.deputy }
 
   before do
+    @student1 = FactoryGirl.create(:user)
+    login_as(@student1, :scope => :user)
     @running = FactoryGirl.create(:job_status, name: 'running')
     @open = FactoryGirl.create(:job_status, name: 'open')
 
-    @job_offer_open = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, name: 'open'))
-    @job_offer_running = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, name: 'running'))
+    @job_offer_open = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :open))
+    @job_offer_running = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running))
 
     visit employer_path(employer)
   end
 
   describe "can be edited" do
     it "by staff members of the employer" do
-      staff = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), employer: employer)
+      staff = FactoryGirl.create(:user, :staff, employer: employer)
       login_as(staff)
       visit employer_path(employer)
 
@@ -28,7 +30,7 @@ describe "the employer page" do
     end
 
     it "by an admin" do
-        admin = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Admin', level: 3))
+        admin = FactoryGirl.create(:user, :admin)
         login_as(admin)
         visit employer_path(employer)
         
