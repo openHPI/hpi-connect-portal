@@ -23,7 +23,6 @@ describe JobOffersController do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
     
-    FactoryGirl.create(:employers_newsletter_information, employer_id: chair.id)
     @epic = FactoryGirl.create(:employer, name:"EPIC")
     @os = FactoryGirl.create(:employer, name:"OS and Middleware")
     @itas = FactoryGirl.create(:employer, name:"Internet and Systems Technologies")
@@ -254,6 +253,8 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
+    FactoryGirl.create(:employers_newsletter_information, employer: employer)
+    FactoryGirl.create(:programming_languages_newsletter_information)
       sign_in responsible_user
     end
     
@@ -277,8 +278,7 @@ describe JobOffersController do
 
       it "sends some emails" do
         post :create, {:job_offer => valid_attributes}, valid_session
-        puts ActionMailer::Base.deliveries
-        ActionMailer::Base.deliveries.count.should > 1
+        ActionMailer::Base.deliveries.count.should >= 2
       end
 
       it "automatically assigns the users employer as the new job offers employer" do

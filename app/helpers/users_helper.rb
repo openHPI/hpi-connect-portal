@@ -44,11 +44,16 @@ module UsersHelper
   end
 
   def update_from_params_for_languages_and_newsletters(params, redirect_to)
+    update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
+    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
+    update_from_params_for_languages(params, redirect_to)
+  end
+
+
+  def update_from_params_for_languages(params, redirect_to)
     update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
 
-    update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "chair_id")
-    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
     if @user.update(user_params)
       respond_and_redirect_to(redirect_to, 'User was successfully updated.')
     else

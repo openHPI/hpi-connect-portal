@@ -15,7 +15,7 @@ en:
     general:
       title: "Title: "
       student: "Student name: "
-      chair: "Chair: "
+      employer: "Employer: "
       staff: "Responsable staff member: "
       room: "Room: "
       duration: "Duration: "

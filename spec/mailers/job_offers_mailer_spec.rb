@@ -182,7 +182,7 @@ describe JobOffersMailer do
             @job_offers.each do
             |job|
             @email.body.should have_content(job.title)
-            @email.body.should have_content(job.chair.name)
+            @email.body.should have_content(job.employer.name)
             @email.body.should have_content(job.room_number)
             @email.body.should have_content(job.start_date)
             @email.body.should have_content(job.end_date)

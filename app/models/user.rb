@@ -54,6 +54,8 @@ class User < ActiveRecord::Base
     accepts_nested_attributes_for :programming_languages
     has_many :languages_users
     has_many :languages, :through => :languages_users
+    has_many :possible_employers, :through => :employers_newsletter_information
+    has_many :possible_programming_language, :through => :programming_languages_newsletter_information 
     accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile

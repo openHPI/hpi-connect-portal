@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20140122153833) do
 
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
-  create_table "employers_newsletter_information", force: true do |t|
+  create_table "employers_newsletter_informations", force: true do |t|
     t.integer "user_id"
     t.integer "employer_id"
   end

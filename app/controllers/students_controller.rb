@@ -33,7 +33,7 @@ class StudentsController < ApplicationController
   def edit
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
-    @all_chairs = Chair.all
+    @all_employers = Employer.all
   end
 
   # PATCH/PUT /students/1

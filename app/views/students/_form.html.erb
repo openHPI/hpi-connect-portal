@@ -313,27 +313,27 @@
         </ul>
       </div>
     <div class="panel panel-default">
-    <div class="panel-heading"  data-toggle="collapse" data-target="#chair_newsletter"><h4><%= t("students.chairs_newsletter") %></h4></div>
-      <div id="chair_newsletter" class="panel-collapse collapse">
+    <div class="panel-heading"  data-toggle="collapse" data-target="#employer_newsletter"><h4><%= t("students.employers_newsletter") %></h4></div>
+      <div id="employer_newsletter" class="panel-collapse collapse">
         <%= fields_for :employers_newsletter_information do |f2| %>
-        <% if @all_chairs %>
-          <% @all_chairs.each do |chair| %>
+        <% if @all_employers %>
+          <% @all_employers.each do |employer| %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-9">
                 <%# Erstelle ein Label fuer jede Programmiersprache %>
-                <%= f2.label chair.name, class: "control-label" %>
+                <%= f2.label employer.name, class: "control-label" %>
                 </div>
                 <div class="col-sm-3">
                   <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                   <% if !@user.new_record? %>
-                    <% pl = EmployersNewsletterInformation.find_by_user_id_and_chair_id(@user.id,chair.id) %>
+                    <% pl = EmployersNewsletterInformation.find_by_user_id_and_employer_id(@user.id,employer.id) %>
                   <% end %>
                     <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                       <% if pl %>
-                        <%= f2.check_box chair.id, :checked => "checked"%>
+                        <%= f2.check_box employer.id, :checked => "checked"%>
                       <% else %>
-                          <%= f2.check_box chair.id %>
+                          <%= f2.check_box employer.id %>
                       <% end %>
                   </div>
                 </div>    
