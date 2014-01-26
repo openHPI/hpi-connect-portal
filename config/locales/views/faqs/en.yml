@@ -4,5 +4,5 @@ en:
     new_faq: "New FAQ"
     new_faq_error: "You are not authorized to create a new FAQ"
     back_to_faqs: "Back to FAQs"
-    edit: "Editing FAQ"
+    edit: "Editing FAQs"
     edit_faq_error: "You are not authorized to edit a FAQ"
