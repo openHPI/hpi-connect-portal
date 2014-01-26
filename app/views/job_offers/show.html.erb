@@ -101,7 +101,7 @@
                   <%= @job_offer.end_date %>
                   <% if can? :prolong, @job_offer %>
                     <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
-                      <%= f.text_field :end_date, label: false, class: 'datepicker form-control' %>
+                      <%= f.text_field :end_date, class: 'datepicker form-control' %>
                       <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
                     <% end %>
                   <% end %>
@@ -136,7 +136,7 @@
                   <%= t("activerecord.attribute.job_offer.contact") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= mail_to  @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
+                  <%= mail_to @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
                 </div>
               </div>
             </li>
@@ -209,7 +209,7 @@
           <%= simple_form_for current_user.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
             <div class="modal-body clearfix" data-no-turbolink="true">
               <%= f.input :job_offer_id, as: :hidden %>
-              <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, :rows => 10, :class => "col-md-12"  %>
+              <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, rows: 10, class: "col-md-12 form-control"  %>
               <% unless (current_user.cv.path).nil? %>
                 <br/>
                 <%= check_box_tag :add_cv, nil, true %>

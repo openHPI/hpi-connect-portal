@@ -15,7 +15,7 @@
                   <%= f.label t "activerecord.attributes.employer.name", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.text_field :name, :class => "form-control"%>
+                  <%= f.input :name %>
                   <br>
                   <%= f.label :external do %>
                     <%= f.check_box :external %>
@@ -30,7 +30,7 @@
                   <%= f.label t "activerecord.attributes.employer.head", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.text_field :head, :class => "form-control"%>
+                  <%= f.input :head %>
                 </div>
               </div>
           </div>

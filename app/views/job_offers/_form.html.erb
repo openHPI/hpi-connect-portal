@@ -14,7 +14,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.text_field :title, :class => "form-control"%>
+                  <%= f.input :title %>
                 </div>
               </div>
           </div>
@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col-sm-12" data-no-turbolink="true">
             <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %>
-            <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
+            <%= f.bootsy_area :description, rows: 10, class: "col-md-12 form-control", placeholder: t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
@@ -44,7 +44,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.text_field :room_number, :class => "form-control" %>
+                  <%= f.input :room_number %>
                 </div>
               </div>
             </li>
@@ -54,7 +54,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field  :start_date, :class => 'datepicker form-control', :value => (job_offer.start_date.blank? ? '' : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.blank? ? '' : job_offer.start_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>
@@ -64,7 +64,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :end_date, :class => 'datepicker form-control', :value => (job_offer.end_date.blank? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.blank? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>
@@ -74,7 +74,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :time_effort, :placeholder => t("job_offers.time_effort_description"), :class => "form-control" %>
+                   <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
                 </div>
               </div>
             </li>
@@ -84,7 +84,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :compensation, :placeholder => t("job_offers.compensation_description"), :class => "form-control" %>
+                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description") %>
                 </div>
               </div>
             </li>
