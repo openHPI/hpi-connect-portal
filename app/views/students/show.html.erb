@@ -158,7 +158,7 @@
               <% if !(@user.education).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.user.education")%></td>
-                  <td><%= @user.education.html_safe %></td>
+                  <td><%= escape_javascript(@user.education.html_safe) %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -201,7 +201,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= @user.additional_information.html_safe %>
+                  <%= escape_javascript(@user.additional_information.html_safe) %>
                 </td>
                </tr>
             </tbody>

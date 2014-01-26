@@ -7,15 +7,15 @@ class JobOffersController < ApplicationController
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline]
-  before_action :set_chairs, only: [:index, :find_archived_jobs, :archive]
+  before_action :set_chairs, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_chair, only: [:index, :archive], as: :chair
   has_scope :filter_start_date, only: [:index, :archive], as: :start_date
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort
   has_scope :filter_compensation, only: [:index, :archive], as: :compensation
-  has_scope :filter_programming_languages, type: :array, only: [:index, :archive], as: :programming_language_ids
-  has_scope :filter_languages, type: :array, only: [:index, :archive], as: :language_ids
+  has_scope :filter_programming_languages, type: :array, only: [:index, :archive, :matching], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index, :archive, :matching], as: :language_ids
   has_scope :search, only: [:index, :archive]
 
   # GET /job_offers
@@ -87,6 +87,13 @@ class JobOffersController < ApplicationController
   def archive
     job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(:page => params[:page])
     @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
+  end
+
+  # GET /job_offers/matching
+  def matching
+    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
+    @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
+    render "index"
   end
 
   # GET /job_offer/:id/complete

@@ -8,7 +8,7 @@
 
     <% if !@job_offer.completed? && (user_is_staff_of_chair?(@job_offer) || user_is_admin?)%>
       <span class="pull-right">
-        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:languages => get_language_names, :programming_languages => get_programming_language_names), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
+        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
 
         <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), "data-no-turbolink" => true, :class => "btn btn-default", :disabled => !@job_offer.editable? %> 
         
@@ -55,7 +55,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12">
-          <%= @job_offer.description.html_safe %>
+          <%= escape_javascript(@job_offer.description.html_safe) %>
         </div>
       </div>
     </li>
