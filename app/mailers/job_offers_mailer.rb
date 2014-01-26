@@ -45,7 +45,7 @@ class JobOffersMailer < ActionMailer::Base
   end
 
   def students_by_chair(job_offer, students)
-    students = extract_students(ChairsNewsletterInformation.where("chair_id = ?",job_offer.chair.id), students)
+    students = extract_students(EmployersNewsletterInformation.where("chair_id = ?",job_offer.chair.id), students)
   end
 
   def students_by_programming_language(job_offer, students)

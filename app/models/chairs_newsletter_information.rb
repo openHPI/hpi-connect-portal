@@ -1,2 +1,2 @@
-class ChairsNewsletterInformation < ActiveRecord::Base
+class EmployersNewsletterInformation < ActiveRecord::Base
 end

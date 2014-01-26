@@ -315,7 +315,7 @@
     <div class="panel panel-default">
     <div class="panel-heading"  data-toggle="collapse" data-target="#chair_newsletter"><h4><%= t("students.chairs_newsletter") %></h4></div>
       <div id="chair_newsletter" class="panel-collapse collapse">
-        <%= fields_for :chairs_newsletter_information do |f2| %>
+        <%= fields_for :employers_newsletter_information do |f2| %>
         <% if @all_chairs %>
           <% @all_chairs.each do |chair| %>
             <li class="list-group-item">
@@ -327,7 +327,7 @@
                 <div class="col-sm-3">
                   <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                   <% if !@user.new_record? %>
-                    <% pl = ChairsNewsletterInformation.find_by_user_id_and_chair_id(@user.id,chair.id) %>
+                    <% pl = EmployersNewsletterInformation.find_by_user_id_and_chair_id(@user.id,chair.id) %>
                   <% end %>
                     <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                       <% if pl %>

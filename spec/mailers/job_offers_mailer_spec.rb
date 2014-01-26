@@ -11,9 +11,9 @@ describe JobOffersMailer do
         @student = FactoryGirl.create(:user, email:'student@example.com')
         @student2 = FactoryGirl.create(:user, email:'student123142@example.com')
         @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_student: @student)
-        @job_offer.chair.deputy = FactoryGirl.create(:user)
+        @job_offer.employer.deputy = FactoryGirl.create(:user)
         @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @user2, assigned_student: @student2)
-        @job_offer2.chair.deputy = @user2
+        @job_offer2.employer.deputy = @user2
         @job_offers = [@job_offer, @job_offer2]
         ActionMailer::Base.deliveries = []
     end

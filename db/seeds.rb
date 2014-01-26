@@ -53,100 +53,6 @@ UserStatus.create!([
 	{ name: 'alumni'}
 ])
 
-#Create User as an example deputy for all employers
-User.delete_all
-User.create!([{
-	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
-	lastname: "Kroschk", 
-	firstname: "Axel", 
-	role: Role.where(:name => 'Admin').first	
-}])
-
-User.create!([{
-	email: "johanna.appel@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
-	lastname: "Appel", 
-	firstname: "Johanna", 
-	role: Role.where(:name => 'Admin').first	
-}])
-
-User.create!([{
-	email: "julia.steier@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
-	lastname: "Steier", 
-	firstname: "Julia", 
-	role: Role.where(:name => 'Admin').first	
-}])
-
-User.create!([{
-	email: "tim.specht@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Specht", 
-	firstname: "Tim",
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-}])
-
-User.create!([{
-	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
-	lastname: "Reinhardt", 
-	firstname: "Pascal", 
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-}])
-
-User.create!([{
-	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
-	lastname: "Friedrich", 
-	firstname: "Tim",
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Student').first	
-}])
-
-User.create!([{
-	email: "johannes.koch@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
-	lastname: "Koch", 
-	firstname: "Johannes", 
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Student').first	
-}])
-
-User.create!([{
-	identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
-	email: 'frank.blechschmidt@example.com', 
-	firstname: 'Frank', 
-	lastname: 'Blechschmidt',
-	semester: 5,
-	academic_program: 'Bachelor',
-	birthday: '1990-12-30',
-	education:'Abitur',
-	additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
-	homepage: 'https://twitter.com/FraBle90',
-	github: 'https://github.com/FraBle',
-	facebook: 'https://www.facebook.com/FraBle90',
-	xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
-	linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
-	languages: Language.where(:name => ['english']),
-	languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-	user_status: UserStatus.where(:name => 'employedext').first,
-	role: Role.where(:name => 'Student').first
-
-}])
-
 Employer.delete_all
 Employer.create!([{
 	name: "Enterprise Platform and Integration Concepts",
@@ -226,6 +132,108 @@ Employer.create!([{
 	deputy: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
 	external: true
 }])
+
+
+#Create User as an example deputy for all employers
+User.delete_all
+User.create!([{
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel", 
+	role: Role.where(:name => 'staff').first	
+}])
+
+User.create!([{
+	email: "johanna.appel@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
+	lastname: "Appel", 
+	firstname: "Johanna", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create!([{
+	email: "julia.steier@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
+	lastname: "Steier", 
+	firstname: "Julia", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create!([{
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Specht", 
+	firstname: "Tim",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Staff').first,
+	employer: Employer.where(:name => 'Verwaltung').first
+}])
+
+User.create!([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Reinhardt", 
+	firstname: "Pascal", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Staff').first,
+	employer: Employer.where(:name => 'Business Process Technology').first
+		
+}])
+
+User.create!([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Friedrich", 
+	firstname: "Tim",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create!([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Koch", 
+	firstname: "Johannes", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create!([{
+	identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
+	email: 'frank.blechschmidt@example.com', 
+	firstname: 'Frank', 
+	lastname: 'Blechschmidt',
+	semester: 5,
+	academic_program: 'Bachelor',
+	birthday: '1990-12-30',
+	education:'Abitur',
+	additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+	homepage: 'https://twitter.com/FraBle90',
+	github: 'https://github.com/FraBle',
+	facebook: 'https://www.facebook.com/FraBle90',
+	xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+	linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+	languages: Language.where(:name => ['english']),
+	languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
+	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+	user_status: UserStatus.where(:name => 'employedext').first,
+	role: Role.where(:name => 'Student').first
+
+}])
+
+
+
+
 
 JobOffer.delete_all
 JobOffer.create!([{
@@ -338,5 +346,3 @@ Faq.create!([{
 	question: "Does HPI-HiWi-Portal have an Android app?",
 	answer: "No, the HPI-HiWi-Portal does not have an Android app."
 }])
-
-Employer.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)
