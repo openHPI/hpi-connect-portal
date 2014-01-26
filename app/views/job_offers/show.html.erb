@@ -206,9 +206,9 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
           </div>
-          <%= form_for current_user.applications.build(job_offer_id: @job_offer.id), :html => { :multipart => true } do |f| %>
+          <%= simple_form_for current_user.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
             <div class="modal-body clearfix" data-no-turbolink="true">
-              <%= f.hidden_field :job_offer_id %>
+              <%= f.input :job_offer_id, as: :hidden %>
               <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, :rows => 10, :class => "col-md-12"  %>
               <% unless (current_user.cv.path).nil? %>
                 <br/>
@@ -216,10 +216,10 @@
                 <%= label_tag :add_cv, t("job_offers.add_cv_application") %>
                 <small style="margin-left:10px;"><%= File.basename(current_user.cv.path) %></small>
               <% end %>
-              <%= file_field_tag('attached_files', multiple: true, name: "attached_files[file_attributes][][file]") %>
+              <%= file_field_tag 'attached_files', multiple: true, name: "attached_files[file_attributes][][file]" %>
             </div>
             <div class="modal-footer">
-              <%= f.button t("links.cancel"), class: 'btn btn-default', data: {dismiss: 'modal'} %>
+              <span class="btn btn-default", data-dismiss="modal"><%= t("links.cancel") %></span>
               <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>
             </div>
           <% end %>
@@ -230,9 +230,9 @@
 
   <% unless @application.nil? %>
     <div class="pull-right">
-      <%= form_for(:@application, :url => application_path(@application), :html => {:method => :delete}) do |f| %>
-        <div><%= f.hidden_field :application_id %></div>
-        <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: {confirm: t("applications.delete_confirmation") } %>
+      <%= simple_form_for @application, method: :delete do |f| %>
+        <div><%= f.input :id, as: :hidden %></div>
+        <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: { confirm: t("applications.delete_confirmation") } %>
       <% end %>
     </div>
   <% end %>

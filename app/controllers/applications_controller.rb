@@ -9,7 +9,7 @@ class ApplicationsController < ApplicationController
         if not @job_offer.open?
             flash[:error] = 'This job offer is currently not open.'
         else
-          @application = Application.new(job_offer: @job_offer, user: current_user)
+          @application = Application.new job_offer: @job_offer, user: current_user
           if @application.save
               ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv], params[:attached_files]).deliver
               flash[:success] = 'Applied Successfully!'
@@ -27,9 +27,9 @@ class ApplicationsController < ApplicationController
       if @job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @job_offer).delete_all
         ApplicationsMailer.application_accepted_student_email(@application).deliver
         JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-        respond_and_redirect_to(@job_offer, 'Application was successfully accepted.')
+        respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
       else
-        render_errors_and_action(@job_offer)
+        render_errors_and_action @job_offer
       end
     end
 
@@ -48,7 +48,7 @@ class ApplicationsController < ApplicationController
     def destroy
       @application = Application.find params[:id]
       @application.destroy
-      respond_and_redirect_to(@application.job_offer, 'Application has been successfully deleted.')
+      respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
     end
 
     private
