@@ -16,3 +16,4 @@ de:
         subject: "Neue Bewerbung"
         title: "Es gibt eine neue Bewerbung auf die Stelle %{job_offer}"
         content: "hat sich auf die Stelle %{%job_offer} beworben."
+    last_line: "Viele Grüße das HPI-Hiwi-Portal"

@@ -1,11 +1,17 @@
 de:
-  job_offers_email:
+  job_offers_mailer:
     new_job_offer:
       subject: 'Ein neues Jobangebot wartet auf Freigabe.'
+      title: 'Ein neues Jobangebot wartet auf Freigabe.'
+      content: 'Bitte überprüfen sie das folgende Jobangebot:'
+      link: 'Jobangebot'
     job_offer_declined:
       subject: "Das folgende Jobangebot wurde leider abgelehnt: "
+      title: "Leider wurde ihr Jobangebot %{job_title} abgelehnt."
+      content: "Bei Rückfragen wenden sie sich bitte an den zuständigen Lehrstuhl Mitarbeiter. (%(email))"
     job_offer_accepted:
       subject: "Das Jobangebot wurde freigeschaltet: "
+      content: "Der zuständige Mitarbeiter hat ihr Jobangebot freigeschaltet."
     job_offer_closed:
       subject: "Ein Jobangebot wurde geschlossen"
       title: "Das folgende Jobangebot wurde geschlossen:"
@@ -15,3 +21,4 @@ de:
     student_accepted:
       subject: "Ein Jobangebot wurde vergeben"
       title: "Das folgende Jobangebot wurde vergeben:"
+    duration: "Zeitraum"
