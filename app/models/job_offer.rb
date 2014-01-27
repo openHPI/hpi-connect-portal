@@ -95,7 +95,7 @@ class JobOffer < ActiveRecord::Base
     if self.compensation == 10.0
       I18n.t('job_offers.default_compensation')
     else
-      self.compensation
+      self.compensation.to_s + " " + I18n.t("job_offers.compensation_description")
     end
   end
 end
