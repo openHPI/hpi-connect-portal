@@ -271,13 +271,13 @@ describe StudentsController do
       end
 
       it "updates role to Deputy" do
-        post :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
         assert_equal(@student.reload, @employer.reload.deputy)
         assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Admin" do
-        post :update_role, { student_id: @student.reload.id, role_name: @admin_role.name }, valid_session
+        post :update_role, { student_id: @student.id, role_name: @admin_role.name }, valid_session
         assert_equal(@admin_role, @student.reload.role)
       end
 

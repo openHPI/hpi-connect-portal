@@ -6,7 +6,7 @@ describe JobOffersMailer do
   before(:each) do
     ActionMailer::Base.delivery_method = :test
       ActionMailer::Base.perform_deliveries = true
-      @user = FactoryGirl.create(:user, email:'test@example.com')
+      @user = FactoryGirl.create(:user)
       @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_student: FactoryGirl.create(:user))
     @job_offer.employer.deputy = FactoryGirl.create(:user)
     ActionMailer::Base.deliveries = []
@@ -49,6 +49,11 @@ describe JobOffersMailer do
 
     it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    end
+
+    it "should handle the 'Haustarif'" do
+      @email = JobOffersMailer.job_prolonged_email(FactoryGirl.create(:job_offer, compensation: 10.0)).deliver
+      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
     end
   end
 
@@ -123,6 +128,14 @@ describe JobOffersMailer do
       @email.body.should have_content(@job_offer.end_date)
       @email.body.should have_content(@job_offer.compensation)
     end
+
+    it "should handle the 'Haustarif'" do
+      @job_offer.compensation = 10.0
+      @job_offer.save!
+
+      @email = JobOffersMailer.job_closed_email(@job_offer).deliver
+      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
+    end
   end
 
   describe "responsible user accepted student" do
@@ -152,6 +165,14 @@ describe JobOffersMailer do
       @email.body.should have_content(@job_offer.end_date)
       @email.body.should have_content(@job_offer.compensation)
       @email.body.should have_content(@job_offer.time_effort)
+    end
+
+    it "should handle the 'Haustarif'" do
+      @job_offer.compensation = 10.0
+      @job_offer.save!
+
+      @email = JobOffersMailer.job_student_accepted_email(@job_offer).deliver
+      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
     end
   end
 end

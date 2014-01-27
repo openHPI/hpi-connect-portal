@@ -25,6 +25,10 @@ class ApplicationsController < ApplicationController
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
     if @job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @job_offer).delete_all
+      if @job_offer.flexible_start_date
+        @job_offer.update!({start_date: Date.current})
+      end
+
       ApplicationsMailer.application_accepted_student_email(@application).deliver
       JobOffersMailer.job_student_accepted_email(@job_offer).deliver
       respond_and_redirect_to @job_offer, 'Application was successfully accepted.'

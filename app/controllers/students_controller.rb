@@ -121,7 +121,7 @@ class StudentsController < ApplicationController
         @employer = Employer.find_by_name(employer_name)
       elsif !current_user.employer.nil?
         @employer = current_user.employer
-      else
+      elsif !current_user.admin?
         redirect_to(student_path(user))
         return
       end

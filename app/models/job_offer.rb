@@ -16,10 +16,12 @@
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
 #  assigned_student_id :integer
+#  flexible_start_date :boolean          default(FALSE)
 #
 
 class JobOffer < ActiveRecord::Base
   include Bootsy::Container
+
   before_save :default_values
 
   has_many :applications
@@ -37,7 +39,7 @@ class JobOffer < ActiveRecord::Base
   validates :title, :description, :employer, :start_date, :time_effort, :compensation, presence: true
   validates :compensation, :time_effort, numericality: true
   validates :responsible_user, presence: true
-  validates_datetime :start_date, on_or_after: lambda { Time.now }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
+  validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
   self.per_page = 5
@@ -87,5 +89,13 @@ class JobOffer < ActiveRecord::Base
 
   def editable?
     self.pending? or self.open?
+  end
+
+  def human_readable_compensation
+    if self.compensation == 10.0
+      I18n.t('job_offers.default_compensation')
+    else
+      self.compensation
+    end
   end
 end

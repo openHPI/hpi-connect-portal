@@ -14,7 +14,7 @@ class JobOffersMailer < ActionMailer::Base
   end
 
   def deputy_declined_job_offer_email(job_offer)
-    @job_offer = job_offergit
+    @job_offer = job_offer
     mail(to: @job_offer.responsible_user.email, subject: (t "job_offers_email.job_offer_accepted.subject")+@job_offer.title)
   end
 

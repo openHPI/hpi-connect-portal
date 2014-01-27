@@ -11,7 +11,7 @@ require 'spec_helper'
 #   end
 # end
 describe JobOffersHelper do
-  describe "get names of habtm attributes of a job offer" do
+  describe "get names of attributes of a job offer" do
   	it "gets all programming languages names that belong to job offer" do
   		@programming_language_1 = FactoryGirl.create(:programming_language)
     	@programming_language_2 = FactoryGirl.create(:programming_language)
@@ -29,5 +29,17 @@ describe JobOffersHelper do
       result = get_language_names
       assert_equal(result,[t("languages."+@language_1.name), t("languages."+@language_2.name)])
   	end
+  end
+
+  describe "auto-value conversion" do
+    it "returns the 'Haustarif' translation when the compensation is 10" do
+      @job_offer = FactoryGirl.create(:job_offer, compensation: 10)
+      assert_equal(human_readable_compensation, I18n.t('job_offers.default_compensation'))
+    end
+
+    it "returns the actual compensation if it is not 10" do
+      @job_offer = FactoryGirl.create(:job_offer, compensation: 11)
+      assert_equal(human_readable_compensation, @job_offer.compensation)
+    end
   end
 end

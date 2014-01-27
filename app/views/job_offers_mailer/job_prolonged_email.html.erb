@@ -6,5 +6,5 @@
       <li>Responsible staff member: <%= @job_offer.employer.name %></li>
       <li>Room: <%= @job_offer.room_number %></li>
       <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
-      <li>Salary: <%= @job_offer.compensation %></li>
+      <li>Salary: <%= @job_offer.human_readable_compensation %></li>
     </ul>

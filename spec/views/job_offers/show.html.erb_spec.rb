@@ -40,4 +40,22 @@ describe "job_offers/show" do
 
     rendered.should_not match(/Edit/)
   end
+
+  it "renders the default compensation text if applicable" do
+    @job_offer.compensation = 10.0
+    @job_offer.save
+
+    render
+
+    rendered.should match(I18n.t('job_offers.default_compensation'))
+  end
+
+  it "renders the actual compensation if its not the default one" do
+    @job_offer.compensation = 11.0
+    @job_offer.save
+
+    render
+
+    rendered.should match(@job_offer.compensation.to_s)
+  end
 end

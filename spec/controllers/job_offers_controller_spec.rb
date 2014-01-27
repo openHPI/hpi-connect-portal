@@ -274,6 +274,29 @@ describe JobOffersController do
         expect(offer.employer).to eq(responsible_user.employer)
       end
 
+      it "automatically converts 'Haustarif'" do
+        attributes = valid_attributes
+        attributes["compensation"] = I18n.t('job_offers.default_compensation')
+
+        post :create, {:job_offer => attributes}, valid_session
+        assigns(:job_offer).should be_a(JobOffer)
+        assigns(:job_offer).should be_persisted
+        offer = JobOffer.last
+        assert_equal(offer.compensation, 10.0)
+      end
+
+      it "automatically converts 'ab sofort' as a start date" do
+        attributes = valid_attributes
+        attributes["start_date"] = I18n.t('job_offers.default_startdate')
+
+        post :create, {:job_offer => attributes}, valid_session
+        assigns(:job_offer).should be_a(JobOffer)
+        assigns(:job_offer).should be_persisted
+        offer = JobOffer.last
+        assert_equal(offer.start_date, Date.current + 1)
+        assert_equal(offer.flexible_start_date, true)
+      end
+
     end
 
     describe "with invalid params" do

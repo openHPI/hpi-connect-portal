@@ -54,7 +54,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.blank? ? '' : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.blank? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>
@@ -84,7 +84,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description") %>
+                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: {value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation)} %>
                 </div>
               </div>
             </li>
