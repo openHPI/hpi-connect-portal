@@ -47,4 +47,5 @@ en:
     required_programming_languages: "required programming languages"
     required_languages: "required languages"
     prolong: "Prolong"
-
+    default_compensation: "Standard compensation"
+    default_startdate: "From now on"

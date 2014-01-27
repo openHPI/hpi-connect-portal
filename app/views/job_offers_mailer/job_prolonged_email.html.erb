@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
+
     <h3><%= t("job_offers_email.job_offer_prolonged.title") %> <%= @job_offer.end_date %>:</h3>
     <ul>
       <li>Title: <%= @job_offer.title %></li>
       <li>Employer: <%= @job_offer.employer.name %></li>
-      <li>Responsible staff member: <%= @job_offer.responsible_user.email %></li>
+      <li>Responsible staff member: <%= @job_offer.employer.name %></li>
       <li>Room: <%= @job_offer.room_number %></li>
       <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
-      <li>Salary: <%= @job_offer.compensation %></li>
+      <li>Salary: <%= @job_offer.human_readable_compensation %></li>
     </ul>
-  </body>
-</html>

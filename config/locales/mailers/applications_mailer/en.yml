@@ -16,3 +16,4 @@ en:
         subject: "New application"
         title: "A new application for the job offer %{job_offer} is pending" 
         content: "has applied for the job offer %{job_offer}."
+    last_line: "Greetings from the HPI-Hiwi-Portal"

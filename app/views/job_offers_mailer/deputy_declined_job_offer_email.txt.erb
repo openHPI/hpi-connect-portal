@@ -1,4 +1,6 @@
-<%= t "job_offers_mailer.deputy_declined.title"+" ("+@job_offer.title+")" %>
+<%= t "job_offers_mailer.job_offer_declined.title", job_title: @application.job_offer.title %>
 
 
-<%= t "job_offers_mailer.deputy_declined.content" %>
+<%= t "job_offers_mailer.job_offer_declined.content" %>
+
+<%= t "applications_mailer.last_line" %>

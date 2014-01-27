@@ -12,9 +12,10 @@ en:
         room_number: "Room number"
         programming_languages: "Programming languages"
         languages: "Languages"
+        requirements: "Requirements"
         additional_information: "Additional Information"
         general_information: "General Information"
+        responsible_user: "Responsible user"
     errors:
       messages:
         in_future: "has to be in the future."
-

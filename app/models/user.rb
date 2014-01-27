@@ -119,19 +119,26 @@ class User < ActiveRecord::Base
   end
 
   def student?
-    role && role.name == 'Student'
+    role && role.student_role?
   end
 
   def staff?
-    role && role.name == 'Staff'
+    role && role.staff_role?
   end
 
   def admin?
-    role && role.name == 'Admin'
+    role && role.admin_role?
   end
 
-  def deputy?
-    role && role.name == 'Deputy'
+  def promote(new_role, employer=nil, should_be_deputy=false)
+    if !employer.nil?
+      self.update!(employer: employer, role: new_role)
+      if should_be_deputy
+        employer.update!(deputy: self)
+      end
+    else
+      self.update!(role: new_role)
+    end
   end
 
   def self.build_from_identity_url(identity_url)

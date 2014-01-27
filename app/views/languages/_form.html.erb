@@ -1,10 +1,10 @@
-<%= form_for(language) do |f| %>
+<%= simple_form_for language do |f| %>
 
   <%= render 'shared/object_errors', object: language %>
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.input :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

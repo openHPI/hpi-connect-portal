@@ -47,4 +47,6 @@ de:
     required_programming_languages: "erforderliche Programmiersprachkenntnisse"
     required_languages: "erforderliche Sprachkenntnisse"
     prolong: "Verlängern"
+    default_compensation: "Haustarif"
+    default_startdate: "Ab sofort"
 

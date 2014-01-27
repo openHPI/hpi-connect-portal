@@ -101,6 +101,16 @@ describe ApplicationsController do
       get :accept, {:id => @application.id}
       response.should redirect_to(@application.job_offer)
     end
+
+    it "updates the job offers start date to the current date if it is 'from now on'" do
+      @job_offer.flexible_start_date = true
+      @job_offer.save!
+
+      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+
+      get :accept, {:id => @application.id}
+      assert_equal(@job_offer.reload.start_date, Date.current)
+    end
   end
 
   describe "POST create" do

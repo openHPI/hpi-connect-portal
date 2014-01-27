@@ -57,7 +57,9 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params, status: JobStatus.pending)
+    parameters = job_offer_params
+    
+    @job_offer = JobOffer.new(parameters, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     @job_offer.employer = current_user.employer
 
@@ -65,6 +67,9 @@ class JobOffersController < ApplicationController
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
       respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
     else
+      if parameters[:flexible_start_date]
+        @job_offer.flexible_start_date = true
+      end
       render_errors_and_action(@job_offer, 'new')
     end
   end
@@ -156,8 +161,19 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
+
+      if parameters[:compensation] == I18n.t('job_offers.default_compensation')
+        parameters[:compensation] = 10.0
+      end
+
+      if parameters[:start_date] == I18n.t('job_offers.default_startdate')
+        parameters[:start_date] = (Date.current + 1).to_s
+        parameters[:flexible_start_date] = true
+      end
+
+      parameters
     end
 
     def check_user_can_create_jobs
