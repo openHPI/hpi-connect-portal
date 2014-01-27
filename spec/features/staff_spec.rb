@@ -39,7 +39,7 @@ describe "the staff page" do
     login_as(@staff1, :scope => :user)
     visit staff_index_path
     current_path.should_not == staff_index_path
-    current_path.should == root_path
+    current_path.should == job_offers_path
   end
 
 describe "the staffs profile page" do

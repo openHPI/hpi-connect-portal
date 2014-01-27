@@ -1,0 +1,77 @@
+<br>
+
+<div class="row">
+  <div class="col-sm-2">
+    <%= image_tag("hpi-logo.png", height: '86', width: '86') %>
+  </div>
+  <div class="col-sm-10">
+    <h1>HPI-HiWi-Portal</h1>
+  </div>
+</div>
+
+<br><br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("users.login_headline") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { id: 'sign_in_form'} do |f| %>
+            <p><%= f.label :identity_url, t("login_page.login_prompt") %></p>
+            https://openid.hpi.uni-potsdam.de/user/ <%= f.text_field :username, id: 'username_field' %>
+
+            <%= f.hidden_field :identity_url, id: 'url_field', value: "https://openid.hpi.uni-potsdam.de/user/#{resource.username}" %>
+
+            <%= f.submit t("users.sign_in") %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("login_page.hpi_hiwi_portal_headline") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= t("login_page.hpi_hiwi_portal_description") %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("login_page.hpi_headline") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= t("login_page.hpi_description") %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("login_page.external_headline") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= t("login_page.external_description") %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

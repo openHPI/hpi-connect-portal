@@ -1,10 +1,10 @@
 HpiHiwiPortal::Application.routes.draw do
-  get "imprint/index"
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   scope "(:locale)", locale: /en|de/ do
 
+  get "imprint/index"
   resources :user_statuses
-    root :to => "job_offers#index"
+    root :to => "login_page#index"
 
     resources :job_offers do
       collection do
