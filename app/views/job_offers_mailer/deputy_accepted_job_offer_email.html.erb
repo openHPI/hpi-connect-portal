@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1><%= t "job_offers_mailer.deputy_accepted.title"+" ("+@job_offer.title+")" %></h1>
-    <p>
-      <%= t "job_offers_mailer.deputy_accepted.content" %>
-    </p>
-  </body>
-</html>
+<h1><%= t "job_offers_mailer.job_offer_accepted.title"+" ("+@job_offer.title+")" %></h1>
+<p>
+    <%= t "job_offers_mailer.job_offer_accepted.content" %>
+</p>
+<p> 
+	<%= t "applications_mailer.last_line" %>
+</p>

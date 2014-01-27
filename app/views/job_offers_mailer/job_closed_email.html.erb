@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h3>The following job has been marked as completed:</h3>
-    <ul>
-      <li>Title: <%= @job_offer.title %></li>
-      <li>Student name: <%= @job_offer.assigned_student.email %></li>
-      <li>Chair: <%= @job_offer.chair.name %></li>
-      <li>Responsible staff member: <%= @job_offer.responsible_user.email %></li>
-      <li>Room: <%= @job_offer.room_number %></li>
-      <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
-      <li>Salary: <%= @job_offer.compensation %></li>
-    </ul>
-  </body>
-</html>
+<h3><%= t "job_offers_mailer.job_offer_closed.title"+" ("+@job_offer.title+")" %></h3>
+<ul>
+  <li><%= t "activerecord.attributes.job_offer.title" %>: <%= @job_offer.title %></li>
+  <li>Email: <%= @job_offer.assigned_student.email %></li>
+  <li><%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %></li>
+  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
+  <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
+  <li><%= t "applications_mailer.duration" %>: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
+  <li><%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %></li>
+</ul>
+<p> 
+  <%= t "applications_mailer.last_line" %>
+</p>

@@ -28,7 +28,7 @@ gem 'turbolinks', '~> 2.1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0.2'
 
-# Create filters Easily with scopes
+# Create filters easily with scopes
 gem 'has_scope'
 
 # Annotate database fields to model files
@@ -63,7 +63,6 @@ gem 'bootstrap-rails-engine'
 gem 'simple-navigation', '~> 3.11'
 
 # authentication including support for oauth
-
 gem 'devise', '~> 3.2'
 gem 'devise_openid_authenticatable', '~> 1.1.5'
 
@@ -95,7 +94,7 @@ gem 'capybara'
 gem 'factory_girl'
 
 #replacement for glyphicons
-gem "font-awesome-rails", '~> 4.0.3.1'
+gem 'font-awesome-rails', '~> 4.0.3.1'
 
 # pagination
 gem 'will_paginate', '~> 3.0'
@@ -110,8 +109,8 @@ gem 'simple_form'
 # WYSIWYG Text Editor
 gem 'bootsy'
 
-#Birthdate validation
-gem "chronic", '~> 0.10.2'
+# Birthdate validation
+gem 'chronic', '~> 0.10.2'
 
 group :test do
   gem 'email_spec'

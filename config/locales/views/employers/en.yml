@@ -1,0 +1,15 @@
+en:
+    employers:
+        employer: "Employer"
+        employers: "Employers"
+        employer_overview_internal: "Listing of chairs"
+        employer_overview_external: "Listing of external employers"
+        editing_employer: "Editing Employer"
+        new_employer: "New Employer"
+        staff: Staff
+        open: Open
+        running: Running
+        general_information: "General Information"
+        open_job_offers: "Open Job offers"
+        running_job_offers: "Running Job offers"
+        external: "External"

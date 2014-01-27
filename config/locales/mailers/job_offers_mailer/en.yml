@@ -1,14 +1,24 @@
 en:
-  job_offers_email:
+  job_offers_mailer:
     new_job_offer:
       subject: 'A new job offer is pending'
+      title: 'A new job offer is pending'
+      content: 'Please accept or decline the follwoing Job Offer:'
+      link: 'Job Offer'
     job_offer_declined:
       subject: "The following job offer has been declined through the deputy: "
+      title: "Your Job Offer %{job_title} has been declined through the deputy."
+      content: "In case of questions please ask the responsible staff member. (%(email))"
     job_offer_accepted:
       subject: "The following job offer has been accepted through the deputy: "
+      content: "The deputy has accepted your job offer."
     job_offer_closed:
       subject: "A job has been closed"
       title: "The following job has been marked as closed:"
+    job_offer_prolonged:
+      subject: "A job has been prolonged"
+      title: "The following job offer has been prolonged and will end "
     student_accepted:
       subject: "A job has been assigned"
       title: "The following job has been assigned to a student:"
+    duration: "Duration"

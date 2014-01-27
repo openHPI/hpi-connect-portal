@@ -4,7 +4,7 @@ en:
       accepted:
         subject: "Congratulations! Your application has been accepted!"
         title: "Congratulations!"
-        content: "Your application to the job offer %{job_title} at the chair %{chair} has been accepted"
+        content: "Your application to the job offer %{job_title} offered by %{employer} has been accepted"
       declined:
         subject: "Unfortunately a application has been declined"
         title: "Unfortunately a application has been declined"
@@ -16,3 +16,4 @@ en:
         subject: "New application"
         title: "A new application for the job offer %{job_offer} is pending" 
         content: "has applied for the job offer %{job_offer}."
+    last_line: "Greetings from the HPI-Hiwi-Portal"

@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    attributes:
+      employer:
+        deputy: "deputy"
+        description: "description"
+        head: "head"
+        name: "name"

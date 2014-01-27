@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: programming_languages_users
+#
+#  id                      :integer          not null, primary key
+#  user_id                 :integer
+#  programming_language_id :integer
+#  skill                   :integer
+#
+
 FactoryGirl.define do
   factory :programming_languages_user do
     association :user

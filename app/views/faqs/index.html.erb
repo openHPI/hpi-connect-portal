@@ -6,10 +6,10 @@
         <%= link_to t("faqs.new_faq"), new_faq_path,"data-no-turbolink" => true, :class => "btn btn-default", :style => "margin-bottom: 20px"%>
       </span>
     <% end %>
-  </h1> 
-  <br>  
+  </h1>
+  <br>
 </div>
-  
+
 <div class="container">
   <% @faqs.each_with_index do |faq, index| %>
     <div class="panel-group" id="accordion">
@@ -29,7 +29,7 @@
               <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
             <% end %>
             <% if signed_in? && can?(:delete, faq) %>
-              <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
+              <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-danger"%>
             <% end %>
             <br>
           </div>

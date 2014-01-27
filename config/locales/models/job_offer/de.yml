@@ -4,7 +4,7 @@ de:
       job_offer:
         description: "Beschreibung"
         title: "Titel"
-        chair: "Lehrstuhl"
+        employer: "Arbeitgeber"
         start_date: "Anfangsdatum"
         end_date: "Enddatum"
         time_effort: "Zeitaufwand"
@@ -15,3 +15,6 @@ de:
         general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Information"
         requirements: "Anforderungen"
+    errors:
+      messages:
+        in_future: "muss in der Zukunft liegen."
