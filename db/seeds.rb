@@ -104,8 +104,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
@@ -124,8 +124,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
@@ -144,8 +144,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "tim.specht@student.hpi.uni-potsdam.de", 
@@ -164,8 +164,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "julia.steier@student.hpi.uni-potsdam.de", 
@@ -181,8 +181,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "johanna.appel@student.hpi.uni-potsdam.de", 
@@ -198,12 +198,12 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "dummy1@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy1", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -215,12 +215,12 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "dummy2@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy2", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -232,12 +232,12 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "dummy3@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy3", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -249,12 +249,12 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
 	email: "dummy4@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy4", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -267,12 +267,12 @@ employer = Employer.new(
 	external: true
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 user = User.new(
-	email: "dummy4@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	email: "dummy5@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy5", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -284,8 +284,8 @@ employer = Employer.new(
 	deputy: user
 )
 user.employer = employer
-employer.save
-user.save
+employer.save!
+user.save!
 
 JobOffer.delete_all
 JobOffer.create!([{

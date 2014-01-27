@@ -61,7 +61,9 @@ class JobOffersController < ApplicationController
     
     @job_offer = JobOffer.new(parameters, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
-    @job_offer.employer = current_user.employer
+    if !parameters[:employer_id]
+      @job_offer.employer = current_user.employer
+    end
 
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
