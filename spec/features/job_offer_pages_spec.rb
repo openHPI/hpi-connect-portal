@@ -131,7 +131,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'}
+        it { should have_link 'Reopen job offer'}
 
         it "shows the assigned students" do
           page.should have_content(
@@ -150,7 +150,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'} 
+        it { should have_link 'Reopen job offer'} 
       end
     end
 
@@ -265,7 +265,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link('reopen Job Offer') }
+        it { should have_link('Reopen job offer') }
 
       end   
 
@@ -277,7 +277,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link('reopen Job Offer') }
+        it { should have_link('Reopen job offer') }
 
       end     
     end

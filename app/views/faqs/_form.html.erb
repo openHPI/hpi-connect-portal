@@ -28,6 +28,7 @@
         </div>
       </div>
     </div>
+    <%= f.hidden_field :locale, :value => locale.to_s %>
     <br>
     <div class="actions">
       <%= f.submit t("links.save"), :class => "btn btn-default" %>
