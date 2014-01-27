@@ -224,18 +224,20 @@ describe StudentsController do
     end
   end
 
-  describe "PUT update_role" do
+  describe "POST update_role" do
     before(:each) do
-        @student_role = FactoryGirl.create(:role)
-        @student = FactoryGirl.create(:user, :student)
+        @student_role = FactoryGirl.create(:role, :student)
+        @student = FactoryGirl.create(:user, :student, employer: FactoryGirl.create(:employer))
         @staff_role = FactoryGirl.create(:role, :staff)
         @admin_role = FactoryGirl.create(:role, :admin)
         @employer = FactoryGirl.create(:employer)
     end
 
-    describe "current user is deputy" do
+
+
+    describe "beeing the employers deputy" do
       before(:each) do
-        sign_in FactoryGirl.create(:user, :staff, employer: @employer)
+        sign_in @employer.deputy
       end
 
       it "updates role to Staff" do
@@ -245,32 +247,56 @@ describe StudentsController do
       end
 
       it "updates role to Deputy" do
-        put :update_role, { student_id: @student.id, role_name: "Deputy" }, valid_session
+        post :update_role, { student_id: @student.id, role_name: "Deputy" }, valid_session
         assert_equal(@student, @employer.deputy)
+      end
+
+      it "redirects to student page when invalid new role is transmitted" do
+        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
+        response.should redirect_to(student_path(@student))
       end
     end
  
-    describe "current user is Admin" do
+    describe "beeing an admin" do
       before(:each) do
         sign_in FactoryGirl.create(:user, :admin)
       end
 
       it "updates role to Staff" do
-        put :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_name: @employer.name }, valid_session
         assert_equal(@staff_role, @student.reload.role)
         assert_equal(@employer, @student.reload.employer)
       end
 
       it "updates role to Deputy" do
-        put :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
         assert_equal(@student.reload, @employer.reload.deputy)
         assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Admin" do
-        put :update_role, { student_id: @student.reload.id, role_name: @admin_role.name }, valid_session
+        post :update_role, { student_id: @student.reload.id, role_name: @admin_role.name }, valid_session
         assert_equal(@admin_role, @student.reload.role)
       end
+
+      it "redirects to student page when invalid new role is transmitted" do
+        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
+        response.should redirect_to(student_path(@student))
+      end
     end
+
+    describe "beeing a student" do
+      
+        before(:each) do
+          sign_in FactoryGirl.create(:user, :student)
+        end
+
+      it "should not allow updating the role" do
+        post :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        response.should redirect_to(student_path(@student))
+      end
+
+    end
+
   end
 end
