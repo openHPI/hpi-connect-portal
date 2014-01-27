@@ -203,7 +203,7 @@ user.save
 
 user = User.new(
 	email: "dummy1@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy1", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -220,7 +220,7 @@ user.save
 
 user = User.new(
 	email: "dummy2@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy2", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -237,7 +237,7 @@ user.save
 
 user = User.new(
 	email: "dummy3@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy3", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -254,7 +254,7 @@ user.save
 
 user = User.new(
 	email: "dummy4@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy4", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
@@ -271,8 +271,8 @@ employer.save
 user.save
 
 user = User.new(
-	email: "dummy4@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy", 
+	email: "dummy5@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy5", 
 	lastname: "dummy", 
 	firstname: "dummy", 
 	role: Role.where(:name => 'Staff').first	
