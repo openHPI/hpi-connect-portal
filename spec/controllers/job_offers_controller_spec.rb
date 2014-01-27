@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe JobOffersController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   let(:assigned_student) { FactoryGirl.create(:user) }
   let(:employer) { FactoryGirl.create(:employer) }
   let(:responsible_user) { FactoryGirl.create(:user, employer: employer, role: FactoryGirl.create(:role, :staff)) }

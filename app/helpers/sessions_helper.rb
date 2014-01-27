@@ -9,6 +9,6 @@ module SessionsHelper
   end
 
   def signed_in_user
-    store_location and redirect_to new_user_session_path, notice: "Please sign in." unless signed_in?
+    redirect_to new_user_session_path, notice: "Please sign in." unless signed_in?
   end
 end

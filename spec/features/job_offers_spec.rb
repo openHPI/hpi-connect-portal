@@ -3,6 +3,10 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
+
+    @student1 = FactoryGirl.create(:user)
+    login_as(@student1, :scope => :user)
+
     @epic = FactoryGirl.create(:employer, name:"EPIC")
     @open = FactoryGirl.create(:job_status, name:"open")
     @test_employer = FactoryGirl.create(:employer)
@@ -47,6 +51,9 @@ end
 describe "a job offer entry" do
 
   before(:each) do
+    @student1 = FactoryGirl.create(:user)
+    login_as(@student1, :scope => :user)
+
     @employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
     @job_offer = FactoryGirl.create(:job_offer, 
@@ -72,6 +79,8 @@ end
 
 describe "job_offers_history" do
   before do
+    @student1 = FactoryGirl.create(:user)
+    login_as(@student1, :scope => :user)
     @employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
     @status = FactoryGirl.create(:job_status, :completed)
