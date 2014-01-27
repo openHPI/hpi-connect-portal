@@ -289,9 +289,9 @@ describe StudentsController do
 
     describe "beeing a student" do
       
-        before(:each) do
-          sign_in FactoryGirl.create(:user, :student)
-        end
+      before(:each) do
+        sign_in FactoryGirl.create(:user, :student)
+      end
 
       it "should not allow updating the role" do
         post :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
