@@ -37,53 +37,61 @@
     <%= javascript_include_tag "application" %>
   </head>
   <body>
-
     <div class="navbar navbar-inverse" role="navigation">
       <div class="navbar-header">
         <%= link_to image_tag("hpi-logo.png", :class=>"logo") + "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
       </div>
       <div class="container navbar-collapse">
+        
+        <!-- left -->
         <ul class="nav navbar-nav">
-              <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
-              <% if not user_is_admin? %>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.internal_employers') %> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <% @employers = Employer.internal %>
-                      <% @employers.each do |employer| %>
-                      <li><%= link_to employer.name, employer %></li>
-                    <% end %>
-                  </ul>
-                </li>
-
-                <li><%= link_to t('layouts.external_employers'), external_employers_path %></li>
-              <%end %>
-              <% if user_is_staff? %>
-                <li><%= link_to t('layouts.students'), students_path %></li>
-              <%end %>
-              <% if user_is_admin? %>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= t('layouts.overview') %> <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><%= link_to t('layouts.students'), students_path %></li>
-                    <li><%= link_to t('layouts.staff'), staff_index_path %></li>
-                    <li><%= link_to t('layouts.employers'), employers_path %></li>
-                  </ul>
-                </li>
-              <%end %>
-        </ul>
-        <p class="navbar-text pull-right">
+          <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
           <% if user_signed_in? %>
-            <%= image_tag(current_user.photo.url, size: "40", class: "img-thumbnail")  %>
-            <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
-            <%= link_to t("layouts.my_profile"), edit_user_path(current_user), :class => 'navbar-link' %>
-            <% if user_is_staff? && current_user.employer%>
-              <%= link_to t('layouts.my_employer'), current_user.employer, :class => 'navbar-link' %>
-            <% end %> |
-            <%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-          <% else %>
-            <%= link_to t("layouts.login"), new_user_session_path, :class => 'navbar-link'  %>
+            <%= render :partial => "layouts/navigation/#{current_user.role.name.downcase}" %>
           <% end %>
+        </ul>
+
+        <!-- right -->
+        <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <strong><%= "#{current_user.firstname} #{current_user.lastname}"%></strong>
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                  <li><%= link_to t('layouts.my_profile'), edit_user_path(current_user) %></li>
+                  <% if current_user.employer%>
+                    <li><%= link_to t('layouts.my_employer'), current_user.employer %></li>
+                  <% end %>
+                  <li><%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete %>
+                </ul>
+            </li>
+            
+            <li> <a href="<%= user_path(current_user) %>" class="profile-picture">
+              <div class="center-cropped thumbnail" 
+                 style="background-image: url('<%= "http://#{request.host_with_port}/#{current_user.photo.url}" %>');">
+                  <%= image_tag(current_user.photo.url, size: "100")  %>
+              </div></a>
+            </li>
+
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <!-- <span class="caret"></span> -->
+                <i class="<%= @flagnames[I18n.locale] %>"></i> <%= I18n.locale %>
+              </a>
+              <ul class="dropdown-menu">
+                <% I18n.available_locales.each do |l| %>
+                  <li> <%= link_to raw("<i class=#{@flagnames[l]}></i> #{l}"), :locale=>l%></li>
+                <% end %>
+                <!-- <li><a href="#"><i class="famfamfam-flag-de"></i> Deutsch</a></li> -->
+                <!-- <li><a href="#"><i class="famfamfam-flag-gb"></i> English</a></li> -->
+            </ul>
+          </li>
+          <% else %>
+            <li><%= link_to t("layouts.login"), new_user_session_path %> </li>
+          <% end %>
+        </ul>
       </div><!--/.navbar-collapse -->
     </div>
 
@@ -97,15 +105,20 @@
         </div>
       </div><!--/row-->
 
-      <footer>
-        <tr>
-          <td>&copy; <%= t("layouts.project") %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.faqs"), faqs_path %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
-        </tr>
-      </footer>
+      
+      <div id="main" class="navbar navbar-default navbar-fixed-bottom">
+        <p>
+          <tr>
+            <td>&copy; <%= t("layouts.project") %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+          </tr>
+        </p>
+      </div>
+
+     
 
     </div> <!-- /container -->
 

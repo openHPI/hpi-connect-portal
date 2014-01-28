@@ -1,4 +1,5 @@
 class UserStatusesController < ApplicationController
+  include ApplicationHelper
   before_action :set_user_status, only: [:show, :edit, :update, :destroy]
 
   # GET /user_statuses

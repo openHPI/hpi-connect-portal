@@ -1,5 +1,6 @@
 class StaffController < ApplicationController
   include UsersHelper
+  include ApplicationHelper
 
   before_filter :check_user_can_index_staff, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
@@ -15,7 +16,10 @@ class StaffController < ApplicationController
   # GET /staff/1
   # GET /staff/1.json
   def show
-    @user = User.staff.find params[:id]
+    @user = User.find params[:id]
+    if not @user.staff?
+      redirect_to user_path
+    end
   end
 
   # GET /staff/1/edit

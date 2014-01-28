@@ -17,3 +17,5 @@ en:
     imprint: "Imprint"
     internal_employers: "Chairs"
     external_employers: "External employers"
+    imprint: "About"
+    asterisk_description: "Fields marked with * are obligated"
