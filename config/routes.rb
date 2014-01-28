@@ -23,7 +23,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :employers
 
-  resources :users, only: [:edit, :update]
+  #resources :users, only: [:edit, :update]
 
   resources :applications, only: [:create, :destroy] do
     member do
@@ -37,7 +37,7 @@ HpiHiwiPortal::Application.routes.draw do
   resources :programming_languages
   resources :languages
 
-  resources :users
+  #resources :users, only: []
   resources :user_statuses
 
   resources :studentsearch
