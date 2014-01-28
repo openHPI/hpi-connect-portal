@@ -9,8 +9,9 @@ class ApplicationsMailer < ActionMailer::Base
     send_mail_for_application_to_user(application, (t "applications_mailer.students.declined.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
   end
   def new_application_notification_email(application, message = t("applications_mailer.wimi.new_application.content") , add_cv = false, attached_files = nil)
-    if(!application.user.cv.path.nil?) and !add_cv.nil?
-      attachments[application.user.cv_file_name] = File.read(application.user.cv.path)
+    user = application.user
+    if(!user.cv.path.nil?) and !add_cv.nil?
+      attachments[user.cv_file_name] = File.read(user.cv.path)
     end
     if !attached_files.nil?
       attached_files[:file_attributes].each do | file |

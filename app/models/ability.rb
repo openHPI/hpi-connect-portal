@@ -19,6 +19,8 @@ class Ability
   end
 
   def initialize_staff(user, employer_id)
+    user_id = user.id
+    
     can :edit, Employer, id: user.employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
@@ -27,12 +29,12 @@ class Ability
 
     can [:create, :complete, :reopen], JobOffer, employer_id: employer_id
 
-    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
-    can [:update, :destroy, :prolong], JobOffer, employer: { deputy_id: user.id }
-    can [:accept, :decline], Application, responsible_user_id: user.id
+    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy, :prolong], JobOffer, employer: { deputy_id: user_id }
+    can [:accept, :decline], Application, responsible_user_id: user_id
 
-    can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user.id }
-    can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user.id }
+    can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user_id }
+    can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
     can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end
 end
