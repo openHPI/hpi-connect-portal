@@ -7,6 +7,6 @@ de:
     deputy_declined:
       title: "Leider wurde ihr Jobangebot abgelehnt."
       content: "Das von Ihnen erstellte Jobangebot konnte leider nicht freigegeben werden, da es abgelehnt wurde"
-    deputy_accept:
+    deputy_accepted:
       title: "Ihr Jobangebot wurde freigeschaltet."
       content: "Das von Ihnen erstellte Jobangebot wurde freigegeben"

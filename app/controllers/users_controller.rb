@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
-  before_filter :check_user, :only => [:update, :edit]
+    before_filter :check_user, :only => [:update, :edit]
+    has_scope :update_immediately
 
   def edit
     @user = User.find(params[:id])

@@ -4,9 +4,9 @@ describe JobOffersController do
 
   login_user FactoryGirl.create(:role, name: 'Student')
 
-  let(:assigned_student) { FactoryGirl.create(:user) }
+  let(:assigned_student) { FactoryGirl.create(:user, :student) }
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) { FactoryGirl.create(:user, employer: employer, role: FactoryGirl.create(:role, :staff)) }
+  let(:responsible_user) { FactoryGirl.create(:user, :staff, employer: employer) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
@@ -23,10 +23,18 @@ describe JobOffersController do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
     
+    @epic = FactoryGirl.create(:employer, name:"EPIC")
+    @os = FactoryGirl.create(:employer, name:"OS and Middleware")
+    @itas = FactoryGirl.create(:employer, name:"Internet and Systems Technologies")
+
     @employer_one = FactoryGirl.create(:employer)
     @employer_two = FactoryGirl.create(:employer)
     @employer_three = FactoryGirl.create(:employer)
+
     @open = FactoryGirl.create(:job_status, name:"open")
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
   end
 
   describe "Check if views are rendered" do
@@ -81,7 +89,7 @@ describe JobOffersController do
     end
 
     it "assigns a possible applications as @application" do
-      user = FactoryGirl.create(:user)
+      user = FactoryGirl.create(:user, :staff)
       sign_in user
 
       job_offer = FactoryGirl.create(:job_offer)
@@ -108,8 +116,6 @@ describe JobOffersController do
 
     it "only allows the responsible user to edit" do
       job_offer = FactoryGirl.create(:job_offer)
-      job_offer.responsible_user = FactoryGirl.create(:user)
-      job_offer.save
       get :edit, {:id => job_offer.to_param}, valid_session
       response.should redirect_to(job_offer)
     end
@@ -132,7 +138,7 @@ describe JobOffersController do
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
-      @user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: @job_offer.employer)
+      @user = FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
       @job_offer.update({ responsible_user_id: @user.id, end_date: Date.current + 10 })
       sign_in @user
     end
@@ -162,7 +168,7 @@ describe JobOffersController do
   end
 
   describe "GET accept" do 
-    let(:deputy) { FactoryGirl.create(:user, employer: employer) }
+    let(:deputy) { FactoryGirl.create(:user, :staff, employer: employer) }
     before(:each) do
       employer.update(deputy: deputy)
       @job_offer = FactoryGirl.create(:job_offer)
@@ -171,13 +177,13 @@ describe JobOffersController do
 
     it "prohibits user to accept job offers if he is not the deputy" do
 
-      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end     
     it "accepts job offers" do
       sign_in deputy
-      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
       @job_offer.save
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open) 
@@ -186,7 +192,7 @@ describe JobOffersController do
   end
 
   describe "GET decline" do
-    let(:deputy) { FactoryGirl.create(:user, employer: employer) }
+    let(:deputy) { FactoryGirl.create(:user, :staff, employer: employer) }
     before(:each) do
       employer.update(deputy: deputy)
       @job_offer = FactoryGirl.create(:job_offer)
@@ -194,13 +200,13 @@ describe JobOffersController do
     end
 
     it "prohibits user to decline job offers if he is not the deputy" do
-      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
       @job_offer.save
       get :decline, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
     end     
     it "declines job offers" do
-      @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
+      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
       @job_offer.save
       sign_in deputy
       expect {
@@ -247,6 +253,8 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
+    FactoryGirl.create(:employers_newsletter_information, employer: employer)
+    FactoryGirl.create(:programming_languages_newsletter_information)
       sign_in responsible_user
     end
     
@@ -266,6 +274,11 @@ describe JobOffersController do
       it "redirects to the created job_offer" do
         post :create, {:job_offer => valid_attributes}, valid_session
         response.should redirect_to(JobOffer.last)
+      end
+
+      it "sends some emails" do
+        post :create, {:job_offer => valid_attributes}, valid_session
+        ActionMailer::Base.deliveries.count.should >= 2
       end
 
       it "automatically assigns the users employer as the new job offers employer" do
@@ -296,7 +309,6 @@ describe JobOffersController do
         assert_equal(offer.start_date, Date.current + 1)
         assert_equal(offer.flexible_start_date, true)
       end
-
     end
 
     describe "with invalid params" do
@@ -353,7 +365,7 @@ describe JobOffersController do
       end
 
       it "only allows the responsible user to update" do
-        @job_offer.responsible_user = FactoryGirl.create(:user)
+        @job_offer.responsible_user = FactoryGirl.create(:user, :staff)
         @job_offer.save
         put :update, {:id => @job_offer.to_param, :job_offer => valid_attributes}, valid_session
         response.should redirect_to(@job_offer)

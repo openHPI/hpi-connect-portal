@@ -35,12 +35,13 @@ class StudentsController < ApplicationController
   def edit
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
+    @all_employers = Employer.all
   end
 
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    update_from_params_for_languages(params, student_path(@user))
+    update_from_params_for_languages_and_newsletters(params, student_path(@user))
   end
 
   # DELETE /students/1
@@ -97,7 +98,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id, :frequency)
     end
 
     def check_current_user_or_admin

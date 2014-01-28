@@ -21,4 +21,15 @@ en:
     student_accepted:
       subject: "A job has been assigned"
       title: "The following job has been assigned to a student:"
-    duration: "Duration"
+    new_job_offer_info:
+      subject: 'Have a look at our new job offer'
+      title: "New job offers are avaible"
+    general:
+      title: "Title: "
+      student: "Student name: "
+      employer: "Employer: "
+      staff: "Responsable staff member: "
+      room: "Room: "
+      duration: "Duration: "
+      salary: "Salary: " 
+      description: "Description: "
