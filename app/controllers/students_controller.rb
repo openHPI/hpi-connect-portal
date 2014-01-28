@@ -65,22 +65,13 @@ class StudentsController < ApplicationController
 
     @user = User.find_by_id(params[:student_id])
 
-    new_role = nil
-    should_be_deputy = false
-    case role_name
-      when "Deputy"
-        new_role = Role.find_by_name("Staff")
-        should_be_deputy = true
-      when "Admin"
-        new_role = Role.find_by_name("Admin")
-      when "Staff"
-        new_role = Role.find_by_name("Staff")
-      else
-        render_errors_and_action(student_path(@user))
-        return
+    should_be_deputy = role_name == "Deputy"
+    unless ["Deputy", "Admin", "Staff"].include? role_name
+      render_errors_and_action(student_path(@user))
+      return
     end
 
-    @user.promote(new_role, @employer, should_be_deputy)
+    @user.promote(Role.find_by_name(should_be_deputy ? "Staff" : role_name), @employer, should_be_deputy)
     redirect_to(students_path)
   end
 

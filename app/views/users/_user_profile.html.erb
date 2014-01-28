@@ -9,11 +9,7 @@
                 <td><%= programming_languages_user.programming_language.name %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <% if i == programming_languages_user.skill %>
-                      <%= radio_button_tag programming_languages_user.programming_language.name, i, true, disabled: true, class: "star" %>
-                    <% else %>
-                      <%= radio_button_tag programming_languages_user.programming_language.name, i, false, disabled: true, class: "star" %>
-                    <% end %>
+                    <%= radio_button_tag programming_languages_user.programming_language.name, i, i==programming_languages_user.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>
@@ -126,11 +122,7 @@
                 <td><%= t("languages." + languages_user.language.name) %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <% if i == languages_user.skill %>
-                      <%= radio_button_tag languages_user.language.name, i, true, disabled: true, class: "star" %>
-                    <% else %>
-                      <%= radio_button_tag languages_user.language.name, i, false, disabled: true, class: "star" %>
-                    <% end %>
+                    <%= radio_button_tag languages_user.language.name, i, i==languages_user.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>

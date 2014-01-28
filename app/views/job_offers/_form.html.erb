@@ -25,10 +25,10 @@
           <% if current_user.admin? %>
           <div class="col-sm-6">
            <div class="row">
-                <div class="col-sm-12" style="text-align:right;">  
+                <div class="col-sm-12" style="text-align:right;"> 
                     <%= f.collection_select :employer_id, Employer.all, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
                 </div>
-              </div>         
+              </div>        
           </div>
 
           <% end %>
@@ -68,7 +68,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.blank? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>
@@ -78,7 +78,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.blank? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>

@@ -9,7 +9,7 @@ class Ability
 
       initialize_student user if user.student?
       initialize_staff user, user.employer_id if user.staff?
-    end 
+    end
   end
 
   def initialize_student(user)
@@ -28,6 +28,7 @@ class Ability
     can [:create, :complete, :reopen], JobOffer, employer_id: employer_id
 
     can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
+    can [:update, :destroy, :prolong], JobOffer, employer: { deputy_id: user.id }
     can [:accept, :decline], Application, responsible_user_id: user.id
 
     can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user.id }

@@ -28,9 +28,10 @@ class EmployersController < ApplicationController
   # GET /employers/1
   # GET /employers/1.json
   def show
-    @staff = @employer.staff.paginate(:page => params[:page])
-    @running_job_offers = @employer.job_offers.running.paginate(:page => params[:page])
-    @open_job_offers = @employer.job_offers.open.paginate(:page => params[:page])
+    page = params[:page]
+    @staff = @employer.staff.paginate(:page => page)
+    @running_job_offers = @employer.job_offers.running.paginate(:page => page)
+    @open_job_offers = @employer.job_offers.open.paginate(:page => page)
   end
 
   # GET /employers/new
