@@ -14,7 +14,15 @@
 	border-radius: 0px;
 }
 
+body {
+	padding-bottom: 70px;
+}
+
 .clickable:hover{
 	background:#ddd;
 	cursor:pointer;
+}
+
+.userstatus {
+	color: #737373;
 }

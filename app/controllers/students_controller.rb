@@ -20,7 +20,8 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    @user = User.students.find params[:id]
+    user = User.students.find(params[:id])
+    @user = user
   end
 
   # GET /students/new

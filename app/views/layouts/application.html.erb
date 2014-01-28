@@ -97,15 +97,20 @@
         </div>
       </div><!--/row-->
 
-      <footer>
-        <tr>
-          <td>&copy; <%= t("layouts.project") %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.faqs"), faqs_path %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
-        </tr>
-      </footer>
+      
+      <div id="main" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
+        <p>
+          <tr>
+            <td>&copy; <%= t("layouts.project") %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+          </tr>
+        </p>
+      </div>
+
+     
 
     </div> <!-- /container -->
 
