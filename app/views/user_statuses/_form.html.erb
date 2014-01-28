@@ -3,9 +3,15 @@
   <%= render 'shared/object_errors', object: user_status %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %><%= mark_if_required(user_status, :name) %><br>
     <%= f.input :name %>
   </div>
+  <% if UserStatus.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div>
+      <%= f.label t("layouts.asterisk_description") %>
+    </div>
+  <% end %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

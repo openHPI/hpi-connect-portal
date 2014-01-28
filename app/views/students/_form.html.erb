@@ -11,27 +11,27 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %>
+                  <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %><%= mark_if_required(user, :firstname) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :firstname %>
+                  <%= f.input :firstname, :disabled => true %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %>
+                  <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %><%= mark_if_required(user, :lastname) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :lastname %>
+                  <%= f.input :lastname, :disabled => true %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :email, class: "control-label" %>
+                  <%= f.label :email, class: "control-label" %><%= mark_if_required(user, :email) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :email %>
@@ -41,7 +41,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %>
+                  <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(user, :user_status) %>
                 </div>
                 <div class="col-sm-9">
                  <%= f.association :user_status, default: 1 %>
@@ -51,7 +51,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
+                  <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(user, :birthday) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-3'} %>
@@ -61,7 +61,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
+                  <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %><%= mark_if_required(user, :photo) %>
                 </div>
                 <div class="col-sm-9">
                   <% if !user.new_record? && !user.photo.nil? %>
@@ -74,7 +74,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %>
+                  <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %><%= mark_if_required(user, :cv) %>
                 </div>
                 <div class="col-sm-9">
                   <% if !user.new_record? %>
@@ -128,6 +128,11 @@
                 <% end %>
               <% end %>
             <% end %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+              </div>
+            </li>
           </ul>
         </div>
     </div>
@@ -140,17 +145,22 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %>
+                <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(user, :academic_program) %>
               </div>
               <div class="col-sm-9">
-                <%= f.input :academic_program %>
+                <%= f.select :academic_program, [ 
+                  t("activerecord.attributes.user.academic_rank_options.bachelor"), 
+                  t("activerecord.attributes.user.academic_rank_options.master"),
+                  t("activerecord.attributes.user.academic_rank_options.phd"),
+                  t("activerecord.attributes.user.academic_rank_options.others")
+                  ], {}, class: "select form-control" %>
               </div>
             </div>
           </li>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %>
+                <%= f.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %><%= mark_if_required(user, :semester) %>
               </div>
               <div class="col-sm-9">
                 <%= f.input :semester, as: :integer %>
@@ -160,10 +170,17 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :education, t("activerecord.attributes.user.education"), class: "control-label" %>
+                <%= f.label :education, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(user, :education) %>
               </div>
               <div class="col-sm-9">
-                  <%= f.bootsy_area :education, rows:"5" %>
+                <%= f.select :education, [
+                  t("activerecord.attributes.user.education_options.abitur"), 
+                  t("activerecord.attributes.user.education_options.secondary_education"), 
+                  t("activerecord.attributes.user.education_options.bachelor"), 
+                  t("activerecord.attributes.user.education_options.master"),
+                  t("activerecord.attributes.user.education_options.phd"),
+                  t("activerecord.attributes.user.education_options.others")
+                  ], {}, class: "select form-control" %>
               </div>
             </div>
           </li>
@@ -207,6 +224,11 @@
               <% end %>
             <% end %>
           <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+            </div>
+          </li>
         </ul>
       </div>
 
@@ -278,6 +300,15 @@
           </li>
         </ul>
       </div>
+      <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5>
+              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            </h5>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 

@@ -1,5 +1,6 @@
 <%= simple_form_for user, url: staff_path(user.id), html: { multipart: true, class: 'form-horizontal', role: 'form' } do |f| %>
 
+
   <%= render 'shared/object_errors', object: user %>
 
   <div class="row">
@@ -11,7 +12,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %>
+                  <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %><%= mark_if_required(user, :firstname) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :firstname %>
@@ -21,7 +22,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %>
+                  <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %><%= mark_if_required(user, :lastname) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :lastname %>
@@ -31,7 +32,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :email, class: "control-label" %>
+                  <%= f.label :email, class: "control-label" %><%= mark_if_required(user, :email) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :email %>
@@ -51,7 +52,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
+                  <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(user, :birthday) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-3'} %>
@@ -61,7 +62,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
+                  <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %><%= mark_if_required(user, :photo) %>
                 </div>
                 <div class="col-sm-9">
                   <% if !user.new_record? %>
@@ -74,7 +75,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %>
+                  <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %><%= mark_if_required(user, :cv) %>
                 </div>
                 <div class="col-sm-9">
                   <% if !user.new_record? %>
@@ -128,6 +129,11 @@
                 <% end %>
               <% end %>
             <% end %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+              </div>
+            </li>
           </ul>
         </div>
     </div>
@@ -171,6 +177,11 @@
               <% end %>
             <% end %>
           <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+            </div>
+          </li>
         </ul>
       </div>
 
@@ -242,6 +253,15 @@
           </li>
         </ul>
       </div>
+      <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5>
+              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            </h5>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 

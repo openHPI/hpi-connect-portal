@@ -2,52 +2,52 @@
 <br>
 <div class="container">
 	<p>
-    	<h5><b><%=  t("imprint.headline1") %></b></h5>
-	    Prof.-Dr.-Helmert-Str. 2-3
+    	<h5><b><%=  t("imprint.hpi.headline") %></b></h5>
+	    <%=  t("imprint.hpi.street") %>
 	    <br>
-	    14482 Potsdam
+	    <%=  t("imprint.hpi.city") %>
 	    <br>
-	    <%=  t("imprint.tel") %>: +49 (0)331 5509-0
+	    <%=  t("imprint.tel") %>: <%=  t("imprint.hpi.tel") %>
 	    <br>
-	    <%=  t("imprint.fax") %>: +49 (0)331 5509-129
+	    <%=  t("imprint.fax") %>: <%=  t("imprint.hpi.fax") %>
 	    <br>
-	    E-Mail: hpi-info(at)hpi.uni-potsdam.de
+	    <%=  t("imprint.email") %>: <%=  t("imprint.hpi.email") %>
 	    <br>
-	    Internet: <%= link_to t("job_offers_path"), job_offers_path,"data-no-turbolink" => true %>
+	    <%=  t("imprint.internet") %>: <%= link_to t("imprint.hpi.internet_title"), t("imprint.hpi.internet_link"),"data-no-turbolink" => true %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.headline2") %>: </b></h5>
-		Prof. Dr. Christoph Meinel
+	    <h5><b><%=  t("imprint.manager.headline") %>: </b></h5>
+		<%=  t("imprint.manager.person") %>
 		<br>
 		<br>
-		<%=  t("imprint.reg_office") %>: <%=  t("imprint.district_court") %>
+		<%=  t("imprint.reg_office") %>: <%=  t("imprint.manager.court") %>
 		<br>
-		<%=  t("imprint.reg_number") %>: HRB 12184
+		<%=  t("imprint.reg_number") %>: <%=  t("imprint.manager.court_num") %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.headline3") %>: </b></h5>
-	    Prof. Dr. Christoph Meinel
+	    <h5><b><%=  t("imprint.content_resp.headline") %>: </b></h5>
+	    <%=  t("imprint.content_resp.name") %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.editor") %>: </b></h5>
-	    Hasso-Plattner-Institut
+	    <h5><b><%=  t("imprint.editor.headline") %>: </b></h5>
+	    <%=  t("imprint.editor.name") %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.design") %>: </b></h5>
-	    Hasso-Plattner-Institut
+	    <h5><b><%=  t("imprint.design.headline") %>: </b></h5>
+	    <%=  t("imprint.design.name") %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.text") %>: </b></h5>
-	    Hasso-Plattner-Institut
+	    <h5><b><%=  t("imprint.text.headline") %>: </b></h5>
+	    <%=  t("imprint.text.name") %>
 	</p>
 	<br>
 	<p>
-	    <h5><b><%=  t("imprint.info") %>: </b></h5>
-	    <%=  t("imprint.info_text") %>
+	    <h5><b><%=  t("imprint.info.headline") %>: </b></h5>
+	    <%=  t("imprint.info.text") %>
 	</p>
 </div>
