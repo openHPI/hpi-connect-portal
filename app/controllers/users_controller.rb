@@ -1,18 +1,7 @@
 class UsersController < ApplicationController
     include ApplicationHelper
 
-  before_filter :check_user, :only => [:update, :edit]
-
-    def show
-      user = User.find(params[:id])
-      if user.student?
-        redirect_to student_path(user.id)
-      elsif user.staff?
-        redirect_to staff_path(user.id)
-      else
-        redirect_to edit_user_path(user.id)
-      end
-    end
+    before_filter :check_user, :only => [:update, :edit]
 
     def edit
         @user = User.find(params[:id])     

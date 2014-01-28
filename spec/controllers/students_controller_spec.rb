@@ -55,8 +55,9 @@ describe StudentsController do
 
     it "checks if the user is a student" do
       user = FactoryGirl.create(:user, role: staff_role)
-      get :show, {:id => user.to_param}, valid_session
-      response.should redirect_to user_path(user)
+      expect {
+        get :show, {:id => user.to_param}, valid_session
+      }.to raise_error(ActionController::RoutingError)
     end
   end
 

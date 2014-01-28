@@ -117,6 +117,3 @@ group :test do
   gem 'email_spec'
   gem 'database_cleaner'
 end
-
-#Flags
-gem 'famfamfam_flags_rails'

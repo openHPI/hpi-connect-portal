@@ -15,7 +15,6 @@
  *= require bootsy
  *= require_tree .
  *= require font-awesome
- *= require famfamfam-flags
  */
 
  h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
@@ -23,30 +22,30 @@
 }
 
 label {
-    font-weight: normal;
+	font-weight: normal;
 }
 
 .btn-default {
-    background-color: #f5f5f5; 
-    color: #000;
+	background-color: #f5f5f5; 
+	color: #000;
 }
 
 .btn-warning {
-    background-color: #e0671e; 
-    color: #FFF;
+	background-color: #e0671e; 
+	color: #FFF;
 }
 
 .btn-danger {
-    background-color: #e0671e; 
-    color: #FFF;
+	background-color: #e0671e; 
+	color: #FFF;
 }
 
 .btn-danger:hover {
-    background-color: #b1063a
+	background-color: #b1063a
 }
 
 .wysihtml5-sandbox{
-    resize: both;
+	resize: both;
 }
 
 label.small {
@@ -54,38 +53,10 @@ label.small {
 }
 
 a:hover, a:focus, .btn-default:hover  {
-    color: #b1063a;
+	color: #b1063a;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    background-color: #e0671e;
-    border-color: #e0671e;
-}
-
-.center-cropped {
-    width: 40px;  
-    height: 40px;
-    background-position: center center;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    background-size: cover;
-    margin-bottom: 0px;
-}
-
-/* Set the image to fill its parent and make transparent */
-.center-cropped img {
-   min-height: 100%;
-   min-width: 100%;
-
-    /*IE 8 */
-   -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    /*IE 5-7 */
-   filter: alpha(opacity=0);
-   /* modern browsers */
-   opacity: 0;
-}
-
-.profile-picture{
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
+	background-color: #e0671e;
+	border-color: #e0671e;
 }
