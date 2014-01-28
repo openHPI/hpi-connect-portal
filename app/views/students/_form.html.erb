@@ -128,6 +128,11 @@
                 <% end %>
               <% end %>
             <% end %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+              </div>
+            </li>
           </ul>
         </div>
     </div>
@@ -143,7 +148,12 @@
                 <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(user, :academic_program) %>
               </div>
               <div class="col-sm-9">
-                <%= f.input :academic_program %>
+                <%= f.select :academic_program, [ 
+                  t("activerecord.attributes.user.academic_rank_options.bachelor"), 
+                  t("activerecord.attributes.user.academic_rank_options.master"),
+                  t("activerecord.attributes.user.academic_rank_options.phd"),
+                  t("activerecord.attributes.user.academic_rank_options.others")
+                  ], {}, class: "select form-control" %>
               </div>
             </div>
           </li>
@@ -163,7 +173,14 @@
                 <%= f.label :education, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(user, :education) %>
               </div>
               <div class="col-sm-9">
-                  <%= f.bootsy_area :education, rows:"5" %>
+                <%= f.select :education, [
+                  t("activerecord.attributes.user.education_options.abitur"), 
+                  t("activerecord.attributes.user.education_options.secondary_education"), 
+                  t("activerecord.attributes.user.education_options.bachelor"), 
+                  t("activerecord.attributes.user.education_options.master"),
+                  t("activerecord.attributes.user.education_options.phd"),
+                  t("activerecord.attributes.user.education_options.others")
+                  ], {}, class: "select form-control" %>
               </div>
             </div>
           </li>
@@ -207,6 +224,11 @@
               <% end %>
             <% end %>
           <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+            </div>
+          </li>
         </ul>
       </div>
 

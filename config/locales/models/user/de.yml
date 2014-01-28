@@ -22,3 +22,15 @@ de:
         photo: "Bild"
         employment_start_date: "Beginn der Anstellung"
         employer: "Arbeitgeber"
+        academic_rank_options:
+            bachelor: "Bachelor"
+            master: "Master"
+            phd: "Ph.D."
+            others: "Andere"
+        education_options:
+            abitur: "Abitur"
+            secondary_education: "Realschulabschluss"
+            bachelor: "Bachelor"
+            master: "Master"
+            phd: "Ph.D."
+            others: "Andere"
