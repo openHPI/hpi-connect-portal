@@ -2,11 +2,11 @@ HpiHiwiPortal::Application.routes.draw do
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   scope "(:locale)", locale: /en|de/ do
 
-  get "imprint/index"
-  get "get-userlist" => "users#userlist"
+    get "imprint/index"
+    get "get-userlist" => "users#userlist"
 
-  resources :user_statuses
-    root :to => "login_page#index"
+    resources :user_statuses
+      root :to => "login_page#index"
 
     resources :job_offers do
       collection do
@@ -22,11 +22,13 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    resources :chairs do
+    resources :employers do
         collection do 
             post 'update_staff'
         end
     end
+    
+
     resources :users, only: [:edit, :update]
 
     resources :applications, only: [:create, :destroy] do
@@ -35,13 +37,10 @@ HpiHiwiPortal::Application.routes.draw do
         get "decline"
       end
     end
-  end
 
-  get "employers/external", to: "employers#index_external", as: "external_employers"
+    get "employers/external", to: "employers#index_external", as: "external_employers"
 
-  resources :employers
-
-  resources :users, only: [:edit, :update]
+    resources :users, only: [:edit, :update]
 
     resources :studentsearch
     resources :faqs
@@ -61,28 +60,27 @@ HpiHiwiPortal::Application.routes.draw do
             post 'update_role'
         end
     end
-  end
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+    devise_for :users, controllers: { sessions: 'sessions' }
 
-  resources :programming_languages
-  resources :languages
+    resources :programming_languages
+    resources :languages
 
-  resources :users
-  resources :user_statuses
+    resources :users
+    resources :user_statuses
 
-  resources :studentsearch
-  resources :faqs
+    resources :studentsearch
+    resources :faqs
 
-  resources :staff, except: [:new, :create]
+    resources :staff, except: [:new, :create]
 
-  resources :students do
-    collection do
-      get 'students/new' => 'students#new'
-      post 'students' => 'students#create'
-      get 'matching'
-      post 'update_role'
+    resources :students do
+      collection do
+        get 'students/new' => 'students#new'
+        post 'students' => 'students#create'
+        get 'matching'
+        post 'update_role'
+      end
     end
-  end
   end
 end

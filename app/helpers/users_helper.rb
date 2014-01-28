@@ -58,6 +58,10 @@ module UsersHelper
     return signed_in? && (current_user.admin? || user_is_deputy?)
   end
 
+  def user_can_demote_staff?
+    return signed_in? && (current_user.admin? || user_is_deputy?)
+  end
+
 def user_is_deputy?
     given_user_is_deputy?(current_user)
   end

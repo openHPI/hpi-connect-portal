@@ -51,13 +51,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_role(role_name, chair_name, user_id)
-    if chair_name
-      chair = Chair.find_by_name(chair_name)
-    else
-      chair = current_user.chair
-    end
-
+  def set_role(role_name, chair, user_id)
     case role_name
       when "Deputy"
         set_role_to_deputy(user_id, chair)
