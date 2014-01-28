@@ -172,7 +172,7 @@ user = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
 	lastname: "Steier", 
 	firstname: "Julia", 
-	role: Role.where(:name => 'Staff').first	
+	role: Role.where(:name => 'Admin').first	
 )
 employer = Employer.new(
 	name: "Business Process Technology",
@@ -189,7 +189,7 @@ user = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
 	lastname: "Appel", 
 	firstname: "Johanna", 
-	role: Role.where(:name => 'Staff').first	
+	role: Role.where(:name => 'Admin').first	
 )
 employer = Employer.new(
 	name: "Software Architecture",
