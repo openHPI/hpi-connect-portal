@@ -2,52 +2,36 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     user ||= User.new
 
     if user.role
-        if user.admin?
-            can :manage, :all
-        end
+      can :manage, :all if user.admin?
 
-        if user.student?
-            can :create, Application 
-            can :read, Faq
-        end
+      initialize_student user if user.student?
+      initialize_staff user, user.employer_id if user.staff?
+    end 
+  end
 
-        if user.staff?
-            can :edit, Chair, :id => user.chair_id
-            can :read, Application
-            can [:create, :new], JobOffer
-            can :manage, Faq
-        end
+  def initialize_student(user)
+    can :create, Application
+    can :read, Faq
+    can :read, User, role: { name: 'Staff' }
+  end
 
-    end
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user 
-    # permission to do.
-    # If you pass :manage it will apply to every action. Other common actions
-    # here are :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. 
-    # If you pass :all it will apply to every resource. Otherwise pass a Ruby
-    # class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the
-    # objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details:
-    # https://github.com/ryanb/cancan/wiki/Defining-Abilities
+  def initialize_staff(user, employer_id)
+    can :edit, Employer, id: user.employer_id
+    can :read, Application
+    can :read, User, role: { name: 'Student' }
+    can :read, User, role: { name: 'Staff' }
+    can :manage, Faq
+
+    can [:create, :complete, :reopen], JobOffer, employer_id: employer_id
+
+    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user.id
+    can [:accept, :decline], Application, responsible_user_id: user.id
+
+    can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user.id }
+    can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user.id }
+    can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end
 end

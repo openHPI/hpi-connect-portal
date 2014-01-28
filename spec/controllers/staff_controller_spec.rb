@@ -20,11 +20,13 @@ require 'spec_helper'
 
 describe StaffController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+  
   # This should return the minimal set of attributes required to create a valid
   # Staff. As you add validations to Staff, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => Role.create(:name => "Staff"), "identity_url" => "af", "email" => "test@example"} }
-  let(:admin_role) { FactoryGirl.create(:role, name: 'Admin', level: 3) }
+  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :staff), "employer" => FactoryGirl.create(:employer), "identity_url" => "af", "email" => "test@example"} }
+  let(:admin_role) { FactoryGirl.create(:role, :admin) }
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
@@ -36,19 +38,19 @@ describe StaffController do
 
   describe "GET index" do
     it "assigns all staff as @staff" do
-      admin = FactoryGirl.create(:user, role: admin_role)  
+      admin = FactoryGirl.create(:user, :admin)  
       sign_in admin
 
-      staff = User.create! valid_attributes
+      staff = FactoryGirl.create(:user, :staff)
       get :index, {}, valid_session
 
-      assigns(:users).should eq([staff])
+      assigns(:users).should eq([staff, staff.employer.deputy])
     end
   end
 
   describe "GET show" do
     it "assigns the requested staff as @staff" do
-      user = User.create! valid_attributes
+      user = FactoryGirl.create(:user, :staff)
       get :show, {:id => user.to_param}, valid_session
       assigns(:user).should eq(user)
     end
@@ -56,7 +58,7 @@ describe StaffController do
 
   describe "GET edit" do
     it "assigns the requested staff as @staff" do
-      staff = User.create! valid_attributes
+      staff = FactoryGirl.create(:user, :staff)
       sign_in staff
       get :edit, {:id => staff.to_param}, valid_session
       assigns(:user).should eq(staff)
@@ -103,7 +105,7 @@ describe StaffController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested staff" do
-        staff = User.create! valid_attributes
+        staff = FactoryGirl.create(:user, :staff)
         # Assuming there are no other staff in the database, this
         # specifies that the Staff created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -113,13 +115,13 @@ describe StaffController do
       end
 
       it "assigns the requested staff as @staff" do
-        staff = User.create! valid_attributes
+        staff = FactoryGirl.create(:user, :staff)
         put :update, {:id => staff.to_param, :user => valid_attributes}, valid_session
         assigns(:user).should eq(staff)
       end
 
       it "redirects to the staff" do
-        staff = User.create! valid_attributes
+        staff = FactoryGirl.create(:user, :staff)
         put :update, {:id => staff.to_param, :user => valid_attributes}, valid_session
         response.should redirect_to(staff_path(staff))
       end
@@ -127,7 +129,7 @@ describe StaffController do
 
     describe "with invalid params" do
       it "assigns the staff as @staff" do
-        staff = User.create! valid_attributes
+        staff = FactoryGirl.create(:user, :staff)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
         put :update, {:id => staff.to_param, :user => { "firstname" => "invalid value" }}, valid_session
@@ -135,7 +137,7 @@ describe StaffController do
       end
 
       it "re-renders the 'edit' template" do
-        staff = User.create! valid_attributes
+        staff = FactoryGirl.create(:user, :staff)
         # Trigger the behavior that occurs when invalid params are submitted
         User.any_instance.stub(:save).and_return(false)
         put :update, {:id => staff.to_param, :user => { "firstname" => "invalid value" }}, valid_session
@@ -146,14 +148,14 @@ describe StaffController do
 
   describe "DELETE destroy" do
     it "destroys the requested staff" do
-      staff = User.create! valid_attributes
+      staff = FactoryGirl.create(:user, :staff)
       expect {
         delete :destroy, {:id => staff.to_param}, valid_session
       }.to change(User, :count).by(-1)
     end
 
     it "redirects to the staff list" do
-      staff = User.create! valid_attributes
+      staff = FactoryGirl.create(:user, :staff)
       delete :destroy, {:id => staff.to_param}, valid_session
       response.should redirect_to(staff_index_path)
     end
@@ -221,8 +223,8 @@ describe StaffController do
     before(:each) do
         @student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
         @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
-        @chair = FactoryGirl.create(:chair)
-        @staff_member = FactoryGirl.create(:user, :role => @staff_role, :chair => @chair)
+        @chair = FactoryGirl.create(:employer)
+        @staff_member = FactoryGirl.create(:user, :role => @staff_role, :employer => @employer)
         @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
     end
 
@@ -235,16 +237,16 @@ describe StaffController do
       it "updates role of staff_member to student" do 
         put :set_role_to_student, {:user_id => @staff_member.to_param}
         assert_equal(@student_role, User.find(@staff_member.id).role)
-        assert_equal(nil, User.find(@staff_member.id).chair)
+        assert_equal(nil, User.find(@staff_member.id).employer)
       end
 
       it "updates role of deputy to student" do 
-        @chair.deputy = @staff_member
+        @employer.deputy = @staff_member
         new_deputy = FactoryGirl.create(:user, :role => @student_role)
         put :set_role_to_student, {:user_id => @staff_member.to_param, :new_deputy_id => new_deputy.to_param}
         assert_equal(@student_role, User.find(@staff_member.id).role)
-        assert_equal(nil, User.find(@staff_member.id).chair)
-        assert_equal(new_deputy, Chair.find(@chair).deputy)
+        assert_equal(nil, User.find(@staff_member.id).employer)
+        assert_equal(new_deputy, Employer.find(@employer).deputy)
       end
 
     end

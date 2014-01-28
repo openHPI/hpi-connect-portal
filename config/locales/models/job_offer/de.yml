@@ -4,7 +4,7 @@ de:
       job_offer:
         description: "Beschreibung"
         title: "Titel"
-        chair: "Lehrstuhl"
+        employer: "Arbeitgeber"
         start_date: "Anfangsdatum"
         end_date: "Enddatum"
         time_effort: "Zeitaufwand"
@@ -13,6 +13,9 @@ de:
         programming_languages: "Programmiersprachen"
         languages: "Sprachen"
         general_information: "Allgemeine Informationen"
-        additional_information: "Zusätzliche Informationen"
+        additional_information: "Zusätzliche Information"
         requirements: "Anforderungen"
         vacant_posts: "Bewerberanzahl"
+    errors:
+      messages:
+        in_future: "muss in der Zukunft liegen."

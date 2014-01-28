@@ -1,10 +1,9 @@
-include UsersHelper
-
 class StudentsController < ApplicationController
   include UsersHelper
-  
+
   before_filter :check_user_can_index_students, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
+  before_filter :check_user_deputy_or_admin, only: [:update_role]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   has_scope :search_students, only: [:index, :matching], as: :q
@@ -15,8 +14,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.students).sort_by{|user| [user.lastname, user.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1
@@ -46,16 +44,17 @@ class StudentsController < ApplicationController
   end
 
   # GET /students/matching
-  def matching 
+  def matching
     #XXX should be a list of strings not [string]
     @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )
     render "index"
   end
 
-  #POST /students/update_role
+  # POST /students/update_role
+
   def update_role
-    set_role(params[:role_name], params[:chair_name], params[:student_id])
+    set_role(params[:role_name], @employer , params[:student_id])
     redirect_to(students_path)
   end
 
@@ -84,6 +83,15 @@ class StudentsController < ApplicationController
     def check_user_can_index_students
       unless user_is_admin? || user_is_staff?
         redirect_to root_path
+      end
+    end
+
+    def check_user_deputy_or_admin
+      user = User.find_by_id(params[:student_id])
+      @employer = params[:employer_name] ? Employer.find_by_name(params[:employer_name]) : current_user.employer
+
+      unless current_user.admin? || @employer.nil? || @employer.deputy == current_user
+        redirect_to(student_path(user))
       end
     end
 end

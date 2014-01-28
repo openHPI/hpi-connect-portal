@@ -11,19 +11,19 @@
 class JobStatus < ActiveRecord::Base
   validates :name, uniqueness: { case_sensitive: false }, presence: true
 
-  def self.pending 
+  def self.pending
     where(name: 'pending').first
   end
 
-  def self.open 
+  def self.open
     where(name: 'open').first
   end
 
-  def self.running 
+  def self.running
     where(name: 'running').first
   end
 
-  def self.completed 
+  def self.completed
     where(name: 'completed').first
   end
 end

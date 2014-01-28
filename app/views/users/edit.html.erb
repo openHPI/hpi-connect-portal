@@ -1,10 +1,10 @@
-<%= form_for @user do |f| %>
+<%= simple_form_for @user do |f| %>
 
     <h3><%= t("users.profile_headline") %></h3>
-	
-    <p><%= f.text_field :firstname %></p>
-	<p><%= f.text_field :lastname %></p>
-    <p><%= f.text_field :email %></p>
+
+    <p><%= f.input :firstname %></p>
+	<p><%= f.input :lastname %></p>
+    <p><%= f.input :email %></p>
 
     <p><%= f.collection_select :role_id, Role.all, :id, :name %></p>
 

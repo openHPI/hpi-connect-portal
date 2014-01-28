@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-  </head>
-  <body>
-    <h1><%= t "applications_mailer.wimi.new_application.title", job_offer: @application.job_offer.title %></h1>
-    <p>
-      <%= link_to(@application.user.firstname.to_s+" "+@application.user.lastname.to_s, url_for(controller:"users", action: "show", id: @application.user.id, only_path: false)) %> <%= t "applications_mailer.wimi.new_application.content", job_offer: @application.job_offer.title %> 
-    </p>
-    <p>
-		  <%= @message %>    	
-    </p>
-  </body>
-</html>
+<h1><%= t "applications_mailer.wimi.new_application.title", job_offer: @application.job_offer.title %></h1>
+<p>
+  <%= link_to(@application.user.firstname.to_s+" "+@application.user.lastname.to_s, url_for(controller:"students", action: "show", id: @application.user.id, only_path: false)) %> <%= t "applications_mailer.wimi.new_application.content", job_offer: @application.job_offer.title %>
+</p>
+<p>
+  <%= @message %>     
+</p>
+<p> 
+  <%= t "applications_mailer.last_line" %>
+</p>
+

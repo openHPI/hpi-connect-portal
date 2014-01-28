@@ -1,5 +1,4 @@
-  
-$(function() {
+  $(function() {
 
   //takes the id of the chosen student and sets it in the dialog
   $(document).on("click", ".promote", function () {
@@ -43,10 +42,10 @@ $(function() {
   //when the role of a student is changed to Admin, the drop-down menu with the different chairs is not visible
   $("#role_name").change(function(event){
     if(event.target.value == "Admin"){
-      $("#chair_name").css('visibility', 'hidden')
+      $("##employer_name").css('visibility', 'hidden')
     }
     else {
-      $("#chair_name").css('visibility', 'visible')
+      $("#employer_name").css('visibility', 'visible')
     }
   });
 })

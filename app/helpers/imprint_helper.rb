@@ -1,2 +1,0 @@
-module ImprintHelper
-end

@@ -18,6 +18,7 @@ HpiHiwiPortal::Application.routes.draw do
         get "accept"
         get "decline"
         get "reopen"
+        put "prolong"
       end
     end
 
@@ -34,14 +35,13 @@ HpiHiwiPortal::Application.routes.draw do
         get "decline"
       end
     end
+  end
 
-    devise_for :users, controllers: { sessions: 'sessions' }
+  get "employers/external", to: "employers#index_external", as: "external_employers"
 
-    resources :programming_languages
-    resources :languages
+  resources :employers
 
-    resources :users
-    resources :user_statuses
+  resources :users, only: [:edit, :update]
 
     resources :studentsearch
     resources :faqs
@@ -61,60 +61,28 @@ HpiHiwiPortal::Application.routes.draw do
             post 'update_role'
         end
     end
+  end
 
-    # The priority is based upon order of creation: first created -> highest priority.
-    # See how all your routes lay out with "rake routes".
+  devise_for :users, controllers: { sessions: 'sessions' }
 
-    # You can have the root of your site routed with "root"
-    # root 'welcome#index'
+  resources :programming_languages
+  resources :languages
 
-    # Example of regular route:
-    #   get 'products/:id' => 'catalog#view'
+  resources :users
+  resources :user_statuses
 
-    # Example of named route that can be invoked with purchase_url(id: product.id)
-    #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  resources :studentsearch
+  resources :faqs
 
-    # Example resource route (maps HTTP verbs to controller actions automatically):
-    #   resources :products
+  resources :staff, except: [:new, :create]
 
-    # Example resource route with options:
-    #   resources :products do
-    #     member do
-    #       get 'short'
-    #       post 'toggle'
-    #     end
-    #
-    #     collection do
-    #       get 'sold'
-    #     end
-    #   end
-
-    # Example resource route with sub-resources:
-    #   resources :products do
-    #     resources :comments, :sales
-    #     resource :seller
-    #   end
-
-    # Example resource route with more complex sub-resources:
-    #   resources :products do
-    #     resources :comments
-    #     resources :sales do
-    #       get 'recent', on: :collection
-    #     end
-    #   end
-
-    # Example resource route with concerns:
-    #   concern :toggleable do
-    #     post 'toggle'
-    #   end
-    #   resources :posts, concerns: :toggleable
-    #   resources :photos, concerns: :toggleable
-
-    # Example resource route within a namespace:
-    #   namespace :admin do
-    #     # Directs /admin/products/* to Admin::ProductsController
-    #     # (app/controllers/admin/products_controller.rb)
-    #     resources :products
-    #   end
+  resources :students do
+    collection do
+      get 'students/new' => 'students#new'
+      post 'students' => 'students#create'
+      get 'matching'
+      post 'update_role'
+    end
+  end
   end
 end

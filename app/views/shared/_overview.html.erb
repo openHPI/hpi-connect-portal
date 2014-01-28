@@ -1,6 +1,6 @@
-<% if defined?(name) %>  
+<% if defined?(name) %>
   <h1> <%= t(name) %> </h1>
-<% end %> 
+<% end %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
@@ -18,7 +18,7 @@
         </div>
         <div class="row">
           <div class="col-md-11 col-md-offset-1">
-            <p class="chair"><%= job_offer.chair.name %></p>
+            <p class="employer"><%= job_offer.employer.name %></p>
           </div>
         </div>
       </li>

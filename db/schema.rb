@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127093416) do
+ActiveRecord::Schema.define(version: 20140127184845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20140127093416) do
     t.datetime "updated_at"
   end
 
-  create_table "chairs", force: true do |t|
+  create_table "employers", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
@@ -46,18 +46,19 @@ ActiveRecord::Schema.define(version: 20140127093416) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "head_of_chair",       null: false
+    t.string   "head",                                null: false
     t.integer  "deputy_id"
+    t.boolean  "external",            default: false
   end
 
-  add_index "chairs", ["name"], name: "index_chairs_on_name", unique: true, using: :btree
+  add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
 
-  create_table "chairs_job_offers", id: false, force: true do |t|
-    t.integer "chair_id"
+  create_table "employers_job_offers", id: false, force: true do |t|
+    t.integer "employer_id"
     t.integer "job_offer_id"
   end
 
-  add_index "chairs_job_offers", ["chair_id", "job_offer_id"], name: "index_chairs_job_offers_on_chair_id_and_job_offer_id", unique: true, using: :btree
+  add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
   create_table "faqs", force: true do |t|
     t.string   "question"
@@ -77,10 +78,11 @@ ActiveRecord::Schema.define(version: 20140127093416) do
     t.float    "time_effort"
     t.float    "compensation"
     t.string   "room_number"
-    t.integer  "chair_id"
+    t.integer  "employer_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
     t.integer  "vacant_posts"
+    t.boolean  "flexible_start_date", default: false
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -161,7 +163,7 @@ ActiveRecord::Schema.define(version: 20140127093416) do
     t.string   "lastname"
     t.string   "firstname"
     t.integer  "role_id",                default: 1,  null: false
-    t.integer  "chair_id"
+    t.integer  "employer_id"
     t.integer  "semester"
     t.string   "academic_program"
     t.date     "birthday"

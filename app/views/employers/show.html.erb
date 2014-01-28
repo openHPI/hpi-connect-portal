@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-sm-9">
+         <h1 style="display:inline">
+            <%= @employer.name %>
+            <% if @employer.external %>
+            <span class="label label-warning"><%= t("employers.external")%></span>
+            <% end %>
+        </h1>
+        <% if can? :edit, @employer %>
+            <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
+        <% end %>
+    </div>
+    <div class="col-sm-3">
+        <%= image_tag @employer.avatar.url(:medium), class: "img-thumbnail pull-left employer-thumbnail", alt: "Picture: "+@employer.name%>
+    </div>
+</div>
+
+<br><br>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= escape_javascript(@employer.description.html_safe) %>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row field">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.head") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.head %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.deputy") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.deputy.email %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
+          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>  
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <% unless @open_job_offers.empty? %>
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4><%= t("employers.open_job_offers") %></h4></div>
+              <%= render 'shared/overview', job_offer_list: @open_job_offers %>
+            </div>
+        <% end %>
+
+        <% unless @running_job_offers.empty? %>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4><%= t("employers.running_job_offers") %></h4></div>
+                <%= render 'shared/overview', job_offer_list: @running_job_offers %>
+            </div>
+        <% end %>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
+      </div>
+      <div class="modal-body">
+      <%= form_tag update_staff_chairs_path do %>
+        <%= text_field_tag "user_id", nil %>
+
+        <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
+        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "name") %>
+        <% if (defined?(@chair)) %>
+        <%= hidden_field_tag :id, @chair.id %>
+        <% end %>
+        <%= submit_tag t('chairs.demote_button'), :data => {confirm: t('chairs.demote_confirm_question')}, :class => "btn btn-default change-role" %>
+      <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
