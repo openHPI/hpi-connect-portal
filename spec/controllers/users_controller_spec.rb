@@ -10,7 +10,7 @@ describe UsersController do
   let(:valid_session) { {} }
 
   before(:each) do
-  	sign_in FactoryGirl.create(:user)
+    sign_in FactoryGirl.create(:user)
   end
 
 end

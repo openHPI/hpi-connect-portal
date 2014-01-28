@@ -52,7 +52,7 @@ class EmployersController < ApplicationController
     if @employer.save
       respond_and_redirect_to(@employer, 'Employer was successfully created.', 'show', :created)
     else
-			@users = User.all
+      @users = User.all
       flash[:error] = 'Invalid content.'
       render_errors_and_action(@employer, 'new')
     end

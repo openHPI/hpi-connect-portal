@@ -26,13 +26,13 @@ describe JobOffersMailer do
     end
 
     it "should be send to the deputy" do
-      @email.to.should eq([@job_offer.employer.deputy.email]) 
+      @email.to.should eq([@job_offer.employer.deputy.email])
     end
 
     it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
-  end  
+  end
 
   describe "job offer prolonged" do
     before(:each) do

@@ -21,7 +21,7 @@ require 'spec_helper'
 describe StaffController do
 
   login_user FactoryGirl.create(:role, name: 'Student')
-  
+
   # This should return the minimal set of attributes required to create a valid
   # Staff. As you add validations to Staff, be sure to
   # adjust the attributes here as well.
@@ -38,7 +38,7 @@ describe StaffController do
 
   describe "GET index" do
     it "assigns all staff as @staff" do
-      admin = FactoryGirl.create(:user, :admin)  
+      admin = FactoryGirl.create(:user, :admin)
       sign_in admin
 
       staff = FactoryGirl.create(:user, :staff)
@@ -159,7 +159,7 @@ describe StaffController do
       response.should redirect_to(staff_index_path)
     end
   end
-  
+
   describe "PUT update with programming languages skills" do
     before(:each) do
       @staff = FactoryGirl.create(:user, valid_attributes)

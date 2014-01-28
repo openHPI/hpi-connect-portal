@@ -81,7 +81,7 @@ describe UserStatusesController do
     describe "with valid params" do
       it "updates the requested user_status" do
         user_status = FactoryGirl.create(:user_status)
-        
+
         UserStatus.any_instance.should_receive(:update).with({ "name" => "MyString" })
         put :update, {:id => user_status.to_param, :user_status => { "name" => "MyString" }}, valid_session
       end

@@ -22,7 +22,7 @@ describe JobOffersController do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
-    
+
     @employer_one = FactoryGirl.create(:employer)
     @employer_two = FactoryGirl.create(:employer)
     @employer_three = FactoryGirl.create(:employer)
@@ -148,20 +148,20 @@ describe JobOffersController do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_student: FactoryGirl.create(:user))
     end
 
-    it "marks jobs as completed if the user is staff of the employer" do 
+    it "marks jobs as completed if the user is staff of the employer" do
       completed = FactoryGirl.create(:job_status, :completed)
       sign_in FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
-      
+
       get :complete, { id: @job_offer.id }
       assigns(:job_offer).status.should eq(completed)
     end
-    it "prohibits user to mark jobs as completed if he is no staff of the employer" do 
+    it "prohibits user to mark jobs as completed if he is no staff of the employer" do
       get :complete, { id: @job_offer.id}, valid_session
       response.should redirect_to(@job_offer)
     end
   end
 
-  describe "GET accept" do 
+  describe "GET accept" do
     let(:deputy) { FactoryGirl.create(:user, employer: employer) }
     before(:each) do
       employer.update(deputy: deputy)
@@ -174,15 +174,15 @@ describe JobOffersController do
       @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
-    end     
+    end
     it "accepts job offers" do
       sign_in deputy
       @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
       @job_offer.save
       get :accept, {:id => @job_offer.id}
-      assigns(:job_offer).status.should eq(JobStatus.open) 
+      assigns(:job_offer).status.should eq(JobStatus.open)
       response.should redirect_to(@job_offer)
-    end    
+    end
   end
 
   describe "GET decline" do
@@ -198,7 +198,7 @@ describe JobOffersController do
       @job_offer.save
       get :decline, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
-    end     
+    end
     it "declines job offers" do
       @job_offer.responsible_user = FactoryGirl.create(:user, email: "test@example.com")
       @job_offer.save
@@ -207,7 +207,7 @@ describe JobOffersController do
         get :decline, {id: @job_offer.id}
       }.to change(JobOffer, :count).by(-1)
       response.should redirect_to(job_offers_path)
-    end 
+    end
   end
 
   describe "GET reopen" do
@@ -228,7 +228,7 @@ describe JobOffersController do
       it "has same values as the original job offer" do
         get :reopen, {:id => @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id, :responsible_user_id]        
+        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id, :responsible_user_id]
 
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil
@@ -249,7 +249,7 @@ describe JobOffersController do
     before(:each) do
       sign_in responsible_user
     end
-    
+
     describe "with valid params" do
       it "creates a new job_offer" do
         expect {

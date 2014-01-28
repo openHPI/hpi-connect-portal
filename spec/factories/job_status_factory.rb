@@ -10,23 +10,23 @@
 
 FactoryGirl.define do
   factory :job_status do
-  	name "pending"
-  	initialize_with { JobStatus.find_or_create_by!(name: name) }
+    name "pending"
+    initialize_with { JobStatus.find_or_create_by!(name: name) }
   end
 
-  trait :pending do 
+  trait :pending do
     name 'pending'
   end
 
-  trait :open do 
+  trait :open do
     name 'open'
   end
 
-  trait :running do 
+  trait :running do
     name 'running'
   end
 
-  trait :completed do 
+  trait :completed do
     name 'completed'
   end
 end

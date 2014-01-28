@@ -258,7 +258,7 @@ describe StudentsController do
         response.should redirect_to(student_path(@student))
       end
     end
- 
+
     describe "beeing an admin" do
       before(:each) do
         sign_in FactoryGirl.create(:user, :admin)
@@ -288,7 +288,7 @@ describe StudentsController do
     end
 
     describe "beeing a student" do
-      
+
       before(:each) do
         sign_in FactoryGirl.create(:user, :student)
       end

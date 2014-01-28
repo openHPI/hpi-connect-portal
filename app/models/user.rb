@@ -163,7 +163,7 @@ class User < ActiveRecord::Base
       role: Role.where(name: "Student").first)
 
     new_user.should_redirect_to_profile = true
-   
+
     return new_user
   end
 

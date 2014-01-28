@@ -61,7 +61,7 @@ describe ApplicationsMailer do
 	end
 
 	describe "application created" do
-		before(:each) do			
+		before(:each) do
 		  @test_file = ActionDispatch::Http::UploadedFile.new({
 		    :filename => 'test_picture.jpg',
 		    :type => 'image/jpeg',
@@ -70,7 +70,7 @@ describe ApplicationsMailer do
 
 		  @message = "Testmessage"
 			@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }).deliver
-			
+
 			html = get_message_part(@email, /html/)
 			@html_body = html.body.raw_source
 		end
@@ -99,7 +99,7 @@ describe ApplicationsMailer do
 		it "should have the personal application message in the body" do
 			@html_body.should have_content(@message)
 		end
-		it "should include the students cv if activated" 
+		it "should include the students cv if activated"
 
 		it "should include all attached files the student chose" do
 			@email.attachments.should have(1).attachment

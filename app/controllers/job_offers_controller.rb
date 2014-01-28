@@ -58,7 +58,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     parameters = job_offer_params
-   
+
     @job_offer = JobOffer.new(parameters, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     if !parameters[:employer_id]
