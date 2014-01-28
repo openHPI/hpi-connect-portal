@@ -243,16 +243,16 @@
           </li>
         </ul>
       </div>
-    </div>
-    <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h5>
-            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
-          </h5>
+      <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5>
+              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            </h5>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>

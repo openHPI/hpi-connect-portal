@@ -14,7 +14,7 @@
                   <%= f.label :firstname, t("activerecord.attributes.user.first_name"), class: "control-label" %><%= mark_if_required(user, :firstname) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.label user.firstname, class: "form-control", type:"text" %>
+                  <%= f.input :firstname, :disabled => true %>
                 </div>
               </div>
             </li>
@@ -24,7 +24,7 @@
                   <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %><%= mark_if_required(user, :lastname) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.label user.lastname, class: "form-control", type:"text" %>
+                  <%= f.input :lastname, :disabled => true %>
                 </div>
               </div>
             </li>
@@ -278,16 +278,16 @@
           </li>
         </ul>
       </div>
-    </div>
-    <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h5>
-            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
-          </h5>
+      <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5>
+              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            </h5>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>

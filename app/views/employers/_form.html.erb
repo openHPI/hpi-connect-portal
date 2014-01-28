@@ -78,6 +78,17 @@
       </li>
     </ul>
   </div>
+  <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h5>
+          <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+        </h5>
+      </div>
+    </div>
+  <% end %>
+
+
 
   <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 

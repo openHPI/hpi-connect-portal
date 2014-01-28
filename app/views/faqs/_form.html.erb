@@ -3,36 +3,17 @@
   <%= render 'shared/object_errors', object: faq %>
 
   <div class="panel panel-default">
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-12">
-                <%= f.label t("activerecord.attributes.faq.question", class: "control-label") %><%= mark_if_required(faq, :question) %>
-                <%= f.input :question %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-12" data-no-turbolink="true">
-            <%= f.label t("activerecord.attributes.faq.answer", class: "control-label") %><%= mark_if_required(faq, :answer) %>
-            <%= f.bootsy_area :answer, rows: 10, class: "col-md-12 form-control" %>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <% if Faq.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
-    <br>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h5>
-          <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
-        </h5>
-      </div>
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.faq.question") %></h4>
     </div>
-  <% end %>
-
+    <%= f.input :question %>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.faq.answer") %></h4>
+    </div>
+    <%= f.bootsy_area :answer, rows: 10, class: "form-control" %>
+  </div>
   <div class="actions">
     <%= f.submit t("links.save"), class: "btn btn-warning pull-right" %>
   </div>
