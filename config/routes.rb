@@ -3,6 +3,8 @@ HpiHiwiPortal::Application.routes.draw do
   scope "(:locale)", locale: /en|de/ do
 
   get "imprint/index"
+  get "get-userlist" => "users#userlist"
+
   resources :user_statuses
     root :to => "login_page#index"
 

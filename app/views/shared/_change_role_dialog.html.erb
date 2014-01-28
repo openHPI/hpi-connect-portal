@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
       <%= form_tag path do %>
-        <%= text_field_tag "student_id", nil %>
+        <%= hidden_field_tag "student_id", nil %>
 
         <%= select_tag :role_name, options_for_select(roles, roles.first) %>
         <% if (defined?(render_chairs) && render_chairs) %>
@@ -16,7 +16,7 @@
         <% if (defined?(@chair)) %>
         <%= hidden_field_tag :id, @chair.id %>
         <% end %>
-        <%= submit_tag button_title, :data => {confirm: confirm_question}, :class => "btn btn-default promote" %>
+        <%= submit_tag button_title, :data => {confirm: confirm_question}, :class => "btn btn-default change-role" %>
       <% end %>
       </div>
     </div><!-- /.modal-content -->

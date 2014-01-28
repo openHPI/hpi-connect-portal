@@ -41,7 +41,7 @@ class ChairsController < ApplicationController
     if @chair.save
       respond_and_redirect_to(@chair, 'Chair was successfully created.', 'show', :created)
     else
-			@users = User.all
+      @users = User.all
       flash[:error] = 'Invalid content.'
       render_errors_and_action(@chair, 'new')
     end
@@ -58,7 +58,7 @@ class ChairsController < ApplicationController
   end
 
   def update_staff
-    set_role_from_staff_to_student(params[:student_id], params[:new_deputy_id])
+    set_role_from_staff_to_student(params[:user_id], params[:new_deputy_id])
     redirect_to(chair_path(@chair))
   end
 

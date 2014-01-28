@@ -186,7 +186,7 @@ describe ChairsController do
       user = FactoryGirl.create(:user, role: staff_role, :chair => chair)
       sign_in user
       chair.update(:deputy => user)
-      put :update_staff, {:student_id => staff_member.to_param, :new_deputy_id => nil, :id => chair.id}, valid_session
+      put :update_staff, {:user_id => staff_member.to_param, :new_deputy_id => nil, :id => chair.id}, valid_session
       assert_equal(student_role, User.find(staff_member.id).role)
       assert_equal(nil, User.find(staff_member.id).chair)
     end

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    include ApplicationHelper
 
     before_filter :check_user, :only => [:update, :edit]
 
@@ -22,6 +23,15 @@ class UsersController < ApplicationController
         end
 
         
+    end
+
+    def userlist
+        @is_deputy = given_user_is_deputy?(User.find(params[:exclude_user]))
+        @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+        respond_to do |format|
+            format.json     
+        end
+
     end
 
     private

@@ -84,6 +84,7 @@ class ApplicationController < ActionController::Base
     user = User.find(user_id)
     if deputy_id
       user.chair.update(:deputy_id => deputy_id)
+      User.find(deputy_id).update(:role => Role.find_by_level(2), :chair => user.chair)
     end   
     user.update(:role_id => Role.find_by_level(1).id, :chair => nil)
 

@@ -43,6 +43,23 @@ describe "the chair page" do
     end
   end
 
+  describe "demote staff" do
+
+    xit "by an admin" do
+      FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Staff', level: 2), chair: chair)
+      admin = FactoryGirl.create(:user, role: FactoryGirl.create(:role, name: 'Admin', level: 3))
+      login_as(admin)
+      visit chair_path(chair)
+      expect(page).to have_css(".change-role")
+      find(".change-role").click
+      expect(page).to have_css(".promote")
+      # find(".promote").click
+      # page.driver.browser.switch_to.alert.accept
+      # page.should_not have_css(".change-role")
+    end
+
+  end
+
   describe "should show the basic information of the chair" do
     it { should have_content(chair.name) }
     it { should have_content(chair.description) }

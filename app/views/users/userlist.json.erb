@@ -1,0 +1,14 @@
+{
+  "is_deputy" : <%= @is_deputy %> , 
+  "users": [
+    <% @users.each_with_index do |user, index| %>
+      {
+        "id": <%= user.id %>,
+        "name": "<%= user.firstname + " " + user.lastname %>"
+      } 
+      <% unless index == (@users.length-1) %>
+        ,
+      <% end %>
+    <% end %>
+  ]
+}
