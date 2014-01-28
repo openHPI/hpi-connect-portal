@@ -1,5 +1,5 @@
 <div class="well sidebar-nav">
-  <%= form_tag('',:method => :get) do %>
+  <%= form_tag '', :method => :get do %>
     <ul class="nav nav-list">
       <div class="form-group">
         <%= label_tag t("job_offers.searchLabel") %>
@@ -50,7 +50,7 @@
             </div>
           </div>
         </div>
-      </div>   
+      </div>
       <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
     </ul>
   <% end %>

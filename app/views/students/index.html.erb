@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-9">
     <h1><%= t("users.students_headline")%></h1>
-      <br><br>
       <ul class="list-group">
       <% @users.each do |student| %>
         <li class="list-group-item">
@@ -38,13 +37,12 @@
         <% if user_is_deputy? %>
            <% promotion_roles = [Role.find_by_level(2).name, "Deputy"] %>
         <% else %>
-           <% chairs = Chair.all %>
            <% promotion_roles = [Role.find_by_level(2).name , Role.find_by_level(3).name, "Deputy"] %>
         <%end%>
 
         <%= select_tag :role_name, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
         <% if user_is_admin? %>
-        <%= select_tag :chair_name, options_for_select(Chair.all.collect{|c| c.name}, :selected => nil) %>
+        <%= select_tag :employer_name, options_for_select(Employer.all.collect{|e| e.name}, :selected => nil) %>
         <% end %>
         <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default promote" %>
       <% end %>

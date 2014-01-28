@@ -27,6 +27,7 @@
 
 # ignore public folder
 /public/system/*
+/public/assets/*
 
 # .orig Files
 .orig

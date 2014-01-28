@@ -1,0 +1,84 @@
+<%= simple_form_for employer, html: { multipart: true } do |f| %>
+  
+  <%= render 'shared/object_errors', object: employer %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><%= t("employers.general_information") %></h4>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.employer.name", class: "control-label" %><%= mark_if_required(employer, :name) %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.input :name %>
+                  <br>
+                  <%= f.label :external do %>
+                    <%= f.check_box :external %>
+                    External employer
+                  <% end %>
+                </div>
+              </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.employer.head", class: "control-label" %><%= mark_if_required(employer, :head) %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.input :head %>
+                </div>
+              </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %><%= mark_if_required(employer, :deputy_id) %>
+                </div>
+                <div class="col-sm-9">
+                  <% if employer.staff.any? %>
+                    <%= f.collection_select :deputy_id, employer.staff, :id, :email %>
+                  <% else %>
+                    <%= f.collection_select :deputy_id, User.staff, :id, :email %>
+                  <% end %>
+                </div>
+              </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label :avatar, class: "control-label" %><%= mark_if_required(employer, :avatar) %>
+                </div>
+                <div class="col-sm-9">
+                  <% unless employer.avatar.nil? %>
+                      <%= image_tag employer.avatar.url(:medium), class: " employer-thumbnail", alt: employer.name %>
+                  <% end %>
+                  <br><br>
+                  <%= f.file_field :avatar %>
+                </div>
+              </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12" data-no-turbolink="true">
+            <%= f.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
+            <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+
+<% end %>

@@ -4,11 +4,11 @@ de:
       accepted:
         subject: "Herzlich Glückwunsch Ihre Bewerbung auf die Stelle %{job_title} wurde angenommen"
         title: "Herzlichen Glückwunsch!"
-        content: "Ihre Bewerbung auf die Stelle %{job_title} am Lehrstuhl %{chair} wurde angenommen."
+        content: "Ihre Bewerbung auf die Stelle %{job_title} ausgeschrieben von %{employer} wurde angenommen."
       declined:
         subject: "Leider wurde eine Bewerbung abgelehnt"
         title: "Leider wurde eine Bewerbung abgelehnt"
-        content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} am Lehrstuhl %{chair} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
+        content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} ausgeschrieben von %{employer} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
       apply:
         application: "Hallo, Ich möchte mich auf die Stelle bewerben."  
     wimi:
@@ -16,3 +16,4 @@ de:
         subject: "Neue Bewerbung"
         title: "Es gibt eine neue Bewerbung auf die Stelle %{job_offer}"
         content: "hat sich auf die Stelle %{%job_offer} beworben."
+    last_line: "Viele Grüße das HPI-Hiwi-Portal"

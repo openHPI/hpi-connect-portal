@@ -1,16 +1,11 @@
 class FaqsController < ApplicationController
-  include ApplicationsHelper
+  include ApplicationHelper
   before_action :set_faq, only: [:show, :edit, :update, :destroy]
 
   # GET /faqs
   # GET /faqs.json
   def index
     @faqs = Faq.all
-  end
-
-  # GET /faqs/1
-  # GET /faqs/1.json
-  def show
   end
 
   # GET /faqs/new
@@ -28,7 +23,7 @@ class FaqsController < ApplicationController
     @faq = Faq.new(faq_params)
 
     if @faq.save
-      respond_and_redirect_to(@faq, 'FAQ was successfully created.', 'show', :created)
+      redirect_to faqs_path
     else
       render_errors_and_action(@faq, 'new')
     end
@@ -38,7 +33,7 @@ class FaqsController < ApplicationController
   # PATCH/PUT /faqs/1.json
   def update
     if @faq.update(faq_params)
-      respond_and_redirect_to(@faq, 'FAQ was successfully updated.')
+      redirect_to faqs_path
     else
       render_errors_and_action(@faq, 'edit')
     end

@@ -1,10 +1,9 @@
-include UsersHelper
-
 class StudentsController < ApplicationController
   include UsersHelper
-  
+
   before_filter :check_user_can_index_students, only: [:index]
   before_filter :check_current_user_or_admin, only: [:edit]
+  before_filter :check_user_deputy_or_admin, only: [:update_role]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   has_scope :search_students, only: [:index], as: :q
@@ -15,8 +14,7 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.students).sort_by{|user| [user.lastname, user.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1
@@ -57,7 +55,7 @@ class StudentsController < ApplicationController
   end
 
   # GET /students/matching
-  def matching 
+  def matching
     #XXX should be a list of strings not [string]
     @users = User.search_students_by_language_and_programming_language(
       params[:languages], params[:programming_languages])
@@ -65,40 +63,30 @@ class StudentsController < ApplicationController
     render "index"
   end
 
+  # POST /students/update_role
+
   def update_role
     role_name = params[:role_name]
-    chair_name = params[:chair_name]
 
-    if chair_name
-      chair = Chair.find_by_name(chair_name)
-    else
-      chair = current_user.chair
-    end
+    @user = User.find_by_id(params[:student_id])
 
+    new_role = nil
+    should_be_deputy = false
     case role_name
       when "Deputy"
-        promote_to_deputy(params[:student_id], chair)
-      when Role.find_by_level(3).name
-        promote_to_admin(params[:student_id])
-      when Role.find_by_level(2).name
-        promote_to_research_assistant(params[:student_id], chair)
+        new_role = Role.find_by_name("Staff")
+        should_be_deputy = true
+      when "Admin"
+        new_role = Role.find_by_name("Admin")
+      when "Staff"
+        new_role = Role.find_by_name("Staff")
+      else
+        render_errors_and_action(student_path(@user))
+        return
     end
+
+    @user.promote(new_role, @employer, should_be_deputy)
     redirect_to(students_path)
-  end
-
-  def promote_to_deputy(student_id, chair)
-    chair.update(:deputy_id => student_id)
-    User.find(student_id).update(:chair => chair, :role => Role.find_by_level(2))
-  end
-
-  def promote_to_admin(student_id)
-    student = User.find(student_id)
-    student.update(:role => Role.find_by_level(3))
-  end
-
-  def promote_to_research_assistant(student_id, chair)
-    student = User.find(student_id)
-    student.update(:role => Role.find_by_level(2), :chair => chair)
   end
 
   private
@@ -126,6 +114,15 @@ class StudentsController < ApplicationController
     def check_user_can_index_students
       unless user_is_admin? || user_is_staff?
         redirect_to root_path
+      end
+    end
+
+    def check_user_deputy_or_admin
+      user = User.find_by_id(params[:student_id])
+      @employer = params[:employer_name] ? Employer.find_by_name(params[:employer_name]) : current_user.employer
+
+      unless current_user.admin? || @employer.nil? || @employer.deputy == current_user
+        redirect_to(student_path(user))
       end
     end
 end

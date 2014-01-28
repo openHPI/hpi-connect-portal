@@ -20,6 +20,8 @@ require 'spec_helper'
 
 describe ProgrammingLanguagesController do
 
+  login_user FactoryGirl.create(:role, name: 'Student')
+
   # This should return the minimal set of attributes required to create a valid
   # ProgrammingLanguage. As you add validations to ProgrammingLanguage, be sure to
   # adjust the attributes here as well.

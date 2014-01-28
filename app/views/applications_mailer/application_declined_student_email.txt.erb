@@ -1,3 +1,6 @@
 <%= t "applications_mailer.students.declined.title" %>
 
-<%= t "applications_mailer.students.declined.content", chair: @application.job_offer.chair, job_title: @application.job_offer.title %>
+<%= t "applications_mailer.students.declined.content", employer: @application.job_offer.employer, job_title: @application.job_offer.title %>
+
+<%= t "applications_mailer.last_line" %>
+

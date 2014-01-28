@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-12">
+  	<% if can?(:create, Employer) %>
+  	<%= link_to t('employers.new_employer'), new_employer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-top: 20px" %>
+  	<% end %>
+	<h1>
+		<% if @internal %>
+		<%= t('employers.employer_overview_internal') %>
+		<% else %>
+		<%= t('employers.employer_overview_external') %>
+		<% end %>
+	</h1>
+
+	  <ul class="list-group">
+	    <div class="row">
+	      <div class="col-md-12">
+	        <%= render @employers %>
+	      </div>
+	    </div>
+	  </ul>
+	</div>
+</div>
+
+<%= will_paginate @employers, renderer: BootstrapPagination::Rails%>
+

@@ -21,11 +21,11 @@
 //= require_tree .
 
 
- $(function() {
+$(function() {
     $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy'});
-  });
+});
 
- $(function(){
+$(function(){
     $('.field_with_errors').addClass('form-group has-error');
 });
 

@@ -1,19 +1,10 @@
-<%= form_for(@user_status) do |f| %>
-  <% if @user_status.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_status.errors.count, "error") %> prohibited this user_status from being saved:</h2>
+<%= simple_form_for user_status do |f| %>
 
-      <ul>
-      <% @user_status.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/object_errors', object: user_status %>
 
   <div class="field">
-    <%= f.label :name %><%= mark_if_required(@user_status, :name) %><br>
-    <%= f.text_field :name %>
+    <%= f.label :name %><%= mark_if_required(user_status, :name) %><br>
+    <%= f.input :name %>
   </div>
   <% if UserStatus.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
     <div>

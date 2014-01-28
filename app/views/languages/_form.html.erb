@@ -1,19 +1,10 @@
-<%= form_for(@language) do |f| %>
-  <% if @language.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@language.errors.count, "error") %> prohibited this language from being saved:</h2>
+<%= simple_form_for language do |f| %>
 
-      <ul>
-      <% @language.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/object_errors', object: language %>
 
   <div class="field">
-    <%= f.label :name %><br><%= mark_if_required(@language, :name) %>
-    <%= f.text_field :name %>
+    <%= f.label :name %><%= mark_if_required(language, :name) %><br>
+    <%= f.input :name %>
   </div>
   <div class="actions">
     <%= f.submit %>

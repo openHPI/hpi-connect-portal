@@ -1,9 +1,11 @@
-The following job offer has been assigned to a student:
+<%= t "job_offers_mailer.student_accepted.title" %>
 
-•Title: <%= @job_offer.title %>
-•Student name: <%= @job_offer.assigned_student.email %>
-•Chair: <%= @job_offer.chair.name %>
-•Responsible staff member: <%= @job_offer.responsible_user.email %>
-•Room: <%= @job_offer.room_number %>
-•Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %>
-•Salary: <%= @job_offer.compensation %>
+•<%= t "activerecord.attributes.job_offer.title" %>: <%= @job_offer.title %>
+•Email: <%= @job_offer.assigned_student.email %>
+•<%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %>
+•<%= t "activerecord.attributes.job_offer.responsible_user" %>:  <%= @job_offer.employer.name %> %>
+•<%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %>
+•<%= t "applications_mailer.duration" %>: <%= @job_offer.start_date %> - <%= @job_offer.end_date %>
+•<%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.compensation %>
+
+<%= t "applications_mailer.last_line" %>

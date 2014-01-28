@@ -10,21 +10,13 @@ class StaffController < ApplicationController
   # GET /staff
   # GET /staff.json
   def index
-    @users = User.staff
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.staff).sort_by{|user| [user.lastname, user.firstname]}.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /staff/1
   # GET /staff/1.json
   def show
     @user = User.staff.find params[:id]
-  end
-
-  # GET /staff/new
-  def new
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-    @user = User.new
   end
 
   # GET /staff/1/edit

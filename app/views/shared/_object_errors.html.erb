@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <div id="error_explanation">
+    <h2>There are <%= pluralize(object.errors.count, "error") %> preventing this form from being saved:</h2>
+    <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

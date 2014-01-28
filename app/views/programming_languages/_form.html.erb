@@ -1,19 +1,10 @@
-<%= form_for(@programming_language) do |f| %>
-  <% if @programming_language.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@programming_language.errors.count, "error") %> prohibited this programming_language from being saved:</h2>
+<%= simple_form_for programming_language do |f| %>
 
-      <ul>
-      <% @programming_language.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/object_errors', object: programming_language %>
 
   <div class="field">
-    <%= f.label :name %><%= mark_if_required(@programming_language, :name) %><br>
-    <%= f.text_field :name %>
+    <%= f.label :name %><%= mark_if_required(programming_language, :name) %><br>
+    <%= f.input :name %>
   </div>
   <% if ProgrammingLanguage.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
     <div>
