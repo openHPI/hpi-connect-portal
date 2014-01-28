@@ -1,5 +1,4 @@
 class ProgrammingLanguagesController < ApplicationController
-  include ApplicationHelper
   before_action :set_programming_language, only: [:show, :edit, :update, :destroy]
 
   # GET /programming_languages

@@ -21,11 +21,7 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     user = User.find(params[:id])
-    if user.student?
-      @user = user
-    else
-      not_found
-    end
+    @user = user
   end
 
   # GET /students/new
