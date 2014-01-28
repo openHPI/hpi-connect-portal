@@ -364,4 +364,16 @@ describe JobOffersController do
     end
   end
 
+  describe "GET matching" do
+    it "finds all job_offers with the requested programming language, and language" do
+      @programming_language_1 = FactoryGirl.create(:programming_language)
+      @language_1 = FactoryGirl.create(:language)
+
+      @job_offer = FactoryGirl.create(:job_offer, programming_languages: [@programming_language_1], languages: [@language_1], status: @open)
+
+      get :matching, ({:language_ids => [@language_1.id], :programming_language_ids => [@programming_language_1.id]}), valid_session
+      assigns(:job_offers_list)[:items].should eq([@job_offer])
+    end
+  end
+
 end

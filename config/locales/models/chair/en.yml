@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       chair:
-        deputy: "deputy"
-        description: "description"
-        head_of_chair: "head of chair"
-        name: "name"
+        deputy: "Deputy"
+        description: "Description"
+        head_of_chair: "Head of chair"
+        name: "Name"

@@ -171,15 +171,14 @@ describe StudentsController do
       @language_1 = FactoryGirl.create(:language)
       @language_2 = FactoryGirl.create(:language)
 
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
+      @user1 = FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
+      @user2 = FactoryGirl.create(:user, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
       FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_1])
       FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_2])
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
+      @user3 =FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
 
-      user = User.search_students_by_language_and_programming_language([@language_1.name], [@programming_language_1.name])
-      get :matching, ({:languages => [@language_1.name.capitalize], :programming_languages => [@programming_language_1.name.capitalize]}), valid_session
-      assigns(:users).should eq(user)
+      get :matching, ({:language_ids => [@language_1.id], :programming_language_ids => [@programming_language_1.id]}), valid_session
+      assigns(:users).should eq([@user1,@user2,@user3])
     end
   end
 

@@ -43,7 +43,7 @@ describe "the students page" do
     login_as(@student1, :scope => :user)
     visit students_path
     current_path.should_not == students_path
-    current_path.should == root_path
+    current_path.should == job_offers_path
   end
 
   # it "should delete the first student if Delete is clicked " do
