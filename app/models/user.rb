@@ -145,8 +145,9 @@ class User < ActiveRecord::Base
   def self.build_from_identity_url(identity_url)
     username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
 
-    first_name = username.split('.').first.capitalize
-    last_name = username.split('.').second.capitalize
+    splitted_name = username.split('.')
+    first_name = splitted_name.first.capitalize
+    last_name = splitted_name.second.capitalize
     email = username + '@student.hpi.uni-potsdam.de'
 
     # semester, academic_program and education are required to create a user with the role student
@@ -171,12 +172,12 @@ class User < ActiveRecord::Base
     search_results = User.search_students string
     search_results += search_students_by_language_identifier :programming_languages, string
     search_results += search_students_by_language_identifier :languages, string
-    search_results.uniq.sort_by{|x| [x.lastname, x.firstname]}
+    search_results.uniq.sort_by{|student| [student.lastname, student.firstname]}
   end
 
   def self.search_students_by_language_identifier(language_identifier, string)
     key = language_identifier.to_s + ".name"
-    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|x| [x.lastname, x.firstname]}
+    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|student| [student.lastname, student.firstname]}
   end
 
   def self.search_students_by_language_and_programming_language(language_array, programming_language_array)

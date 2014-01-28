@@ -7,12 +7,12 @@ class Ability
     if user.role
       can :manage, :all if user.admin?
 
-      initialize_student user if user.student?
+      initialize_student if user.student?
       initialize_staff user, user.employer_id if user.staff?
     end
   end
 
-  def initialize_student(user)
+  def initialize_student()
     can :create, Application
     can :read, Faq
     can :read, User, role: { name: 'Staff' }

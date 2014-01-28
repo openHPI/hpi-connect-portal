@@ -10,8 +10,10 @@ class ApplicationsMailer < ActionMailer::Base
   end
   def new_application_notification_email(application, message = t("applications_mailer.wimi.new_application.content") , add_cv = false, attached_files = nil)
     user = application.user
-    if(!user.cv.path.nil?) and !add_cv.nil?
-      attachments[user.cv_file_name] = File.read(user.cv.path)
+    cv = user.cv
+    
+    if(!cv.path.nil?) and !add_cv.nil?
+      attachments[user.cv_file_name] = File.read(cv.path)
     end
     if !attached_files.nil?
       attached_files[:file_attributes].each do | file |
