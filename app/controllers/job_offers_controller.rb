@@ -7,6 +7,7 @@ class JobOffersController < ApplicationController
   before_filter :check_user_is_staff_of_employer_or_admin, only: [:complete, :reopen]
   before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
   before_filter :check_job_is_in_deletable_state, only: [:destroy]
+  before_filter :check_new_end_date_is_valid, only: [:prolong]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive]
@@ -102,8 +103,9 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/prolong
   def prolong
-    if @job_offer.end_date < Date.parse(params[:job_offer][:end_date])
-      @job_offer.update_column :end_date, params[:job_offer][:end_date]
+    date = Date.parse(params[:job_offer][:end_date])
+    if @job_offer.end_date < date
+      @job_offer.update_column :end_date, date
       flash[:success] = 'Job offer successfully prolonged'
       JobOffersMailer.job_prolonged_email(@job_offer).deliver
     else
@@ -221,6 +223,14 @@ class JobOffersController < ApplicationController
       set_job_offer
       unless !@job_offer.running?
         respond_and_redirect_to(@job_offer, 'This job offer is currently running and therefore can\'t be deleted.')
+      end
+    end
+
+    def check_new_end_date_is_valid
+      begin
+        date = Date.parse(params[:job_offer][:end_date])
+      rescue ArgumentError
+        respond_and_redirect_to(@job_offer, 'Please choose a new end date which is valid.')
       end
     end
 end

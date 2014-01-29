@@ -147,6 +147,11 @@ describe JobOffersController do
       put :prolong, {id: @job_offer.id, job_offer: { end_date: Date.current + 100 } }
       assigns(:job_offer).end_date.should eq(Date.current + 100)
     end
+
+    it "should handle invalid end_dates" do
+      put :prolong, {id: @job_offer.id, job_offer: { end_date: '20-40-2014' } }
+      response.should redirect_to(@job_offer)
+    end
   end
 
   describe "GET complete" do
@@ -326,6 +331,7 @@ describe JobOffersController do
         post :create, {:job_offer => { "description" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
+      
       it "should not send mail to deputy" do
         job_offer = FactoryGirl.create(:job_offer)
         #expect
@@ -333,6 +339,17 @@ describe JobOffersController do
         # when
         FactoryGirl.create(:job_offer)
       end
+
+      it "handles an invalid start date" do
+        attributes = valid_attributes
+        attributes["start_date"] = '20-40-2014'
+
+        expect {
+          post :create, {:job_offer => attributes}, valid_session
+        }.to change(JobOffer, :count).by(0)
+        response.should render_template("new")
+      end
+
     end
   end
 

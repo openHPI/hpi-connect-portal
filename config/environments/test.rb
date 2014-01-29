@@ -34,6 +34,9 @@ HpiHiwiPortal::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # Enable strict date parsing using the timeliness gem
+  config.use_plugin_parser = true
+
   config.action_mailer.default_url_options = { host: "http://hpi-hiwi-portal.herokuapp.com" }
 
   config.action_mailer.delivery_method = :test

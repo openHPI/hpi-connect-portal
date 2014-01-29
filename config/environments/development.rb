@@ -8,6 +8,8 @@ HpiHiwiPortal::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
+  # Enable strict date parsing using the timeliness gem
+  config.use_plugin_parser = true
 
   # Do not eager load code on boot.
   config.eager_load = false
