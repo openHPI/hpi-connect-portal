@@ -67,18 +67,6 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :users
     resources :user_statuses
-
-    resources :faqs
-
-    resources :staff, except: [:new, :create]
-
-    resources :students do
-      collection do
-        get 'students/new' => 'students#new'
-        post 'students' => 'students#create'
-        get 'matching'
-        post 'update_role'
-      end
     end
   end
 end
