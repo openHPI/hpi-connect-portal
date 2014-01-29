@@ -5,6 +5,8 @@ describe "Job Offer pages" do
 
   subject { page }
 
+  let(:user) { FactoryGirl.create(:user) }
+
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
     @status_open = FactoryGirl.create(:job_status, :open)
@@ -16,15 +18,12 @@ describe "Job Offer pages" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
-      before { visit job_offer_path(job_offer) }
+      before { 
+        login_as(user)
+        visit job_offer_path(job_offer) }
 
       describe "application button and list" do
         let(:student) { FactoryGirl.create(:user, :student) }
-
-        describe "without being signed in" do
-          it { should_not have_button('Apply') }
-          it { should_not have_selector('h4', text: 'Applications') }
-        end
 
         describe "as a student" do
           before do 
