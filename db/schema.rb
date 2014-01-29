@@ -60,6 +60,11 @@ ActiveRecord::Schema.define(version: 20140127184845) do
 
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
+  create_table "employers_newsletter_informations", force: true do |t|
+    t.integer "user_id"
+    t.integer "employer_id"
+  end
+
   create_table "faqs", force: true do |t|
     t.string   "question"
     t.text     "answer"
@@ -122,6 +127,11 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.datetime "updated_at"
   end
 
+  create_table "programming_languages_newsletter_informations", force: true do |t|
+    t.integer "user_id"
+    t.integer "programming_language_id"
+  end
+
   create_table "programming_languages_users", force: true do |t|
     t.integer "user_id"
     t.integer "programming_language_id"
@@ -177,6 +187,7 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.integer  "status"
     t.integer  "user_status_id"
     t.date     "employment_start_date"
+    t.integer  "frequency",              default: 1,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
