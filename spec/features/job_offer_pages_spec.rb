@@ -150,6 +150,10 @@ describe "Job Offer pages" do
         it "should not be editable" do
           expect(current_path).to eq(job_offer_path(job_offer))
         end
+
+        it "shouldn't display a delete button" do
+          should_not have_link I18n.t("links.destroy")
+        end
       end
 
       describe "as a admin" do

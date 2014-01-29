@@ -407,6 +407,16 @@ describe JobOffersController do
       delete :destroy, {:id => @job_offer.to_param}, valid_session
       response.should redirect_to(job_offers_url)
     end
+
+    it "redirects to the job offer page and keeps the offer if the job is running" do
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
+      sign_in @job_offer.responsible_user
+
+      expect {
+        delete :destroy, {:id => @job_offer.to_param}, valid_session
+      }.to change(JobOffer, :count).by(0)
+      response.should redirect_to(@job_offer)
+    end
   end
 
 end
