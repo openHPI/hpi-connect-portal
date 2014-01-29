@@ -47,7 +47,7 @@
                   <% if employer.staff.any? %>
                     <%= f.collection_select :deputy_id, employer.staff, :id, :email %>
                   <% else %>
-                    <%= f.collection_select :deputy_id, User.staff, :id, :email %>
+                    <%= f.collection_select :deputy_id, User.students, :id, :email %>
                   <% end %>
                 </div>
               </div>
