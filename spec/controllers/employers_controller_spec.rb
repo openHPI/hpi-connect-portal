@@ -172,7 +172,7 @@ describe EmployersController do
       user = FactoryGirl.create(:user, role: staff_role, :employer => employer)
       sign_in user
       employer.update(:deputy => user)
-      put :update_staff, {:user_id => staff_member.to_param, :new_deputy_id => nil, :id => employer.id}, valid_session
+      put :update_staff, {:user_id => staff_member.to_param, :new_deputy_id => nil, :id => employer.id}
       assert_equal(student_role, User.find(staff_member.id).role)
       assert_equal(nil, User.find(staff_member.id).employer)
     end

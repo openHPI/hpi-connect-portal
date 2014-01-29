@@ -22,6 +22,8 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
+    get "employers/external", to: "employers#index_external", as: "external_employers"
+    
     resources :employers do
         collection do 
             post 'update_staff'
@@ -38,11 +40,8 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    get "employers/external", to: "employers#index_external", as: "external_employers"
-
     resources :users, only: [:edit, :update]
 
-    resources :studentsearch
     resources :faqs
 
     resources :staff, except: [:new, :create] do
@@ -69,7 +68,6 @@ HpiHiwiPortal::Application.routes.draw do
     resources :users
     resources :user_statuses
 
-    resources :studentsearch
     resources :faqs
 
     resources :staff, except: [:new, :create]

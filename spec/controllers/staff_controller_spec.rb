@@ -223,7 +223,7 @@ describe StaffController do
     before(:each) do
         @student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
         @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
-        @chair = FactoryGirl.create(:employer)
+        @employer = FactoryGirl.create(:employer)
         @staff_member = FactoryGirl.create(:user, :role => @staff_role, :employer => @employer)
         @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
     end
