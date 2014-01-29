@@ -66,7 +66,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %><%= mark_if_required(@job_offer, :start_date) %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.nil? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>
@@ -76,7 +76,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %><%= mark_if_required(@job_offer, :end_date) %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.nil? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
             </li>

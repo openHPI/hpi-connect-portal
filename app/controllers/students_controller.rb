@@ -20,8 +20,10 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    user = User.students.find(params[:id])
-    @user = user
+    @user = User.find(params[:id])
+    if not @user.student?
+      redirect_to user_path
+    end
   end
 
   # GET /students/new
