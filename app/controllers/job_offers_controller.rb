@@ -116,7 +116,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/matching
   def matching
     job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
-    @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
+    @job_offers_list = {:items => job_offers, :name => "job_offers.matching_job_offers"}
     render "index"
   end
 
