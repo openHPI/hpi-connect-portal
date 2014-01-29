@@ -54,9 +54,8 @@ class JobOffersMailer < ActionMailer::Base
 
   def students_by_programming_language(job_offer, students)
     language_students = []
-    job_offer.programming_languages.each do |programming_language|
-      language_students = ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id).map(&:user)
-    end
+    job_offer.programming_languages.map{ |programming_language|
+      language_students = ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id).map(&:user)}
     students & language_students
   end
 end
