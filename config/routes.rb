@@ -4,7 +4,9 @@ HpiHiwiPortal::Application.routes.draw do
 
   get "imprint/index"
   
-  root :to => "login_page#index"
+  devise_scope :user do 
+    root :to => 'sessions#new'
+  end
 
   resources :job_offers do
     collection do
