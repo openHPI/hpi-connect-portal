@@ -106,6 +106,8 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
+    famfamfam_flags_rails (0.3.0)
+      railties (>= 3.1.0)
     font-awesome-rails (4.0.3.1)
       railties (>= 3.2, < 5.0)
     has_scope (0.5.1)
@@ -263,6 +265,7 @@ DEPENDENCIES
   email_spec
   factory_girl
   factory_girl_rails
+  famfamfam_flags_rails
   font-awesome-rails (~> 4.0.3.1)
   has_scope
   highline

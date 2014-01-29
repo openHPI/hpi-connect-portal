@@ -15,7 +15,10 @@ class StaffController < ApplicationController
   # GET /staff/1
   # GET /staff/1.json
   def show
-    @user = User.staff.find params[:id]
+    @user = User.find params[:id]
+    if not @user.staff?
+      redirect_to user_path
+    end
   end
 
   # GET /staff/1/edit

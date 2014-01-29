@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
     before_filter :check_user, :only => [:update, :edit]
     has_scope :update_immediately
 
@@ -21,9 +20,19 @@ class UsersController < ApplicationController
       flash[:error] = 'Error while updating profile.'
       render 'edit'
     end
-
-
   end
+
+  def show
+    user = User.find(params[:id])
+    if user.student?
+      redirect_to student_path(user.id)
+    elsif user.staff?
+      redirect_to staff_path(user.id)
+    else
+      redirect_to edit_user_path(user.id)
+    end
+  end
+
 
   private
     def user_params
