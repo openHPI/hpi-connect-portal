@@ -48,22 +48,15 @@ class JobOffersMailer < ActionMailer::Base
    end
 
   def students_by_employer(job_offer, students)
-    employer_students = extract_students(EmployersNewsletterInformation.where(:employer => job_offer.employer), [])
+    employer_students = EmployersNewsletterInformation.where(:employer => job_offer.employer).map(&:user)
     students & employer_students
   end
 
   def students_by_programming_language(job_offer, students)
     language_students = []
     job_offer.programming_languages.each do |programming_language|
-      language_students = extract_students(ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id), [])
+      language_students = ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id).map(&:user)
     end
     students & language_students
-  end
-
-  def extract_students(iterable_newsletter_information, students)
-    iterable_newsletter_information.each do |entry|
-      students = students + [entry.user]
-    end
-    students
   end
 end
