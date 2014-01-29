@@ -31,8 +31,8 @@ describe "FAQ page" do
 
   it 'should return a page for FAQ' do
 
-    # @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) 
-    # login_as(student, :scope => :user)
+    @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) 
+    login_as(@student, :scope => :user)
     visit faqs_path
     expect(page).to have_content "FAQ"
     end

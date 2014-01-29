@@ -1,5 +1,6 @@
 class JobOffersController < ApplicationController
   include UsersHelper
+  include ApplicationHelper
 
   before_filter :check_user_can_create_jobs, only: [:new]
   before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy, :prolong]

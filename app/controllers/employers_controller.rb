@@ -1,4 +1,5 @@
 class EmployersController < ApplicationController
+  include ApplicationHelper
 
   authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_employer, only: [:show, :edit, :update]
