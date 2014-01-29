@@ -56,6 +56,6 @@ describe "job_offers/show" do
 
     render
 
-    rendered.should match(@job_offer.compensation.to_s)
+    rendered.should match(@job_offer.compensation.to_s + " " + I18n.t('job_offers.compensation_description'))
   end
 end
