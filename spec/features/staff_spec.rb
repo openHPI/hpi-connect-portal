@@ -44,9 +44,9 @@ describe "the staffs profile page" do
   let(:staff_role) { FactoryGirl.create(:role, name: 'Staff', level: 2) }
 
   before(:each) do
-    @staff1 = FactoryGirl.create(:user, :role => staff_role)
+    @staff1 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
 
-    @staff2 = FactoryGirl.create(:user, :role => staff_role)
+    @staff2 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
   end
 
   it "should have an edit link on the show page of the own profile which leads to the staffs edit page" do

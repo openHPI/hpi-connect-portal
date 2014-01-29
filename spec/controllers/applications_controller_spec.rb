@@ -56,10 +56,9 @@ describe ApplicationsController do
     end
 
     it "accepts a student and he/her is included in @job_offer.assigned_students" do
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
       
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
       assigns(:application).job_offer.assigned_students.should include(@student)
     end
 
@@ -68,12 +67,11 @@ describe ApplicationsController do
       @job_offer.save
       student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
 
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
 
       expect{
         get :accept, {:id => application_2.id}
@@ -84,12 +82,11 @@ describe ApplicationsController do
       @job_offer.vacant_posts = 1
       @job_offer.save
       
-      application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
       running = FactoryGirl.create(:job_status, :name=>'running')
       
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
-      get :accept, {:id => application.id}
+      get :accept, {:id => @application.id}
       assigns(:application).job_offer.status.should eq(running)
     end
 

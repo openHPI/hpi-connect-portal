@@ -4,6 +4,7 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:user, :staff) }
 
+
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
 
@@ -105,12 +106,11 @@ end
 describe "the students profile page" do
 
   before(:each) do
+    @job_offer =  FactoryGirl.create(:job_offer)
+    @student1 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
+    @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
 
-    @student1 = FactoryGirl.create(:user, :student)
-    @student2 = FactoryGirl.create(:user, :student)
-
-    @student3 = FactoryGirl.create(:user)
-    login_as(@student3, :scope => :user)
+    login_as(@student1, :scope => :user)
     
   end
 
@@ -128,7 +128,7 @@ describe "the students profile page" do
     end
 
     it "should contain all jobs i am assigned to" do
-      page.should have_content(job_offer.title)
+      page.should have_content(@job_offer.title)
     end
 
     it "should have an edit link which leads to the students edit page" do
@@ -151,7 +151,7 @@ describe "the students profile page" do
     end
 
     it "should not contain the job the other student is assigned to" do
-      page.should_not have_content(job_offer.title)
+      page.should_not have_content(@job_offer.title)
     end
 
     it "should not have an edit link on the show page of someone elses profile" do
