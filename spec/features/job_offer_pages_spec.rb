@@ -136,7 +136,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link 'Job completed' }
+        it { should have_link I18n.t('job_offers.job_completed') }
         it { should have_link 'reopen Job Offer'}
       end
 
@@ -164,7 +164,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link 'Job completed' }
+        it { should have_link I18n.t('job_offers.job_completed') }
         it { should have_link 'reopen Job Offer'}
       end
     end

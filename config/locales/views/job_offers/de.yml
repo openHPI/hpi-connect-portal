@@ -17,7 +17,7 @@ de:
     start_date: "beginnt frühestens"
     end_date: "endet spätestens"
     archive: "Archiv"
-    job_completed: "Arbeit erledigt"
+    job_completed: "Beenden"
     overview: "Übersicht"
     create_new_job_offer: "Neues Stellenangebot anlegen"
     select_employer: "Arbeitgeber auswählen"
