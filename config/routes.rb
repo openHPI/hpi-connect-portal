@@ -67,6 +67,5 @@ HpiHiwiPortal::Application.routes.draw do
 
     resources :users
     resources :user_statuses
-    end
   end
 end
