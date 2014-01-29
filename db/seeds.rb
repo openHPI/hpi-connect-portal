@@ -287,6 +287,29 @@ user.employer = employer
 employer.save!
 user.save!
 
+User.new(
+	email: "alexander.ernst@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/alexander.ernst", 
+	lastname: "Alexander", 
+	firstname: "Ernst",
+	semester: 5,
+	academic_program: 'Bachelor',
+	birthday: '1990-12-30',
+	education:'Abitur',
+	additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+	homepage: 'https://twitter.com/FraBle90',
+	github: 'https://github.com/FraBle',
+	facebook: 'https://www.facebook.com/FraBle90',
+	xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+	linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+	languages: Language.where(:name => ['english']),
+	languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
+	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+	user_status: UserStatus.where(:name => 'employedext').first, 
+	role: Role.where(:name => 'Student').first	
+)
+
 JobOffer.delete_all
 JobOffer.create!([{
 	title: "Touch floor", 
@@ -312,7 +335,7 @@ JobOffer.create!([{
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
 	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
-	assigned_students: [User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first, User.where(:firstname=>"Max", :lastname=>"Mustermann").first]
+	assigned_students: [User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first]
 }])
 
 JobOffer.create!([{
@@ -392,12 +415,12 @@ Application.create([{
 }])
 
 Application.create([{
-	:user => User.where(:firstname=>'Max', :lastname => 'Mustermann').first,
+	:user => User.where(:firstname=>'Alexander', :lastname => 'Ernst').first,
 	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
 }])
 
 Application.create([{
-	:user => User.where(:firstname=>'Erika', :lastname => 'Mustermann').first,
+	:user => User.where(:firstname=>'Alexander', :lastname => 'Ernst').first,
 	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
 }])
 
@@ -419,7 +442,8 @@ Faq.create!([{
 }])
 Faq.create!([{
 	question: "Does HPI-HiWi-Portal have an Android app?",
-	answer: "No, the HPI-HiWi-Portal does not have an Android app."
+	answer: "No, the HPI-HiWi-Portal does not have an Android app.",
+	locale: "en"
 }])
 Faq.create([{
 	question: "Wie kann ich mein Profile bearbeiten?", 

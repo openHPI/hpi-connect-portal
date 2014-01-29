@@ -7,7 +7,7 @@ describe JobOffersMailer do
     ActionMailer::Base.delivery_method = :test
       ActionMailer::Base.perform_deliveries = true
       @user = FactoryGirl.create(:user)
-      @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user)
+      @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_students: [FactoryGirl.create(:user)])
     @job_offer.employer.deputy = FactoryGirl.create(:user)
     ActionMailer::Base.deliveries = []
   end
@@ -120,7 +120,7 @@ describe JobOffersMailer do
 
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_student.last.email)
+      @email.body.should have_content(@job_offer.assigned_students.last.email)
       @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)
@@ -157,7 +157,7 @@ describe JobOffersMailer do
 
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_student.last.email)
+      @email.body.should have_content(@job_offer.assigned_students.last.email)
       @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)

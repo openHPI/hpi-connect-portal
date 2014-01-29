@@ -23,29 +23,15 @@ class ApplicationsController < ApplicationController
   # GET accept
   def accept
     @application = Application.find params[:id]
-    @job_offer = @application.job_offer
-    if @job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @job_offer).delete_all
-      if @job_offer.flexible_start_date
-        @job_offer.update!({start_date: Date.current})
-      end
-
-      ApplicationsMailer.application_accepted_student_email(@application).deliver
-      JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
-    else
-      render_errors_and_action @job_offer
-    end
+    @application.accept
+    respond_and_redirect_to(@application.job_offer, 'Application was successfully accepted.')
   end
 
   # GET decline
   def decline
     @application = Application.find params[:id]
-    if @application.delete
-      ApplicationsMailer.application_declined_student_email(@application).deliver
-      redirect_to @application.job_offer
-    else
-      render_errors_and_action @application.job_offer
-    end
+    @application.decline
+    redirect_to @application.job_offer         
   end
 
   # DELETE destroy

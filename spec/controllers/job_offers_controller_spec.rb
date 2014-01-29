@@ -11,9 +11,9 @@ describe JobOffersController do
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
   let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_student_id" => assigned_student.id, "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_student_id" => assigned_student.email, "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" =>[assigned_student], "responsible_user_id" => responsible_user.id }}
 
   let(:valid_session) { {} }
 
@@ -145,7 +145,7 @@ describe JobOffersController do
 
   describe "GET complete" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_student: FactoryGirl.create(:user))
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_students: [FactoryGirl.create(:user)])
     end
 
     it "marks jobs as completed if the user is staff of the employer" do 

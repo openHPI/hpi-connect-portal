@@ -6,6 +6,7 @@ describe "the staff page" do
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
 	before(:each) do
+    FactoryGirl.create(:role, :student)
     @staff1 = FactoryGirl.create(:user, :staff)
     login_as(admin, :scope => :user)
     visit staff_index_path
