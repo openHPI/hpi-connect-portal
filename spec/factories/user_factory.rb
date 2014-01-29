@@ -74,7 +74,7 @@ FactoryGirl.define do
     after(:create) do |user, evaluator|
       create_list(:language, 1)
       create_list(:programming_language, 1)
-      user.status = UserStatus.where(:name => 'employed (ext)').first || UserStatus.create(:name => 'employed (ext)')
+      user.status = UserStatus.where(:name => 'employedext').first || UserStatus.create(:name => 'employedext')
     end
   end
 end

@@ -66,6 +66,7 @@ class JobOffersController < ApplicationController
 
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
+      JobOffersMailer.inform_interested_students_immediately(@job_offer)
       respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
     else
       if parameters[:flexible_start_date]

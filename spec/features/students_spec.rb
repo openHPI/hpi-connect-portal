@@ -64,9 +64,8 @@ describe "the students editing page" do
     visit edit_student_path(@student1)
     fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
     fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
-
-    find('input[type="submit"]').click
-
+    
+    page.find('input[type="submit"]').click
     current_path.should == student_path(@student1)
 
     page.should have_content(
@@ -74,8 +73,7 @@ describe "the students editing page" do
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
-
-end
+    end
 
 # to implement:
   # it "should not be possible to change the name of  a student " do
@@ -130,7 +128,7 @@ describe "the students profile page" do
       login_as(@student1, :scope => :user)
       visit student_path(@student1)
       page.find_link('Edit').click
-      page.current_path.should == edit_student_path(@student1)
+      current_path.should == edit_student_path(@student1)
   end
 
   it "should not have an edit link on the show page of someone elses profile" do
