@@ -5,6 +5,8 @@ de:
         new_student: "Neuen Studenten anlegen"
         edit_student: "Studenten bearbeiten"
         carrier: "Karriere"
+        programming_language_newsletter: "Für welche Programmiersprachen möchten Sie über Jobangebote informiert werden?"
+        employers_newsletter: "Bei welchen Arbeitgebern möchten Sie arbeiten?"
         name: Name
         semester: Semester
         promote_button: "Rolle ändern"

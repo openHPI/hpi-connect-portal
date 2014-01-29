@@ -67,7 +67,8 @@
                   <ul class="dropdown-menu">
                     <li><%= link_to t('layouts.students'), students_path %></li>
                     <li><%= link_to t('layouts.staff'), staff_index_path %></li>
-                    <li><%= link_to t('layouts.employers'), employers_path %></li>
+                    <li><%= link_to t('layouts.internal_employer'), employers_path %></li>
+                    <li><%= link_to t('layouts.external_employer'), external_employers_path %></li>
                   </ul>
                 </li>
               <%end %>
@@ -76,7 +77,7 @@
           <% if user_signed_in? %>
             <%= image_tag(current_user.photo.url, size: "40", class: "img-thumbnail")  %>
             <%= t("layouts.logged_in") %> <strong><%= current_user.email %></strong>.
-            <%= link_to t("layouts.my_profile"), edit_user_path(current_user), :class => 'navbar-link' %>
+            <%= link_to t("layouts.my_profile"), current_user.student? ? student_path(current_user) : staff_path(current_user), :class => 'navbar-link' %>
             <% if user_is_staff? && current_user.employer%>
               <%= link_to t('layouts.my_employer'), current_user.employer, :class => 'navbar-link' %>
             <% end %> |
@@ -97,15 +98,20 @@
         </div>
       </div><!--/row-->
 
-      <footer>
-        <tr>
-          <td>&copy; <%= t("layouts.project") %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.faqs"), faqs_path %></td>
-          <td>|</td>
-          <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
-        </tr>
-      </footer>
+      
+      <div id="main" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
+        <p>
+          <tr>
+            <td>&copy; <%= t("layouts.project") %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.faqs"), faqs_path %></td>
+            <td>|</td>
+            <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+          </tr>
+        </p>
+      </div>
+
+     
 
     </div> <!-- /container -->
 

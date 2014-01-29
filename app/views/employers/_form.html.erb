@@ -1,5 +1,5 @@
 <%= simple_form_for employer, html: { multipart: true } do |f| %>
-  
+
   <%= render 'shared/object_errors', object: employer %>
 
   <div class="panel panel-default">
@@ -12,7 +12,7 @@
           <div class="col-sm-6">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.employer.name", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.name", class: "control-label" %><%= mark_if_required(employer, :name) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :name %>
@@ -27,7 +27,7 @@
           <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.employer.head", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.head", class: "control-label" %><%= mark_if_required(employer, :head) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :head %>
@@ -41,7 +41,7 @@
           <div class="col-sm-6">
             <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %><%= mark_if_required(employer, :deputy_id) %>
                 </div>
                 <div class="col-sm-9">
                   <% if employer.staff.any? %>
@@ -55,7 +55,7 @@
           <div class="col-sm-6">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :avatar, class: "control-label" %>
+                  <%= f.label :avatar, class: "control-label" %><%= mark_if_required(employer, :avatar) %>
                 </div>
                 <div class="col-sm-9">
                   <% unless employer.avatar.nil? %>
@@ -71,13 +71,24 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-12" data-no-turbolink="true">
-            <%= f.label t "activerecord.attributes.employer.description", class: "control-label" %>
+            <%= f.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
             <%= f.bootsy_area :description, :rows => 10, :class => "col-md-12 form-control", :placeholder => t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
     </ul>
   </div>
+  <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h5>
+          <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+        </h5>
+      </div>
+    </div>
+  <% end %>
+
+
 
   <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 

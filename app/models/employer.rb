@@ -21,6 +21,7 @@ class Employer < ActiveRecord::Base
 
   has_many :staff, foreign_key: 'employer_id', class_name: 'User'
   has_many :job_offers
+  has_many :interested_students, class_name: 'User', :through => :employers_newsletter_information
   belongs_to :deputy, class_name: "User"
 
   validates_attachment_size :avatar, less_than: 5.megabytes
@@ -34,7 +35,7 @@ class Employer < ActiveRecord::Base
 
   scope :internal, -> { where(external: false) }
   scope :external, -> { where(external: true) }
-  
+
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
   end

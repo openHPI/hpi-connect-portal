@@ -33,14 +33,14 @@ describe "the employer page" do
         admin = FactoryGirl.create(:user, :admin)
         login_as(admin)
         visit employer_path(employer)
-        
+
         should have_link 'Edit'
     end
 
     it "not by student" do
         login_as(user)
         visit employer_path(employer)
-        
+
         should_not have_link 'Edit'
     end
   end

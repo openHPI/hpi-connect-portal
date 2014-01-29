@@ -68,16 +68,16 @@ describe User do
     it "should return the user with the corrent email and name" do
       url = "https://openid.hpi.uni-potsdam.de/user/max.meier"
       user =  User.new(
-              identity_url: url, 
-              email: "max.meier@student.hpi.uni-potsdam.de", 
-              firstname: "Max", 
-              lastname: "Meier", 
+              identity_url: url,
+              email: "max.meier@student.hpi.uni-potsdam.de",
+              firstname: "Max",
+              lastname: "Meier",
               semester: 1,
               academic_program: "unknown",
               education: "unknown",
               role: Role.where(name: "Student").first)
       expect(User.build_from_identity_url(url)).to eql(user)
-    end 
+    end
   end
 
   describe "#checkTypeOfPhoto" do
@@ -85,7 +85,7 @@ describe User do
     it "accepts a jpeg image" do
       # no working version found
 
-      
+
       #@student.photo = File.new("spec/fixtures/pdf/test_cv.pdf")
       #@student.photo = File.new("spec/fixtures/images/test_picture.jpg")
       #expect(@student.photo.path).should eq("bla")

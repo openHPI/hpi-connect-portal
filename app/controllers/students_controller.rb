@@ -20,7 +20,8 @@ class StudentsController < ApplicationController
   # GET /students/1
   # GET /students/1.json
   def show
-    @user = User.students.find params[:id]
+    user = User.students.find(params[:id])
+    @user = user
   end
 
   # GET /students/new
@@ -34,12 +35,13 @@ class StudentsController < ApplicationController
   def edit
     @all_programming_languages = ProgrammingLanguage.all
     @all_languages = Language.all
+    @all_employers = Employer.all
   end
 
   # PATCH/PUT /students/1
   # PATCH/PUT /students/1.json
   def update
-    update_from_params_for_languages(params, student_path(@user))
+    update_from_params_for_languages_and_newsletters(params, student_path(@user))
   end
 
   # DELETE /students/1
@@ -65,22 +67,13 @@ class StudentsController < ApplicationController
 
     @user = User.find_by_id(params[:student_id])
 
-    new_role = nil
-    should_be_deputy = false
-    case role_name
-      when "Deputy"
-        new_role = Role.find_by_name("Staff")
-        should_be_deputy = true
-      when "Admin"
-        new_role = Role.find_by_name("Admin")
-      when "Staff"
-        new_role = Role.find_by_name("Staff")
-      else
-        render_errors_and_action(student_path(@user))
-        return
+    should_be_deputy = role_name == "Deputy"
+    unless ["Deputy", "Admin", "Staff"].include? role_name
+      render_errors_and_action(student_path(@user))
+      return
     end
 
-    @user.promote(new_role, @employer, should_be_deputy)
+    @user.promote(Role.find_by_name(should_be_deputy ? "Staff" : role_name), @employer, should_be_deputy)
     redirect_to(students_path)
   end
 
@@ -96,7 +89,7 @@ class StudentsController < ApplicationController
         :email,
         :firstname, :lastname, :semester, :academic_program,
         :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id)
+        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id, :frequency)
     end
 
     def check_current_user_or_admin

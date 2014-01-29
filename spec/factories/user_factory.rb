@@ -44,7 +44,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:firstname)    { |n| "User #{n}" }
     sequence(:lastname)     { |n| "the #{n}th of his kind" }
-    sequence(:email)        { |n| "user_#{n}@example.com" } 
+    sequence(:email)        { |n| "user_#{n}@example.com" }
     sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
     association             :role
     semester                1
@@ -74,7 +74,7 @@ FactoryGirl.define do
     after(:create) do |user, evaluator|
       create_list(:language, 1)
       create_list(:programming_language, 1)
-      user.status = UserStatus.where(:name => 'employed (ext)').first || UserStatus.create(:name => 'employed (ext)')
+      user.status = UserStatus.where(:name => 'employedext').first || UserStatus.create(:name => 'employedext')
     end
   end
 end

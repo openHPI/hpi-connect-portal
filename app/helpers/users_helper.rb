@@ -17,7 +17,7 @@ module UsersHelper
   end
 
   def user_is_admin?
-  	signed_in? && current_user.admin?
+    signed_in? && current_user.admin?
   end
 
   def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
@@ -43,6 +43,13 @@ module UsersHelper
     end
   end
 
+  def update_from_params_for_languages_and_newsletters(params, redirect_to)
+    update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
+    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
+    update_from_params_for_languages(params, redirect_to)
+  end
+
+
   def update_from_params_for_languages(params, redirect_to)
     update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
@@ -53,6 +60,27 @@ module UsersHelper
       render_errors_and_action(redirect_to, 'edit')
     end
   end
+
+  def update_and_remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    if params
+      params.each do |id, boolean|
+        if boolean.to_i == 1
+        newsletter_class.where(:user_id => user_id, attributes_id.to_sym => id).first_or_create
+       end
+      end
+       remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    else
+      newsletter_class.destroy_all(:user_id => user_id)
+    end
+  end
+
+  def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+    newsletter_class.where(:user_id => user_id).each do |n|
+      if params[n.attributes[attributes_id].to_s].to_i == 0
+        n.delete
+      end
+    end
+  end  
 
   def user_can_promote_students?
     return signed_in? && (current_user.admin? || user_is_deputy?)

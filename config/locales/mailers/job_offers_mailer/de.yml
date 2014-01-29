@@ -21,4 +21,15 @@ de:
     student_accepted:
       subject: "Ein Jobangebot wurde vergeben"
       title: "Das folgende Jobangebot wurde vergeben:"
-    duration: "Zeitraum"
+    new_job_offer_info:
+      subject: 'Wir haben neue Jobangebote für Sie'
+      title: "Neue Jobangebote stehen für Sie zur Verfügung"
+    general:
+      title: "Titel: "
+      student: "Studentenname: "
+      employer: "Arbeitgeber: "
+      staff: "Verantwortlicher Mitarbeiter: "
+      room: "Raum: "
+      duration: "Zeitraum: "
+      salary: "Vergütung: "
+      description: "Beschreibung: "

@@ -27,7 +27,7 @@ describe ApplicationsController do
 
     it "redirects to job offer view if user don't have permissions for declining" do
       sign_in @student
-      
+
       get :decline, {:id => @application.id}
       response.should redirect_to(@job_offer)
     end
@@ -57,7 +57,7 @@ describe ApplicationsController do
 
     it "accepts student is assigned as @job_offer.assigned_student" do
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-      
+
       get :accept, {:id => @application.id}
       assigns(:application).job_offer.assigned_student.should eq(@student)
     end
@@ -74,7 +74,7 @@ describe ApplicationsController do
 
     it "application status should be 'working' if an application is accepted" do
       working = FactoryGirl.create(:job_status, :name=>'running')
-      
+
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       get :accept, {:id => @application.id}
@@ -83,7 +83,7 @@ describe ApplicationsController do
 
     it "sends two emails" do
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-      
+
       old_count = ActionMailer::Base.deliveries.count
 
       get :accept, {:id => @application.id}
@@ -93,7 +93,7 @@ describe ApplicationsController do
 
     it "renders errors if updating all objects failed" do
       working = FactoryGirl.create(:job_status, :name=>'running')
-      
+
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       JobOffer.any_instance.stub(:save).and_return(false)
@@ -133,7 +133,7 @@ describe ApplicationsController do
         :type => 'application/pdf',
         :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
       })
-      
+
       sign_in FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
       expect{
           post :create, { :application => {:job_offer_id => @job_offer.id}, :attached_files => {:file_attributes => [:file => test_file] }}
@@ -147,7 +147,7 @@ describe ApplicationsController do
       user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-      
+
       sign_in user
       post :create, { :application => {:job_offer_id => @job_offer.id} }
       response.should redirect_to(job_offer_path(@job_offer))
@@ -160,7 +160,7 @@ describe ApplicationsController do
       user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-      
+
       sign_in user
       expect {
         delete :destroy, {:id => application.to_param}
@@ -171,7 +171,7 @@ describe ApplicationsController do
       user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
 
       application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-      
+
       sign_in user
       delete :destroy, {:id => application.to_param}
       response.should redirect_to(job_offer_path(@job_offer))
