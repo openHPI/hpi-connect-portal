@@ -22,7 +22,7 @@ describe "the staff page" do
 
   it "should contain a link for showing a profile and it should lead to profile page " do
     find_link(@staff1.firstname).click
-    
+
     current_path.should_not == staff_index_path
     current_path.should == staff_path(@staff1)
   end

@@ -1,14 +1,18 @@
 require "spec_helper"
 
 describe JobOffersMailer do
-  include EmailSpec::Helpers
+    include EmailSpec::Helpers
     include EmailSpec::Matchers
   before(:each) do
     ActionMailer::Base.delivery_method = :test
-      ActionMailer::Base.perform_deliveries = true
-      @user = FactoryGirl.create(:user)
-      @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_students: [FactoryGirl.create(:user)])
+    ActionMailer::Base.perform_deliveries = true
+    @user = FactoryGirl.create(:user)
+    @user2 = FactoryGirl.create(:user)
+    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_students: [FactoryGirl.create(:user, :student)])
     @job_offer.employer.deputy = FactoryGirl.create(:user)
+    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @user2, assigned_students: [FactoryGirl.create(:user, :student)])
+    @job_offer2.employer.deputy = @user2
+    @job_offers = [@job_offer, @job_offer2]
     ActionMailer::Base.deliveries = []
   end
 
@@ -26,13 +30,13 @@ describe JobOffersMailer do
     end
 
     it "should be send to the deputy" do
-      @email.to.should eq([@job_offer.employer.deputy.email]) 
+      @email.to.should eq([@job_offer.employer.deputy.email])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
-  end  
+  end
 
   describe "job offer prolonged" do
     before(:each) do
@@ -47,7 +51,7 @@ describe JobOffersMailer do
       @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
@@ -70,7 +74,7 @@ describe JobOffersMailer do
       @email.to.should eq([@job_offer.responsible_user.email])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
@@ -92,7 +96,7 @@ describe JobOffersMailer do
       @email.to.should eq([@job_offer.responsible_user.email])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
@@ -114,7 +118,7 @@ describe JobOffersMailer do
       @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
@@ -151,7 +155,7 @@ describe JobOffersMailer do
       @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
-    it "should be send from 'hpi-hiwi-portal@hpi.uni-potsdam.de'" do
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
@@ -175,4 +179,34 @@ describe JobOffersMailer do
       @email.body.should have_content(I18n.t('job_offers.default_compensation'))
     end
   end
+    describe "students are informed about new job offer" do
+      before(:each) do
+        @email = JobOffersMailer.new_job_offer_info_email(@job_offers, @job_offer.assigned_students.last).deliver
+      end
+
+      it "should send an email" do
+        ActionMailer::Base.deliveries.count.should == 1
+      end
+
+      it "should have be send to user adress" do
+        @email.to.should eq([@job_offer.assigned_students.last.email])
+      end
+
+      it "should be send from 'hpi.hiwi.portal@gmail.com'" do
+        @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+      end
+
+      it "should have job information in its body" do
+        @job_offers.each do
+         |job|
+          @email.body.should have_content(job.title)
+          @email.body.should have_content(job.employer.name)
+          @email.body.should have_content(job.room_number)
+          @email.body.should have_content(job.start_date)
+          @email.body.should have_content(job.end_date)
+          @email.body.should have_content(job.compensation)
+          @email.body.should have_content(job.description)
+        end
+      end
+    end
 end

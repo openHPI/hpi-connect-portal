@@ -1,7 +1,7 @@
 <%= t "applications_mailer.wimi.new_application.title", job_offer: @application.job_offer.title %>
 
-<%= link_to(@application.user.firstname.to_s+" "+@application.user.lastname.to_s, url_for(controller:"students", action: "show", id: @application.user.id, only_path: false)) %> <%= t "applications_mailer.wimi.new_application.content", job_offer: @application.job_offer.title %> 
+<%= link_to(@application.user.firstname.to_s+" "+@application.user.lastname.to_s, url_for(controller:"students", action: "show", id: @application.user.id, only_path: false)) %> <%= t "applications_mailer.wimi.new_application.content", job_offer: @application.job_offer.title %>
 
-<%= @message %>    	
+<%= @message %>
 
 <%= t "applications_mailer.last_line" %>

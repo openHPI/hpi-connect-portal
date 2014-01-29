@@ -55,6 +55,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :programming_languages
   has_many :languages_users
   has_many :languages, :through => :languages_users
+  has_many :possible_employers, :through => :employers_newsletter_information
+  has_many :possible_programming_language, :through => :programming_languages_newsletter_information 
   accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
@@ -85,23 +87,24 @@ class User < ActiveRecord::Base
   scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
   scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
 
-  scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
-  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
-  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
-  scope :search_students, -> string { where("
-        (lower(firstname) LIKE ?
-        OR lower(lastname) LIKE ?
-        OR lower(email) LIKE ?
-        OR lower(academic_program) LIKE ?
-        OR lower(education) LIKE ?
-        OR lower(homepage) LIKE ?
-        OR lower(github) LIKE ?
-        OR lower(facebook) LIKE ?
-        OR lower(xing) LIKE ?
-        OR lower(linkedin) LIKE ?)
-        ",
-        string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
-        string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
+    scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
+    scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
+    scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+    scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+    scope :search_students, -> string { where("
+                (lower(firstname) LIKE ?
+                OR lower(lastname) LIKE ?
+                OR lower(email) LIKE ?
+                OR lower(academic_program) LIKE ?
+                OR lower(education) LIKE ?
+                OR lower(homepage) LIKE ?
+                OR lower(github) LIKE ?
+                OR lower(facebook) LIKE ?
+                OR lower(xing) LIKE ?
+                OR lower(linkedin) LIKE ?)
+                ",
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
 
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
@@ -136,6 +139,7 @@ class User < ActiveRecord::Base
   end
 
   def promote(new_role, employer=nil, should_be_deputy=false)
+    new_role ||= self.role
     if !employer.nil?
       self.update!(employer: employer, role: new_role)
       if should_be_deputy
@@ -149,24 +153,25 @@ class User < ActiveRecord::Base
   def self.build_from_identity_url(identity_url)
     username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
 
-    first_name = username.split('.').first.capitalize
-    last_name = username.split('.').second.capitalize
+    splitted_name = username.split('.')
+    first_name = splitted_name.first.capitalize
+    last_name = splitted_name.second.capitalize
     email = username + '@student.hpi.uni-potsdam.de'
 
     # semester, academic_program and education are required to create a user with the role student
     # If another role is chosen, these attributes are still present, but it does not matter
     new_user = User.new(
-      identity_url: identity_url, 
-      email: email, 
-      firstname: first_name, 
-      lastname: last_name, 
+      identity_url: identity_url,
+      email: email,
+      firstname: first_name,
+      lastname: last_name,
       semester: 1,
       academic_program: "unknown",
       education: "unknown",
       role: Role.where(name: "Student").first)
 
     new_user.should_redirect_to_profile = true
-    
+
     return new_user
   end
 
@@ -175,12 +180,12 @@ class User < ActiveRecord::Base
     search_results = User.search_students string
     search_results += search_students_by_language_identifier :programming_languages, string
     search_results += search_students_by_language_identifier :languages, string
-    search_results.uniq.sort_by{|x| [x.lastname, x.firstname]}
+    search_results.uniq.sort_by{|student| [student.lastname, student.firstname]}
   end
 
   def self.search_students_by_language_identifier(language_identifier, string)
     key = language_identifier.to_s + ".name"
-    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|x| [x.lastname, x.firstname]}
+    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|student| [student.lastname, student.firstname]}
   end
 
   def self.search_students_by_language_and_programming_language(language_array, programming_language_array)

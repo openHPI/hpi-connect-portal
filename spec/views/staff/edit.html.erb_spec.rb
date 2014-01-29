@@ -5,7 +5,6 @@ describe "staff/edit" do
     @user = assign(:users, stub_model(User,
       :firstname => "MyString",
       :lastname => "MyString",
-      :user_status_id => 1,
       :email => "MyString@example.com",
       :birthday => "2014-01-10",
       :additional_information => "MyText",
@@ -23,7 +22,6 @@ describe "staff/edit" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form[action=?][method=?]", staff_path(@user.id), "post" do
       assert_select "input#user_email[name=?]", "user[email]"
-      assert_select "select#user_user_status_id[name=?]", "user[user_status_id]"
       assert_select "select#user_birthday_1i[name=?]", "user[birthday(1i)]"
       assert_select "select#user_birthday_2i[name=?]", "user[birthday(2i)]"
       assert_select "select#user_birthday_3i[name=?]", "user[birthday(3i)]"

@@ -3,10 +3,15 @@
   <%= render 'shared/object_errors', object: language %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %><%= mark_if_required(language, :name) %><br>
     <%= f.input :name %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+  <% if Language.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div>
+      <%= f.label t("layouts.asterisk_description") %>
+    </div>
+  <% end %>
 <% end %>

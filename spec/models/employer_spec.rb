@@ -21,7 +21,7 @@ require 'spec_helper'
 describe Employer do
   before(:each) do
     @employer = FactoryGirl.create(:employer)
-  end 
+  end
 
   describe "validation of parameters" do
 

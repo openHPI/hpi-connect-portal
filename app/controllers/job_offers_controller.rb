@@ -1,6 +1,5 @@
 class JobOffersController < ApplicationController
   include UsersHelper
-  include ApplicationHelper
 
   before_filter :check_user_can_create_jobs, only: [:new]
   before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy, :prolong]
@@ -59,7 +58,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers.json
   def create
     parameters = job_offer_params
-    
+
     @job_offer = JobOffer.new(parameters, status: JobStatus.pending)
     @job_offer.responsible_user = current_user
     if !parameters[:employer_id]
@@ -68,6 +67,7 @@ class JobOffersController < ApplicationController
 
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
+      JobOffersMailer.inform_interested_students_immediately(@job_offer)
       respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
     else
       if parameters[:flexible_start_date]
@@ -194,7 +194,7 @@ class JobOffersController < ApplicationController
 
     def check_user_is_responsible_or_admin
       set_job_offer
-      unless can?(:update, @job_offer) || current_user == @job_offer.employer.deputy
+      unless can?(:update, @job_offer)
         redirect_to @job_offer
       end
     end

@@ -49,37 +49,37 @@ describe JobOffer do
   end
 
   it "does create a joboffer if all required attributes are set and valid" do
-    assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic, 
+    assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
       start_date: Date.current + 1, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
   end
 
   it "does not create a joboffer if the start_date is in the past" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", 
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website",
       employer: @epic, start_date: Date.current - 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if start_date is after end_date" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", 
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website",
       employer: @epic, start_date: Date.current + 2, end_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does create a joboffer if end_date is after start_date" do
-    assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic, 
+    assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
       start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
   end
 
   it "does not create a joboffer if compensation is not a number" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic, 
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
       start_date: Date.current + 1, compensation: "i gonna be rich", time_effort: 9).valid?
   end
 
   it "does not create a joboffer without a responsible user" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic, 
+    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
       start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "returns job offers sorted by created_at" do
-        
+
     FactoryGirl.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, employer: @epic)
     FactoryGirl.create(:job_offer, start_date: Date.current + 10, end_date: Date.current + 11, created_at: Date.current + 10, employer: @epic)
     FactoryGirl.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 2, created_at: Date.current + 1, employer: @epic)
@@ -89,14 +89,14 @@ describe JobOffer do
     sorted_job_offers = JobOffer.sort "date"
     (sorted_job_offers).each_with_index do |offer, index|
 
-       if !sorted_job_offers.length == (index + 1)  
+       if !sorted_job_offers.length == (index + 1)
         offer.created_at.should <= sorted_job_offers[index+1].created_at
-       end    
+       end
     end
   end
 
   it "returns job offers sorted by their employer" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @itas)
     FactoryGirl.create(:job_offer, employer: @os)
@@ -104,7 +104,7 @@ describe JobOffer do
     sorted_job_offers = JobOffer.sort "employer"
     (sorted_job_offers).each_with_index do |offer, index|
 
-       if sorted_job_offers.length == (index + 1) 
+       if sorted_job_offers.length == (index + 1)
         break
        end
       offer.employer.name.should <= sorted_job_offers[index+1].employer.name
@@ -112,7 +112,7 @@ describe JobOffer do
   end
 
   it "returns job offers including the word EPIC" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @itas, description: "develop a website with an epic framework")
@@ -124,7 +124,7 @@ describe JobOffer do
   end
 
   it "returns job offers filtered by employer EPIC and start_date >= specified_date" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
@@ -136,7 +136,7 @@ describe JobOffer do
   end
 
   it "returns job offers filtered start_date >= specified_date" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
@@ -146,7 +146,7 @@ describe JobOffer do
   end
 
   it "returns job offers filtered by employer EPIC" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @epic)
@@ -158,7 +158,7 @@ describe JobOffer do
   end
 
   it "returns job offers filtered between start_date and end_date" do
-        
+
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8, employer: @epic)
     FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8, employer: @epic)
@@ -168,7 +168,7 @@ describe JobOffer do
   end
 
   it "returns job offers filtered with compensation>=10 AND time_effort<=5" do
-        
+
     FactoryGirl.create(:job_offer, time_effort: 10, compensation: 20, employer: @epic)
     FactoryGirl.create(:job_offer, time_effort: 5, compensation: 20, employer: @epic)
     FactoryGirl.create(:job_offer, time_effort: 8, compensation: 5, employer: @epic)
@@ -233,7 +233,7 @@ describe JobOffer do
     assert_equal(filtered_jobs.length, 0)
   end
 
- 
+
   it "returns job offers filtered by status" do
     @status = FactoryGirl.create(:job_status, :name => "completed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);

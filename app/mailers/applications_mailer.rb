@@ -2,15 +2,18 @@ class ApplicationsMailer < ActionMailer::Base
   default from: "hpi.hiwi.portal@gmail.com"
 
   def application_accepted_student_email(application)
-  	send_mail_for_application_to_user(application, (t "applications_mailer.students.accepted.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
+    send_mail_for_application_to_user(application, (t "applications_mailer.students.accepted.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
   end
 
   def application_declined_student_email(application)
     send_mail_for_application_to_user(application, (t "applications_mailer.students.declined.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
   end
   def new_application_notification_email(application, message = t("applications_mailer.wimi.new_application.content") , add_cv = false, attached_files = nil)
-    if(!application.user.cv.path.nil?) and !add_cv.nil?
-      attachments[application.user.cv_file_name] = File.read(application.user.cv.path)
+    user = application.user
+    cv = user.cv
+
+    if(!cv.path.nil?) and !add_cv.nil?
+      attachments[user.cv_file_name] = File.read(cv.path)
     end
     if !attached_files.nil?
       attached_files[:file_attributes].each do | file |

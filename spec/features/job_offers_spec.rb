@@ -40,7 +40,7 @@ describe "the job-offers page" do
       login_as(@student, :scope => :user)
     end
 
-    it { 
+    it {
       visit job_offers_path
       page.should have_selector('span.label-success', count: 1, text: I18n.t('job_offers.already_applied_badge'))
     }
@@ -56,10 +56,10 @@ describe "a job offer entry" do
 
     @employer = FactoryGirl.create(:employer)
     @user = FactoryGirl.create(:user)
-    @job_offer = FactoryGirl.create(:job_offer, 
-      title: "TestJob", 
-      employer: @employer, 
-      responsible_user: @user, 
+    @job_offer = FactoryGirl.create(:job_offer,
+      title: "TestJob",
+      employer: @employer,
+      responsible_user: @user,
       status: FactoryGirl.create(:job_status, :open)
     )
 
@@ -86,8 +86,8 @@ describe "job_offers_history" do
     @status = FactoryGirl.create(:job_status, :completed)
     @open = FactoryGirl.create(:job_status, name:"open")
     @running = FactoryGirl.create(:job_status, name:"running")
-    @job_offer = FactoryGirl.create(:job_offer, 
-      title: "Closed Job Touch Floor", 
+    @job_offer = FactoryGirl.create(:job_offer,
+      title: "Closed Job Touch Floor",
       status: @status,
       employer: @employer,
       responsible_user: @user
@@ -98,9 +98,9 @@ describe "job_offers_history" do
     visit job_offers_path
     find("div#buttons").should have_link "Archive"
     click_on "Archive"
-    
+
     expect(current_path).to eq(archive_job_offers_path)
-    
+
     page.should have_css "ul.list-group li"
     page.should have_css "#search"
     page.should have_css "#filter"

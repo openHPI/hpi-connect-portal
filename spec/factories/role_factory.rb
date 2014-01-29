@@ -14,17 +14,17 @@ FactoryGirl.define do
     name 'Student'
     level 1
 
-    trait :student do 
+    trait :student do
       name 'Student'
       level 1
     end
 
-    trait :staff do 
+    trait :staff do
       name 'Staff'
       level 2
     end
 
-    trait :admin do 
+    trait :admin do
       name 'Admin'
       level 3
     end

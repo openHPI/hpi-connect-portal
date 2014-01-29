@@ -53,8 +53,291 @@ UserStatus.create!([
 	{ name: 'alumni'}
 ])
 
-#Create User as an example deputy for all employers
+Employer.delete_all
 User.delete_all
+epic = Employer.new(
+	name: "Enterprise Platform and Integration Concepts",
+	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
+	head: "Hasso Plattner",
+	deputy: nil
+)
+#User.where(:firstname=>"Axel").first.update(employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
+epic_chief = User.new(
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Specht", 
+	firstname: "Tim",
+	role: Role.where(:name => 'Staff').first,
+	employer: epic
+)
+
+epic.deputy = epic_chief
+epic_chief.employment_start_date =  Date.today
+epic.save!
+epic_chief.save!
+
+
+www = Employer.new(
+	name: "Internet Technologies and Systems",
+	description: "The research at the chair of Prof. Dr. Christoph Meinel focuses on investigation of scientific principles, methodes and technologies to design and implement novel Internet technologies and innovative Internet-based IT-systems",
+	head: "Christoph Meinel",
+	deputy: nil
+)
+www_chief = User.new(
+	email: "www.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/www.chair", 
+	lastname: "Mustermann", 
+	firstname: "Max",
+	role: Role.where(:name => 'Staff').first,
+	employer: www
+)
+
+www.deputy = www_chief
+www_chief.employment_start_date =  Date.today
+www.save!
+www_chief.save!
+
+hci = Employer.new(
+	name: "Human Computer Interaction",
+	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
+	head: "Patrick Baudisch",
+	deputy: nil
+)
+hci_chief = User.new(
+	email: "hci.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/hci.chair", 
+	lastname: "Musterfrau", 
+	firstname: "Leonie",
+	role: Role.where(:name => 'Staff').first,
+	employer: hci
+)
+
+hci.deputy = hci_chief
+hci_chief.employment_start_date =  Date.today
+hci.save!
+hci_chief.save!
+
+d3 = Employer.new(
+	name: "Computer Graphic Systems",
+	description: "The Computer Graphics Systems group headed by Prof. Dr. Jürgen Döllner is concerned with the analysis, planning and construction of computer graphics and multimedia systems. Human-computer communication is the overall context of the group’s work.",
+	head: "Jürgen Döllner",
+	deputy: nil
+)
+d3_chief = User.new(
+	email: "d3.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/d3.chair", 
+	lastname: "Werner", 
+	firstname: "Hans",
+	role: Role.where(:name => 'Staff').first,
+	employer: d3
+)
+
+d3.deputy = d3_chief
+d3_chief.employment_start_date =  Date.today
+d3.save!
+d3_chief.save!
+
+os = Employer.new(
+	name: "OS and Middleware",
+	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
+	head: "Andreas Polze",
+	deputy: nil
+)
+os_chief = User.new(
+	email: "os.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/os.chair", 
+	lastname: "Müller", 
+	firstname: "Jasper",
+	role: Role.where(:name => 'Staff').first,
+	employer: os
+)
+
+os.deputy = os_chief
+os_chief.employment_start_date =  Date.today
+os.save!
+os_chief.save!
+
+bpet = Employer.new(
+	name: "Business Process Technology",
+	description: "The Business Process Technology group headed by Prof. Dr. Mathias Weske is engaged in research on the development of innovative models, methods and techniques and the design and construction of software systems to support knowledge-intensive and flexible business processes. The particular focus is on languages and concepts for modeling such processes.",
+	head: "Mathias Weske",
+	deputy: nil
+)
+bpet_chief = User.new(
+	email: "bpet.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/bpet.chair", 
+	lastname: "Wespe", 
+	firstname: "Felix",
+	role: Role.where(:name => 'Staff').first,
+	employer: bpet
+)
+
+bpet.deputy = bpet_chief
+bpet_chief.employment_start_date =  Date.today
+bpet.save!
+bpet_chief.save!
+
+swa = Employer.new(
+	name: "Software Architecture",
+	description: "The Software Architecture Group, led by Prof. Dr. Robert Hirschfeld, is concerned with fundamental elements and structures of software. Methods and tools are developed for improving the comprehension and design of large complex systems.",
+	head: "Robert Hirschfeld",
+	deputy: nil
+)
+swa_chief = User.new(
+	email: "swa.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/swa.chair", 
+	lastname: "Schwan", 
+	firstname: "Bob",
+	role: Role.where(:name => 'Staff').first,
+	employer: swa
+)
+
+swa.deputy = swa_chief
+swa_chief.employment_start_date =  Date.today
+swa.save!
+swa_chief.save!
+
+db = Employer.new(
+	name: "Information Systems",
+	description: "Prof. Dr. Felix Naumann is head of the Information Systems Research Group. The group's research goals are the efficient and effective management of heterogeneous information in large, autonomous systems. These include information integration methods, approaches to information quality and data cleansing, directed information searches and metadata management.",
+	head: "Felix Naumann",
+	deputy: nil
+)
+db_chief = User.new(
+	email: "db.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/db.chair", 
+	lastname: "Schmied", 
+	firstname: "Hans",
+	role: Role.where(:name => 'Staff').first,
+	employer: db
+)
+
+db.deputy = db_chief
+db_chief.employment_start_date =  Date.today
+db.save!
+db_chief.save!
+
+mod = Employer.new(
+	name: "Systems Analysis and Modeling",
+	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
+	head: "Holger Giese",
+	deputy: nil
+)
+mod_chief = User.new(
+	email: "mod.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/mod.chair", 
+	lastname: "Fliese", 
+	firstname: "Giesela",
+	role: Role.where(:name => 'Staff').first,
+	employer: mod
+)
+
+mod.deputy = mod_chief
+mod_chief.employment_start_date =  Date.today
+mod.save!
+mod_chief.save!
+
+
+administration = Employer.new(
+	name: "Verwaltung",
+	description: "to be done",
+	head: "to be done",
+	deputy: nil
+)
+administration_chief = User.new(
+	email: "administration.chair@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/administration.chair", 
+	lastname: "Geiger", 
+	firstname: "Hermine",
+	role: Role.where(:name => 'Staff').first,
+	employer: administration
+)
+
+administration.deputy = administration_chief
+administration_chief.employment_start_date =  Date.today
+administration.save!
+administration_chief.save!
+
+sap = Employer.new(
+	name: "SAP",
+	description: "SAP",
+	head: "Hasso Plattner",
+	deputy: nil,
+	external: true
+)
+sap_chief = User.new(
+	email: "sap.external@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
+	lastname: "Jasper", 
+	firstname: "Dustin",
+	role: Role.where(:name => 'Staff').first,
+	employer: sap
+)
+
+sap.deputy = sap_chief
+sap_chief.employment_start_date =  Date.today
+sap.save!
+sap_chief.save!
+
+
+User.create!([{
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create!([{
+	email: "johanna.appel@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
+	lastname: "Appel", 
+	firstname: "Johanna", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create!([{
+	email: "julia.steier@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
+	lastname: "Steier", 
+	firstname: "Julia", 
+	role: Role.where(:name => 'Admin').first	
+}])
+
+User.create!([{
+	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
+	lastname: "Reinhardt", 
+	firstname: "Pascal", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Staff').first,
+	employer: Employer.where(:name => 'Business Process Technology').first
+		
+}])
+
+User.create!([{
+	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
+	lastname: "Friedrich", 
+	firstname: "Tim",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
+
+User.create!([{
+	email: "johannes.koch@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
+	lastname: "Koch", 
+	firstname: "Johannes", 
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first	
+}])
 
 User.create!([{
 	identity_url: 'https://openid.hpi.uni-potsdam.de/user/frank.blechschmidt',
@@ -77,215 +360,12 @@ User.create!([{
 	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
 	user_status: UserStatus.where(:name => 'employedext').first,
 	role: Role.where(:name => 'Student').first
+
 }])
-User.create([{
-	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
-	lastname: "Kroschk", 
-	firstname: "Axel", 
-	role: Role.where(:name => 'Admin').first	
-}])
-Employer.delete_all
 
-user = User.new(
-	email: "johannes.koch@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johannes.koch", 
-	lastname: "Koch", 
-	firstname: "Johannes", 
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Internet Technologies and Systems",
-	description: "The research at the chair of Prof. Dr. Christoph Meinel focuses on investigation of scientific principles, methodes and technologies to design and implement novel Internet technologies and innovative Internet-based IT-systems",
-	head: "Christoph Meinel",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
 
-user = User.new(
-	email: "tim.friedrich@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.friedrich", 
-	lastname: "Friedrich", 
-	firstname: "Tim",
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Human Computer Interaction",
-	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
-	head: "Patrick Baudisch",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
 
-user = User.new(
-	email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/pascal.reinhardt", 
-	lastname: "Reinhardt", 
-	firstname: "Pascal", 
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Computer Graphic Systems",
-	description: "The Computer Graphics Systems group headed by Prof. Dr. Jürgen Döllner is concerned with the analysis, planning and construction of computer graphics and multimedia systems. Human-computer communication is the overall context of the group’s work.",
-	head: "Jürgen Döllner",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
 
-user = User.new(
-	email: "tim.specht@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Specht", 
-	firstname: "Tim",
-	semester: 5,
-	academic_program: 'Bachelor',
-	education:'Abitur',
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "OS and Middleware",
-	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
-	head: "Andreas Polze",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "julia.steier@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
-	lastname: "Steier", 
-	firstname: "Julia", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Business Process Technology",
-	description: "The Business Process Technology group headed by Prof. Dr. Mathias Weske is engaged in research on the development of innovative models, methods and techniques and the design and construction of software systems to support knowledge-intensive and flexible business processes. The particular focus is on languages and concepts for modeling such processes.",
-	head: "Mathias Weske",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "johanna.appel@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
-	lastname: "Appel", 
-	firstname: "Johanna", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Software Architecture",
-	description: "The Software Architecture Group, led by Prof. Dr. Robert Hirschfeld, is concerned with fundamental elements and structures of software. Methods and tools are developed for improving the comprehension and design of large complex systems.",
-	head: "Robert Hirschfeld",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "dummy1@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy1", 
-	lastname: "dummy", 
-	firstname: "dummy", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Information Systems",
-	description: "Prof. Dr. Felix Naumann is head of the Information Systems Research Group. The group's research goals are the efficient and effective management of heterogeneous information in large, autonomous systems. These include information integration methods, approaches to information quality and data cleansing, directed information searches and metadata management.",
-	head: "Felix Naumann",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "dummy2@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy2", 
-	lastname: "dummy", 
-	firstname: "dummy", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Systems Analysis and Modeling",
-	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
-	head: "Holger Giese",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "dummy3@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy3", 
-	lastname: "dummy", 
-	firstname: "dummy", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Verwaltung",
-	description: "to be done",
-	head: "to be done",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "dummy4@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy4", 
-	lastname: "dummy", 
-	firstname: "dummy", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "SAP",
-	description: "SAP",
-	head: "Hasso Plattner",
-	deputy: user,
-	external: true
-)
-user.employer = employer
-employer.save!
-user.save!
-
-user = User.new(
-	email: "dummy5@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/dummy5", 
-	lastname: "dummy", 
-	firstname: "dummy", 
-	role: Role.where(:name => 'Staff').first	
-)
-employer = Employer.new(
-	name: "Enterprise Platform and Integration Concepts",
-	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
-	head: "Hasso Plattner",
-	deputy: user
-)
-user.employer = employer
-employer.save!
-user.save!
 
 User.new(
 	email: "alexander.ernst@student.hpi.uni-potsdam.de", 
@@ -465,5 +545,3 @@ Faq.create([{
 	answer: 'Ja, die HPI-HiWi-Portal Android-App ermöglicht es Ihnen, über alle für Sie passenden Stellenangebote am HPI auf dem Laufenden zu bleiben.',
 	locale: "de"
 }])
-
-Employer.where(name: "Enterprise Platform and Integration Concepts").first.update(deputy: User.where(email: "axel.kroschk@student.hpi.uni-potsdam.de").first)

@@ -29,9 +29,6 @@ HpiHiwiPortal::Application.routes.draw do
             post 'update_staff'
         end
     end
-    
-
-    resources :users, only: [:edit, :update]
 
     resources :applications, only: [:create, :destroy] do
       member do
@@ -51,7 +48,10 @@ HpiHiwiPortal::Application.routes.draw do
         end
     end
 
-    resources :students do
+  resources :users, only: [:show, :edit, :update]
+  resources :user_statuses
+
+	resources :students do
         collection do
             get 'students/new' => 'students#new'
             post 'students' => 'students#create'

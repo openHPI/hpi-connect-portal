@@ -31,10 +31,12 @@ describe StudentsController do
     end
 
     it "checks if the user is a student" do
-      user = FactoryGirl.create(:user, :staff)
-      expect {
-        get :show, {:id => user.to_param}, valid_session
-        }.to raise_error(ActionController::RoutingError)
+      user = FactoryGirl.create(:user,
+          role: FactoryGirl.create(:role, :staff),
+          employer: FactoryGirl.create(:employer)
+          )
+      get :show, {:id => user.to_param}, valid_session
+      response.should redirect_to user_path(user)
     end
   end
 
@@ -249,7 +251,7 @@ describe StudentsController do
         response.should redirect_to(student_path(@student))
       end
     end
- 
+
     describe "beeing an admin" do
       before(:each) do
         sign_in FactoryGirl.create(:user, :admin)
@@ -279,7 +281,7 @@ describe StudentsController do
     end
 
     describe "beeing a student" do
-      
+
       before(:each) do
         sign_in FactoryGirl.create(:user, :student)
       end

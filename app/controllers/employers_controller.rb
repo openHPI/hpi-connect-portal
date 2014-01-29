@@ -1,5 +1,4 @@
 class EmployersController < ApplicationController
-  include ApplicationHelper
 
   authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_employer, only: [:show, :edit, :update]
@@ -28,9 +27,10 @@ class EmployersController < ApplicationController
   # GET /employers/1
   # GET /employers/1.json
   def show
-    @staff = @employer.staff.paginate(:page => params[:page])
-    @running_job_offers = @employer.job_offers.running.paginate(:page => params[:page])
-    @open_job_offers = @employer.job_offers.open.paginate(:page => params[:page])
+    page = params[:page]
+    @staff = @employer.staff.paginate(:page => page)
+    @running_job_offers = @employer.job_offers.running.paginate(:page => page)
+    @open_job_offers = @employer.job_offers.open.paginate(:page => page)
   end
 
   # GET /employers/new
@@ -51,7 +51,7 @@ class EmployersController < ApplicationController
     if @employer.save
       respond_and_redirect_to(@employer, 'Employer was successfully created.', 'show', :created)
     else
-			@users = User.all
+      @users = User.all
       flash[:error] = 'Invalid content.'
       render_errors_and_action(@employer, 'new')
     end

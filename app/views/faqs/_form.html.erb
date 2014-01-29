@@ -3,32 +3,19 @@
   <%= render 'shared/object_errors', object: faq %>
 
   <div class="panel panel-default">
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-12">
-                <%= f.label t("activerecord.attributes.faq.question", class: "control-label") %>
-                <%= f.input :question %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-12" data-no-turbolink="true">
-            <%= f.label t("activerecord.attributes.faq.answer", class: "control-label") %>
-            <%= f.bootsy_area :answer, rows: 10, class: "col-md-12 form-control" %>
-          </div>
-        </div>
-      </div>
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.faq.question") %></h4>
     </div>
-    <%= f.hidden_field :locale, :value => locale.to_s %>
-    <br>
-    <div class="actions">
-      <%= f.submit t("links.save"), :class => "btn btn-default" %>
+    <%= f.input :question %>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.faq.answer") %></h4>
     </div>
-
+    <%= f.bootsy_area :answer, rows: 10, class: "form-control" %>
+  </div>
+      <%= f.hidden_field :locale, :value => locale.to_s %>
   <div class="actions">
     <%= f.submit t("links.save"), class: "btn btn-warning pull-right" %>
   </div>
-  
 <% end %>

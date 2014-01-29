@@ -5,14 +5,14 @@ describe EmployersController do
   let(:deputy) { FactoryGirl.create(:user, :staff) }
   let(:admin) { FactoryGirl.create(:role, :admin) }
 
-  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction", 
+  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction",
       "head" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
 
   let(:false_attributes) { { "name" => "HCI"} }
-  
+
   login_user FactoryGirl.create(:role, :admin)
 
-  before(:each) do 
+  before(:each) do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :open)
   end
@@ -97,7 +97,7 @@ describe EmployersController do
     end
 
     describe "with invalid params" do
-      
+
       it "renders new again" do
         post :create, { employer: false_attributes}
         response.should render_template("new")
@@ -105,7 +105,7 @@ describe EmployersController do
       end
 
       it "does not create a new employer without deputy" do
-        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction", 
+        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction",
       "head" => "Prof. Patrick Baudisch"}}
         response.should render_template("new")
         flash[:error].should eql("Invalid content.")
@@ -130,9 +130,9 @@ describe EmployersController do
       it "updates the requested employer" do
         employer = FactoryGirl.create(:employer)
 
-        Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction", 
+        Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction",
               "head" => "Prof. Patrick Baudisch" } )
-        put :update, { id: employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction", 
+        put :update, { id: employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction",
               "head" => "Prof. Patrick Baudisch" } }
       end
 

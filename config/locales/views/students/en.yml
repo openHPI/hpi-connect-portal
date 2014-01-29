@@ -7,6 +7,8 @@ en:
         carrier: "Carrier"
         name: "Name"
         semester: "Semester"
+        programming_language_newsletter: "In which languages you are interested as part of a job offer?"
+        employers_newsletter: "Where would it be a pleasure to work?"
         promote_button: "Promote"
         promote_title: "Change Role"
         promote_confirm_question: "Are you sure to change the role of the user?"

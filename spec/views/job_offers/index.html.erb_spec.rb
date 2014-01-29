@@ -14,7 +14,7 @@ describe "job_offers/index" do
         :title => "Title",
         :start_date => '2013-11-11'
       )]
-    assign(:job_offers_list, {:items => job_offers, 
+    assign(:job_offers_list, {:items => job_offers,
                         :name => "job_offers.archive"})
     assign(:radio_button_sort_value, {"date" => false, "employer" => false})
 
@@ -24,7 +24,7 @@ describe "job_offers/index" do
   it "renders a list of job_offers" do
     view.stub(:will_paginate)
 
-    render 
+    render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "h4", :text => "Title".to_s, :count => 2
     assert_select ".employer", :text => @employer.name.to_s, :count => 2
@@ -32,7 +32,7 @@ describe "job_offers/index" do
 
   it "has a date radio_button that is checked when loaded" do
     view.stub(:will_paginate)
-    render 
+    render
     assert_select "input[id='sort_by_date_RB'][checked='checked']"
   end
 end

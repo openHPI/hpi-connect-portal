@@ -1,6 +1,5 @@
 <%= simple_form_for job_offer do |f| %>
   <%= render 'shared/object_errors', object: job_offer %>
-
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4><%= t("activerecord.attributes.job_offer.general_information") %></h4>
@@ -9,13 +8,13 @@
       <li class="list-group-item">
         <div class="row">
         <% if current_user.admin? %>
-        <div class="col-sm-6">
+          <div class="col-sm-6">
         <% else %>
-        <div class="col-sm-12">
+          <div class="col-sm-12">
         <% end %>
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %>
+                  <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %><%= mark_if_required(@job_offer, :title) %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :title %>
@@ -25,10 +24,10 @@
           <% if current_user.admin? %>
           <div class="col-sm-6">
            <div class="row">
-                <div class="col-sm-12" style="text-align:right;">  
+                <div class="col-sm-12" style="text-align:right;">
                     <%= f.collection_select :employer_id, Employer.all, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
                 </div>
-              </div>         
+              </div>
           </div>
 
           <% end %>
@@ -37,78 +36,77 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-12" data-no-turbolink="true">
-            <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %>
+            <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %><%= mark_if_required(@job_offer, :description) %>
             <%= f.bootsy_area :description, rows: 10, class: "col-md-12 form-control", placeholder: t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
     </ul>
   </div>
-
   <div class="row">
     <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4>
+          </div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %><%= mark_if_required(@job_offer, :room_number) %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.input :room_number %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %><%= mark_if_required(@job_offer, :start_date) %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.nil? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %><%= mark_if_required(@job_offer, :end_date) %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.nil? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %><%= mark_if_required(@job_offer, :time_effort) %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %><%= mark_if_required(@job_offer, :compensation) %>
+                </div>
+                <div class="col-sm-9">
+                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: {value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation)} %>
+                </div>
+              </div>
+            </li>
+          <ul>
         </div>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                <%= f.input :room_number %>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.blank? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.blank? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %>
-              </div>
-              <div class="col-sm-9">
-                 <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: {value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation)} %>
-              </div>
-            </div>
-          </li>
-        <ul>
-      </div>
     </div>
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.job_offer.programming_languages") %></h4>
+          <h4><%= t("activerecord.attributes.job_offer.required_programming_languages") %></h4>
         </div>
         <ul class="list-group">
           <li class="list-group-item">
@@ -122,12 +120,11 @@
               <% end %>
             </div>
           </li>
-        <ul>
+        </ul>
       </div>
-
       <div class="panel panel-default">
           <div class="panel-heading">
-            <h4><%= t("activerecord.attributes.job_offer.languages") %></h4>
+            <h4><%= t("activerecord.attributes.job_offer.required_languages") %></h4>
           </div>
           <ul class="list-group">
             <li class="list-group-item">
@@ -143,6 +140,15 @@
             </li>
           <ul>
         </div>
+      <% if JobOffer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h5>
+              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            </h5>
+          </div>
+        </div>
+      <% end %>
       </div>
   </div>
 

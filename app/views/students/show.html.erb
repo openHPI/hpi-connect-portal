@@ -3,19 +3,19 @@
 <div class="row">
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
-    <% if signed_in? && (current_user?(@user) || user_is_admin?)%>
-      <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
-    style: "float:right; display:inline;" %>
-    <% end %>
-        <blockquote>
-          <% if !(@user.user_status).nil? %>
-            <p><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
-          <% end %>
-        </blockquote>
+      <blockquote class="userstatus">
+        <% if !(@user.user_status).nil? %>
+          <p><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+        <% end %>
+      </blockquote>
   </div>
   <div class="col-sm-6 text-center">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
+      <% if signed_in? && (current_user?(@user) || user_is_admin?)%>
+        <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+      style: "float:right; display:inline;" %>
+      <% end %>
     </p>
   </div>
 </div>
@@ -41,7 +41,11 @@
                 <% if (@user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
                 <% else %>
-                  <p class="text-muted"><%= link_to(image_tag('file_thumbnails/pdf.png', size: "16"), @user.cv.path) %> <%= File.basename(@user.cv.path); %></p>
+                  <p class="text-muted">
+                    <%= link_to(@user.cv.url) do %>
+                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= File.basename(@user.cv.path); %>
+                    <% end %>
+                  </p>
                 <% end %>
               </td>
           </tr>
