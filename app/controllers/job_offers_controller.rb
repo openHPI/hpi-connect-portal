@@ -10,15 +10,15 @@ class JobOffersController < ApplicationController
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
-  before_action :set_employers, only: [:index, :find_archived_jobs, :archive]
+  before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_employer, only: [:index, :archive], as: :employer
   has_scope :filter_start_date, only: [:index, :archive], as: :start_date
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort
   has_scope :filter_compensation, only: [:index, :archive], as: :compensation
-  has_scope :filter_programming_languages, type: :array, only: [:index, :archive], as: :programming_language_ids
-  has_scope :filter_languages, type: :array, only: [:index, :archive], as: :language_ids
+  has_scope :filter_programming_languages, type: :array, only: [:index, :archive, :matching], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index, :archive, :matching], as: :language_ids
   has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
 
@@ -38,6 +38,7 @@ class JobOffersController < ApplicationController
 
     if signed_in?
       @application = current_user.applied? @job_offer
+      @assigned_students = @job_offer.assigned_students.paginate(:page => params[:page])
     end
   end
 
@@ -114,6 +115,13 @@ class JobOffersController < ApplicationController
     redirect_to @job_offer
   end
 
+  # GET /job_offers/matching
+  def matching
+    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
+    @job_offers_list = {:items => job_offers, :name => "job_offers.matching_job_offers"}
+    render "index"
+  end
+
   # GET /job_offer/:id/complete
   def complete
     if @job_offer.update status: JobStatus.completed
@@ -147,8 +155,8 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/reopen
   def reopen
     old_job_offer = JobOffer.find params[:id]
-    if old_job_offer.update status: JobStatus.completed
-      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :assigned_student_id, :status_id))
+    if old_job_offer.update(status: JobStatus.completed)
+      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students))
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'
     else

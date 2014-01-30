@@ -12,30 +12,32 @@
 
 <div class="container">
   <% @faqs.each_with_index do |faq, index| %>
-    <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= index.to_s %>">
-              <h4><%= faq.question %></h4>
-            </a>
-          </h4>
-        </div>
-        <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
-          <div class="panel-body">
-            <%= escape_javascript (faq.answer.html_safe) %>
-            <br><br>
-            <% if signed_in? && can?(:update, faq) %>
-              <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
-            <% end %>
-            <% if signed_in? && can?(:delete, faq) %>
-              <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-danger"%>
-            <% end %>
-            <br>
+    <% if (faq.locale.to_s == locale.to_s) %> 
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= index.to_s %>">
+                <h4><%= faq.question %></h4>
+              </a>
+            </h4>
+          </div>
+          <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
+            <div class="panel-body">
+              <%=  escape_javascript(faq.answer.html_safe) %>
+              <br><br>
+              <% if signed_in? && can?(:update, faq) %>
+                <%= link_to t("links.edit"), edit_faq_path(faq),"data-no-turbolink" => true, :class => "btn btn-default btn-primary" %>
+              <% end %>
+              <% if signed_in? && can?(:delete, faq) %>
+                <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-default btn-danger"%>
+              <% end %>
+              <br>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <br>
+      </div>      
+      <br>
+    <% end %>   
   <% end %>
 </div>

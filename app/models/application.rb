@@ -16,4 +16,10 @@ class Application < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :job_offer
   validates_uniqueness_of :user_id, scope: :job_offer_id
+
+  def decline
+    ApplicationsMailer.application_declined_student_email(self).deliver
+    self.delete
+  end
+
 end

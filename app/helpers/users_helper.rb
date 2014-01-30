@@ -86,16 +86,12 @@ module UsersHelper
     return signed_in? && (current_user.admin? || user_is_deputy?)
   end
 
+  def user_can_demote_staff?
+    return signed_in? && (current_user.admin? || user_is_deputy?)
+  end
+
   def user_is_deputy?
-    if(signed_in?)
-      Employer.all.each do |employer|
-        if employer.deputy_id == current_user.id
-          current_user.employer_id = employer.id
-          return true
-        end
-      end
-    end
-    return false
+    current_user.deputy?
   end
 
 end

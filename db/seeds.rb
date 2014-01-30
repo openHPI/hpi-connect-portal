@@ -68,6 +68,9 @@ epic_deputy = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
 	lastname: "Specht", 
 	firstname: "Tim",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: epic
 )
@@ -89,6 +92,9 @@ os_deputy = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/os.chair", 
 	lastname: "Müller", 
 	firstname: "Jasper",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: os
 )
@@ -132,6 +138,9 @@ sap_deputy = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
 	lastname: "Jasper", 
 	firstname: "Dustin",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: sap
 )
@@ -465,17 +474,41 @@ JobOffer.create!([{
 Faq.delete_all
 Faq.create!([{
 	question: "How do I make edits to my profile?", 
-	answer: 'Log in to your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button.'
+	answer: 'Log in to your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "How do I log off of HPI-HiWi-Portal?", 
-	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.'
+	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "How can I add a profile photo?", 
-	answer: 'Log into your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.'
+	answer: 'Log into your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "Does HPI-HiWi-Portal have an Android app?",
-	answer: "No, the HPI-HiWi-Portal does not have an Android app."
+	answer: "No, the HPI-HiWi-Portal does not have an Android app.",
+	locale: "en"
+}])
+Faq.create!([{
+	question: "Wie kann ich mein Profile bearbeiten?", 
+	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button.',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Wie kann ich mich am HPI-HiWi-Portal ausloggen?", 
+	answer: 'Bitte klicken Sie den "Ausloggen"-Button in der rechten oberen Bildschirmecke.',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Wie kann ich mein Profil-Foto bearbeiten?", 
+	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button Search for Foto. Wählen Sie nun das gewünschte Foto aus, und klicken abschließend auf "Aktualisieren".',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Hat das HPI-HiWi-Portal eine Android-App?", 
+	answer: 'Ja, die HPI-HiWi-Portal Android-App ermöglicht es Ihnen, über alle für Sie passenden Stellenangebote am HPI auf dem Laufenden zu bleiben.',
+	locale: "de"
 }])

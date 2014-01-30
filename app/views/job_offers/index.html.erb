@@ -5,6 +5,10 @@
         <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px; margin-left: 5px;"%>
       <% end %>
       <%= link_to t("job_offers.archive"), archive_job_offers_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"  %>
+      <% if signed_in? && current_user.student?%>
+        <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(:language_ids => current_user.languages.map(&:id), 
+          :programming_language_ids => current_user.programming_languages.map(&:id)), :class => "btn btn-default pull-right" %>
+      <% end %>
        <%= render 'shared/overview', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
      </div>
   </div><!--/.span -->

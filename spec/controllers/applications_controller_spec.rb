@@ -55,15 +55,19 @@ describe ApplicationsController do
       response.should redirect_to(@job_offer)
     end
 
-    it "accepts student is assigned as @job_offer.assigned_student" do
+    it "accepts a student and he/her is included in @job_offer.assigned_students" do
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       get :accept, {:id => @application.id}
-      assigns(:application).job_offer.assigned_student.should eq(@student)
+      assigns(:application).job_offer.assigned_students.should include(@student)
     end
 
-    it "declines all other students" do
-      application_2 = FactoryGirl.create(:application, :job_offer => @job_offer)
+    it "declines all other students after accepting the last possible application" do
+      @job_offer.vacant_posts = 2
+      @job_offer.save
+      student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
+
+      application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
@@ -72,13 +76,16 @@ describe ApplicationsController do
       }.to change(Application, :count).by(-3)
     end
 
-    it "application status should be 'working' if an application is accepted" do
-      working = FactoryGirl.create(:job_status, :name=>'running')
-
+    it "job status should be 'running' if the last possible application is accepted" do
+      @job_offer.vacant_posts = 1
+      @job_offer.save
+      
+      running = FactoryGirl.create(:job_status, :name=>'running')
+      
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
       get :accept, {:id => @application.id}
-      assigns(:application).job_offer.status.should eq(working)
+      assigns(:application).job_offer.status.should eq(running)
     end
 
     it "sends two emails" do

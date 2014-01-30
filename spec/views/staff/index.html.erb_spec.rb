@@ -26,6 +26,8 @@ describe "staff/index" do
         :linkedin => "Linkedin",
       )
     ])
+    view.stub(:user_is_admin?){false}
+    FactoryGirl.create(:role, :name => "Test", :level => 1)
   end
 
   it "renders a list of students" do

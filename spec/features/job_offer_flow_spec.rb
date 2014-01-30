@@ -150,7 +150,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     assert job_offer.running?
     assert Application.where(job_offer: job_offer).load.count == 0
-    assert_equal(job_offer.assigned_student, first_applicant)
+    assert_equal(job_offer.assigned_students, [first_applicant])
 
     # accepted student, declined students and the HPI administration get notified
     ActionMailer::Base.deliveries.count.should == 3

@@ -13,5 +13,6 @@ FactoryGirl.define do
   factory :faq do
     sequence(:question)  { |n| "Question #{n}" }
     sequence(:answer)  { |n| "Answer #{n}" }
+    locale "en"
   end
 end
