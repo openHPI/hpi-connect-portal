@@ -6,7 +6,15 @@
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
     <% end %>
     <% if signed_in? && (user_is_staff_of_employer?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
+<<<<<<< HEAD
       <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
+=======
+          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-default " %>
+          <% end %>
+
+    <% if signed_in? && (user_is_staff_of_employer?(@job_offer) || user_is_admin?) && @job_offer.running? %>
+      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-default pull-right" %>
+>>>>>>> made apply button grey on job-offers page,  made blue buttons on job offers  grey, inserted form field vor vacant posts and display for them in show page under additional information #288
     <% end %>
 
     <span class="pull-right">
@@ -137,6 +145,16 @@
               </div>
             </li>
           <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attributes.job_offer.vacant_posts") %>
+              </div>
+              <div class="col-sm-9">
+                <%= @job_offer.vacant_posts %>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -185,8 +203,20 @@
             <%= render 'shared/user_list', user_list: @assigned_students %> 
         </div>
       </div>
+<<<<<<< HEAD
     <% end %>
   </div> 
+=======
+    <%end%>
+
+  </div>
+
+
+
+  <div class="pull-right">
+    <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
+      <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
+>>>>>>> made apply button grey on job-offers page,  made blue buttons on job offers  grey, inserted form field vor vacant posts and display for them in show page under additional information #288
 
   <div class="row">
     <div class="pull-right">
