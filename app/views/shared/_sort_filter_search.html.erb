@@ -3,19 +3,19 @@
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
-              <%= label_tag(:q, t("job_offers.sortLabel")) %><br>
+              <h5><%= label_tag(:q, t("job_offers.sortLabel")) %></h5>
               <%= label_tag :sort,t("job_offers.sortDate"), :class => "radio-inline small" %>
               <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
               <%= label_tag :sort, t("job_offers.sortEmployer"), :class => "radio-inline small" %>
               <%= radio_button_tag :sort, 'employer' , params[:sort] == "employer" %>
             </div>
             <div class="form-group" id="search">
-              <%= label_tag t("job_offers.searchLabel") %>
+              <h5><%= label_tag t("job_offers.searchLabel") %></h5>
               <%= text_field_tag(:search, params[:search], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
             </div>
 
             <div id="filter">
-              <%= label_tag t("job_offers.filterLabel") %>
+              <h5><%= label_tag t("job_offers.filterLabel") %></h5>
 
               <% unless @employers.empty? %>
                 <div class="form-group">
