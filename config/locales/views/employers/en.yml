@@ -14,4 +14,4 @@ en:
         running_job_offers: "Running Job offers"
         external: "External"
         demote_button: "Demote"
-        demote_confirm_question: "Really?"
+        demote_confirm_question: "Do you really want to demote this user?"
