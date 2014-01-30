@@ -17,25 +17,6 @@ class Application < ActiveRecord::Base
   validates_presence_of :job_offer
   validates_uniqueness_of :user_id, scope: :job_offer_id
 
-  def accept
-    self.job_offer.assigned_students << self.user
-    self.job_offer.update({vacant_posts: self.job_offer.vacant_posts - 1})
-    ApplicationsMailer.application_accepted_student_email(self).deliver
-    JobOffersMailer.job_student_accepted_email(self.job_offer).deliver
-
-    if self.job_offer.flexible_start_date
-      self.job_offer.start_date = Date.current
-    end
-
-    if self.job_offer.vacant_posts == 0
-      self.job_offer.update({status: JobStatus.running})
-      Application.where(job_offer: self.job_offer).where.not(id: self.id).each do | application |
-        application.decline
-      end
-    end
-    self.delete
-  end
-
   def decline
     ApplicationsMailer.application_declined_student_email(self).deliver
     self.delete
