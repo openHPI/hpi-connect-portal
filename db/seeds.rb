@@ -62,7 +62,7 @@ epic = Employer.new(
 	deputy: nil
 )
 #User.where(:firstname=>"Axel").first.update(employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
-epic_chief = User.new(
+epic_deputy = User.new(
 	email: "tim.specht@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
 	lastname: "Specht", 
@@ -71,10 +71,10 @@ epic_chief = User.new(
 	employer: epic
 )
 
-epic.deputy = epic_chief
-epic_chief.employment_start_date =  Date.today
+epic.deputy = epic_deputy
+epic_deputy.employment_start_date =  Date.today
 epic.save!
-epic_chief.save!
+epic_deputy.save!
 
 
 www = Employer.new(
@@ -83,7 +83,7 @@ www = Employer.new(
 	head: "Christoph Meinel",
 	deputy: nil
 )
-www_chief = User.new(
+www_deputy = User.new(
 	email: "www.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/www.chair", 
 	lastname: "Mustermann", 
@@ -92,10 +92,10 @@ www_chief = User.new(
 	employer: www
 )
 
-www.deputy = www_chief
-www_chief.employment_start_date =  Date.today
+www.deputy = www_deputy
+www_deputy.employment_start_date =  Date.today
 www.save!
-www_chief.save!
+www_deputy.save!
 
 hci = Employer.new(
 	name: "Human Computer Interaction",
@@ -103,7 +103,7 @@ hci = Employer.new(
 	head: "Patrick Baudisch",
 	deputy: nil
 )
-hci_chief = User.new(
+hci_deputy = User.new(
 	email: "hci.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/hci.chair", 
 	lastname: "Musterfrau", 
@@ -112,10 +112,10 @@ hci_chief = User.new(
 	employer: hci
 )
 
-hci.deputy = hci_chief
-hci_chief.employment_start_date =  Date.today
+hci.deputy = hci_deputy
+hci_deputy.employment_start_date =  Date.today
 hci.save!
-hci_chief.save!
+hci_deputy.save!
 
 d3 = Employer.new(
 	name: "Computer Graphic Systems",
@@ -123,7 +123,7 @@ d3 = Employer.new(
 	head: "Jürgen Döllner",
 	deputy: nil
 )
-d3_chief = User.new(
+d3_deputy = User.new(
 	email: "d3.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/d3.chair", 
 	lastname: "Werner", 
@@ -132,10 +132,10 @@ d3_chief = User.new(
 	employer: d3
 )
 
-d3.deputy = d3_chief
-d3_chief.employment_start_date =  Date.today
+d3.deputy = d3_deputy
+d3_deputy.employment_start_date =  Date.today
 d3.save!
-d3_chief.save!
+d3_deputy.save!
 
 os = Employer.new(
 	name: "OS and Middleware",
@@ -143,7 +143,7 @@ os = Employer.new(
 	head: "Andreas Polze",
 	deputy: nil
 )
-os_chief = User.new(
+os_deputy = User.new(
 	email: "os.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/os.chair", 
 	lastname: "Müller", 
@@ -152,10 +152,10 @@ os_chief = User.new(
 	employer: os
 )
 
-os.deputy = os_chief
-os_chief.employment_start_date =  Date.today
+os.deputy = os_deputy
+os_deputy.employment_start_date =  Date.today
 os.save!
-os_chief.save!
+os_deputy.save!
 
 bpet = Employer.new(
 	name: "Business Process Technology",
@@ -163,7 +163,7 @@ bpet = Employer.new(
 	head: "Mathias Weske",
 	deputy: nil
 )
-bpet_chief = User.new(
+bpet_deputy = User.new(
 	email: "bpet.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/bpet.chair", 
 	lastname: "Wespe", 
@@ -172,10 +172,30 @@ bpet_chief = User.new(
 	employer: bpet
 )
 
-bpet.deputy = bpet_chief
-bpet_chief.employment_start_date =  Date.today
+bpet.deputy = bpet_deputy
+bpet_deputy.employment_start_date =  Date.today
 bpet.save!
-bpet_chief.save!
+bpet_deputy.save!
+
+dschool = Employer.new(
+	name: "HPI School of Design Thinking",
+	description: "At the d.school, we help to create “T-shaped” students. They bring a deep set of skills, knowledge and approach to problem solving from their own field; we help them develop the breadth and creative confidence to collaborate with people from vastly different disciplines. This equips students to tackle the big, ambiguous challenges they’ll encounter out in the world that can’t be solved with a single approach.",
+	head: "Uli Weinberg",
+	deputy: nil
+)
+dschool_deputy = User.new(
+	email: "dschool.deputy@example.com", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/dschool.chair", 
+	lastname: "Weinberg", 
+	firstname: "Uli",
+	role: Role.where(:name => 'Staff').first,
+	employer: dschool
+)
+
+dschool.deputy = dschool_deputy
+dschool_deputy.employment_start_date =  Date.today
+dschool.save!
+dschool_deputy.save!
 
 swa = Employer.new(
 	name: "Software Architecture",
@@ -183,7 +203,7 @@ swa = Employer.new(
 	head: "Robert Hirschfeld",
 	deputy: nil
 )
-swa_chief = User.new(
+swa_deputy = User.new(
 	email: "swa.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/swa.chair", 
 	lastname: "Schwan", 
@@ -192,10 +212,10 @@ swa_chief = User.new(
 	employer: swa
 )
 
-swa.deputy = swa_chief
-swa_chief.employment_start_date =  Date.today
+swa.deputy = swa_deputy
+swa_deputy.employment_start_date =  Date.today
 swa.save!
-swa_chief.save!
+swa_deputy.save!
 
 db = Employer.new(
 	name: "Information Systems",
@@ -203,7 +223,7 @@ db = Employer.new(
 	head: "Felix Naumann",
 	deputy: nil
 )
-db_chief = User.new(
+db_deputy = User.new(
 	email: "db.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/db.chair", 
 	lastname: "Schmied", 
@@ -212,10 +232,10 @@ db_chief = User.new(
 	employer: db
 )
 
-db.deputy = db_chief
-db_chief.employment_start_date =  Date.today
+db.deputy = db_deputy
+db_deputy.employment_start_date =  Date.today
 db.save!
-db_chief.save!
+db_deputy.save!
 
 mod = Employer.new(
 	name: "Systems Analysis and Modeling",
@@ -223,7 +243,7 @@ mod = Employer.new(
 	head: "Holger Giese",
 	deputy: nil
 )
-mod_chief = User.new(
+mod_deputy = User.new(
 	email: "mod.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/mod.chair", 
 	lastname: "Fliese", 
@@ -232,10 +252,10 @@ mod_chief = User.new(
 	employer: mod
 )
 
-mod.deputy = mod_chief
-mod_chief.employment_start_date =  Date.today
+mod.deputy = mod_deputy
+mod_deputy.employment_start_date =  Date.today
 mod.save!
-mod_chief.save!
+mod_deputy.save!
 
 
 administration = Employer.new(
@@ -244,7 +264,7 @@ administration = Employer.new(
 	head: "to be done",
 	deputy: nil
 )
-administration_chief = User.new(
+administration_deputy = User.new(
 	email: "administration.chair@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/administration.chair", 
 	lastname: "Geiger", 
@@ -253,10 +273,10 @@ administration_chief = User.new(
 	employer: administration
 )
 
-administration.deputy = administration_chief
-administration_chief.employment_start_date =  Date.today
+administration.deputy = administration_deputy
+administration_deputy.employment_start_date =  Date.today
 administration.save!
-administration_chief.save!
+administration_deputy.save!
 
 sap = Employer.new(
 	name: "SAP",
@@ -265,7 +285,7 @@ sap = Employer.new(
 	deputy: nil,
 	external: true
 )
-sap_chief = User.new(
+sap_deputy = User.new(
 	email: "sap.external@example.com", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
 	lastname: "Jasper", 
@@ -274,10 +294,10 @@ sap_chief = User.new(
 	employer: sap
 )
 
-sap.deputy = sap_chief
-sap_chief.employment_start_date =  Date.today
+sap.deputy = sap_deputy
+sap_deputy.employment_start_date =  Date.today
 sap.save!
-sap_chief.save!
+sap_deputy.save!
 
 
 User.create!([{
@@ -362,10 +382,6 @@ User.create!([{
 	role: Role.where(:name => 'Student').first
 
 }])
-
-
-
-
 
 JobOffer.delete_all
 JobOffer.create!([{
