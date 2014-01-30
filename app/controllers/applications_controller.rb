@@ -24,7 +24,14 @@ class ApplicationsController < ApplicationController
   def accept
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
-    if @job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @job_offer).delete_all
+    @application.delete
+
+    @job_offer.applications.each do | application |
+      ApplicationsMailer.application_declined_student_email(application).deliver
+      application.delete
+    end
+    
+    if @job_offer.update({assigned_student: @application.user, status: JobStatus.running})
       if @job_offer.flexible_start_date
         @job_offer.update!({start_date: Date.current})
       end

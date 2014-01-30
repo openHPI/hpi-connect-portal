@@ -253,7 +253,3 @@
     </tbody>
   </table>
 <% end %>
-
-<% if signed_in? && user_is_staff_of_employer?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
-  <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
-<% end %>
