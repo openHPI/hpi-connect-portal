@@ -3,6 +3,6 @@ en:
     attributes:
       employer:
         deputy: "Deputy"
-        description: "Head"
+        description: "Description"
         head: "Head"
         name: "Name"
