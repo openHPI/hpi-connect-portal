@@ -12,6 +12,7 @@ en:
         general_information: "General Information"
         open_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
+        pending_job_offers: "Pending Job offers"
         external: "External"
         demote_button: "Demote"
         demote_confirm_question: "Do you really want to demote this user?"

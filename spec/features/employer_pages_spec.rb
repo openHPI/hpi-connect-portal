@@ -11,12 +11,10 @@ describe "the employer page" do
   before do
     @student1 = FactoryGirl.create(:user)
     login_as(@student1, :scope => :user)
-    @running = FactoryGirl.create(:job_status, name: 'running')
-    @open = FactoryGirl.create(:job_status, name: 'open')
 
     @job_offer_open = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :open))
     @job_offer_running = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running))
-
+    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :pending))
     visit employer_path(employer)
   end
 
@@ -61,7 +59,7 @@ describe "the employer page" do
     end
   end
 
-  describe "shows job offers for the employer" do
+  describe "shows running and open job offers for the employer" do
 
     it { should have_content('Open') }
     it { should have_content('Running') }
@@ -71,6 +69,32 @@ describe "the employer page" do
 
     it { should have_content(@job_offer_open.start_date) }
     it { should have_content(@job_offer_running.start_date) }
+
   end
 
+  describe "should show the pending job offers" do
+
+    it "not for students" do
+      visit employer_path(employer)
+      should_not have_content('Pending')
+      should_not have_content(@job_offer_pending.title)
+    end
+
+    it "not for an employer of another chair" do
+      staff = FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer))
+      login_as(staff)
+      visit employer_path(employer)
+      should_not have_content('Pending')
+      should_not have_content(@job_offer_pending.title)
+    end
+
+    it "for an employer of the chair" do
+      staff = FactoryGirl.create(:user, :staff, employer: employer)
+      login_as(staff)
+      visit employer_path(employer)
+      should have_content('Pending')
+      should have_content(@job_offer_pending.title)
+    end
+
+  end
  end

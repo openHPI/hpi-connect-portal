@@ -12,10 +12,10 @@
           <div class="col-md-4">
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
           </div>
+        </div>
       </li>
     <%end%>
   </ul>
     <div class="pull-right">
      <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
     </div>
-  </div>

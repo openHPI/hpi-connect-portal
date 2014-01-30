@@ -31,6 +31,7 @@ class EmployersController < ApplicationController
     @staff = @employer.staff.paginate(:page => page)
     @running_job_offers = @employer.job_offers.running.paginate(:page => page)
     @open_job_offers = @employer.job_offers.open.paginate(:page => page)
+    @pending_job_offers = @employer.job_offers.pending.paginate(:page => page)
   end
 
   # GET /employers/new
