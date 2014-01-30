@@ -95,10 +95,6 @@ describe "the employer page" do
 
     it { should have_content(@job_offer_open.start_date) }
     it { should have_content(@job_offer_running.start_date) }
-
-    it { should have_content(@job_offer_open.employer.name) }
-    it { should have_content(@job_offer_running.employer.name) }
-
   end
 
  end

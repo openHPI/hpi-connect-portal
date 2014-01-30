@@ -9,7 +9,7 @@
         <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(:language_ids => current_user.languages.map(&:id), 
           :programming_language_ids => current_user.programming_languages.map(&:id)), :class => "btn btn-default pull-right" %>
       <% end %>
-       <%= render 'shared/overview', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
+       <%= render 'shared/jobs_listing_detailed', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
      </div>
   </div><!--/.span -->
   <div class="col-md-3">
