@@ -37,7 +37,7 @@ HpiHiwiPortal::Application.configure do
   # Enable strict date parsing using the timeliness gem
   config.use_plugin_parser = true
 
-  config.action_mailer.default_url_options = { host: "http://hpi-hiwi-portal.herokuapp.com" }
+  config.action_mailer.default_url_options = { host: "http://www.example.com" }
 
   config.action_mailer.delivery_method = :test
   config.action_mailer.smtp_settings = {

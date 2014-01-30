@@ -60,7 +60,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [deputy.email])
-    email.body.should have_link("new job offer", url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false))
+    email.should have_selector("a[href='" + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + "']")
     ActionMailer::Base.deliveries = []
 
     # deputy accepts the new job offer
@@ -217,7 +217,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [deputy.email])
-    email.body.should have_link("new job offer", url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false))
+    email.should have_selector("a[href='" + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + "']")
     ActionMailer::Base.deliveries = []
   end
 end

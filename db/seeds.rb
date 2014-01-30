@@ -76,67 +76,6 @@ epic_deputy.employment_start_date =  Date.today
 epic.save!
 epic_deputy.save!
 
-
-www = Employer.new(
-	name: "Internet Technologies and Systems",
-	description: "The research at the chair of Prof. Dr. Christoph Meinel focuses on investigation of scientific principles, methodes and technologies to design and implement novel Internet technologies and innovative Internet-based IT-systems",
-	head: "Christoph Meinel",
-	deputy: nil
-)
-www_deputy = User.new(
-	email: "www.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/www.chair", 
-	lastname: "Mustermann", 
-	firstname: "Max",
-	role: Role.where(:name => 'Staff').first,
-	employer: www
-)
-
-www.deputy = www_deputy
-www_deputy.employment_start_date =  Date.today
-www.save!
-www_deputy.save!
-
-hci = Employer.new(
-	name: "Human Computer Interaction",
-	description: "The Human Computer Interaction group headed by Prof. Dr. Patrick Baudisch is concerned with the design, implementation and evaluation of interaction techniques, devices, and systems. More specifically, we create new ways to interact with small devices, such as mobile phones and very large display devices, such as tables and walls.",
-	head: "Patrick Baudisch",
-	deputy: nil
-)
-hci_deputy = User.new(
-	email: "hci.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/hci.chair", 
-	lastname: "Musterfrau", 
-	firstname: "Leonie",
-	role: Role.where(:name => 'Staff').first,
-	employer: hci
-)
-
-hci.deputy = hci_deputy
-hci_deputy.employment_start_date =  Date.today
-hci.save!
-hci_deputy.save!
-
-d3 = Employer.new(
-	name: "Computer Graphic Systems",
-	description: "The Computer Graphics Systems group headed by Prof. Dr. Jürgen Döllner is concerned with the analysis, planning and construction of computer graphics and multimedia systems. Human-computer communication is the overall context of the group’s work.",
-	head: "Jürgen Döllner",
-	deputy: nil
-)
-d3_deputy = User.new(
-	email: "d3.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/d3.chair", 
-	lastname: "Werner", 
-	firstname: "Hans",
-	role: Role.where(:name => 'Staff').first,
-	employer: d3
-)
-
-d3.deputy = d3_deputy
-d3_deputy.employment_start_date =  Date.today
-d3.save!
-d3_deputy.save!
-
 os = Employer.new(
 	name: "OS and Middleware",
 	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
@@ -157,26 +96,6 @@ os_deputy.employment_start_date =  Date.today
 os.save!
 os_deputy.save!
 
-bpet = Employer.new(
-	name: "Business Process Technology",
-	description: "The Business Process Technology group headed by Prof. Dr. Mathias Weske is engaged in research on the development of innovative models, methods and techniques and the design and construction of software systems to support knowledge-intensive and flexible business processes. The particular focus is on languages and concepts for modeling such processes.",
-	head: "Mathias Weske",
-	deputy: nil
-)
-bpet_deputy = User.new(
-	email: "bpet.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/bpet.chair", 
-	lastname: "Wespe", 
-	firstname: "Felix",
-	role: Role.where(:name => 'Staff').first,
-	employer: bpet
-)
-
-bpet.deputy = bpet_deputy
-bpet_deputy.employment_start_date =  Date.today
-bpet.save!
-bpet_deputy.save!
-
 dschool = Employer.new(
 	name: "HPI School of Design Thinking",
 	description: "At the d.school, we help to create “T-shaped” students. They bring a deep set of skills, knowledge and approach to problem solving from their own field; we help them develop the breadth and creative confidence to collaborate with people from vastly different disciplines. This equips students to tackle the big, ambiguous challenges they’ll encounter out in the world that can’t be solved with a single approach.",
@@ -196,87 +115,6 @@ dschool.deputy = dschool_deputy
 dschool_deputy.employment_start_date =  Date.today
 dschool.save!
 dschool_deputy.save!
-
-swa = Employer.new(
-	name: "Software Architecture",
-	description: "The Software Architecture Group, led by Prof. Dr. Robert Hirschfeld, is concerned with fundamental elements and structures of software. Methods and tools are developed for improving the comprehension and design of large complex systems.",
-	head: "Robert Hirschfeld",
-	deputy: nil
-)
-swa_deputy = User.new(
-	email: "swa.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/swa.chair", 
-	lastname: "Schwan", 
-	firstname: "Bob",
-	role: Role.where(:name => 'Staff').first,
-	employer: swa
-)
-
-swa.deputy = swa_deputy
-swa_deputy.employment_start_date =  Date.today
-swa.save!
-swa_deputy.save!
-
-db = Employer.new(
-	name: "Information Systems",
-	description: "Prof. Dr. Felix Naumann is head of the Information Systems Research Group. The group's research goals are the efficient and effective management of heterogeneous information in large, autonomous systems. These include information integration methods, approaches to information quality and data cleansing, directed information searches and metadata management.",
-	head: "Felix Naumann",
-	deputy: nil
-)
-db_deputy = User.new(
-	email: "db.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/db.chair", 
-	lastname: "Schmied", 
-	firstname: "Hans",
-	role: Role.where(:name => 'Staff').first,
-	employer: db
-)
-
-db.deputy = db_deputy
-db_deputy.employment_start_date =  Date.today
-db.save!
-db_deputy.save!
-
-mod = Employer.new(
-	name: "Systems Analysis and Modeling",
-	description: "Prof. Dr. Holger Giese heads the Systems Analysis and Modeling research group since January 2008. The team focuses on model-driven software development for software-intensive systems. This includes the UML-based specification of flexible systems with samples and components, approaches to the formal verification of these models and approaches to the synthesis of models. The group also looks at the transformations of models, code generation concepts for structure and behavior for models and, in general, the problem of the integration of models in model-driven software development.",
-	head: "Holger Giese",
-	deputy: nil
-)
-mod_deputy = User.new(
-	email: "mod.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/mod.chair", 
-	lastname: "Fliese", 
-	firstname: "Giesela",
-	role: Role.where(:name => 'Staff').first,
-	employer: mod
-)
-
-mod.deputy = mod_deputy
-mod_deputy.employment_start_date =  Date.today
-mod.save!
-mod_deputy.save!
-
-
-administration = Employer.new(
-	name: "Verwaltung",
-	description: "to be done",
-	head: "to be done",
-	deputy: nil
-)
-administration_deputy = User.new(
-	email: "administration.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/administration.chair", 
-	lastname: "Geiger", 
-	firstname: "Hermine",
-	role: Role.where(:name => 'Staff').first,
-	employer: administration
-)
-
-administration.deputy = administration_deputy
-administration_deputy.employment_start_date =  Date.today
-administration.save!
-administration_deputy.save!
 
 sap = Employer.new(
 	name: "SAP",
@@ -332,9 +170,7 @@ User.create!([{
 	semester: 5,
 	academic_program: 'Bachelor',
 	education:'Abitur',
-	role: Role.where(:name => 'Staff').first,
-	employer: Employer.where(:name => 'Business Process Technology').first
-		
+	role: Role.where(:name => 'Student').first,		
 }])
 
 User.create!([{
@@ -384,44 +220,87 @@ User.create!([{
 }])
 
 JobOffer.delete_all
-JobOffer.create!([{
-	title: "Touch floor", 
-	description: 'The student extends the functionality of the touch floor.', 
-	employer: Employer.where(:name => "Human Computer Interaction").first, 
-	status: JobStatus.where(:name => "completed").first,
-	start_date: Date.current+1, 
-	time_effort: 6,
-	compensation: 11.50,
-	languages: Language.where(:name => 'german'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
-}])
+
+# EPIC Jobs
 
 JobOffer.create!([{
-	title: "Website Developer", 
-	description: 'The student develops a wonderful website.', 
+	title: "HPI Career Portal", 
+	description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.', 
 	employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
 	status: JobStatus.where(:name => "open").first,
 	start_date: Date.current+2, 
 	time_effort: 9,
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
+	programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
+	responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first
+}])
+
+JobOffer.create!([{
+  title: "Genome project", 
+  description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.', 
+  employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
+  status: JobStatus.where(:name => "open").first,
+  start_date: Date.current+15, 
+  time_effort: 38,
+  compensation: 12.0,
+  languages: Language.where(:name => 'german'), 
+  programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
+  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+}])
+
+JobOffer.create!([{
+  title: "Hyrise Developer", 
+  description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.', 
+  employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
+  status: JobStatus.where(:name => "running").first,
+  start_date: Date.current+15, 
+  time_effort: 38,
+  compensation: 12.0,
+  languages: Language.where(:name => 'german'), 
+  programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
+  responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first
+}])
+
+# DSchool Jobs
+
+JobOffer.create!([{
+	title: "Research assistant", 
+	description: 'For the summer semester 2014 a new research assistant is needed to assist the head of the chair and his fellow researches with their work. Also includes support and supervision of students taking the basic track.', 
+	employer: Employer.where(:name => "HPI School of Design Thinking").first, 
+	status: JobStatus.where(:name => "open").first,
+	start_date: Date.current+1, 
+	time_effort: 12,
+	compensation: 10.0,
+	languages: Language.where(:name => 'german'), 
 	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
 
 JobOffer.create!([{
-	title: "tele-Task developer", 
-	description: 'The Job includes the development of new features for tele-Task', 
-	employer: Employer.where(:name => "Internet Technologies and Systems").first, 
-	start_date: Date.current+3, 
-	status: JobStatus.where(:name => "completed").first,
-	time_effort: 10,
-	compensation: 12.00,
-	languages: Language.where(:name => ['german', 'english']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Frank").first
+  title: "Post graduate", 
+  description: 'Starting May 2014 the HPI School of Design Thinking is looking for a post-graduate former HPI student to join the chair.', 
+  employer: Employer.where(:name => "HPI School of Design Thinking").first, 
+  status: JobStatus.where(:name => "open").first,
+  start_date: Date.current+1, 
+  time_effort: 38,
+  compensation: 14.0,
+  languages: Language.where(:name => 'german'), 
+  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
 }])
+
+JobOffer.create!([{
+  title: "Visitor Attendant", 
+  description: 'The HPI School of Design Thinking is looking for someone to attend the miscellaneous vistors coming to visit the school. Includes show-arounds and introductions to Design Thinking.', 
+  employer: Employer.where(:name => "HPI School of Design Thinking").first, 
+  status: JobStatus.where(:name => "running").first,
+  start_date: Date.current+1, 
+  time_effort: 38,
+  compensation: 14.0,
+  languages: Language.where(:name => 'english'), 
+  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+}])
+
+# OS Jobs
 
 JobOffer.create!([{
 	title: "Tutor for Operating systems", 
@@ -438,33 +317,6 @@ JobOffer.create!([{
 
 
 JobOffer.create!([{
-	title: "Teleboard Developer", 
-	description: 'You have to develop the Teleboard with HTML5 and Javascript', 
-	employer: Employer.where(:name => "Internet Technologies and Systems").first, 
-	status: JobStatus.where(:name => "open").first,
-	start_date: Date.current+6, 
-	time_effort: 5,
-	compensation: 12.00,
-	languages: Language.where(:name => ['german', 'english']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
-}])
-
-
-JobOffer.create!([{
-	title: "HCI TA", 
-	description: 'The job includes preparing the framework for HCI I class, control the assignments and be present at every lecture', 
-	employer: Employer.where(:name => "Human Computer Interaction").first, 
-	start_date: Date.current+8, 
-	time_effort: 20,
-	status: JobStatus.where(:name => "working").first,
-	compensation: 12.00,
-	languages: Language.where(:name	 => ['english']), 
-	programming_languages: ProgrammingLanguage.where(:name => ['C++']),
-	responsible_user: User.where(:firstname=>'Frank').first
-}])
-
-JobOffer.create!([{
 	title: "Supporting the lab operations of the chair", 
 	description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
 	employer: Employer.where(:name => "OS and Middleware").first,
@@ -476,6 +328,21 @@ JobOffer.create!([{
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
 	responsible_user: User.where(:firstname=>'Frank').first
 }])
+
+JobOffer.create!([{
+  title: "OpenHPI supporter", 
+  description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.', 
+  employer: Employer.where(:name => "OS and Middleware").first,
+  status: JobStatus.where(:name => "running").first,
+  start_date: Date.current+100, 
+  time_effort: 8,
+  compensation: 10.00,
+  languages: Language.where(:name => 'german'), 
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+  responsible_user: User.where(:firstname=>'Frank').first
+}])
+
+# FAQs
 
 Faq.delete_all
 Faq.create!([{
