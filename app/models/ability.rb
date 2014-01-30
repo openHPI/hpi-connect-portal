@@ -24,7 +24,7 @@ class Ability
     user_id = user.id
     employer_id = user.employer_id
 
-    can :edit, Employer, id: user.employer_id
+    can [:edit, :update], Employer, id: user.employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
     can :read, User, role: { name: 'Staff' }
