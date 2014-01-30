@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-    before_filter :check_user, :only => [:update, :edit]
-    has_scope :update_immediately
+
+  before_filter :user_is_not_aloud_to_change_data, :only => [:update, :edit]
+  has_scope :update_immediately
 
   def edit
     @user = User.find(params[:id])
@@ -33,17 +34,31 @@ class UsersController < ApplicationController
     end
   end
 
+  def userlist
+    @is_deputy = User.find(params[:exclude_user]).deputy?
+    @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+    respond_to do |format|
+        format.json     
+    end
+  end
+
 
   private
     def user_params
       params.require(:user).permit(:firstname, :lastname, :email, :role_id)
     end
 
-    def check_user
-      @user = User.find(params[:id])
 
-      if current_user != @user && !current_user.admin?
-        redirect_to @user
-      end
-    end
+    private
+        def user_params
+            params.require(:user).permit(:firstname, :lastname, :email, :role_id)
+        end
+
+        def user_is_not_aloud_to_change_data
+            @user = User.find(params[:id])
+
+            if current_user != @user && !current_user.admin?
+                redirect_to @user
+            end
+        end
 end

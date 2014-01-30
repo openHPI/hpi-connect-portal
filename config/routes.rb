@@ -3,12 +3,16 @@ HpiHiwiPortal::Application.routes.draw do
   scope "(:locale)", locale: /en|de/ do
     get "imprint/index"
 
-  resources :user_statuses
-  root :to => "job_offers#index"
+  get "imprint/index"
+  
+  devise_scope :user do 
+    root :to => 'sessions#new'
+  end
 
   resources :job_offers do
     collection do
       get "archive"
+      get "matching"
     end
     member do
       get "complete"
@@ -19,9 +23,14 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
+  get "get-userlist" => "users#userlist"
   get "employers/external", to: "employers#index_external", as: "external_employers"
 
-  resources :employers
+  resources :employers do
+    collection do 
+        post 'update_staff'
+    end
+  end
 
   #resources :users, only: [:edit, :update]
 
@@ -43,7 +52,12 @@ HpiHiwiPortal::Application.routes.draw do
   resources :studentsearch
   resources :faqs
 
-  resources :staff, except: [:new, :create]
+  resources :staff, except: [:new, :create] do
+      collection do
+          post 'update_role'
+          post 'set_role_to_student'
+      end
+  end
 
   resources :students do
     collection do

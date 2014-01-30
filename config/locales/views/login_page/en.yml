@@ -1,0 +1,16 @@
+en:
+  login_page:
+    login_prompt: "Please login using your HPI OpenID !"
+    hpi_headline: "Hasso Plattner Institute"
+    hpi_hiwi_portal_headline: "HPI-HiWi-Portal"
+    external_headline: "Are you an external employer that wants to recruit HPI students?"
+    external_description: "Please contact [...] for further information."
+    hpi_description: "The HPI in Potsdam is the only university-level institute in Germany offering
+                      study programs in \"IT-Systems Engineering\". The HPI has no tuition fees and is
+                      financed entirely through private funds donated by its founder, Professor Hasso Plattner
+                      , who co-founded the software giant SAP and is currently its chairman of supervisory board.
+                      Plattner is the most important private supporter of science in Germany and will contribute to
+                      further promote this unique university-level training in IT-Systems Engineering."
+    hpi_hiwi_portal_description: "The HPI-HiWi-Portal allows students to conveniently search for job offers at the
+                                  HPI. Employees and external employers can post new offers to recruit the most 
+                                  qualified students from one of the world's leading institues for IT-Systems Engineering."

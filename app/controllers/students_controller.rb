@@ -6,10 +6,10 @@ class StudentsController < ApplicationController
   before_filter :check_user_deputy_or_admin, only: [:update_role]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  has_scope :search_students, only: [:index], as: :q
-  has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
-  has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
-  has_scope :filter_semester, only: [:index],  as: :semester
+  has_scope :search_students, only: [:index, :matching], as: :q
+  has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
+  has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
   # GET /students
   # GET /students.json
@@ -24,13 +24,7 @@ class StudentsController < ApplicationController
     if not @user.student?
       redirect_to user_path
     end
-  end
-
-  # GET /students/new
-  def new
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-    @user = User.new
+    @job_offers = @user.assigned_job_offers.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1/edit
@@ -56,26 +50,15 @@ class StudentsController < ApplicationController
   # GET /students/matching
   def matching
     #XXX should be a list of strings not [string]
-    @users = User.search_students_by_language_and_programming_language(
-      params[:languages], params[:programming_languages])
-    @users = @users.paginate(:page => params[:page], :per_page => 10 )
+    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
+    @users = @users.paginate(:page => params[:page], :per_page => 5 )
     render "index"
   end
 
   # POST /students/update_role
 
   def update_role
-    role_name = params[:role_name]
-
-    @user = User.find_by_id(params[:student_id])
-
-    should_be_deputy = role_name == "Deputy"
-    unless ["Deputy", "Admin", "Staff"].include? role_name
-      render_errors_and_action(student_path(@user))
-      return
-    end
-
-    @user.promote(Role.find_by_name(should_be_deputy ? "Staff" : role_name), @employer, should_be_deputy)
+    User.find(params[:student_id]).set_role(params[:role_level], @employer)
     redirect_to(students_path)
   end
 
@@ -109,9 +92,9 @@ class StudentsController < ApplicationController
 
     def check_user_deputy_or_admin
       user = User.find_by_id(params[:student_id])
-      @employer = params[:employer_name] ? Employer.find_by_name(params[:employer_name]) : current_user.employer
+      @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
 
-      unless current_user.admin? || @employer.nil? || @employer.deputy == current_user
+      if (cannot? :promote, user)
         redirect_to(student_path(user))
       end
     end

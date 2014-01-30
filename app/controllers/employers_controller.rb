@@ -1,7 +1,7 @@
 class EmployersController < ApplicationController
 
   authorize_resource only: [:new, :edit, :create, :update]
-  before_action :set_employer, only: [:show, :edit, :update]
+  before_action :set_employer, only: [:show, :edit, :update, :update_staff]
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to employers_path, :notice => exception.message
@@ -65,6 +65,11 @@ class EmployersController < ApplicationController
     else
       render_errors_and_action(@employer, 'edit')
     end
+  end
+
+  def update_staff
+    set_role_from_staff_to_student(params[:user_id], params[:new_deputy_id])
+    redirect_to employer_path(@employer)
   end
 
   private

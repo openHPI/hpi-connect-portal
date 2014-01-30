@@ -47,16 +47,17 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :trackable, :openid_authenticatable
 
-    has_many :applications
-    has_many :job_offers, through: :applications
-    has_many :programming_languages_users
-    has_many :programming_languages, :through => :programming_languages_users
-    accepts_nested_attributes_for :programming_languages
-    has_many :languages_users
-    has_many :languages, :through => :languages_users
-    has_many :possible_employers, :through => :employers_newsletter_information
-    has_many :possible_programming_language, :through => :programming_languages_newsletter_information 
-    accepts_nested_attributes_for :languages
+  has_many :applications
+  has_many :job_offers, through: :applications
+  has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
+  has_many :programming_languages_users
+  has_many :programming_languages, :through => :programming_languages_users
+  accepts_nested_attributes_for :programming_languages
+  has_many :languages_users
+  has_many :languages, :through => :languages_users
+  has_many :possible_employers, :through => :employers_newsletter_information
+  has_many :possible_programming_language, :through => :programming_languages_newsletter_information 
+  accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
 
@@ -129,8 +130,23 @@ class User < ActiveRecord::Base
     role && role.staff_role?
   end
 
+  def deputy?
+    Employer.all.each do |employer|
+      if employer.deputy_id == self.id
+        self.employer_id = employer.id
+        return true
+      end
+    end
+
+    return false
+  end
+
   def admin?
     role && role.admin_role?
+  end
+
+  def full_name
+     return firstname + " " +lastname
   end
 
   def promote(new_role, employer=nil, should_be_deputy=false)
@@ -197,5 +213,35 @@ class User < ActiveRecord::Base
     end
 
     return result
+  end
+
+  def set_role(role_level, employer)
+    case role_level.to_i
+      when 4
+        self.set_role_to_deputy(employer)
+      when 3
+        self.set_role_to_admin
+      when 2
+        self.set_role_to_staff(employer)
+      when 1
+        self.set_role_to_student
+    end
+  end
+
+  def set_role_to_deputy(employer)
+    self.update(:employer => employer, :role => Role.find_by_level(2))
+    employer.update(:deputy => self)
+  end
+
+  def set_role_to_admin
+    self.update(:role => Role.find_by_level(3))
+  end
+
+  def set_role_to_staff(employer)
+    self.update(:role => Role.find_by_level(2), :employer => employer)
+  end
+
+  def set_role_to_student
+    self.update(:role => Role.find_by_level(1), :employer => nil)
   end
 end

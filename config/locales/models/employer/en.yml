@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       employer:
-        deputy: "deputy"
-        description: "description"
-        head: "head"
-        name: "name"
+        deputy: "Deputy"
+        description: "Description"
+        head: "Head"
+        name: "Name"

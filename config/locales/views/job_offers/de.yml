@@ -17,6 +17,7 @@ de:
     start_date: "beginnt frühestens"
     end_date: "endet spätestens"
     archive: "Archiv"
+    matching_job_offers: "Passende Jobangebote"
     job_completed: "Arbeit erledigt"
     overview: "Übersicht"
     create_new_job_offer: "Neues Stellenangebot anlegen"
@@ -24,6 +25,7 @@ de:
     enter_description: "Füge eine Beschreibung hinzu"
     compensation_description: "€/Stunde"
     time_effort_description: "Stunden/Woche"
+    vacant_posts_description: "offene Stellen"
     apply: "Bewerben"
     applications_headline: "Bewerbungen"
     applicant_first_name: "Vorname"
@@ -49,4 +51,6 @@ de:
     prolong: "Verlängern"
     default_compensation: "Haustarif"
     default_startdate: "Ab sofort"
+    recommended_jobs: "empfohlene Stellen"
+    vacant_posts_left: "offene Stelle(n) verfügbar"
 

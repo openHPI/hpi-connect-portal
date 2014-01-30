@@ -1,0 +1,16 @@
+de:
+  login_page:
+    login_prompt: "Bitte loggen Sie sich mit Ihrer HPI OpenID ein !"
+    hpi_headline: "Hasso Plattner Institut"
+    hpi_hiwi_portal_headline: "HPI-HiWi-Portal"
+    external_headline: "Sie sind ein externer Arbeitgeber und möchten HPI-Studenten einstellen?"
+    external_description: "Bitte kontaktieren Sie [...] für weitere Informationen diesbezüglich."
+    hpi_description:  "Das HPI in Potsdam ist Deutschlands einziges Uni-Institut, an dem man \"IT-Systems Engineering\" 
+                      studieren kann und das völlig privat finanziert wird - von Stifter Professor Hasso Plattner, 
+                      Mitgründer und Aufsichtsratsvorsitzender des Software-Konzerns SAP. Deutschlands wohl bedeutendster 
+                      privater Wissenschaftsförderer ermöglicht so eine einzigartige universitäre Ausbildung in der 
+                      IT-Systemtechnik."
+    hpi_hiwi_portal_description: "Das HPI-HiWi-Portal erlaubt es Studenten, einfach nach den besten Job-Angeboten am HPI
+                                  zu suchen. Mitarbeiter und externe Unternehmen können neue Job-Angebote einstellen,
+                                  um die best-qualifiziertesten Studenten eines der weltweit führenden Institute für IT-
+                                  Systemtechnik zu rekrutieren."

@@ -10,5 +10,5 @@
 #
 
 class Faq < ActiveRecord::Base
-	validates :question, :answer, presence: true
+	validates :question, :answer, :locale, presence: true
 end

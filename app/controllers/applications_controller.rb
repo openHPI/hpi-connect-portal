@@ -24,13 +24,28 @@ class ApplicationsController < ApplicationController
   def accept
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
-    if @job_offer.update({assigned_student: @application.user, status: JobStatus.running}) and Application.where(job_offer: @job_offer).delete_all
+    new_assigned_students = @job_offer.assigned_students << @application.user
+    if @job_offer.update({assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1})
       if @job_offer.flexible_start_date
         @job_offer.update!({start_date: Date.current})
       end
 
       ApplicationsMailer.application_accepted_student_email(@application).deliver
       JobOffersMailer.job_student_accepted_email(@job_offer).deliver
+
+      if @job_offer.vacant_posts == 0
+        if @job_offer.update({status: JobStatus.running})
+          Application.where(job_offer: @job_offer).where.not(id: @application.id).each do | application |
+            unless application.decline
+              render_errors_and_action @application.job_offer
+            end
+          end
+        else
+          render_errors_and_action @job_offer
+        end
+      end
+
+      @application.delete
       respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
     else
       render_errors_and_action @job_offer
@@ -40,8 +55,7 @@ class ApplicationsController < ApplicationController
   # GET decline
   def decline
     @application = Application.find params[:id]
-    if @application.delete
-      ApplicationsMailer.application_declined_student_email(@application).deliver
+    if @application.decline
       redirect_to @application.job_offer
     else
       render_errors_and_action @application.job_offer
@@ -51,8 +65,11 @@ class ApplicationsController < ApplicationController
   # DELETE destroy
   def destroy
     @application = Application.find params[:id]
-    @application.destroy
-    respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
+    if @application.destroy
+      respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
+    else
+      render_errors_and_action @application.job_offer
+    end
   end
 
   private

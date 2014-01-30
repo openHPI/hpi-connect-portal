@@ -67,6 +67,9 @@ epic_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
 	lastname: "Specht", 
 	firstname: "Tim",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: epic
 )
@@ -84,10 +87,13 @@ www = Employer.new(
 	deputy: nil
 )
 www_chief = User.new(
-	email: "www.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/www.chair", 
-	lastname: "Mustermann", 
-	firstname: "Max",
+	email: "judith.hartmann@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/judith.hartmann", 
+	lastname: "Judith", 
+	firstname: "Hartmann",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: www
 )
@@ -108,6 +114,9 @@ hci_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/hci.chair", 
 	lastname: "Musterfrau", 
 	firstname: "Leonie",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: hci
 )
@@ -128,6 +137,9 @@ d3_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/d3.chair", 
 	lastname: "Werner", 
 	firstname: "Hans",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: d3
 )
@@ -148,6 +160,9 @@ os_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/os.chair", 
 	lastname: "Müller", 
 	firstname: "Jasper",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: os
 )
@@ -168,6 +183,9 @@ bpet_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/bpet.chair", 
 	lastname: "Wespe", 
 	firstname: "Felix",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: bpet
 )
@@ -188,6 +206,9 @@ swa_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/swa.chair", 
 	lastname: "Schwan", 
 	firstname: "Bob",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: swa
 )
@@ -208,6 +229,9 @@ db_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/db.chair", 
 	lastname: "Schmied", 
 	firstname: "Hans",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: db
 )
@@ -228,6 +252,9 @@ mod_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/mod.chair", 
 	lastname: "Fliese", 
 	firstname: "Giesela",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: mod
 )
@@ -249,6 +276,9 @@ administration_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/administration.chair", 
 	lastname: "Geiger", 
 	firstname: "Hermine",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: administration
 )
@@ -270,6 +300,9 @@ sap_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
 	lastname: "Jasper", 
 	firstname: "Dustin",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: sap
 )
@@ -285,6 +318,9 @@ User.create!([{
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
 	lastname: "Kroschk", 
 	firstname: "Axel", 
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Admin').first	
 }])
 
@@ -367,6 +403,14 @@ User.create!([{
 
 
 
+User.create!([{
+	email: "alexander.ernst@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/alexander.ernst", 
+	lastname: "Ernst", 
+	firstname: "Alexander", 
+	role: Role.where(:name => 'Admin').first
+	}])
+
 JobOffer.delete_all
 JobOffer.create!([{
 	title: "Touch floor", 
@@ -391,7 +435,8 @@ JobOffer.create!([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Ruby']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	assigned_students: [User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first]
 }])
 
 JobOffer.create!([{
@@ -404,7 +449,7 @@ JobOffer.create!([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Frank").first
+	responsible_user: User.where(:firstname=>"Frank").first,
 }])
 
 JobOffer.create!([{
@@ -417,7 +462,9 @@ JobOffer.create!([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	assigned_students: User.where(:firstname=>['Frank', 'Tim']),
+	vacant_posts: 3
 }])
 
 
@@ -431,7 +478,8 @@ JobOffer.create!([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+	vacant_posts: 2
 }])
 
 
@@ -461,20 +509,60 @@ JobOffer.create!([{
 	responsible_user: User.where(:firstname=>'Frank').first
 }])
 
+Application.delete_all
+Application.create([{
+	:user => User.where(:firstname=>'Frank', :lastname => 'Blechschmidt').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
+}])
+
+Application.create([{
+	:user => User.where(:firstname=>'Alexander', :lastname => 'Ernst').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
+}])
+
+Application.create([{
+	:user => User.where(:firstname=>'Alexander', :lastname => 'Ernst').first,
+	:job_offer => JobOffer.where(:title => "Teleboard Developer").first
+}])
+
 Faq.delete_all
 Faq.create!([{
 	question: "How do I make edits to my profile?", 
-	answer: 'Log in to your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button.'
+	answer: 'Log in to your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "How do I log off of HPI-HiWi-Portal?", 
-	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.'
+	answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "How can I add a profile photo?", 
-	answer: 'Log into your account. Then hover over "My Profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.'
+	answer: 'Log into your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.',
+	locale: "en"
 }])
 Faq.create!([{
 	question: "Does HPI-HiWi-Portal have an Android app?",
-	answer: "No, the HPI-HiWi-Portal does not have an Android app."
+	answer: "No, the HPI-HiWi-Portal does not have an Android app.",
+	locale: "en"
+}])
+Faq.create!([{
+	question: "Wie kann ich mein Profile bearbeiten?", 
+	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button.',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Wie kann ich mich am HPI-HiWi-Portal ausloggen?", 
+	answer: 'Bitte klicken Sie den "Ausloggen"-Button in der rechten oberen Bildschirmecke.',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Wie kann ich mein Profil-Foto bearbeiten?", 
+	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button Search for Foto. Wählen Sie nun das gewünschte Foto aus, und klicken abschließend auf "Aktualisieren".',
+	locale: "de"
+}])
+Faq.create!([{
+	question: "Hat das HPI-HiWi-Portal eine Android-App?", 
+	answer: 'Ja, die HPI-HiWi-Portal Android-App ermöglicht es Ihnen, über alle für Sie passenden Stellenangebote am HPI auf dem Laufenden zu bleiben.',
+	locale: "de"
 }])

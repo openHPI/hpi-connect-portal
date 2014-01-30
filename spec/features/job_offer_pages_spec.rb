@@ -5,6 +5,8 @@ describe "Job Offer pages" do
 
   subject { page }
 
+  let(:user) { FactoryGirl.create(:user) }
+
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
     @status_open = FactoryGirl.create(:job_status, :open)
@@ -16,15 +18,12 @@ describe "Job Offer pages" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
-      before { visit job_offer_path(job_offer) }
+      before { 
+        login_as(user)
+        visit job_offer_path(job_offer) }
 
       describe "application button and list" do
         let(:student) { FactoryGirl.create(:user, :student) }
-
-        describe "without being signed in" do
-          it { should_not have_button('Apply') }
-          it { should_not have_selector('h4', text: 'Applications') }
-        end
 
         describe "as a student" do
           before do
@@ -122,8 +121,8 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)
-        end
+          login_as(student, :scope => :user)          
+        end 
 
         it { should_not have_button('Apply')}
       end
@@ -132,12 +131,20 @@ describe "Job Offer pages" do
         let(:staff) { FactoryGirl.create(:user, :staff, employer: job_offer.employer) }
 
         before do
+          job_offer.assigned_students = [student]
           login_as(staff, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'}
+        it { should have_link 'Reopen job offer'}
+
+        it "shows the assigned students" do
+          page.should have_content(
+                student.firstname,
+                student.lastname
+              )
+        end
       end
 
       describe "as the responsible user" do
@@ -161,7 +168,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'reopen Job Offer'}
+        it { should have_link 'Reopen job offer'}
       end
     end
 
@@ -179,8 +186,8 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)
-        end
+          login_as(student, :scope => :user)          
+        end 
 
         it "should not be visible in the job offers list" do
           visit job_offers_path
@@ -213,8 +220,8 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the employer" do
-        before do
+      describe "as the deputy of the employer" do 
+        before do          
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
         end
@@ -236,7 +243,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as admin" do
+      describe "as admin" do 
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
         before do
@@ -275,10 +282,10 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link('reopen Job Offer') }
+        it { should have_link('Reopen job offer') }
 
       end
-
+      
       describe "as admin" do
         let(:admin) { FactoryGirl.create(:user, :admin, employer: job_offer.employer) }
 
@@ -287,9 +294,9 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link('reopen Job Offer') }
+        it { should have_link('Reopen job offer') }
 
-      end
+      end     
     end
   end
 end

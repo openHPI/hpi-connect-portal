@@ -15,6 +15,7 @@ en:
         requirements: "Requirements"
         additional_information: "Additional Information"
         general_information: "General Information"
+        vacant_posts: "Number of applicants"
         responsible_user: "Responsible user"
     errors:
       messages:
