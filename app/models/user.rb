@@ -114,10 +114,6 @@ class User < ActiveRecord::Base
     self.id.hash
   end
 
-  def name
-    "#{firstname} #{lastname}"
-  end
-
   def applied?(job_offer)
     applications.find_by_job_offer_id job_offer.id
   end
@@ -146,7 +142,7 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-     return firstname + " " +lastname
+    "#{firstname} #{lastname}"
   end
 
   def promote(new_role, employer=nil, should_be_deputy=false)
