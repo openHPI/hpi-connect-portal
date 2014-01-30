@@ -17,6 +17,7 @@ en:
         general_information: "General Information"
         vacant_posts: "Vacant posts"
         responsible_user: "Responsible user"
+        contact: "Contact"
     errors:
       messages:
         in_future: "has to be in the future."

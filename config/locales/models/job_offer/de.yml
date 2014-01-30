@@ -16,6 +16,7 @@ de:
         additional_information: "Zusätzliche Information"
         requirements: "Anforderungen"
         vacant_posts: "Verfügbare Stellen"
+        contact: "Kontakt"
     errors:
       messages:
         in_future: "muss in der Zukunft liegen."
