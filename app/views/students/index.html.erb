@@ -35,12 +35,12 @@
         <%= text_field_tag "student_id", nil %>
         <% promotion_rules = [] %>
         <% if user_is_deputy? %>
-           <% promotion_roles = [Role.find_by_level(2).name, "Deputy"] %>
+           <% promotion_roles = [[Role.find_by_level(2).name, 2], ["Deputy", 4]] %>
         <% else %>
-           <% promotion_roles = [Role.find_by_level(2).name , Role.find_by_level(3).name, "Deputy"] %>
+           <% promotion_roles = [[Role.find_by_level(2).name, 2] , [Role.find_by_level(3).name,3], ["Deputy", 4]] %>
         <%end%>
 
-        <%= select_tag :role_name, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
+        <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
         <% if user_is_admin? %>
         <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil) %>
         <% end %>

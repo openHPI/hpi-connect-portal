@@ -67,6 +67,9 @@ epic_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
 	lastname: "Specht", 
 	firstname: "Tim",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: epic
 )
@@ -84,10 +87,13 @@ www = Employer.new(
 	deputy: nil
 )
 www_chief = User.new(
-	email: "www.chair@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/www.chair", 
-	lastname: "Mustermann", 
-	firstname: "Max",
+	email: "judith.hartmann@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/judith.hartmann", 
+	lastname: "Judith", 
+	firstname: "Hartmann",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: www
 )
@@ -108,6 +114,9 @@ hci_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/hci.chair", 
 	lastname: "Musterfrau", 
 	firstname: "Leonie",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: hci
 )
@@ -128,6 +137,9 @@ d3_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/d3.chair", 
 	lastname: "Werner", 
 	firstname: "Hans",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: d3
 )
@@ -148,6 +160,9 @@ os_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/os.chair", 
 	lastname: "Müller", 
 	firstname: "Jasper",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: os
 )
@@ -168,6 +183,9 @@ bpet_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/bpet.chair", 
 	lastname: "Wespe", 
 	firstname: "Felix",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: bpet
 )
@@ -188,6 +206,9 @@ swa_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/swa.chair", 
 	lastname: "Schwan", 
 	firstname: "Bob",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: swa
 )
@@ -208,6 +229,9 @@ db_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/db.chair", 
 	lastname: "Schmied", 
 	firstname: "Hans",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: db
 )
@@ -228,6 +252,9 @@ mod_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/mod.chair", 
 	lastname: "Fliese", 
 	firstname: "Giesela",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: mod
 )
@@ -249,6 +276,9 @@ administration_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/administration.chair", 
 	lastname: "Geiger", 
 	firstname: "Hermine",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: administration
 )
@@ -270,6 +300,9 @@ sap_chief = User.new(
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
 	lastname: "Jasper", 
 	firstname: "Dustin",
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
 	employer: sap
 )
@@ -285,6 +318,9 @@ User.create!([{
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
 	lastname: "Kroschk", 
 	firstname: "Axel", 
+	semester: 1,
+	academic_program: "undefined",
+	education: "undefined",
 	role: Role.where(:name => 'Admin').first	
 }])
 
@@ -367,28 +403,13 @@ User.create!([{
 
 
 
-User.new(
+User.create!([{
 	email: "alexander.ernst@student.hpi.uni-potsdam.de", 
 	identity_url: "https://openid.hpi.uni-potsdam.de/user/alexander.ernst", 
-	lastname: "Alexander", 
-	firstname: "Ernst",
-	semester: 5,
-	academic_program: 'Bachelor',
-	birthday: '1990-12-30',
-	education:'Abitur',
-	additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
-	homepage: 'https://twitter.com/FraBle90',
-	github: 'https://github.com/FraBle',
-	facebook: 'https://www.facebook.com/FraBle90',
-	xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
-	linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
-	languages: Language.where(:name => ['english']),
-	languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
-	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-	user_status: UserStatus.where(:name => 'employedext').first, 
-	role: Role.where(:name => 'Student').first	
-)
+	lastname: "Ernst", 
+	firstname: "Alexander", 
+	role: Role.where(:name => 'Admin').first
+	}])
 
 JobOffer.delete_all
 JobOffer.create!([{
@@ -525,22 +546,22 @@ Faq.create!([{
 	answer: "No, the HPI-HiWi-Portal does not have an Android app.",
 	locale: "en"
 }])
-Faq.create([{
+Faq.create!([{
 	question: "Wie kann ich mein Profile bearbeiten?", 
 	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button.',
 	locale: "de"
 }])
-Faq.create([{
+Faq.create!([{
 	question: "Wie kann ich mich am HPI-HiWi-Portal ausloggen?", 
 	answer: 'Bitte klicken Sie den "Ausloggen"-Button in der rechten oberen Bildschirmecke.',
 	locale: "de"
 }])
-Faq.create([{
+Faq.create!([{
 	question: "Wie kann ich mein Profil-Foto bearbeiten?", 
 	answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button Search for Foto. Wählen Sie nun das gewünschte Foto aus, und klicken abschließend auf "Aktualisieren".',
 	locale: "de"
 }])
-Faq.create([{
+Faq.create!([{
 	question: "Hat das HPI-HiWi-Portal eine Android-App?", 
 	answer: 'Ja, die HPI-HiWi-Portal Android-App ermöglicht es Ihnen, über alle für Sie passenden Stellenangebote am HPI auf dem Laufenden zu bleiben.',
 	locale: "de"

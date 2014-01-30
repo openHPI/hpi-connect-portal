@@ -4,7 +4,6 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:user, :staff) }
 
-
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
 
@@ -25,7 +24,7 @@ describe "the students page" do
 
   it "should contain a link for showing a profile and it should lead to profile page " do
     find_link(@student1.firstname).click
-    
+
     current_path.should_not == students_path
     current_path.should == student_path(@student1)
   end
@@ -91,7 +90,6 @@ end
   #   fill_in 'user_firstname', :with => 'Agathe'
   #   fill_in 'user_lastname', :with => 'Ackermann'
   #   find('input[type="submit"]').click
-  
 
   #   page.should have_content(
   #   "error",

@@ -13,7 +13,7 @@ describe "Job Offer pages" do
     @status_running = FactoryGirl.create(:job_status, :running)
     @status_completed = FactoryGirl.create(:job_status, :completed)
   end
-  
+
   describe "show page" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
@@ -26,7 +26,7 @@ describe "Job Offer pages" do
         let(:student) { FactoryGirl.create(:user, :student) }
 
         describe "as a student" do
-          before do 
+          before do
             login_as(student, :scope => :user)
             visit job_offer_path(job_offer)
           end
@@ -36,7 +36,7 @@ describe "Job Offer pages" do
           it { should_not have_selector('h4', text: 'Applications') }
 
           describe "and having applied already" do
-            before do 
+            before do
               FactoryGirl.create(:application, user: student, job_offer: job_offer)
               login_as(student, :scope => :user)
               visit job_offer_path(job_offer)
@@ -168,7 +168,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link 'Job completed' }
-        it { should have_link 'Reopen job offer'} 
+        it { should have_link 'Reopen job offer'}
       end
     end
 
@@ -177,13 +177,13 @@ describe "Job Offer pages" do
       let(:employer) { FactoryGirl.create(:employer) }
       let(:deputy) { employer.deputy }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), employer: employer, status: @status_pending) }
-     
+
       let(:student) { FactoryGirl.create(:user, :student) }
 
       before do
         deputy.update(:employer => employer)
       end
-      
+
       describe "as a student" do
         before(:each) do
           login_as(student, :scope => :user)          
@@ -237,7 +237,7 @@ describe "Job Offer pages" do
         end
 
         it "is possible to accept or decline the job offer" do
-          
+
           should have_link('Accept')
           should have_link('Decline')
         end
@@ -246,7 +246,7 @@ describe "Job Offer pages" do
       describe "as admin" do 
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
-        before do          
+        before do
           login_as(admin, :scope => :user)
           visit job_offer_path(job_offer)
         end
@@ -262,18 +262,18 @@ describe "Job Offer pages" do
         end
 
         it "is possible to accept or decline the job offer" do
-          
+
           should have_link('Accept')
           should have_link('Decline')
         end
       end
     end
-  
+
     describe "completed job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_completed) }
 
       before { visit job_offer_path(job_offer) }
-    
+
       describe "as a staff of the job offers employer" do
         let(:staff) { FactoryGirl.create(:user, :staff, employer: job_offer.employer) }
 
@@ -284,8 +284,8 @@ describe "Job Offer pages" do
 
         it { should have_link('Reopen job offer') }
 
-      end   
-
+      end
+      
       describe "as admin" do
         let(:admin) { FactoryGirl.create(:user, :admin, employer: job_offer.employer) }
 
