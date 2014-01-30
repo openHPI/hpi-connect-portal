@@ -25,7 +25,7 @@ de:
     enter_description: "Füge eine Beschreibung hinzu"
     compensation_description: "€/Stunde"
     time_effort_description: "Stunden/Woche"
-    vacant_posts_description: "max angenommene Bewerber"
+    vacant_posts_description: "offene Stellen"
     apply: "Bewerben"
     applications_headline: "Bewerbungen"
     applicant_first_name: "Vorname"

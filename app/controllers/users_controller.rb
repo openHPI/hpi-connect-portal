@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  include UsersHelper
 
   before_filter :user_is_not_aloud_to_change_data, :only => [:update, :edit]
   has_scope :update_immediately
