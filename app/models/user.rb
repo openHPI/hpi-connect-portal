@@ -130,11 +130,22 @@ class User < ActiveRecord::Base
     role && role.staff_role?
   end
 
+  def deputy?
+    Employer.all.each do |employer|
+      if employer.deputy_id == self.id
+        self.employer_id = employer.id
+        return true
+      end
+    end
+
+    return false
+  end
+
   def admin?
     role && role.admin_role?
   end
 
-  def name
+  def full_name
      return firstname + " " +lastname
   end
 
