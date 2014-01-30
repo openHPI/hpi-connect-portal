@@ -17,20 +17,19 @@
 //= require jquery.turbolinks
 //= require jquery-star-rating
 //= require bootstrap/bootstrap
-//= require turbolinks
 //= require_tree .
 
 
 $(function() {
-    $( ".datepicker").datepicker({dateFormat: 'dd-mm-yy'});
+    $(".datepicker").datepicker({
+        dateFormat: 'dd-mm-yy'
+    });
 });
 
-$(function(){
+$(function() {
     $('.field_with_errors').addClass('form-group has-error');
 });
 
-$(function(){
+$(function() {
     $('#error_explanation').addClass('alert alert-danger block-message');
 });
-
-
