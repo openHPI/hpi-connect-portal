@@ -2,6 +2,7 @@ class ApplicationsController < ApplicationController
   include UsersHelper
 
   before_filter :signed_in_user
+  before_filter :check_attachment_is_valid, only: [:create]
 
   def create
     @job_offer = JobOffer.find application_params[:job_offer_id]
@@ -70,5 +71,15 @@ class ApplicationsController < ApplicationController
 
     def file_params
       params.require(:attached_files).permit([file_attributes: :file])
+    end
+
+    def check_attachment_is_valid
+      if params[:attached_files]
+        file = file_params[:file_attributes][0][:file]
+        unless file.content_type == "application/pdf"
+          job_offer = JobOffer.find application_params[:job_offer_id]
+          respond_and_redirect_to job_offer, "Please choose a valid attachment (PDF only)."
+        end
+      end
     end
 end

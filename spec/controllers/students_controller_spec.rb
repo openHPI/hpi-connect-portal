@@ -131,7 +131,13 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_picture.jpg',
+        :type => 'image/jpeg',
+        :tempfile => fixture_file_upload('/images/test_picture.jpg')
+      })
+
+      patch :update, { :id => @student.id, :user => { "photo" => test_file } }
       response.should redirect_to(student_path(@student))
     end
   end
