@@ -36,7 +36,9 @@ class ApplicationsController < ApplicationController
       if @job_offer.vacant_posts == 0
         if @job_offer.update({status: JobStatus.running})
           Application.where(job_offer: @job_offer).where.not(id: @application.id).each do | application |
-            application.decline
+            unless application.decline
+              render_errors_and_action @application.job_offer
+            end
           end
         else
           render_errors_and_action @job_offer
