@@ -203,4 +203,34 @@ class User < ActiveRecord::Base
 
     return result
   end
+
+  def set_role(role_level, employer)
+    case role_level.to_i
+      when 4
+        self.set_role_to_deputy(employer)
+      when 3
+        self.set_role_to_admin
+      when 2
+        self.set_role_to_staff(employer)
+      when 1
+        self.set_role_to_student
+    end
+  end
+
+  def set_role_to_deputy(employer)
+    self.update(:employer => employer, :role => Role.find_by_level(2))
+    employer.update(:deputy => self)
+  end
+
+  def set_role_to_admin
+    self.update(:role => Role.find_by_level(3))
+  end
+
+  def set_role_to_staff(employer)
+    self.update(:role => Role.find_by_level(2), :employer => employer)
+  end
+
+  def set_role_to_student
+    self.update(:role => Role.find_by_level(1), :employer => nil)
+  end
 end

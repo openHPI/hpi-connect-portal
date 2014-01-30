@@ -21,10 +21,10 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     @user = User.find(params[:id])
-    @job_offers = @user.assigned_job_offers.paginate(:page => params[:page], :per_page => 5 )
     if not @user.student?
       redirect_to user_path
     end
+    @job_offers = @user.assigned_job_offers.paginate(:page => params[:page], :per_page => 5 )
   end
 
   # GET /students/1/edit
@@ -58,7 +58,7 @@ class StudentsController < ApplicationController
   # POST /students/update_role
 
   def update_role
-    set_role(params[:role_name], @employer , params[:student_id])
+    User.find(params[:student_id]).set_role(params[:role_level], @employer)
     redirect_to(students_path)
   end
 

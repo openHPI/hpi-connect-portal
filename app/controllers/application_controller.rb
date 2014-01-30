@@ -60,39 +60,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_role(role_name, employer, user_id)
-    case role_name
-      when "Deputy"
-        set_role_to_deputy(user_id, employer)
-      when Role.find_by_level(3).name
-        set_role_to_admin(user_id)
-      when Role.find_by_level(2).name
-        set_role_to_staff(user_id, employer)
-      when Role.find_by_level(1).name
-        set_role_to_student(user_id)
-    end
-  end
-
-  def set_role_to_deputy(user_id, employer)
-    User.find(user_id).update(:employer => employer, :role => Role.find_by_level(2))
-    employer.update(:deputy_id => user_id)
-  end
-
-  def set_role_to_admin(user_id)
-    student = User.find(user_id)
-    student.update(:role => Role.find_by_level(3))
-  end
-
-  def set_role_to_staff(user_id, employer)
-    student = User.find(user_id)
-    student.update(:role => Role.find_by_level(2), :employer => employer)
-  end
-
-  def set_role_to_student(user_id)
-    user = User.find(user_id)
-    user.update(:role => Role.find_by_level(1), :employer => nil)
-  end
-
   def set_role_from_staff_to_student(user_id, deputy_id)
     user = User.find(user_id)
     if deputy_id

@@ -27,6 +27,7 @@
             })
           } 
           else {
+            $("#new_deputy_id").empty();
             $("#new_deputy_id").css("visibility", "hidden");
           }     
         },

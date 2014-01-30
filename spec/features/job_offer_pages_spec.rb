@@ -26,7 +26,7 @@ describe "Job Offer pages" do
         let(:student) { FactoryGirl.create(:user, :student) }
 
         describe "as a student" do
-          before do 
+          before do
             login_as(student, :scope => :user)
             visit job_offer_path(job_offer)
           end

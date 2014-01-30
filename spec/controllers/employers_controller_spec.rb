@@ -165,8 +165,8 @@ describe EmployersController do
   describe "PUT update_staff_to_student" do
   
     it "demotes staff to student" do
-      student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
-      staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
+      student_role = FactoryGirl.create(:role, :student)
+      staff_role = FactoryGirl.create(:role, :staff)
       employer = FactoryGirl.create(:employer)
       staff_member = FactoryGirl.create(:user, :role => staff_role, :employer => employer)
       user = FactoryGirl.create(:user, role: staff_role, :employer => employer)
