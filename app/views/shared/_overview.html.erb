@@ -24,4 +24,6 @@
       </li>
     <%end%>
   </ul>
-  <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
+  <div class="pull-right">
+    <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
+  </div>

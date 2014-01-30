@@ -15,7 +15,9 @@
         </li>
       <% end %>
       </ul>
-      <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
+      <div class="pull-right">
+        <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
+      </div>
   </div>
   <div class="col-md-3">
   </div>
