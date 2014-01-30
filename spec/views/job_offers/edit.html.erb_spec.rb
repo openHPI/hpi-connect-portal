@@ -8,7 +8,7 @@ describe "job_offers/edit" do
     ))
   end
 
-  xit "renders the edit job_offer form" do
+  it "renders the edit job_offer form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
