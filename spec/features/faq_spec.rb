@@ -6,7 +6,7 @@ describe Faq do
   end 
 
   describe "validation of parameters" do
-    
+
     it "with question not present" do
       @faq.question = nil
       @faq.should be_invalid

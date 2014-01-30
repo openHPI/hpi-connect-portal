@@ -59,7 +59,7 @@ class ApplicationsController < ApplicationController
       redirect_to @application.job_offer
     else
       render_errors_and_action @application.job_offer
-    end      
+    end
   end
 
   # DELETE destroy
