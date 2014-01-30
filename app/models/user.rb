@@ -87,24 +87,24 @@ class User < ActiveRecord::Base
   scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
   scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
 
-    scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
-    scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
-    scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
-    scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
-    scope :search_students, -> string { where("
-                (lower(firstname) LIKE ?
-                OR lower(lastname) LIKE ?
-                OR lower(email) LIKE ?
-                OR lower(academic_program) LIKE ?
-                OR lower(education) LIKE ?
-                OR lower(homepage) LIKE ?
-                OR lower(github) LIKE ?
-                OR lower(facebook) LIKE ?
-                OR lower(xing) LIKE ?
-                OR lower(linkedin) LIKE ?)
-                ",
-                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
-                string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
+  scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
+  scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
+  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+  scope :search_students, -> string { where("
+              (lower(firstname) LIKE ?
+              OR lower(lastname) LIKE ?
+              OR lower(email) LIKE ?
+              OR lower(academic_program) LIKE ?
+              OR lower(education) LIKE ?
+              OR lower(homepage) LIKE ?
+              OR lower(github) LIKE ?
+              OR lower(facebook) LIKE ?
+              OR lower(xing) LIKE ?
+              OR lower(linkedin) LIKE ?)
+              ",
+              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
 
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id

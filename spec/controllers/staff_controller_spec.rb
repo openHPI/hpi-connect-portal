@@ -36,32 +36,31 @@ describe StaffController do
   # StaffController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before(:each) do
+    @staff = FactoryGirl.create(:user, :staff)
+  end
+
   describe "GET index" do
     it "assigns all staff as @staff" do
       admin = FactoryGirl.create(:user, :admin)
       sign_in admin
-
-      staff = FactoryGirl.create(:user, :staff)
+      
       get :index, {}, valid_session
-
-      assigns(:users).should eq([staff, staff.employer.deputy])
+      assigns(:users).should eq(User.staff.sort_by{|user| [user.lastname, user.firstname]})
     end
   end
 
   describe "GET show" do
     it "assigns the requested staff as @staff" do
-      user = FactoryGirl.create(:user, :staff)
-      get :show, {:id => user.to_param}, valid_session
-      assigns(:user).should eq(user)
+      get :show, {:id => @staff.to_param}, valid_session
+      assigns(:user).should eq(@staff)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested staff as @staff" do
-      staff = FactoryGirl.create(:user, :staff)
-      sign_in staff
-      get :edit, {:id => staff.to_param}, valid_session
-      assigns(:user).should eq(staff)
+      get :edit, {:id => @staff.to_param}, valid_session
+      assigns(:user).should eq(@staff)
     end
   end
 
