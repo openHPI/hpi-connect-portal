@@ -13,3 +13,5 @@ en:
         open_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
         external: "External"
+        demote_button: "Demote"
+        demote_confirm_question: "Really?"

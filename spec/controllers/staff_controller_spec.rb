@@ -224,7 +224,7 @@ describe StaffController do
         @student_role = FactoryGirl.create(:role, :name => "Student", :level => 1)
         @staff_role = FactoryGirl.create(:role, :name => "Staff", :level => 2)
         @employer = FactoryGirl.create(:employer)
-        @staff_member = FactoryGirl.create(:user, :role => @staff_role, :employer => @employer)
+        @staff_member = FactoryGirl.create(:user, :staff, :employer => @employer)
         @admin_role = FactoryGirl.create(:role, :name => "Admin", :level => 3)
     end
 
@@ -241,12 +241,15 @@ describe StaffController do
       end
 
       it "updates role of deputy to student" do 
-        @employer.deputy = @staff_member
-        new_deputy = FactoryGirl.create(:user, :role => @student_role)
-        put :set_role_to_student, {:user_id => @staff_member.to_param, :new_deputy_id => new_deputy.to_param}
+        @employer.update(:deputy => @staff_member)
+        new_deputy = FactoryGirl.create(:user, :student)
+        post :set_role_to_student, {:user_id => @staff_member.to_param, :new_deputy_id => new_deputy.to_param}
+        @employer.reload
+        new_deputy.reload
         assert_equal(@student_role, User.find(@staff_member.id).role)
         assert_equal(nil, User.find(@staff_member.id).employer)
-        assert_equal(new_deputy, Employer.find(@employer).deputy)
+        assert_equal(@staff_role, new_deputy.role)
+        assert_equal(new_deputy, @employer.deputy)
       end
 
     end

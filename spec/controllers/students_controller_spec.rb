@@ -246,10 +246,6 @@ describe StudentsController do
         assert_equal(@student, @employer.deputy)
       end
 
-      it "redirects to student page when invalid new role is transmitted" do
-        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
-        response.should redirect_to(student_path(@student))
-      end
     end
 
     describe "beeing an admin" do
@@ -258,13 +254,13 @@ describe StudentsController do
       end
 
       it "updates role to Staff" do
-        post :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_id: @employer.id }, valid_session
         assert_equal(@staff_role, @student.reload.role)
         assert_equal(@employer, @student.reload.employer)
       end
 
       it "updates role to Deputy" do
-        post :update_role, { student_id: @student.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_name: "Deputy", employer_id: @employer.id }, valid_session
         assert_equal(@student.reload, @employer.reload.deputy)
         assert_equal(@staff_role, @student.reload.role)
       end
@@ -274,8 +270,9 @@ describe StudentsController do
         assert_equal(@admin_role, @student.reload.role)
       end
 
-      it "redirects to student page when invalid new role is transmitted" do
-        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
+      it "redirects to student page when current user is not aloud to change role" do
+        sign_in FactoryGirl.create(:user, :student)
+        post :update_role, { student_id: @student.id, role_name: "Deputy" }, valid_session
         response.should redirect_to(student_path(@student))
       end
     end

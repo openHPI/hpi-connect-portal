@@ -13,3 +13,5 @@ de:
         open_job_offers: "Offene Stellenangebote"
         running_job_offers: "Vergebene Stellenangebote"
         external: "Extern"
+        demote_button: "Zum Studenten erklären"
+        demote_confirm_question: "Wirklich?"

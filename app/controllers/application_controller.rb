@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-    def set_role_to_deputy(user_id, employer)
-    employer.update(:deputy_id => user_id)
+  def set_role_to_deputy(user_id, employer)
     User.find(user_id).update(:employer => employer, :role => Role.find_by_level(2))
+    employer.update(:deputy_id => user_id)
   end
 
   def set_role_to_admin(user_id)
@@ -96,10 +96,10 @@ class ApplicationController < ActionController::Base
   def set_role_from_staff_to_student(user_id, deputy_id)
     user = User.find(user_id)
     if deputy_id
-      user.employer.update(:deputy_id => deputy_id)
       User.find(deputy_id).update(:role => Role.find_by_level(2), :employer => user.employer)
+      user.employer.update(:deputy_id => deputy_id)
     end   
-    user.update(:role_id => Role.find_by_level(1).id, :employer => nil)
+    user.update(:role => Role.find_by_level(1), :employer => nil)
 
   end
 

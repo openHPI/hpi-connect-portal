@@ -92,10 +92,14 @@ class StudentsController < ApplicationController
 
     def check_user_deputy_or_admin
       user = User.find_by_id(params[:student_id])
-      @employer = params[:employer_name] ? Employer.find_by_name(params[:employer_name]) : current_user.employer
+      @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
 
-      unless current_user.admin? || @employer.nil? || @employer.deputy == current_user
+      if (user_has_no_promotion_rights?)
         redirect_to(student_path(user))
       end
+    end
+
+    def user_has_no_promotion_rights?
+      return (!current_user.admin? && (@employer.nil? || @employer.deputy != current_user))
     end
 end

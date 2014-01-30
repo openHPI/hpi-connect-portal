@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  include ApplicationHelper
+  include UsersHelper
 
   before_filter :check_user, :only => [:update, :edit]
   has_scope :update_immediately
@@ -35,20 +35,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def userlist
+    @is_deputy = given_user_is_deputy?(User.find(params[:exclude_user]))
+    @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+    respond_to do |format|
+        format.json     
+    end
+  end
+
 
   private
     def user_params
       params.require(:user).permit(:firstname, :lastname, :email, :role_id)
     end
 
-    def userlist
-        @is_deputy = given_user_is_deputy?(User.find(params[:exclude_user]))
-        @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
-        respond_to do |format|
-            format.json     
-        end
-
-    end
 
     private
         def user_params

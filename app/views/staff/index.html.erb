@@ -33,11 +33,11 @@
         <%= hidden_field_tag "user_id", nil %>
 
         <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
-        <select id="new_deputy_id" name="new_deputy_id" class="visible"></select>
-        <% if (defined?(@chair)) %>
-        <%= hidden_field_tag :id, @chair.id %>
+        <select id="new_deputy_id" name="new_deputy_id"></select>
+        <% if (defined?(@employer)) %>
+        <%= hidden_field_tag :id, @employers.id %>
         <% end %>
-        <%= submit_tag t('chairs.demote_button'), :data => {confirm: t('chairs.demote_confirm_question')}, :class => "btn btn-default change-role" %>
+        <%= submit_tag t('employers.demote_button'), :data => {confirm: t('employers.demote_confirm_question')}, :class => "btn btn-default change-role" %>
       <% end %>
       </div>
     </div><!-- /.modal-content -->
