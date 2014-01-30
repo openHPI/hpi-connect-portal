@@ -11,7 +11,7 @@
         <% end %>
     </div>
     <div class="col-sm-3">
-        <%= image_tag @employer.avatar.url(:medium), class: "img-thumbnail pull-left employer-thumbnail", alt: "Picture: "+@employer.name%>
+      <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail pull-left", alt: "Picture: "+@employer.name )  %>
     </div>
 </div>
 
