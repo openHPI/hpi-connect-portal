@@ -26,7 +26,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers.json
   def index
     job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
-    @job_offers_list = { :items => job_offers, :name => "job_offers.headline" }
+    @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
   # GET /job_offers/1
@@ -38,7 +38,7 @@ class JobOffersController < ApplicationController
 
     if signed_in?
       @application = current_user.applied? @job_offer
-      @assigned_students = @job_offer.assigned_students.paginate(:page => params[:page])
+      @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
     end
   end
 
@@ -61,7 +61,7 @@ class JobOffersController < ApplicationController
   def create
     parameters = job_offer_params
 
-    @job_offer = JobOffer.new(parameters, status: JobStatus.pending)
+    @job_offer = JobOffer.new parameters, status: JobStatus.pending
     @job_offer.responsible_user = current_user
     if !parameters[:employer_id]
       @job_offer.employer = current_user.employer
@@ -70,22 +70,22 @@ class JobOffersController < ApplicationController
     if @job_offer.save
       JobOffersMailer.new_job_offer_email(@job_offer).deliver
       JobOffersMailer.inform_interested_students_immediately(@job_offer)
-      respond_and_redirect_to(@job_offer, 'Job offer was successfully created.', 'show', :created)
+      respond_and_redirect_to @job_offer, 'Job offer was successfully created.', 'show', :created
     else
       if parameters[:flexible_start_date]
         @job_offer.flexible_start_date = true
       end
-      render_errors_and_action(@job_offer, 'new')
+      render_errors_and_action @job_offer, 'new'
     end
   end
 
   # PATCH/PUT /job_offers/1
   # PATCH/PUT /job_offers/1.json
   def update
-    if @job_offer.update(job_offer_params)
-      respond_and_redirect_to(@job_offer, 'Job offer was successfully updated.')
+    if @job_offer.update job_offer_params
+      respond_and_redirect_to @job_offer, 'Job offer was successfully updated.'
     else
-      render_errors_and_action(@job_offer, 'edit')
+      render_errors_and_action @job_offer, 'edit'
     end
   end
 
@@ -93,13 +93,13 @@ class JobOffersController < ApplicationController
   # DELETE /job_offers/1.json
   def destroy
     @job_offer.destroy
-    respond_and_redirect_to(job_offers_url, 'Job offer has been successfully deleted.')
+    respond_and_redirect_to job_offers_url, 'Job offer has been successfully deleted.'
   end
 
   # GET /job_offers/archive
   def archive
-    job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(:page => params[:page])
-    @job_offers_list = {:items => job_offers, :name => "job_offers.archive"}
+    job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(page: params[:page])
+    @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
   # GET /job_offer/:id/prolong
@@ -117,8 +117,8 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/matching
   def matching
-    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
-    @job_offers_list = {:items => job_offers, :name => "job_offers.matching_job_offers"}
+    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
+    @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
     render "index"
   end
 
@@ -126,9 +126,9 @@ class JobOffersController < ApplicationController
   def complete
     if @job_offer.update status: JobStatus.completed
       JobOffersMailer.job_closed_email(@job_offer).deliver
-      respond_and_redirect_to(@job_offer, 'Job offer was successfully marked as completed.')
+      respond_and_redirect_to @job_offer, 'Job offer was successfully marked as completed.'
     else
-      render_errors_and_action(@job_offer, 'edit')
+      render_errors_and_action @job_offer, 'edit'
     end
   end
 
@@ -138,7 +138,7 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
       redirect_to @job_offer, notice: 'Job offer was successfully opened.'
     else
-      render_errors_and_action(@job_offer)
+      render_errors_and_action @job_offer
     end
   end
 
@@ -148,19 +148,19 @@ class JobOffersController < ApplicationController
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
       redirect_to job_offers_path, notice: 'Job offer was deleted.'
     else
-      render_errors_and_action(@job_offer)
+      render_errors_and_action @job_offer
     end
   end
 
   # GET /job_offer/:id/reopen
   def reopen
     old_job_offer = JobOffer.find params[:id]
-    if old_job_offer.update(status: JobStatus.completed)
-      @job_offer = JobOffer.new(old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students))
+    if old_job_offer.update status: JobStatus.completed
+      @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
       @job_offer.responsible_user = current_user
       render "new", notice: 'New job offer was created.'
     else
-      render_errors_and_action(@job_offer)
+      render_errors_and_action @job_offer
     end
   end
 
@@ -190,14 +190,14 @@ class JobOffersController < ApplicationController
     end
 
     def check_user_can_create_jobs
-      unless can?(:create, JobOffer)
+      unless can? :create, JobOffer
         redirect_to job_offers_path
       end
     end
 
     def check_user_is_responsible_or_admin
       set_job_offer
-      unless can?(:update, @job_offer)
+      unless can? :update, @job_offer
         redirect_to @job_offer
       end
     end
@@ -236,7 +236,7 @@ class JobOffersController < ApplicationController
 
     def check_new_end_date_is_valid
       begin
-        date = Date.parse(params[:job_offer][:end_date])
+        date = Date.parse params[:job_offer][:end_date]
       rescue ArgumentError
         respond_and_redirect_to(@job_offer, 'Please choose a new end date which is valid.')
       end

@@ -26,16 +26,13 @@ describe StudentsController do
   describe "GET show" do
     it "assigns the requested user as @user" do
       user = FactoryGirl.create(:user)
-      get :show, {:id => user.to_param}, valid_session
+      get :show, { id: user.to_param }, valid_session
       assigns(:user).should eq(user)
     end
 
     it "checks if the user is a student" do
-      user = FactoryGirl.create(:user,
-          role: FactoryGirl.create(:role, :staff),
-          employer: FactoryGirl.create(:employer)
-          )
-      get :show, {:id => user.to_param}, valid_session
+      user = FactoryGirl.create(:user, :staff)
+      get :show, { id: user.to_param }, valid_session
       response.should redirect_to user_path(user)
     end
   end
