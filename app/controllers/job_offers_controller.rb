@@ -55,6 +55,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/edit
   def edit
     authorize! :edit, @job_offer
+    @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
 
