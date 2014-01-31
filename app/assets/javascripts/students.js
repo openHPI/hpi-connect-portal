@@ -13,7 +13,7 @@
      $.ajax({
         type: "GET",
         dataType: "json",
-        url: "/get-userlist",
+        url: "/userlist",
         data: {
           exclude_user : user_id
         },
@@ -23,7 +23,7 @@
             var options = $("#new_deputy_id");
             $("#new_deputy_id").empty();
             $.each(data.users, function(index, user){
-              options.append('<option value=' + user.id+ '>' + user.name + '</option>');
+              options.append('<option value=' + user.id+ '>' + user.full_name + '</option>');
             })
           } 
           else {

@@ -41,10 +41,8 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessor :username
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+  include UserScopes
+
   devise :trackable, :openid_authenticatable
 
   has_many :applications
@@ -60,6 +58,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
+  attr_accessor :username
 
   belongs_to :role
   belongs_to :employer
@@ -84,38 +83,12 @@ class User < ActiveRecord::Base
   validates :semester, :academic_program, :education, presence: true, :if => :student?
   validates_inclusion_of :semester, :in => 1..12, :if => :student?
 
-  scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
-  scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
-
-  scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
-  scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
-  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
-  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
-  scope :search_students, -> string { where("
-              (lower(firstname) LIKE ?
-              OR lower(lastname) LIKE ?
-              OR lower(email) LIKE ?
-              OR lower(academic_program) LIKE ?
-              OR lower(education) LIKE ?
-              OR lower(homepage) LIKE ?
-              OR lower(github) LIKE ?
-              OR lower(facebook) LIKE ?
-              OR lower(xing) LIKE ?
-              OR lower(linkedin) LIKE ?)
-              ",
-              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
-              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
-
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
   end
 
   def hash
     self.id.hash
-  end
-
-  def name
-    "#{firstname} #{lastname}"
   end
 
   def applied?(job_offer)
@@ -131,14 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def deputy?
-    Employer.all.each do |employer|
-      if employer.deputy_id == self.id
-        self.employer_id = employer.id
-        return true
-      end
-    end
-
-    return false
+    employer_id && Employer.exists?(deputy: self)
   end
 
   def admin?
@@ -146,19 +112,7 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-     return firstname + " " +lastname
-  end
-
-  def promote(new_role, employer=nil, should_be_deputy=false)
-    new_role ||= self.role
-    if !employer.nil?
-      self.update!(employer: employer, role: new_role)
-      if should_be_deputy
-        employer.update!(deputy: self)
-      end
-    else
-      self.update!(role: new_role)
-    end
+    "#{firstname} #{lastname}"
   end
 
   def self.build_from_identity_url(identity_url)
@@ -183,65 +137,20 @@ class User < ActiveRecord::Base
 
     new_user.should_redirect_to_profile = true
 
-    return new_user
-  end
-
-  def self.search_student(string)
-    string = string.downcase
-    search_results = User.search_students string
-    search_results += search_students_by_language_identifier :programming_languages, string
-    search_results += search_students_by_language_identifier :languages, string
-    search_results.uniq.sort_by{|student| [student.lastname, student.firstname]}
-  end
-
-  def self.search_students_by_language_identifier(language_identifier, string)
-    key = language_identifier.to_s + ".name"
-    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|student| [student.lastname, student.firstname]}
-  end
-
-  def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
-    search_students_for_multiple_languages_and_identifiers(:languages, language_array) & search_students_for_multiple_languages_and_identifiers(:programming_languages, programming_language_array)
-  end
-
-  def self.search_students_for_multiple_languages_and_identifiers(language_identifier, languages)
-    result = User.all
-
-    if !languages.nil?
-      languages.each do |language|
-        result = result & search_students_by_language_identifier(language_identifier, language)
-      end
-    end
-
-    return result
+    new_user
   end
 
   def set_role(role_level, employer)
-    case role_level.to_i
-      when 4
-        self.set_role_to_deputy(employer)
-      when 3
-        self.set_role_to_admin
-      when 2
-        self.set_role_to_staff(employer)
-      when 1
-        self.set_role_to_student
-    end
+    new_role = Role.find_by_level ((role_level == 4) ? 2 : role_level)
+
+    update! employer: employer, role: new_role
+    employer.update! deputy: self if role_level == 4
   end
 
-  def set_role_to_deputy(employer)
-    self.update(:employer => employer, :role => Role.find_by_level(2))
-    employer.update(:deputy => self)
-  end
-
-  def set_role_to_admin
-    self.update(:role => Role.find_by_level(3))
-  end
-
-  def set_role_to_staff(employer)
-    self.update(:role => Role.find_by_level(2), :employer => employer)
-  end
-
-  def set_role_to_student
-    self.update(:role => Role.find_by_level(1), :employer => nil)
+  def set_role_from_staff_to_student(deputy_id)
+    if deputy_id
+      User.find(deputy_id).set_role 4, employer
+    end   
+    set_role 1, nil
   end
 end

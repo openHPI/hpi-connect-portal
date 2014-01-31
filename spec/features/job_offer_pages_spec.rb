@@ -18,9 +18,10 @@ describe "Job Offer pages" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
-      before { 
+      before do
         login_as(user)
-        visit job_offer_path(job_offer) }
+        visit job_offer_path(job_offer)
+      end
 
       describe "application button and list" do
         let(:student) { FactoryGirl.create(:user, :student) }
@@ -82,7 +83,7 @@ describe "Job Offer pages" do
             describe "the job should be prolongable" do
 
               before do
-                job_offer.update(end_date: Date.current + 20)
+                job_offer.update(end_date: Date.current + 20, status: @status_running)
                 visit job_offer_path(job_offer)
               end
 
@@ -136,8 +137,9 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link 'Job completed' }
+        it { should have_link I18n.t('job_offers.job_completed') }
         it { should have_link 'Reopen job offer'}
+
 
         it "shows the assigned students" do
           page.should have_content(
@@ -157,6 +159,10 @@ describe "Job Offer pages" do
         it "should not be editable" do
           expect(current_path).to eq(job_offer_path(job_offer))
         end
+
+        it "shouldn't display a delete button" do
+          should_not have_link I18n.t("links.destroy")
+        end
       end
 
       describe "as a admin" do
@@ -167,7 +173,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link 'Job completed' }
+        it { should have_link I18n.t('job_offers.job_completed') }
         it { should have_link 'Reopen job offer'}
       end
     end
@@ -213,7 +219,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -230,7 +236,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -255,7 +261,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
