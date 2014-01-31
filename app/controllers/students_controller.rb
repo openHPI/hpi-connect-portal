@@ -56,7 +56,7 @@ class StudentsController < ApplicationController
   # POST /students/update_role
 
   def update_role
-    User.find(params[:student_id]).set_role(params[:role_level], @employer)
+    User.find(params[:student_id]).set_role(params[:role_level].to_i, @employer)
     redirect_to students_path
   end
 

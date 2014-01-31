@@ -29,7 +29,8 @@ class StaffController < ApplicationController
 
   # POST /staff/set_role_to_student
   def set_role_to_student 
-    set_role_from_staff_to_student params[:user_id], params[:new_deputy_id]
+    user = User.find_by_id params[:user_id]
+    user.set_role_from_staff_to_student params[:new_deputy_id]
     redirect_to staff_index_path
   end
 

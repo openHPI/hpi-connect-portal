@@ -115,18 +115,6 @@ class User < ActiveRecord::Base
     "#{firstname} #{lastname}"
   end
 
-  def promote(new_role, employer=nil, should_be_deputy=false)
-    new_role ||= self.role
-    if !employer.nil?
-      self.update!(employer: employer, role: new_role)
-      if should_be_deputy
-        employer.update!(deputy: self)
-      end
-    else
-      self.update!(role: new_role)
-    end
-  end
-
   def self.build_from_identity_url(identity_url)
     username = identity_url.reverse[0..identity_url.reverse.index('/')-1].reverse
 
@@ -182,32 +170,23 @@ class User < ActiveRecord::Base
   end
 
   def set_role(role_level, employer)
-    case role_level.to_i
-      when 4
-        self.set_role_to_deputy(employer)
-      when 3
-        self.set_role_to_admin
-      when 2
-        self.set_role_to_staff(employer)
-      when 1
-        self.set_role_to_student
+    new_role = Role.find_by_level role_level
+    should_be_deputy = (role_level == 4)
+
+    if should_be_deputy
+      new_role = Role.find_by_level 2
+    end
+
+    update!(:employer => employer, :role => new_role)
+    if should_be_deputy
+      employer.update!(deputy: self)
     end
   end
 
-  def set_role_to_deputy(employer)
-    self.update(:employer => employer, :role => Role.find_by_level(2))
-    employer.update(:deputy => self)
-  end
-
-  def set_role_to_admin
-    self.update(:role => Role.find_by_level(3))
-  end
-
-  def set_role_to_staff(employer)
-    self.update(:role => Role.find_by_level(2), :employer => employer)
-  end
-
-  def set_role_to_student
-    self.update(:role => Role.find_by_level(1), :employer => nil)
+  def set_role_from_staff_to_student(deputy_id)
+    if deputy_id
+      User.find(deputy_id).set_role 4, employer
+    end   
+    set_role 1, nil
   end
 end
