@@ -1,9 +1,9 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  load_and_authorize_resource except: [:create, :edit]
+  load_and_authorize_resource except: [:edit]
 
-  before_filter :new_job_offer, only: [:create]
+  #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
@@ -61,9 +61,7 @@ class JobOffersController < ApplicationController
   # POST /job_offers
   # POST /job_offers.json
   def create
-    parameters = job_offer_params
-
-    @job_offer = JobOffer.create_and_notify parameters, current_user
+    @job_offer = JobOffer.create_and_notify job_offer_params, current_user
 
     if !@job_offer.new_record?
       respond_and_redirect_to @job_offer, 'Job offer was successfully created.', 'show', :created
@@ -173,7 +171,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
@@ -183,12 +181,7 @@ class JobOffersController < ApplicationController
         parameters[:start_date] = (Date.current + 1).to_s
         parameters[:flexible_start_date] = true
       end
-
-      return parameters
-    end
-
-    def new_job_offer
-      @job_offer = JobOffer.new(job_offer_params)
+      parameters
     end
 
     def check_job_is_in_editable_state

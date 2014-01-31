@@ -259,12 +259,37 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
-    FactoryGirl.create(:employers_newsletter_information, employer: employer)
-    FactoryGirl.create(:programming_languages_newsletter_information)
+      FactoryGirl.create(:employers_newsletter_information, employer: employer)
+      FactoryGirl.create(:programming_languages_newsletter_information)
       sign_in responsible_user
     end
 
     describe "with valid params" do
+      it "allows staff members to create a new job offer" do
+        expect{
+          post :create, {:job_offer => valid_attributes}, valid_session
+        }.to change(JobOffer, :count).by(1)
+        response.should redirect_to job_offer_path(JobOffer.last)
+      end
+
+      it "allows the admin to create a new job offer" do
+        sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
+
+        expect{
+          post :create, {:job_offer => valid_attributes}, valid_session
+        }.to change(JobOffer, :count).by(1)
+        response.should redirect_to job_offer_path(JobOffer.last)
+      end
+
+      it "doesn't allow students to create a job offer" do
+        sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
+
+        expect{
+          post :create, {:job_offer => valid_attributes}, valid_session
+        }.to change(JobOffer, :count).by(0)
+        response.should redirect_to job_offers_path
+      end
+
       it "creates a new job_offer" do
         expect {
           post :create, {:job_offer => valid_attributes}, valid_session
@@ -308,7 +333,10 @@ describe JobOffersController do
         attributes = valid_attributes
         attributes["start_date"] = I18n.t('job_offers.default_startdate')
 
-        post :create, {:job_offer => attributes}, valid_session
+        expect{
+          post :create, {:job_offer => attributes}, valid_session
+        }.to change(JobOffer, :count).by(1)
+
         assigns(:job_offer).should be_a(JobOffer)
         assigns(:job_offer).should be_persisted
         offer = JobOffer.last
