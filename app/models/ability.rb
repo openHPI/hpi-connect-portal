@@ -9,6 +9,8 @@ class Ability
 
       can [:archive, :read], JobOffer
 
+      can [:edit, :update], User, id: user.id
+
       initialize_student if user.student?
       initialize_staff user if user.staff?
     end

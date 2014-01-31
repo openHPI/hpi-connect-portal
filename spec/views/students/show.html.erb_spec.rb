@@ -18,6 +18,8 @@ describe "students/show" do
     ))
 
     view.stub(:signed_in?) { false }
+    view.stub(:current_user) { FactoryGirl.create(:user) }
+    view.stub(:can?) { true }
   end
 
   it "renders attributes in <p>" do

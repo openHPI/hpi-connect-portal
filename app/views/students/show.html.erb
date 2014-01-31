@@ -10,7 +10,7 @@
   <div class="col-sm-6 text-center">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <% if signed_in? && (current_user?(@user) || user_is_admin?)%>
+      <% if can? :edit, @user %>
         <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
       style: "float:right; display:inline;" %>
       <% end %>
