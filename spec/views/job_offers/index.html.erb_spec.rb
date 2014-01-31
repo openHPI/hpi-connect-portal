@@ -19,6 +19,8 @@ describe "job_offers/index" do
     assign(:radio_button_sort_value, {"date" => false, "employer" => false})
 
     view.stub(:signed_in?) { false }
+    view.stub(:current_user) { FactoryGirl.create(:user) }
+    view.stub(:can?) { true }
   end
 
   it "renders a list of job_offers" do
