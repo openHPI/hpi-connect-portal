@@ -41,10 +41,8 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessor :username
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+  include UserScopes
+
   devise :trackable, :openid_authenticatable
 
   has_many :applications
@@ -60,6 +58,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
+  attr_accessor :username
 
   belongs_to :role
   belongs_to :employer
@@ -84,28 +83,6 @@ class User < ActiveRecord::Base
   validates :semester, :academic_program, :education, presence: true, :if => :student?
   validates_inclusion_of :semester, :in => 1..12, :if => :student?
 
-  scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
-  scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
-
-  scope :update_immediately, ->{joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student')}
-  scope :filter_semester, -> semester {where("semester IN (?)", semester.split(',').map(&:to_i))}
-  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
-  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
-  scope :search_students, -> string { where("
-              (lower(firstname) LIKE ?
-              OR lower(lastname) LIKE ?
-              OR lower(email) LIKE ?
-              OR lower(academic_program) LIKE ?
-              OR lower(education) LIKE ?
-              OR lower(homepage) LIKE ?
-              OR lower(github) LIKE ?
-              OR lower(facebook) LIKE ?
-              OR lower(xing) LIKE ?
-              OR lower(linkedin) LIKE ?)
-              ",
-              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
-              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase)}
-
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
   end
@@ -127,14 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def deputy?
-    Employer.all.each do |employer|
-      if employer.deputy_id == self.id
-        self.employer_id = employer.id
-        return true
-      end
-    end
-
-    return false
+    employer_id && Employer.exists?(deputy: self)
   end
 
   def admin?
