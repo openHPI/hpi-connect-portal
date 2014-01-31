@@ -206,7 +206,6 @@
         <% end %>
         <% if !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
-
           <!-- Modal for sending an application email-->
           <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -270,4 +269,3 @@
   
   </div>
 </div>
-
