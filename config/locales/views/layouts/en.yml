@@ -1,14 +1,14 @@
 en:
   layouts:
-    job_offers: "Job Offers"
+    job_offers: "Job offers"
     students: "Students"
     staff: "Staff"
     employers: "Employers"
     login: "Login"
     logged_in: "logged in"
-    edit_profile: "edit profile"
-    my_profile: "My Profile"
-    my_employer: "My Employer"
+    edit_profile: "Edit profile"
+    my_profile: "My profile"
+    my_employer: "My chair"
     overview: "Overview"
     logout: "log out"
     faqs: "FAQs"

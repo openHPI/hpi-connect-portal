@@ -26,27 +26,16 @@ describe StudentsController do
   describe "GET show" do
     it "assigns the requested user as @user" do
       user = FactoryGirl.create(:user)
-      get :show, {:id => user.to_param}, valid_session
+      get :show, { id: user.to_param }, valid_session
       assigns(:user).should eq(user)
     end
 
     it "checks if the user is a student" do
-      user = FactoryGirl.create(:user,
-          role: FactoryGirl.create(:role, :staff),
-          employer: FactoryGirl.create(:employer)
-          )
-      get :show, {:id => user.to_param}, valid_session
+      user = FactoryGirl.create(:user, :staff)
+      get :show, { id: user.to_param }, valid_session
       response.should redirect_to user_path(user)
     end
   end
-
-  #caused by OpenID we cannot create new students anymore by Urls
-  # describe "GET new" do
-  #   it "assigns a new student as @student" do
-  #     get :new, {}, valid_session
-  #     assigns(:).should be_a_new(Student)
-  #   endstudent
-  # end
 
   describe "GET edit" do
     it "assigns the requested student as @user" do
@@ -131,7 +120,13 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_picture.jpg',
+        :type => 'image/jpeg',
+        :tempfile => fixture_file_upload('/images/test_picture.jpg')
+      })
+
+      patch :update, { :id => @student.id, :user => { "photo" => test_file } }
       response.should redirect_to(student_path(@student))
     end
   end
@@ -158,15 +153,14 @@ describe StudentsController do
       @language_1 = FactoryGirl.create(:language)
       @language_2 = FactoryGirl.create(:language)
 
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
+      @user1 = FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
+      @user2 = FactoryGirl.create(:user, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
       FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_1])
       FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_2])
-      FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
+      @user3 =FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
 
-      user = User.search_students_by_language_and_programming_language([@language_1.name], [@programming_language_1.name])
-      get :matching, ({:languages => [@language_1.name.capitalize], :programming_languages => [@programming_language_1.name.capitalize]}), valid_session
-      assigns(:users).should eq(user)
+      get :matching, ({:language_ids => [@language_1.id], :programming_language_ids => [@programming_language_1.id]}), valid_session
+      assigns(:users).should eq([@user1,@user2,@user3])
     end
   end
 
@@ -246,19 +240,15 @@ describe StudentsController do
 
       it "updates role to Staff" do
         assert_equal(@student.role, @student_role)
-        put :update_role, { student_id: @student.id, role_name: @staff_role.name }, valid_session
+        post :update_role, { student_id: @student.id, role_level: @staff_role.level }, valid_session
         assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Deputy" do
-        post :update_role, { student_id: @student.id, role_name: "Deputy" }, valid_session
+        post :update_role, { student_id: @student.id, role_level: 4 }, valid_session
         assert_equal(@student, @employer.deputy)
       end
 
-      it "redirects to student page when invalid new role is transmitted" do
-        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
-        response.should redirect_to(student_path(@student))
-      end
     end
 
     describe "beeing an admin" do
@@ -267,24 +257,25 @@ describe StudentsController do
       end
 
       it "updates role to Staff" do
-        post :update_role, { student_id: @student.id, role_name: @staff_role.name, employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_level: @staff_role.level, employer_id: @employer.id }, valid_session
         assert_equal(@staff_role, @student.reload.role)
         assert_equal(@employer, @student.reload.employer)
       end
 
       it "updates role to Deputy" do
-        post :update_role, { student_id: @student.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.id, role_level: 4, employer_id: @employer.id }, valid_session
         assert_equal(@student.reload, @employer.reload.deputy)
         assert_equal(@staff_role, @student.reload.role)
       end
 
       it "updates role to Admin" do
-        post :update_role, { student_id: @student.id, role_name: @admin_role.name }, valid_session
+        post :update_role, { student_id: @student.id, role_level: @admin_role.level }, valid_session
         assert_equal(@admin_role, @student.reload.role)
       end
 
-      it "redirects to student page when invalid new role is transmitted" do
-        post :update_role, { student_id: @student.id, role_name: "Doktorand" }, valid_session
+      it "redirects to student page when current user is not aloud to change role" do
+        sign_in FactoryGirl.create(:user, :student)
+        post :update_role, { student_id: @student.id, role_level: 4 }, valid_session
         response.should redirect_to(student_path(@student))
       end
     end
@@ -296,7 +287,7 @@ describe StudentsController do
       end
 
       it "should not allow updating the role" do
-        post :update_role, { student_id: @student.reload.id, role_name: "Deputy", employer_name: @employer.name }, valid_session
+        post :update_role, { student_id: @student.reload.id, role_level: 4, employer_name: @employer.name }, valid_session
         response.should redirect_to(student_path(@student))
       end
 

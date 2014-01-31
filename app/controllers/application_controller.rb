@@ -7,17 +7,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_constants
 
-
-  def set_constants
-    @flagnames = {
-      :en => "famfamfam-flag-gb",
-      :de => "famfamfam-flag-de"
-    }
-  end
-
   before_filter :signed_in_user
 
-  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
@@ -34,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.should_redirect_to_profile
-      student_path(resource)
+      student_path resource
     else
       job_offers_path
     end
@@ -59,4 +50,23 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def set_role_from_staff_to_student(user_id, deputy_id)
+    user = User.find user_id
+    if deputy_id
+      User.find(deputy_id).update(role: Role.find_by_level(2), employer: user.employer)
+      user.employer.update deputy_id: deputy_id
+    end   
+    user.update role: Role.find_by_level(1), employer: nil
+  end
+
+  protected
+
+    def set_constants
+      @flagnames = {
+        :en => "famfamfam-flag-gb",
+        :de => "famfamfam-flag-de"
+      }
+    end
+
 end

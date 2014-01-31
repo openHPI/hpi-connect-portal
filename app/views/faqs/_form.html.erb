@@ -14,6 +14,7 @@
     </div>
     <%= f.bootsy_area :answer, rows: 10, class: "form-control" %>
   </div>
+      <%= f.hidden_field :locale, :value => locale.to_s %>
   <div class="actions">
     <%= f.submit t("links.save"), class: "btn btn-warning pull-right" %>
   </div>

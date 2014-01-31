@@ -19,22 +19,22 @@ class FaqsController < ApplicationController
   # POST /faqs
   # POST /faqs.json
   def create
-    @faq = Faq.new(faq_params)
+    @faq = Faq.new faq_params
 
     if @faq.save
       redirect_to faqs_path
     else
-      render_errors_and_action(@faq, 'new')
+      render_errors_and_action @faq, 'new'
     end
   end
 
   # PATCH/PUT /faqs/1
   # PATCH/PUT /faqs/1.json
   def update
-    if @faq.update(faq_params)
+    if @faq.update faq_params
       redirect_to faqs_path
     else
-      render_errors_and_action(@faq, 'edit')
+      render_errors_and_action @faq, 'edit'
     end
   end
 
@@ -42,18 +42,17 @@ class FaqsController < ApplicationController
   # DELETE /faqs/1.json
   def destroy
     @faq.destroy
-    respond_and_redirect_to(faqs_url, 'FAQ has been successfully deleted.')
+    respond_and_redirect_to faqs_url, 'FAQ has been successfully deleted.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_faq
-      @faq = Faq.find(params[:id])
+      @faq = Faq.find params[:id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def faq_params
-      params.require(:faq).permit(
-        :question, :answer)
+      params.require(:faq).permit(:question, :answer, :locale)
     end
 end

@@ -6,7 +6,7 @@ describe FaqsController do
 
   let(:deputy) { FactoryGirl.create(:user) }
 
-  let(:valid_attributes) { { "question" => "Is this a question?", "answer" => "Yes"} }
+  let(:valid_attributes) { { "question" => "Is this a question?", "answer" => "Yes", "locale" => "en"} }
 
   let(:valid_session) { {} }
 

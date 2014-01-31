@@ -9,7 +9,7 @@ class StaffController < ApplicationController
   # GET /staff
   # GET /staff.json
   def index
-    @users = apply_scopes(User.staff).sort_by{|user| [user.lastname, user.firstname]}.paginate(:page => params[:page], :per_page => 5 )
+    @users = apply_scopes(User.staff).sort_by{|user| [user.lastname, user.firstname]}.paginate(page: params[:page], per_page: 5)
   end
 
   # GET /staff/1
@@ -27,23 +27,29 @@ class StaffController < ApplicationController
     @all_languages = Language.all
   end
 
+  # POST /staff/set_role_to_student
+  def set_role_to_student 
+    set_role_from_staff_to_student params[:user_id], params[:new_deputy_id]
+    redirect_to staff_index_path
+  end
+
   # PATCH/PUT /staff/1
   # PATCH/PUT /staff/1.json
   def update
-    update_from_params_for_languages(params, staff_path(@user))
+    update_from_params_for_languages params, staff_path(@user)
   end
 
   # DELETE /staff/1
   # DELETE /staff/1.json
   def destroy
     @user.destroy
-    respond_and_redirect_to(staff_index_path, 'Staff has been successfully deleted.')
+    respond_and_redirect_to staff_index_path, 'Staff has been successfully deleted.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find params[:id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -59,7 +65,7 @@ class StaffController < ApplicationController
     def check_current_user_or_admin
       set_user
       unless current_user? @user or user_is_admin?
-        redirect_to staff_path(@user)
+        redirect_to staff_path @user
       end
     end
 

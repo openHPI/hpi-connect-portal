@@ -8,9 +8,9 @@ describe JobOffersMailer do
     ActionMailer::Base.perform_deliveries = true
     @user = FactoryGirl.create(:user)
     @user2 = FactoryGirl.create(:user)
-    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_student: FactoryGirl.create(:user, :student))
+    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_students: [FactoryGirl.create(:user, :student)])
     @job_offer.employer.deputy = FactoryGirl.create(:user)
-    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @user2, assigned_student: FactoryGirl.create(:user, :student))
+    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @user2, assigned_students: [FactoryGirl.create(:user, :student)])
     @job_offer2.employer.deputy = @user2
     @job_offers = [@job_offer, @job_offer2]
     ActionMailer::Base.deliveries = []
@@ -124,7 +124,7 @@ describe JobOffersMailer do
 
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_student.email)
+      @email.body.should have_content(@job_offer.assigned_students.last.email)
       @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)
@@ -161,7 +161,7 @@ describe JobOffersMailer do
 
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_student.email)
+      @email.body.should have_content(@job_offer.assigned_students.last.email)
       @email.body.should have_content(@job_offer.employer.name)
       @email.body.should have_content(@job_offer.responsible_user.email)
       @email.body.should have_content(@job_offer.room_number)
@@ -181,7 +181,7 @@ describe JobOffersMailer do
   end
     describe "students are informed about new job offer" do
       before(:each) do
-        @email = JobOffersMailer.new_job_offer_info_email(@job_offers, @job_offer.assigned_student).deliver
+        @email = JobOffersMailer.new_job_offer_info_email(@job_offers, @job_offer.assigned_students.last).deliver
       end
 
       it "should send an email" do
@@ -189,7 +189,7 @@ describe JobOffersMailer do
       end
 
       it "should have be send to user adress" do
-        @email.to.should eq([@job_offer.assigned_student.email])
+        @email.to.should eq([@job_offer.assigned_students.last.email])
       end
 
       it "should be send from 'hpi.hiwi.portal@gmail.com'" do

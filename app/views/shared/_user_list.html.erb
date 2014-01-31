@@ -1,4 +1,3 @@
-  <!-- <h2> <%= t(name) %> </h2>  -->
   <% if !user_list.nil? %>
     <ul class="list-group">
       <% user_list.each do |user| %>
@@ -6,9 +5,12 @@
           <div class="row">
             <div class="col-md-9">
               <% if user.student? %>
-                <%= link_to user.name, student_path(user), :class => "h4" %>
+                <%= link_to user.full_name, student_path(user), :class => "h4" %>
               <% else %>
-                <%= link_to user.name, staff_path(user), :class => "h4" %>
+                <%= link_to user.full_name, staff_path(user), :class => "h4" %>
+              <%end%>
+              <% if (defined?(show_demote_button) && show_demote_button) %>
+                <button class="btn btn btn-default demote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= change_role_button_title %></button>
               <%end%>
             </div>
           </div>

@@ -1,14 +1,14 @@
 en:
     students:
         students: "Students"
-        students_headline: "student list"
-        new_student: "create new student"
-        edit_student: "edit student"
+        students_headline: "Student list"
+        new_student: "Create new student"
+        edit_student: "Edit student"
         carrier: "Carrier"
+        name: "Name"
+        semester: "Semester"
         programming_language_newsletter: "In which languages you are interested as part of a job offer?"
         employers_newsletter: "Where would it be a pleasure to work?"
-        name: Name
-        semester: Semester
         promote_button: "Promote"
         promote_title: "Change Role"
-        promote_confirm_question: "Are you sure to change the role of the user?"
+        promote_confirm_question: "Do you really want to promote this user?"

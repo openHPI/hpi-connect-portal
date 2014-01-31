@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.text     "answer"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "locale"
   end
 
   create_table "job_offers", force: true do |t|
@@ -85,7 +86,7 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.integer  "employer_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.integer  "assigned_student_id"
+    t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
   end
 
@@ -102,6 +103,13 @@ ActiveRecord::Schema.define(version: 20140127184845) do
   end
 
   add_index "job_offers_programming_languages", ["job_offer_id", "programming_language_id"], name: "jo_pl_index", unique: true, using: :btree
+
+  create_table "job_offers_users", id: false, force: true do |t|
+    t.integer "job_offer_id"
+    t.integer "user_id"
+  end
+
+  add_index "job_offers_users", ["job_offer_id", "user_id"], name: "jo_u_index", unique: true, using: :btree
 
   create_table "job_statuses", force: true do |t|
     t.string   "name"
