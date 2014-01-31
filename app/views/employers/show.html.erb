@@ -71,7 +71,7 @@
         <% end %>
 
         <% unless @pending_job_offers.empty? %>
-          <% if signed_in? && (user_is_staff_of_employer?(@pending_job_offers.first) || user_is_admin?) %>
+          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
             <div class="panel panel-default">
                 <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
                 <%= render 'shared/jobs_listing', job_offer_list: @pending_job_offers %>
