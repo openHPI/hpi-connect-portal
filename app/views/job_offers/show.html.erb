@@ -56,7 +56,7 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-12">
-            <%= escape_javascript(@job_offer.description.html_safe) %>
+            <%= sanitize_html(@job_offer.description.html_safe) %>
           </div>
         </div>
       </li>

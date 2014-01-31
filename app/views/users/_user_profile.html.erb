@@ -142,7 +142,7 @@
             <tbody>
               <tr>
                 <td>
-                  <%= escape_javascript(user.additional_information.html_safe) %>
+                  <%= sanitize_html(user.additional_information.html_safe) %>
                 </td>
                </tr>
             </tbody>
