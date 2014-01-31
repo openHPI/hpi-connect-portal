@@ -42,7 +42,8 @@ label {
 }
 
 .btn-danger:hover {
-    background-color: #b1063a
+    background-color: #b1063a;
+    color: #FFF;
 }
 
 .wysihtml5-sandbox{

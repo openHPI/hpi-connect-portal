@@ -19,11 +19,11 @@
     <% end %>
 
     <% if signed_in? && (user_is_staff_of_employer?(@job_offer) || user_is_admin?) && (@job_offer.completed? or @job_offer.running?) %>
-          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
+          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-default " %>
           <% end %>
 
     <% if signed_in? && (user_is_staff_of_employer?(@job_offer) || user_is_admin?) && @job_offer.running? %>
-      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
+      <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-default pull-right" %>
     <% end %>
 
   	<br><br>
@@ -133,7 +133,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= t("activerecord.attribute.job_offer.contact") %>
+                  <%= t("activerecord.attributes.job_offer.contact") %>
                 </div>
                 <div class="col-sm-9">
                   <%= mail_to @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
@@ -141,6 +141,16 @@
               </div>
             </li>
           <% end %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("activerecord.attributes.job_offer.vacant_posts") %>
+              </div>
+              <div class="col-sm-9">
+                <%= @job_offer.vacant_posts %>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -185,11 +195,8 @@
 
 
   <div class="pull-right">
-    <% if signed_in? && @job_offer.open? %>
-      <%= label_tag :vacant_posts, @job_offer.vacant_posts.to_s + " " + t("job_offers.vacant_posts_left"), class: "panel panel-default panel-heading" %>
-    <% end %>
     <% if signed_in? && !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
-      <%= submit_tag t("job_offers.apply"), class: 'btn btn-success apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
+      <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
 
       <!-- Modal for sending an application email-->
       <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -247,8 +254,4 @@
       <%= render @job_offer.applications %>
     </tbody>
   </table>
-<% end %>
-
-<% if signed_in? && user_is_staff_of_employer?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
-  <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary pull-right" %>
 <% end %>

@@ -1,6 +1,3 @@
-<% if defined?(name) %>
-  <h1> <%= t(name) %> </h1>
-<% end %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
@@ -16,12 +13,9 @@
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-11 col-md-offset-1">
-            <p class="employer"><%= job_offer.employer.name %></p>
-          </div>
-        </div>
       </li>
     <%end%>
   </ul>
-  <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
+    <div class="pull-right">
+     <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
+    </div>

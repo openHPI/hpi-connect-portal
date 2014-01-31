@@ -15,8 +15,9 @@ en:
         requirements: "Requirements"
         additional_information: "Additional Information"
         general_information: "General Information"
-        vacant_posts: "Number of applicants"
+        vacant_posts: "Vacant posts"
         responsible_user: "Responsible user"
+        contact: "Contact"
     errors:
       messages:
         in_future: "has to be in the future."
