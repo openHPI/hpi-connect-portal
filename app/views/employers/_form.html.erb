@@ -45,9 +45,9 @@
                 </div>
                 <div class="col-sm-9">
                   <% if employer.staff.any? %>
-                    <%= f.collection_select :deputy_id, employer.staff, :id, :email, { promt: t("employers.select_deputy")}, { class: "form-control"} %>
+                    <%= f.collection_select :deputy_id, employer.staff, :id, :email, { prompt: t("employers.select_deputy")}, {class: "form-control" } %>
                   <% else %>
-                    <%= f.collection_select :deputy_id, User.students, :id, :email, { promt: t("employers.select_deputy")}, { class: "form-control"} %>
+                    <%= f.collection_select :deputy_id, User.students, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
                   <% end %>
                 </div>
               </div>

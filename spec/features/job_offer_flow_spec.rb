@@ -26,11 +26,12 @@ describe "the job offer flow" do
   it "behaves correctly" do
     # staff creates a new job offer for his employer
     login_as(creating_staff, :scope => :user)
-		visit job_offers_path
+		
+    visit job_offers_path
 
-		should have_link(I18n.t("job_offers.new_job_offer"))
-		click_on I18n.t("job_offers.new_job_offer")
-		current_path.should == new_job_offer_path
+	should have_link(I18n.t("job_offers.new_job_offer"))
+	click_on I18n.t("job_offers.new_job_offer")
+	current_path.should == new_job_offer_path
 
     fill_in "job_offer_title", :with => "HPI-Career-Portal"
     fill_in "job_offer_description", :with => "A new carrer portal for HPI students should be developed and deployed."
@@ -39,7 +40,7 @@ describe "the job offer flow" do
     fill_in "job_offer_time_effort", :with => "12"
   
     JobOffer.delete_all
-    expect{
+    expect {
       click_button I18n.t("links.save")
     }.to change(JobOffer, :count).by(1)
 

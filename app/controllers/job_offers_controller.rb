@@ -27,7 +27,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(:page => params[:page])
+    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
@@ -173,8 +173,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
-        {:language_ids => []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
@@ -185,7 +184,7 @@ class JobOffersController < ApplicationController
         parameters[:flexible_start_date] = true
       end
 
-      parameters
+      return parameters
     end
 
     def new_job_offer
