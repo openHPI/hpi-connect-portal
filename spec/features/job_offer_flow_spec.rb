@@ -23,7 +23,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
   end
 
-	it "behaves correctly" do
+  it "behaves correctly" do
     # staff creates a new job offer for his employer
     login_as(creating_staff, :scope => :user)
 		visit job_offers_path
@@ -170,6 +170,7 @@ describe "the job offer flow" do
     job_offer.reload
     current_path.should == job_offer_path(job_offer)
     assert_equal(job_offer.end_date, Date.current + 3)
+    assert_equal(job_offer.running?, true)
 
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1

@@ -50,6 +50,24 @@ class JobOffer < ActiveRecord::Base
     self.vacant_posts ||= 1
   end
 
+  def self.create_and_notify(parameters, current_user)
+    job_offer = JobOffer.new parameters, status: JobStatus.pending
+    job_offer.responsible_user = current_user
+    if !parameters[:employer_id]
+      job_offer.employer = current_user.employer
+    end
+
+    if job_offer.save
+      JobOffersMailer.new_job_offer_email(job_offer).deliver
+      JobOffersMailer.inform_interested_students_immediately(job_offer)
+    else
+      if parameters[:flexible_start_date]
+        job_offer.flexible_start_date = true
+      end
+    end
+    job_offer
+  end
+
   def self.sort(order_attribute)
     if order_attribute == "employer"
       includes(:employer).order("employers.name ASC")
@@ -59,23 +77,23 @@ class JobOffer < ActiveRecord::Base
   end
 
   def completed?
-    status == JobStatus.completed
+    status && status == JobStatus.completed
   end
 
   def pending?
-    status == JobStatus.pending
+    status && status == JobStatus.pending
   end
 
   def open?
-    status == JobStatus.open
+    status && status == JobStatus.open
   end
 
   def running?
-    status == JobStatus.running
+    status && status == JobStatus.running
   end
 
   def editable?
-    self.pending? or self.open?
+    self.pending? || self.open?
   end
 
   def human_readable_compensation
@@ -93,5 +111,15 @@ class JobOffer < ActiveRecord::Base
       end
     end
     true
+  end
+
+  def prolong(date)
+    if end_date < date
+      update_column :end_date, date
+      JobOffersMailer.job_prolonged_email(self).deliver
+      true
+    else
+      false
+    end
   end
 end
