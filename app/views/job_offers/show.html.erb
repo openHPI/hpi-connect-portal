@@ -40,7 +40,7 @@
       <h1 style="display:inline">
         <%= @job_offer.title %>
           <% if @job_offer.pending? %>
-            <span> - pending</span>
+            <span> - <%= t("job_status.pending") %></span>
         <% end %>
       </h1>
       <blockquote>
@@ -147,7 +147,7 @@
     <% unless @job_offer.programming_languages.empty? %>
       <div class="col-sm-6">
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offers.required_programming_languages") %></h4></div>
+          <div class="panel-heading"><h4><%= t("job_offers.required_programming_languages") %></h4></div>
           <ul class="list-group">
             <% @job_offer.programming_languages.each do |programming_language| %>
               <li class="list-group-item">
@@ -166,7 +166,7 @@
     <% unless @job_offer.languages.empty? %>
       <div class="col-sm-6">
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offers.required_languages") %></h4></div>
+          <div class="panel-heading"><h4><%= t("job_offers.required_languages") %></h4></div>
           <ul class="list-group">
             <% @job_offer.languages.each do |language| %>
               <li class="list-group-item">
@@ -238,20 +238,23 @@
 </div>
 
 <% if signed_in? && @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>
-  <div class="clearfix"></div>
-  <h4><%= t("job_offers.applications_headline")%></h4>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th><%= t("job_offers.applicant_first_name") %></th>
-        <th><%= t("job_offers.applicant_last_name") %></th>
-        <th><%= t("job_offers.applicant_email") %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= render @job_offer.applications %>
-    </tbody>
-  </table>
+  <div class="clearfix">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><%= t("job_offers.applicant_first_name") %></th>
+            <th><%= t("job_offers.applicant_last_name") %></th>
+            <th><%= t("job_offers.applicant_email") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @job_offer.applications %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% end %>
 
 <% if signed_in? && user_is_staff_of_employer?(@job_offer) && (@job_offer.completed? or @job_offer.running?) %>
