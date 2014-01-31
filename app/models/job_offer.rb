@@ -50,6 +50,24 @@ class JobOffer < ActiveRecord::Base
     self.vacant_posts ||= 1
   end
 
+  def self.create_and_notify(parameters, current_user)
+    job_offer = JobOffer.new parameters, status: JobStatus.pending
+    job_offer.responsible_user = current_user
+    if !parameters[:employer_id]
+      job_offer.employer = current_user.employer
+    end
+
+    if job_offer.save
+      JobOffersMailer.new_job_offer_email(job_offer).deliver
+      JobOffersMailer.inform_interested_students_immediately(job_offer)
+    else
+      if parameters[:flexible_start_date]
+        job_offer.flexible_start_date = true
+      end
+    end
+    job_offer
+  end
+
   def self.sort(order_attribute)
     if order_attribute == "employer"
       includes(:employer).order("employers.name ASC")

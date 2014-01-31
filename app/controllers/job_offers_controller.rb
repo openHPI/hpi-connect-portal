@@ -67,20 +67,11 @@ class JobOffersController < ApplicationController
   def create
     parameters = job_offer_params
 
-    @job_offer = JobOffer.new parameters, status: JobStatus.pending
-    @job_offer.responsible_user = current_user
-    if !parameters[:employer_id]
-      @job_offer.employer = current_user.employer
-    end
+    @job_offer = JobOffer.create_and_notify parameters, current_user
 
-    if @job_offer.save
-      JobOffersMailer.new_job_offer_email(@job_offer).deliver
-      JobOffersMailer.inform_interested_students_immediately(@job_offer)
+    if !@job_offer.new_record?
       respond_and_redirect_to @job_offer, 'Job offer was successfully created.', 'show', :created
     else
-      if parameters[:flexible_start_date]
-        @job_offer.flexible_start_date = true
-      end
       render_errors_and_action @job_offer, 'new'
     end
   end
