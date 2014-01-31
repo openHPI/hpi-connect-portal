@@ -10,7 +10,8 @@ describe "job_offers/show" do
       :responsible_user => FactoryGirl.create(:user),
       :status => FactoryGirl.create(:job_status, :name => "open")
     ))
-    view.stub(:signed_in?) { false }
+    view.stub(:can?) { false }
+    view.stub(:current_user) { FactoryGirl.create(:user) }
   end
 
   it "renders attributes in <p>" do
