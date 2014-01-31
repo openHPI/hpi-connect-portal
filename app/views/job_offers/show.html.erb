@@ -65,7 +65,7 @@
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
         <ul class="list-group">
-          <% unless @job_offer.room_number.nil? %>
+          <% unless @job_offer.room_number.blank? %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
@@ -87,7 +87,7 @@
               </div>
             </div>
           </li>
-          <% unless @job_offer.end_date.nil? %>
+          <% unless @job_offer.end_date.blank? %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-sm-9">
                   <%= @job_offer.end_date %>
-                  <% if can? :prolong, @job_offer %>
+                  <% if can? :prolong, @job_offer and @job_offer.running? %>
                     <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
                       <%= f.text_field :end_date, class: 'datepicker form-control' %>
                       <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
@@ -125,7 +125,7 @@
               </div>
             </div>
           </li>
-          <% unless @job_offer.responsible_user.nil? %>
+          <% unless @job_offer.responsible_user.blank? %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
@@ -141,7 +141,7 @@
       </div>
     </div>
 
-    <% unless @job_offer.programming_languages.empty? %>
+    <% unless @job_offer.programming_languages.blank? %>
       <div class="col-sm-6 pull-right">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("job_offers.required_programming_languages") %></h4></div>
@@ -160,7 +160,7 @@
       </div>
     <% end %>
 
-    <% unless @job_offer.languages.empty? %>
+    <% unless @job_offer.languages.blank? %>
       <div class="col-sm-6 pull-right">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("job_offers.required_languages") %></h4></div>
@@ -178,7 +178,7 @@
         </div>
       </div>
     <% end %> 
-    <% if signed_in? && (user_is_staff_of_employer?(@job_offer) or user_is_admin?) && !@assigned_students.empty? %>
+    <% if signed_in? && (user_is_staff_of_employer?(@job_offer) or user_is_admin?) && !@assigned_students.blank? %>
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
@@ -227,7 +227,7 @@
       <% end %>
     </div>
 
-    <% unless @application.nil? %>
+    <% unless @application.blank? %>
       <div class="pull-right">
         <%= simple_form_for @application, method: :delete do |f| %>
           <div><%= f.input :id, as: :hidden %></div>

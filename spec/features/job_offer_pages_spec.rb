@@ -82,7 +82,7 @@ describe "Job Offer pages" do
             describe "the job should be prolongable" do
 
               before do
-                job_offer.update(end_date: Date.current + 20)
+                job_offer.update(end_date: Date.current + 20, status: @status_running)
                 visit job_offer_path(job_offer)
               end
 
