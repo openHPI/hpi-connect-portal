@@ -135,7 +135,7 @@
                   <%= t("activerecord.attribute.job_offer.contact") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= mail_to @job_offer.responsible_user.email, @job_offer.responsible_user.email%>
+                  <%= link_to @job_offer.responsible_user.firstname+" "+@job_offer.responsible_user.lastname, @job_offer.responsible_user %>
                 </div>
               </div>
             </li>

@@ -73,7 +73,7 @@ describe "the employer page" do
     it { should have_content(employer.name) }
     it { should have_content(employer.description) }
     it { should have_content(employer.head) }
-    it { should have_content(employer.deputy.email) }
+    it { should have_content(employer.deputy.firstname+" "+employer.deputy.lastname) }
 
     describe "for an external employer" do
       before do

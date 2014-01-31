@@ -25,13 +25,6 @@ describe "job_offers/show" do
     rendered.should_not match(/Apply/)
   end
 
-  it "renders contact mailto link" do
-    render
-
-    rendered.should match(/Contact/)
-    assert_select "a[href='mailto:" + @job_offer.responsible_user.email + "']"
-  end
-
   it "hides the edit button if the job is running" do
     @job_offer.status = FactoryGirl.create(:job_status, :name => "running")
     @job_offer.save
