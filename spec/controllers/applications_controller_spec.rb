@@ -63,19 +63,17 @@ describe ApplicationsController do
     end
 
     it "declines all other students after accepting the last possible application" do
-      @job_offer.vacant_posts = 2
+      @job_offer.vacant_posts = 1
       @job_offer.save
-      student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
+      student2 = FactoryGirl.create(:user, :role => student_role)
 
       application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
       sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
 
-      get :accept, {:id => @application.id}
-
       expect{
-        get :accept, {:id => application_2.id}
-      }.to change(Application, :count).by(-2)
+        get :accept, {:id => @application.id}
+      }.to change(Application, :count).by(-3)
     end
 
     it "job status should be 'running' if the last possible application is accepted" do
@@ -161,6 +159,23 @@ describe ApplicationsController do
       post :create, { :application => {:job_offer_id => @job_offer.id} }
       response.should redirect_to(job_offer_path(@job_offer))
       assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
+    end
+
+    it "forbids attachments that are not a PDF" do
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.save
+
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_cv.pdf',
+        :type => 'application/png',
+        :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
+      })
+
+      sign_in FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id}, :attached_files => {:file_attributes => [:file => test_file] }}
+        }.to change(Application, :count).by(0)
+      response.should redirect_to(@job_offer)
     end
   end
 

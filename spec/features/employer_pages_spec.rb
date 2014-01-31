@@ -43,11 +43,35 @@ describe "the employer page" do
     end
   end
 
+  describe "creating a new employer" do
+
+    it "displays a select with all students for selecting the deputy" do
+      admin = FactoryGirl.create(:user, :admin)
+      login_as(admin)
+      visit new_employer_path
+
+      should have_select("employer[deputy_id]", options: [I18n.t("employers.select_deputy")] + User.students.map { |student| student.email })
+    end
+
+  end
+
+  describe "editing an existing employer" do
+    it "displays a select with all staff members of the employer for selecting the deputy" do
+      admin = FactoryGirl.create(:user, :admin)
+      employer = FactoryGirl.create(:employer)
+      staff = FactoryGirl.create(:user, employer: employer)
+      login_as(admin)
+      visit edit_employer_path(employer)
+
+      should have_select("employer[deputy_id]", options: employer.staff.map { |staff| staff.email })
+    end
+  end
+
   describe "should show the basic information of the employer" do
     it { should have_content(employer.name) }
     it { should have_content(employer.description) }
     it { should have_content(employer.head) }
-    it { should have_content(employer.deputy.email) }
+    it { should have_content(employer.deputy.firstname+" "+employer.deputy.lastname) }
 
     describe "for an external employer" do
       before do

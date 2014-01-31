@@ -9,7 +9,7 @@
     <td class='clickable' href='<%= path_to_user %>'><%= application.user.lastname %></td>
     <td class='clickable' href='<%= path_to_user %>'><%= application.user.email %></td>
 
-    <% if user_is_responsible_user?(@job_offer) or user_is_admin? %>
+    <% if can?(:accept, application) %>
     	<td>
         <%= link_to t("applications.decline"), decline_application_path(application), :class=>"btn btn-danger", data: {confirm: t("applications.decline_confirmation")} %>
       </td>

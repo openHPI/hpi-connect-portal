@@ -23,7 +23,7 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
-  get "get-userlist" => "users#userlist"
+  get "userlist" => "users#userlist"
   get "employers/external", to: "employers#index_external", as: "external_employers"
 
   resources :employers do

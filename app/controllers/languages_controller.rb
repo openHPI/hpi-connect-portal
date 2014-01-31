@@ -24,22 +24,22 @@ class LanguagesController < ApplicationController
   # POST /languages
   # POST /languages.json
   def create
-    @language = Language.new(language_params)
+    @language = Language.new language_params
 
     if @language.save
-      respond_and_redirect_to(@language, 'Language was successfully created.', 'show', :created)
+      respond_and_redirect_to @language, 'Language was successfully created.', 'show', :created
     else
-      render_errors_and_action(@language, 'new')
+      render_errors_and_action @language, 'new'
     end
   end
 
   # PATCH/PUT /languages/1
   # PATCH/PUT /languages/1.json
   def update
-    if @language.update(language_params)
-      respond_and_redirect_to(@language, 'Language was successfully updated.')
+    if @language.update language_params
+      respond_and_redirect_to @language, 'Language was successfully updated.'
     else
-      render_errors_and_action(@language, 'edit')
+      render_errors_and_action @language, 'edit'
     end
   end
 
@@ -47,13 +47,13 @@ class LanguagesController < ApplicationController
   # DELETE /languages/1.json
   def destroy
     @language.destroy#
-    respond_and_redirect_to(languages_url, 'Language has been successfully deleted.')
+    respond_and_redirect_to languages_url, 'Language has been successfully deleted.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_language
-      @language = Language.find(params[:id])
+      @language = Language.find params[:id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

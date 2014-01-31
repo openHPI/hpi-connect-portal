@@ -243,19 +243,31 @@
           </li>
         </ul>
       </div>
-
-
+  </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
     <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h5>
-            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+            <%= t("layouts.asterisk_description") %>
           </h5>
         </div>
       </div>
     <% end %>
-    </div>
-  </div>
+</div>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
 <% end %>
