@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
   # GET /students/1.json
   def show
     @user = User.find params[:id]
-    redirect_to user_path(@user) unless @user.student?
+    redirect_to user_path @user unless @user.student?
     @job_offers = @user.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 

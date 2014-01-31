@@ -18,9 +18,10 @@ describe "Job Offer pages" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
 
-      before { 
+      before do
         login_as(user)
-        visit job_offer_path(job_offer) }
+        visit job_offer_path(job_offer)
+      end
 
       describe "application button and list" do
         let(:student) { FactoryGirl.create(:user, :student) }

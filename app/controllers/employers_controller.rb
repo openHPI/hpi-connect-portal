@@ -4,7 +4,7 @@ class EmployersController < ApplicationController
   before_action :set_employer, only: [:show, :edit, :update, :update_staff]
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to employers_path, :notice => exception.message
+    redirect_to employers_path, notice: exception.message
   end
 
   # GET /employers
