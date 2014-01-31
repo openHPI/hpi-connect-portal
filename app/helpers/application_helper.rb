@@ -16,6 +16,10 @@ module ApplicationHelper
   end 
 
   def sanitize_html(html)
-    Sanitize.clean(html, Sanitize::Config::BASIC).html_safe
+    Sanitize.clean(html, 
+      :elements => ['ul', 'li', 'b', 'u', 'i', 'tr', 'td', 'ol', 'blockquote', 'div', 'span', 
+        'br', 'a', 'h1', 'h2', 'h3'],
+      :attributes => {'a' => ['target', 'href'], 'span' => ['class']},
+      :protocols => {'a' => {'href' => ['http', 'https', 'mailto']}}).html_safe
   end
 end
