@@ -137,50 +137,14 @@ class User < ActiveRecord::Base
 
     new_user.should_redirect_to_profile = true
 
-    return new_user
-  end
-
-  def self.search_student(string)
-    string = string.downcase
-    search_results = User.search_students string
-    search_results += search_students_by_language_identifier :programming_languages, string
-    search_results += search_students_by_language_identifier :languages, string
-    search_results.uniq.sort_by{|student| [student.lastname, student.firstname]}
-  end
-
-  def self.search_students_by_language_identifier(language_identifier, string)
-    key = language_identifier.to_s + ".name"
-    User.joins(language_identifier).where(key + " ILIKE ?", string).sort_by{|student| [student.lastname, student.firstname]}
-  end
-
-  def self.search_students_by_language_and_programming_language(language_array, programming_language_array)
-    search_students_for_multiple_languages_and_identifiers(:languages, language_array) & search_students_for_multiple_languages_and_identifiers(:programming_languages, programming_language_array)
-  end
-
-  def self.search_students_for_multiple_languages_and_identifiers(language_identifier, languages)
-    result = User.all
-
-    if !languages.nil?
-      languages.each do |language|
-        result = result & search_students_by_language_identifier(language_identifier, language)
-      end
-    end
-
-    return result
+    new_user
   end
 
   def set_role(role_level, employer)
-    new_role = Role.find_by_level role_level
-    should_be_deputy = (role_level == 4)
+    new_role = Role.find_by_level ((role_level == 4) ? 2 : role_level)
 
-    if should_be_deputy
-      new_role = Role.find_by_level 2
-    end
-
-    update!(:employer => employer, :role => new_role)
-    if should_be_deputy
-      employer.update!(deputy: self)
-    end
+    update! employer: employer, role: new_role
+    employer.update! deputy: self if role_level == 4
   end
 
   def set_role_from_staff_to_student(deputy_id)
