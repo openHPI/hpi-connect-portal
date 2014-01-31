@@ -59,23 +59,23 @@ class JobOffer < ActiveRecord::Base
   end
 
   def completed?
-    status == JobStatus.completed
+    status && status == JobStatus.completed
   end
 
   def pending?
-    status == JobStatus.pending
+    status && status == JobStatus.pending
   end
 
   def open?
-    status == JobStatus.open
+    status && status == JobStatus.open
   end
 
   def running?
-    status == JobStatus.running
+    status && status == JobStatus.running
   end
 
   def editable?
-    self.pending? or self.open?
+    self.pending? || self.open?
   end
 
   def human_readable_compensation

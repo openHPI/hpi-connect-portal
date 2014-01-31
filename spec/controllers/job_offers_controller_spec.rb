@@ -328,7 +328,9 @@ describe JobOffersController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         JobOffer.any_instance.stub(:save).and_return(false)
-        post :create, {:job_offer => { "description" => "invalid value" }}, valid_session
+        expect {
+          post :create, {:job_offer => valid_attributes}, valid_session
+        }.to change(JobOffer, :count).by(0) 
         response.should render_template("new")
       end
       
