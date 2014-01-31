@@ -63,9 +63,9 @@ describe ApplicationsController do
     end
 
     it "declines all other students after accepting the last possible application" do
-      @job_offer.vacant_posts = 2
+      @job_offer.vacant_posts = 1
       @job_offer.save
-      student2 = FactoryGirl.create(:user, :role => student_role, :email => 'test1234@example.com')
+      student2 = FactoryGirl.create(:user, :role => student_role)
 
       application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)

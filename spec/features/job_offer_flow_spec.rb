@@ -155,11 +155,11 @@ describe "the job offer flow" do
     # accepted student, declined students and the HPI administration get notified
     ActionMailer::Base.deliveries.count.should == 3
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [second_applicant.email])
-    email = ActionMailer::Base.deliveries[1]
     assert_equal(email.to, [first_applicant.email])
-    email = ActionMailer::Base.deliveries[2]
+    email = ActionMailer::Base.deliveries[1]
     assert_equal(email.to, ["hpi.hiwi.portal@gmail.com"])
+    email = ActionMailer::Base.deliveries[2]
+    assert_equal(email.to, [second_applicant.email])
     ActionMailer::Base.deliveries = []
 
     # responsible user prolongs the job offer

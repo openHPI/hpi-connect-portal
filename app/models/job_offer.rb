@@ -99,4 +99,17 @@ class JobOffer < ActiveRecord::Base
       self.compensation.to_s + " " + I18n.t("job_offers.compensation_description")
     end
   end
+
+  def check_remaining_applications
+    if vacant_posts == 0
+      if update({ status: JobStatus.running })
+        applications.each do | application |
+          application.decline
+        end
+      else
+        false
+      end
+    end
+    true
+  end
 end
