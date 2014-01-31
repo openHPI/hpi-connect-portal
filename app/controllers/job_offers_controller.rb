@@ -21,11 +21,7 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   rescue_from CanCan::AccessDenied do |exception|
-    if [:complete, :edit, :destroy].include? exception.action
-      redirect_to exception.subject, :notice => exception.message
-    else
-      redirect_to job_offers_path, :notice => exception.message
-    end
+    rescue_from_exception exception
   end
 
   # GET /job_offers
@@ -102,14 +98,12 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/prolong
   def prolong
     date = Date.parse(params[:job_offer][:end_date])
-    if @job_offer.end_date < date
-      @job_offer.update_column :end_date, date
-      flash[:success] = 'Job offer successfully prolonged'
-      JobOffersMailer.job_prolonged_email(@job_offer).deliver
+    if @job_offer.prolong date
+      respond_and_redirect_to @job_offer, 'Job offer successfully prolonged'
     else
-      flash[:error] = 'You can only prolong the job offer.'
+      flash[:error] = "Job offer couldn't be prolonged."
+      render_errors_and_action @job_offer
     end
-    redirect_to @job_offer
   end
 
   # GET /job_offers/matching
@@ -168,6 +162,14 @@ class JobOffersController < ApplicationController
 
     def set_employers
       @employers = Employer.all
+    end
+
+    def rescue_from_exception(exception)
+      if [:complete, :edit, :destroy].include? exception.action
+        redirect_to exception.subject, :notice => exception.message
+      else
+        redirect_to job_offers_path, :notice => exception.message
+      end
     end
 
     def job_offer_params

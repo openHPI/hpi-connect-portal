@@ -112,4 +112,14 @@ class JobOffer < ActiveRecord::Base
     end
     true
   end
+
+  def prolong(date)
+    if end_date < date
+      update_column :end_date, date
+      JobOffersMailer.job_prolonged_email(self).deliver
+      true
+    else
+      false
+    end
+  end
 end
