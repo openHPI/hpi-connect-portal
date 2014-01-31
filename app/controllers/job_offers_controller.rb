@@ -1,12 +1,10 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  before_filter :check_user_can_create_jobs, only: [:new]
-  before_filter :check_user_is_responsible_or_admin, only: [:edit, :update, :destroy, :prolong]
+  load_and_authorize_resource except: [:create, :edit]
+
+  before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
-  before_filter :check_user_is_staff_of_employer_or_admin, only: [:complete, :reopen]
-  before_filter :check_user_is_deputy_or_admin, only: [:accept, :decline]
-  before_filter :check_job_is_in_deletable_state, only: [:destroy]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
@@ -21,6 +19,10 @@ class JobOffersController < ApplicationController
   has_scope :filter_languages, type: :array, only: [:index, :archive, :matching], as: :language_ids
   has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    rescue_from_exception exception
+  end
 
   # GET /job_offers
   # GET /job_offers.json
@@ -52,7 +54,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/1/edit
   def edit
-    @programming_languages = ProgrammingLanguage.all
+    authorize! :edit, @job_offer
     @languages = Language.all
   end
 
@@ -61,20 +63,11 @@ class JobOffersController < ApplicationController
   def create
     parameters = job_offer_params
 
-    @job_offer = JobOffer.new parameters, status: JobStatus.pending
-    @job_offer.responsible_user = current_user
-    if !parameters[:employer_id]
-      @job_offer.employer = current_user.employer
-    end
+    @job_offer = JobOffer.create_and_notify parameters, current_user
 
-    if @job_offer.save
-      JobOffersMailer.new_job_offer_email(@job_offer).deliver
-      JobOffersMailer.inform_interested_students_immediately(@job_offer)
+    if !@job_offer.new_record?
       respond_and_redirect_to @job_offer, 'Job offer was successfully created.', 'show', :created
     else
-      if parameters[:flexible_start_date]
-        @job_offer.flexible_start_date = true
-      end
       render_errors_and_action @job_offer, 'new'
     end
   end
@@ -105,14 +98,12 @@ class JobOffersController < ApplicationController
   # GET /job_offer/:id/prolong
   def prolong
     date = Date.parse(params[:job_offer][:end_date])
-    if @job_offer.end_date < date
-      @job_offer.update_column :end_date, date
-      flash[:success] = 'Job offer successfully prolonged'
-      JobOffersMailer.job_prolonged_email(@job_offer).deliver
+    if @job_offer.prolong date
+      respond_and_redirect_to @job_offer, 'Job offer successfully prolonged'
     else
-      flash[:error] = 'You can only prolong the job offer.'
+      flash[:error] = "Job offer couldn't be prolonged."
+      render_errors_and_action @job_offer
     end
-    redirect_to @job_offer
   end
 
   # GET /job_offers/matching
@@ -173,6 +164,14 @@ class JobOffersController < ApplicationController
       @employers = Employer.all
     end
 
+    def rescue_from_exception(exception)
+      if [:complete, :edit, :destroy].include? exception.action
+        redirect_to exception.subject, :notice => exception.message
+      else
+        redirect_to job_offers_path, :notice => exception.message
+      end
+    end
+
     def job_offer_params
       parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, {:programming_language_ids => []},
         {:language_ids => []})
@@ -189,48 +188,14 @@ class JobOffersController < ApplicationController
       parameters
     end
 
-    def check_user_can_create_jobs
-      unless can? :create, JobOffer
-        redirect_to job_offers_path
-      end
-    end
-
-    def check_user_is_responsible_or_admin
-      set_job_offer
-      unless can? :update, @job_offer
-        redirect_to @job_offer
-      end
-    end
-
-    def check_user_is_staff_of_employer_or_admin
-      set_job_offer
-      unless user_is_staff_of_employer?(@job_offer) || user_is_admin?
-        redirect_to @job_offer
-      end
-    end
-
-    def check_user_is_deputy_or_admin
-      set_job_offer
-      unless (@job_offer.employer.deputy == current_user) || user_is_admin?
-        if user_is_staff_of_employer? @job_offer
-          redirect_to @job_offer
-        else
-          redirect_to job_offers_path
-        end
-      end
+    def new_job_offer
+      @job_offer = JobOffer.new(job_offer_params)
     end
 
     def check_job_is_in_editable_state
       set_job_offer
-      unless @job_offer.open? || @job_offer.pending?
+      unless @job_offer.editable?
         redirect_to @job_offer
-      end
-    end
-
-    def check_job_is_in_deletable_state
-      set_job_offer
-      unless !@job_offer.running?
-        respond_and_redirect_to(@job_offer, 'This job offer is currently running and therefore can\'t be deleted.')
       end
     end
 

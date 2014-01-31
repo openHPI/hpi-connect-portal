@@ -7,8 +7,10 @@ class Ability
     if user.role
       can :manage, :all if user.admin?
 
+      can [:archive, :read], JobOffer
+
       initialize_student if user.student?
-      initialize_staff user, user.employer_id if user.staff?
+      initialize_staff user if user.staff?
     end
   end
 
@@ -18,8 +20,9 @@ class Ability
     can :read, User, role: { name: 'Staff' }
   end
 
-  def initialize_staff(user, employer_id)
+  def initialize_staff(user)
     user_id = user.id
+    employer_id = user.employer_id
 
     can :edit, Employer, id: user.employer_id
     can :read, Application
@@ -27,13 +30,19 @@ class Ability
     can :read, User, role: { name: 'Staff' }
     can :manage, Faq
 
-    can [:create, :complete, :reopen], JobOffer, employer_id: employer_id
-
-    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
-    can [:update, :destroy, :prolong], JobOffer, employer: { deputy_id: user_id }
-    can [:accept, :decline], Application, responsible_user_id: user_id
-
+    can [:create, :complete, :reopen], JobOffer
     can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user_id }
+    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy, :prolong, :accept], JobOffer, employer: { deputy_id: user_id }
+    can [:update, :edit], JobOffer do |job|
+      job.editable?
+    end
+    cannot :destroy, JobOffer do |job|
+      job.running?
+    end
+
+    can [:accept, :decline], Application, responsible_user_id: user_id
+    
     can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
     can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end

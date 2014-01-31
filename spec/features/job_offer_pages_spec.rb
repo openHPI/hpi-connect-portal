@@ -82,7 +82,7 @@ describe "Job Offer pages" do
             describe "the job should be prolongable" do
 
               before do
-                job_offer.update(end_date: Date.current + 20)
+                job_offer.update(end_date: Date.current + 20, status: @status_running)
                 visit job_offer_path(job_offer)
               end
 
@@ -218,7 +218,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -235,7 +235,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -260,7 +260,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
