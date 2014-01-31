@@ -218,7 +218,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -235,7 +235,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -260,7 +260,7 @@ describe "Job Offer pages" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('pending')
+          should have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
