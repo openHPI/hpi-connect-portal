@@ -5,7 +5,13 @@ module JobOfferScopes
       scope :open, -> { where(status_id: JobStatus.open.id) }
       scope :running, -> { where(status_id: JobStatus.running.id) }
       scope :completed, -> { where(status_id: JobStatus.completed.id) }
+    end
 
+    add_filter_and_search_scopes job_offer
+  end
+
+  def self.add_filter_and_search_scopes(job_offer)
+    job_offer.class_eval do
       scope :filter_employer, -> employer { where(employer_id: employer) }
       scope :filter_start_date, -> start_date { where('start_date >= ?', Date.parse(start_date)) }
       scope :filter_end_date, -> end_date { where('end_date <= ?', Date.parse(end_date)) }
