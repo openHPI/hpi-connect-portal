@@ -15,6 +15,7 @@ describe EmployersController do
   before(:each) do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :open)
+    FactoryGirl.create(:job_status, :pending)
   end
 
   describe "GET index" do

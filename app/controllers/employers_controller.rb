@@ -10,7 +10,7 @@ class EmployersController < ApplicationController
   # GET /employers
   # GET /employers.json
   def index
-    @employers = Employer.internal.sort_by{|employer| employer.name}
+    @employers = Employer.internal.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
     @internal = true
   end
@@ -18,7 +18,7 @@ class EmployersController < ApplicationController
   # GET /employers/external
   # GET /employers/external.json
   def index_external
-    @employers = Employer.external.sort_by{|employer| employer.name}
+    @employers = Employer.external.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
     @internal = false
     render 'index'
@@ -31,6 +31,7 @@ class EmployersController < ApplicationController
     @staff = @employer.staff.paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
     @open_job_offers = @employer.job_offers.open.paginate page: page
+    @pending_job_offers = @employer.job_offers.pending.paginate page: page
   end
 
   # GET /employers/new
