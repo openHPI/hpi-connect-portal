@@ -10,7 +10,6 @@ describe "the students page" do
     @student1 = FactoryGirl.create(:user, :student, :programming_languages =>[@programming_language])
     login_as(staff, :scope => :user)
 
-    FactoryGirl.create(:role, :student)
     FactoryGirl.create(:role, :admin)
     visit students_path
   end

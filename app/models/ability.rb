@@ -19,14 +19,15 @@ class Ability
   def initialize_student()
     can :create, Application
     can :read, Faq
-    can :read, User, role: { name: 'Student' }
+    cannot :index, User
   end
 
   def initialize_staff(user)
     user_id = user.id
     employer_id = user.employer_id
 
-    can [:edit, :update], Employer, id: user.employer_id
+    can [:edit, :update], Employer, deputy_id: user_id
+    can [:edit, :update], Employer, id: employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
     can :manage, Faq
@@ -45,6 +46,6 @@ class Ability
     can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
     
     can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
-    can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
+    can [:promote], User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end
 end
