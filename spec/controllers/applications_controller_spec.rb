@@ -19,16 +19,18 @@ describe ApplicationsController do
     end
 
     it "deletes application" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
       expect{
-          get :decline, {:id => @application.id}
-        }.to change(Application, :count).by(-1)
+        get :decline, {:id => @application.id}
+      }.to change(Application, :count).by(-1)
     end
 
     it "redirects to job offer view if user don't have permissions for declining" do
       sign_in @student
 
-      get :decline, {:id => @application.id}
+      expect{
+        get :decline, {:id => @application.id}
+      }.to change(Application, :count).by(0)
       response.should redirect_to(@job_offer)
     end
 
@@ -51,12 +53,14 @@ describe ApplicationsController do
     it "redirects to job offer view if user don't have permissions for accepting" do
       sign_in @student
 
-      get :accept, {:id => @application.id}
+      expect{
+        get :accept, {:id => @application.id}
+      }.to change(Application, :count).by(0)
       response.should redirect_to(@job_offer)
     end
 
     it "accepts a student and he/her is included in @job_offer.assigned_students" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
 
       get :accept, {:id => @application.id}
       assigns(:application).job_offer.assigned_students.should include(@student)
@@ -69,7 +73,7 @@ describe ApplicationsController do
 
       application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
       application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @application.job_offer.responsible_user
 
       expect{
         get :accept, {:id => @application.id}
@@ -82,14 +86,14 @@ describe ApplicationsController do
       
       running = FactoryGirl.create(:job_status, :name=>'running')
       
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
 
       get :accept, {:id => @application.id}
       assigns(:application).job_offer.status.should eq(running)
     end
 
     it "sends two emails" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
 
       old_count = ActionMailer::Base.deliveries.count
 
@@ -101,7 +105,7 @@ describe ApplicationsController do
     it "renders errors if updating all objects failed" do
       working = FactoryGirl.create(:job_status, :name=>'running')
 
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
 
       JobOffer.any_instance.stub(:save).and_return(false)
 
@@ -113,7 +117,7 @@ describe ApplicationsController do
       @job_offer.flexible_start_date = true
       @job_offer.save!
 
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+      sign_in @job_offer.responsible_user
 
       get :accept, {:id => @application.id}
       assert_equal(@job_offer.reload.start_date, Date.current)
@@ -176,6 +180,13 @@ describe ApplicationsController do
           post :create, { :application => {:job_offer_id => @job_offer.id}, :attached_files => {:file_attributes => [:file => test_file] }}
         }.to change(Application, :count).by(0)
       response.should redirect_to(@job_offer)
+    end
+
+    it "only allows students to create applications" do
+      sign_in FactoryGirl.create(:user, role: student_role, employer: @job_offer.employer)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id}}
+      }.to change(Application, :count).by(0)
     end
   end
 
