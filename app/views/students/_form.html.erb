@@ -130,45 +130,12 @@
             <% end %>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+                <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>
               </div>
             </li>
           </ul>
         </div>
 
-      <div class="panel panel-default">
-      <div class="panel-heading"data-toggle="collapse" data-target="#programming_language_newsletter">
-          <h4><%= t("students.programming_language_newsletter") %></h4>
-      </div>
-        <div id="programming_language_newsletter" class="panel-collapse collapse">
-          <%= fields_for :programming_languages_newsletter_information do |f2| %>
-          <% if @all_programming_languages %>
-            <% @all_programming_languages.each do |programming_language| %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-3">
-                  <%# Erstelle ein Label fuer jede Programmiersprache %>
-                  <%= f2.label programming_language.name, class: "control-label" %>
-                  </div>
-                  <div class="col-sm-9">
-                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                    <% if !@user.new_record? %>
-                      <% pl = ProgrammingLanguagesNewsletterInformation.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
-                    <% end %>
-                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                        <% if pl %>
-                          <%= f2.check_box programming_language.id, :checked => "checked" %>
-                          <% else %>
-                            <%= f2.check_box programming_language.id %>
-                          <% end %>
-                         </div>
-                  </div>    
-                </li>
-            <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
     </div>
 
   <!--     Right -->
@@ -260,7 +227,7 @@
           <% end %>
           <li class="list-group-item">
             <div class="row">
-              <div class="col-sm-12"><%= t("layouts.star_description") %></div>
+              <div class="col-sm-12"><%= t("layouts.star_description_lang") %></div>
             </div>
           </li>
         </ul>
@@ -334,6 +301,53 @@
           </li>
         </ul>
       </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("students.newsletter_headline") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12"><%= t("students.newsletter_description") %></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+    <div class="panel-heading"data-toggle="collapse" data-target="#programming_language_newsletter">
+        <h4><%= t("students.programming_language_newsletter") %></h4>
+    </div>
+      <div id="programming_language_newsletter" class="panel-collapse collapse">
+        <%= fields_for :programming_languages_newsletter_information do |f2| %>
+        <% if @all_programming_languages %>
+          <% @all_programming_languages.each do |programming_language| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                <%# Erstelle ein Label fuer jede Programmiersprache %>
+                <%= f2.label programming_language.name, class: "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                  <% if !@user.new_record? %>
+                    <% pl = ProgrammingLanguagesNewsletterInformation.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
+                  <% end %>
+                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+                      <% if pl %>
+                        <%= f2.check_box programming_language.id, :checked => "checked" %>
+                        <% else %>
+                          <%= f2.check_box programming_language.id %>
+                        <% end %>
+                       </div>
+                </div>    
+              </li>
+          <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
     <div class="panel panel-default">
     <div class="panel-heading"  data-toggle="collapse" data-target="#employer_newsletter"><h4><%= t("students.employers_newsletter") %></h4></div>
       <div id="employer_newsletter" class="panel-collapse collapse">
@@ -365,6 +379,7 @@
         <% end %>
       </div>
     </div>
+
     <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
       <div class="panel panel-default">
         <div class="panel-heading">

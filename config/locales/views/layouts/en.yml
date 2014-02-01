@@ -18,4 +18,5 @@ en:
     internal_employers: "Chairs"
     external_employers: "External employers"
     asterisk_description: "Fields marked with * are obligatory"
-    star_description: "1 star: I used it; 3 stars: Basic knowledge; 5 stars: I'm an expert"
+    star_description_prog: "1 = I used it; 3 = Basic knowledge; 5 = I'm an expert"
+    star_description_lang: "1 = basic knowledge; 3 = advanced knowledge; 5 = native"
