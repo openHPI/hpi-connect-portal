@@ -5,6 +5,6 @@
       <li>Employer: <%= @job_offer.employer.name %></li>
       <li>Responsible staff member: <%= @job_offer.employer.name %></li>
       <li>Room: <%= @job_offer.room_number %></li>
-      <li>Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %></li>
+      <li>Duration: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) %></li>
       <li>Salary: <%= @job_offer.human_readable_compensation %></li>
     </ul>

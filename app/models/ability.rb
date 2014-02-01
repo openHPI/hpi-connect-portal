@@ -9,6 +9,8 @@ class Ability
 
       can [:archive, :read], JobOffer
 
+      can [:edit, :update, :read], User, id: user.id
+
       initialize_student if user.student?
       initialize_staff user if user.staff?
     end
@@ -17,23 +19,25 @@ class Ability
   def initialize_student()
     can :create, Application
     can :read, Faq
-    can :read, User, role: { name: 'Staff' }
+    cannot :index, User
   end
 
   def initialize_staff(user)
     user_id = user.id
     employer_id = user.employer_id
 
-    can [:edit, :update], Employer, id: user.employer_id
+    can [:edit, :update], Employer, deputy_id: user_id
+    can [:edit, :update], Employer, id: employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
-    can :read, User, role: { name: 'Staff' }
     can :manage, Faq
 
     can [:create, :complete, :reopen], JobOffer
     can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user_id }
-    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
-    can [:update, :destroy, :prolong, :accept], JobOffer, employer: { deputy_id: user_id }
+    can :prolong, JobOffer, responsible_user_id: user_id, status: { name: 'running' }
+    can :prolong, JobOffer, employer: { deputy_id: user_id }, status: { name: 'running' }
+    can [:update, :destroy], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy, :accept], JobOffer, employer: { deputy_id: user_id }
     can [:update, :edit], JobOffer do |job|
       job.editable?
     end
@@ -41,9 +45,9 @@ class Ability
       job.running?
     end
 
-    can [:accept, :decline], Application, responsible_user_id: user_id
-    
+    can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
+
     can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
-    can :promote, User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
+    can [:promote], User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
   end
 end

@@ -1,12 +1,16 @@
 class ApplicationsController < ApplicationController
   include UsersHelper
 
-  before_filter :signed_in_user
   before_filter :check_attachment_is_valid, only: [:create]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to exception.subject.job_offer, notice: exception.message
+  end
 
   def create
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
+    authorize! :create, Application
     if not @job_offer.open?
       flash[:error] = 'This job offer is currently not open.'
     else
@@ -25,7 +29,9 @@ class ApplicationsController < ApplicationController
   def accept
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
-    
+
+    authorize! :accept, @application
+
     new_assigned_students = @job_offer.assigned_students << @application.user
     if @job_offer.update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1 })
       @application.delete
@@ -49,6 +55,8 @@ class ApplicationsController < ApplicationController
   # GET decline
   def decline
     @application = Application.find params[:id]
+    authorize! :decline, @application
+
     if @application.decline
       redirect_to @application.job_offer
     else

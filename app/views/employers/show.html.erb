@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-sm-9">
         <h1 style="display:inline" class="pull-left">
-          <%= @employer.name %>  
+          <%= @employer.name %>
           <% if @employer.external %>
-            <span class="label label-warning"><%= t("employers.external")%></span>         
-          <% end %> 
+            <span class="label label-warning"><%= t("employers.external")%></span>
+          <% end %>
         </h1>
       <% if can? :edit, @employer %>
         <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
@@ -71,7 +71,7 @@
         <% end %>
 
         <% unless @pending_job_offers.empty? %>
-          <% if signed_in? && (user_is_staff_of_employer?(@pending_job_offers.first) || user_is_admin?) %>
+          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
             <div class="panel panel-default">
                 <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
                 <%= render 'shared/jobs_listing', job_offer_list: @pending_job_offers %>
@@ -83,7 +83,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
-          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>  
+          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>
         </div>
     </div>
 </div>

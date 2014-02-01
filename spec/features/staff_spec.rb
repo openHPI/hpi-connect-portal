@@ -47,6 +47,8 @@ describe "the staffs profile page" do
     @staff1 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
 
     @staff2 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
+
+    FactoryGirl.create(:job_status, name: 'open')
   end
 
   it "should have an edit link on the show page of the own profile which leads to the staffs edit page" do

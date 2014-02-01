@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-  before_filter :user_is_not_aloud_to_change_data, :only => [:update, :edit]
   has_scope :update_immediately
 
   def edit
@@ -46,12 +45,5 @@ class UsersController < ApplicationController
 
     def user_params
       params.require(:user).permit(:firstname, :lastname, :email, :role_id)
-    end
-
-    def user_is_not_aloud_to_change_data
-      @user = User.find params[:id]
-      if current_user != @user && !current_user.admin?
-        redirect_to @user
-      end
     end
 end

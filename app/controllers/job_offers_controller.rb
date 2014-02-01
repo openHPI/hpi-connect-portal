@@ -1,9 +1,9 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  load_and_authorize_resource except: [:create, :edit]
+  load_and_authorize_resource except: [:edit]
 
-  before_filter :new_job_offer, only: [:create]
+  #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
@@ -55,18 +55,17 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/edit
   def edit
     authorize! :edit, @job_offer
+    @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
 
   # POST /job_offers
   # POST /job_offers.json
   def create
-    parameters = job_offer_params
-
-    @job_offer = JobOffer.create_and_notify parameters, current_user
+    @job_offer = JobOffer.create_and_notify job_offer_params, current_user
 
     if !@job_offer.new_record?
-      respond_and_redirect_to @job_offer, 'Job offer was successfully created.', 'show', :created
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     else
       render_errors_and_action @job_offer, 'new'
     end
@@ -76,7 +75,7 @@ class JobOffersController < ApplicationController
   # PATCH/PUT /job_offers/1.json
   def update
     if @job_offer.update job_offer_params
-      respond_and_redirect_to @job_offer, 'Job offer was successfully updated.'
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')
     else
       render_errors_and_action @job_offer, 'edit'
     end
@@ -86,7 +85,7 @@ class JobOffersController < ApplicationController
   # DELETE /job_offers/1.json
   def destroy
     @job_offer.destroy
-    respond_and_redirect_to job_offers_url, 'Job offer has been successfully deleted.'
+    respond_and_redirect_to job_offers_url, I18n.t('job_offers.messages.successfully_deleted')
   end
 
   # GET /job_offers/archive
@@ -97,11 +96,10 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/prolong
   def prolong
-    date = Date.parse(params[:job_offer][:end_date])
-    if @job_offer.prolong date
-      respond_and_redirect_to @job_offer, 'Job offer successfully prolonged'
+    if @job_offer.prolong @date
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_prolonged')
     else
-      flash[:error] = "Job offer couldn't be prolonged."
+      flash[:error] = I18n.t('job_offers.messages.prolonging_failed')
       render_errors_and_action @job_offer
     end
   end
@@ -117,7 +115,7 @@ class JobOffersController < ApplicationController
   def complete
     if @job_offer.update status: JobStatus.completed
       JobOffersMailer.job_closed_email(@job_offer).deliver
-      respond_and_redirect_to @job_offer, 'Job offer was successfully marked as completed.'
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_completed')
     else
       render_errors_and_action @job_offer, 'edit'
     end
@@ -127,7 +125,7 @@ class JobOffersController < ApplicationController
   def accept
     if @job_offer.update status: JobStatus.open
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
-      redirect_to @job_offer, notice: 'Job offer was successfully opened.'
+      redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
     else
       render_errors_and_action @job_offer
     end
@@ -137,7 +135,7 @@ class JobOffersController < ApplicationController
   def decline
     if @job_offer.destroy
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
-      redirect_to job_offers_path, notice: 'Job offer was deleted.'
+      redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer
     end
@@ -149,7 +147,7 @@ class JobOffersController < ApplicationController
     if old_job_offer.update status: JobStatus.completed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
       @job_offer.responsible_user = current_user
-      render "new", notice: 'New job offer was created.'
+      render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer
     end
@@ -166,14 +164,13 @@ class JobOffersController < ApplicationController
 
     def rescue_from_exception(exception)
       if [:complete, :edit, :destroy].include? exception.action
-        redirect_to exception.subject, :notice => exception.message
-      else
-        redirect_to job_offers_path, :notice => exception.message
+        redirect_to exception.subject, notice: exception.message and return
       end
+      redirect_to job_offers_path, notice: exception.message
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
@@ -183,12 +180,7 @@ class JobOffersController < ApplicationController
         parameters[:start_date] = (Date.current + 1).to_s
         parameters[:flexible_start_date] = true
       end
-
-      return parameters
-    end
-
-    def new_job_offer
-      @job_offer = JobOffer.new(job_offer_params)
+      parameters
     end
 
     def check_job_is_in_editable_state
@@ -199,10 +191,8 @@ class JobOffersController < ApplicationController
     end
 
     def check_new_end_date_is_valid
-      begin
-        date = Date.parse params[:job_offer][:end_date]
-      rescue ArgumentError
-        respond_and_redirect_to(@job_offer, 'Please choose a new end date which is valid.')
-      end
+      @date = Date.parse params[:job_offer][:end_date]
+    rescue ArgumentError
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.choose_valid_end_date')
     end
 end

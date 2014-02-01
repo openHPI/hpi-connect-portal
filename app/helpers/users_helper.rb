@@ -80,7 +80,7 @@ module UsersHelper
         n.delete
       end
     end
-  end  
+  end
 
   def user_can_promote_students?
     return signed_in? && (current_user.admin? || user_is_deputy?)
