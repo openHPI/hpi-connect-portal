@@ -4,6 +4,7 @@ class StudentsController < ApplicationController
   authorize_resource class: "User", except: [:update_role, :destroy, :matching]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_employer, only: [:update_role]
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
@@ -66,13 +67,10 @@ class StudentsController < ApplicationController
   # POST /students/update_role
 
   def update_role
-    @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
-    student = User.find(params[:student_id])
-
-    authorize! :promote, student
+    authorize! :promote, User.find(params[:student_id])
     authorize! :update, @employer if params[:role_level].to_i == 4
 
-    student.set_role(params[:role_level].to_i, @employer)
+    User.find(params[:student_id]).set_role(params[:role_level].to_i, @employer)
     redirect_to students_path
   end
 
@@ -80,6 +78,10 @@ class StudentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find params[:id]
+    end
+
+    def set_employer
+      @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
