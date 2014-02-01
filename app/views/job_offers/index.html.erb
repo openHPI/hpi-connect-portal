@@ -2,7 +2,7 @@
   <div class="col-md-9">
       <div id="buttons">
       <% if can?(:create, JobOffer) %>
-        <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, "data-no-turbolink" => true, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px; margin-left: 5px;"%>
+        <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px; margin-left: 5px;"%>
       <% end %>
       <%= link_to t("job_offers.archive"), archive_job_offers_path, :class => "btn btn-default pull-right", :style => "margin-bottom: 20px"  %>
       <% if current_user.student? %>

@@ -14,7 +14,7 @@
       <% if can?(:update, @job_offer) && !@job_offer.completed? %>
         <%= link_to t("job_offers.show_matching_students"), matching_students_path(:language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
         <% unless @job_offer.running? %>
-          <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), "data-no-turbolink" => true, :class => "btn btn-default", :disabled => !@job_offer.editable? %>
+          <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
         <% end %>    
       <% end %>
@@ -132,7 +132,7 @@
                   <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
                 </div>
                 <%= simple_form_for current_user.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
-                  <div class="modal-body clearfix" data-no-turbolink="true">
+                  <div class="modal-body clearfix">
                     <%= f.input :job_offer_id, as: :hidden %>
                     <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, rows: 10, class: "col-md-12 form-control"  %>
                     <% unless (current_user.cv.path).nil? %>
