@@ -3,8 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 form[action*="configurable"]{
-	@import "bootstrap/variables";
-	max-width: $screen-xs;
+	// not a nice way :-/
+	@import "bootstrap/bootstrap";
+	max-width: 50%;
 	.configurable{
 		@extend .form-group;
 		input{

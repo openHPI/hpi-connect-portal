@@ -16,7 +16,7 @@ class Admin::ConfigurablesController < ApplicationController
   	def validation
 
   		if !params[:mailToAdministration].nil? and !VALID_EMAIL_REGEX.match(params[:mailToAdministration])
-  			redirect_to admin_configurable_path, notice: t("Not a valid email address!") 
+  			redirect_to admin_configurable_path, notice: t("errors.configuration.invalid_email") 
   		end
   	end
 end
