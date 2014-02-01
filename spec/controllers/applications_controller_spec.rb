@@ -83,9 +83,9 @@ describe ApplicationsController do
     it "job status should be 'running' if the last possible application is accepted" do
       @job_offer.vacant_posts = 1
       @job_offer.save
-      
+
       running = FactoryGirl.create(:job_status, :name=>'running')
-      
+
       sign_in @job_offer.responsible_user
 
       get :accept, {:id => @application.id}

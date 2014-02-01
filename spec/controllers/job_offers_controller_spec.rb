@@ -22,7 +22,7 @@ describe JobOffersController do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
-    
+
     @epic = FactoryGirl.create(:employer)
     @os = FactoryGirl.create(:employer)
     @itas = FactoryGirl.create(:employer)
@@ -174,7 +174,7 @@ describe JobOffersController do
 
   describe "GET accept" do
     let(:deputy) { FactoryGirl.create(:user, :staff, employer: employer) }
-    
+
     before(:each) do
       employer.update(deputy: deputy)
       @job_offer = FactoryGirl.create(:job_offer)
@@ -358,10 +358,10 @@ describe JobOffersController do
         JobOffer.any_instance.stub(:save).and_return(false)
         expect {
           post :create, {:job_offer => valid_attributes}, valid_session
-        }.to change(JobOffer, :count).by(0) 
+        }.to change(JobOffer, :count).by(0)
         response.should render_template("new")
       end
-      
+
       it "should not send mail to deputy" do
         job_offer = FactoryGirl.create(:job_offer)
         #expect

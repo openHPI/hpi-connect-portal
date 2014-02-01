@@ -131,8 +131,8 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)          
-        end 
+          login_as(student, :scope => :user)
+        end
 
         it { should_not have_button('Apply')}
       end
@@ -201,8 +201,8 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)          
-        end 
+          login_as(student, :scope => :user)
+        end
 
         it "should not be visible in the job offers list" do
           visit job_offers_path
@@ -235,8 +235,8 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the employer" do 
-        before do          
+      describe "as the deputy of the employer" do
+        before do
           login_as(deputy, :scope => :user)
           visit job_offer_path(job_offer)
         end
@@ -258,7 +258,7 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as admin" do 
+      describe "as admin" do
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
         before do
@@ -300,7 +300,7 @@ describe "Job Offer pages" do
         it { should have_link('Reopen job offer') }
 
       end
-      
+
       describe "as admin" do
         let(:admin) { FactoryGirl.create(:user, :admin, employer: job_offer.employer) }
 
@@ -311,7 +311,7 @@ describe "Job Offer pages" do
 
         it { should have_link('Reopen job offer') }
 
-      end     
+      end
     end
   end
 end

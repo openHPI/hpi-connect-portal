@@ -44,8 +44,8 @@ describe "the students page" do
   #  page.find(:xpath, "/html/body/div[2]/div/div[2]/table/tbody/tr[1]/td[15]/a").click
 
   #   current_path.should == students_path
-  #  expect(page).to have_no_content "#{@student1.firstname} #{@student1.lastname}"       
-    
+  #  expect(page).to have_no_content "#{@student1.firstname} #{@student1.lastname}"
+
   # end
 
 end
@@ -70,9 +70,9 @@ describe "the students editing page" do
     visit edit_student_path(@student1)
     fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
     fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
-   
+
     find('input[type="submit"]').click
-  
+
     current_path.should == student_path(@student1)
 
     page.should have_content(
@@ -80,7 +80,7 @@ describe "the students editing page" do
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
-    
+
 end
 
 # to implement:
@@ -92,7 +92,7 @@ end
 
   #   page.should have_content(
   #   "error",
-   
+
   #   )
   #    #fill_in ':lastname', with: 'NewName'
 
@@ -108,7 +108,7 @@ describe "the students profile page" do
     @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
 
     login_as(@student1, :scope => :user)
-    
+
   end
 
 
