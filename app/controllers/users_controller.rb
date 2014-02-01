@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     elsif user.staff?
       redirect_to staff_path user.id
     else
-      redirect_to edit_user_path user.id
+      redirect_to root_path
     end
   end
 
