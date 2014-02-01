@@ -5,6 +5,7 @@ class StudentsController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_employer, only: [:update_role]
+  
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
