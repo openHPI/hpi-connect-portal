@@ -1,4 +1,3 @@
-
 # Create Standard Roles
 Role.delete_all
 Role.create!(name: 'Student', level: 1)

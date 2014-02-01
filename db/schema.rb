@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127184845) do
+ActiveRecord::Schema.define(version: 20140131162509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "configurables", force: true do |t|
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
   create_table "employers", force: true do |t|
     t.string   "name"
@@ -86,8 +95,8 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.integer  "employer_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
+    t.integer  "vacant_posts"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
