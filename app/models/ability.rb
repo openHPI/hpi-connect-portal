@@ -34,8 +34,10 @@ class Ability
 
     can [:create, :complete, :reopen], JobOffer
     can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user_id }
-    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
-    can [:update, :destroy, :prolong, :accept], JobOffer, employer: { deputy_id: user_id }
+    can :prolong, JobOffer, responsible_user_id: user_id, status: { name: 'running' }
+    can :prolong, JobOffer, employer: { deputy_id: user_id }, status: { name: 'running' }
+    can [:update, :destroy], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy, :accept], JobOffer, employer: { deputy_id: user_id }
     can [:update, :edit], JobOffer do |job|
       job.editable?
     end

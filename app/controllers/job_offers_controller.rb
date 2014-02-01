@@ -96,8 +96,7 @@ class JobOffersController < ApplicationController
 
   # GET /job_offer/:id/prolong
   def prolong
-    date = Date.parse(params[:job_offer][:end_date])
-    if @job_offer.prolong date
+    if @job_offer.prolong @date
       respond_and_redirect_to @job_offer, 'Job offer successfully prolonged'
     else
       flash[:error] = "Job offer couldn't be prolonged."
@@ -193,10 +192,8 @@ class JobOffersController < ApplicationController
     end
 
     def check_new_end_date_is_valid
-      begin
-        date = Date.parse params[:job_offer][:end_date]
-      rescue ArgumentError
-        respond_and_redirect_to(@job_offer, 'Please choose a new end date which is valid.')
-      end
+      @date = Date.parse params[:job_offer][:end_date]
+    rescue ArgumentError
+      respond_and_redirect_to @job_offer, 'Please choose a new end date which is valid.'
     end
 end
