@@ -41,16 +41,6 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %>
-                </div>
-                <div class="col-sm-9">
-                 <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-3">
                   <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
@@ -180,7 +170,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :lastname, t("activerecord.attributes.user.last_name"), class: "control-label" %><%= mark_if_required(@user, :lastname) %>
+                 <%= fa_icon "home 2x", class: "control-label"%>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :homepage, class: "form-control", type:"text" %>
@@ -190,7 +180,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :email, class: "control-label" %><%= mark_if_required(@user, :email) %>
+                 <%= fa_icon "github-square 2x", class: "control-label"%>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :github, class: "form-control", type:"text" %>
@@ -211,7 +201,6 @@
             <div class="row">
               <div class="col-sm-3">
                  <%= fa_icon "xing-square 2x", class: "control-label"%>
-                <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(@user, :birthday) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :xing, class: "form-control", type:"text" %>
@@ -221,7 +210,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %><%= mark_if_required(@user, :photo) %>
+                 <%= fa_icon "linkedin-square 2x", class: "control-label"%>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :linkedin, class: "form-control", type:"text" %>
@@ -236,47 +225,14 @@
         <ul class="list-group">
           <li class="list-group-item">
             <div class="row">
-              <div class="col-sm-3">
-                <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %><%= mark_if_required(@user, :cv) %>
-              </div>
-              <div class="col-sm-9">
-                <% if !@user.new_record? %>
-                  <% if (@user.cv.path).nil? || !File.file?(@user.cv.path) %>
-                    <%= image_tag('file_thumbnails/missing.png', size: "80") %>
-                  <% else %>
-                    <%= link_to(image_tag('file_thumbnails/pdf.png', size: "80"), @user.cv.url) %><br><br><%= File.basename(@user.cv.path); %>
-                  <% end %>
-                <% end %>
-                <br><br>
-                <%= f.file_field :cv, accept: 'application/pdf' %>
+              <div class="col-sm-12">
+                <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
               </div>
             </div>
           </li>
         </ul>
       </div>
     </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-12">
-              <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h5>
-            <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
-          </h5>
-        </div>
-      </div>
-    <% end %>
   </div>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
