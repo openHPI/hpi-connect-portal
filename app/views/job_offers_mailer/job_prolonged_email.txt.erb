@@ -4,5 +4,5 @@
 •Employer: <%= @job_offer.employer.name %>
 •Responsible staff member: <%= @job_offer.employer.name %>
 •Room: <%= @job_offer.room_number %>
-•Duration: <%= @job_offer.start_date %> - <%= @job_offer.end_date %>
+•Duration: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) %>
 •Salary: <%= @job_offer.compensation %>

@@ -69,7 +69,7 @@
             <% unless @job_offer.room_number.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>
             <% end %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: @job_offer.start_date %>
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
             <% unless @job_offer.end_date.blank? %>
               <li class="list-group-item">
                 <div class="row">
@@ -77,7 +77,7 @@
                     <%= t("activerecord.attributes.job_offer.end_date") %>
                   </div>
                   <div class="col-sm-9">
-                    <%= @job_offer.end_date %>
+                    <%= l(@job_offer.end_date) %>
                     <% if can? :prolong, @job_offer%>
                       <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
                         <%= f.text_field :end_date, class: 'datepicker form-control' %>
