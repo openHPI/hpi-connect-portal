@@ -9,7 +9,7 @@ class Ability
 
       can [:archive, :read], JobOffer
 
-      can [:edit, :update], User, id: user.id
+      can [:edit, :update, :read], User, id: user.id
 
       initialize_student if user.student?
       initialize_staff user if user.staff?
@@ -19,7 +19,7 @@ class Ability
   def initialize_student()
     can :create, Application
     can :read, Faq
-    can :read, User, role: { name: 'Staff' }
+    can :read, User, role: { name: 'Student' }
   end
 
   def initialize_staff(user)
@@ -29,7 +29,6 @@ class Ability
     can [:edit, :update], Employer, id: user.employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
-    can :read, User, role: { name: 'Staff' }
     can :manage, Faq
 
     can [:create, :complete, :reopen], JobOffer

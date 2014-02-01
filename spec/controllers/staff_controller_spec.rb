@@ -146,6 +146,11 @@ describe StaffController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      admin = FactoryGirl.create(:user, :admin)
+      sign_in admin
+    end 
+
     it "destroys the requested staff" do
       staff = FactoryGirl.create(:user, :staff)
       expect {
@@ -155,7 +160,9 @@ describe StaffController do
 
     it "redirects to the staff list" do
       staff = FactoryGirl.create(:user, :staff)
-      delete :destroy, {:id => staff.to_param}, valid_session
+      expect {
+        delete :destroy, {:id => staff.to_param}, valid_session
+      }.to change(User, :count).by(-1)
       response.should redirect_to(staff_index_path)
     end
   end
