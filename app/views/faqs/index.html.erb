@@ -12,7 +12,7 @@
 
 <div class="container">
   <% @faqs.each_with_index do |faq, index| %>
-    <% if (faq.locale.to_s == locale.to_s) %> 
+    <% if (faq.locale.to_s == locale.to_s) %>
       <div class="panel-group" id="accordion">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -40,8 +40,8 @@
             </div>
           </div>
         </div>
-      </div>      
+      </div>
       <br>
-    <% end %>   
+    <% end %>
   <% end %>
 </div>

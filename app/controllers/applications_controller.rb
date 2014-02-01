@@ -31,7 +31,7 @@ class ApplicationsController < ApplicationController
     @job_offer = @application.job_offer
 
     authorize! :accept, @application
-    
+
     new_assigned_students = @job_offer.assigned_students << @application.user
     if @job_offer.update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1 })
       @application.delete
@@ -56,7 +56,7 @@ class ApplicationsController < ApplicationController
   def decline
     @application = Application.find params[:id]
     authorize! :decline, @application
-    
+
     if @application.decline
       redirect_to @application.job_offer
     else

@@ -68,7 +68,7 @@ class StudentsController < ApplicationController
   def update_role
     @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
     student = User.find(params[:student_id])
-    
+
     authorize! :promote, student
     authorize! :update, @employer if params[:role_level].to_i == 4
 

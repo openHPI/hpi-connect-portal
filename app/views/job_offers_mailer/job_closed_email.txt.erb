@@ -2,7 +2,7 @@
 
 •<%= t "activerecord.attributes.job_offer.title" %>: <%= @job_offer.title %>
 •Email: <% @job_offer.assigned_students.each do |student| %>
-          <%= student.email %>, 
+          <%= student.email %>,
         <% end %>
 •<%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %>
 •<%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.employer.name %>

@@ -3,7 +3,7 @@
   <li><%= t "activerecord.attributes.job_offer.title" %>: <%= @job_offer.title %></li>
   <li>E-Mails:
     <% @job_offer.assigned_students.each do |student| %>
-      <%= student.email %>, 
+      <%= student.email %>,
     <% end %>
   </li>
   <li><%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %></li>

@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   has_many :languages_users
   has_many :languages, :through => :languages_users
   has_many :possible_employers, :through => :employers_newsletter_information
-  has_many :possible_programming_language, :through => :programming_languages_newsletter_information 
+  has_many :possible_programming_language, :through => :programming_languages_newsletter_information
   accepts_nested_attributes_for :languages
 
   attr_accessor :should_redirect_to_profile
@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   def set_role_from_staff_to_student(deputy_id)
     if deputy_id
       User.find(deputy_id).set_role 4, employer
-    end   
+    end
     set_role 1, nil
   end
 end

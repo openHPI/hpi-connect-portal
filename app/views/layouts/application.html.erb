@@ -42,7 +42,7 @@
         <%= link_to image_tag("hpi-logo.png", :class=>"logo") + "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
       </div>
       <div class="container navbar-collapse">
-        
+
         <!-- left -->
         <ul class="nav navbar-nav">
           <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
@@ -67,9 +67,9 @@
                   <li><%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete %>
                 </ul>
             </li>
-            
+
             <li> <a href="<%= user_path(current_user) %>" class="profile-picture">
-              <div class="center-cropped thumbnail" 
+              <div class="center-cropped thumbnail"
                  style="background-image: url('<%= "http://#{request.host_with_port}/#{current_user.photo.url}" %>');">
                   <%= image_tag(current_user.photo.url, size: "100")  %>
               </div></a>
@@ -105,7 +105,7 @@
         </div>
       </div><!--/row-->
 
-      
+
       <div id="footer" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
         <p>
           <tr>

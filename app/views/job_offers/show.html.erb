@@ -16,7 +16,7 @@
         <% unless @job_offer.running? %>
           <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
-        <% end %>    
+        <% end %>
       <% end %>
       <% if can?(:complete, @job_offer) && @job_offer.running? %>
         <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary" %>
@@ -31,7 +31,7 @@
         <%= t("job_offers.already_applied") %>
       </div>
     <% end %>
-  
+
     <br>
     <div class="row">
       <div class="col-sm-12">
@@ -104,13 +104,13 @@
 
       <% unless @job_offer.languages.blank? %>
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
-      <% end %> 
-      
+      <% end %>
+
       <% if (user_is_staff_of_employer?(@job_offer) or user_is_admin?) && !@assigned_students.blank? %>
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-              <%= render 'shared/user_list', user_list: @assigned_students %> 
+              <%= render 'shared/user_list', user_list: @assigned_students %>
           </div>
         </div>
       <%end%>
@@ -183,6 +183,6 @@
         </div>
       </div>
     <% end %>
-  
+
   </div>
 </div>

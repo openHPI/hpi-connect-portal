@@ -64,7 +64,7 @@ a:hover, a:focus, .btn-default:hover  {
 }
 
 .center-cropped {
-    width: 40px;  
+    width: 40px;
     height: 40px;
     background-position: center center;
     background-repeat: no-repeat;
