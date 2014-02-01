@@ -7,7 +7,7 @@
 •<%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %>
 •<%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.employer.name %>
 •<%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %>
-•<%= t "applications_mailer.duration" %>: <%= @job_offer.start_date %> - <%= @job_offer.end_date %>
+•<%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %>
 •<%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.compensation %>
 
 <%= t "applications_mailer.last_line" %>

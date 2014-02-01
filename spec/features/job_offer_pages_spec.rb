@@ -89,6 +89,15 @@ describe "Job Offer pages" do
 
               it { should have_button('Prolong') }
             end
+
+            describe "but only if it is on running" do
+              before do
+                job_offer.update(end_date: Date.current + 20, status: @status_completed)
+                visit job_offer_path(job_offer)
+              end
+
+              it { should_not have_button('Prolong') }
+            end
           end
         end
 

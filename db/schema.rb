@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 20140127184845) do
     t.integer  "employer_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.boolean  "flexible_start_date", default: false
     t.integer  "vacant_posts"
+    t.boolean  "flexible_start_date", default: false
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
