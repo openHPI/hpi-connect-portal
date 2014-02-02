@@ -250,6 +250,8 @@ User.create!([{
   lastname: "Meyer", 
   firstname: "Carsten",
   education:'Master',
+  semester: 5,
+  academic_program: 'Bachelor',
   role: Role.where(:name => 'Staff').first,
   employer: epic,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-2.jpg'))

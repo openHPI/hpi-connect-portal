@@ -2,13 +2,13 @@
 
   //takes the id of the chosen student and sets it in the dialog
   $(document).on("click", ".promote", function () {
-     var student_id = $(this).data('id');
-     $("#student_id").val( student_id ); 
+     var user_id = $(this).data('id');
+     $(".user-id").val( user_id ); 
    });
 
    $(document).on("click", ".demote", function () {
      var user_id = $(this).data('id');
-     $("#user_id").val( user_id ); 
+     $(".user_id").val( user_id ); 
 
      $.ajax({
         type: "GET",

@@ -40,7 +40,7 @@
       </div>
       <div class="modal-body">
       <%= form_tag update_role_students_path do %>
-        <%= text_field_tag "student_id", nil %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id" %>
         <% promotion_rules = [] %>
         <% if user_is_deputy? %>
            <% promotion_roles = [[Role.find_by_level(2).name, 2], ["Deputy", 4]] %>

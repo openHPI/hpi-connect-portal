@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
       <%= form_tag path do %>
-        <%= hidden_field_tag "student_id", nil %>
+        <%= hidden_field_tag "promote_user_id", nil %>
 
         <%= select_tag :role_name, options_for_select(roles, roles.first) %>
         <% if (defined?(render_chairs) && render_chairs) %>

@@ -83,7 +83,35 @@
     <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
-          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>  
+          <ul class="list-group">
+            <% @staff.each do |user| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-9">
+                    <% if user.student? %>
+                      <%= link_to user.full_name, student_path(user), :class => "h4" %>
+                    <% else %>
+                      <%= link_to user.full_name, staff_path(user), :class => "h4" %>
+                    <%end%>
+                  </div>
+                   <% if can? :promote, user %>
+                    <div class="col-md-1">
+                      <button class="btn btn btn-default demote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= t('employers.demote_button') %></button>
+                    </div>
+                   <% end %>
+                  <% if can? :promote, user %>
+                    <div class="col-md-1 col-md-offset-1">
+                      <button class="btn btn btn-default promote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#promoteDialog"><%= t('students.promote_button') %></button>
+                    </div>
+                  <% end %>
+
+                </div>
+              </li>
+            <%end%>
+          </ul>
+          <div class="pull-right">
+            <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
+          </div>
         </div>
     </div>
 </div>
@@ -97,7 +125,7 @@
       </div>
       <div class="modal-body">
       <%= form_tag demote_staff_employers_path do %>
-        <%= hidden_field_tag "user_id", nil %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id" %>
 
         <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
         <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name") %>
@@ -111,3 +139,21 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="promoteDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
+      </div>
+      <div class="modal-body">
+      <%= form_tag promote_staff_employers_path do %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id"  %>
+        <%= select_tag :role_level, options_for_select([["Deputy", 4]]) %>
+        <%= hidden_field_tag :id, @employer.id %>
+        <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
+      <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

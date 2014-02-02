@@ -56,7 +56,7 @@ class StudentsController < ApplicationController
   # POST /students/update_role
 
   def update_role
-    User.find(params[:student_id]).set_role(params[:role_level].to_i, @employer)
+    User.find(params[:user_id]).set_role(params[:role_level].to_i, @employer)
     redirect_to students_path
   end
 
@@ -89,7 +89,7 @@ class StudentsController < ApplicationController
     end
 
     def check_user_deputy_or_admin
-      user = User.find_by_id params[:student_id]
+      user = User.find_by_id params[:user_id]
       @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
       unless can? :promote, user
         redirect_to student_path(user)

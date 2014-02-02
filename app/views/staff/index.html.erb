@@ -32,7 +32,7 @@
       </div>
       <div class="modal-body">
       <%= form_tag set_role_to_student_staff_index_path do %>
-        <%= hidden_field_tag "user_id", nil %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id" %>
 
         <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
         <select id="new_deputy_id" name="new_deputy_id"></select>
