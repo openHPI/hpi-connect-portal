@@ -78,10 +78,10 @@
                           <li><%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete %>
                         </ul>
                     </li>
-                    
+
                     <!-- profile picture -->
                     <li> <a href="<%= user_path(current_user) %>" class="profile-picture">
-                      <div class="center-cropped thumbnail" 
+                      <div class="center-cropped thumbnail"
                          style="background-image: url('<%= "http://#{request.host_with_port}/#{current_user.photo.url}" %>');">
                           <%= image_tag(current_user.photo.url, size: "100")  %>
                       </div></a>
@@ -118,7 +118,7 @@
         </div>
       </div><!--/row-->
 
-      
+
       <div id="footer" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
         <p>
           <tr>
@@ -129,7 +129,7 @@
             <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
             <% if !user_signed_in? %>
             <td>|</td>
-            <td>You are an company and want to offer jobs to HPI-students? Please contact <%= mail_to "hpi.hiwi.portal@gmail.com" %>
+            <td><%= t('login_page.external_headline') %> <%= t('login_page.external_contact')%> <%= mail_to "hpi.hiwi.portal@gmail.com" %>
             <% end %>
             </td>
           </tr>

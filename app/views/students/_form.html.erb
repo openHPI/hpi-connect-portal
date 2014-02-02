@@ -135,7 +135,6 @@
             </li>
           </ul>
         </div>
-
     </div>
 
   <!--     Right -->
@@ -149,8 +148,8 @@
                 <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(user, :academic_program) %>
               </div>
               <div class="col-sm-9">
-                <%= f.select :academic_program, [ 
-                  t("activerecord.attributes.user.academic_rank_options.bachelor"), 
+                <%= f.select :academic_program, [
+                  t("activerecord.attributes.user.academic_rank_options.bachelor"),
                   t("activerecord.attributes.user.academic_rank_options.master"),
                   t("activerecord.attributes.user.academic_rank_options.phd"),
                   t("activerecord.attributes.user.academic_rank_options.others")
@@ -175,9 +174,9 @@
               </div>
               <div class="col-sm-9">
                 <%= f.select :education, [
-                  t("activerecord.attributes.user.education_options.abitur"), 
-                  t("activerecord.attributes.user.education_options.secondary_education"), 
-                  t("activerecord.attributes.user.education_options.bachelor"), 
+                  t("activerecord.attributes.user.education_options.abitur"),
+                  t("activerecord.attributes.user.education_options.secondary_education"),
+                  t("activerecord.attributes.user.education_options.bachelor"),
                   t("activerecord.attributes.user.education_options.master"),
                   t("activerecord.attributes.user.education_options.phd"),
                   t("activerecord.attributes.user.education_options.others")
@@ -372,7 +371,7 @@
                           <%= f2.check_box employer.id %>
                       <% end %>
                   </div>
-                </div>    
+                </div>
               </li>
             <% end %>
           <% end %>

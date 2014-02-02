@@ -38,6 +38,7 @@
 #  status                 :integer
 #  user_status_id         :integer
 #  employment_start_date  :date
+#  frequency              :integer          default(1), not null
 #
 
 FactoryGirl.define do

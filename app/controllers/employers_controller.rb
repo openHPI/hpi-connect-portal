@@ -3,10 +3,6 @@ class EmployersController < ApplicationController
   authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_employer, only: [:show, :edit, :update, :update_staff]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to employers_path, notice: exception.message
-  end
-
   # GET /employers
   # GET /employers.json
   def index
@@ -75,7 +71,11 @@ class EmployersController < ApplicationController
   end
 
   private
-  
+
+    def rescue_from_exception(exception)
+      redirect_to employers_path, notice: exception.message
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_employer
       @employer = Employer.find params[:id]

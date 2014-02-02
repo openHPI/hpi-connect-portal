@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
   def userlist
     @is_deputy = User.find(params[:exclude_user]).deputy?
-    @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+    @users = User.where.not(id: params[:exclude_user]).order(:lastname)
     respond_to do |format|
       format.json { render json: { is_deputy: @is_deputy, users: @users.as_json(only: :id, methods: :full_name) } }
     end

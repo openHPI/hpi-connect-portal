@@ -3,12 +3,12 @@
   //takes the id of the chosen student and sets it in the dialog
   $(document).on("click", ".promote", function () {
      var student_id = $(this).data('id');
-     $("#student_id").val( student_id ); 
+     $("#student_id").val( student_id );
    });
 
    $(document).on("click", ".demote", function () {
      var user_id = $(this).data('id');
-     $("#user_id").val( user_id ); 
+     $("#user_id").val( user_id );
 
      $.ajax({
         type: "GET",
@@ -25,11 +25,11 @@
             $.each(data.users, function(index, user){
               options.append('<option value=' + user.id+ '>' + user.full_name + '</option>');
             })
-          } 
+          }
           else {
             $("#new_deputy_id").empty();
             $("#new_deputy_id").css("visibility", "hidden");
-          }     
+          }
         },
         error: function(xhr, ajaxOptions, thrownError){
           console.log("HTTP-Status = "+ xhr.status);
