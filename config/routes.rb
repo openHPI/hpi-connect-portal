@@ -43,11 +43,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'sessions' }
 
-  resources :programming_languages
-  resources :languages
-
   resources :users, only: [:show, :edit, :update]
-  resources :user_statuses
 
   resources :studentsearch
   resources :faqs

@@ -10,7 +10,7 @@
   <div class="col-sm-6 text-center">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <%= link_to t("links.edit"),  edit_staff_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+      <%= link_to t("links.edit"),  edit_staff_path(@user.id), class: "btn btn-default",
       style: "float:right; display:inline;" %>
     </p>
   </div>

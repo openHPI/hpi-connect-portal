@@ -1,7 +1,7 @@
 module UserScopes
 
   def self.included(user)
-    user.class_eval do 
+    user.class_eval do
       scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
       scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
 

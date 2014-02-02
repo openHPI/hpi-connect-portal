@@ -6,17 +6,17 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
-      <%= form_tag path do %>
+      <%= form_tag path, class: "form-inline" do %>
         <%= hidden_field_tag "student_id", nil %>
 
-        <%= select_tag :role_name, options_for_select(roles, roles.first) %>
+        <%= select_tag :role_name, options_for_select(roles, roles.first), class: "form-control" %>
         <% if (defined?(render_chairs) && render_chairs) %>
-        <%= select_tag :chair_name, options_for_select(Chair.all.collect{|c| c.name}, :selected => nil) %>
+        <%= select_tag :chair_name, options_for_select(Chair.all.collect{|c| c.name}, :selected => nil), class: "form-control"  %>
         <% end %>
         <% if (defined?(@chair)) %>
         <%= hidden_field_tag :id, @chair.id %>
         <% end %>
-        <%= submit_tag button_title, :data => {confirm: confirm_question}, :class => "btn btn-default change-role" %>
+        <%= submit_tag button_title, :data => {confirm: confirm_question}, :class => "btn btn-default change-role pull-right" %>
       <% end %>
       </div>
     </div><!-- /.modal-content -->

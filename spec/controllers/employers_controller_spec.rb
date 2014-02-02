@@ -164,7 +164,7 @@ describe EmployersController do
   end
 
   describe "PUT update_staff_to_student" do
-  
+
     it "demotes staff to student" do
       student_role = FactoryGirl.create(:role, :student)
       staff_role = FactoryGirl.create(:role, :staff)

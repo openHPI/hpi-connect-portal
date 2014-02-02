@@ -68,6 +68,8 @@ describe "the staffs profile page" do
   before(:each) do
     @staff1 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
     @staff2 = FactoryGirl.create(:user, :role => staff_role, employer: FactoryGirl.create(:employer))
+
+    FactoryGirl.create(:job_status, name: 'open')
   end
 
   describe "as a staff member" do

@@ -7,7 +7,8 @@ describe "the students page" do
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:user, :student, :programming_languages =>[@programming_language])
-    FactoryGirl.create(:role, :student)
+    login_as(staff, :scope => :user)
+
     FactoryGirl.create(:role, :admin)
 
     login_as(staff, :scope => :user)
@@ -92,7 +93,7 @@ describe "the students editing page" do
     fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
     fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
     find('input[type="submit"]').click
-  
+
     current_path.should == student_path(@student1)
 
     page.should have_content(
@@ -100,8 +101,8 @@ describe "the students editing page" do
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
-  end
 
+   end
 end
 
 describe "the students profile page" do
@@ -112,7 +113,7 @@ describe "the students profile page" do
     @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
 
     login_as(@student1, :scope => :user)
-  end
+   end
 
 
   describe "of myself" do

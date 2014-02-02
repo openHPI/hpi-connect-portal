@@ -44,7 +44,7 @@ describe StaffController do
     it "assigns all staff as @staff" do
       admin = FactoryGirl.create(:user, :admin)
       sign_in admin
-      
+
       get :index, {}, valid_session
       assigns(:users).should eq(User.staff.sort_by{|user| [user.lastname, user.firstname]})
     end
@@ -146,6 +146,11 @@ describe StaffController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      admin = FactoryGirl.create(:user, :admin)
+      sign_in admin
+    end
+
     it "destroys the requested staff" do
       staff = FactoryGirl.create(:user, :staff)
       expect {
@@ -155,7 +160,9 @@ describe StaffController do
 
     it "redirects to the staff list" do
       staff = FactoryGirl.create(:user, :staff)
-      delete :destroy, {:id => staff.to_param}, valid_session
+      expect {
+        delete :destroy, {:id => staff.to_param}, valid_session
+      }.to change(User, :count).by(-1)
       response.should redirect_to(staff_index_path)
     end
   end
@@ -233,13 +240,13 @@ describe StaffController do
         sign_in FactoryGirl.create(:user, role: @admin_role)
       end
 
-      it "updates role of staff_member to student" do 
+      it "updates role of staff_member to student" do
         put :set_role_to_student, {:user_id => @staff_member.to_param}
         assert_equal(@student_role, User.find(@staff_member.id).role)
         assert_equal(nil, User.find(@staff_member.id).employer)
       end
 
-      it "updates role of deputy to student" do 
+      it "updates role of deputy to student" do
         @employer.update(:deputy => @staff_member)
         new_deputy = FactoryGirl.create(:user, :student)
         post :set_role_to_student, {:user_id => @staff_member.to_param, :new_deputy_id => new_deputy.to_param}

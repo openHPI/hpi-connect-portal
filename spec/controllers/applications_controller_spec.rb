@@ -18,105 +18,121 @@ describe ApplicationsController do
       @application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
     end
 
-    it "deletes application" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-      expect{
+    describe "having sufficient permissions" do
+
+      before(:each) do
+        sign_in @job_offer.responsible_user
+      end
+
+      it "deletes application" do
+        
+        expect{
           get :decline, {:id => @application.id}
         }.to change(Application, :count).by(-1)
+      end
+      
+      it "redirects to job offer view if saving fails" do
+        Application.any_instance.stub(:delete).and_return(false)
+
+        expect{
+          get :decline, {:id => @application.id}
+        }.to change(Application, :count).by(0)
+        response.should redirect_to(@application.job_offer)
+      end
     end
 
-    it "redirects to job offer view if user don't have permissions for declining" do
-      sign_in @student
+    describe "having insufficient permissions" do
 
-      get :decline, {:id => @application.id}
-      response.should redirect_to(@job_offer)
-    end
+      before(:each) do
+        sign_in @student
+      end
 
-    it "redirects to job offer view if saving fails" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      Application.any_instance.stub(:delete).and_return(false)
-
-      get :decline, {:id => @application.id}
-      response.should redirect_to(@application.job_offer)
+      it "redirects to job offer view" do
+        expect{
+          get :decline, {:id => @application.id}
+        }.to change(Application, :count).by(0)
+        response.should redirect_to(@job_offer)
+      end
     end
   end
 
   describe "GET accept" do
 
-    before do
+    before(:each) do
       @application = FactoryGirl.create(:application, :user => @student, :job_offer => @job_offer)
     end
 
-    it "redirects to job offer view if user don't have permissions for accepting" do
-      sign_in @student
+    describe "having sufficient permissions" do
+      before(:each) do
+        sign_in @job_offer.responsible_user
+      end
 
-      get :accept, {:id => @application.id}
-      response.should redirect_to(@job_offer)
-    end
-
-    it "accepts a student and he/her is included in @job_offer.assigned_students" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      get :accept, {:id => @application.id}
-      assigns(:application).job_offer.assigned_students.should include(@student)
-    end
-
-    it "declines all other students after accepting the last possible application" do
-      @job_offer.vacant_posts = 1
-      @job_offer.save
-      student2 = FactoryGirl.create(:user, :role => student_role)
-
-      application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
-      application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      expect{
+      it "accepts a student and he/her is included in @job_offer.assigned_students" do
         get :accept, {:id => @application.id}
-      }.to change(Application, :count).by(-3)
+        assigns(:application).job_offer.assigned_students.should include(@student)
+      end
+
+      it "declines all other students after accepting the last possible application" do
+        @job_offer.vacant_posts = 1
+        @job_offer.save
+        student2 = FactoryGirl.create(:user, :role => student_role)
+
+        application_2 = FactoryGirl.create(:application, :user => student2, :job_offer => @job_offer)
+        application_3 = FactoryGirl.create(:application, :job_offer => @job_offer)
+
+        expect{
+          get :accept, {:id => @application.id}
+        }.to change(Application, :count).by(-3)
+      end
+
+      it "changes the job status to 'running' if the last possible application is accepted" do
+        @job_offer.vacant_posts = 1
+        @job_offer.save
+
+        running = FactoryGirl.create(:job_status, :name=>'running')
+
+        get :accept, {:id => @application.id}
+        assigns(:application).job_offer.status.should eq(running)
+      end
+
+      it "sends two emails" do
+        old_count = ActionMailer::Base.deliveries.count
+
+        get :accept, {:id => @application.id}
+
+        ActionMailer::Base.deliveries.count.should == old_count + 2
+      end
+
+      it "renders errors if updating all objects failed" do
+        working = FactoryGirl.create(:job_status, :name=>'running')
+
+        JobOffer.any_instance.stub(:save).and_return(false)
+
+        get :accept, {:id => @application.id}
+        response.should redirect_to(@application.job_offer)
+      end
+
+      it "updates the job offers start date to the current date if it is 'from now on'" do
+        @job_offer.flexible_start_date = true
+        @job_offer.save!
+
+        get :accept, {:id => @application.id}
+        assert_equal(@job_offer.reload.start_date, Date.current)
+      end
     end
 
-    it "job status should be 'running' if the last possible application is accepted" do
-      @job_offer.vacant_posts = 1
-      @job_offer.save
-      
-      running = FactoryGirl.create(:job_status, :name=>'running')
-      
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
+    describe "having insufficient permissions" do
 
-      get :accept, {:id => @application.id}
-      assigns(:application).job_offer.status.should eq(running)
-    end
+      before(:each) do
+        sign_in @student
+      end
 
-    it "sends two emails" do
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      old_count = ActionMailer::Base.deliveries.count
-
-      get :accept, {:id => @application.id}
-
-      ActionMailer::Base.deliveries.count.should == old_count + 2
-    end
-
-    it "renders errors if updating all objects failed" do
-      working = FactoryGirl.create(:job_status, :name=>'running')
-
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      JobOffer.any_instance.stub(:save).and_return(false)
-
-      get :accept, {:id => @application.id}
-      response.should redirect_to(@application.job_offer)
-    end
-
-    it "updates the job offers start date to the current date if it is 'from now on'" do
-      @job_offer.flexible_start_date = true
-      @job_offer.save!
-
-      sign_in FactoryGirl.create(:user,:role=>staff_role, :employer => @job_offer.employer)
-
-      get :accept, {:id => @application.id}
-      assert_equal(@job_offer.reload.start_date, Date.current)
+      it "redirects to job offer view" do
+        expect{
+          get :accept, {:id => @application.id}
+        }.to change(Application, :count).by(0)
+        response.should redirect_to(@job_offer)
+      end
     end
   end
 
@@ -177,26 +193,31 @@ describe ApplicationsController do
         }.to change(Application, :count).by(0)
       response.should redirect_to(@job_offer)
     end
+
+    it "only allows students to create applications" do
+      sign_in FactoryGirl.create(:user, role: student_role, employer: @job_offer.employer)
+      expect{
+          post :create, { :application => {:job_offer_id => @job_offer.id}}
+      }.to change(Application, :count).by(0)
+    end
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @user = FactoryGirl.create(:user,role: student_role, employer: @job_offer.employer)
+      sign_in @user
+    end
     it "destroys the requested application" do
-      user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: @user)
 
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-
-      sign_in user
       expect {
         delete :destroy, {:id => application.to_param}
       }.to change(Application, :count).by(-1)
     end
 
     it "redirects to the job_offers page" do
-      user = FactoryGirl.create(:user,:role=>student_role, :employer => @job_offer.employer)
+      application = FactoryGirl.create(:application, job_offer: @job_offer, user: @user)
 
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
-
-      sign_in user
       delete :destroy, {:id => application.to_param}
       response.should redirect_to(job_offer_path(@job_offer))
     end

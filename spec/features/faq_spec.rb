@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Faq do
   before(:each) do
     @faq = Faq.new("question" => "How do I make edits to my profile?", "answer" => "Log in to your account. Then hover over My Profile at the top right of the page. Choose the Edit-Button.",  "locale" => "en")
-  end 
+  end
 
   describe "validation of parameters" do
 
@@ -33,11 +33,12 @@ describe "FAQ page" do
 
   it 'should return a page for FAQ' do
 
-    @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) 
+    @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
     login_as(@student, :scope => :user)
     visit faqs_path
     expect(page).to have_content "FAQ"
     end
+
 
   # it 'should have a buttons for editing the FAQ page' do
 

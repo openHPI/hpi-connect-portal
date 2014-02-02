@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 3.1.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0.2'
@@ -33,21 +33,21 @@ gem 'annotate', '>=2.6.1'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
+  gem 'sdoc', '~> 0.4.0', require: false
 end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rake'
   gem 'factory_girl_rails', :require => false
-  gem 'codeclimate-test-reporter', :require => nil
+  gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
 end
 
 gem 'simplecov', :group => :test, :require => nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
-gem 'newrelic_rpm', '~> 3.7.1.182', group: :production
+gem 'newrelic_rpm', '~> 3.7.1.188', group: :production
 gem 'airbrake', '~> 3.1.15'
 
 # basic layouting
@@ -104,7 +104,7 @@ gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
 # WYSIWYG Text Editor
-gem 'bootsy'
+gem 'bootsy', '~> 2.0.6'
 gem 'sanitize'
 
 # Birthdate validation
