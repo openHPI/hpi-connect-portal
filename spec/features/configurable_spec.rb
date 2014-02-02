@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "the configurable page" do
+describe Admin::ConfigurablesController do
 
   let(:staff) { FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer)) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
