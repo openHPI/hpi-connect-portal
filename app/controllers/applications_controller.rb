@@ -28,21 +28,8 @@ class ApplicationsController < ApplicationController
 
     authorize! :accept, @application
 
-    new_assigned_students = @job_offer.assigned_students << @application.user
-    if @job_offer.update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1 })
-      @application.delete
-      if @job_offer.flexible_start_date
-        @job_offer.update!({ start_date: Date.current })
-      end
-
-      ApplicationsMailer.application_accepted_student_email(@application).deliver
-      JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-
-      if @job_offer.check_remaining_applications
-        respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
-      else
-        render_errors_and_action @job_offer
-      end
+    if @job_offer.accept_application(@application) && @job_offer.check_remaining_applications
+      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
     else
       render_errors_and_action @job_offer
     end
