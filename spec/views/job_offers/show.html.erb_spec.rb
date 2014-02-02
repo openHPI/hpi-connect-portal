@@ -7,6 +7,7 @@ describe "job_offers/show" do
       :description => "Description",
       :title => "Title",
       :employer => @employer,
+      :start_date => Date.current + 10,
       :responsible_user => FactoryGirl.create(:user),
       :status => FactoryGirl.create(:job_status, :name => "open")
     ))

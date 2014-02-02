@@ -7,6 +7,7 @@
 #  answer     :text
 #  created_at :datetime
 #  updated_at :datetime
+#  locale     :string(255)
 #
 
 require 'spec_helper'
@@ -14,10 +15,10 @@ require 'spec_helper'
 describe Faq do
 	before(:each) do
     	@faq = Faq.new("question" => "How do I make edits to my profile?", "answer" => "Log in to your account. Then hover over My Profile at the top right of the page. Choose the Edit-Button.", "locale" => "en")
-	end 
+	end
 
 	describe "validation of parameters" do
-		
+
 		it "with question not present" do
 			@faq.question = nil
 			@faq.should be_invalid

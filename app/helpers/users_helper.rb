@@ -23,20 +23,20 @@ module UsersHelper
   def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
     if params
       params.each do |id, skill|
-        language = language_class.where(:user_id => user_id, language_id_attribute.to_sym => id).first_or_create
-        language.update_attributes(:skill => skill)
+        language = language_class.where(user_id: user_id, language_id_attribute.to_sym => id).first_or_create
+        language.update_attributes(skill: skill)
       end
 
       remove_for_language(params, user_id, language_class, language_id_attribute)
     else
       #If the User deselects all languages, they have to be destroyed
-      language_class.destroy_all(:user_id => user_id)
+      language_class.destroy_all(user_id: user_id)
     end
   end
 
   def remove_for_language(params, user_id, language_class, language_id_attribute)
     #Delete all programming languages which have been deselected (rating removed) from the form
-    language_class.where(:user_id => user_id).each do |lang|
+    language_class.where(user_id: user_id).each do |lang|
       if params[lang.attributes[language_id_attribute].to_s].nil?
         lang.destroy
       end
@@ -65,25 +65,21 @@ module UsersHelper
     if params
       params.each do |id, boolean|
         if boolean.to_i == 1
-        newsletter_class.where(:user_id => user_id, attributes_id.to_sym => id).first_or_create
+        newsletter_class.where(user_id: user_id, attributes_id.to_sym => id).first_or_create
        end
       end
        remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
     else
-      newsletter_class.destroy_all(:user_id => user_id)
+      newsletter_class.destroy_all(user_id: user_id)
     end
   end
 
   def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
-    newsletter_class.where(:user_id => user_id).each do |n|
+    newsletter_class.where(user_id: user_id).each do |n|
       if params[n.attributes[attributes_id].to_s].to_i == 0
         n.delete
       end
     end
-  end  
-
-  def user_can_promote_students?
-    return signed_in? && (current_user.admin? || user_is_deputy?)
   end
 
   def user_can_demote_staff?

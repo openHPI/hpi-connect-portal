@@ -6,7 +6,8 @@ en:
         employer_overview_external: "Listing of external employers"
         editing_employer: "Editing Employer"
         new_employer: "New Employer"
-        staff: Staff
+        staff: "Staff"
+        additional_staff: "Additional Staff"
         open: Open
         running: Running
         general_information: "General Information"

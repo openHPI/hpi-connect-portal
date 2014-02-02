@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     params[resource] &&= send(method) if respond_to?(method, true)
   end
 
+  rescue_from CanCan::AccessDenied do |exception|
+    rescue_from_exception exception
+  end
+
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { locale: I18n.locale }
@@ -65,4 +69,7 @@ class ApplicationController < ActionController::Base
       }
     end
 
+    def rescue_from_exception(exception)
+      redirect_to root_path
+    end
 end

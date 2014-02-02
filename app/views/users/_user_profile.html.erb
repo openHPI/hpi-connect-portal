@@ -25,7 +25,7 @@
           <table class="table">
             <thead></thead>
             <tbody>
-              <% if !(user.homepage).empty? %>
+              <% unless (user.homepage).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "home 2x"%>
@@ -35,7 +35,7 @@
                   </td>
                 </tr>
               <% end %>
-              <% if !(user.github).empty? %>
+              <% unless (user.github).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "github-square 2x"%>
@@ -45,7 +45,7 @@
                   </td>
                 </tr>
               <% end %>
-              <% if !(user.facebook).empty? %>
+              <% unless (user.facebook).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "facebook-square 2x"%>
@@ -55,7 +55,7 @@
                   </td>
                 </tr>
               <% end %>
-              <% if !(user.xing).empty? %>
+              <% unless (user.xing).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "xing-square 2x"%>
@@ -65,7 +65,7 @@
                   </td>
                 </tr>
               <% end %>
-              <% if !(user.linkedin).empty? %>
+              <% unless (user.linkedin).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "linkedin-square 2x"%>
@@ -88,13 +88,13 @@
           <table class="table">
             <thead></thead>
             <tbody>
-              <% if !(user.academic_program).nil? %>
+              <% unless (user.academic_program).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.user.academic_program")%></td>
                   <td><%= user.academic_program %></td>
                 </tr>
               <% end %>
-              <% if !(user.semester).nil? %>
+              <% unless (user.semester).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.user.semester")%></td>
                   <td><%= user.semester %></td>
