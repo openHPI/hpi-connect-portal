@@ -15,8 +15,8 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  vacant_posts        :integer          default(1)
 #  flexible_start_date :boolean          default(FALSE)
+#  vacant_posts        :integer
 #
 
 class JobOffer < ActiveRecord::Base
