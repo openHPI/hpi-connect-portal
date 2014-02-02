@@ -19,4 +19,4 @@ en:
     external_employers: "External employers"
     asterisk_description: "Fields marked with * are obligatory"
     star_description_prog: "1 = I used it; 3 = Basic knowledge; 5 = I'm an expert"
-    star_description_lang: "1 = basic knowledge; 3 = advanced knowledge; 5 = native"
+    star_description_lang: "1 = Basic knowledge; 3 = Advanced knowledge; 5 = Native"
