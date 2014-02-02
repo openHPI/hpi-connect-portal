@@ -7,7 +7,7 @@ class ApplicationsController < ApplicationController
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
     authorize! :create, Application
-    if not @job_offer.open?
+    unless @job_offer.open?
       flash[:error] = 'This job offer is currently not open.'
     else
       @application = Application.new job_offer: @job_offer, user: current_user

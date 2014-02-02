@@ -53,7 +53,7 @@ class JobOffer < ActiveRecord::Base
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
     job_offer.responsible_user = current_user
-    if !parameters[:employer_id]
+    unless parameters[:employer_id]
       job_offer.employer = current_user.employer
     end
 

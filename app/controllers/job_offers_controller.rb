@@ -60,7 +60,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.create_and_notify job_offer_params, current_user
 
-    if !@job_offer.new_record?
+    unless @job_offer.new_record?
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     else
       render_errors_and_action @job_offer, 'new'
