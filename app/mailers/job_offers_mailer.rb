@@ -48,7 +48,7 @@ class JobOffersMailer < ActionMailer::Base
    end
 
   def students_by_employer(job_offer, students)
-    employer_students = EmployersNewsletterInformation.where(:employer => job_offer.employer).map(&:user)
+    employer_students = EmployersNewsletterInformation.where(employer: job_offer.employer).map(&:user)
     students & employer_students
   end
 
