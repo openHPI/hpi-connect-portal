@@ -22,7 +22,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12">
-          <%= escape_javascript(@employer.description.html_safe) %>
+          <%= sanitize_html(@employer.description.html_safe) %>
         </div>
       </div>
     </li>

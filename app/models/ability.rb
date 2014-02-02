@@ -19,6 +19,7 @@ class Ability
   def initialize_student()
     can :create, Application
     can :read, Faq
+    can :matching, JobOffer
     can :read, User, role: { name: 'Staff' }
   end
 

@@ -105,6 +105,7 @@ gem 'simple_form'
 
 # WYSIWYG Text Editor
 gem 'bootsy'
+gem 'sanitize'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'

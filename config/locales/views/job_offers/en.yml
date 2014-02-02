@@ -53,3 +53,4 @@ en:
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
     vacant_posts_left: "open position(s) left"
+    no_results: "No job offer matches your search"
