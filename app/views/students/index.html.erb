@@ -39,6 +39,13 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
+        <div><%= t('students.promote_description_introduction')%></div><br>
+        <ul>
+          <li><%= t('students.promote_description_part_1')%></li>
+          <li><%= t('students.promote_description_part_2')%></li>
+          <li><%= t('students.promote_description_part_3')%></li>
+        </ul>
+
       <%= form_tag update_role_students_path do %>
         <%= hidden_field_tag "user_id", nil, class: "user-id" %>
         <% promotion_rules = [] %>
@@ -47,12 +54,29 @@
         <% else %>
            <% promotion_roles = [[Role.find_by_level(2).name, 2] , [Role.find_by_level(3).name,3], ["Deputy", 4]] %>
         <%end%>
-
-        <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
-        <% if user_is_admin? %>
-        <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil) %>
-        <% end %>
-        <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= label_tag 'role_level', 'New Role: ' %>
+          </div>
+          <div class="col-md-5">
+            <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
+          </div>
+        </div>
+        <div class="row">
+          <% if user_is_admin? %>
+          <div class="col-md-3">
+            <%= label_tag 'employer_id', 'New Employer: ' %>
+          </div>
+          <div class="col-md-7">
+            <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil) %>
+          </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <div class="col-md-1 col-md-offset-9">
+            <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
+         </div>
+       </div>
       <% end %>
       </div>
     </div><!-- /.modal-content -->

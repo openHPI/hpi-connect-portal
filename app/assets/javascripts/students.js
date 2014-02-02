@@ -41,12 +41,13 @@
 
 
   //when the role of a student is changed to Admin, the drop-down menu with the different chairs is not visible
-  $("#role_name").change(function(event){
-    if(event.target.value == "Admin"){
-      $("##employer_name").css('visibility', 'hidden')
+  $("#role_level").change(function(event){
+
+    if(event.target.options[event.target.selectedIndex].text == "Admin"){
+      $("#employer_id").css('visibility', 'hidden')
     }
     else {
-      $("#employer_name").css('visibility', 'visible')
+      $("#employer_id").css('visibility', 'visible')
     }
   });
 })
