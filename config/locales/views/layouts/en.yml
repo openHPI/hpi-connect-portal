@@ -4,6 +4,7 @@ en:
     students: "Students"
     staff: "Staff"
     employers: "Employers"
+    users: "Users"
     login: "Login"
     logged_in: "logged in"
     edit_profile: "Edit profile"

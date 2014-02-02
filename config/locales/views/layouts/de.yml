@@ -4,6 +4,7 @@ de:
     students: "Studenten"
     staff: "Mitarbeiter"
     employers: "Employers"
+    users: "Benutzer"
     login: "Anmelden"
     logged_in: "Angemeldet"
     edit_profile: "Profil bearbeiten"
