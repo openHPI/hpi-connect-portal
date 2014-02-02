@@ -26,16 +26,13 @@ describe StudentsController do
   describe "GET show" do
     it "assigns the requested user as @user" do
       user = FactoryGirl.create(:user)
-      get :show, {:id => user.to_param}, valid_session
+      get :show, { id: user.to_param }, valid_session
       assigns(:user).should eq(user)
     end
 
     it "checks if the user is a student" do
-      user = FactoryGirl.create(:user,
-          role: FactoryGirl.create(:role, :staff),
-          employer: FactoryGirl.create(:employer)
-          )
-      get :show, {:id => user.to_param}, valid_session
+      user = FactoryGirl.create(:user, :staff)
+      get :show, { id: user.to_param }, valid_session
       response.should redirect_to user_path(user)
     end
   end
@@ -123,7 +120,13 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      patch :update, { :id => @student.id, :user => { "photo" => fixture_file_upload('images/test_picture.jpg', 'image/jpeg') } }
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_picture.jpg',
+        :type => 'image/jpeg',
+        :tempfile => fixture_file_upload('/images/test_picture.jpg')
+      })
+
+      patch :update, { :id => @student.id, :user => { "photo" => test_file } }
       response.should redirect_to(student_path(@student))
     end
   end

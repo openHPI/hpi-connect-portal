@@ -86,7 +86,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %><%= mark_if_required(@job_offer, :time_effort) %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
+                  <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
                 </div>
               </div>
             </li>
@@ -96,7 +96,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %><%= mark_if_required(@job_offer, :compensation) %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: {value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation)} %>
+                  <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation) } %>
                 </div>
               </div>
             </li>
@@ -106,7 +106,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.vacant_posts", class: "control-label" %><%= mark_if_required(@job_offer, :vacant_posts) %>
                 </div>
                 <div class="col-sm-9">
-                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: {value: (job_offer.vacant_posts.blank? ? 1 : job_offer.vacant_posts)} %>
+                   <%= f.input :vacant_posts, input_html: {value: (job_offer.vacant_posts.blank? ? 1 : job_offer.vacant_posts)} %>
                 </div>
               </div>
             </li>
@@ -116,7 +116,7 @@
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.job_offer.required_programming_languages") %></h4>
+          <h4><%= t("job_offers.required_programming_languages") %></h4>
         </div>
         <ul class="list-group">
           <li class="list-group-item">
@@ -134,7 +134,7 @@
       </div>
       <div class="panel panel-default">
           <div class="panel-heading">
-            <h4><%= t("activerecord.attributes.job_offer.required_languages") %></h4>
+            <h4><%= t("job_offers.required_languages") %></h4>
           </div>
           <ul class="list-group">
             <li class="list-group-item">
@@ -154,7 +154,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h5>
-              <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+              <%= t("layouts.asterisk_description") %>
             </h5>
           </div>
         </div>

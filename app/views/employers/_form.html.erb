@@ -44,11 +44,11 @@
                   <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %><%= mark_if_required(employer, :deputy_id) %>
                 </div>
                 <div class="col-sm-9">
-                    <% if employer.staff.any? %>
-                      <%= f.collection_select :deputy_id, employer.staff, :id, :email, {prompt: t("employers.select_deputy")}, {class: "form-control"}%>
-                    <% else %>
-                      <%= f.collection_select :deputy_id, User.staff, :id, :email, {prompt: t("employers.select_deputy")}, {class: "form-control"}%>
-                    <% end %>
+                  <% if employer.staff.any? %>
+                    <%= f.collection_select :deputy_id, employer.staff, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
+                  <% else %>
+                    <%= f.collection_select :deputy_id, User.students, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
+                  <% end %>
                 </div>
               </div>
           </div>
@@ -82,13 +82,11 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h5>
-          <%= f.label t("layouts.asterisk_description"),  class: "control-label" %>
+          <%= t("layouts.asterisk_description") %>
         </h5>
       </div>
     </div>
   <% end %>
-
-
 
   <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 

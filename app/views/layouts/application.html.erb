@@ -106,7 +106,7 @@
       </div><!--/row-->
 
       
-      <div id="main" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
+      <div id="footer" class="navbar navbar-default navbar-fixed-bottom" style="text-align: center;">
         <p>
           <tr>
             <td>&copy; <%= t("layouts.project") %></td>
@@ -114,12 +114,14 @@
             <td><%= link_to t("layouts.faqs"), faqs_path %></td>
             <td>|</td>
             <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
+            <% if !user_signed_in? %>
+            <td>|</td>
+            <td>You are an company and want to offer jobs to HPI-students? Please contact <%= mail_to "hpi.hiwi.portal@gmail.com" %>
+            <% end %>
+            </td>
           </tr>
         </p>
       </div>
-
-     
-
     </div> <!-- /container -->
 
   </body>

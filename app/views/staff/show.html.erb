@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div class="row">
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
@@ -29,9 +27,9 @@
             <td><%= t("activerecord.attributes.user.birthday") %></td>
             <td><%= @user.birthday %></td>
           </tr>
-           <tr>
+          <tr>
             <td><%= t("activerecord.attributes.user.email") %></td>
-            <td><%= @user.email %></td>
+            <td><%= mail_to @user.email %></td>
           </tr>
            <tr>
             <td><%= t("activerecord.attributes.user.employer") %></td>
@@ -49,7 +47,7 @@
                 <% else %>
                    <p class="text-muted">
                     <%= link_to(@user.cv.url) do %>
-                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= File.basename(@user.cv.path); %>
+                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= t('activerecord.attributes.user.cv') %>
                     <% end %>
                   </p>
                 <% end %>

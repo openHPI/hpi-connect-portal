@@ -2,6 +2,7 @@ class ApplicationsController < ApplicationController
   include UsersHelper
 
   before_filter :signed_in_user
+  before_filter :check_attachment_is_valid, only: [:create]
 
   def create
     @job_offer = JobOffer.find application_params[:job_offer_id]
@@ -24,29 +25,22 @@ class ApplicationsController < ApplicationController
   def accept
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
+    
     new_assigned_students = @job_offer.assigned_students << @application.user
-    if @job_offer.update({assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1})
+    if @job_offer.update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1 })
+      @application.delete
       if @job_offer.flexible_start_date
-        @job_offer.update!({start_date: Date.current})
+        @job_offer.update!({ start_date: Date.current })
       end
 
       ApplicationsMailer.application_accepted_student_email(@application).deliver
       JobOffersMailer.job_student_accepted_email(@job_offer).deliver
 
-      if @job_offer.vacant_posts == 0
-        if @job_offer.update({status: JobStatus.running})
-          Application.where(job_offer: @job_offer).where.not(id: @application.id).each do | application |
-            unless application.decline
-              render_errors_and_action @application.job_offer
-            end
-          end
-        else
-          render_errors_and_action @job_offer
-        end
+      if @job_offer.check_remaining_applications
+        respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
+      else
+        render_errors_and_action @job_offer
       end
-
-      @application.delete
-      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
     else
       render_errors_and_action @job_offer
     end
@@ -80,5 +74,15 @@ class ApplicationsController < ApplicationController
 
     def file_params
       params.require(:attached_files).permit([file_attributes: :file])
+    end
+
+    def check_attachment_is_valid
+      if params[:attached_files]
+        file = file_params[:file_attributes][0][:file]
+        unless file.content_type == "application/pdf"
+          job_offer = JobOffer.find application_params[:job_offer_id]
+          respond_and_redirect_to job_offer, "Please choose a valid attachment (PDF only)."
+        end
+      end
     end
 end

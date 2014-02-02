@@ -10,7 +10,8 @@ describe "job_offers/show" do
       :responsible_user => FactoryGirl.create(:user),
       :status => FactoryGirl.create(:job_status, :name => "open")
     ))
-    view.stub(:signed_in?) { false }
+    view.stub(:can?) { false }
+    view.stub(:current_user) { FactoryGirl.create(:user) }
   end
 
   it "renders attributes in <p>" do
@@ -23,13 +24,6 @@ describe "job_offers/show" do
     render
     rendered.should_not match(/Applications/)
     rendered.should_not match(/Apply/)
-  end
-
-  it "renders contact mailto link" do
-    render
-
-    rendered.should match(/Contact/)
-    assert_select "a[href='mailto:" + @job_offer.responsible_user.email + "']"
   end
 
   it "hides the edit button if the job is running" do
@@ -56,6 +50,6 @@ describe "job_offers/show" do
 
     render
 
-    rendered.should match(@job_offer.compensation.to_s)
+    rendered.should match(@job_offer.compensation.to_s + " " + I18n.t('job_offers.compensation_description'))
   end
 end

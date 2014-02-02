@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <% if signed_in? && can?(:update, @faq) %>
+        <% if can?(:update, @faq) %>
             <h2><%= t("faqs.edit") %></h2>
             <%= render 'form', faq: @faq %>
         <% else %>

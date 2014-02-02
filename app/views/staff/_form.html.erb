@@ -81,6 +81,7 @@
             </li>
           </ul>
       </div>
+
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
           <ul class="list-group">
@@ -119,7 +120,7 @@
               <% end %>
             <% end %>
           </ul>
-        </div>
+      </div>
     </div>
 
   <!--     Right -->
@@ -170,7 +171,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                 <%= fa_icon "home 2x", class: "control-label"%>
+                <%= fa_icon "home 2x", class: "control-label"%><%= mark_if_required(@user, :homepage) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :homepage, class: "form-control", type:"text" %>
@@ -180,7 +181,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                 <%= fa_icon "github-square 2x", class: "control-label"%>
+                <%= fa_icon "github-square 2x", class: "control-label"%><%= mark_if_required(@user, :github) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :github, class: "form-control", type:"text" %>
@@ -190,7 +191,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                 <%= fa_icon "facebook-square 2x", class: "control-label"%>
+                 <%= fa_icon "facebook-square 2x", class: "control-label"%><%= mark_if_required(@user, :facebook) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :facebook, class: "form-control", type:"text" %>
@@ -200,7 +201,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                 <%= fa_icon "xing-square 2x", class: "control-label"%>
+                 <%= fa_icon "xing-square 2x", class: "control-label"%><%= mark_if_required(@user, :xing) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :xing, class: "form-control", type:"text" %>
@@ -210,7 +211,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                 <%= fa_icon "linkedin-square 2x", class: "control-label"%>
+                <%= fa_icon "linkedin-square 2x", class: "control-label"%><%= mark_if_required(@user, :linkedin) %>
               </div>
               <div class="col-sm-9">
                 <%= f.text_field :linkedin, class: "form-control", type:"text" %>
@@ -232,8 +233,31 @@
           </li>
         </ul>
       </div>
-    </div>
   </div>
+</div>
+<div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= f.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <% if User.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>
+            <%= t("layouts.asterisk_description") %>
+          </h5>
+        </div>
+      </div>
+    <% end %>
+</div>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
 <% end %>

@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col-sm-9">
-         <h1 style="display:inline">
-            <%= @employer.name %>
-            <% if @employer.external %>
-            <span class="label label-warning"><%= t("employers.external")%></span>
-            <% end %>
+        <h1 style="display:inline" class="pull-left">
+          <%= @employer.name %>  
+          <% if @employer.external %>
+            <span class="label label-warning"><%= t("employers.external")%></span>         
+          <% end %> 
         </h1>
-        <% if can? :edit, @employer %>
-            <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
-        <% end %>
+      <% if can? :edit, @employer %>
+        <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
+      <% end %>
     </div>
     <div class="col-sm-3">
-        <%= image_tag @employer.avatar.url(:medium), class: "img-thumbnail pull-left employer-thumbnail", alt: "Picture: "+@employer.name%>
+      <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail pull-left", alt: "Picture: "+@employer.name )  %>
     </div>
 </div>
 
@@ -22,7 +22,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12">
-          <%= escape_javascript(@employer.description.html_safe) %>
+          <%= sanitize_html(@employer.description.html_safe) %>
         </div>
       </div>
     </li>
@@ -30,7 +30,6 @@
 </div>
 <div class="row">
     <div class="col-sm-6">
-
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
@@ -50,22 +49,13 @@
                   <%= t("activerecord.attributes.employer.deputy") %>
                 </div>
                 <div class="col-sm-8">
-                  <%= @employer.deputy.email %>
+                  <%= link_to @employer.deputy.firstname+" "+@employer.deputy.lastname, @employer.deputy %>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-    </div>
 
-    <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
-          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>  
-        </div>
-    </div>
-
-    <div class="col-sm-6">
         <% unless @open_job_offers.empty? %>
             <div class="panel panel-default">
               <div class="panel-heading"><h4><%= t("employers.open_job_offers") %></h4></div>
@@ -81,7 +71,7 @@
         <% end %>
 
         <% unless @pending_job_offers.empty? %>
-          <% if signed_in? && (user_is_staff_of_employer?(@pending_job_offers.first) || user_is_admin?) %>
+          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
             <div class="panel panel-default">
                 <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
                 <%= render 'shared/jobs_listing', job_offer_list: @pending_job_offers %>
@@ -90,6 +80,12 @@
         <% end %>
     </div>
 
+    <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
+          <%= render 'shared/user_list', name: "employers.staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>  
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -104,9 +100,9 @@
         <%= hidden_field_tag "user_id", nil %>
 
         <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
-        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "name") %>
-        <% if (defined?(@employer)) %>
-        <%= hidden_field_tag :id, @employer.id %>
+        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name") %>
+        <% if defined? @employer %>
+          <%= hidden_field_tag :id, @employer.id %>
         <% end %>
         <%= submit_tag t('employers.demote_button'), :data => {confirm: t('employers.demote_confirm_question')}, :class => "btn btn-default change-role" %>
       <% end %>
