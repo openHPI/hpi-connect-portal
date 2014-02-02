@@ -10,9 +10,7 @@ class ApplicationsController < ApplicationController
     unless @job_offer.open?
       flash[:error] = 'This job offer is currently not open.'
     else
-      @application = Application.new job_offer: @job_offer, user: current_user
-      if @application.save
-        ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv], params[:attached_files]).deliver
+      if Application.create_and_notify @job_offer, current_user, params
         flash[:success] = 'Applied Successfully!'
       else
         flash[:error] = 'An error occured while applying. Please try again later.'
