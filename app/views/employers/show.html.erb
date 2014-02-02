@@ -96,7 +96,7 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
-      <%= form_tag update_staff_employers_path do %>
+      <%= form_tag demote_staff_employers_path do %>
         <%= hidden_field_tag "user_id", nil %>
 
         <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>

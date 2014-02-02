@@ -28,7 +28,8 @@ HpiHiwiPortal::Application.routes.draw do
 
   resources :employers do
     collection do 
-        post 'update_staff'
+        post 'demote_staff'
+        post 'promote_staff'
     end
   end
 
