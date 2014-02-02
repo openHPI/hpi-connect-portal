@@ -19,7 +19,7 @@
       </div>
     <% end %>
 
-    <% if !(user.homepage).empty? || !(user.github).empty? || !(user.facebook).empty? || !(user.xing).empty? || !(user.linkedin).empty? %>
+    <% if ( !(user.homepage).nil? && !(user.homepage).empty? ) || ( !(user.github).nil? && !(user.github).empty? ) || ( !(user.facebook).nil? && !(user.facebook).empty? ) || ( !(user.xing).nil? && !(user.xing).empty? ) || ( !(user.linkedin).nil? && !(user.linkedin).empty? ) %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.user.links")%></h4></div>
           <table class="table">
