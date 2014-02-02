@@ -7,6 +7,7 @@
 #  answer     :text
 #  created_at :datetime
 #  updated_at :datetime
+#  locale     :string(255)
 #
 
 require 'spec_helper'

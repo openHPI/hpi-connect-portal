@@ -20,10 +20,6 @@ class JobOffersController < ApplicationController
   has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    rescue_from_exception exception
-  end
-
   # GET /job_offers
   # GET /job_offers.json
   def index
@@ -64,7 +60,7 @@ class JobOffersController < ApplicationController
   def create
     @job_offer = JobOffer.create_and_notify job_offer_params, current_user
 
-    if !@job_offer.new_record?
+    unless @job_offer.new_record?
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     else
       render_errors_and_action @job_offer, 'new'
@@ -170,7 +166,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

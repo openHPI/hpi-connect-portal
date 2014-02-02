@@ -54,7 +54,7 @@
                   <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(user, :birthday) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-3'} %>
+                  <%= f.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-4'} %>
                 </div>
               </div>
             </li>

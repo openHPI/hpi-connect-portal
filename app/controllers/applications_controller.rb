@@ -3,20 +3,14 @@ class ApplicationsController < ApplicationController
 
   before_filter :check_attachment_is_valid, only: [:create]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to exception.subject.job_offer, notice: exception.message
-  end
-
   def create
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
     authorize! :create, Application
-    if not @job_offer.open?
+    unless @job_offer.open?
       flash[:error] = 'This job offer is currently not open.'
     else
-      @application = Application.new job_offer: @job_offer, user: current_user
-      if @application.save
-        ApplicationsMailer.new_application_notification_email(@application, params[:message], params[:add_cv], params[:attached_files]).deliver
+      if Application.create_and_notify @job_offer, current_user, params
         flash[:success] = 'Applied Successfully!'
       else
         flash[:error] = 'An error occured while applying. Please try again later.'
@@ -32,21 +26,8 @@ class ApplicationsController < ApplicationController
 
     authorize! :accept, @application
 
-    new_assigned_students = @job_offer.assigned_students << @application.user
-    if @job_offer.update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: @job_offer.vacant_posts - 1 })
-      @application.delete
-      if @job_offer.flexible_start_date
-        @job_offer.update!({ start_date: Date.current })
-      end
-
-      ApplicationsMailer.application_accepted_student_email(@application).deliver
-      JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-
-      if @job_offer.check_remaining_applications
-        respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
-      else
-        render_errors_and_action @job_offer
-      end
+    if @job_offer.accept_application(@application) && @job_offer.check_remaining_applications
+      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
     else
       render_errors_and_action @job_offer
     end
@@ -75,6 +56,10 @@ class ApplicationsController < ApplicationController
   end
 
   private
+
+    def rescue_from_exception(exception)
+      redirect_to exception.subject.job_offer, notice: exception.message
+    end
 
     def application_params
       params.require(:application).permit(:job_offer_id)

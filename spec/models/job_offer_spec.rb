@@ -15,8 +15,8 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  assigned_student_id :integer
 #  flexible_start_date :boolean          default(FALSE)
+#  vacant_posts        :integer
 #
 
 require 'spec_helper'

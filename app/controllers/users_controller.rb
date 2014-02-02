@@ -29,13 +29,13 @@ class UsersController < ApplicationController
     elsif user.staff?
       redirect_to staff_path user.id
     else
-      redirect_to edit_user_path user.id
+      redirect_to root_path
     end
   end
 
   def userlist
     @is_deputy = User.find(params[:exclude_user]).deputy?
-    @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+    @users = User.where.not(id: params[:exclude_user]).order(:lastname)
     respond_to do |format|
       format.json { render json: { is_deputy: @is_deputy, users: @users.as_json(only: :id, methods: :full_name) } }
     end
