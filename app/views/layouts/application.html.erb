@@ -41,20 +41,24 @@
       <div class="navbar-header">
         <%= link_to image_tag("hpi-logo.png", :class=>"logo") + "HpiHiwiPortal", root_path, :class =>"navbar-brand" %>
       </div>
-      <% if user_signed_in? %>
+      
           <div class="container navbar-collapse">
             
             <!-- left -->
+            <% if user_signed_in? %>
             <ul class="nav navbar-nav">
               <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
               <% if user_signed_in? %>
                 <%= render :partial => "layouts/navigation/#{current_user.role.name.downcase}" %>
               <% end %>
             </ul>
+            <% end %> <!-- if signed in -->
 
             <!-- right -->
             <ul class="nav navbar-nav navbar-right">
-              
+                <% if user_signed_in? %>
+
+                <!-- user dropdown options -->
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <strong><%= "#{current_user.firstname} #{current_user.lastname}"%></strong>
@@ -69,13 +73,16 @@
                     </ul>
                 </li>
                 
+                <!-- profile picture -->
                 <li> <a href="<%= user_path(current_user) %>" class="profile-picture">
                   <div class="center-cropped thumbnail" 
                      style="background-image: url('<%= "http://#{request.host_with_port}/#{current_user.photo.url}" %>');">
                       <%= image_tag(current_user.photo.url, size: "100")  %>
                   </div></a>
                 </li>
-
+                <% end %> <!-- if signed in -->
+                
+                <!-- flags -->
                 <li>
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <!-- <span class="caret"></span> -->
@@ -91,7 +98,6 @@
               </li>
             </ul>
           </div><!--/.navbar-collapse -->
-      <% end %> <!-- if signed in -->
 
     </div>
 
