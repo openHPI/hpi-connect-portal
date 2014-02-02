@@ -1,6 +1,7 @@
 <% if defined?(name) %>
   <h1> <%= t(name) %> </h1>
 <% end %>
+<% if !job_offer_list.empty? %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
@@ -27,3 +28,8 @@
   <div class="pull-right">
     <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
   </div>
+<% else %>
+  <div class="col-md-6 col-md-offset-3" style="margin-top:25%">
+    <h4><%= t("job_offers.no_results") %></h4>
+  </div>
+<% end %>
