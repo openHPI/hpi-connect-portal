@@ -5,16 +5,6 @@ class StaffController < ApplicationController
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    if [:index].include? exception.action
-      respond_and_redirect_to root_path, exception.message
-    elsif [:edit].include? exception.action
-      respond_and_redirect_to exception.subject, exception.message
-    else
-      respond_and_redirect_to staff_index_path, exception.message
-    end
-  end
-
   # GET /staff
   # GET /staff.json
   def index
@@ -59,6 +49,17 @@ class StaffController < ApplicationController
   end
 
   private
+
+    def rescue_from_exception(exception)
+      if [:index].include? exception.action
+        respond_and_redirect_to root_path, exception.message
+      elsif [:edit].include? exception.action
+        respond_and_redirect_to exception.subject, exception.message
+      else
+        respond_and_redirect_to staff_index_path, exception.message
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find params[:id]

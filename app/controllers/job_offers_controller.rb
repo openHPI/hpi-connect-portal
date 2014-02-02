@@ -20,10 +20,6 @@ class JobOffersController < ApplicationController
   has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    rescue_from_exception exception
-  end
-
   # GET /job_offers
   # GET /job_offers.json
   def index

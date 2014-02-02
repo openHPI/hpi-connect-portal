@@ -3,10 +3,6 @@ class ApplicationsController < ApplicationController
 
   before_filter :check_attachment_is_valid, only: [:create]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to exception.subject.job_offer, notice: exception.message
-  end
-
   def create
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
@@ -75,6 +71,10 @@ class ApplicationsController < ApplicationController
   end
 
   private
+
+    def rescue_from_exception(exception)
+      redirect_to exception.subject.job_offer, notice: exception.message
+    end
 
     def application_params
       params.require(:application).permit(:job_offer_id)

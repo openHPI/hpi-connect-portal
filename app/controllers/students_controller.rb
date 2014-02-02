@@ -11,16 +11,6 @@ class StudentsController < ApplicationController
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
-  rescue_from CanCan::AccessDenied do |exception|
-    if [:index].include? exception.action
-      respond_and_redirect_to root_path, exception.message
-    elsif [:edit, :update_role, :destroy, :promote, :update].include? exception.action
-      respond_and_redirect_to student_path(exception.subject), exception.message
-    else
-      respond_and_redirect_to students_path, exception.message
-    end
-  end
-
   # GET /students
   # GET /students.json
   def index
@@ -76,6 +66,17 @@ class StudentsController < ApplicationController
   end
 
   private
+
+    def rescue_from_exception(exception)
+      if [:index].include? exception.action
+        respond_and_redirect_to root_path, exception.message
+      elsif [:edit, :update_role, :destroy, :promote, :update].include? exception.action
+        respond_and_redirect_to student_path(exception.subject), exception.message
+      else
+        respond_and_redirect_to students_path, exception.message
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find params[:id]
