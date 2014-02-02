@@ -64,7 +64,7 @@
                   <%= f.label :photo, t("activerecord.attributes.user.photo"), class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <% if !user.new_record? %>
+                  <% unless user.new_record? %>
                     <%= image_tag(user.photo.url, size: "150", class: "img-thumbnail")  %><br><br>
                   <% end %>
                   <%= f.file_field :photo, accept: 'image/jpeg,image/png,image/gif' %>
@@ -77,7 +77,7 @@
                   <%= f.label :cv, t("activerecord.attributes.user.cv"), class: "control-label" %>
                 </div>
                 <div class="col-sm-9">
-                  <% if !user.new_record? %>
+                  <% unless user.new_record? %>
                     <% if (user.cv.path).nil? || !File.file?(user.cv.path) %>
                       <%= image_tag('file_thumbnails/missing.png', size: "80") %>
                     <% else %>
@@ -101,24 +101,19 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-sm-3">
-                    <%# Erstelle ein Label fuer jede Programmiersprache %>
                     <%= f2.label programming_language.name, class: "control-label" %>
                     </div>
                     <div class="col-sm-9">
-                      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                      <% if !user.new_record? %>
+                      <% unless user.new_record? %>
                         <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(user.id,programming_language.id) %>
                       <% end %>
-                      <%# Erzeuge 5 radio buttons fuer die Sterne %>
                       <% (1..5).each do |i| %>
-                        <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                           <% if pl %>
                             <% if i == pl.skill %>
                               <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
                             <% else %>
                               <%= f2.radio_button programming_language.id, i, :class=>"star" %>
                             <% end %>
-                          <%# Erzeuge sonst einen unchecked radio button %>
                           <% else %>
                             <%= f2.radio_button programming_language.id, i, :class=>"star" %>
                           <% end %>
@@ -144,24 +139,19 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-sm-3">
-                      <%# Erstelle ein Label fuer jede Programmiersprache %>
                       <%= f3.label language.name, class: "control-label" %>
                     </div>
                     <div class="col-sm-9">
-                      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                      <% if !user.new_record? %>
+                      <% unless user.new_record? %>
                         <% l = LanguagesUser.find_by_user_id_and_language_id(user.id,language.id) %>
                       <% end %>
-                      <%# Erzeuge 5 radio buttons fuer die Sterne %>
                       <% (1..5).each do |i| %>
-                        <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                         <% if l %>
                           <% if i == l.skill %>
                             <%= f3.radio_button language.id, i, :checked => "checked", :class=>"star" %>
                           <% else %>
                             <%= f3.radio_button language.id, i, :class=>"star" %>
                           <% end %>
-                        <%# Erzeuge sonst einen unchecked radio button %>
                         <% else %>
                           <%= f3.radio_button language.id, i, :class=>"star" %>
                         <% end %>

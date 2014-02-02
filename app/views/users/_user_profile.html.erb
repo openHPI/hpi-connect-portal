@@ -88,13 +88,13 @@
           <table class="table">
             <thead></thead>
             <tbody>
-              <% if !(user.academic_program).nil? %>
+              <% unless (user.academic_program).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.user.academic_program")%></td>
                   <td><%= user.academic_program %></td>
                 </tr>
               <% end %>
-              <% if !(user.semester).nil? %>
+              <% unless (user.semester).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.user.semester")%></td>
                   <td><%= user.semester %></td>
