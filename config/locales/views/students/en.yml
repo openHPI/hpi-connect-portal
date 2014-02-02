@@ -12,3 +12,4 @@ en:
         promote_button: "Promote"
         promote_title: "Change Role"
         promote_confirm_question: "Do you really want to promote this user?"
+        no_results: "No student matches your search"

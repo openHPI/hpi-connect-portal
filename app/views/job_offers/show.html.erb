@@ -53,7 +53,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-12">
-              <%= escape_javascript(@job_offer.description.html_safe) %>
+              <%= sanitize_html(@job_offer.description.html_safe) %>
             </div>
           </div>
         </li>
@@ -118,9 +118,6 @@
 
     <div class="row">
       <div class="pull-right">
-        <% if @job_offer.open? %>
-          <%= label_tag :vacant_posts, @job_offer.vacant_posts.to_s + " " + t("job_offers.vacant_posts_left"), class: "panel panel-default panel-heading" %>
-        <% end %>
         <% if !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
           <!-- Modal for sending an application email-->

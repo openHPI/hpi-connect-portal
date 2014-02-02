@@ -24,7 +24,7 @@
           </div>
           <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
             <div class="panel-body">
-              <%=  escape_javascript(faq.answer.html_safe) %>
+              <%= sanitize_html(faq.answer.html_safe) %>
               <br><br>
               <% if can?(:update, faq) ||  can?(:destroy, faq) %>
                 <div class="pull-right">

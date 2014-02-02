@@ -20,6 +20,7 @@ class Ability
     can :create, Application
     can :read, Faq
     cannot :index, User
+    can :matching, JobOffer
   end
 
   def initialize_staff(user)

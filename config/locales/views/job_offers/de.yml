@@ -62,4 +62,5 @@ de:
         successfully_opened: "Das Jobangebot wurde erfolgreich veröffentlicht."
         prolonging_failed: "Das Jobangebot konnte nicht verlängert werden."
         choose_valid_end_date: "Bitte geben Sie ein valides Datum ein."
+    no_results: "Zu deiner Suchanfrage wurde kein passendes Stellenangebot gefunden"
 
