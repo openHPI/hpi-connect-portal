@@ -64,8 +64,8 @@ class ApplicationController < ActionController::Base
 
     def set_constants
       @flagnames = {
-        :en => "famfamfam-flag-gb",
-        :de => "famfamfam-flag-de"
+        en: "famfamfam-flag-gb",
+        de: "famfamfam-flag-de"
       }
     end
 

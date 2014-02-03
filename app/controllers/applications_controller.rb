@@ -7,14 +7,14 @@ class ApplicationsController < ApplicationController
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
     authorize! :create, Application
-    unless @job_offer.open?
-      flash[:error] = 'This job offer is currently not open.'
-    else
+    if @job_offer.open?
       if Application.create_and_notify @job_offer, current_user, params
         flash[:success] = 'Applied Successfully!'
       else
         flash[:error] = 'An error occured while applying. Please try again later.'
       end
+    else
+      flash[:error] = 'This job offer is currently not open.'
     end
     redirect_to @job_offer
   end
