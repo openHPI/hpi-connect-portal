@@ -159,7 +159,7 @@ class JobOffersController < ApplicationController
     end
 
     def rescue_from_exception(exception)
-      if [:complete, :edit, :destroy].include? exception.action
+      if [:complete, :edit, :destroy, :update, :decline].include? exception.action
         redirect_to exception.subject, notice: exception.message and return
       end
       redirect_to job_offers_path, notice: exception.message
