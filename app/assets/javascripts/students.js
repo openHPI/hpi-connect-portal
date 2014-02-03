@@ -44,10 +44,10 @@
   $("#role_level").change(function(event){
 
     if(event.target.options[event.target.selectedIndex].text == "Admin"){
-      $("#employer_id").css('visibility', 'hidden')
+      $(".employer_select").hide()
     }
     else {
-      $("#employer_id").css('visibility', 'visible')
+      $(".employer_select").show()
     }
   });
 })

@@ -54,24 +54,31 @@
         <% else %>
            <% promotion_roles = [[Role.find_by_level(2).name, 2] , [Role.find_by_level(3).name,3], ["Deputy", 4]] %>
         <%end%>
-        <div class="row">
-          <div class="col-md-3">
-            <%= label_tag 'role_level', 'New Role: ' %>
-          </div>
-          <div class="col-md-5">
-            <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name) %>
-          </div>
-        </div>
-        <div class="row">
-          <% if user_is_admin? %>
-          <div class="col-md-3">
-            <%= label_tag 'employer_id', 'New Employer: ' %>
-          </div>
-          <div class="col-md-7">
-            <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil) %>
-          </div>
-          <% end %>
-        </div>
+
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_tag 'role_level', 'New Role: ', :class => "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name), :class => "select form-control" %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item employer_select">
+            <div class="row">
+              <% if user_is_admin? %>
+              <div class="col-sm-3">
+                <%= label_tag 'employer_id', 'New Employer: ', :class => "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control" %>
+              </div>
+              <% end %>
+            </div>
+          </li>
+        </ul>
         <div class="row">
           <div class="col-md-1 col-md-offset-9">
             <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
