@@ -96,7 +96,7 @@ describe "Job Offer pages" do
                 visit job_offer_path(job_offer)
               end
 
-              it { should_not have_button('Prolong') }
+              it { should_not have_button(I18n.t("job_offers.prolong")) }
             end
           end
         end
