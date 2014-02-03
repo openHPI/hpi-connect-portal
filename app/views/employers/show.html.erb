@@ -87,7 +87,7 @@
             <% @staff.each do |user| %>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-md-9">
+                  <div class="col-md-6">
                     <% if user.student? %>
                       <%= link_to user.full_name, student_path(user), :class => "h4" %>
                     <% else %>
@@ -95,12 +95,12 @@
                     <%end%>
                   </div>
                    <% if can? :promote, user %>
-                    <div class="col-md-1">
+                    <div class="col-md-2 col-md-offset-1">
                       <button class="btn btn btn-default demote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= t('employers.demote_button') %></button>
                     </div>
                    <% end %>
                   <% if can? :promote, user %>
-                    <div class="col-md-1 col-md-offset-1">
+                    <div class="col-md-2 col-md-offset-1">
                       <button class="btn btn btn-default promote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#promoteDialog"><%= t('students.promote_button') %></button>
                     </div>
                   <% end %>
@@ -189,7 +189,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= label_tag 'role_level', 'New Role: ', :class => "control-label" %>
+                <%= label_tag 'role_level', t('students.new_role_label'), :class => "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= select_tag :role_level, options_for_select([["Deputy", 4]] ), :class => "select form-control" %>     

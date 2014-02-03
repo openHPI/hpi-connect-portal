@@ -59,7 +59,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= label_tag 'role_level', 'New Role: ', :class => "control-label" %>
+                <%= label_tag 'role_level', t('students.new_role_label'), :class => "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name), :class => "select form-control" %>
@@ -70,7 +70,7 @@
             <div class="row">
               <% if user_is_admin? %>
               <div class="col-sm-3">
-                <%= label_tag 'employer_id', 'New Employer: ', :class => "control-label" %>
+                <%= label_tag 'employer_id', t('students.new_deputy_label'), :class => "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control" %>
