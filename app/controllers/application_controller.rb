@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_errors_and_action(object, action=nil)
+  def render_errors_and_action(object, action = nil)
     respond_to do |format|
         if action.nil?
           format.html { redirect_to object }
@@ -51,9 +51,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def respond_and_redirect_to(url, notice, action=nil, status=nil)
+  def respond_and_redirect_to(url, notice = nil, action = nil, status = nil)
     respond_to do |format|
-      format.html { redirect_to url, notice: notice }
+      format.html { redirect_to url, flash: { success: notice } }
       if action && status
         format.json { render action: action, status: status, location: object }
       end

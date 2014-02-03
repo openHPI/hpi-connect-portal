@@ -74,7 +74,8 @@ class ApplicationsController < ApplicationController
         file = file_params[:file_attributes][0][:file]
         unless file.content_type == "application/pdf"
           job_offer = JobOffer.find application_params[:job_offer_id]
-          respond_and_redirect_to job_offer, "Please choose a valid attachment (PDF only)."
+          flash[:error] = 'Please choose a valid attachment (PDF only).'
+          respond_and_redirect_to job_offer
         end
       end
     end
