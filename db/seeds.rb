@@ -48,8 +48,8 @@ UserStatus.delete_all
 UserStatus.create!([
 	{ name: 'jobseeking'},
 	{ name: 'employed'},
-	{ name: 'employedext'},
-	{ name: 'nointerest'},
+	{ name: 'externally employed'},
+	{ name: 'no interest'},
 	{ name: 'alumni'}
 ])
 

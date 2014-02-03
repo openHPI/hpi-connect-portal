@@ -93,3 +93,11 @@ a:hover, a:focus, .btn-default:hover  {
     padding-top: 5px !important;
     padding-bottom: 5px !important;
 }
+
+[data-toggle=collapse]{
+  cursor: pointer;
+}
+
+[data-toggle=collapse]:hover{
+  background-color: #ddd;
+}
