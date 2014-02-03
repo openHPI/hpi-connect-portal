@@ -105,7 +105,7 @@ class User < ActiveRecord::Base
   end
 
   def deputy?
-    defined?(employer_id) && Employer.exists?(deputy: self)
+    employer && Employer.exists?(deputy: self)
   end
 
   def admin?
