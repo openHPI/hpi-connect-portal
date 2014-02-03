@@ -48,7 +48,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the administration" do
-      @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.to.should eq([Configurable[:mailToAdministration]])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do

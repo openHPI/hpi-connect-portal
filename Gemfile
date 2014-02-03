@@ -117,3 +117,6 @@ end
 
 #Flags
 gem 'famfamfam_flags_rails'
+
+# saves config settings in a database
+gem 'configurable_engine'

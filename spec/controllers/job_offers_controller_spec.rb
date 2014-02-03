@@ -17,12 +17,14 @@ describe JobOffersController do
 
   let(:valid_session) { {} }
 
-  before(:each) do
+  before(:all){
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
+  }
 
+  before(:each) do
     @epic = FactoryGirl.create(:employer)
     @os = FactoryGirl.create(:employer)
     @itas = FactoryGirl.create(:employer)
