@@ -1,4 +1,3 @@
-
 # Create Standard Roles
 Role.delete_all
 Role.create!(name: 'Student', level: 1)
@@ -238,7 +237,8 @@ User.create!([{
 	programming_languages: ProgrammingLanguage.where(:name => ['Java']),
 	programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
 	user_status: UserStatus.where(:name => 'employedext').first,
-	role: Role.where(:name => 'Student').first,
+	role: Role.where(:name => 'Staff').first,
+	employer: epic,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
 }])
 
@@ -333,7 +333,7 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
-  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+  responsible_user: User.where(:firstname=>"Martin", :lastname=>"Boissier").first
 }])
 
 JobOffer.create!([{
@@ -346,7 +346,8 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-  responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first
+  responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first,
+  assigned_students: [User.where(firstname: "Pascal").first]
 }])
 
 # DSchool Jobs
@@ -360,7 +361,7 @@ JobOffer.create!([{
 	time_effort: 12,
 	compensation: 10.0,
 	languages: Language.where(:name => 'german'), 
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first
 }])
 
 JobOffer.create!([{
@@ -372,7 +373,7 @@ JobOffer.create!([{
   time_effort: 38,
   compensation: 14.0,
   languages: Language.where(:name => 'german'), 
-  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+  responsible_user: User.where(:firstname=>"Frank", :lastname=>"Blechschmidt").first
 }])
 
 JobOffer.create!([{
@@ -384,7 +385,8 @@ JobOffer.create!([{
   time_effort: 38,
   compensation: 14.0,
   languages: Language.where(:name => 'english'), 
-  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+  responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
+  assigned_students: [User.where(firstname: "Frank").first]
 }])
 
 # OS Jobs
@@ -399,7 +401,7 @@ JobOffer.create!([{
 	compensation: 12.00,
 	languages: Language.where(:name => ['german', 'english']), 
 	programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-	responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first
+	responsible_user: User.where(:firstname=>"Carsten", :lastname=>"Meyer").first
 }])
 
 
@@ -426,7 +428,8 @@ JobOffer.create!([{
   compensation: 10.00,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
-  responsible_user: User.where(:firstname=>'Frank').first
+  responsible_user: User.where(:firstname=>'Frank').first,
+  assigned_students: [User.where(firstname: "Johannes").first]
 }])
 
 # SAP jobs
@@ -441,7 +444,7 @@ JobOffer.create!([{
   compensation: 20.00,
   languages: Language.where(:name => 'english'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C']),
-  responsible_user: User.where(:firstname=>'Axel').first
+  responsible_user: User.where(:firstname=>'Carsten').first
 }])
 
 JobOffer.create!([{
@@ -454,11 +457,11 @@ JobOffer.create!([{
   compensation: 60.00,
   languages: Language.where(:name => 'english'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C']),
-  responsible_user: User.where(:firstname=>'Axel').first
+  responsible_user: User.where(:firstname=>'Carsten').first
 }])
 
 JobOffer.create!([{
-  title: "HR Recruter", 
+  title: "HR Recruiter", 
   description: 'To further fullfill the SAPs personal needs a additional teammate for the HR team is seeked.', 
   employer: Employer.where(:name => "SAP").first,
   status: JobStatus.where(:name => "running").first,
@@ -466,7 +469,8 @@ JobOffer.create!([{
   time_effort: 40,
   compensation: 24.00,
   languages: Language.where(:name => 'english'),
-  responsible_user: User.where(:firstname=>'Axel').first
+  responsible_user: User.where(:firstname=>'Martin').first,
+  assigned_students: [User.where(firstname: "Tim").first]
 }])
 
 # FAQs

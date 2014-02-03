@@ -12,5 +12,15 @@
 require 'spec_helper'
 
 describe Role do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "checks for the student role" do
+    assert FactoryGirl.create(:role, name: "Student").student_role?
+  end
+
+  it "checks for the staff role" do
+    assert FactoryGirl.create(:role, name: "Staff").staff_role?
+  end
+
+  it "checks for the admin role" do
+    assert FactoryGirl.create(:role, name: "Admin").admin_role?
+  end
 end

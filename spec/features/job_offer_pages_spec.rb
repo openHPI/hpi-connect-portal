@@ -96,7 +96,7 @@ describe "Job Offer pages" do
                 visit job_offer_path(job_offer)
               end
 
-              it { should_not have_button('Prolong') }
+              it { should_not have_button(I18n.t("job_offers.prolong")) }
             end
           end
         end
@@ -118,6 +118,15 @@ describe "Job Offer pages" do
           it { should have_selector('h4', text: 'Applications') }
           it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
 
+          describe "when the job is running" do
+            before do
+              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "running"))
+              login_as(admin, :scope => :user)
+              visit job_offer_path(job_offer)
+            end
+
+            it { should_not have_button(I18n.t("job_offers.prolong")) }
+          end
         end
       end
     end

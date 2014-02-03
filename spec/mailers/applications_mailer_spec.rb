@@ -99,7 +99,6 @@ describe ApplicationsMailer do
 		it "should have the personal application message in the body" do
 			@html_body.should have_content(@message)
 		end
-		it "should include the students cv if activated"
 
 		it "should include all attached files the student chose" do
 			@email.attachments.should have(1).attachment

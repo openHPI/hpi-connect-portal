@@ -30,7 +30,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1
   # GET /job_offers/1.json
   def show
-    if @job_offer.pending? and signed_in? and (!user_is_staff_of_employer?(@job_offer) and !user_is_admin?)
+    if @job_offer.pending? and signed_in? and !user_is_staff_of_employer?(@job_offer) and !current_user.admin?
       redirect_to job_offers_path
     end
 
@@ -159,7 +159,7 @@ class JobOffersController < ApplicationController
     end
 
     def rescue_from_exception(exception)
-      if [:complete, :edit, :destroy].include? exception.action
+      if [:complete, :edit, :destroy, :update, :decline].include? exception.action
         redirect_to exception.subject, notice: exception.message and return
       end
       redirect_to job_offers_path, notice: exception.message

@@ -1,0 +1,19 @@
+// Place all the styles related to the admin/configurables controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+form[action*="configurable"]{
+	// not a nice way :-/
+	@import "bootstrap/bootstrap";
+	max-width: 50%;
+	.configurable{
+		@extend .form-group;
+		input{
+			@extend .form-control;
+		}
+		&+ input{
+			@extend .btn;
+			@extend .btn-success;
+		}
+	}
+}

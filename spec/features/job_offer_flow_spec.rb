@@ -158,7 +158,7 @@ describe "the job offer flow" do
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [first_applicant.email])
     email = ActionMailer::Base.deliveries[1]
-    assert_equal(email.to, ["hpi.hiwi.portal@gmail.com"])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     email = ActionMailer::Base.deliveries[2]
     assert_equal(email.to, [second_applicant.email])
     ActionMailer::Base.deliveries = []
@@ -176,7 +176,7 @@ describe "the job offer flow" do
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, ["hpi.hiwi.portal@gmail.com"])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     ActionMailer::Base.deliveries = []
 
     # responsible user tries to edit the job offer

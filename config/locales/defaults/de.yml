@@ -145,6 +145,8 @@ de:
       header:
         one: ! 'Konnte %{model} nicht speichern: ein Fehler.'
         other: ! 'Konnte %{model} nicht speichern: %{count} Fehler.'
+    configuration:
+      invalid_email:  "Dies ist keine gültige Email Adresse!"
   helpers:
     select:
       prompt: Bitte wählen

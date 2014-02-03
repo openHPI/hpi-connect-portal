@@ -78,7 +78,7 @@
                   </div>
                   <div class="col-sm-9">
                     <%= l(@job_offer.end_date) %>
-                    <% if can? :prolong, @job_offer%>
+                    <% if can? :prolong, @job_offer and !current_user.admin?%>
                       <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
                         <%= f.text_field :end_date, class: 'datepicker form-control' %>
                         <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
@@ -106,7 +106,7 @@
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
       <% end %>
 
-      <% if (user_is_staff_of_employer?(@job_offer) or user_is_admin?) && !@assigned_students.blank? %>
+      <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>

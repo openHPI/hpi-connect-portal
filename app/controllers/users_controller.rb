@@ -6,21 +6,21 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
   end
 
-  def update
-    @user = User.find params[:id]
+  # def update
+  #   @user = User.find params[:id]
 
-    if @user.update_attributes user_params
-      flash[:success] = 'Information updated.'
-      if @user.student?
-        redirect_to edit_student_path @user
-      else
-        redirect_to root_path
-      end
-    else
-      flash[:error] = 'Error while updating profile.'
-      render 'edit'
-    end
-  end
+  #   if @user.update_attributes user_params
+  #     flash[:success] = 'Information updated.'
+  #     if @user.student?
+  #       redirect_to edit_student_path @user
+  #     else
+  #       redirect_to root_path
+  #     end
+  #   else
+  #     flash[:error] = 'Error while updating profile.'
+  #     render 'edit'
+  #   end
+  # end
 
   def show
     user = User.find params[:id]
