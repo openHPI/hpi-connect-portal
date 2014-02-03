@@ -46,6 +46,9 @@ label {
     color: #FFF;
 }
 
+.panel-default > .panel-heading {
+  background-color: #DDDDDD;
+}
 .wysihtml5-sandbox{
     resize: both;
 }
