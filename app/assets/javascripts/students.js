@@ -19,7 +19,7 @@
         },
         success: function(data){
           if (data.is_deputy){
-            $("#new_deputy_id").css("visibility", "visible");
+            $(".deputy_select").show();
             var options = $("#new_deputy_id");
             $("#new_deputy_id").empty();
             $.each(data.users, function(index, user){
@@ -28,7 +28,7 @@
           } 
           else {
             $("#new_deputy_id").empty();
-            $("#new_deputy_id").css("visibility", "hidden");
+            $(".deputy_select").hide();
           }     
         },
         error: function(xhr, ajaxOptions, thrownError){
