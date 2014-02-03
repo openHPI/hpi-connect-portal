@@ -461,7 +461,7 @@ JobOffer.create!([{
 }])
 
 JobOffer.create!([{
-  title: "HR Recruter", 
+  title: "HR Recruiter", 
   description: 'To further fullfill the SAPs personal needs a additional teammate for the HR team is seeked.', 
   employer: Employer.where(:name => "SAP").first,
   status: JobStatus.where(:name => "running").first,
