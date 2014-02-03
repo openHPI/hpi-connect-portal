@@ -62,16 +62,4 @@ describe UsersHelper do
     helper.stub(:current_user) { FactoryGirl.create(:job_offer).responsible_user }
     assert !helper.user_is_deputy?
   end
-
-  it "updates and removes for a language"
-
-  it "removes for a language"
-
-  it "updates from params for langugages and newsletters"
-
-  it "updates from params for languages"
-
-  it "updates and removes for a newsletter"
-
-  it "removes for a newletter"
 end

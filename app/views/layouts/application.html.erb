@@ -129,7 +129,7 @@
             <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
             <% if !user_signed_in? %>
             <td>|</td>
-            <td><%= t('login_page.external_headline') %> <%= t('login_page.external_contact')%> <%= mail_to "hpi.hiwi.portal@gmail.com" %>
+            <td><%= t('login_page.external_headline') %> <%= t('login_page.external_contact')%> <%= mail_to Configurable.mailToAdministration %>
             <% end %>
             </td>
           </tr>
