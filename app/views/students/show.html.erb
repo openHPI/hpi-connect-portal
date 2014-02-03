@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
       <blockquote class="userstatus">
-        <% if !(@user.user_status).nil? %>
+        <% unless @user.user_status.nil? %>
           <p><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
         <% end %>
       </blockquote>
