@@ -179,6 +179,8 @@ describe JobOffersController do
       employer.update(deputy: deputy)
       @job_offer = FactoryGirl.create(:job_offer)
       @job_offer.update(employer: employer, status: FactoryGirl.create(:job_status))
+      FactoryGirl.create(:employers_newsletter_information, employer: employer)
+      FactoryGirl.create(:programming_languages_newsletter_information)
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
@@ -193,6 +195,7 @@ describe JobOffersController do
       @job_offer.save
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open)
+      ActionMailer::Base.deliveries.count.should >= 1
       response.should redirect_to(@job_offer)
     end
   end
@@ -259,8 +262,6 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
-      FactoryGirl.create(:employers_newsletter_information, employer: employer)
-      FactoryGirl.create(:programming_languages_newsletter_information)
       sign_in responsible_user
     end
 
@@ -305,11 +306,6 @@ describe JobOffersController do
       it "redirects to the created job_offer" do
         post :create, {:job_offer => valid_attributes}, valid_session
         response.should redirect_to(JobOffer.last)
-      end
-
-      it "sends some emails" do
-        post :create, {:job_offer => valid_attributes}, valid_session
-        ActionMailer::Base.deliveries.count.should >= 2
       end
 
       it "automatically assigns the users employer as the new job offers employer" do
