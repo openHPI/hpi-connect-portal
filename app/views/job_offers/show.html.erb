@@ -7,7 +7,7 @@
     <% end %>
 
     <% if can? :reopen, @job_offer %>
-      <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-primary " %>
+      <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-default " %>
     <% end %>
 
     <span class="pull-right">
@@ -19,7 +19,7 @@
         <% end %>
       <% end %>
       <% if can?(:complete, @job_offer) && @job_offer.running? %>
-        <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-primary" %>
+        <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-default" %>
       <% end %>
     </span>
 
