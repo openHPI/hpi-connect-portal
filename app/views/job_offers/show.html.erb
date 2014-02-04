@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-sm-12">
 
     <% if @job_offer.pending? && can?(:accept, @job_offer) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
@@ -28,7 +28,19 @@
     <% if current_user.applied?(@job_offer) %>
       <br><br>
         <div class="panel panel-default panel-body">
-        <%= t("job_offers.already_applied") %>
+        <div class="row">
+          <div class="col-sm-10">
+            <%= t("job_offers.already_applied") %>
+          </div>
+          <div class="col-sm-2">
+            <% unless @application.blank? %>
+              <%= simple_form_for @application, method: :delete do |f| %>
+                  <div><%= f.input :id, as: :hidden %></div>
+                  <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button pull-right', data: { confirm: t("applications.delete_confirmation") } %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
     <% end %>
 
@@ -151,14 +163,7 @@
         <% end %>
       </div>
 
-      <% unless @application.blank? %>
-        <div class="pull-right">
-          <%= simple_form_for @application, method: :delete do |f| %>
-            <div><%= f.input :id, as: :hidden %></div>
-            <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button', data: { confirm: t("applications.delete_confirmation") } %>
-          <% end %>
-        </div>
-      <% end %>
+
     </div>
 
     <% if @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>
