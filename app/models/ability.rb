@@ -22,7 +22,6 @@ class Ability
     cannot :prolong, JobOffer, status: JobStatus.completed
     cannot :reopen, JobOffer, status: JobStatus.open
     cannot :reopen, JobOffer, status: JobStatus.pending
-    cannot :reopen, JobOffer, status: JobStatus.running
   end
 
   def initialize_student
@@ -45,6 +44,7 @@ class Ability
     can :create, JobOffer
     can :complete, JobOffer, employer: user.employer
     can :reopen, JobOffer, employer: user.employer, status: JobStatus.completed
+    can :reopen, JobOffer, employer: user.employer, status: JobStatus.running
     can [:accept, :decline], JobOffer, employer: { deputy_id: user_id }
     can :prolong, JobOffer, responsible_user_id: user_id, status: JobStatus.running
     can :prolong, JobOffer, employer: { deputy_id: user_id }, status: JobStatus.running
