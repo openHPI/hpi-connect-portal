@@ -62,22 +62,24 @@
                 <%= label_tag 'role_level', t('students.new_role_label'), :class => "control-label" %>
               </div>
               <div class="col-sm-9">
-                <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name), :class => "select form-control" %>
+                <%= select_tag :role_level, options_for_select(promotion_roles), :class => "select form-control dialog-select" %>
               </div>
             </div>
           </li>
-          <li class="list-group-item employer_select">
-            <div class="row">
-              <% if current_user.admin? %>
-              <div class="col-sm-3">
-                <%= label_tag 'employer_id', t('students.new_employer_label'), :class => "control-label" %>
+          <% if current_user.admin? %>
+            <li class="list-group-item employer_select">
+              <div class="row">
+                
+                <div class="col-sm-3">
+                  <%= label_tag 'employer_id', t('students.new_employer_label'), :class => "control-label" %>
+                </div>  
+                <div class="col-sm-9">
+                  <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control dialog-select" %>
+                </div>
+                
               </div>
-              <div class="col-sm-9">
-                <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control" %>
-              </div>
-              <% end %>
-            </div>
-          </li>
+            </li>
+          <% end %>
         </ul>
         <div class="row">
           <div class="col-md-1 col-md-offset-9">
