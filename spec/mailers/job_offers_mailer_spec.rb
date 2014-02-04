@@ -34,7 +34,7 @@ describe JobOffersMailer do
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.from.should eq([Configurable.mailToAdministration])
     end
   end
 
@@ -48,7 +48,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the administration" do
-      @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.to.should eq([Configurable[:mailToAdministration]])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
@@ -115,11 +115,11 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the default staff address" do
-      @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.to.should eq([Configurable.mailToAdministration])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.from.should eq([Configurable.mailToAdministration])
     end
 
     it "should have job information in its body" do
@@ -152,7 +152,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the default staff address" do
-      @email.to.should eq(['hpi.hiwi.portal@gmail.com'])
+      @email.to.should eq([Configurable.mailToAdministration])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do

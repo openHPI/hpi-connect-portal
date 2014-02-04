@@ -17,12 +17,14 @@ describe JobOffersController do
 
   let(:valid_session) { {} }
 
-  before(:each) do
+  before(:all){
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
-    
+  }
+
+  before(:each) do
     @epic = FactoryGirl.create(:employer)
     @os = FactoryGirl.create(:employer)
     @itas = FactoryGirl.create(:employer)
@@ -35,47 +37,44 @@ describe JobOffersController do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
+
+    @job_offer = FactoryGirl.create(:job_offer, status: @open)
   end
 
   describe "Check if views are rendered" do
     render_views
 
     it "renders the find results" do
-      job_offer = FactoryGirl.create(:job_offer)
       get :index, ({:employer => employer.id}), valid_session
       response.should render_template("index")
     end
 
     it "renders the archive" do
-      job_offer = FactoryGirl.create(:job_offer)
       get :archive, {}, valid_session
       response.should render_template("archive")
     end
 
     it "renders the jobs found archive" do
-      job_offer = FactoryGirl.create(:job_offer)
       get :archive, ({:search => "Ruby"}), valid_session
       response.should render_template("archive")
     end
   end
 
   describe "GET index" do
-    it "assigns all job_offers as @job_offer-list[:items]" do
-      job_offer = FactoryGirl.create(:job_offer, status: @open)
+    it "assigns all job_offers as @job_offers_list[:items]" do
       get :index, {}, valid_session
-      assigns(:job_offers_list)[:items].should eq([job_offer])
+      assigns(:job_offers_list)[:items].should eq([@job_offer])
     end
   end
 
   describe "GET archive" do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
-      job_offer = FactoryGirl.create(:job_offer, status: completed)
+      @job_offer.update!(status: completed)
       get :archive, {}, valid_session
-      assigns(:job_offers_list)[:items].should eq([job_offer])
+      assigns(:job_offers_list)[:items].should eq([@job_offer])
     end
 
     it "does not assign non-completed jobs" do
-      job_offer = FactoryGirl.create(:job_offer)
       get :archive, {}, valid_session
       assert assigns(:job_offers_list)[:items].empty?
     end
@@ -83,18 +82,16 @@ describe JobOffersController do
 
   describe "GET show" do
     it "assigns the requested job_offer as @job_offer" do
-      job_offer = FactoryGirl.create(:job_offer)
-      get :show, {:id => job_offer.to_param}, valid_session
-      assigns(:job_offer).should eq(job_offer)
+      get :show, {:id => @job_offer.to_param}, valid_session
+      assigns(:job_offer).should eq(@job_offer)
     end
 
     it "assigns a possible applications as @application" do
       user = FactoryGirl.create(:user, :staff)
       sign_in user
 
-      job_offer = FactoryGirl.create(:job_offer)
-      application = FactoryGirl.create(:application, user: user, job_offer: job_offer)
-      get :show, {:id => job_offer.to_param}, valid_session
+      application = FactoryGirl.create(:application, user: user, job_offer: @job_offer)
+      get :show, {:id => @job_offer.to_param}, valid_session
       assigns(:application).should eq(application)
     end
   end
@@ -109,15 +106,14 @@ describe JobOffersController do
 
   describe "GET edit" do
     it "assigns the requested job_offer as @job_offer" do
-      job_offer = FactoryGirl.create(:job_offer)
-      get :edit, {:id => job_offer.to_param}, valid_session
-      assigns(:job_offer).should eq(job_offer)
+      get :edit, {:id => @job_offer.to_param}, valid_session
+      assigns(:job_offer).should eq(@job_offer)
     end
 
     it "only allows the responsible user to edit" do
-      job_offer = FactoryGirl.create(:job_offer)
-      get :edit, {:id => job_offer.to_param}, valid_session
-      response.should redirect_to(job_offer)
+      sign_in FactoryGirl.create(:user, :staff)
+      get :edit, {:id => @job_offer.to_param}, valid_session
+      response.should redirect_to(@job_offer)
     end
   end
 
@@ -173,24 +169,18 @@ describe JobOffersController do
   end
 
   describe "GET accept" do
-    let(:deputy) { FactoryGirl.create(:user, :staff, employer: employer) }
-    
+
     before(:each) do
-      employer.update(deputy: deputy)
-      @job_offer = FactoryGirl.create(:job_offer)
-      @job_offer.update(employer: employer, status: FactoryGirl.create(:job_status))
+      @job_offer = FactoryGirl.create(:job_offer, employer: employer)
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
-
-      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
+      sign_in @job_offer.responsible_user
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end
     it "accepts job offers" do
-      sign_in deputy
-      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
-      @job_offer.save
+      sign_in employer.deputy
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open)
       response.should redirect_to(@job_offer)
@@ -198,23 +188,17 @@ describe JobOffersController do
   end
 
   describe "GET decline" do
-    let(:deputy) { FactoryGirl.create(:user, :staff, employer: employer) }
     before(:each) do
-      employer.update(deputy: deputy)
-      @job_offer = FactoryGirl.create(:job_offer)
-      @job_offer.update(employer: employer, status: FactoryGirl.create(:job_status))
+      @job_offer = FactoryGirl.create(:job_offer, employer: employer)
     end
 
     it "prohibits user to decline job offers if he is not the deputy" do
-      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
-      @job_offer.save
       get :decline, {id: @job_offer.id}
-      response.should redirect_to(job_offers_path)
+      response.should redirect_to(@job_offer)
     end
+
     it "declines job offers" do
-      @job_offer.responsible_user = FactoryGirl.create(:user, :staff, email: "test@example.com")
-      @job_offer.save
-      sign_in deputy
+      sign_in employer.deputy
       expect {
         get :decline, {id: @job_offer.id}
       }.to change(JobOffer, :count).by(-1)
@@ -227,8 +211,7 @@ describe JobOffersController do
 
       before(:each) do
         sign_in responsible_user
-        @job_offer = FactoryGirl.create(:job_offer)
-        @job_offer.update(employer: employer, status: FactoryGirl.create(:job_status, :running), responsible_user: responsible_user)
+        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running), responsible_user: responsible_user)
       end
 
       it "assigns a new job_offer as @job_offer" do
@@ -251,7 +234,7 @@ describe JobOffersController do
       it "is pending and old job offer changes to completed" do
         get :reopen, {:id => @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        JobOffer.find(@job_offer).status.should eql(completed)
+        @job_offer.reload.status.should eql(completed)
       end
     end
   end
@@ -358,10 +341,10 @@ describe JobOffersController do
         JobOffer.any_instance.stub(:save).and_return(false)
         expect {
           post :create, {:job_offer => valid_attributes}, valid_session
-        }.to change(JobOffer, :count).by(0) 
+        }.to change(JobOffer, :count).by(0)
         response.should render_template("new")
       end
-      
+
       it "should not send mail to deputy" do
         job_offer = FactoryGirl.create(:job_offer)
         #expect
@@ -413,8 +396,7 @@ describe JobOffersController do
       end
 
       it "only allows the responsible user to update" do
-        @job_offer.responsible_user = FactoryGirl.create(:user, :staff)
-        @job_offer.save
+        sign_in FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
         put :update, {:id => @job_offer.to_param, :job_offer => valid_attributes}, valid_session
         response.should redirect_to(@job_offer)
       end
@@ -456,7 +438,7 @@ describe JobOffersController do
     end
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
+      @job_offer.update!(status: FactoryGirl.create(:job_status, :running))
       sign_in @job_offer.responsible_user
 
       expect {

@@ -4,6 +4,10 @@ HpiHiwiPortal::Application.routes.draw do
     get "imprint/index"
 
   get "imprint/index"
+
+  namespace :admin do
+    resource :configurable, except: [:index]
+  end
   
   devise_scope :user do 
     root :to => 'sessions#new'
@@ -44,11 +48,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   devise_for :users, controllers: { sessions: 'sessions' }
 
-  resources :programming_languages
-  resources :languages
-
   resources :users, only: [:show, :edit, :update]
-  resources :user_statuses
 
   resources :studentsearch
   resources :faqs

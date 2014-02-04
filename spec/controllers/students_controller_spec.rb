@@ -134,13 +134,23 @@ describe StudentsController do
   describe "DELETE destroy" do
     it "destroys the requested student" do
       user = FactoryGirl.create(:user)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
       expect {
         delete :destroy, {:id => user.to_param}, valid_session
       }.to change(User, :count).by(-1)
     end
 
+    it "redirects to the students profile if access is denied" do
+      user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
+      expect {
+        delete :destroy, {:id => user.to_param}, valid_session
+      }.to change(User, :count).by(0)
+      response.should redirect_to student_path(user)
+    end
+
     it "redirects to the students list" do
       user = FactoryGirl.create(:user)
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
       delete :destroy, {:id => user.to_param}, valid_session
       response.should redirect_to(students_path)
     end
@@ -159,7 +169,10 @@ describe StudentsController do
       FactoryGirl.create(:user, programming_languages: [@programming_language_2], languages: [@language_2])
       @user3 =FactoryGirl.create(:user, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
 
+      sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
+      old_path = current_path
       get :matching, ({:language_ids => [@language_1.id], :programming_language_ids => [@programming_language_1.id]}), valid_session
+      assert current_path.should == old_path
       assigns(:users).should eq([@user1,@user2,@user3])
     end
   end
@@ -246,6 +259,7 @@ describe StudentsController do
 
       it "updates role to Deputy" do
         post :update_role, { user_id: @student.id, role_level: 4 }, valid_session
+        response.should redirect_to students_path
         assert_equal(@student, @employer.deputy)
       end
 
@@ -271,12 +285,6 @@ describe StudentsController do
       it "updates role to Admin" do
         post :update_role, { user_id: @student.id, role_level: @admin_role.level }, valid_session
         assert_equal(@admin_role, @student.reload.role)
-      end
-
-      it "redirects to student page when current user is not aloud to change role" do
-        sign_in FactoryGirl.create(:user, :student)
-        post :update_role, { user_id: @student.id, role_level: 4 }, valid_session
-        response.should redirect_to(student_path(@student))
       end
     end
 

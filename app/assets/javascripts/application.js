@@ -33,3 +33,15 @@ $(function() {
 $(function() {
     $('#error_explanation').addClass('alert alert-danger block-message');
 });
+
+$(function(){
+    var caret = ' <span style="font-size:0.7em" class="glyphicon glyphicon-chevron-right"><span>';
+    $("[data-toggle=collapse]").parent().on('show.bs.collapse', function () {
+        console.debug(this)
+        $("h4 span.glyphicon-chevron-right", this).removeClass("glyphicon-chevron-right").addClass("glyphicon-chevron-down");
+    });
+    $("[data-toggle=collapse]").parent().on('hide.bs.collapse', function () {
+        $("h4 span.glyphicon-chevron-down", this).removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-right");
+    });
+    $("[data-toggle=collapse] h4").append(caret);
+});

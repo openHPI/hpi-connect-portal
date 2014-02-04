@@ -25,7 +25,7 @@
             $.each(data.users, function(index, user){
               options.append('<option value=' + user.id+ '>' + user.full_name + '</option>');
             })
-          } 
+          }
           else {
             $("#new_deputy_id").empty();
             $(".deputy-select").hide();

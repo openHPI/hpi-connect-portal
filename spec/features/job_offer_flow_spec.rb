@@ -26,7 +26,7 @@ describe "the job offer flow" do
   it "behaves correctly" do
     # staff creates a new job offer for his employer
     login_as(creating_staff, :scope => :user)
-		
+
     visit job_offers_path
 
 	should have_link(I18n.t("job_offers.new_job_offer"))
@@ -38,7 +38,7 @@ describe "the job offer flow" do
     fill_in "job_offer_room_number", :with => "A-1.2"
     fill_in "job_offer_end_date", :with => (Date.current + 2).to_s
     fill_in "job_offer_time_effort", :with => "12"
-  
+
     JobOffer.delete_all
     expect {
       click_button I18n.t("links.save")
@@ -158,7 +158,7 @@ describe "the job offer flow" do
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [first_applicant.email])
     email = ActionMailer::Base.deliveries[1]
-    assert_equal(email.to, ["hpi.hiwi.portal@gmail.com"])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     email = ActionMailer::Base.deliveries[2]
     assert_equal(email.to, [second_applicant.email])
     ActionMailer::Base.deliveries = []
@@ -166,7 +166,7 @@ describe "the job offer flow" do
     # responsible user prolongs the job offer
     fill_in "job_offer_end_date", :with => (Date.current + 3).to_s
     click_button I18n.t("job_offers.prolong")
- 
+
     # the job offers end date is updated
     job_offer.reload
     current_path.should == job_offer_path(job_offer)
@@ -176,7 +176,7 @@ describe "the job offer flow" do
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, ["hpi.hiwi.portal@gmail.com"])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     ActionMailer::Base.deliveries = []
 
     # responsible user tries to edit the job offer
@@ -194,7 +194,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
     ActionMailer::Base.deliveries = []
-    
+
     job_offer = job_offer.reload
     assert job_offer.completed?
 

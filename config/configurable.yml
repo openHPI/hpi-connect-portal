@@ -1,0 +1,4 @@
+mailToAdministration:	
+  name: Mail Adress for administration   # sets the edit label
+  default: "hpi.hiwi.portal@gmail.com"  # sets the default value
+  type: email                           # uses input type="email"

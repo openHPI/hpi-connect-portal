@@ -5,10 +5,12 @@ de:
         new_student: "Neuen Studenten anlegen"
         edit_student: "Studenten bearbeiten"
         carrier: "Karriere"
-        programming_language_newsletter: "Für welche Programmiersprachen möchten Sie über Jobangebote informiert werden?"
-        employers_newsletter: "Bei welchen Arbeitgebern möchten Sie arbeiten?"
-        name: Name
-        semester: Semester
+        name: "Name"
+        semester: "Semester"
+        newsletter_headline: "Benachrichtigungen"
+        programming_language_newsletter: "Programmiersprachen"
+        employers_newsletter: "Lehrstühle"
+        newsletter_description: "Du willst Emails erhalten, sobald ein neues Jobangebot erstellt wurde, das zu dir passt? Dann wähle hier die Programmiersprachen und Lehrstühle aus, die dich interssieren!"
         promote_button: "Befördern"
         promote_title: "Rolle ändern"
         promote_confirm_question: "Sind Sie sich sicher, dass Sie diesen Nutzer befördern wollen?"

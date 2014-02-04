@@ -1,5 +1,5 @@
 class JobOffersMailer < ActionMailer::Base
-  default from: "hpi.hiwi.portal@gmail.com"
+  default from: 'hpi.hiwi.portal@gmail.com'
   layout "email"
 
   def new_job_offer_email(job_offer)
@@ -24,17 +24,17 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_closed_email(job_offer)
     @job_offer = job_offer
-    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_mailer.job_offer_closed.subject"))
+    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_closed.subject"))
   end
 
   def job_student_accepted_email(job_offer)
     @job_offer = job_offer
-    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_mailer.student_accepted.subject"))
+    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.student_accepted.subject"))
   end
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    mail(to: 'hpi.hiwi.portal@gmail.com', subject: (t "job_offers_mailer.job_offer_prolonged.subject"))
+    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_prolonged.subject"))
   end
 
   def inform_interested_students_immediately(job_offer)
@@ -48,11 +48,11 @@ class JobOffersMailer < ActionMailer::Base
    end
 
   def students_by_employer(job_offer, students)
-    employer_students = EmployersNewsletterInformation.where(:employer => job_offer.employer).map(&:user)
+    employer_students = EmployersNewsletterInformation.where(employer: job_offer.employer).map(&:user)
     students & employer_students
   end
 
-  def students_by_programming_language(job_offer, students)    
+  def students_by_programming_language(job_offer, students)
     students & job_offer.programming_languages.map{ |programming_language|
       ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", @programming_language.id).map(&:user)}
   end

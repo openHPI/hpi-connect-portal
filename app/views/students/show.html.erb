@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-sm-6">
-    <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
-      <blockquote class="userstatus">
-        <% if !(@user.user_status).nil? %>
-          <p><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+    <div class="pull-right">
+      <h1><%= @user.firstname %> <%= @user.lastname %></h1>
+        <% unless @user.user_status.nil? %>
+          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
         <% end %>
-      </blockquote>
+    </div>
   </div>
-  <div class="col-sm-6 text-center">
+  <div class="col-sm-6 text-left">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
       <% if can? :edit, @user %>
-        <%= link_to t("links.edit"),  edit_student_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
+        <%= link_to t("links.edit"),  edit_student_path(@user.id), class: "btn btn-default",
       style: "float:right; display:inline;" %>
       <% end %>
     </p>
@@ -51,7 +51,7 @@
       </table>
     </div>
 
-    <% if signed_in? && (current_user?(@user) || user_is_admin? || user_is_staff?) && !@job_offers.empty?%>
+    <% if signed_in? && (current_user?(@user) || current_user.admin? || current_user.staff?) && !@job_offers.empty?%>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4><%= t("activerecord.attributes.user.jobs")%></h4>

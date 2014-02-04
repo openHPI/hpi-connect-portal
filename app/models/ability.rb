@@ -5,47 +5,55 @@ class Ability
     user ||= User.new
 
     if user.role
-      can :manage, :all if user.admin?
-
       can [:archive, :read], JobOffer
 
-      can [:edit, :update], User, id: user.id
-
+      can [:edit, :update, :read], User, id: user.id
+      can :read, User, role: { name: 'Staff' }
       initialize_student if user.student?
       initialize_staff user if user.staff?
+      initialize_admin if user.admin?
     end
   end
 
-  def initialize_student()
+  def initialize_admin
+    can :manage, :all
+    cannot :prolong, JobOffer, status: JobStatus.open
+    cannot :prolong, JobOffer, status: JobStatus.pending
+    cannot :prolong, JobOffer, status: JobStatus.completed
+  end
+
+  def initialize_student
     can :create, Application
     can :read, Faq
+    cannot :index, User
     can :matching, JobOffer
-    can :read, User, role: { name: 'Staff' }
   end
 
   def initialize_staff(user)
     user_id = user.id
     employer_id = user.employer_id
 
-    can [:edit, :update], Employer, id: user.employer_id
+    can [:edit, :update], Employer, deputy_id: user_id
+    can [:edit, :update], Employer, id: employer_id
     can :read, Application
     can :read, User, role: { name: 'Student' }
-    can :read, User, role: { name: 'Staff' }
     can :manage, Faq
 
     can [:create, :complete, :reopen], JobOffer
-    can [:accept, :decline], JobOffer, employer: { id: employer_id, deputy_id: user_id }
-    can [:update, :destroy, :prolong], JobOffer, responsible_user_id: user_id
-    can [:update, :destroy, :prolong, :accept], JobOffer, employer: { deputy_id: user_id }
+    can [:accept, :decline], JobOffer, employer: { deputy_id: user_id }
+    can :prolong, JobOffer, responsible_user_id: user_id, status: JobStatus.running
+    can :prolong, JobOffer, employer: { deputy_id: user_id }, status: JobStatus.running
+    can [:update, :destroy], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy], JobOffer, employer: { deputy_id: user_id }
     can [:update, :edit], JobOffer do |job|
-      job.editable?
+      job.editable? && (job.responsible_user_id == user_id || job.employer.deputy_id == user_id)
     end
     cannot :destroy, JobOffer do |job|
       job.running?
     end
 
     can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
-    
+
     can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
     can :promote, User, role: { name: 'Student'} if user.employer && user == user.employer.deputy
     can :promote, User, role: { name: 'Staff'} if user.employer && user == user.employer.deputy

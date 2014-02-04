@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-sm-6">
-    <h1 style="display:inline"><%= @user.firstname %> <%= @user.lastname %></h1>
-    <blockquote>
-      <% if !(@user.user_status).nil? %>
-        <p><%= @user.user_status.name %></p>
-      <% end %>
-    </blockquote>
+    <div class="pull-right">
+      <h1><%= @user.firstname %> <%= @user.lastname %></h1>
+        <% if !(@user.user_status).nil? %>
+          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+        <% end %>
+    </div>
   </div>
-  <div class="col-sm-6 text-center">
+  <div class="col-sm-6 text-left">
     <p>
       <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <%= link_to t("links.edit"),  edit_staff_path(@user.id), "data-no-turbolink" => true, class: "btn btn-default",
-      style: "float:right; display:inline;" %>
+      <%= link_to t("links.edit"),  edit_staff_path(@user.id), class: "btn btn-default",
+    style: "float:right; display:inline;" %>
     </p>
   </div>
 </div>
@@ -38,10 +38,6 @@
                 <%= link_to @user.employer.name, employer_path(@user.employer) %>
               <% end %>
               </td>
-          </tr>
-          <tr>
-            <td><%= t("activerecord.attributes.user.employment_start_date") %></td>
-            <td><%= @user.employment_start_date %></td>
           </tr>
           <tr>
             <td><%= t("activerecord.attributes.user.cv")%></td>

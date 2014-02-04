@@ -46,6 +46,9 @@ label {
     color: #FFF;
 }
 
+.panel-default > .panel-heading {
+  background-color: #EBEBEB;
+}
 .wysihtml5-sandbox{
     resize: both;
 }
@@ -64,7 +67,7 @@ a:hover, a:focus, .btn-default:hover  {
 }
 
 .center-cropped {
-    width: 40px;  
+    width: 40px;
     height: 40px;
     background-position: center center;
     background-repeat: no-repeat;
@@ -89,4 +92,12 @@ a:hover, a:focus, .btn-default:hover  {
 .profile-picture{
     padding-top: 5px !important;
     padding-bottom: 5px !important;
+}
+
+[data-toggle=collapse]{
+  cursor: pointer;
+}
+
+[data-toggle=collapse]:hover{
+  background-color: #ddd;
 }

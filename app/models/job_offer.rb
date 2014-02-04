@@ -15,8 +15,8 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  vacant_posts        :integer          default(1)
 #  flexible_start_date :boolean          default(FALSE)
+#  vacant_posts        :integer
 #
 
 class JobOffer < ActiveRecord::Base
@@ -53,7 +53,7 @@ class JobOffer < ActiveRecord::Base
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
     job_offer.responsible_user = current_user
-    if !parameters[:employer_id]
+    unless parameters[:employer_id]
       job_offer.employer = current_user.employer
     end
 
@@ -114,9 +114,26 @@ class JobOffer < ActiveRecord::Base
   end
 
   def prolong(date)
-    if end_date < date
+    if running? && end_date < date
       update_column :end_date, date
       JobOffersMailer.job_prolonged_email(self).deliver
+      true
+    else
+      false
+    end
+  end
+
+  def accept_application(application)
+    new_assigned_students = assigned_students << application.user
+    if update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: vacant_posts - 1 })
+      application.delete
+      if flexible_start_date
+        update!({ start_date: Date.current })
+      end
+
+      ApplicationsMailer.application_accepted_student_email(application).deliver
+      JobOffersMailer.job_student_accepted_email(self).deliver
+
       true
     else
       false

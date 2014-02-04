@@ -13,12 +13,15 @@ deploy:
       secure: IrNqyY8hWCOkdddDQrYLmVG4eGxhrGVaFskv2fTpJcR3FZLS4lNbdRlBuEbUHE6cGg7NLKSES3GmXkkLv8KBPCfT6htdHyu22SmekrVZD2TwfrIhYh7xUrRXz5A0Rl8WMbVzAIfPdPs/pQiimH/V5JOq8+Kc4VLjQ+OHPbK8T24=
     develop-ja: 
       secure: IuhhiuxOx7aguasw1MDK/LiqOSSu2jnTUtnxnohlV2VMQpvPCLakV9BzUyqATCsYgnSHmeezXz7TbZ/V/t6BIo+nLu6pssRY582carEnXlmLmze8dOe/bhRegxB9VVqC4XTq5dHxXDnJ4mEzQbn7cETZYQ/RrVpPMxXBFHCr8H0=
+    develop-ak:
+      secure: bJKQ/hqoMAg/iUjmsUPMqJwgreGWmZz06QdudAA6hcF9mu5vf026JBhm7f+bwHvbcUS3Jd655tWMujA1/vbDOtylegIIjCI4f42y46lRFGhKVVtz+Djn/amV4on9hBOjhbhA6T2XndlNYNs2VtjoigRirzLA91Qjns2Yi3pITrw=
     develop:
       secure: PDZ872XdmxzxnTgcEcGyr/gPmdvx+BV2L2UZ+Iq7OUhK8ZVJfnBIbc49Z/NPPfbEmfl1XuWspwNl/v/6Nj/9mzpiZVr1ReqtxPKTHW/eo2x8kB8+GfeFvRdfOWw3m2O0ZAaE9+TWAjw9NlgwPNm3qtP1DMN+DMPibT7m3ZZ0jmQ=
   app: 
     master: hpi-hiwi-portal
     develop-ja: hpi-hiwi-portal-develop-ja
     develop: hpi-hiwi-portal-develop
+    develop-ak: hpi-hiwi-portal-develop-ak
   on:
     repo: tkowark/hpi-hiwi-portal
   run: 

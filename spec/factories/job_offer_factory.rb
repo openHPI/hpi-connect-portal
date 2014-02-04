@@ -15,8 +15,8 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  assigned_student_id :integer
 #  flexible_start_date :boolean          default(FALSE)
+#  vacant_posts        :integer
 #
 
 FactoryGirl.define do
@@ -32,7 +32,7 @@ FactoryGirl.define do
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)
-      job_offer.responsible_user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: job_offer.employer)
+      job_offer.responsible_user = FactoryGirl.create(:user, :staff, employer: job_offer.employer)
     end
   end
 end

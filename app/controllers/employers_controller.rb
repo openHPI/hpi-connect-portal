@@ -4,10 +4,6 @@ class EmployersController < ApplicationController
   before_action :set_employer, only: [:show, :edit, :update, :demote_staff, :promote_staff]
   before_action :check_user_deputy_or_admin, only: [:promote_staff]
 
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to employers_path, notice: exception.message
-  end
-
   # GET /employers
   # GET /employers.json
   def index
@@ -29,7 +25,7 @@ class EmployersController < ApplicationController
   # GET /employers/1.json
   def show
     page = params[:page]
-    @staff = @employer.staff.paginate page: page
+    @staff =  @employer.staff.where.not(id: @employer.deputy.id).paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
     @open_job_offers = @employer.job_offers.open.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
@@ -81,7 +77,11 @@ class EmployersController < ApplicationController
   end
 
   private
-  
+
+    def rescue_from_exception(exception)
+      redirect_to employers_path, notice: exception.message
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_employer
       @employer = Employer.find params[:id]
