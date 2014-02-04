@@ -98,11 +98,11 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
-      <%= form_tag update_staff_employers_path do %>
+      <%= form_tag update_staff_employers_path, class: "form-inline" do %>
         <%= hidden_field_tag "user_id", nil %>
 
-        <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name) %>
-        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name") %>
+        <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name), class: "form-control" %>
+        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name"), class: "form-control" %>
         <% if defined? @employer %>
           <%= hidden_field_tag :id, @employer.id %>
         <% end %>
