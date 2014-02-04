@@ -1,4 +1,4 @@
-require 'spec_helper'
+  require 'spec_helper'
 
 
 describe "Job Offer pages" do
@@ -118,9 +118,9 @@ describe "Job Offer pages" do
           it { should have_selector('h4', text: 'Applications') }
           it { should have_selector('td[href="' + student_path(id: @application.user.id) + '"]') }
 
-          describe "when the job is running" do
+          describe "when the job is open" do
             before do
-              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "running"))
+              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "open"))
               login_as(admin, :scope => :user)
               visit job_offer_path(job_offer)
             end

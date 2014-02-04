@@ -5,18 +5,24 @@ class Ability
     user ||= User.new
 
     if user.role
-      can :manage, :all if user.admin?
-
       can [:archive, :read], JobOffer
 
       can [:edit, :update, :read], User, id: user.id
 
       initialize_student if user.student?
       initialize_staff user if user.staff?
+      initialize_admin if user.admin?
     end
   end
 
-  def initialize_student()
+  def initialize_admin
+    can :manage, :all
+    cannot :prolong, JobOffer, status: { name: 'open' } 
+    cannot :prolong, JobOffer, status: { name: 'pending' } 
+    cannot :prolong, JobOffer, status: { name: 'completed'} 
+  end
+
+  def initialize_student
     can :create, Application
     can :read, Faq
     cannot :index, User
