@@ -49,7 +49,7 @@
         <%end%>
 
         <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name), class: "form-control" %>
-        <% if user_is_admin? %>
+        <% if current_user.admin? %>
         <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), class: "form-control" %>
         <% end %>
         <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role pull-right" %>

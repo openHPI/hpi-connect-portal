@@ -9,15 +9,7 @@ module UsersHelper
   end
 
   def user_is_deputy_of_employer?(employer)
-    signed_in? && current_user == @job_offer.employer.deputy
-  end
-
-  def user_is_staff?
-    signed_in? && current_user.staff?
-  end
-
-  def user_is_admin?
-    signed_in? && current_user.admin?
+    signed_in? && current_user == employer.deputy
   end
 
   def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)

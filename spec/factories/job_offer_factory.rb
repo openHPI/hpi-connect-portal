@@ -32,7 +32,7 @@ FactoryGirl.define do
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)
-      job_offer.responsible_user = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: job_offer.employer)
+      job_offer.responsible_user = FactoryGirl.create(:user, :staff, employer: job_offer.employer)
     end
   end
 end

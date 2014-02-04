@@ -11,15 +11,15 @@
 
 class Role < ActiveRecord::Base
 
-	def student_role?
-		name == 'Student'
-	end
+  def student_role?
+    name == 'Student'
+  end
 
-	def staff_role?
-		name == 'Staff'
-	end
+  def staff_role?
+    name == 'Staff'
+  end
 
-	def admin_role?
-		name == 'Admin'
-	end
+  def admin_role?
+    name == 'Admin'
+  end
 end

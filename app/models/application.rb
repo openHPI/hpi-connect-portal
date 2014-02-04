@@ -20,10 +20,10 @@ class Application < ActiveRecord::Base
   def self.create_and_notify(job_offer, user, params)
     application = Application.new job_offer: job_offer, user: user
     if application.save
-        ApplicationsMailer.new_application_notification_email(application, params[:message], params[:add_cv], params[:attached_files]).deliver
-        true
+      ApplicationsMailer.new_application_notification_email(application, params[:message], params[:add_cv], params[:attached_files]).deliver
+      true
     else
-        false
+      false
     end
   end
 
@@ -31,5 +31,4 @@ class Application < ActiveRecord::Base
     ApplicationsMailer.application_declined_student_email(self).deliver
     self.delete
   end
-
 end

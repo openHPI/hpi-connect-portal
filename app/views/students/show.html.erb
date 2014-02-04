@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <div class="pull-right">
       <h1><%= @user.firstname %> <%= @user.lastname %></h1>
-        <% if !(@user.user_status).nil? %>
+        <% unless @user.user_status.nil? %>
           <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
         <% end %>
     </div>
@@ -51,7 +51,7 @@
       </table>
     </div>
 
-    <% if signed_in? && (current_user?(@user) || user_is_admin? || user_is_staff?) && !@job_offers.empty?%>
+    <% if signed_in? && (current_user?(@user) || current_user.admin? || current_user.staff?) && !@job_offers.empty?%>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4><%= t("activerecord.attributes.user.jobs")%></h4>

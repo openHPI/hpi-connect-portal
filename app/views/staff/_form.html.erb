@@ -41,16 +41,6 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %>
-                </div>
-                <div class="col-sm-9">
-                 <%= f.association :user_status, label: false, default: 1, input_html: { class: 'form-control' } %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-3">
                   <%= f.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %>
                 </div>
                 <div class="col-sm-9">

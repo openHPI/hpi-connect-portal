@@ -106,7 +106,7 @@
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
       <% end %>
 
-      <% if (user_is_staff_of_employer?(@job_offer) or user_is_admin?) && !@assigned_students.blank? %>
+      <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
