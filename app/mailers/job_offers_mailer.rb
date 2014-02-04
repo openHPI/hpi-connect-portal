@@ -7,8 +7,9 @@ class JobOffersMailer < ActionMailer::Base
     mail(to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject"))
   end
 
-  def new_job_offer_info_email(job_offers, user)
-    @job_offers = job_offers
+  def new_job_offer_info_email(job_offer, user)
+    @job_offer = job_offer
+    @student = user
      mail(to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject"))
   end
 
@@ -39,7 +40,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def inform_interested_students_immediately(job_offer)
     determine_interested_students(job_offer,User.update_immediately).each do |student|
-      JobOffersMailer.new_job_offer_info_email([job_offer], student).deliver
+      JobOffersMailer.new_job_offer_info_email(job_offer, student).deliver
     end
   end
 
