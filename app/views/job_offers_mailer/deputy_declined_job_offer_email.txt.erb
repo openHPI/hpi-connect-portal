@@ -1,5 +1,21 @@
-<%= t "job_offers_mailer.job_offer_declined.title", job_title: @application.job_offer.title %>
+(For an English translation, scroll down.)
 
-<%= t "job_offers_mailer.job_offer_declined.content" %>
+Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>,
 
-<%= t "applications_mailer.last_line" %>
+Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
+
+Grüße,
+Das HPI-HiWi-Portal Team.
+
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+
+-------------------------------------------------------------
+
+Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>
+
+unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
+
+Regards,
+The HPI-HiWi-Portal Team.
+
+(This is an automatically created email, please do not respond to it.)
