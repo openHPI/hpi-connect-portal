@@ -78,7 +78,7 @@
                   </div>
                   <div class="col-sm-9">
                     <%= l(@job_offer.end_date) %>
-                    <% if can? :prolong, @job_offer and !current_user.admin?%>
+                    <% if can? :prolong, @job_offer%>
                       <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
                         <%= f.text_field :end_date, class: 'datepicker form-control' %>
                         <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
