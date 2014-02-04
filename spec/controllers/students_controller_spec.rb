@@ -258,7 +258,7 @@ describe StudentsController do
       end
 
       it "updates role to Deputy" do
-        post :update_role, { user_id: @student.id, role_level: 4 }, valid_session
+        post :update_role, { user_id: @student.id, role_level: Role.deputy_level }, valid_session
         response.should redirect_to students_path
         assert_equal(@student, @employer.deputy)
       end
@@ -277,7 +277,7 @@ describe StudentsController do
       end
 
       it "updates role to Deputy" do
-        post :update_role, { user_id: @student.id, role_level: 4, employer_id: @employer.id }, valid_session
+        post :update_role, { user_id: @student.id, role_level: Role.deputy_level, employer_id: @employer.id }, valid_session
         assert_equal(@student.reload, @employer.reload.deputy)
         assert_equal(@staff_role, @student.reload.role)
       end
@@ -295,7 +295,7 @@ describe StudentsController do
       end
 
       it "should not allow updating the role" do
-        post :update_role, { user_id: @student.reload.id, role_level: 4, employer_name: @employer.name }, valid_session
+        post :update_role, { user_id: @student.reload.id, role_level: Role.deputy_level, employer_name: @employer.name }, valid_session
         response.should redirect_to(student_path(@student))
       end
 
