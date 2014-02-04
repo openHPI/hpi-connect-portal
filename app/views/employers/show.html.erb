@@ -88,11 +88,7 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-md-6">
-                    <% if user.student? %>
-                      <%= link_to user.full_name, student_path(user), :class => "h4" %>
-                    <% else %>
-                      <%= link_to user.full_name, staff_path(user), :class => "h4" %>
-                    <%end%>
+                    <%= link_to user.full_name, user_path(user), :class => "h4" %>
                   </div>
                    <% if can? :promote, user %>
                     <div class="col-md-2 col-md-offset-1">

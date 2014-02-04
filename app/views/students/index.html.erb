@@ -70,7 +70,7 @@
             <div class="row">
               <% if user_is_admin? %>
               <div class="col-sm-3">
-                <%= label_tag 'employer_id', t('students.new_deputy_label'), :class => "control-label" %>
+                <%= label_tag 'employer_id', t('students.new_employer_label'), :class => "control-label" %>
               </div>
               <div class="col-sm-9">
                 <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control" %>
