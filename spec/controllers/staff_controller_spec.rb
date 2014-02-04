@@ -27,6 +27,7 @@ describe StaffController do
   # adjust the attributes here as well.
   let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :staff), "employer" => FactoryGirl.create(:employer), "identity_url" => "af", "email" => "test@example"} }
   let(:admin_role) { FactoryGirl.create(:role, :admin) }
+  let(:student) {FactoryGirl.create(:user, :student) }
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
@@ -55,6 +56,12 @@ describe StaffController do
       get :show, {:id => @staff.to_param}, valid_session
       assigns(:user).should eq(@staff)
     end
+
+    it "redirects to users_controller if user!= staff" do
+      get :show, {:id => student.to_param}, valid_session
+      response.should redirect_to user_path student
+    end
+
   end
 
   describe "GET edit" do
