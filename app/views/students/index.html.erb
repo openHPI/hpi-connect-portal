@@ -68,7 +68,7 @@
           </li>
           <li class="list-group-item employer_select">
             <div class="row">
-              <% if user_is_admin? %>
+              <% if current_user.admin? %>
               <div class="col-sm-3">
                 <%= label_tag 'employer_id', t('students.new_employer_label'), :class => "control-label" %>
               </div>
