@@ -19,7 +19,7 @@
         },
         success: function(data){
           if (data.is_deputy){
-            $(".deputy_select").show();
+            $(".deputy-select").show();
             var options = $("#new_deputy_id");
             $("#new_deputy_id").empty();
             $.each(data.users, function(index, user){
@@ -28,7 +28,7 @@
           } 
           else {
             $("#new_deputy_id").empty();
-            $(".deputy_select").hide();
+            $(".deputy-select").hide();
           }     
         },
         error: function(xhr, ajaxOptions, thrownError){

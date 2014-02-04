@@ -34,10 +34,13 @@ class UsersController < ApplicationController
   end
 
   def userlist
-    @is_deputy = User.find(params[:exclude_user]).deputy?
-    @users = User.where.not(:id => params[:exclude_user]).order(:lastname)
+    is_deputy = User.find(params[:exclude_user]).deputy?
+    puts User.find(params[:exclude_user]).deputy? != nil
+    puts User.find(params[:exclude_user]).deputy?
+    puts is_deputy
+    users = User.where.not(id: params[:exclude_user], role: Role.find_by_level(3)).order(:lastname)
     respond_to do |format|
-      format.json { render json: { is_deputy: @is_deputy, users: @users.as_json(only: :id, methods: :full_name) } }
+      format.json { render json: { is_deputy: is_deputy, users: users.as_json(only: :id, methods: :full_name) } }
     end
   end
 

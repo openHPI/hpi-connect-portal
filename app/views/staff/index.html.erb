@@ -53,6 +53,16 @@
               </div>
             </div>
           </li>
+          <li class="list-group-item deputy-select">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_tag 'new_deputy_id', t('students.new_deputy_label'), :class => "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name"), :class => "select form-control" %>
+              </div>
+            </div>
+          </li>  
         </ul>
         <div class="row">
           <div class="col-md-1 col-md-offset-9">
