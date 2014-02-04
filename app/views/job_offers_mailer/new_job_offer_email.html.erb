@@ -1,8 +1,25 @@
-<h1><%= t "job_offers_mailer.new_job_offer.title"+" ("+@job_offer.title+")" %></h1>
-<p>
-  <%= t "job_offers_mailer.new_job_offer.content" %>
-  <%= link_to (t "job_offers_mailer.new_job_offer.link"), url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false) %>
-</p>
-<p>
-  <%= t "applications_mailer.last_line" %>
-</p>
+(For an English translation, scroll down.)
+
+<h1>Hallo <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1>,
+
+ein Mitarbeiter deiner Abteilung oder Firma hat soeben ein neues Stellenangebot erstellt.
+Bitte entscheide baldmöglichst, ob du diese Stelle freigeben möchtest. Möglich ist dies unter:
+<%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>
+
+Grüße,
+Das HPI-HiWi-Portal Team.
+
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+
+<hr>
+
+<h1>Dear <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1>
+
+a staff member of your department or company has just created a new job offer.
+Please accept or decline this offer as soon as possible on this page:
+<%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false %>
+
+Regards,
+The HPI-HiWi-Portal Team.
+
+(This is an automatically created email, please do not respond to it.)

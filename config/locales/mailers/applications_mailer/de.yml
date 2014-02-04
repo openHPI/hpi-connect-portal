@@ -10,7 +10,8 @@ de:
         title: "Leider wurde eine Bewerbung abgelehnt"
         content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} ausgeschrieben von %{employer} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
       apply:
-        application: "Hallo, Ich möchte mich auf die Stelle bewerben."  
+        application: "Sehr geehrte Damen und Herren,\nhiermit bwerbe ich mich um die von Ihnen angebotene Stelle.\nMit freundlichen Grüßen"
+
     wimi:
       new_application:
         subject: "Neue Bewerbung"

@@ -59,7 +59,6 @@ class JobOffer < ActiveRecord::Base
 
     if job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver
-      JobOffersMailer.inform_interested_students_immediately(job_offer)
     else
       if parameters[:flexible_start_date]
         job_offer.flexible_start_date = true

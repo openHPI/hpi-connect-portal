@@ -3,14 +3,14 @@
       <% user_list.each do |user| %>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9" style="width: 100%;">
               <% if user.student? %>
                 <%= link_to user.full_name, student_path(user), :class => "h4" %>
               <% else %>
                 <%= link_to user.full_name, staff_path(user), :class => "h4" %>
               <%end%>
               <% if (defined?(show_demote_button) && show_demote_button) %>
-                <button class="btn btn btn-default demote" style="float:right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= change_role_button_title %></button>
+                <button class="btn btn-default demote pull-right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= change_role_button_title %></button>
               <%end%>
             </div>
           </div>

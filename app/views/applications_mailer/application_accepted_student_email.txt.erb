@@ -1,6 +1,21 @@
-<%= t "applications_mailer.students.accepted.title" %>
+(For an English translation, scroll down.)
 
-<%= t "applications_mailer.students.accepted.content", employer: @application.job_offer.employer, job_title: @application.job_offer.title %>
+Hallo <%=@application.user.firstname%>,
 
-<%= t "applications_mailer.last_line" %>
+Glückwunsch! Deine Bewerbung auf das Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> wurde angenommen. Wir wünschen dir alles Gute für deinen neuen Job!
 
+Grüße,
+Das HPI-HiWi-Portal Team.
+
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+
+-----------------------------------------------------------
+
+Dear <%=@application.user.firstname%>
+
+congratulation! Your application for the job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> has been accepted. We wish you all the best for you new job!
+
+Regards,
+The HPI-HiWi-Portal Team.
+
+(This is an automatically created email, please do not respond to it.)

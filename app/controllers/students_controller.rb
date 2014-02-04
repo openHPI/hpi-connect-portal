@@ -56,12 +56,11 @@ class StudentsController < ApplicationController
   end
 
   # POST /students/update_role
-
   def update_role
-    authorize! :promote, User.find(params[:student_id])
-    authorize! :update, @employer if params[:role_level].to_i == 4
+    authorize! :promote, User.find(params[:user_id])
+    authorize! :update, @employer if params[:role_level].to_i == Role.deputy_level
 
-    User.find(params[:student_id]).set_role(params[:role_level].to_i, @employer)
+    User.find(params[:user_id]).set_role(params[:role_level].to_i, @employer)
     redirect_to students_path
   end
 
