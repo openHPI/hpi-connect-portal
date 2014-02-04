@@ -8,7 +8,7 @@
 
    $(document).on("click", ".demote", function () {
      var user_id = $(this).data('id');
-     $(".user_id").val( user_id ); 
+     $(".user-id").val( user_id ); 
 
      $.ajax({
         type: "GET",

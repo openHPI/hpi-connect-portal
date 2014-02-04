@@ -37,7 +37,7 @@
           <li><%= t('students.demote_description_part_2')%></li>
         </ul>
       <%= form_tag set_role_to_student_staff_index_path do %>
-        <%= hidden_field_tag "user_id", nil, class: "user_id" %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id" %>
         <% if (defined?(@employer)) %>
         <%= hidden_field_tag :id, @employers.id %>
         <% end %>
