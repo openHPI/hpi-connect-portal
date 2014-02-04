@@ -250,6 +250,8 @@ User.create!([{
   lastname: "Meyer", 
   firstname: "Carsten",
   education:'Master',
+  semester: 5,
+  academic_program: 'Bachelor',
   role: Role.where(:name => 'Staff').first,
   employer: epic,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-2.jpg'))
@@ -260,7 +262,9 @@ User.create!([{
   identity_url: "https://openid.hpi.uni-potsdam.de/user/martin.boissier", 
   lastname: "Boissier", 
   firstname: "Martin",
-  education:'Master',
+  education:'undefined',
+  semester: 1,
+  academic_program: 'undefined',
   role: Role.where(:name => 'Staff').first,
   employer: epic,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-1.jpg'))
@@ -271,6 +275,9 @@ User.create!([{
   identity_url: "https://openid.hpi.uni-potsdam.de/user/nurith.moersberger", 
   lastname: "Moersberger", 
   firstname: "Nurith",
+  education:'undefined',
+  semester: 1,
+  academic_program: 'undefined',
   role: Role.where(:name => 'Staff').first,
   employer: dschool,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-3.jpg')) 
@@ -281,6 +288,9 @@ User.create!([{
   identity_url: "https://openid.hpi.uni-potsdam.de/user/ulla.egelhof", 
   lastname: "Egelhof", 
   firstname: "Ulla",
+  education:'undefined',
+  semester: 1,
+  academic_program: 'undefined',
   role: Role.where(:name => 'Staff').first,
   employer: dschool,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-3.jpg')) 
@@ -291,6 +301,9 @@ User.create!([{
   identity_url: "https://openid.hpi.uni-potsdam.de/user/peter.troeger", 
   lastname: "Tröger", 
   firstname: "Dr. Peter",
+  education:'undefined',
+  semester: 1,
+  academic_program: 'undefined',
   role: Role.where(:name => 'Staff').first,
   employer: os,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-1.jpg')) 
@@ -301,6 +314,9 @@ User.create!([{
   identity_url: "https://openid.hpi.uni-potsdam.de/user/sabine.wagner", 
   lastname: "Wagner", 
   firstname: "Sabine",
+  education:'undefined',
+  semester: 1,
+  academic_program: 'undefined',
   role: Role.where(:name => 'Staff').first,
   employer: os,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-3.jpg'))

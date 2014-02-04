@@ -8,7 +8,7 @@
             <div class="row">
               <div class="col-md-12">
                 <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
-                <% if can? :promote, User.students.first %>
+                <% if can? :promote, student %>
                   <button class="btn btn btn-default promote" style="float:right" data-id="<%= student.id %>" data-toggle="modal" data-target="#myModal"><%= t('students.promote_button')%></button>
                 <%end%>
               </div>
@@ -39,8 +39,15 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
+        <div><%= t('students.promote_description_introduction')%></div><br>
+        <ul>
+          <li><%= t('students.promote_description_part_1')%></li>
+          <li><%= t('students.promote_description_part_2')%></li>
+          <li><%= t('students.promote_description_part_3')%></li>
+        </ul>
+
       <%= form_tag update_role_students_path, class: "form-inline" do %>
-        <%= text_field_tag "student_id", nil %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id" %>
         <% promotion_rules = [] %>
         <% if user_is_deputy? %>
            <% promotion_roles = [[Role.find_by_level(2).name, 2], ["Deputy", 4]] %>
@@ -48,11 +55,37 @@
            <% promotion_roles = [[Role.find_by_level(2).name, 2] , [Role.find_by_level(3).name,3], ["Deputy", 4]] %>
         <%end%>
 
-        <%= select_tag :role_level, options_for_select(promotion_roles, Role.find_by_level(2).name), class: "form-control" %>
-        <% if current_user.admin? %>
-        <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), class: "form-control" %>
-        <% end %>
-        <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role pull-right" %>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_tag 'role_level', t('students.new_role_label'), :class => "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= select_tag :role_level, options_for_select(promotion_roles), :class => "select form-control dialog-select" %>
+              </div>
+            </div>
+          </li>
+          <% if current_user.admin? %>
+            <li class="list-group-item employer_select">
+              <div class="row">
+                
+                <div class="col-sm-3">
+                  <%= label_tag 'employer_id', t('students.new_employer_label'), :class => "control-label" %>
+                </div>  
+                <div class="col-sm-9">
+                  <%= select_tag :employer_id, options_for_select(Employer.all.collect{|e| [e.name, e.id]}, :selected => nil), :class => "select form-control dialog-select" %>
+                </div>
+                
+              </div>
+            </li>
+          <% end %>
+        </ul>
+        <div class="row">
+          <div class="col-md-1 col-md-offset-9">
+            <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
+         </div>
+       </div>
       <% end %>
       </div>
     </div><!-- /.modal-content -->

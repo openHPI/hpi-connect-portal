@@ -11,6 +11,22 @@
 
 class Role < ActiveRecord::Base
 
+  def self.student_level
+    return 1
+  end
+
+  def self.staff_level
+    return 2
+  end
+
+  def self.admin_level
+    return 3
+  end
+
+  def self.deputy_level
+    return 4
+  end
+
   def student_role?
     name == 'Student'
   end

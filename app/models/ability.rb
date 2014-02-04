@@ -55,6 +55,7 @@ class Ability
     can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
 
     can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
-    can [:promote], User, role: { name: 'Student' } if user.employer && user == user.employer.deputy
+    can :promote, User, role: { name: 'Student'} if user.employer && user == user.employer.deputy
+    can :promote, User, role: { name: 'Staff'} if user.employer && user == user.employer.deputy
   end
 end
