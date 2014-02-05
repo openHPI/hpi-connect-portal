@@ -1,14 +1,19 @@
-<h3><%= t "application_mailer.student_accepted.title" %></h3>
-<ul>
-  <li><%= t "activerecord.attributes.job_offer.title" %>: <%= @job_offer.title %></li>
-  <li>Email: <%= @job_offer.assigned_students.last.email %></li>
-  <li><%= t "activerecord.attributes.job_offer.chair" %>: <%= @job_offer.employer.name %></li>
-  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
-  <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
-  <li><%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %></li>
-  <li><%= t("activerecord.attributes.job_offer.time_effort") %>: <%= @job_offer.time_effort %> <%= t("job_offers.time_effort_description") %></li>
-  <li><%= t("activerecord.attributes.job_offer.compensation") %>: <%= @job_offer.human_readable_compensation %></li>
-</ul>
-<p>
-  <%= t "applications_mailer.last_line" %>
-</p>
+(For an English translation, scroll down.)<br>
+<br>
+<h1>Sehr geehrte Damen und Herren</h1>,<br>
+<br>
+<%= link_to(@job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname, controller:"students", action: "show", id: @job_offer.assigned_students.last.id, only_path: false)%> wurde soeben für das Jobangebot <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%> eingestellt.<br>
+<br>
+Grüße, Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
+<hr>
+<br>
+<h1>Dear Sir or Madam</h1><br>
+<br>
+<%= link_to(@job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname, controller:"students", action: "show", id: @job_offer.assigned_students.last.id, only_path: false)%> is been accepted for the job offer <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>.<br>
+<br>
+Regards, The HPI-HiWi-Portal Team.<br>
+<br>
+(This is an automatically created email, please do not respond to it.

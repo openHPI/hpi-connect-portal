@@ -86,16 +86,6 @@ describe ApplicationsMailer do
 			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
 		end
 
-		it "should have the title of the joboffer in the body" do
-			@html_body.should have_content(@job_offer.title)
-		end
-		it "should have the name of the student in the body" do
-			@html_body.should have_content(@student.firstname)
-			@html_body.should have_content(@student.lastname)
-		end
-		it "should include the link to the students profile page" do
-			@email.should have_body_text(url_for(controller:"students", action: "show", id: @student.id, only_path: false))
-		end
 		it "should have the personal application message in the body" do
 			@html_body.should have_content(@message)
 		end

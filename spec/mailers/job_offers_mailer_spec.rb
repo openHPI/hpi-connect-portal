@@ -54,11 +54,6 @@ describe JobOffersMailer do
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
-
-    it "should handle the 'Haustarif'" do
-      @email = JobOffersMailer.job_prolonged_email(FactoryGirl.create(:job_offer, compensation: 10.0)).deliver
-      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
-    end
   end
 
   describe "deputy accepted application" do
@@ -121,25 +116,6 @@ describe JobOffersMailer do
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
       @email.from.should eq([Configurable.mailToAdministration])
     end
-
-    it "should have job information in its body" do
-      @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_students.last.email)
-      @email.body.should have_content(@job_offer.employer.name)
-      @email.body.should have_content(@job_offer.responsible_user.email)
-      @email.body.should have_content(@job_offer.room_number)
-      @email.body.should have_content(@job_offer.start_date)
-      @email.body.should have_content(@job_offer.end_date)
-      @email.body.should have_content(@job_offer.compensation)
-    end
-
-    it "should handle the 'Haustarif'" do
-      @job_offer.compensation = 10.0
-      @job_offer.save!
-
-      @email = JobOffersMailer.job_closed_email(@job_offer).deliver
-      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
-    end
   end
 
   describe "responsible user accepted student" do
@@ -161,27 +137,11 @@ describe JobOffersMailer do
 
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
-      @email.body.should have_content(@job_offer.assigned_students.last.email)
-      @email.body.should have_content(@job_offer.employer.name)
-      @email.body.should have_content(@job_offer.responsible_user.email)
-      @email.body.should have_content(@job_offer.room_number)
-      @email.body.should have_content(@job_offer.start_date)
-      @email.body.should have_content(@job_offer.end_date)
-      @email.body.should have_content(@job_offer.compensation)
-      @email.body.should have_content(@job_offer.time_effort)
-    end
-
-    it "should handle the 'Haustarif'" do
-      @job_offer.compensation = 10.0
-      @job_offer.save!
-
-      @email = JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-      @email.body.should have_content(I18n.t('job_offers.default_compensation'))
     end
   end
     describe "students are informed about new job offer" do
       before(:each) do
-        @email = JobOffersMailer.new_job_offer_info_email(@job_offers, @job_offer.assigned_students.last).deliver
+        @email = JobOffersMailer.new_job_offer_info_email(@job_offer, @job_offer.assigned_students.last).deliver
       end
 
       it "should send an email" do
@@ -197,16 +157,7 @@ describe JobOffersMailer do
       end
 
       it "should have job information in its body" do
-        @job_offers.each do
-         |job|
-          @email.body.should have_content(job.title)
-          @email.body.should have_content(job.employer.name)
-          @email.body.should have_content(job.room_number)
-          @email.body.should have_content(job.start_date)
-          @email.body.should have_content(job.end_date)
-          @email.body.should have_content(job.compensation)
-          @email.body.should have_content(job.description)
-        end
+        @email.body.should have_content(@job_offer.title)
       end
     end
 end

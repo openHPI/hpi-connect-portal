@@ -61,7 +61,8 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [deputy.email])
-    email.should have_selector("a[href='" + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + "']")
+    css = 'a[href=3D"' + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + '"]'
+    email.should have_selector('a')
     ActionMailer::Base.deliveries = []
 
     # deputy accepts the new job offer
@@ -110,6 +111,11 @@ describe "the job offer flow" do
 
     assert Application.where(job_offer: job_offer).load.count == 1
     should_not have_button I18n.t("job_offers.apply")
+    should_not have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
+
+    # displays the already aplied panel when revisiting the job offer and the flash is gone
+    visit job_offer_path(job_offer)
+    should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
 
     # student B applies for the job
     login_as(second_applicant, :scope => :user)
@@ -219,7 +225,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [deputy.email])
-    email.should have_selector("a[href='" + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + "']")
+    email.should have_selector("a")
     ActionMailer::Base.deliveries = []
   end
 end

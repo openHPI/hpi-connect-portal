@@ -171,16 +171,35 @@ describe EmployersController do
     end
   end
 
-  describe "PUT update_staff_to_student" do
-
+  describe "PUT update_staff" do
+  
     it "demotes staff to student" do
       student_role = FactoryGirl.create(:role, :student)
       employer = FactoryGirl.create(:employer)
       staff_member = FactoryGirl.create(:user, :staff, employer: employer)
       sign_in employer.deputy
-      put :update_staff, {user_id: staff_member.to_param, new_deputy_id: nil, id: employer.id}
+      put :demote_staff, {user_id: staff_member.to_param, new_deputy_id: nil, id: employer.id}
       assert_equal(student_role, User.find(staff_member.id).role)
       assert_equal(nil, User.find(staff_member.id).employer)
     end
   end
+
+  describe "PUT promote_staff" do
+  
+    it "promotes staff to deputy" do
+      deputy_role_level = 4
+      staff_role = FactoryGirl.create(:role, :staff)
+      employer = FactoryGirl.create(:employer)
+      staff_member = FactoryGirl.create(:user, :role => staff_role, :employer => employer)
+      deputy = FactoryGirl.create(:user, role: staff_role, :employer => employer)
+      employer.update!(:deputy => deputy)
+      sign_in deputy
+      
+      put :promote_staff, {:user_id => staff_member.to_param, :role_level => deputy_role_level, :id => employer.to_param}
+      assert_equal(staff_role, staff_member.reload.role)
+      assert_equal(employer.reload.deputy, staff_member.reload)
+      
+    end
+  end
+
 end

@@ -1,7 +1,20 @@
-<h1><%= t "job_offers_mailer.job_offer_accepted.title"+" ("+@job_offer.title+")" %></h1>
-<p>
-    <%= t "job_offers_mailer.job_offer_accepted.content" %>
-</p>
-<p>
-	<%= t "applications_mailer.last_line" %>
-</p>
+(For an English translation, scroll down.)<br>
+<br>
+<h1>Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1>,<br>
+<br>
+dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde bestätigt. Studenten können sich jetzt für dein Angebot bewerben.<br>
+<br>
+Grüße,<br>
+Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<hr>
+<br>
+<h1>Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1><br>
+<br>
+your job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been accepted. Students can now apply for this job.<br>
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
+(This is an automatically created email, please do not respond to it.)

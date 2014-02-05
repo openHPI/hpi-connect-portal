@@ -131,6 +131,29 @@ describe JobOffersController do
     end
   end
 
+  describe "GET matching" do
+    it "assigns @job_offers_list[:items] to all job offers matching to the logged in user" do
+      programming_language1 = FactoryGirl.create(:programming_language)
+      programming_language2 = FactoryGirl.create(:programming_language)
+      programming_language3 = FactoryGirl.create(:programming_language)
+
+      language1 = FactoryGirl.create(:language)
+      language2 = FactoryGirl.create(:language)
+
+      JobOffer.delete_all
+      job1 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language2])
+      job2 = FactoryGirl.create(:job_offer, status: @open, programming_languages: [programming_language1, programming_language2])
+      job3 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language1] )
+      job4 = FactoryGirl.create(:job_offer, status: @open, languages: [language2], programming_languages:[programming_language3])
+
+      user = FactoryGirl.create(:user, :student, programming_languages: [programming_language1, programming_language2], languages: [language1])
+      sign_in user
+      get :matching, {language_ids: user.languages.map(&:id), programming_language_ids: user.programming_languages.map(&:id)}, valid_session
+      assigns(:job_offers_list)[:items].to_a.should eq([job3, job1])
+    end
+  end
+
+
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
@@ -172,6 +195,8 @@ describe JobOffersController do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, employer: employer)
+      FactoryGirl.create(:employers_newsletter_information, employer: employer)
+      FactoryGirl.create(:programming_languages_newsletter_information)
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
@@ -183,6 +208,7 @@ describe JobOffersController do
       sign_in employer.deputy
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open)
+      ActionMailer::Base.deliveries.count.should >= 1
       response.should redirect_to(@job_offer)
     end
   end
@@ -242,8 +268,6 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
-      FactoryGirl.create(:employers_newsletter_information, employer: employer)
-      FactoryGirl.create(:programming_languages_newsletter_information)
       sign_in responsible_user
     end
 
@@ -288,11 +312,6 @@ describe JobOffersController do
       it "redirects to the created job_offer" do
         post :create, {:job_offer => valid_attributes}, valid_session
         response.should redirect_to(JobOffer.last)
-      end
-
-      it "sends some emails" do
-        post :create, {:job_offer => valid_attributes}, valid_session
-        ActionMailer::Base.deliveries.count.should >= 2
       end
 
       it "automatically assigns the users employer as the new job offers employer" do

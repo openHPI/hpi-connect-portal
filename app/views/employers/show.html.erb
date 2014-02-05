@@ -1,17 +1,19 @@
 <div class="row">
-    <div class="col-sm-9">
-        <h1 style="display:inline" class="pull-left">
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <h1 align="right">
           <%= @employer.name %>
           <% if @employer.external %>
             <span class="label label-warning"><%= t("employers.external")%></span>
           <% end %>
         </h1>
+      </div>
+    </div>
+    <div class="col-sm-6 text-left">
+       <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: "+@employer.name )  %>
       <% if can? :edit, @employer %>
         <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
       <% end %>
-    </div>
-    <div class="col-sm-3">
-      <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail pull-left", alt: "Picture: "+@employer.name )  %>
     </div>
 </div>
 
@@ -55,12 +57,35 @@
             </li>
           </ul>
         </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.additional_staff") %></h4></div>
-            <%= render 'shared/user_list', name: "employers.additional_staff", user_list: @staff, show_demote_button: user_can_demote_staff?, change_role_button_title: t('employers.demote_button')  %>
+        <% unless @staff.empty? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.additional_staff") %></h4></div>
+            <ul class="list-group">
+              <% @staff.each do |user| %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <%= link_to user.full_name, user_path(user), :class => "h4" %>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="pull-right">
+                        <% if can? :promote, user %>
+                            <button class="btn btn btn-default promote" data-id="<%= user.id %>" data-toggle="modal" data-target="#promoteDialog"><%= t('students.promote_button') %></button>
+                        <% end %>
+                         <% if can? :promote, user %>
+                            <button class="btn btn btn-default demote" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= t('employers.demote_button') %></button>
+                         <% end %>
+                       </div>
+                    </div>
+                  </div>
+                </li>
+              <%end%>
+            </ul>
+            <div class="pull-right">
+              <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
+            </div>
           </div>
-          
+        <% end %>
       </div>
 
     <div class="col-md-6">
@@ -98,18 +123,86 @@
         <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
       </div>
       <div class="modal-body">
-      <%= form_tag update_staff_employers_path, class: "form-inline" do %>
-        <%= hidden_field_tag "user_id", nil %>
+        <div><%= t('students.demote_description_introduction')%></div><br>
+        <ul>
+          <li><%= t('students.demote_description_part_1')%></li>
+          <li><%= t('students.demote_description_part_2')%></li>
+        </ul>
+        <%= form_tag demote_staff_employers_path do %>
+          <%= hidden_field_tag "user_id", nil, class: "user-id" %>
+          <% if defined? @employer %>
+            <%= hidden_field_tag :id, @employer.id %>
+          <% end %>
 
-        <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name), class: "form-control" %>
-        <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name"), class: "form-control" %>
-        <% if defined? @employer %>
-          <%= hidden_field_tag :id, @employer.id %>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_tag 'role_name', t('students.new_role_label'), :class => "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%= select_tag :role_name, options_for_select([Role.find_by_level(1).name], Role.find_by_level(1).name), :class => "select form-control dialog-select" %>
+                </div>
+              </div>
+            </li> 
+            <li class="list-group-item deputy-select">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_tag 'new_deputy_id', t('students.new_deputy_label'), :class => "control-label" %>
+                </div>
+                <div class="col-sm-9">
+                  <%= select_tag :new_deputy_id, options_from_collection_for_select(User.order(:lastname), "id", "full_name"), :class => "select form-control dialog-select" %>
+                </div>
+              </div>
+            </li>           
+          </ul>       
+          <div class="row">
+            <div class="col-md-1 col-md-offset-9">
+              <%= submit_tag t('employers.demote_button'), :data => {confirm: t('employers.demote_confirm_question')}, :class => "btn btn-default change-role" %>
+            </div>
+          </div>
         <% end %>
-        <%= submit_tag t('employers.demote_button'), :data => {confirm: t('employers.demote_confirm_question')}, :class => "btn btn-default change-role" %>
-      <% end %>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="promoteDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%=t("students.promote_title")%></h4>
+      </div>
+      <div class="modal-body">
+        <div><%= t('students.promote_description_introduction')%></div><br>
+        <ul>
+          <li><%= t('students.promote_description_part_1')%></li>
+          <li><%= t('students.promote_description_part_2')%></li>
+          <li><%= t('students.promote_description_part_3')%></li>
+        </ul>
+      <%= form_tag promote_staff_employers_path do %>
+        <%= hidden_field_tag "user_id", nil, class: "user-id"  %>
+        <%= hidden_field_tag :id, @employer.id %>       
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_tag 'role_level', t('students.new_role_label'), :class => "control-label" %>
+              </div>
+              <div class="col-sm-9">
+                <%= select_tag :role_level, options_for_select([["Deputy", 4]] ), :class => "select form-control dialog-select" %>     
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-md-1 col-md-offset-9">
+            <%= submit_tag t('students.promote_button'), :data => {confirm: t('students.promote_confirm_question')}, :class => "btn btn-default change-role" %>
+          </div>
+        </div>       
+      <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

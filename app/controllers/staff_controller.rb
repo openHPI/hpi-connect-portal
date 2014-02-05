@@ -17,7 +17,7 @@ class StaffController < ApplicationController
   def show
     @user = User.find params[:id]
     unless @user.staff?
-      redirect_to user_path
+      redirect_to user_path @user
     end
   end
 

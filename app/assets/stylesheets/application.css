@@ -47,7 +47,7 @@ label {
 }
 
 .panel-default > .panel-heading {
-  background-color: #DDDDDD;
+  background-color: #EBEBEB;
 }
 .wysihtml5-sandbox{
     resize: both;
@@ -87,6 +87,10 @@ a:hover, a:focus, .btn-default:hover  {
    filter: alpha(opacity=0);
    /* modern browsers */
    opacity: 0;
+}
+
+.dialog-select{
+  width: 100% !important;
 }
 
 .profile-picture{

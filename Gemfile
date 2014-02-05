@@ -120,3 +120,6 @@ gem 'famfamfam_flags_rails'
 
 # saves config settings in a database
 gem 'configurable_engine'
+
+# asset handling for heroku
+gem 'rails_serve_static_assets'

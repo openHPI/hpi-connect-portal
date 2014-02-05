@@ -1,9 +1,29 @@
-<%= t "job_offers_mailer.new_job_offer.title"%>
+(For an English translation, scroll down.)
 
-<%= @job_offers.each do |job| %>
-•<%= (t "job_offers_mailer.general.title") + job.title %>
-•<%= (t "job_offers_mailer.general.employer") + job.employer.name %>
-•<%= (t "job_offers_mailer.general.room") + job.room_number.to_s %>
-•<%= (t "job_offers_mailer.general.duration") + job.start_date.to_s %> - <%= job.end_date.to_s %>
-•<%= (t "job_offers_mailer.general.salary") + job.compensation.to_s %>
-<% end %>
+Hallo <%=@student.firstname%>,
+
+gute Nachrichten: Es gibt ein neues Jobangebote, das Dich interessieren könnten:
+
+<%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
+
+Vielleicht ist das ja was Passendes für dich?
+
+Grüße,
+Das HPI-HiWi-Portal Team.
+
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+
+------------------------------------------------------------
+
+Dear <%= @student.firstname%>
+
+good news! There is a new job offers that might be interesting for you:
+
+<%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
+
+Visit our HPI-HiWi-Portal if you're interested!
+
+Regards,
+The HPI-HiWi-Portal Team.
+
+(This is an automatically created email, please do not respond to it.)

@@ -142,10 +142,10 @@ class User < ActiveRecord::Base
   end
 
   def set_role(role_level, employer)
-    new_role = Role.find_by_level ((role_level == 4) ? 2 : role_level)
+    new_role = Role.find_by_level ((role_level == Role.deputy_level) ? Role.staff_level : role_level)
 
     update! employer: employer, role: new_role
-    employer.update! deputy: self if role_level == 4
+    employer.update! deputy: self if role_level == Role.deputy_level
   end
 
   def set_role_from_staff_to_student(deputy_id)
@@ -155,8 +155,8 @@ class User < ActiveRecord::Base
     self.save!
 
     if deputy_id
-      User.find(deputy_id).set_role 4, employer
+      User.find(deputy_id).set_role Role.deputy_level, employer
     end
-    set_role 1, nil
+    set_role Role.student_level, nil
   end
 end
