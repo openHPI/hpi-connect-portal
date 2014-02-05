@@ -36,7 +36,7 @@ describe "the employer page" do
 
         should have_link 'Edit'
         visit edit_employer_path(employer)
-        current_path = edit_employer_path(employer)
+        current_path == edit_employer_path(employer)
     end
 
     it "not by student" do

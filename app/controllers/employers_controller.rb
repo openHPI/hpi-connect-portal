@@ -1,6 +1,6 @@
 class EmployersController < ApplicationController
 
-  authorize_resource only: [:new, :edit, :create, :update]
+  load_and_authorize_resource only: [:new, :edit, :create, :update]
   before_action :set_employer, only: [:show, :edit, :update, :demote_staff, :promote_staff]
   before_action :check_user_deputy_or_admin, only: [:promote_staff]
 

@@ -61,21 +61,36 @@ describe EmployersController do
 
   describe "GET edit" do
     describe "with sufficient access rights" do
-      it "assigns the requested employer as @employer" do
+      it "assigns the requested employer as @employer as admin" do
         employer = FactoryGirl.create(:employer)
+        get :edit, {:id => employer.to_param}
+        assigns(:employer).should eq(employer)
+      end
+
+      it "assigns the requested employer as @employer as staff of employer" do
+        employer = FactoryGirl.create(:employer)
+        sign_in FactoryGirl.create(:user, :staff, employer: employer)
         get :edit, {:id => employer.to_param}
         assigns(:employer).should eq(employer)
       end
     end
 
-    describe "with insufficient access rights" do
+    describe "with insufficient access rights it should redirect to employers path" do
       
       before(:each) do
-        sign_in FactoryGirl.create(:user, :student)
         @employer = FactoryGirl.create(:employer)
       end
 
-      it "redirects to the employers_path" do
+      it "as a student" do
+        sign_in FactoryGirl.create(:user, :student)
+      end
+
+      it "as a staff of another chair" do
+        employer2 = FactoryGirl.create(:employer)
+        sign_in FactoryGirl.create(:user, :staff, employer: employer2)
+      end
+
+      after(:each) do
         get :edit, {:id => @employer.to_param}
         response.should redirect_to(employers_path)
         flash[:notice].should eql("You are not authorized to access this page.")
