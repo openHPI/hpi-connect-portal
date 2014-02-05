@@ -45,7 +45,7 @@ class StaffController < ApplicationController
   # DELETE /staff/1.json
   def destroy
     @user.destroy
-    respond_and_redirect_to staff_index_path, 'Staff has been successfully deleted.'
+    respond_and_redirect_to staff_index_path, I18n.t('users.messages.successfully_deleted.')
   end
 
   private

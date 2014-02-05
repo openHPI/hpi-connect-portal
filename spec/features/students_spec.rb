@@ -97,7 +97,7 @@ describe "the students editing page" do
     current_path.should == student_path(@student1)
 
     page.should have_content(
-      "User was successfully updated",
+      "Profile was successfully updated",
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )

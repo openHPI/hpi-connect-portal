@@ -6,3 +6,7 @@ de:
     back_to_faqs: "Zurück zur Übersicht"
     edit: "Frage bearbeiten"
     edit_faq_error: "Sie sind nicht berechtigt, eine Frage zu bearbeiten"
+    messages:
+        successfully_created: "Die Frage wurde erfolgreich erstellt."
+        successfully_updated: "Die Frage wurde erfolgreich aktualisiert."
+        successfully_deleted: "Die Frage wurde erfolgreich gelöscht."

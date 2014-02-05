@@ -9,7 +9,8 @@ en:
     logged_in: "logged in"
     edit_profile: "Edit profile"
     my_profile: "My profile"
-    my_employer: "My chair"
+    my_employer: "My employer"
+    my_chair: "My chair"
     overview: "Overview"
     logout: "Log Out"
     faqs: "FAQs"
@@ -22,3 +23,5 @@ en:
     configuration: "Platform Settings"
     star_description_prog: "1 = I used it; 3 = Basic knowledge; 5 = I'm an expert"
     star_description_lang: "1 = Basic knowledge; 3 = Advanced knowledge; 5 = Native"
+    messages:
+        sign_in: "Please sign in."

@@ -14,3 +14,7 @@ de:
     staff_headline: "Mitarbeiterübersicht"
     new_staff: "Neuen Mitarbeiter anlegen"
     edit_staff: "Mitarbeiter bearbeiten"
+    messages:
+        successfully_created: "Das Profil wurde erfolgreich erstellt."
+        successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
+        successfully_deleted: "Das Profil wurde erfolgreich gelöscht."

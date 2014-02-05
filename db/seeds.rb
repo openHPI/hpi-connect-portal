@@ -59,7 +59,7 @@ epic = Employer.new(
 	description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
 	head: "Hasso Plattner",
 	deputy: nil,
-  avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
+    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
 #User.where(:firstname=>"Axel").first.update(employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
 epic_deputy = User.new(
@@ -84,7 +84,7 @@ os = Employer.new(
 	description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
 	head: "Andreas Polze",
 	deputy: nil,
-  avatar: File.open(Rails.root.join('public', 'photos', 'original', 'andreas-polze.jpg'))
+    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'andreas-polze.jpg'))
 )
 os_deputy = User.new(
 	email: "os.chair@example.com", 
@@ -108,7 +108,7 @@ dschool = Employer.new(
 	description: "At the d.school, we help to create “T-shaped” students. They bring a deep set of skills, knowledge and approach to problem solving from their own field; we help them develop the breadth and creative confidence to collaborate with people from vastly different disciplines. This equips students to tackle the big, ambiguous challenges they’ll encounter out in the world that can’t be solved with a single approach.",
 	head: "Uli Weinberg",
 	deputy: nil,
-  avatar: File.open(Rails.root.join('public', 'photos', 'original', 'uli-weinberg.jpg'))
+    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'uli-weinberg.jpg'))
 )
 dschool_deputy = User.new(
 	email: "dschool.deputy@example.com", 
@@ -130,7 +130,7 @@ sap = Employer.new(
 	head: "Hasso Plattner",
 	deputy: nil,
 	external: true,
-  avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
+    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
 sap_deputy = User.new(
 	email: "sap.external@example.com", 
@@ -158,7 +158,7 @@ User.create!([{
 	lastname: "Kroschk", 
 	firstname: "Axel", 
 	role: Role.where(:name => 'Admin').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
 }])
 
 User.create!([{
@@ -167,7 +167,7 @@ User.create!([{
 	lastname: "Appel", 
 	firstname: "Johanna", 
 	role: Role.where(:name => 'Admin').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
 }])
 
 User.create!([{
@@ -176,8 +176,9 @@ User.create!([{
 	lastname: "Steier", 
 	firstname: "Julia", 
 	role: Role.where(:name => 'Admin').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
 }])
+
 
 # Students
 
@@ -190,7 +191,7 @@ User.create!([{
 	academic_program: 'Bachelor',
 	education:'Abitur',
 	role: Role.where(:name => 'Student').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))	
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))	
 }])
 
 User.create!([{
@@ -202,7 +203,7 @@ User.create!([{
 	academic_program: 'Bachelor',
 	education:'Abitur',
 	role: Role.where(:name => 'Student').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-4.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-4.jpg'))
 }])
 
 User.create!([{
@@ -214,7 +215,7 @@ User.create!([{
 	academic_program: 'Bachelor',
 	education:'Abitur',
 	role: Role.where(:name => 'Student').first,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
 }])
 
 User.create!([{
@@ -239,7 +240,7 @@ User.create!([{
 	user_status: UserStatus.where(:name => 'employedext').first,
 	role: Role.where(:name => 'Staff').first,
 	employer: epic,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
+    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
 }])
 
 # Staff
@@ -321,6 +322,7 @@ User.create!([{
   employer: os,
   photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-3.jpg'))
 }])
+
 
 JobOffer.delete_all
 
