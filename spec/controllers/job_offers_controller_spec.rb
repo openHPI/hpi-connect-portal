@@ -9,11 +9,11 @@ describe JobOffersController do
   let(:responsible_user) { FactoryGirl.create(:user, :staff, employer: employer) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
   let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
 
   let(:valid_session) { {} }
 
