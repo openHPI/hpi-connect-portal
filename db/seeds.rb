@@ -368,7 +368,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
   responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first,
-  assigned_students: [User.where(firstname: "Pascal").first],
+  assigned_students: [User.where(firstname: "Pascal").first, User.where(firstname: "Julia").first],
   vacant_posts: 0
 }])
 
