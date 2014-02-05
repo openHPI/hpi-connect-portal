@@ -10,7 +10,7 @@ describe ApplicationsController do
                         "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:user, :role => student_role, :email => 'test@example.com')
-    @job_offer = FactoryGirl.create(:job_offer)
+    @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "open"))
   end
 
   describe "GET decline" do
@@ -93,6 +93,14 @@ describe ApplicationsController do
 
         get :accept, {:id => @application.id}
         assigns(:application).job_offer.status.should eq(running)
+      end
+
+      it "keeps the job 'open' when there are still vacant_posts left" do
+        @job_offer.vacant_posts = 2
+        @job_offer.save
+
+        get :accept, {:id => @application.id}
+        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'open'))
       end
 
       it "sends two emails" do
@@ -195,7 +203,7 @@ describe ApplicationsController do
     end
 
     it "only allows students to create applications" do
-      sign_in FactoryGirl.create(:user, role: student_role, employer: @job_offer.employer)
+      sign_in FactoryGirl.create(:user, role: staff_role, employer: @job_offer.employer)
       expect{
           post :create, { :application => {:job_offer_id => @job_offer.id}}
       }.to change(Application, :count).by(0)

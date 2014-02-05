@@ -124,10 +124,13 @@ class JobOffer < ActiveRecord::Base
 
   def accept_application(application)
     new_assigned_students = assigned_students << application.user
-    if update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: vacant_posts - 1 })
+    if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
       application.delete
       if flexible_start_date
         update!({ start_date: Date.current })
+      end
+      if vacant_posts == 0
+        update!({status: JobStatus.running})
       end
 
       ApplicationsMailer.application_accepted_student_email(application).deliver
