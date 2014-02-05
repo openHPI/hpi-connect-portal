@@ -1,25 +1,25 @@
-(For an English translation, scroll down.)
-
-<h1>Hallo <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1>,
-
-ein Mitarbeiter deiner Abteilung oder Firma hat soeben ein neues Stellenangebot erstellt.
+(For an English translation, scroll down.)<br>
+<br>
+<h1>Hallo <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1>,<br>
+<br>
+ein Mitarbeiter deiner Abteilung oder Firma hat soeben ein neues Stellenangebot erstellt.<br>
 Bitte entscheide baldmöglichst, ob du diese Stelle freigeben möchtest. Möglich ist dies unter:
 <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>
-
-Grüße,
-Das HPI-HiWi-Portal Team.
-
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
-
+<br>
+Grüße,<br>
+Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
 <hr>
-
-<h1>Dear <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1>
-
-a staff member of your department or company has just created a new job offer.
-Please accept or decline this offer as soon as possible on this page:
+<br>
+<h1>Dear <%=@job_offer.employer.deputy.firstname %> <%=@job_offer.employer.deputy.lastname %></h1><br>
+<br>
+a staff member of your department or company has just created a new job offer.<br>
+Please accept or decline this offer as soon as possible on this page:<br>
 <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false %>
-
-Regards,
-The HPI-HiWi-Portal Team.
-
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
 (This is an automatically created email, please do not respond to it.)
