@@ -11,23 +11,15 @@ require 'spec_helper'
 #   end
 # end
 describe JobOffersHelper do
-  describe "get names of attributes of a job offer" do
-  	it "gets all programming languages names that belong to job offer" do
-  		@programming_language_1 = FactoryGirl.create(:programming_language)
-    	@programming_language_2 = FactoryGirl.create(:programming_language)
+  describe "start date" do
+    it "is from now on/ ab sofort if flexible" do
+      @job_offer = FactoryGirl.create(:job_offer, flexible_start_date: true)
+      assert_equal(human_readable_start_date, t('job_offers.default_start_date'))
+    end
 
-      @job_offer = FactoryGirl.create(:job_offer, programming_languages: [@programming_language_1, @programming_language_2])
-      result = get_programming_language_names
-      assert_equal(result,[@programming_language_1.name,@programming_language_2.name])
-  	end
-
-  	it "gets all languages names that belong to job offer" do
-    	@language_1 = FactoryGirl.create(:language)
-      @language_2 = FactoryGirl.create(:language)
-
-      @job_offer = FactoryGirl.create(:job_offer, languages: [@language_1, @language_2])
-      result = get_language_names
-      assert_equal(result,[t("languages."+@language_1.name), t("languages."+@language_2.name)])
-  	end
+    it "is is the actual date if not flexible" do
+      @job_offer = FactoryGirl.create(:job_offer, flexible_start_date: false)
+      assert_equal(human_readable_start_date, @job_offer.start_date.to_s)
+    end
   end
 end
