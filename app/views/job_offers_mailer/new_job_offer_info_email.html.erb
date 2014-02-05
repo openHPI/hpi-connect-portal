@@ -1,29 +1,29 @@
-(For an English translation, scroll down.)
-
-<H1>Hallo <%=@student.firstname%></H1>,
-
-gute Nachrichten: Es gibt ein neues Jobangebote, das Dich interessieren könnten:
-
+(For an English translation, scroll down.)<br>
+<br>
+<H1>Hallo <%=@student.firstname%></H1>,<br>
+<br>
+gute Nachrichten: Es gibt ein neues Jobangebote, das Dich interessieren könnten:<br>
+<br>
 <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
-
-Vielleicht ist das ja was Passendes für dich?
-
-Grüße,
-Das HPI-HiWi-Portal Team.
-
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
-
+<br>
+Vielleicht ist das ja was Passendes für dich?<br>
+<br>
+Grüße,<br>
+Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
 <hr>
-
-<h1>Dear <%= @student.firstname%></h1>
-
-good news! There is a new job offers that might be interesting for you:
-
-<%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
-
-Visit our HPI-HiWi-Portal if you're interested!
-
-Regards,
-The HPI-HiWi-Portal Team.
-
+<br>
+<h1>Dear <%= @student.firstname%></h1><br>
+<br>
+good news! There is a new job offers that might be interesting for you:<br>
+<br>
+<%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%><br>
+<br>
+Visit our HPI-HiWi-Portal if you're interested!<br>
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
 (This is an automatically created email, please do not respond to it.)

@@ -25,7 +25,7 @@
 
     <br><br>
 
-    <% if current_user.applied?(@job_offer) %>
+    <% if current_user.applied?(@job_offer) and !flash[:success] %>
       <br><br>
         <div class="panel panel-default panel-body">
         <div class="row">

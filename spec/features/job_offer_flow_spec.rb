@@ -111,6 +111,11 @@ describe "the job offer flow" do
 
     assert Application.where(job_offer: job_offer).load.count == 1
     should_not have_button I18n.t("job_offers.apply")
+    should_not have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
+
+    # displays the already aplied panel when revisiting the job offer and the flash is gone
+    visit job_offer_path(job_offer)
+    should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
 
     # student B applies for the job
     login_as(second_applicant, :scope => :user)

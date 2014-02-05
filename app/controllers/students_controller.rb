@@ -48,7 +48,6 @@ class StudentsController < ApplicationController
 
   # GET /students/matching
   def matching
-    #XXX should be a list of strings not [string]
     authorize! :read, User
     @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
     @users = @users.paginate(:page => params[:page], :per_page => 5 )

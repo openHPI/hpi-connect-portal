@@ -63,11 +63,11 @@ epic = Employer.new(
 )
 #User.where(:firstname=>"Axel").first.update(employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, employment_start_date: Date.today)
 epic_deputy = User.new(
-	email: "tim.specht@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Specht", 
-	firstname: "Tim",
-	semester: 1,
+	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
+	lastname: "Kroschk", 
+	firstname: "Axel",
+	semester: 7,
 	academic_program: "undefined",
 	education: "undefined",
 	role: Role.where(:name => 'Staff').first,
@@ -151,12 +151,11 @@ sap_deputy.save!
 
 # Admin Users
 
-
 User.create!([{
-	email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/axel.kroschk", 
-	lastname: "Kroschk", 
-	firstname: "Axel", 
+	email: "tim.specht@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
+	lastname: "Specht", 
+	firstname: "Tim", 
 	role: Role.where(:name => 'Admin').first,
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
 }])
@@ -244,6 +243,16 @@ User.create!([{
 }])
 
 # Staff
+
+User.create!([{
+	email: "johanna.appel@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
+	lastname: "Appel", 
+	firstname: "Johanna", 
+	role: Role.where(:name => 'Staff').first,
+	employer: epic,
+  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
+}])
 
 User.create!([{
   email: "carsten.meyer@hpi.uni-potsdam.de", 
