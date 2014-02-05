@@ -44,7 +44,9 @@
                   <%= f.label :user_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(user, :user_status) %>
                 </div>
                 <div class="col-sm-9">
-                 <%= f.association :user_status, default: 1 %>
+                  <div class="input select optional user_user_status">
+                    <%= select("user", "user_status_id", UserStatus.all.collect {|status| [ t("activerecord.attributes.user_status." +  status.name), status.id ] }, {}, {id: 'user_user_status_id', class: 'select optional form-control'}) %>
+                  </div>
                 </div>
               </div>
             </li>
