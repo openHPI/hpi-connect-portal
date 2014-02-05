@@ -1,8 +1,19 @@
 (For an English translation, scroll down.)<br>
 <br>
-<h1>Sehr geehrte Damen und Herren</h1>,<br>
+Sehr geehrte Damen und Herren,<br>
 <br>
 <%= link_to(@job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname, controller:"students", action: "show", id: @job_offer.assigned_students.last.id, only_path: false)%> wurde soeben für das Jobangebot <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%> eingestellt.<br>
+Bitte hinterlegen Sie folgende Informationen im System:<br>
+<ul>
+  <li><%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%></li>
+  <li><%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %></li>
+  <li><%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%></li>
+  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
+  <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
+  <li><%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %></li>
+  <li><%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %></li>
+	<li><%= t "activerecord.attributes.job_offer.description" %>: <%= @job_offer.description %></li>
+</ul>
 <br>
 Grüße, Das HPI-HiWi-Portal Team.<br>
 <br>
@@ -10,10 +21,21 @@ Grüße, Das HPI-HiWi-Portal Team.<br>
 <br>
 <hr>
 <br>
-<h1>Dear Sir or Madam</h1><br>
+Dear Sir or Madam,<br>
 <br>
-<%= link_to(@job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname, controller:"students", action: "show", id: @job_offer.assigned_students.last.id, only_path: false)%> is been accepted for the job offer <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>.<br>
+<%= link_to(@job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname, controller:"students", action: "show", id: @job_offer.assigned_students.last.id, only_path: false)%> has been accepted for the job offer <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>.<br>
+Please use the following information to update your system:<br>
+<ul>
+  <li><%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%></li>
+  <li><%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %>
+  <li><%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%></li>
+  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
+  <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
+  <li><%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %></li>
+  <li><%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %></li>
+  <li><%= t "activerecord.attributes.job_offer.description" %>: <%= @job_offer.description %></li>
+</ul>
 <br>
 Regards, The HPI-HiWi-Portal Team.<br>
 <br>
-(This is an automatically created email, please do not respond to it.
+(This is an automatically created email, please do not respond to it.)

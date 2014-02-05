@@ -2,19 +2,12 @@ de:
   applications_mailer:
     students:
       accepted:
-        subject: "Herzlich Glückwunsch Ihre Bewerbung auf die Stelle %{job_title} wurde angenommen"
-        title: "Herzlichen Glückwunsch!"
-        content: "Ihre Bewerbung auf die Stelle %{job_title} ausgeschrieben von %{employer} wurde angenommen."
+        subject: "Deine Bewerbung zu %{job_title} wurde angenommen"
       declined:
-        subject: "Leider wurde eine Bewerbung abgelehnt"
-        title: "Leider wurde eine Bewerbung abgelehnt"
-        content: "Leider konnte Ihre Bewerbung auf die Stelle %{job_title} ausgeschrieben von %{employer} nicht angenommen werden. Wir wünschen Ihnen noch viel Erfolg bei der Jobsuche."
+        subject: "Deine Bewerbung %{job_title} wurde abgelehnt"
       apply:
         application: "Sehr geehrte Damen und Herren,\nhiermit bwerbe ich mich um die von Ihnen angebotene Stelle.\nMit freundlichen Grüßen"
-
     wimi:
       new_application:
-        subject: "Neue Bewerbung"
-        title: "Es gibt eine neue Bewerbung auf die Stelle %{job_offer}"
-        content: "hat sich auf die Stelle %{%job_offer} beworben."
+        subject: "Neue Bewerbung auf %{job_title}"
     last_line: "Viele Grüße das HPI-Hiwi-Portal"

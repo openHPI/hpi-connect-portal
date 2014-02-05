@@ -4,7 +4,7 @@ E-Mails:<br>
     <% end %>
 (For an English translation, scroll down.)<br>
 <br>
-<h1>Sehr geehrte Damen und Herren</h1>,<br>
+Sehr geehrte Damen und Herren,<br>
 <br>
 der Job <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde soeben geschlossen. Dieser Job kann nun nur noch über das Archiv <%=link_to('Archiv link','/de/job_offers/archive')%> gefunden werden.<br>
 <br>
@@ -15,7 +15,7 @@ Das HPI-HiWi-Portal Team.<br>
 <br>
 <hr>
 <br>
-<h1>Dear Sir or Madam</h1><br>
+Dear Sir or Madam,<br>
 <br>
 the job <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has now ended. You can find it in our archive <%=link_to('archive link','/en/job_offers/archive')%>.<br>
 <br>
