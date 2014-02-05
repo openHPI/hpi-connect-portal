@@ -58,7 +58,11 @@ class ApplicationsController < ApplicationController
   private
 
     def rescue_from_exception(exception)
-      redirect_to exception.subject.job_offer, notice: exception.message
+      if exception.subject.is_a?(Application)
+        redirect_to exception.subject.job_offer, notice: exception.message
+      else
+        redirect_to @job_offer, notice: exception.message
+      end
     end
 
     def application_params

@@ -1,7 +1,7 @@
 module UsersHelper
 
   def user_is_staff_of_employer?(job_offer)
-    signed_in? and current_user.employer == job_offer.employer and current_user.staff?
+    signed_in? &&  current_user.employer == job_offer.employer &&  current_user.staff?
   end
 
   def user_is_responsible_user?(job_offer)
@@ -35,7 +35,7 @@ module UsersHelper
     end
   end
 
-  def update_from_params_for_languages_and_newsletters(params, redirect_to)
+  def update_from_params_for_languages_and_newsletters(params, redirect_to) 
     update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
     update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
     update_from_params_for_languages(params, redirect_to)
@@ -47,7 +47,7 @@ module UsersHelper
     update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
 
     if @user.update(user_params)
-      respond_and_redirect_to(redirect_to, 'User was successfully updated.')
+      respond_and_redirect_to(redirect_to, I18n.t('users.messages.successfully_updated.'))
     else
       render_errors_and_action(redirect_to, 'edit')
     end

@@ -6,3 +6,7 @@ en:
     back_to_faqs: "Back to FAQs"
     edit: "Editing FAQs"
     edit_faq_error: "You are not authorized to edit a FAQ"
+    messages:
+        successfully_created: "FAQ was successfully created."
+        successfully_updated: "FAQ was successfully updated."
+        successfully_deleted: "FAQ was successfully deleted."

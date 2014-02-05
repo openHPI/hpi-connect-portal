@@ -14,3 +14,7 @@ en:
     staff_headline: "Listing of staff"
     new_staff: "Create new staff"
     edit_staff: "Edit staff"
+    messages:
+        successfully_created: "Profile was successfully created."
+        successfully_updated: "Profile was successfully updated."
+        successfully_deleted: "Profile was successfully deleted."

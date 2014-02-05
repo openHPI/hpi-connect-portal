@@ -97,7 +97,7 @@ describe "the students editing page" do
     current_path.should == student_path(@student1)
 
     page.should have_content(
-      "User was successfully updated",
+      "Profile was successfully updated",
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
@@ -157,6 +157,8 @@ describe "the students profile page" do
 
     it "should not have an edit link on the show page of someone elses profile" do
       should_not have_link('Edit')
+      visit edit_student_path(@student1)
+      current_path != edit_student_path(@student1)
     end
 
     it "can't be edited by staff members " do

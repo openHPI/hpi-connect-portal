@@ -38,7 +38,8 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   validates :title, :description, :employer, :start_date, :time_effort, :compensation, presence: true
-  validates :compensation, :time_effort, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :compensation, :time_effort, :vacant_posts, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :vacant_posts, :numericality => { :greater_than_or_equal_to => 1 }, on: :create
   validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
@@ -122,12 +123,21 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
+  def fire(student)
+    assigned_students.delete student
+    save!
+    update!({vacant_posts: vacant_posts + 1, status: JobStatus.open})
+  end
+
   def accept_application(application)
     new_assigned_students = assigned_students << application.user
-    if update({ assigned_students: new_assigned_students, status: JobStatus.running, vacant_posts: vacant_posts - 1 })
+    if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
       application.delete
       if flexible_start_date
         update!({ start_date: Date.current })
+      end
+      if vacant_posts == 0
+        update!({status: JobStatus.running})
       end
 
       ApplicationsMailer.application_accepted_student_email(application).deliver

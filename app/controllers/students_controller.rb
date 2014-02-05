@@ -43,7 +43,7 @@ class StudentsController < ApplicationController
   def destroy
     authorize! :destroy, @user
     @user.destroy
-    respond_and_redirect_to(students_url, 'Student has been successfully deleted.')
+    respond_and_redirect_to(students_url, I18n.t('users.messages.successfully_deleted.'))
   end
 
   # GET /students/matching

@@ -1,6 +1,6 @@
 class EmployersController < ApplicationController
 
-  authorize_resource only: [:new, :edit, :create, :update]
+  load_and_authorize_resource only: [:new, :edit, :update, :create]
   before_action :set_employer, only: [:show, :edit, :update, :demote_staff, :promote_staff]
   before_action :check_user_deputy_or_admin, only: [:promote_staff]
 
@@ -47,7 +47,7 @@ class EmployersController < ApplicationController
     @employer.deputy.employer = @employer if @employer.deputy
 
     if @employer.save
-      respond_and_redirect_to @employer, 'Employer was successfully created.', 'show', :created
+      respond_and_redirect_to @employer, I18n.t('users.messages.successfully_created.') , 'show', :created
     else
       @users = User.all
       flash[:error] = 'Invalid content.'
@@ -59,7 +59,7 @@ class EmployersController < ApplicationController
   # PATCH/PUT /employers/1.json
   def update
     if @employer.update employer_params
-      respond_and_redirect_to @employer, 'Employer was successfully updated.'
+      respond_and_redirect_to @employer, I18n.t('users.messages.successfully_updated.')
     else
       render_errors_and_action @employer, 'edit'
     end

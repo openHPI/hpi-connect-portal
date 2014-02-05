@@ -149,6 +149,11 @@ class User < ActiveRecord::Base
   end
 
   def set_role_from_staff_to_student(deputy_id)
+    self.semester = 1 if not semester
+    self.academic_program = 'unknown' if not academic_program
+    self.education = 'unknown' if not education
+    self.save!
+
     if deputy_id
       User.find(deputy_id).set_role Role.deputy_level, employer
     end

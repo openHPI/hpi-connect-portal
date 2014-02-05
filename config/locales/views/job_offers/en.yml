@@ -53,6 +53,7 @@ en:
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
     vacant_posts_left: "open position(s) left"
+    external_only: "Show external employers only"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."
@@ -63,3 +64,4 @@ en:
         prolonging_failed: "Job offer couldn't be prolonged."
         choose_valid_end_date: "Please choose a new end date which is valid."
     no_results: "No job offer matches your search"
+    fire: "Cancel employment"

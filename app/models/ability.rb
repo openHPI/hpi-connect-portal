@@ -48,8 +48,8 @@ class Ability
     can [:accept, :decline], JobOffer, employer: { deputy_id: user_id }
     can :prolong, JobOffer, responsible_user_id: user_id, status: JobStatus.running
     can :prolong, JobOffer, employer: { deputy_id: user_id }, status: JobStatus.running
-    can [:update, :destroy], JobOffer, responsible_user_id: user_id
-    can [:update, :destroy], JobOffer, employer: { deputy_id: user_id }
+    can [:update, :destroy, :fire], JobOffer, responsible_user_id: user_id
+    can [:update, :destroy, :fire], JobOffer, employer: { deputy_id: user_id }
     can [:update, :edit], JobOffer do |job|
       job.editable? && (job.responsible_user_id == user_id || job.employer.deputy_id == user_id)
     end

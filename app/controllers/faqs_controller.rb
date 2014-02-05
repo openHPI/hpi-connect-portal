@@ -24,7 +24,7 @@ class FaqsController < ApplicationController
     @faq = Faq.new faq_params
 
     if @faq.save
-      redirect_to faqs_path
+      respond_and_redirect_to faqs_url, I18n.t('faqs.messages.successfully_created.')
     else
       render_errors_and_action @faq, 'new'
     end
@@ -34,7 +34,7 @@ class FaqsController < ApplicationController
   # PATCH/PUT /faqs/1.json
   def update
     if @faq.update faq_params
-      redirect_to faqs_path
+      respond_and_redirect_to faqs_url, I18n.t('faqs.messages.successfully_updated.')
     else
       render_errors_and_action @faq, 'edit'
     end
@@ -44,7 +44,7 @@ class FaqsController < ApplicationController
   # DELETE /faqs/1.json
   def destroy
     @faq.destroy
-    respond_and_redirect_to faqs_url, 'FAQ has been successfully deleted.'
+    respond_and_redirect_to faqs_url, I18n.t('faqs.messages.successfully_deleted.')
   end
 
   private

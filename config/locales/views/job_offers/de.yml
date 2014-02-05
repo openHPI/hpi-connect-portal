@@ -46,13 +46,14 @@ de:
     send_application_headline: "Bewerbungsemail"  
     add_cv_application: "Lebenslauf der Bewerbung beilegen?"  
     send_application: "Bewerbung abschicken"
-    required_programming_languages: "Erforderliche Programmiersprachkenntnisse"
+    required_programming_languages: "Erforderliche Programmiersprachen"
     required_languages: "Erforderliche Sprachkenntnisse"
     prolong: "Verlängern"
     default_compensation: "Haustarif"
     default_startdate: "Ab sofort"
     recommended_jobs: "empfohlene Stellen"
     vacant_posts_left: "offene Stelle(n) verfügbar"
+    external_only: "Nur externe Arbeitgeber anzeigen"
     messages:
         successfully_created: "Das Jobangebot wurde erfolgreich erstellt."
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."
@@ -63,4 +64,5 @@ de:
         prolonging_failed: "Das Jobangebot konnte nicht verlängert werden."
         choose_valid_end_date: "Bitte geben Sie ein valides Datum ein."
     no_results: "Zu deiner Suchanfrage wurde kein passendes Stellenangebot gefunden"
+    fire: "Arbeitsverhältnis beenden"
 
