@@ -1,1 +1,29 @@
-  <%= @message %>
+(For an English translation, scroll down.)<br>
+<br>
+Hallo <%=@application.job_offer.responsible_user.firstname%> <%=@application.job_offer.responsible_user.lastname%>,<br>
+<br>
+<%=@application.user.firstname%> <%=@application.user.lastname%> hat sich auf dein Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> beworben:<br>
+<p>
+<i><%= @message %></i>
+</p>
+Gehe auf das HPI-HIWI-Portal, um diese Bewerbung zu bestätigen.<br>
+<br>
+Viele Grüße,<br> 
+das HPI-HIWI-Portal<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+<br>
+<hr>
+<br>
+Dear <%=@application.job_offer.responsible_user.firstname%> <%=@application.job_offer.responsible_user.lastname%>,<br>
+<br>
+<%=@application.user.firstname%> <%=@application.user.lastname%>has applied for you job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%>:<br>
+<p>
+<i><%= @message %></i>
+</p>
+Visit HPI-HIWI-Portal to accept this application.<br>
+<br>
+Kind regards,<br> 
+your HPI-HIWI-Portal<br>
+<br>
+(This is an automatically created email, please do not respond to it.)<br>
