@@ -157,6 +157,8 @@ describe "the students profile page" do
 
     it "should not have an edit link on the show page of someone elses profile" do
       should_not have_link('Edit')
+      visit edit_student_path(@student1)
+      current_path != edit_student_path(@student1)
     end
 
     it "can't be edited by staff members " do
