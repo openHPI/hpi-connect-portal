@@ -1,21 +1,21 @@
-(For an English translation, scroll down.)
-
-<h1>Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1>,
-
-Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
-
-Grüße,
-Das HPI-HiWi-Portal Team.
-
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
-
+(For an English translation, scroll down.)<br>
+<br>
+<h1>Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1>,<br>
+<br>
+Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.<br>
+<br>
+Grüße,<br>
+Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
 <hr>
-
-<h1>Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1>
-
-unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
-
-Regards,
-The HPI-HiWi-Portal Team.
-
+<br>
+<h1>Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%></h1><br>
+<br>
+unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.<br>
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
 (This is an automatically created email, please do not respond to it.)
