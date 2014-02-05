@@ -131,6 +131,29 @@ describe JobOffersController do
     end
   end
 
+  describe "GET matching" do
+    it "assigns @job_offers_list[:items] to all job offers matching to the logged in user" do
+      programming_language1 = FactoryGirl.create(:programming_language)
+      programming_language2 = FactoryGirl.create(:programming_language)
+      programming_language3 = FactoryGirl.create(:programming_language)
+
+      language1 = FactoryGirl.create(:language)
+      language2 = FactoryGirl.create(:language)
+
+      JobOffer.delete_all
+      job1 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language2])
+      job2 = FactoryGirl.create(:job_offer, status: @open, programming_languages: [programming_language1, programming_language2])
+      job3 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language1] )
+      job4 = FactoryGirl.create(:job_offer, status: @open, languages: [language2], programming_languages:[programming_language3])
+
+      user = FactoryGirl.create(:user, :student, programming_languages: [programming_language1, programming_language2], languages: [language1])
+      sign_in user
+      get :matching, {language_ids: user.languages.map(&:id), programming_language_ids: user.programming_languages.map(&:id)}, valid_session
+      assigns(:job_offers_list)[:items].to_a.should eq([job3, job1])
+    end
+  end
+
+
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
