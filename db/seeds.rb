@@ -354,7 +354,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
   responsible_user: User.where(:firstname=>"Martin", :lastname=>"Boissier").first,
-  vacant_posts: 1
+  vacant_posts: 5
 }])
 
 JobOffer.create!([{
@@ -369,7 +369,7 @@ JobOffer.create!([{
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
   responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first,
   assigned_students: [User.where(firstname: "Pascal").first, User.where(firstname: "Julia").first],
-  vacant_posts: 0
+  vacant_posts: 1
 }])
 
 # DSchool Jobs
@@ -411,7 +411,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'english'), 
   responsible_user: User.where(:firstname=>"Axel", :lastname=>"Kroschk").first,
   assigned_students: [User.where(firstname: "Frank").first],
-  vacant_posts: 0
+  vacant_posts: 1
 }])
 
 # OS Jobs
@@ -457,7 +457,7 @@ JobOffer.create!([{
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
   responsible_user: User.where(:firstname=>'Frank').first,
   assigned_students: [User.where(firstname: "Johannes").first],
-  vacant_posts: 0
+  vacant_posts: 1
 }])
 
 # SAP jobs
@@ -501,7 +501,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'english'),
   responsible_user: User.where(:firstname=>'Martin').first,
   assigned_students: [User.where(firstname: "Tim").first],
-  vacant_posts: 0
+  vacant_posts: 1
 }])
 
 # FAQs
