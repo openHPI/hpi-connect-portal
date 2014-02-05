@@ -467,4 +467,44 @@ describe JobOffersController do
     end
   end
 
+
+  describe "POST fire" do
+    before(:each) do
+      @job_offer = FactoryGirl.create(:job_offer)
+      @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
+      sign_in @job_offer.responsible_user
+    end
+
+    it "fires the student" do
+
+      old_offer = @job_offer
+
+      post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+
+      assert_equal(old_offer.vacant_posts+1, @job_offer.reload.vacant_posts)
+      assert_equal(0, @job_offer.reload.assigned_students.count)
+      assert_equal(@job_offer.reload.status, JobStatus.open)
+    end
+
+    describe "without the required permissions" do
+      before(:each) do
+        @job_offer = FactoryGirl.create(:job_offer)
+        @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
+      end
+
+      it "doesn't allow students to fire other students" do
+        sign_in FactoryGirl.create(:user, :student)
+        expect{
+          post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+        }.to change(@job_offer.reload.assigned_students, :count).by(0)
+      end
+
+      it "doesn't allow normal staff to fire students" do
+        sign_in FactoryGirl.create(:user, :staff)
+        expect{
+          post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+        }.to change(@job_offer.reload.assigned_students, :count).by(0)
+      end
+    end
+  end
 end

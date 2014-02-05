@@ -34,10 +34,8 @@ class JobOffersController < ApplicationController
       redirect_to job_offers_path
     end
 
-    if signed_in?
-      @application = current_user.applied? @job_offer
-      @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
-    end
+    @application = current_user.applied? @job_offer
+    @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
   end
 
   # GET /job_offers/new
@@ -150,6 +148,13 @@ class JobOffersController < ApplicationController
     end
   end
 
+  # POST /job_offer/:id/fire
+  def fire
+    student = User.find job_offer_params[:student_id]
+    @job_offer.fire student
+    respond_and_redirect_to @job_offer, student.full_name + " was successfully removed from this job offer."
+  end
+
   private
     def set_job_offer
       @job_offer = JobOffer.find params[:id]
@@ -167,7 +172,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :student_id, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

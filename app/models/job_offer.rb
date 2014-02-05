@@ -122,6 +122,12 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
+  def fire(student)
+    assigned_students.delete student
+    save!
+    update!({vacant_posts: vacant_posts + 1, status: JobStatus.open})
+  end
+
   def accept_application(application)
     new_assigned_students = assigned_students << application.user
     if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
