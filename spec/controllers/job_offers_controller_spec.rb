@@ -9,11 +9,11 @@ describe JobOffersController do
   let(:responsible_user) { FactoryGirl.create(:user, :staff, employer: employer) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id } }
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
   let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
   let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
 
   let(:valid_session) { {} }
 
@@ -467,4 +467,44 @@ describe JobOffersController do
     end
   end
 
+
+  describe "POST fire" do
+    before(:each) do
+      @job_offer = FactoryGirl.create(:job_offer)
+      @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
+      sign_in @job_offer.responsible_user
+    end
+
+    it "fires the student" do
+
+      old_offer = @job_offer
+
+      post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+
+      assert_equal(old_offer.vacant_posts+1, @job_offer.reload.vacant_posts)
+      assert_equal(0, @job_offer.reload.assigned_students.count)
+      assert_equal(@job_offer.reload.status, JobStatus.open)
+    end
+
+    describe "without the required permissions" do
+      before(:each) do
+        @job_offer = FactoryGirl.create(:job_offer)
+        @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
+      end
+
+      it "doesn't allow students to fire other students" do
+        sign_in FactoryGirl.create(:user, :student)
+        expect{
+          post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+        }.to change(@job_offer.reload.assigned_students, :count).by(0)
+      end
+
+      it "doesn't allow normal staff to fire students" do
+        sign_in FactoryGirl.create(:user, :staff)
+        expect{
+          post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
+        }.to change(@job_offer.reload.assigned_students, :count).by(0)
+      end
+    end
+  end
 end

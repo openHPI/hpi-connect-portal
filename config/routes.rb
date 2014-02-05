@@ -24,6 +24,7 @@ HpiHiwiPortal::Application.routes.draw do
       get "decline"
       get "reopen"
       put "prolong"
+      post "fire"
     end
   end
 

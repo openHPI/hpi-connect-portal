@@ -1,7 +1,7 @@
 module UsersHelper
 
   def user_is_staff_of_employer?(job_offer)
-    signed_in? and current_user.employer == job_offer.employer and current_user.staff?
+    signed_in? &&  current_user.employer == job_offer.employer &&  current_user.staff?
   end
 
   def user_is_responsible_user?(job_offer)

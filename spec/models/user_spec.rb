@@ -80,18 +80,4 @@ describe User do
       expect(User.build_from_identity_url(url)).to eql(user)
     end
   end
-
-  describe "#checkTypeOfPhoto" do
-
-    it "accepts a jpeg image" do
-      # no working version found
-
-
-      #@student.photo = File.new("spec/fixtures/pdf/test_cv.pdf")
-      #@student.photo = File.new("spec/fixtures/images/test_picture.jpg")
-      #expect(@student.photo.path).should eq("bla")
-
-      #expect(FileTest.exists?(@student.photo.path)).should eq(@student.photo)
-    end
-  end
 end

@@ -52,12 +52,6 @@ FactoryGirl.define do
     academic_program        'Master'
     birthday                '1970-12-10'
     education               'Abitur'
-    additional_information  'No'
-    homepage                'oracle.com'
-    github                  'www.github.com/dieter'
-    facebook                'www.faceboook.com/dieter'
-    xing                    'www.xing.com/dieter'
-    linkedin                'www.linkedin.com/dieter'
 
     trait :student do
       association :role, :student

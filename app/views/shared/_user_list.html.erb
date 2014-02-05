@@ -11,7 +11,14 @@
               <%end%>
               <% if (defined?(show_demote_button) && show_demote_button) %>
                 <button class="btn btn-default demote pull-right" data-id="<%= user.id %>" data-toggle="modal" data-target="#myModal"><%= change_role_button_title %></button>
-              <%end%>
+              <% end %>
+
+              <% if defined?(show_fire_button) && show_fire_button %>
+                <%= simple_form_for [:fire, @job_offer], method: :post, class: "form-inline" do |f| %>
+                  <%= f.hidden_field :student_id, value: user.id %>
+                  <%= f.submit t("job_offers.fire"), class: 'btn btn-default pull-right', style: "margin-top: -20px;" %>
+                <% end %>
+              <% end %>
             </div>
           </div>
         </li>

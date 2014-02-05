@@ -168,11 +168,14 @@ describe "Job Offer pages" do
                 student.lastname
               )
         end
+
+        it { should_not have_button I18n.t('job_offers.fire') }
       end
 
       describe "as the responsible user" do
 
         before do
+          job_offer.assigned_students = [student]
           login_as(job_offer.responsible_user, :scope => :user)
           visit edit_job_offer_path(job_offer)
         end
@@ -184,18 +187,23 @@ describe "Job Offer pages" do
         it "shouldn't display a delete button" do
           should_not have_link I18n.t("links.destroy")
         end
+
+        it { should have_button I18n.t('job_offers.fire') }
       end
 
       describe "as a admin" do
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
         before do
+          job_offer.assigned_students = [student]
           login_as(admin, :scope => :user)
           visit job_offer_path(job_offer)
         end
 
         it { should have_link I18n.t('job_offers.job_completed') }
         it { should have_link 'Reopen job offer'}
+
+        it { should have_button I18n.t('job_offers.fire') }
       end
     end
 

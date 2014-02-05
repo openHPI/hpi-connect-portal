@@ -122,7 +122,7 @@
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-              <%= render 'shared/user_list', user_list: @assigned_students %>
+              <%= render 'shared/user_list', user_list: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
           </div>
         </div>
       <%end%>
