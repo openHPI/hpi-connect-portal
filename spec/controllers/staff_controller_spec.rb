@@ -246,6 +246,12 @@ describe StaffController do
         assert_equal(nil, User.find(@staff_member.id).employer)
       end
 
+      it "handles a staff member with not all required student information" do
+        user = FactoryGirl.create(:user, :staff, semester: nil, academic_program: nil, birthday: nil, education: nil)
+        put :set_role_to_student, {:user_id => user.to_param}
+        response.should redirect_to staff_index_path
+      end
+
       it "updates role of deputy to student" do
         @employer.update(:deputy => @staff_member)
         new_deputy = FactoryGirl.create(:user, :student)
