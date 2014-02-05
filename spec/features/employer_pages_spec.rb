@@ -25,6 +25,8 @@ describe "the employer page" do
       visit employer_path(employer)
 
       should have_link 'Edit'
+      visit edit_employer_path(employer)
+      current_path == edit_employer_path(employer)
     end
 
     it "by an admin" do
@@ -33,6 +35,8 @@ describe "the employer page" do
         visit employer_path(employer)
 
         should have_link 'Edit'
+        visit edit_employer_path(employer)
+        current_path = edit_employer_path(employer)
     end
 
     it "not by student" do
@@ -40,6 +44,8 @@ describe "the employer page" do
         visit employer_path(employer)
 
         should_not have_link 'Edit'
+        visit edit_employer_path(employer)
+        current_path != edit_employer_path(employer)
     end
   end
 
