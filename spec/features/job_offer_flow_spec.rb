@@ -94,7 +94,7 @@ describe "the job offer flow" do
     should have_selector("#applicationEmailModal", visible: true)
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
-    message = "Hello Thomas, I'd really like to work on the new portal! All the best, Tim"
+    message = "Hello Thomas, I would really like to work on the new portal!"
     fill_in "message", :with => message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
@@ -126,7 +126,7 @@ describe "the job offer flow" do
     should have_selector("#applicationEmailModal", visible: true)
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
-    message = "Hello Thomas, I'd really like to work on the new portal! All the best, Tim"
+    message = "Hello Thomas, I would really like to work on the new portal!"
     fill_in "message", :with => message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")

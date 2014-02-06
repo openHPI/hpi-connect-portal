@@ -11,7 +11,7 @@ Das HPI-HiWi-Portal Team.
 
 -----------------------------------------------------------
 
-Dear <%=@application.user.firstname%>
+Dear <%=@application.user.firstname%>,
 
 congratulation! Your application for the job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> has been accepted. We wish you all the best for you new job!
 
