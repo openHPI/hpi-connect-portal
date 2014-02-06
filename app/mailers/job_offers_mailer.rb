@@ -4,7 +4,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail(to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject"))
+    mail(to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title))
   end
 
   def new_job_offer_info_email(job_offer, user)

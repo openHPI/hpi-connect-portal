@@ -1,7 +1,7 @@
 de:
   job_offers_mailer:
     new_job_offer:
-      subject: 'Jobangebot wartet auf Freigabe'
+      subject: 'Jobangebot %{job_title} wartet auf Freigabe'
     job_offer_declined:
       subject: "Jobangebot %{job_title} abgelehnt"
     job_offer_accepted:

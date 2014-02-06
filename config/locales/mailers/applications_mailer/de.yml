@@ -2,7 +2,7 @@ de:
   applications_mailer:
     students:
       accepted:
-        subject: "Deine Bewerbung zu %{job_title} wurde angenommen"
+        subject: "Deine Bewerbung zu {job_title} wurde angenommen"
       declined:
         subject: "Deine Bewerbung %{job_title} wurde abgelehnt"
       apply:
