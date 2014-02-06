@@ -25,6 +25,10 @@ describe JobOffersMailer do
       @email.should have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))
     end
 
+    it "should include the job title int the subject" do
+      @email.subject.should have_content(@job_offer.title)
+    end
+
     it "should send an email" do
       ActionMailer::Base.deliveries.count.should == 1
     end
