@@ -160,25 +160,6 @@ User.create!([{
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
 }])
 
-User.create!([{
-	email: "johanna.appel@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/johanna.appel", 
-	lastname: "Appel", 
-	firstname: "Johanna", 
-	role: Role.where(:name => 'Admin').first,
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
-}])
-
-User.create!([{
-	email: "julia.steier@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
-	lastname: "Steier", 
-	firstname: "Julia", 
-	role: Role.where(:name => 'Admin').first,
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
-}])
-
-
 # Students
 
 User.create!([{
@@ -240,6 +221,18 @@ User.create!([{
 	role: Role.where(:name => 'Staff').first,
 	employer: epic,
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
+}])
+
+User.create!([{
+	email: "julia.steier@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/julia.steier", 
+	lastname: "Steier", 
+	firstname: "Julia",
+	semester: 5,
+	academic_program: 'Bachelor',
+	education:'Abitur',
+	role: Role.where(:name => 'Student').first,
+  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
 }])
 
 # Staff
@@ -361,7 +354,7 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
-  responsible_user: User.where(:firstname=>"Martin", :lastname=>"Boissier").first,
+  responsible_user: User.where(firstname: "Martin").first,
   vacant_posts: 5
 }])
 
@@ -375,7 +368,7 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-  responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first,
+  responsible_user: User.where(firstname: "Tim").first,
   assigned_students: [User.where(firstname: "Pascal").first, User.where(firstname: "Julia").first],
   vacant_posts: 1
 }])
