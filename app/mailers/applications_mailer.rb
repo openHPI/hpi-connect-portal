@@ -22,7 +22,7 @@ class ApplicationsMailer < ActionMailer::Base
       end
     end
 
-    send_mail_for_application_to_wimi(application, message, (t "applications_mailer.wimi.new_application.subject"))
+    send_mail_for_application_to_wimi(application, message, (t "applications_mailer.wimi.new_application.subject", job_title: application.job_offer.title))
   end
 
   private

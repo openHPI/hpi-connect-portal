@@ -62,14 +62,14 @@ describe ApplicationsMailer do
 
 	describe "application created" do
 		before(:each) do
-		  @test_file = ActionDispatch::Http::UploadedFile.new({
-		    :filename => 'test_picture.jpg',
-		    :type => 'image/jpeg',
-		    :tempfile => fixture_file_upload('/images/test_picture.jpg')
-		  })
+			@test_file = ActionDispatch::Http::UploadedFile.new({
+			  :filename => 'test_picture.jpg',
+			  :type => 'image/jpeg',
+			  :tempfile => fixture_file_upload('/images/test_picture.jpg')
+			})
 
-		  @message = "Testmessage"
-			@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }).deliver
+		  	@message = "Testmessage"
+		  	@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }).deliver
 
 			html = get_message_part(@email, /html/)
 			@html_body = html.body.raw_source

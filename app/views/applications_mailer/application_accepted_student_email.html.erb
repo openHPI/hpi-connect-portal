@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)<br>
 <br>
-<h1>Hallo <%=@application.user.firstname%></h1>,<br>
+Hallo <%=@application.user.firstname%>,<br>
 <br>
 Glückwunsch! Deine Bewerbung auf das Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> wurde angenommen. Wir wünschen dir alles Gute für deinen neuen Job!<br>
 <br>
@@ -11,7 +11,7 @@ Das HPI-HiWi-Portal Team.<br>
 <br>
 <hr>
 <br>
-<h1>Dear <%=@application.user.firstname%></h1><br>
+Dear <%=@application.user.firstname%><br>
 <br>
 congratulation! Your application for the job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> has been accepted. We wish you all the best for you new job!<br>
 <br>

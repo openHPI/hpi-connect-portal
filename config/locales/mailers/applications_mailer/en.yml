@@ -2,18 +2,12 @@ en:
   applications_mailer:
     students:
       accepted:
-        subject: "Congratulations! Your application has been accepted!"
-        title: "Congratulations!"
-        content: "Your application to the job offer %{job_title} offered by %{employer} has been accepted"
+        subject: "Application %{job_title} has been accepted"
       declined:
-        subject: "Unfortunately a application has been declined"
-        title: "Unfortunately a application has been declined"
-        content: "Sadly your application to the job offer %{job_title} has been declined."
+        subject: "Application %{job_title} has been declined"
       apply:
         application: "Dear Sir or Madam,\nI would like to apply for your job offer.\nKind regards,"
     wimi:
       new_application:
-        subject: "New application"
-        title: "A new application for the job offer %{job_offer} is pending" 
-        content: "has applied for the job offer %{job_offer}."
+        subject: "New application %{job_title}"
     last_line: "Greetings from the HPI-Hiwi-Portal"
