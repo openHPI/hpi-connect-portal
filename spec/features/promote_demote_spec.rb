@@ -1,11 +1,6 @@
 require 'spec_helper'
 
 describe "the students listing" do
-  include EmailSpec::Helpers
-  include EmailSpec::Matchers
-
-  include ApplicationHelper
-
   subject { page }
 
   let(:employer) { FactoryGirl.create(:employer) }
@@ -13,7 +8,6 @@ describe "the students listing" do
 
   before(:each) do
     @student1 = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
-    ActionMailer::Base.deliveries = []
   end
 
   it "should have promote button for deputies" do

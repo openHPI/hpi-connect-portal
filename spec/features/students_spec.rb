@@ -50,7 +50,7 @@ describe "the students page" do
           @student1.firstname,
           @student1.lastname
         )
-        #page.should have_link('Promote')
+       page.should have_button("Promote")
       end
 
       it "should contain a link for showing a profile and it should lead to profile page " do
@@ -103,6 +103,29 @@ describe "the students editing page" do
     )
 
    end
+
+    it "can be edited by an admin" do
+      admin = FactoryGirl.create(:user, :admin)
+      login_as(admin)
+      visit student_path(@student1)
+
+      page.should have_link("Edit")
+      page.find_link("Edit").click
+
+
+      fill_in 'user_facebook', :with => 'www.face.com/alex'
+      fill_in 'user_email', :with => 'www.alex@uni-potsdam.de'
+      find('input[type="submit"]').click
+
+      current_path.should == student_path(@student1)
+
+      page.should have_content(
+        "Profile was successfully updated",
+        "General information",
+        "www.alex@uni-potsdam.de"
+      )
+      
+    end
 end
 
 describe "the students profile page" do
@@ -169,13 +192,7 @@ describe "the students profile page" do
       page.should_not have_link('Edit')
     end 
 
-    # it "can be edited by an admin" do
-    #   admin = FactoryGirl.create(:user, :admin)
-    #   login_as(admin)
-    #   visit edit_student_path(@student1)
 
-    #   page.should have_link('Edit')
-    # end
   end
 end
 
