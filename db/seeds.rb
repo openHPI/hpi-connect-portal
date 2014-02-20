@@ -133,10 +133,10 @@ sap = Employer.new(
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
 sap_deputy = User.new(
-	email: "sap.external@example.com", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/sap.external", 
-	lastname: "Jasper", 
-	firstname: "Dustin",
+	email: "claudia.koch@hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/claudia.koch", 
+	lastname: "Koch", 
+	firstname: "Claudia",
 	semester: 1,
 	academic_program: "undefined",
 	education: "undefined",
@@ -152,10 +152,10 @@ sap_deputy.save!
 # Admin Users
 
 User.create!([{
-	email: "tim.specht@student.hpi.uni-potsdam.de", 
-	identity_url: "https://openid.hpi.uni-potsdam.de/user/tim.specht", 
-	lastname: "Specht", 
-	firstname: "Tim", 
+	email: "alexander.ernst@student.hpi.uni-potsdam.de", 
+	identity_url: "https://openid.hpi.uni-potsdam.de/user/alexander.ernst", 
+	lastname: "Ernst", 
+	firstname: "Alexander", 
 	role: Role.where(:name => 'Admin').first,
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
 }])
@@ -340,7 +340,7 @@ JobOffer.create!([{
 	compensation: 13.50,
 	languages: Language.where(:name => 'german'), 
 	programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
-	responsible_user: User.where(:firstname=>"Tim", :lastname=>"Specht").first,
+	responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first,
     vacant_posts: 1
 }])
 
@@ -368,7 +368,7 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-  responsible_user: User.where(firstname: "Tim").first,
+  responsible_user: User.where(firstname: "Alexander").first,
   assigned_students: [User.where(firstname: "Pascal").first, User.where(firstname: "Julia").first],
   vacant_posts: 1
 }])
@@ -501,7 +501,7 @@ JobOffer.create!([{
   compensation: 24.00,
   languages: Language.where(:name => 'english'),
   responsible_user: User.where(:firstname=>'Martin').first,
-  assigned_students: [User.where(firstname: "Tim").first],
+  assigned_students: [User.where(firstname: "Pascal").first],
   vacant_posts: 1
 }])
 
