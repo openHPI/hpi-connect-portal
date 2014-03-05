@@ -84,6 +84,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    configurable_engine (0.3.0)
+      activerecord (> 3)
+      rails (> 3)
     database_cleaner (1.2.0)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
@@ -261,6 +264,7 @@ DEPENDENCIES
   chronic (~> 0.10.2)
   codeclimate-test-reporter (~> 0.3.0)
   coffee-rails (~> 4.0.0)
+  configurable_engine
   database_cleaner
   devise (~> 3.2)
   devise_openid_authenticatable (~> 1.1.5)
@@ -281,6 +285,7 @@ DEPENDENCIES
   pg (~> 0.17.1)
   rails (~> 4.0.0)
   rails_12factor
+  rails_serve_static_assets
   rake
   rest-client
   rspec-rails (~> 2.0)
