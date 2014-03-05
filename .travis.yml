@@ -23,7 +23,7 @@ deploy:
     develop: hpi-hiwi-portal-develop
     develop-ak: hpi-hiwi-portal-develop-ak
   on:
-    repo: tkowark/hpi-hiwi-portal
+    repo: hpi-swt2/hpi-hiwi-portal
   run: 
   - "rake db:migrate"
   - "rake db:seed"
