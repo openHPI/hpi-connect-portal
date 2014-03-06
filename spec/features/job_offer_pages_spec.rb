@@ -309,18 +309,6 @@ describe "Job Offer pages" do
 
       before { visit job_offer_path(job_offer) }
 
-      describe "as a staff of the job offers employer" do
-        let(:staff) { FactoryGirl.create(:user, :staff, employer: job_offer.employer) }
-
-        before do
-          login_as(staff, :scope => :user)
-          visit job_offer_path(job_offer)
-        end
-
-        it { should have_link('Reopen job offer') }
-
-      end
-
       describe "as admin" do
         let(:admin) { FactoryGirl.create(:user, :admin, employer: job_offer.employer) }
 
@@ -331,6 +319,33 @@ describe "Job Offer pages" do
 
         it { should have_link('Reopen job offer') }
 
+      end
+    end
+
+    describe "show jobs in archive" do
+      let(:admin) { FactoryGirl.create(:user, :admin)}
+      let(:staff) { FactoryGirl.create(:user, :staff)}
+      let(:student) { FactoryGirl.create(:user, :student)}
+      before do
+        FactoryGirl.create(:job_offer, title: "archive job", responsible_user: FactoryGirl.create(:user), status: @status_completed)
+      end
+
+      it "shows job offer details link for admin" do
+        login_as(admin, :scope => :user)
+        visit archive_job_offers_path
+        page.should have_link("archive job")
+      end
+
+      it "doesn't show job offer details link for students" do
+        login_as(student, :scope => :user)
+        visit archive_job_offers_path
+        page.should_not have_link("archive job")
+      end
+
+      it "doesn't show job offer details link for staff" do
+        login_as(staff, :scope => :user)
+        visit archive_job_offers_path
+        page.should_not have_link("archive job")
       end
     end
   end

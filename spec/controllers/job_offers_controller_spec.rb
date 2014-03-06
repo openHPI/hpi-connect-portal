@@ -94,6 +94,20 @@ describe JobOffersController do
       get :show, {:id => @job_offer.to_param}, valid_session
       assigns(:application).should eq(application)
     end
+
+    it "redirects students when job is in archive" do
+      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
+      get :show, {id: archive_job.to_param}, valid_session
+      response.should redirect_to(archive_job_offers_path)
+    end
+
+    it "shows archive job for admin" do
+      sign_in FactoryGirl.create(:user, :admin)
+      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
+      get :show, {id: archive_job.to_param}, valid_session
+      response.should_not redirect_to(archive_job_offers_path)
+      response.should render_template("show")
+    end
   end
 
   describe "GET new" do

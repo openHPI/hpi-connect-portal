@@ -28,6 +28,7 @@ class Ability
     can :create, Application
     can :read, Faq
     cannot :index, User
+    cannot :show, JobOffer, status: JobStatus.completed
     can :matching, JobOffer
   end
 
@@ -42,6 +43,7 @@ class Ability
     can :manage, Faq
 
     can :create, JobOffer
+    cannot :show, JobOffer, status: JobStatus.completed
     can :complete, JobOffer, employer: user.employer
     can :reopen, JobOffer, employer: user.employer, status: JobStatus.completed
     can :reopen, JobOffer, employer: user.employer, status: JobStatus.running

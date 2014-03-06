@@ -165,8 +165,11 @@ class JobOffersController < ApplicationController
     end
 
     def rescue_from_exception(exception)
-      if [:complete, :edit, :destroy, :update, :decline].include? exception.action
+      if [:complete, :edit, :destroy, :update, :decline].include?(exception.action)
         redirect_to exception.subject, notice: exception.message and return
+      end
+      if [:show].include?(exception.action) && @job_offer.completed?
+        redirect_to archive_job_offers_path and return
       end
       redirect_to job_offers_path, notice: exception.message
     end

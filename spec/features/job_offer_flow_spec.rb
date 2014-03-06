@@ -205,6 +205,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     assert job_offer.completed?
 
+    login_as FactoryGirl.create(:user, :admin)
     # responsible user reopens the jobs
     visit job_offer_path(job_offer)
     find_link(I18n.t("job_offers.reopen_job")).click
