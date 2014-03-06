@@ -28,14 +28,6 @@ class StaffController < ApplicationController
     @all_languages = Language.all
   end
 
-  # POST /staff/set_role_to_student
-  def set_role_to_student
-    user = User.find_by_id params[:user_id]
-    
-    user.set_role_from_staff_to_student params[:new_deputy_id]
-    redirect_to staff_index_path
-  end
-
   # PATCH/PUT /staff/1
   # PATCH/PUT /staff/1.json
   def update

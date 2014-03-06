@@ -1,10 +1,9 @@
 class StudentsController < ApplicationController
   include UsersHelper
 
-  authorize_resource class: "User", except: [:update_role, :destroy, :matching]
+  authorize_resource class: "User", except: [:destroy, :matching]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_employer, only: [:update_role]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
@@ -54,21 +53,12 @@ class StudentsController < ApplicationController
     render "index"
   end
 
-  # POST /students/update_role
-  def update_role
-    authorize! :promote, User.find(params[:user_id])
-    authorize! :update, @employer if params[:role_level].to_i == Role.deputy_level
-
-    User.find(params[:user_id]).set_role(params[:role_level].to_i, @employer)
-    redirect_to students_path
-  end
-
   private
 
     def rescue_from_exception(exception)
       if [:index].include? exception.action
         respond_and_redirect_to root_path, exception.message
-      elsif [:edit, :update_role, :destroy, :promote, :update].include? exception.action
+      elsif [:edit, :destroy, :update].include? exception.action
         respond_and_redirect_to student_path(exception.subject), exception.message
       else
         respond_and_redirect_to students_path, exception.message
@@ -78,10 +68,6 @@ class StudentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find params[:id]
-    end
-
-    def set_employer
-      @employer = params[:employer_id] ? Employer.find(params[:employer_id]) : current_user.employer
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

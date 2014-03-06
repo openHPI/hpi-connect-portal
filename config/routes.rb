@@ -28,14 +28,9 @@ HpiHiwiPortal::Application.routes.draw do
     end
   end
 
-  get "userlist" => "users#userlist"
   get "employers/external", to: "employers#index_external", as: "external_employers"
 
   resources :employers do
-    collection do 
-        post 'demote_staff'
-        post 'promote_staff'
-    end
   end
 
   #resources :users, only: [:edit, :update]
@@ -55,10 +50,6 @@ HpiHiwiPortal::Application.routes.draw do
   resources :faqs
 
   resources :staff, except: [:new, :create] do
-      collection do
-          post 'update_role'
-          post 'set_role_to_student'
-      end
   end
 
   resources :students do
@@ -66,7 +57,6 @@ HpiHiwiPortal::Application.routes.draw do
       get 'students/new' => 'students#new'
       post 'students' => 'students#create'
       get 'matching'
-      post 'update_role'
     end
   end
   end

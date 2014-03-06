@@ -1,8 +1,7 @@
 class EmployersController < ApplicationController
 
   load_and_authorize_resource only: [:new, :edit, :update, :create]
-  before_action :set_employer, only: [:show, :edit, :update, :demote_staff, :promote_staff]
-  before_action :check_user_deputy_or_admin, only: [:promote_staff]
+  before_action :set_employer, only: [:show, :edit, :update]
 
   # GET /employers
   # GET /employers.json
@@ -65,17 +64,6 @@ class EmployersController < ApplicationController
     end
   end
 
-  def demote_staff
-    user = User.find_by_id params[:user_id]
-    user.set_role_from_staff_to_student params[:new_deputy_id]
-    redirect_to employer_path @employer
-  end
-
-  def promote_staff
-    User.find(params[:user_id]).set_role(params[:role_level].to_i, @employer)
-    redirect_to @employer
-  end
-
   private
 
     def rescue_from_exception(exception)
@@ -90,12 +78,5 @@ class EmployersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def employer_params
       params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external)
-    end
-
-    def check_user_deputy_or_admin
-      user = User.find_by_id params[:user_id]
-      unless can? :promote, user
-        redirect_to @employer
-      end
     end
 end

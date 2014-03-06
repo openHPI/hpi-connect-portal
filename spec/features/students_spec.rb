@@ -50,7 +50,6 @@ describe "the students page" do
           @student1.firstname,
           @student1.lastname
         )
-       page.should have_button("Promote")
       end
 
       it "should contain a link for showing a profile and it should lead to profile page " do
