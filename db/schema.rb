@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131162509) do
+ActiveRecord::Schema.define(version: 20140307104607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,28 @@ ActiveRecord::Schema.define(version: 20140131162509) do
     t.datetime "updated_at"
   end
 
+  create_table "staffs", force: true do |t|
+    t.integer  "employer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "students", force: true do |t|
+    t.integer  "semester"
+    t.string   "academic_program"
+    t.text     "education"
+    t.text     "additional_information"
+    t.date     "birthday"
+    t.string   "homepage"
+    t.string   "github"
+    t.string   "facebook"
+    t.string   "xing"
+    t.string   "linkedin"
+    t.string   "employment_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_statuses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -169,30 +191,17 @@ ActiveRecord::Schema.define(version: 20140131162509) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
+    t.string   "email",               default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",       default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "identity_url"
     t.string   "lastname"
     t.string   "firstname"
-    t.integer  "role_id",                default: 1,  null: false
-    t.integer  "employer_id"
-    t.integer  "semester"
-    t.string   "academic_program"
-    t.date     "birthday"
-    t.text     "education"
-    t.text     "additional_information"
-    t.string   "homepage"
-    t.string   "github"
-    t.string   "facebook"
-    t.string   "xing"
-    t.string   "linkedin"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
@@ -202,9 +211,9 @@ ActiveRecord::Schema.define(version: 20140131162509) do
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
     t.integer  "status"
-    t.integer  "user_status_id"
-    t.date     "employment_start_date"
-    t.integer  "frequency",              default: 1,  null: false
+    t.integer  "frequency",           default: 1,  null: false
+    t.integer  "manifestation_id"
+    t.string   "manifestation_type"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

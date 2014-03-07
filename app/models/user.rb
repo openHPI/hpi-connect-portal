@@ -2,68 +2,42 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string(255)      default(""), not null
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0)
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string(255)
-#  last_sign_in_ip        :string(255)
-#  created_at             :datetime
-#  updated_at             :datetime
-#  identity_url           :string(255)
-#  lastname               :string(255)
-#  firstname              :string(255)
-#  role_id                :integer          default(1), not null
-#  employer_id            :integer
-#  semester               :integer
-#  academic_program       :string(255)
-#  birthday               :date
-#  education              :text
-#  additional_information :text
-#  homepage               :string(255)
-#  github                 :string(255)
-#  facebook               :string(255)
-#  xing                   :string(255)
-#  linkedin               :string(255)
-#  photo_file_name        :string(255)
-#  photo_content_type     :string(255)
-#  photo_file_size        :integer
-#  photo_updated_at       :datetime
-#  cv_file_name           :string(255)
-#  cv_content_type        :string(255)
-#  cv_file_size           :integer
-#  cv_updated_at          :datetime
-#  status                 :integer
-#  user_status_id         :integer
-#  employment_start_date  :date
-#  frequency              :integer          default(1), not null
+#  id                  :integer          not null, primary key
+#  email               :string(255)      default(""), not null
+#  remember_created_at :datetime
+#  sign_in_count       :integer          default(0)
+#  current_sign_in_at  :datetime
+#  last_sign_in_at     :datetime
+#  current_sign_in_ip  :string(255)
+#  last_sign_in_ip     :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  lastname            :string(255)
+#  firstname           :string(255)
+#  photo_file_name     :string(255)
+#  photo_content_type  :string(255)
+#  photo_file_size     :integer
+#  photo_updated_at    :datetime
+#  cv_file_name        :string(255)
+#  cv_content_type     :string(255)
+#  cv_file_size        :integer
+#  cv_updated_at       :datetime
+#  status              :integer
+#  frequency           :integer          default(1), not null
+#  manifestation_id    :integer
+#  manifestation_type  :string(255)
 #
 
 class User < ActiveRecord::Base
   include UserScopes
 
-  devise :trackable, :openid_authenticatable
-
-  has_many :applications
-  has_many :job_offers, through: :applications
-  has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
-  has_many :programming_languages_users
-  has_many :programming_languages, through: :programming_languages_users
-  accepts_nested_attributes_for :programming_languages
-  has_many :languages_users
-  has_many :languages, through: :languages_users
-  has_many :possible_employers, through: :employers_newsletter_information
-  has_many :possible_programming_language, through: :programming_languages_newsletter_information
-  accepts_nested_attributes_for :languages
-
   attr_accessor :should_redirect_to_profile
   attr_accessor :username
 
-  belongs_to :role
-  belongs_to :employer
-  belongs_to :user_status
+  belongs_to :manifestation, polymorphic: true, touch: true, :dependent => :destroy
+
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :firstname, :lastname, presence: true
 
   has_attached_file   :photo,
             :url  => "/assets/students/:id/:style/:basename.:extension",
@@ -75,14 +49,6 @@ class User < ActiveRecord::Base
             :url  => "/assets/students/:id/:style/:basename.:extension",
             :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
   validates_attachment_content_type :cv, :content_type => ['application/pdf']
-
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :identity_url, uniqueness: true
-  validates :firstname, :lastname, presence: true
-  validates :role, presence: true
-  validates :employer, presence: true, :if => :staff?
-  validates :semester, :academic_program, :education, presence: true, :if => :student?
-  validates_inclusion_of :semester, :in => 1..12, :if => :student?
 
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
@@ -97,11 +63,11 @@ class User < ActiveRecord::Base
   end
 
   def student?
-    role && role.student_role?
+    manifestation_type.downcase == 'student'
   end
 
   def staff?
-    role && role.staff_role?
+    manifestation_type.downcase == 'staff'
   end
 
   def deputy?

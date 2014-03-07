@@ -49,7 +49,6 @@ UserStatus.create!([
 	{ name: 'employed'},
 	{ name: 'externally employed'},
 	{ name: 'no interest'},
-
 ])
 
 Employer.delete_all
