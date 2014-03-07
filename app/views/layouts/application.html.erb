@@ -78,9 +78,10 @@
                         <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu">
-                        <li><%= link_to t('layouts.my_profile'), current_user %></li>
                         <% if current_user.staff? %>
                           <li><%= link_to t('layouts.my_chair'), current_user.manifestation.employer %></li>
+                        <% elsif current_user.student? %>
+                          <li><%= link_to t('layouts.my_profile'), current_user.manifestation %></li>
                         <% end %>
                         <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>
                       </ul>

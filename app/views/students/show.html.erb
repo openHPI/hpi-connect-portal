@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="pull-right">
-      <h1 align="right"><%= @user.firstname %> <%= @user.lastname %></h1>
-        <% unless @user.user_status.nil? %>
-          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+      <h1 align="right"><%= @student.user.firstname %> <%= @student.user.lastname %></h1>
+        <% unless @student.employment_status.nil? %>
+          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @student.employment_status) %></p>
         <% end %>
     </div>
   </div>
   <div class="col-sm-6 text-left">
     <p>
-      <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <% if can? :edit, @user %>
-        <%= link_to t("links.edit"),  edit_student_path(@user.id), class: "btn btn-default pull-right" %>
+      <%= image_tag(@student.user.photo.url, size: "150", class: "img-thumbnail")  %>
+      <% if can? :edit, @student %>
+        <%= link_to t("links.edit"),  edit_student_path(@student.id), class: "btn btn-default pull-right" %>
       <% end %>
     </p>
   </div>
@@ -26,20 +26,20 @@
         <tbody>
           <tr>
             <td><%= t("activerecord.attributes.user.birthday") %></td>
-            <td><%= @user.birthday %></td>
+            <td><%= @student.birthday %></td>
           </tr>
            <tr>
             <td><%= t("activerecord.attributes.user.email") %></td>
-            <td><%= mail_to @user.email %></td>
+            <td><%= mail_to @student.user.email %></td>
           </tr>
           <tr>
             <td><%= t("activerecord.attributes.user.cv")%></td>
               <td>
-                <% if (@user.cv.path).nil? %>
+                <% if (@student.user.cv.path).nil? %>
                   <%= image_tag('file_thumbnails/missing.png', size: "16") %>
                 <% else %>
                   <p class="text-muted">
-                    <%= link_to(@user.cv.url) do %>
+                    <%= link_to(@student.user.cv.url) do %>
                       <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= t('activerecord.attributes.user.cv') %>
                     <% end %>
                   </p>
@@ -50,7 +50,7 @@
       </table>
     </div>
 
-    <% if signed_in? && (current_user?(@user) || current_user.admin? || current_user.staff?) && !@job_offers.empty?%>
+    <% if signed_in? && (current_user?(@student) || current_user.admin? || current_user.staff?) && !@job_offers.empty?%>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4><%= t("activerecord.attributes.user.jobs")%></h4>
@@ -59,5 +59,5 @@
       </div>
     <% end %>
 
-    <%= render 'users/user_profile', user: @user%>
+    <%= render 'users/user_profile', student: @student%>
 </div>

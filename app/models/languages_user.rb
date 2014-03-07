@@ -3,7 +3,7 @@
 # Table name: languages_users
 #
 #  id          :integer          not null, primary key
-#  user_id     :integer
+#  student_id  :integer
 #  language_id :integer
 #  skill       :integer
 #

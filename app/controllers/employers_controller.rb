@@ -24,7 +24,7 @@ class EmployersController < ApplicationController
   # GET /employers/1.json
   def show
     page = params[:page]
-    @staff =  @employer.staff.where.not(id: @employer.deputy.id).paginate page: page
+    @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
     @open_job_offers = @employer.job_offers.open.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page

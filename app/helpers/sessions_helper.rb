@@ -9,6 +9,14 @@ module SessionsHelper
     !!current_user
   end
 
+  def signed_in_student?
+    !!current_user && user_type == 'student'
+  end
+
+  def signed_in_staff?
+    !!current_user && user_type == 'student'
+  end
+
   def current_user=(user)
     @current_user = user
   end
@@ -22,7 +30,7 @@ module SessionsHelper
   end
 
   def user_type
-    current_user.manifestation_type
+    current_user.manifestation_type.downcase
   end
 
   def signed_in_user

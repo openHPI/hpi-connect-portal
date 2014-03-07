@@ -3,7 +3,7 @@
 # Table name: programming_languages_users
 #
 #  id                      :integer          not null, primary key
-#  user_id                 :integer
+#  student_id              :integer
 #  programming_language_id :integer
 #  skill                   :integer
 #

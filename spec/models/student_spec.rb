@@ -13,9 +13,9 @@
 #  facebook               :string(255)
 #  xing                   :string(255)
 #  linkedin               :string(255)
-#  employment_status      :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  employment_status_id   :integer          default(0), not null
 #
 
 require 'spec_helper'

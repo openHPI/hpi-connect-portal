@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
 
   authorize_resource class: "User", except: [:destroy, :matching]
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:show, :edit, :update, :destroy]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
