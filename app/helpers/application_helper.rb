@@ -1,10 +1,7 @@
 module ApplicationHelper
-  def resource_name
-      :user
-  end
 
-  def resource
-    @resource ||= User.new
+  def label_field(form, field, name)
+    form.label(field, name, class: "control-label") << mark_if_required(form.object, field)
   end
 
   def mark_if_required(object, attribute)

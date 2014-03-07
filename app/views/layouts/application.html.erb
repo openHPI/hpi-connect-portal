@@ -79,10 +79,10 @@
                       </a>
                       <ul class="dropdown-menu">
                         <li><%= link_to t('layouts.my_profile'), current_user %></li>
-                        <% if current_user.employer%>
-                          <li><%= link_to t('layouts.my_chair'), current_user.employer %></li>
+                        <% if current_user.staff? %>
+                          <li><%= link_to t('layouts.my_chair'), current_user.manifestation.employer %></li>
                         <% end %>
-                        <li><%= link_to t("layouts.logout"), destroy_user_session_path, method: :delete %>
+                        <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>
                       </ul>
                     </li>
 

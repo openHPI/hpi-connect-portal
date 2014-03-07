@@ -38,7 +38,10 @@ HpiHiwiPortal::Application.routes.draw do
     end
 
     resources :users, only: [:show]
-    resources :sessions
+
+    resources :sessions, only: [:new, :create, :destroy]
+    get '/signin' => 'sessions#new', as: 'signin'
+    delete '/signout' => 'sessions#destroy', as: 'signout'
 
     resources :studentsearch
     resources :faqs

@@ -9,5 +9,6 @@ class RemoveDeviseFromUser < ActiveRecord::Migration
 
     add_column :users, :password_digest, :string
     add_column :users, :activated, :boolean, null: false, default: false
+    add_column :users, :admin, :boolean, null: false, default: false
   end
 end

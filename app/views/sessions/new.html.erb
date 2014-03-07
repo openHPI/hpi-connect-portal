@@ -3,5 +3,10 @@
 <%= simple_form_for :session, url: sessions_path do |f| %>
     <%= f.input :email %>
     <%= f.input :password %>
+
+    <br />
     <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
 <% end %>
+
+<br />
+<%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>

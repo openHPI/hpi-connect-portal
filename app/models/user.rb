@@ -22,6 +22,7 @@
 #  manifestation_type :string(255)
 #  password_digest    :string(255)
 #  activated          :boolean          default(FALSE), not null
+#  admin              :boolean          default(FALSE), not null
 #
 
 class User < ActiveRecord::Base
@@ -34,7 +35,7 @@ class User < ActiveRecord::Base
 
   belongs_to :manifestation, polymorphic: true, touch: true, :dependent => :destroy
 
-  validates :email, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstname, :lastname, presence: true
 
   has_attached_file   :photo,
@@ -60,6 +61,10 @@ class User < ActiveRecord::Base
     applications.find_by_job_offer_id job_offer.id
   end
 
+  def role
+    Role.find_or_create_by_name 'Student'
+  end
+
   def student?
     manifestation_type.downcase == 'student'
   end
@@ -73,7 +78,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role && role.admin_role?
+    admin
   end
 
   def full_name

@@ -1,6 +1,8 @@
 class StudentsController < ApplicationController
   include UsersHelper
 
+  skip_before_filter :signed_in_user, only: [:new, :create]
+
   authorize_resource class: "User", except: [:destroy, :matching]
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -9,6 +11,22 @@ class StudentsController < ApplicationController
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
+
+  def new
+    @student = Student.new
+    @student.build_user
+  end
+
+  def create
+    @student = Student.new student_params
+    if @student.save
+      sign_in @student.user
+      flash[:success] = "Welcome to HPI Career!"
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
 
   def index
     @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
@@ -55,5 +73,9 @@ class StudentsController < ApplicationController
 
     def set_student
       @student = Student.find params[:id]
+    end
+
+    def student_params
+      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, :created_at, :updated_at, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
     end
 end

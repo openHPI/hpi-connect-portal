@@ -32,10 +32,11 @@ class Student < ActiveRecord::Base
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
   has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
 
+  accepts_nested_attributes_for :user
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
-  validates :semester, :academic_program, :education, presence: true
+  validates :semester, :academic_program, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }

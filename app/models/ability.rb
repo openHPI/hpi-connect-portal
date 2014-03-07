@@ -4,6 +4,9 @@ class Ability
   def initialize(user)
     user ||= User.new
 
+    can :manage, :all
+    return
+
     if user.role
       can [:archive, :read], JobOffer
 

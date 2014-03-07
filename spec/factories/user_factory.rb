@@ -22,6 +22,7 @@
 #  manifestation_type :string(255)
 #  password_digest    :string(255)
 #  activated          :boolean          default(FALSE), not null
+#  admin              :boolean          default(FALSE), not null
 #
 
 FactoryGirl.define do
