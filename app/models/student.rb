@@ -56,4 +56,8 @@ class Student < ActiveRecord::Base
           ",
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
+
+  def applied?(job_offer)
+    applications.find_by_job_offer_id job_offer.id
+  end
 end

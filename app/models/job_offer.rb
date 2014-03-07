@@ -26,7 +26,7 @@ class JobOffer < ActiveRecord::Base
   before_save :default_values
 
   has_many :applications
-  has_many :users, through: :applications
+  has_many :students, through: :applications
   has_and_belongs_to_many :assigned_students, class_name: "User"
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages

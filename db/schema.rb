@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307115357) do
+ActiveRecord::Schema.define(version: 20140307140115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "applications", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "student_id"
     t.integer  "job_offer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -113,12 +113,12 @@ ActiveRecord::Schema.define(version: 20140307115357) do
 
   add_index "job_offers_programming_languages", ["job_offer_id", "programming_language_id"], name: "jo_pl_index", unique: true, using: :btree
 
-  create_table "job_offers_users", id: false, force: true do |t|
+  create_table "job_offers_students", id: false, force: true do |t|
     t.integer "job_offer_id"
-    t.integer "user_id"
+    t.integer "student_id"
   end
 
-  add_index "job_offers_users", ["job_offer_id", "user_id"], name: "jo_u_index", unique: true, using: :btree
+  add_index "job_offers_students", ["job_offer_id", "student_id"], name: "jo_s_index", unique: true, using: :btree
 
   create_table "job_statuses", force: true do |t|
     t.string   "name"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20140307115357) do
   end
 
   create_table "languages_users", force: true do |t|
-    t.integer "user_id"
+    t.integer "student_id"
     t.integer "language_id"
     t.integer "skill"
   end
@@ -145,12 +145,12 @@ ActiveRecord::Schema.define(version: 20140307115357) do
   end
 
   create_table "programming_languages_newsletter_informations", force: true do |t|
-    t.integer "user_id"
+    t.integer "student_id"
     t.integer "programming_language_id"
   end
 
   create_table "programming_languages_users", force: true do |t|
-    t.integer "user_id"
+    t.integer "student_id"
     t.integer "programming_language_id"
     t.integer "skill"
   end

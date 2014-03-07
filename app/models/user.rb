@@ -57,10 +57,7 @@ class User < ActiveRecord::Base
     self.id.hash
   end
 
-  def applied?(job_offer)
-    applications.find_by_job_offer_id job_offer.id
-  end
-
+  # just until the roles are removed completely
   def role
     Role.find_or_create_by_name 'Student'
   end
