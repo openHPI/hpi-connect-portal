@@ -45,10 +45,10 @@
           <div class="container navbar-collapse">
             
             <!-- left -->
-            <% if user_signed_in? %>
+            <% if signed_in? %>
             <ul class="nav navbar-nav">
               <li><%= link_to t('layouts.job_offers'), job_offers_path  %></li>
-              <% if user_signed_in? %>
+              <% if signed_in? %>
                 <%= render :partial => "layouts/navigation/#{current_user.role.name.downcase}" %>
               <% end %>
             </ul>
@@ -56,7 +56,7 @@
 
             <!-- right -->
             <ul class="nav navbar-nav navbar-right">
-                <% if user_signed_in? %>
+                <% if signed_in? %>
 
                   <% if current_user.admin? %>
 
@@ -133,8 +133,8 @@
             <td>|</td>
             <td><%= link_to t("layouts.faqs"), faqs_path %></td>
             <td>|</td>
-            <td><%= link_to t("layouts.imprint"), imprint_index_path %></td>
-            <% if !user_signed_in? %>
+            <td><%= link_to t("layouts.imprint"), imprint_path %></td>
+            <% if !signed_in? %>
             <td>|</td>
             <td><%= t('login_page.external_headline') %> <%= t('login_page.external_contact')%> <%= mail_to Configurable.mailToAdministration %>
             <% end %>

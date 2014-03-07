@@ -4,11 +4,7 @@ module ApplicationHelper
   end
 
   def resource
-      @resource ||= User.new
-  end
-
-  def devise_mapping
-      @devise_mapping ||= Devise.mappings[:user]
+    @resource ||= User.new
   end
 
   def mark_if_required(object, attribute)

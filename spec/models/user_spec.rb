@@ -2,30 +2,26 @@
 #
 # Table name: users
 #
-#  id                  :integer          not null, primary key
-#  email               :string(255)      default(""), not null
-#  remember_created_at :datetime
-#  sign_in_count       :integer          default(0)
-#  current_sign_in_at  :datetime
-#  last_sign_in_at     :datetime
-#  current_sign_in_ip  :string(255)
-#  last_sign_in_ip     :string(255)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  lastname            :string(255)
-#  firstname           :string(255)
-#  photo_file_name     :string(255)
-#  photo_content_type  :string(255)
-#  photo_file_size     :integer
-#  photo_updated_at    :datetime
-#  cv_file_name        :string(255)
-#  cv_content_type     :string(255)
-#  cv_file_size        :integer
-#  cv_updated_at       :datetime
-#  status              :integer
-#  frequency           :integer          default(1), not null
-#  manifestation_id    :integer
-#  manifestation_type  :string(255)
+#  id                 :integer          not null, primary key
+#  email              :string(255)      default(""), not null
+#  created_at         :datetime
+#  updated_at         :datetime
+#  lastname           :string(255)
+#  firstname          :string(255)
+#  photo_file_name    :string(255)
+#  photo_content_type :string(255)
+#  photo_file_size    :integer
+#  photo_updated_at   :datetime
+#  cv_file_name       :string(255)
+#  cv_content_type    :string(255)
+#  cv_file_size       :integer
+#  cv_updated_at      :datetime
+#  status             :integer
+#  frequency          :integer          default(1), not null
+#  manifestation_id   :integer
+#  manifestation_type :string(255)
+#  password_digest    :string(255)
+#  activated          :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'

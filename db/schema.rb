@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307104607) do
+ActiveRecord::Schema.define(version: 20140307115357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -191,13 +191,7 @@ ActiveRecord::Schema.define(version: 20140307104607) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "email",              default: "",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "lastname"
@@ -211,9 +205,11 @@ ActiveRecord::Schema.define(version: 20140307104607) do
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
     t.integer  "status"
-    t.integer  "frequency",           default: 1,  null: false
+    t.integer  "frequency",          default: 1,     null: false
     t.integer  "manifestation_id"
     t.string   "manifestation_type"
+    t.string   "password_digest"
+    t.boolean  "activated",          default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
