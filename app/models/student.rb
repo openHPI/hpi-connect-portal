@@ -37,4 +37,22 @@ class Student < ActiveRecord::Base
 
   validates :semester, :academic_program, :education, presence: true
   validates_inclusion_of :semester, :in => 1..12
+
+  scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
+  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+  scope :search_students, -> string { where("
+          (lower(firstname) LIKE ?
+          OR lower(lastname) LIKE ?
+          OR lower(email) LIKE ?
+          OR lower(academic_program) LIKE ?
+          OR lower(education) LIKE ?
+          OR lower(homepage) LIKE ?
+          OR lower(github) LIKE ?
+          OR lower(facebook) LIKE ?
+          OR lower(xing) LIKE ?
+          OR lower(linkedin) LIKE ?)
+          ",
+          string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+          string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
 end
