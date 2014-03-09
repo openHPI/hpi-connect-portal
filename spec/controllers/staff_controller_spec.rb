@@ -20,7 +20,9 @@ require 'spec_helper'
 
 describe StaffController do
 
-  login_user FactoryGirl.create(:role, name: 'Student')
+  before(:each) do
+    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Staff. As you add validations to Staff, be sure to

@@ -16,19 +16,19 @@ describe "Job Offer pages" do
 
   describe "show page" do
     describe "open job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:user), status: @status_open) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_open) }
 
       before do
-        login_as(user)
+        login user
         visit job_offer_path(job_offer)
       end
 
       describe "application button and list" do
-        let(:student) { FactoryGirl.create(:user, :student) }
+        let(:student) { FactoryGirl.create(:student) }
 
         describe "as a student" do
           before do
-            login_as(student, :scope => :user)
+            login student.user
             visit job_offer_path(job_offer)
           end
 
@@ -39,7 +39,7 @@ describe "Job Offer pages" do
           describe "and having applied already" do
             before do
               FactoryGirl.create(:application, user: student, job_offer: job_offer)
-              login_as(student, :scope => :user)
+              login student.user
               visit job_offer_path(job_offer)
             end
 
@@ -58,7 +58,7 @@ describe "Job Offer pages" do
 
           before do
             @application = FactoryGirl.create(:application, job_offer: job_offer)
-            login_as(staff, :scope => :user)
+            login staff.user
             visit job_offer_path(job_offer)
           end
 
@@ -74,7 +74,7 @@ describe "Job Offer pages" do
 
             before do
               job_offer.update(responsible_user: staff)
-              login_as(staff, :scope => :user)
+              login staff.user
               visit job_offer_path(job_offer)
             end
 
@@ -108,7 +108,7 @@ describe "Job Offer pages" do
           let(:admin) { FactoryGirl.create(:user, :admin) }
           before do
             @application = FactoryGirl.create(:application, job_offer: job_offer)
-            login_as(admin, :scope => :user)
+            login admin
             visit job_offer_path(job_offer)
           end
 
@@ -124,7 +124,7 @@ describe "Job Offer pages" do
           describe "when the job is open" do
             before do
               job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "open"))
-              login_as(admin, :scope => :user)
+              login admin
               visit job_offer_path(job_offer)
             end
 
@@ -143,7 +143,7 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)
+          login student.user
         end
 
         it { should_not have_button('Apply')}
@@ -154,7 +154,7 @@ describe "Job Offer pages" do
 
         before do
           job_offer.assigned_students = [student]
-          login_as(staff, :scope => :user)
+          login staff.user
           visit job_offer_path(job_offer)
         end
 
@@ -176,7 +176,7 @@ describe "Job Offer pages" do
 
         before do
           job_offer.assigned_students = [student]
-          login_as(job_offer.responsible_user, :scope => :user)
+          login job_offer.responsible_user.user
           visit edit_job_offer_path(job_offer)
         end
 
@@ -196,7 +196,7 @@ describe "Job Offer pages" do
 
         before do
           job_offer.assigned_students = [student]
-          login_as(admin, :scope => :user)
+          login admin
           visit job_offer_path(job_offer)
         end
 
@@ -221,7 +221,7 @@ describe "Job Offer pages" do
 
       describe "as a student" do
         before(:each) do
-          login_as(student, :scope => :user)
+          login student.user
         end
 
         it "should not be visible in the job offers list" do
@@ -240,7 +240,7 @@ describe "Job Offer pages" do
 
         before do
           job_offer.update(responsible_user: staff)
-          login_as(staff, :scope => :user)
+          login staff.user
           visit job_offer_path(job_offer)
         end
 
@@ -257,7 +257,7 @@ describe "Job Offer pages" do
 
       describe "as the deputy of the employer" do
         before do
-          login_as(deputy, :scope => :user)
+          login deputy.user
           visit job_offer_path(job_offer)
         end
 
@@ -282,7 +282,7 @@ describe "Job Offer pages" do
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
         before do
-          login_as(admin, :scope => :user)
+          login admin
           visit job_offer_path(job_offer)
         end
 
@@ -313,7 +313,7 @@ describe "Job Offer pages" do
         let(:admin) { FactoryGirl.create(:user, :admin, employer: job_offer.employer) }
 
         before do
-          login_as(admin, :scope => :user)
+          login admin
           visit job_offer_path(job_offer)
         end
 
@@ -331,19 +331,19 @@ describe "Job Offer pages" do
       end
 
       it "shows job offer details link for admin" do
-        login_as(admin, :scope => :user)
+        login admin
         visit archive_job_offers_path
         page.should have_link("archive job")
       end
 
       it "doesn't show job offer details link for students" do
-        login_as(student, :scope => :user)
+        login student.user
         visit archive_job_offers_path
         page.should_not have_link("archive job")
       end
 
       it "doesn't show job offer details link for staff" do
-        login_as(staff, :scope => :user)
+        login staff.user
         visit archive_job_offers_path
         page.should_not have_link("archive job")
       end

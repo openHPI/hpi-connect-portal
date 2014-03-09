@@ -38,6 +38,8 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
+  delegate :firstname, :lastname, :email, to: :user
+
   validates :semester, :academic_program, presence: true
   validates_inclusion_of :semester, :in => 1..12
 

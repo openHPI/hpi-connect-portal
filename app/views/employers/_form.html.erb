@@ -44,8 +44,8 @@
                   <%= f.label t "activerecord.attributes.employer.deputy", class: "control-label" %><%= mark_if_required(employer, :deputy_id) %>
                 </div>
                 <div class="col-sm-9">
-                  <% if employer.staff.any? %>
-                    <%= f.collection_select :deputy_id, employer.staff, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
+                  <% if employer.staff_members.any? %>
+                    <%= f.collection_select :deputy_id, employer.staff_members, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
                   <% else %>
                     <%= f.collection_select :deputy_id, User.students, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
                   <% end %>

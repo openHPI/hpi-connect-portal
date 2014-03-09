@@ -4,16 +4,16 @@ describe "the job-offers page" do
 
   before(:each) do
 
-    @student1 = FactoryGirl.create(:user)
-    login_as(@student1, :scope => :user)
+    @student1 = FactoryGirl.create(:student)
+    login @student1.user
 
     @epic = FactoryGirl.create(:employer, name:"EPIC")
     @open = FactoryGirl.create(:job_status, name:"open")
     @test_employer = FactoryGirl.create(:employer)
-    @user = FactoryGirl.create(:user)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @user, status: @open)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @user, status: @open)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", employer: @epic, responsible_user: @user, status: @open)
+    @staff = FactoryGirl.create(:staff)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @staff, status: @open)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @staff, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", employer: @epic, responsible_user: @staff, status: @open)
   end
 
   it "should include all jobs currently available" do
@@ -35,9 +35,9 @@ describe "the job-offers page" do
 
   describe "student has already applied" do
     before(:each) do
-      @student = FactoryGirl.create(:user)
+      @student = FactoryGirl.create(:student)
       FactoryGirl.create(:application, user: @student, job_offer: @job_offer_1)
-      login_as(@student, :scope => :user)
+      login @student.user
     end
 
     it {
@@ -52,14 +52,14 @@ describe "a job offer entry" do
 
   before(:each) do
     @student1 = FactoryGirl.create(:user)
-    login_as(@student1, :scope => :user)
+    login @student1.user
 
     @employer = FactoryGirl.create(:employer)
-    @user = FactoryGirl.create(:user)
+    @staff = FactoryGirl.create(:staff)
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      responsible_user: @user,
+      responsible_user: @staff,
       status: FactoryGirl.create(:job_status, :open)
     )
 
@@ -80,9 +80,9 @@ end
 describe "job_offers_history" do
   before do
     @student1 = FactoryGirl.create(:user)
-    login_as(@student1, :scope => :user)
+    login @student1.user
     @employer = FactoryGirl.create(:employer)
-    @user = FactoryGirl.create(:user)
+    @staff = FactoryGirl.create(:staff)
     @status = FactoryGirl.create(:job_status, :completed)
     @open = FactoryGirl.create(:job_status, name:"open")
     @running = FactoryGirl.create(:job_status, name:"running")
@@ -90,7 +90,7 @@ describe "job_offers_history" do
       title: "Closed Job Touch Floor",
       status: @status,
       employer: @employer,
-      responsible_user: @user
+      responsible_user: @staff
       )
   end
 

@@ -30,30 +30,11 @@ FactoryGirl.define do
     sequence(:firstname)    { |n| "User #{n}" }
     sequence(:lastname)     { |n| "the #{n}th of his kind" }
     sequence(:email)        { |n| "user_#{n}@example.com" }
-    sequence(:identity_url) { |n| "openid.example.com/users/user_#{n}" }
-    association             :role
-    semester                1
-    academic_program        'Master'
-    birthday                '1970-12-10'
-    education               'Abitur'
-
-    trait :student do
-      association :role, :student
-    end
-
-    trait :staff do
-      association :role, :staff
-      association :employer
-    end
+    password                "password123"
+    password_confirmation   "password123"
 
     trait :admin do
-      association :role, :admin
-    end
-
-    after(:create) do |user, evaluator|
-      create_list(:language, 1)
-      create_list(:programming_language, 1)
-      user.status = UserStatus.where(:name => 'employedext').first || UserStatus.create(:name => 'employedext')
+      admin true
     end
   end
 end

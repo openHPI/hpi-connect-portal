@@ -11,6 +11,9 @@
 class Staff < ActiveRecord::Base
 
   has_one :user, as: :manifestation, dependent: :destroy
+  belongs_to :employer
+
+  delegate :firstname, :lastname, :email, to: :user
 
   validates :employer, presence: true
 end

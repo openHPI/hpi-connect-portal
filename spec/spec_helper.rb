@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start 'rails'
 
 require 'factory_girl'
-#FactoryGirl.find_definitions
+# FactoryGirl.find_definitions
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
@@ -12,7 +12,6 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'factory_girl_rails'
 require 'email_spec'
-include Warden::Test::Helpers
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -49,8 +48,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.include Devise::TestHelpers, :type => :controller
-  config.extend ControllerHelpers, :type => :controller
+  config.extend SessionHelper, :type => :controller
+  config.include FeatureSessionHelper, :type => :feature
 
   config.include Capybara::DSL
 

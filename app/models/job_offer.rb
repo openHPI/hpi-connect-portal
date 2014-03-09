@@ -27,11 +27,11 @@ class JobOffer < ActiveRecord::Base
 
   has_many :applications
   has_many :students, through: :applications
-  has_and_belongs_to_many :assigned_students, class_name: "User"
+  has_and_belongs_to_many :assigned_students, class_name: "Student"
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer
-  belongs_to :responsible_user, class_name: "User"
+  belongs_to :responsible_user, class_name: "Staff"
   belongs_to :status, class_name: "JobStatus"
 
   accepts_nested_attributes_for :programming_languages

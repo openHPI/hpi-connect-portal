@@ -3,8 +3,10 @@ require 'spec_helper'
 describe StudentsController do
 
   let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :student), "identity_url" => "af", "email" => "test@example", "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
-  login_user FactoryGirl.create(:role, name: 'Student')
-
+  
+  before(:each) do
+    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+  end
 
   # Programming Languages with a mapping to skill integers
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }

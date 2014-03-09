@@ -6,13 +6,13 @@ describe "the job offer flow" do
 
   include ApplicationHelper
 
-	let(:employer) { FactoryGirl.create(:employer) }
-	let(:creating_staff) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: employer) }
-	let(:deputy) { employer.deputy }
-  let(:first_applicant) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) }
-  let(:second_applicant) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) }
+  let(:employer) { FactoryGirl.create(:employer) }
+  let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
+  let(:deputy) { employer.deputy }
+  let(:first_applicant) { FactoryGirl.create(:student) }
+  let(:second_applicant) { FactoryGirl.create(:student) }
 
-	subject { page }
+  subject { page }
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
@@ -25,13 +25,13 @@ describe "the job offer flow" do
 
   it "behaves correctly" do
     # staff creates a new job offer for his employer
-    login_as(creating_staff, :scope => :user)
+    login creating_staff.user
 
     visit job_offers_path
 
-	should have_link(I18n.t("job_offers.new_job_offer"))
-	click_on I18n.t("job_offers.new_job_offer")
-	current_path.should == new_job_offer_path
+    should have_link(I18n.t("job_offers.new_job_offer"))
+    click_on I18n.t("job_offers.new_job_offer")
+    current_path.should == new_job_offer_path
 
     fill_in "job_offer_title", :with => "HPI-Career-Portal"
     fill_in "job_offer_description", :with => "A new carrer portal for HPI students should be developed and deployed."
@@ -67,7 +67,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # deputy accepts the new job offer
-    login_as(deputy, :scope => :user)
+    login deputy.user
     visit job_offer_path(job_offer)
 
     should have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
@@ -87,7 +87,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # student A applies for the job
-    login_as(first_applicant, :scope => :user)
+    login first_applicant.user
     visit job_offer_path(job_offer)
 
     click_button I18n.t("job_offers.apply")
@@ -119,7 +119,7 @@ describe "the job offer flow" do
     should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
 
     # student B applies for the job
-    login_as(second_applicant, :scope => :user)
+    login second_applicant.user
     visit job_offer_path(job_offer)
 
     click_button I18n.t("job_offers.apply")
@@ -146,7 +146,7 @@ describe "the job offer flow" do
     should_not have_button I18n.t("job_offers.apply")
 
     # responsible user accepts first application
-    login_as(creating_staff, :scope => :user)
+    login creating_staff.user
     visit job_offer_path(job_offer)
 
     # he sees the entries for the applicants
@@ -205,7 +205,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     assert job_offer.completed?
 
-    login_as FactoryGirl.create(:user, :admin)
+    login FactoryGirl.create(:user, :admin)
     # responsible user reopens the jobs
     visit job_offer_path(job_offer)
     find_link(I18n.t("job_offers.reopen_job")).click

@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   # just until the roles are removed completely
   def role
-    Role.find_or_create_by_name 'Student'
+    Role.find_or_create_by name: 'Student'
   end
 
   def student?

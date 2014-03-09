@@ -2,11 +2,13 @@ require 'spec_helper'
 
 describe JobOffersController do
 
-  login_user FactoryGirl.create(:role, name: 'Student')
+  before(:each) do
+    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+  end
 
-  let(:assigned_student) { FactoryGirl.create(:user, :student) }
+  let(:assigned_student) { FactoryGirl.create(:student) }
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) { FactoryGirl.create(:user, :staff, employer: employer) }
+  let(:responsible_user) { FactoryGirl.create(:staff, employer: employer) }
   let(:completed) {FactoryGirl.create(:job_status, :completed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
@@ -102,7 +104,8 @@ describe JobOffersController do
     end
 
     it "shows archive job for admin" do
-      sign_in FactoryGirl.create(:user, :admin)
+      post '/signin', { session: { email: FactoryGirl.create(:user, :admin).email, password: 'password123' }}
+
       archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
       get :show, {id: archive_job.to_param}, valid_session
       response.should_not redirect_to(archive_job_offers_path)
@@ -112,7 +115,8 @@ describe JobOffersController do
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
-      sign_in responsible_user
+      post '/signin', { session: { email: responsible_user.user.email, password: 'password123' }}
+
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
     end

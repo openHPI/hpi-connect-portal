@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe FaqsController do
 
-  login_user FactoryGirl.create(:role, name: 'Student')
+  before(:each) do
+    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+  end
 
   let(:deputy) { FactoryGirl.create(:user) }
 
@@ -95,20 +97,21 @@ describe FaqsController do
       end
 
       describe "with invalid params" do
-      it "assigns the faq as @faq" do
-        faq = FactoryGirl.create(:faq)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Faq.any_instance.stub(:save).and_return(false)
-        put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
-        assigns(:faq).should eq(faq)
-      end
+        it "assigns the faq as @faq" do
+          faq = FactoryGirl.create(:faq)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Faq.any_instance.stub(:save).and_return(false)
+          put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
+          assigns(:faq).should eq(faq)
+        end
 
-      it "re-renders the 'edit' template" do
-        faq = FactoryGirl.create(:faq)
-        # Trigger the behavior that occurs when invalid params are submitted
-        Faq.any_instance.stub(:save).and_return(false)
-        put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        it "re-renders the 'edit' template" do
+          faq = FactoryGirl.create(:faq)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Faq.any_instance.stub(:save).and_return(false)
+          put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
+          response.should render_template("edit")
+        end
       end
     end
   end
@@ -127,6 +130,4 @@ describe FaqsController do
       response.should redirect_to(faqs_url)
     end
   end
-
-end
 end

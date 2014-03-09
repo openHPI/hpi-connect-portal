@@ -4,18 +4,13 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can :manage, :all
-    return
+    can [:archive, :read], JobOffer
 
-    if user.role
-      can [:archive, :read], JobOffer
-
-      can [:edit, :update, :read], User, id: user.id
-      can :read, User, role: { name: 'Staff' }
-      initialize_student if user.student?
-      initialize_staff user if user.staff?
-      initialize_admin if user.admin?
-    end
+    can [:edit, :update, :read], User, id: user.id
+    can :read, User, role: { name: 'Staff' }
+    initialize_admin and return if user.admin?
+    initialize_student and return if user.student?
+    initialize_staff user and return if user.staff?
   end
 
   def initialize_admin
@@ -37,19 +32,20 @@ class Ability
 
   def initialize_staff(user)
     user_id = user.id
-    employer_id = user.employer_id
+    staff = user.manifestation
+    employer_id = staff.employer_id
 
     can [:edit, :update], Employer, deputy_id: user_id
     can [:edit, :update], Employer, id: employer_id
     can :read, Application
-    can :read, User, role: { name: 'Student' }
+    can :read, User, manifestation_type: 'Student'
     can :manage, Faq
 
     can :create, JobOffer
     cannot :show, JobOffer, status: JobStatus.completed
-    can :complete, JobOffer, employer: user.employer
-    can :reopen, JobOffer, employer: user.employer, status: JobStatus.completed
-    can :reopen, JobOffer, employer: user.employer, status: JobStatus.running
+    can :complete, JobOffer, employer: staff.employer
+    can :reopen, JobOffer, employer: staff.employer, status: JobStatus.completed
+    can :reopen, JobOffer, employer: staff.employer, status: JobStatus.running
     can [:accept, :decline], JobOffer, employer: { deputy_id: user_id }
     can :prolong, JobOffer, responsible_user_id: user_id, status: JobStatus.running
     can :prolong, JobOffer, employer: { deputy_id: user_id }, status: JobStatus.running
@@ -64,6 +60,6 @@ class Ability
 
     can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
 
-    can :destroy, User, role: { name: 'Staff' }, employer: { id: employer_id, deputy_id: user_id }
+    can :destroy, User, manifestation_type: 'Staff', manifestation: { employer: { id: employer_id, deputy_id: user_id }}
   end
 end

@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe "the students page" do
 
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { FactoryGirl.create(:staff) }
 
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:user, :student, :programming_languages =>[@programming_language])
-    login_as(staff, :scope => :user)
+    @student1 = FactoryGirl.create(:student, :programming_languages =>[@programming_language])
+    login staff.user
 
     FactoryGirl.create(:role, :admin)
 
-    login_as(staff, :scope => :user)
+    login staff.user
     visit students_path
   end
 
@@ -36,7 +36,7 @@ describe "the students page" do
 
     it "is not available for students" do
       FactoryGirl.create(:job_status, name: 'open')
-      login_as(@student1, :scope => :user)
+      login @student1.user
       visit students_path
       current_path.should_not == students_path
       current_path.should == job_offers_path
@@ -67,7 +67,7 @@ describe "the students editing page" do
 
   before(:each) do
     @student1 = FactoryGirl.create(:user, :student)
-    login_as(@student1, :scope => :user)
+    login @student1.user
   end
 
   it "should contain all attributes of a student" do
@@ -105,7 +105,7 @@ describe "the students editing page" do
 
     it "can be edited by an admin" do
       admin = FactoryGirl.create(:user, :admin)
-      login_as(admin)
+      login admin
       visit student_path(@student1)
 
       page.should have_link("Edit")
@@ -134,7 +134,7 @@ describe "the students profile page" do
     @student1 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
     @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
 
-    login_as(@student1, :scope => :user)
+    login @student1.user
    end
 
 
@@ -185,15 +185,10 @@ describe "the students profile page" do
 
     it "can't be edited by staff members " do
       staff = FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer))
-      login_as(staff)
+      login staff.user
       visit edit_student_path(@student1)
 
       page.should_not have_link('Edit')
     end 
-
-
   end
 end
-
-
-
