@@ -38,7 +38,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
-  delegate :firstname, :lastname, :email, to: :user
+  delegate :firstname, :lastname, :full_name, :email, to: :user
 
   validates :semester, :academic_program, presence: true
   validates_inclusion_of :semester, :in => 1..12
@@ -61,8 +61,12 @@ class Student < ActiveRecord::Base
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
 
-  def applied?(job_offer)
+  def application(job_offer)
     applications.find_by_job_offer_id job_offer.id
+  end
+
+  def applied?(job_offer)
+    !!application(job_offer)
   end
 
   def employment_status

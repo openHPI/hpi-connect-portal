@@ -1,15 +1,15 @@
 module UsersHelper
 
   def user_is_staff_of_employer?(job_offer)
-    signed_in? &&  current_user.employer == job_offer.employer &&  current_user.staff?
+    signed_in? && current_user.staff? && current_user.manifestation.employer == job_offer.employer
   end
 
   def user_is_responsible_user?(job_offer)
-    signed_in? && current_user == job_offer.responsible_user
+    signed_in? && current_user.staff? && current_user.manifestation == job_offer.responsible_user
   end
 
   def user_is_deputy_of_employer?(employer)
-    signed_in? && current_user == employer.deputy
+    signed_in? && current_user.staff? && current_user.manifestation == employer.deputy
   end
 
   def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)

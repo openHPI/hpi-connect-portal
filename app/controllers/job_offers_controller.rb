@@ -34,14 +34,14 @@ class JobOffersController < ApplicationController
       redirect_to job_offers_path
     end
 
-    @application = current_user.applied? @job_offer
+    @application = current_user.manifestation.applications @job_offer if current_user.student?
     @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
   end
 
   # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
-    @job_offer.responsible_user = current_user
+    @job_offer.responsible_user = current_user.manifestation
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
@@ -150,7 +150,7 @@ class JobOffersController < ApplicationController
 
   # POST /job_offer/:id/fire
   def fire
-    student = User.find job_offer_params[:student_id]
+    student = Student.find job_offer_params[:student_id]
     @job_offer.fire student
     respond_and_redirect_to @job_offer, student.full_name + " was successfully removed from this job offer."
   end

@@ -2,19 +2,22 @@ require 'spec_helper'
 
 describe "students/show" do
   before(:each) do
-    @user = assign(:user, stub_model(User,
-      :firstname => "First Name",
-      :lastname => "Last Name",
-      :semester => 1,
-      :academic_program => "Academic Program",
-      :birthday => '2013-11-10',
-      :education => "MyText",
-      :additional_information => "MyText",
-      :homepage => "Homepage",
-      :github => "Github",
-      :facebook => "Facebook",
-      :xing => "Xing",
-      :linkedin => "Linkedin"
+    @student = assign(:student, stub_model(Student,
+      user: {
+        firstname: "First Name",
+        lastname: "Last Name",
+        email: "test@test.de"
+      },
+      semester: 1,
+      academic_program: "Academic Program",
+      birthday: '2013-11-10',
+      education: "MyText",
+      additional_information: "MyText",
+      homepage: "Homepage",
+      github: "Github",
+      facebook: "Facebook",
+      xing: "Xing",
+      linkedin: "Linkedin"
     ))
 
     view.stub(:signed_in?) { false }

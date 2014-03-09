@@ -14,12 +14,12 @@ class Application < ActiveRecord::Base
   belongs_to :student
   belongs_to :job_offer
 
-  validates_presence_of :user
+  validates_presence_of :student
   validates_presence_of :job_offer
-  validates_uniqueness_of :user_id, scope: :job_offer_id
+  validates_uniqueness_of :student_id, scope: :job_offer_id
 
-  def self.create_and_notify(job_offer, user, params)
-    application = Application.new job_offer: job_offer, user: user
+  def self.create_and_notify(job_offer, student, params)
+    application = Application.new job_offer: job_offer, student: student
     if application.save
       ApplicationsMailer.new_application_notification_email(application, params[:message], params[:add_cv], params[:attached_files]).deliver
       true

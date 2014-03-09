@@ -11,7 +11,7 @@
 
 FactoryGirl.define do
   factory :application do
-    user
+    association :student
     association :job_offer, factory: :joboffer
   end
 end

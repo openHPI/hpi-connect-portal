@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   attr_accessor :should_redirect_to_profile
   attr_accessor :username
 
-  belongs_to :manifestation, polymorphic: true, touch: true, :dependent => :destroy
+  belongs_to :manifestation, polymorphic: true, :dependent => :destroy
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstname, :lastname, presence: true
@@ -63,11 +63,11 @@ class User < ActiveRecord::Base
   end
 
   def student?
-    manifestation_type.downcase == 'student'
+    manifestation_type == 'Student'
   end
 
   def staff?
-    manifestation_type.downcase == 'staff'
+    manifestation_type == 'Staff'
   end
 
   def deputy?
