@@ -141,7 +141,7 @@ class JobOffersController < ApplicationController
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.completed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
-      @job_offer.responsible_user = current_user
+      @job_offer.responsible_user = current_user.manifestation
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer

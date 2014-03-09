@@ -3,7 +3,7 @@ require 'spec_helper'
 describe JobOffersController do
 
   before(:each) do
-    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+    login FactoryGirl.create(:student).user
   end
 
   let(:assigned_student) { FactoryGirl.create(:student) }
@@ -47,7 +47,7 @@ describe JobOffersController do
     render_views
 
     it "renders the find results" do
-      get :index, ({:employer => employer.id}), valid_session
+      get :index, ({ employer: employer.id }), valid_session
       response.should render_template("index")
     end
 
@@ -89,8 +89,8 @@ describe JobOffersController do
     end
 
     it "assigns a possible applications as @application" do
-      user = FactoryGirl.create(:user, :staff)
-      sign_in user
+      user = FactoryGirl.create(:staff)
+      login user
 
       application = FactoryGirl.create(:application, user: user, job_offer: @job_offer)
       get :show, {:id => @job_offer.to_param}, valid_session
@@ -104,7 +104,7 @@ describe JobOffersController do
     end
 
     it "shows archive job for admin" do
-      post '/signin', { session: { email: FactoryGirl.create(:user, :admin).email, password: 'password123' }}
+      login FactoryGirl.create(:user, :admin)
 
       archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
       get :show, {id: archive_job.to_param}, valid_session
@@ -115,7 +115,7 @@ describe JobOffersController do
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
-      post '/signin', { session: { email: responsible_user.user.email, password: 'password123' }}
+      login responsible_user.user
 
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
@@ -129,7 +129,7 @@ describe JobOffersController do
     end
 
     it "only allows the responsible user to edit" do
-      sign_in FactoryGirl.create(:user, :staff)
+      login FactoryGirl.create(:staff).user
       get :edit, {:id => @job_offer.to_param}, valid_session
       response.should redirect_to(@job_offer)
     end
@@ -164,8 +164,8 @@ describe JobOffersController do
       job3 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language1] )
       job4 = FactoryGirl.create(:job_offer, status: @open, languages: [language2], programming_languages:[programming_language3])
 
-      user = FactoryGirl.create(:user, :student, programming_languages: [programming_language1, programming_language2], languages: [language1])
-      sign_in user
+      user = FactoryGirl.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
+      login user
       get :matching, {language_ids: user.languages.map(&:id), programming_language_ids: user.programming_languages.map(&:id)}, valid_session
       assigns(:job_offers_list)[:items].to_a.should eq([job3, job1])
     end
@@ -175,9 +175,9 @@ describe JobOffersController do
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
-      @user = FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
+      @user = FactoryGirl.create(:staff, employer: @job_offer.employer)
       @job_offer.update({ responsible_user_id: @user.id, end_date: Date.current + 10 })
-      sign_in @user
+      login @user
     end
 
     it "should prolong the job" do
@@ -198,7 +198,7 @@ describe JobOffersController do
 
     it "marks jobs as completed if the user is staff of the employer" do
       completed = FactoryGirl.create(:job_status, :completed)
-      sign_in FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
+      login FactoryGirl.create(:staff, employer: @job_offer.employer)
 
       get :complete, { id: @job_offer.id }
       assigns(:job_offer).status.should eq(completed)
@@ -218,12 +218,12 @@ describe JobOffersController do
     end
 
     it "prohibits user to accept job offers if he is not the deputy" do
-      sign_in @job_offer.responsible_user
+      login @job_offer.responsible_user
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end
     it "accepts job offers" do
-      sign_in employer.deputy
+      login employer.deputy.user
       get :accept, {:id => @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open)
       ActionMailer::Base.deliveries.count.should >= 1
@@ -242,7 +242,7 @@ describe JobOffersController do
     end
 
     it "declines job offers" do
-      sign_in employer.deputy
+      login employer.deputy.user
       expect {
         get :decline, {id: @job_offer.id}
       }.to change(JobOffer, :count).by(-1)
@@ -254,7 +254,7 @@ describe JobOffersController do
     describe "with valid params" do
 
       before(:each) do
-        sign_in responsible_user
+        login responsible_user.user
         @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running), responsible_user: responsible_user)
       end
 
@@ -286,7 +286,7 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
-      sign_in responsible_user
+      login responsible_user.user
     end
 
     describe "with valid params" do
@@ -298,7 +298,7 @@ describe JobOffersController do
       end
 
       it "allows the admin to create a new job offer" do
-        sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
+        login FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
 
         expect{
           post :create, {:job_offer => valid_attributes}, valid_session
@@ -307,7 +307,7 @@ describe JobOffersController do
       end
 
       it "doesn't allow students to create a job offer" do
-        sign_in FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
+        login FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
 
         expect{
           post :create, {:job_offer => valid_attributes}, valid_session
@@ -408,7 +408,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      sign_in @job_offer.responsible_user
+      login @job_offer.responsible_user
     end
 
     describe "with valid params" do
@@ -433,7 +433,7 @@ describe JobOffersController do
       end
 
       it "only allows the responsible user to update" do
-        sign_in FactoryGirl.create(:user, :staff, employer: @job_offer.employer)
+        login FactoryGirl.create(:staff, employer: @job_offer.employer)
         put :update, {:id => @job_offer.to_param, :job_offer => valid_attributes}, valid_session
         response.should redirect_to(@job_offer)
       end
@@ -460,7 +460,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      sign_in @job_offer.responsible_user
+      login @job_offer.responsible_user
     end
 
     it "destroys the requested job_offer" do
@@ -476,7 +476,7 @@ describe JobOffersController do
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
       @job_offer.update!(status: FactoryGirl.create(:job_status, :running))
-      sign_in @job_offer.responsible_user
+      login @job_offer.responsible_user
 
       expect {
         delete :destroy, {:id => @job_offer.to_param}, valid_session
@@ -489,8 +489,8 @@ describe JobOffersController do
   describe "POST fire" do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
-      @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
-      sign_in @job_offer.responsible_user
+      @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
+      login @job_offer.responsible_user
     end
 
     it "fires the student" do
@@ -507,18 +507,18 @@ describe JobOffersController do
     describe "without the required permissions" do
       before(:each) do
         @job_offer = FactoryGirl.create(:job_offer)
-        @job_offer.update!({assigned_students: [FactoryGirl.create(:user, :student)]})
+        @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
       end
 
       it "doesn't allow students to fire other students" do
-        sign_in FactoryGirl.create(:user, :student)
+        login FactoryGirl.create(:student)
         expect{
           post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
         }.to change(@job_offer.reload.assigned_students, :count).by(0)
       end
 
       it "doesn't allow normal staff to fire students" do
-        sign_in FactoryGirl.create(:user, :staff)
+        login FactoryGirl.create(:staff)
         expect{
           post :fire, {:id => @job_offer.to_param, :job_offer => { :student_id => @job_offer.assigned_students[0].id} }, valid_session
         }.to change(@job_offer.reload.assigned_students, :count).by(0)

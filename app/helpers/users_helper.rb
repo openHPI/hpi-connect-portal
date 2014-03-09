@@ -79,7 +79,6 @@ module UsersHelper
   end
 
   def user_is_deputy?
-    current_user.deputy?
+    current_user.staff? && current_user.manifestation.deputy?
   end
-
 end

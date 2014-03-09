@@ -16,4 +16,8 @@ class Staff < ActiveRecord::Base
   delegate :firstname, :lastname, :full_name, :email, to: :user
 
   validates :employer, presence: true
+
+  def deputy?
+    employer && Employer.exists?(deputy: self)
+  end
 end

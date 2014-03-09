@@ -48,7 +48,7 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.extend SessionHelper, :type => :controller
+  config.include ControllerSessionHelper, :type => :controller
   config.include FeatureSessionHelper, :type => :feature
 
   config.include Capybara::DSL

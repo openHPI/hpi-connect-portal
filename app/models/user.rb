@@ -70,10 +70,6 @@ class User < ActiveRecord::Base
     manifestation_type == 'Staff'
   end
 
-  def deputy?
-    employer && Employer.exists?(deputy: self)
-  end
-
   def admin?
     admin
   end

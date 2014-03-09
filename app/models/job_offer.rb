@@ -53,17 +53,12 @@ class JobOffer < ActiveRecord::Base
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
-    job_offer.responsible_user = current_user
-    unless parameters[:employer_id]
-      job_offer.employer = current_user.employer
-    end
-
+    job_offer.responsible_user = current_user.manifestation
+    job_offer.employer = current_user.employer unless parameters[:employer_id]
     if job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver
-    else
-      if parameters[:flexible_start_date]
-        job_offer.flexible_start_date = true
-      end
+    elsif parameters[:flexible_start_date]
+      job_offer.flexible_start_date = true
     end
     job_offer
   end
