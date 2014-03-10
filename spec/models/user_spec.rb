@@ -28,39 +28,29 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @english = Language.create(:name=>'english')
     @user = FactoryGirl.create(:user)
-    @programming_language = FactoryGirl.create(:programming_language)
-    @student = FactoryGirl.create(:user, :languages=>[@english], :programming_languages => [@programming_language])
   end
 
-  subject { @user }
+  describe 'validation of attributes' do
 
-  describe 'applying' do
-    before do
-      @job_offer = FactoryGirl.create(:job_offer)
-      @application = Application.create(user: @user, job_offer: @job_offer)
+    it 'with firstname not present' do
+      @user.firstname = nil
+      @user.should be_invalid
     end
 
-    it { should be_applied(@job_offer) }
-    its(:applications) { should include(@application) }
-    its(:job_offers) { should include(@job_offer) }
-  end
-
-  describe 'build from identity_url' do
-
-    it "should return the user with the corrent email and name" do
-      url = "https://openid.hpi.uni-potsdam.de/user/max.meier"
-      user =  User.new(
-              identity_url: url,
-              email: "max.meier@student.hpi.uni-potsdam.de",
-              firstname: "Max",
-              lastname: "Meier",
-              semester: 1,
-              academic_program: "unknown",
-              education: "unknown",
-              role: Role.where(name: "Student").first)
-      expect(User.build_from_identity_url(url)).to eql(user)
+    it 'with lastname not present' do
+      @user.lastname = nil
+      @user.should be_invalid
     end
+
+    it 'with email not present' do
+      @user.email = nil
+      @user.should be_invalid
+    end
+
+    it 'with duplicate email' do
+      @user.email = FactoryGirl.create(:user).email
+      @user.should be_invalid
+    end    
   end
 end

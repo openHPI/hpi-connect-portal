@@ -22,5 +22,22 @@
 require 'spec_helper'
 
 describe Student do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @english = Language.create(name: 'english')
+    @programming_language = FactoryGirl.create(:programming_language)
+    @student = FactoryGirl.create(:student, languages: [@english], programming_languages: [@programming_language])
+  end
+
+  subject { @student }
+
+  describe 'applying' do
+    before do
+      @job_offer = FactoryGirl.create(:job_offer)
+      @application = Application.create(student: @student, job_offer: @job_offer)
+    end
+
+    it { should be_applied(@job_offer) }
+    its(:applications) { should include(@application) }
+    its(:job_offers) { should include(@job_offer) }
+  end
 end

@@ -27,21 +27,21 @@ describe JobOffer do
       @epic = FactoryGirl.create(:employer, name: "EPIC")
       @os = FactoryGirl.create(:employer, name: "OS and Middleware")
       @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
-      @responsible_user = FactoryGirl.create(:user)
+      @responsible_user = FactoryGirl.create(:staff)
   end
 
   describe 'applying' do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
-      @user = FactoryGirl.create(:user)
-      @application = Application.create(user: @user, job_offer: @job_offer)
+      @student = FactoryGirl.create(:student)
+      @application = Application.create(student: @student, job_offer: @job_offer)
     end
 
     subject { @job_offer }
 
     its(:applications) { should include(@application) }
-    its(:users) { should include(@user) }
+    its(:students) { should include(@student) }
   end
 
   it "does not create a joboffer if attributes are not set" do
