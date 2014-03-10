@@ -76,18 +76,23 @@ describe StaffController do
       login admin
     end
 
-    it "destroys the requested staff" do
-      staff = FactoryGirl.create(:staff)
-      expect {
-        delete :destroy, {:id => staff.to_param}, valid_session
-      }.to change(User, :count).by(-1)
+    describe "destroys the requested staff" do
+      before(:each) do
+        @staff = FactoryGirl.create(:staff)
+      end
+      
+      it "should delete the staff object" do
+        expect { delete :destroy, {id: @staff.to_param}, valid_session }.to change(Staff, :count).by(-1)
+      end
+
+      it "should delete the user object" do
+        expect { delete :destroy, {id: @staff.to_param}, valid_session }.to change(User, :count).by(-1)
+      end
     end
 
     it "redirects to the staff list" do
       staff = FactoryGirl.create(:staff)
-      expect {
-        delete :destroy, {:id => staff.to_param}, valid_session
-      }.to change(User, :count).by(-1)
+      delete :destroy, {id: staff.to_param}, valid_session
       response.should redirect_to(staff_index_path)
     end
   end

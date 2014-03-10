@@ -2,15 +2,18 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new
 
-    can [:archive, :read], JobOffer
+    can :create, Student
+    can :create, Employer
 
-    can [:edit, :update, :read], User, id: user.id
-    can :read, User, role: { name: 'Staff' }
-    initialize_admin and return if user.admin?
-    initialize_student and return if user.student?
-    initialize_staff user and return if user.staff?
+    unless user.nil?
+      can [:archive, :read], JobOffer
+      can [:edit, :update, :read], User, id: user.id
+      can :read, Staff
+      initialize_admin and return if user.admin?
+      initialize_student and return if user.student?
+      initialize_staff user and return if user.staff?
+    end
   end
 
   def initialize_admin
@@ -38,7 +41,7 @@ class Ability
     can [:edit, :update], Employer, deputy_id: user_id
     can [:edit, :update], Employer, id: employer_id
     can :read, Application
-    can :read, User, manifestation_type: 'Student'
+    can :read, Students
     can :manage, Faq
 
     can :create, JobOffer
@@ -60,6 +63,6 @@ class Ability
 
     can [:accept, :decline], Application, job_offer: { responsible_user_id: user_id }
 
-    can :destroy, User, manifestation_type: 'Staff', manifestation: { employer: { id: employer_id, deputy_id: user_id }}
+    can :destroy, Staff, manifestation: { employer: { id: employer_id, deputy_id: user_id }}
   end
 end

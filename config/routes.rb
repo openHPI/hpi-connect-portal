@@ -37,7 +37,7 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    resources :users, only: [:show]
+    resources :users, only: [:edit, :update]
 
     resources :sessions, only: [:new, :create, :destroy]
     get '/signin' => 'sessions#new', as: 'signin'

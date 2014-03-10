@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource class: "User", except: [:destroy, :matching]
+  authorize_resource except: [:destroy, :matching]
 
   before_action :set_student, only: [:show, :edit, :update, :destroy]
   

@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   attr_accessor :should_redirect_to_profile
   attr_accessor :username
 
-  belongs_to :manifestation, polymorphic: true, :dependent => :destroy
+  belongs_to :manifestation, polymorphic: true
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstname, :lastname, presence: true
@@ -48,6 +48,8 @@ class User < ActiveRecord::Base
             :url  => "/assets/students/:id/:style/:basename.:extension",
             :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
   validates_attachment_content_type :cv, :content_type => ['application/pdf']
+
+  after_destroy :clean_manifestation
 
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
@@ -76,5 +78,9 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{firstname} #{lastname}"
+  end
+
+  def clean_manifestation
+    manifestation.destroy if manifestation
   end
 end
