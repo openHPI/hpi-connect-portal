@@ -61,7 +61,7 @@ class Student < ActiveRecord::Base
           ",
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
-  scope :update_immediately, -> { joins(:user).where('users.frequency = ?', 1) }
+  scope :update_immediately, -> { where(frequency: 1) }
 
   def application(job_offer)
     applications(job_offer).first

@@ -33,12 +33,12 @@ describe "the job offer flow" do
     click_on I18n.t("job_offers.new_job_offer")
     current_path.should == new_job_offer_path
 
-    fill_in "job_offer_title", :with => "HPI-Career-Portal"
-    fill_in "job_offer_description", :with => "A new carrer portal for HPI students should be developed and deployed."
-    fill_in "job_offer_room_number", :with => "A-1.2"
-    fill_in "job_offer_end_date", :with => (Date.current + 2).to_s
-    fill_in "job_offer_time_effort", :with => "12"
-    fill_in "job_offer_vacant_posts", :with => "1"
+    fill_in "job_offer_title", with: "HPI-Career-Portal"
+    fill_in "job_offer_description", with: "A new carrer portal for HPI students should be developed and deployed."
+    fill_in "job_offer_room_number", with: "A-1.2"
+    fill_in "job_offer_end_date", with: (Date.current + 2).to_s
+    fill_in "job_offer_time_effort", with: "12"
+    fill_in "job_offer_vacant_posts", with: "1"
 
     JobOffer.delete_all
     expect {
@@ -95,7 +95,7 @@ describe "the job offer flow" do
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
     message = "Hello Thomas, I would really like to work on the new portal!"
-    fill_in "message", :with => message
+    fill_in "message", with: message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
@@ -127,7 +127,7 @@ describe "the job offer flow" do
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
     message = "Hello Thomas, I would really like to work on the new portal!"
-    fill_in "message", :with => message
+    fill_in "message", with: message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
@@ -171,7 +171,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # responsible user prolongs the job offer
-    fill_in "job_offer_end_date", :with => (Date.current + 3).to_s
+    fill_in "job_offer_end_date", with: (Date.current + 3).to_s
     click_button I18n.t("job_offers.prolong")
 
     # the job offers end date is updated
@@ -218,7 +218,7 @@ describe "the job offer flow" do
     should have_content mark_if_required(job_offer, :time_effort)
     should have_content mark_if_required(job_offer, :compensation)
 
-    fill_in "job_offer_vacant_posts", :with => "1"
+    fill_in "job_offer_vacant_posts", with: "1"
 
     click_button I18n.t("links.save")
 

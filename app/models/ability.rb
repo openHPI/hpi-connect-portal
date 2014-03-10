@@ -4,7 +4,6 @@ class Ability
   def initialize(user)
 
     can :create, Student
-    can :create, Employer
 
     unless user.nil?
       can [:archive, :read], JobOffer

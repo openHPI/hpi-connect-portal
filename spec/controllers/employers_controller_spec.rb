@@ -69,7 +69,7 @@ describe EmployersController do
 
       it "assigns the requested employer as @employer as staff of employer" do
         employer = FactoryGirl.create(:employer)
-        sign_in FactoryGirl.create(:staff, employer: employer).user
+        login FactoryGirl.create(:staff, employer: employer).user
         get :edit, { id: employer.to_param }
         assigns(:employer).should eq(employer)
       end
@@ -82,12 +82,12 @@ describe EmployersController do
       end
 
       it "as a student" do
-        sign_in FactoryGirl.create(:student).user
+        login FactoryGirl.create(:student).user
       end
 
       it "as a staff of another chair" do
         employer2 = FactoryGirl.create(:employer)
-        sign_in FactoryGirl.create(:staff, employer: employer2).user
+        login FactoryGirl.create(:staff, employer: employer2).user
       end
 
       after(:each) do
@@ -146,7 +146,7 @@ describe EmployersController do
 
       it "redirects to the employers path" do
         employer = FactoryGirl.create(:employer)
-        post :create, { id: employer.to_param}
+        post :create, { employer: valid_attributes }
         response.should redirect_to(employers_path)
         flash[:notice].should eql("You are not authorized to access this page.")
       end
