@@ -13,6 +13,22 @@ class StaffController < ApplicationController
   def show
   end
 
+  def new
+    @staff = Staff.new
+    @staff.build_user
+  end
+
+  def create
+    @staff = Staff.new staff_params
+    if @staff.save
+      sign_in @staff.user
+      flash[:success] = "Welcome to HPI Career!"
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
+
   def destroy
     authorize! :destroy, @staff
     @staff.destroy
@@ -26,7 +42,7 @@ class StaffController < ApplicationController
     end
 
     def staff_params
-      params.require(:student).permit(:employer, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+      params.require(:staff).permit(:employer, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
     end
 
     def rescue_from_exception(exception)

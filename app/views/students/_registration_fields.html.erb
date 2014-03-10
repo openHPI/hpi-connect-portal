@@ -1,4 +1,4 @@
-<%= f.simple_fields_for :user, student.user do |user_form| %>
+<%= form.simple_fields_for :user, student.user do |user_form| %>
 
   <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
   <%= user_form.input :firstname %>
@@ -17,8 +17,8 @@
 
 <% end %>
 
-<%= label_field f, :academic_program, t("activerecord.attributes.user.academic_program") %>
-<%= f.input :academic_program %>
+<%= label_field form, :academic_program, t("activerecord.attributes.user.academic_program") %>
+<%= form.input :academic_program %>
 
-<%= label_field f, :semester, t("activerecord.attributes.user.semester") %>
-<%= f.input :semester %>
+<%= label_field form, :semester, t("activerecord.attributes.user.semester") %>
+<%= form.input :semester %>

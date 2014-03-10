@@ -3,7 +3,7 @@
 <%= simple_form_for @student do |f| %>
 
     <%= render 'shared/object_errors', object: @student %>
-    <%= render 'registration_field', student: @student %>
+    <%= render 'registration_field', student: @student, form: f %>
 
     <br />
     <%= f.submit "Register", class: "btn btn-large btn-primary" %>

@@ -6,10 +6,8 @@ describe "the students page" do
 
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:student, :programming_languages =>[@programming_language])
+    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
     login staff.user
-
-    FactoryGirl.create(:role, :admin)
 
     login staff.user
     visit students_path
@@ -66,7 +64,7 @@ end
 describe "the students editing page" do
 
   before(:each) do
-    @student1 = FactoryGirl.create(:user, :student)
+    @student1 = FactoryGirl.create(:student)
     login @student1.user
   end
 
@@ -89,8 +87,8 @@ describe "the students editing page" do
 
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
-    fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
-    fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
+    fill_in 'student_facebook', with: 'www.faceboook.com/alex'
+    fill_in 'student_email', with: 'www.alex@hpi.uni-potsdam.de'
     find('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
@@ -112,8 +110,8 @@ describe "the students editing page" do
       page.find_link("Edit").click
 
 
-      fill_in 'user_facebook', :with => 'www.face.com/alex'
-      fill_in 'user_email', :with => 'www.alex@uni-potsdam.de'
+      fill_in 'student_facebook', with: 'www.face.com/alex'
+      fill_in 'student_email', with: 'www.alex@uni-potsdam.de'
       find('input[type="submit"]').click
 
       current_path.should == student_path(@student1)
@@ -131,8 +129,8 @@ describe "the students profile page" do
 
   before(:each) do
     @job_offer =  FactoryGirl.create(:job_offer)
-    @student1 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
-    @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
+    @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
+    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
 
     login @student1.user
    end
@@ -184,7 +182,7 @@ describe "the students profile page" do
     end
 
     it "can't be edited by staff members " do
-      staff = FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer))
+      staff = FactoryGirl.create(:staff)
       login staff.user
       visit edit_student_path(@student1)
 

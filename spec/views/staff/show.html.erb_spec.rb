@@ -3,10 +3,11 @@ require 'spec_helper'
 describe "staff/show" do
   before(:each) do
     @staff = assign(:staff, stub_model(Staff,
-      user: {
-        :firstname => "First Name",
-        :lastname => "Last Name",
-      }
+      user: stub_model(User,
+        firstname: "First Name",
+        lastname: "Last Name",
+        email: "staff@test.de"
+      )
     ))
 
     view.stub(:signed_in?) { false }
