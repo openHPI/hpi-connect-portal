@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ImprintController do
 
   before(:each) do
-    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+    login FactoryGirl.create(:student).user
   end
 
   describe "GET 'index'" do

@@ -13,5 +13,4 @@ describe ApplicationController do
     user = FactoryGirl.create(:user)
     expect(controller.after_sign_in_path_for(user)).to eq(job_offers_path)
   end
-
 end

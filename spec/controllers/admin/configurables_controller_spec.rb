@@ -7,7 +7,7 @@ describe Admin::ConfigurablesController do
   describe "validation" do 
 
     before(:each) do
-      post '/signin', { session: { email: admin.email, password: 'password123' }}
+      login admin
     end
     
     it "checks if a valid email address is saved" do

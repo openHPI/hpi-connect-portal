@@ -89,10 +89,10 @@ describe JobOffersController do
     end
 
     it "assigns a possible applications as @application" do
-      user = FactoryGirl.create(:staff)
-      login user
+      student = FactoryGirl.create(:student)
+      login FactoryGirl.create(:staff).user
 
-      application = FactoryGirl.create(:application, user: user, job_offer: @job_offer)
+      application = FactoryGirl.create(:application, student: student, job_offer: @job_offer)
       get :show, {:id => @job_offer.to_param}, valid_session
       assigns(:application).should eq(application)
     end
@@ -193,7 +193,7 @@ describe JobOffersController do
 
   describe "GET complete" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_students: [FactoryGirl.create(:user)])
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_students: [FactoryGirl.create(:student)])
     end
 
     it "marks jobs as completed if the user is staff of the employer" do
@@ -298,7 +298,7 @@ describe JobOffersController do
       end
 
       it "allows the admin to create a new job offer" do
-        login FactoryGirl.create(:user, role: FactoryGirl.create(:role, :admin))
+        login FactoryGirl.create(:user, :admin)
 
         expect{
           post :create, {:job_offer => valid_attributes}, valid_session
@@ -307,7 +307,7 @@ describe JobOffersController do
       end
 
       it "doesn't allow students to create a job offer" do
-        login FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
+        login FactoryGirl.create(:student).user
 
         expect{
           post :create, {:job_offer => valid_attributes}, valid_session

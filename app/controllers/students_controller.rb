@@ -61,6 +61,14 @@ class StudentsController < ApplicationController
 
   private
 
+    def set_student
+      @student = Student.find params[:id]
+    end
+
+    def student_params
+      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+    end
+
     def rescue_from_exception(exception)
       if [:index].include? exception.action
         respond_and_redirect_to root_path, exception.message
@@ -69,13 +77,5 @@ class StudentsController < ApplicationController
       else
         respond_and_redirect_to students_path, exception.message
       end
-    end
-
-    def set_student
-      @student = Student.find params[:id]
-    end
-
-    def student_params
-      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, :created_at, :updated_at, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
     end
 end

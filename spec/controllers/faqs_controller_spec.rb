@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FaqsController do
 
   before(:each) do
-    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+    login FactoryGirl.create(:student).user
   end
 
   let(:deputy) { FactoryGirl.create(:user) }

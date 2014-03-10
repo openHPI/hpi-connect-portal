@@ -15,7 +15,7 @@ describe EmployersController do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :pending)
 
-    post '/signin', { session: { email: admin.email, password: 'password123' }}
+    login admin
   end
 
   describe "GET index" do
@@ -141,7 +141,7 @@ describe EmployersController do
     describe "with insufficient access rights" do
       
       before(:each) do
-        post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+        login FactoryGirl.create(:student).user
       end
 
       it "redirects to the employers path" do
@@ -181,7 +181,7 @@ describe EmployersController do
     describe "with missing permission" do
       
       before(:each) do
-        post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+        login FactoryGirl.create(:student).user
       end
 
       it "redirects to the employer index page" do

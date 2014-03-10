@@ -5,7 +5,7 @@ describe StudentsController do
   let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "role" => FactoryGirl.create(:role, :student), "identity_url" => "af", "email" => "test@example", "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
   
   before(:each) do
-    post '/signin', { session: { email: FactoryGirl.create(:student).user.email, password: 'password123' }}
+    login FactoryGirl.create(:student).user
   end
 
   # Programming Languages with a mapping to skill integers

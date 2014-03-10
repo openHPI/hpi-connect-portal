@@ -1,26 +1,16 @@
 class StaffController < ApplicationController
   include UsersHelper
 
-  authorize_resource class: "User"
+  authorize_resource
 
   before_action :set_staff, only: [:show, :edit, :update, :destroy]
 
   def index
     authorize! :index, Staff.all
-    @staff_members = apply_scopes(Staff.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+    @staff_members = Staff.all.sort_by { |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
   end
 
   def show
-  end
-
-  def edit
-    authorize! :edit, @staff
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-  end
-
-  def update
-    update_from_params_for_languages params, staff_path(@staff)
   end
 
   def destroy
@@ -31,6 +21,14 @@ class StaffController < ApplicationController
 
   private
 
+    def set_staff
+      @staff = Staff.find params[:id]
+    end
+
+    def staff_params
+      params.require(:student).permit(:employer, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+    end
+
     def rescue_from_exception(exception)
       if [:index].include? exception.action
         respond_and_redirect_to root_path, exception.message
@@ -39,9 +37,5 @@ class StaffController < ApplicationController
       else
         respond_and_redirect_to staff_index_path, exception.message
       end
-    end
-
-    def set_staff
-      @staff = Staff.find params[:id]
     end
 end

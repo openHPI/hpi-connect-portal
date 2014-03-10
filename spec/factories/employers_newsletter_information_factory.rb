@@ -9,7 +9,7 @@
 
 FactoryGirl.define do
   factory :employers_newsletter_information do
-    association :student
+    association :user
     association :employer
   end
 end

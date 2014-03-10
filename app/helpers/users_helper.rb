@@ -12,23 +12,21 @@ module UsersHelper
     signed_in? && current_user.staff? && current_user.manifestation == employer.deputy
   end
 
-  def update_and_remove_for_language(params, user_id, language_class, language_id_attribute)
+  def update_and_remove_for_language(params, student_id, language_class, language_id_attribute)
     if params
       params.each do |id, skill|
-        language = language_class.where(user_id: user_id, language_id_attribute.to_sym => id).first_or_create
+        language = language_class.where(student_id: student_id, language_id_attribute.to_sym => id).first_or_create
         language.update_attributes(skill: skill)
       end
 
-      remove_for_language(params, user_id, language_class, language_id_attribute)
+      remove_for_language(params, student_id, language_class, language_id_attribute)
     else
-      #If the User deselects all languages, they have to be destroyed
-      language_class.destroy_all(user_id: user_id)
+      language_class.destroy_all(student_id: student_id)
     end
   end
 
-  def remove_for_language(params, user_id, language_class, language_id_attribute)
-    #Delete all programming languages which have been deselected (rating removed) from the form
-    language_class.where(user_id: user_id).each do |lang|
+  def remove_for_language(params, student_id, language_class, language_id_attribute)
+    language_class.where(student_id: student_id).each do |lang|
       if params[lang.attributes[language_id_attribute].to_s].nil?
         lang.destroy
       end
