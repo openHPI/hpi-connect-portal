@@ -17,7 +17,6 @@
 #  cv_file_size       :integer
 #  cv_updated_at      :datetime
 #  status             :integer
-#  frequency          :integer          default(1), not null
 #  manifestation_id   :integer
 #  manifestation_type :string(255)
 #  password_digest    :string(255)

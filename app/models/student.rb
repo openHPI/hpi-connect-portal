@@ -16,6 +16,7 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
+#  frequency              :integer          default(1), not null
 #
 
 EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']

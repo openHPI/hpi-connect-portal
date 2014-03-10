@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140310110059) do
+ActiveRecord::Schema.define(version: 20140310124313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 20140310110059) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "employment_status_id",   default: 0, null: false
+    t.integer  "frequency",              default: 1, null: false
   end
 
   create_table "user_statuses", force: true do |t|
@@ -205,7 +206,6 @@ ActiveRecord::Schema.define(version: 20140310110059) do
     t.integer  "cv_file_size"
     t.datetime "cv_updated_at"
     t.integer  "status"
-    t.integer  "frequency",          default: 1,     null: false
     t.integer  "manifestation_id"
     t.string   "manifestation_type"
     t.string   "password_digest"
