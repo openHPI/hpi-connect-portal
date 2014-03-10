@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307143545) do
+ActiveRecord::Schema.define(version: 20140310110059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140307143545) do
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
   create_table "employers_newsletter_informations", force: true do |t|
-    t.integer "user_id"
+    t.integer "student_id"
     t.integer "employer_id"
   end
 

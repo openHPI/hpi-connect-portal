@@ -21,7 +21,7 @@ class Employer < ActiveRecord::Base
 
   has_many :staff_members, class_name: 'Staff'
   has_many :job_offers
-  has_many :interested_students, class_name: 'User', through: :employers_newsletter_information
+  has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
   belongs_to :deputy, class_name: 'Staff'
 
   validates_attachment_size :avatar, less_than: 5.megabytes

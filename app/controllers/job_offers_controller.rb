@@ -20,25 +20,20 @@ class JobOffersController < ApplicationController
   has_scope :filter_external_employer_only, only: [:index, :archive], as: :external_only
   has_scope :search, only: [:index, :archive]
 
-  # GET /job_offers
-  # GET /job_offers.json
   def index
     job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
-  # GET /job_offers/1
-  # GET /job_offers/1.json
   def show
     if @job_offer.pending? and signed_in? and !user_is_staff_of_employer?(@job_offer) and !current_user.admin?
       redirect_to job_offers_path
     end
 
-    @application = current_user.manifestation.applications @job_offer if current_user.student?
+    @application = current_user.manifestation.application @job_offer if current_user.student?
     @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
   end
 
-  # GET /job_offers/new
   def new
     @job_offer = JobOffer.new
     @job_offer.responsible_user = current_user.manifestation
@@ -46,27 +41,21 @@ class JobOffersController < ApplicationController
     @languages = Language.all
   end
 
-  # GET /job_offers/1/edit
   def edit
     authorize! :edit, @job_offer
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
 
-  # POST /job_offers
-  # POST /job_offers.json
   def create
     @job_offer = JobOffer.create_and_notify job_offer_params, current_user
-
-    unless @job_offer.new_record?
-      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
-    else
+    if @job_offer.new_record?
       render_errors_and_action @job_offer, 'new'
+    else
+      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     end
   end
 
-  # PATCH/PUT /job_offers/1
-  # PATCH/PUT /job_offers/1.json
   def update
     if @job_offer.update job_offer_params
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')
@@ -75,20 +64,16 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # DELETE /job_offers/1
-  # DELETE /job_offers/1.json
   def destroy
     @job_offer.destroy
     respond_and_redirect_to job_offers_url, I18n.t('job_offers.messages.successfully_deleted')
   end
 
-  # GET /job_offers/archive
   def archive
     job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
-  # GET /job_offer/:id/prolong
   def prolong
     if @job_offer.prolong @date
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_prolonged')
@@ -98,14 +83,12 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offers/matching
   def matching
     job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
     render "index"
   end
 
-  # GET /job_offer/:id/complete
   def complete
     if @job_offer.update status: JobStatus.completed
       JobOffersMailer.job_closed_email(@job_offer).deliver
@@ -115,7 +98,6 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offer/:id/accept
   def accept
     if @job_offer.update status: JobStatus.open
       JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
@@ -126,7 +108,6 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offer/:id/decline
   def decline
     if @job_offer.destroy
       JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
@@ -136,7 +117,6 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offer/:id/reopen
   def reopen
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.completed
@@ -148,7 +128,6 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # POST /job_offer/:id/fire
   def fire
     student = Student.find job_offer_params[:student_id]
     @job_offer.fire student
