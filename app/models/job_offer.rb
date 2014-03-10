@@ -125,7 +125,7 @@ class JobOffer < ActiveRecord::Base
   end
 
   def accept_application(application)
-    new_assigned_students = assigned_students << application.user
+    new_assigned_students = assigned_students << application.student
     if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
       application.delete
       if flexible_start_date

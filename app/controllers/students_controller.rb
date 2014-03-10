@@ -37,9 +37,9 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-    @all_employers = Employer.all
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
+    @employers = Employer.all
   end
 
   def update

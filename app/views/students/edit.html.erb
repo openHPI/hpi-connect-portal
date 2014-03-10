@@ -1,4 +1,10 @@
 <h1><%= t("users.edit_student") %></h1>
 
-<%= render 'form', user: @user %>
+<%= simple_form_for @student do |f| %>
 
+    <%= render 'shared/object_errors', object: @student %>
+    <%= render 'profile_fields', student: @student %>
+
+    <br />
+    <%= f.submit t("links.save"), class: "btn btn-large btn-primary" %>
+<% end %>

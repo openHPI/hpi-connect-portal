@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-md-9">
     <h1><%= t("users.students_headline")%></h1>
-      <% unless @users.empty? %>
+      <% unless @students.empty? %>
         <ul class="list-group">
-        <% @users.each do |student| %>
+        <% @students.each do |student| %>
           <li class="list-group-item">
             <div class="row">
               <div class="col-md-12">
@@ -14,7 +14,7 @@
         <% end %>
         </ul>
         <div class="pull-right">
-         <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
+         <%= will_paginate @students, renderer: BootstrapPagination::Rails%>
         </div>
       <% else %>
         <div class="col-md-6 col-md-offset-3" style="margin-top:25%">

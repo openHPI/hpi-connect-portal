@@ -10,7 +10,7 @@
 
 FactoryGirl.define do
   factory :languages_user do
-    association :user
+    association :student
     association :language
     skill 1
   end

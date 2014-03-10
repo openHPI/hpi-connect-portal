@@ -20,7 +20,7 @@ describe ApplicationsController do
     describe "having sufficient permissions" do
 
       before(:each) do
-        sign_in @job_offer.responsible_user
+        login @job_offer.responsible_user.user
       end
 
       it "deletes application" do
@@ -43,7 +43,7 @@ describe ApplicationsController do
     describe "having insufficient permissions" do
 
       before(:each) do
-        sign_in @student
+        login @student.user
       end
 
       it "redirects to job offer view" do
@@ -63,7 +63,7 @@ describe ApplicationsController do
 
     describe "having sufficient permissions" do
       before(:each) do
-        sign_in @job_offer.responsible_user
+        login @job_offer.responsible_user.user
       end
 
       it "accepts a student and he/her is included in @job_offer.assigned_students" do
@@ -131,7 +131,7 @@ describe ApplicationsController do
     describe "having insufficient permissions" do
 
       before(:each) do
-        sign_in @student.user
+        login @student.user
       end
 
       it "redirects to job offer view" do
@@ -148,7 +148,7 @@ describe ApplicationsController do
       @job_offer.status = FactoryGirl.create(:job_status, name: 'running')
       @job_offer.save
 
-      sign_in FactoryGirl.create(:student).user
+      login FactoryGirl.create(:student).user
       expect{
           post :create, { application: { job_offer_id: @job_offer.id} }
         }.not_to change(Application, :count).by(1)
@@ -164,7 +164,7 @@ describe ApplicationsController do
         :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
       })
 
-      sign_in FactoryGirl.create(:student).user
+      login FactoryGirl.create(:student).user
       expect{
           post :create, { application: { job_offer_id: @job_offer.id}, attached_files: { file_attributes: [file: test_file] }}
         }.to change(Application, :count).by(1)
@@ -174,12 +174,12 @@ describe ApplicationsController do
       @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
       @job_offer.save
 
-      user = FactoryGirl.create(:student).user
+      student = FactoryGirl.create(:student)
 
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: user)
+      application = FactoryGirl.create(:application, job_offer: @job_offer, student: student)
 
-      sign_in user
-      post :create, { :application => { job_offer_id: @job_offer.id} }
+      login student.user
+      post :create, { application: { job_offer_id: @job_offer.id} }
       response.should redirect_to(job_offer_path(@job_offer))
       assert_equal(flash[:error], 'An error occured while applying. Please try again later.')
     end
@@ -194,28 +194,29 @@ describe ApplicationsController do
         :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
       })
 
-      sign_in FactoryGirl.create(:student)
+      login FactoryGirl.create(:student).user
       expect{
-          post :create, { :application => { job_offer_id: @job_offer.id}, attached_files: { file_attributes: [file: test_file] }}
+          post :create, { application: { job_offer_id: @job_offer.id}, attached_files: { file_attributes: [file: test_file] }}
         }.to change(Application, :count).by(0)
       response.should redirect_to(@job_offer)
     end
 
     it "only allows students to create applications" do
-      sign_in FactoryGirl.create(:staff, employer: @job_offer.employer)
+      login FactoryGirl.create(:staff, employer: @job_offer.employer)
       expect{
-          post :create, { :application => { job_offer_id: @job_offer.id}}
+          post :create, { application: { job_offer_id: @job_offer.id}}
       }.to change(Application, :count).by(0)
     end
   end
 
   describe "DELETE destroy" do
     before(:each) do
-      @user = FactoryGirl.create(:student).user
-      sign_in @user
+      @student = FactoryGirl.create(:student)
+      login @student.user
     end
+
     it "destroys the requested application" do
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: @user)
+      application = FactoryGirl.create(:application, job_offer: @job_offer, student: @student)
 
       expect {
         delete :destroy, {id: application.to_param}
@@ -223,7 +224,7 @@ describe ApplicationsController do
     end
 
     it "redirects to the job_offers page" do
-      application = FactoryGirl.create(:application, job_offer: @job_offer, user: @user)
+      application = FactoryGirl.create(:application, job_offer: @job_offer, student: @student)
 
       delete :destroy, {id: application.to_param}
       response.should redirect_to(job_offer_path(@job_offer))

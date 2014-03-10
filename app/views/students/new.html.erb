@@ -1,3 +1,10 @@
 <h1> Register as a Student </h1>
 
-<%= render 'registration_form', student: @student %>
+<%= simple_form_for @student do |f| %>
+
+    <%= render 'shared/object_errors', object: @student %>
+    <%= render 'registration_field', student: @student %>
+
+    <br />
+    <%= f.submit "Register", class: "btn btn-large btn-primary" %>
+<% end %>
