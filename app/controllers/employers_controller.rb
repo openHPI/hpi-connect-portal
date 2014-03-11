@@ -1,6 +1,6 @@
 class EmployersController < ApplicationController
 
-  load_and_authorize_resource only: [:new, :edit, :update, :create]
+  authorize_resource only: [:new, :edit, :update, :create]
   before_action :set_employer, only: [:show, :edit, :update]
 
   def index
@@ -29,6 +29,7 @@ class EmployersController < ApplicationController
   end
 
   def edit
+    authorize! :edit, @employer
   end
 
   def create

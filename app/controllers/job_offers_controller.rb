@@ -2,12 +2,13 @@ class JobOffersController < ApplicationController
   include UsersHelper
 
   load_and_authorize_resource except: [:edit]
+  skip_load_resource only: [:create] 
 
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_employer, only: [:index, :archive], as: :employer

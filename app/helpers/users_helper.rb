@@ -34,38 +34,32 @@ module UsersHelper
   end
 
   def update_from_params_for_languages_and_newsletters(params, redirect_to) 
-    update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
-    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
+    update_and_remove_for_newsletter(params[:student][:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
+    update_and_remove_for_newsletter(params[:student][:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
     update_from_params_for_languages(params, redirect_to)
   end
 
 
   def update_from_params_for_languages(params, redirect_to)
-    update_and_remove_for_language(params[:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:languages], params[:id], LanguagesUser, "language_id")
-
-    if @user.update(user_params)
-      respond_and_redirect_to(redirect_to, I18n.t('users.messages.successfully_updated.'))
-    else
-      render_errors_and_action(redirect_to, 'edit')
-    end
+    update_and_remove_for_language(params[:student][:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
+    update_and_remove_for_language(params[:student][:languages], params[:id], LanguagesUser, "language_id")
   end
 
-  def update_and_remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+  def update_and_remove_for_newsletter(params, student_id, newsletter_class, attributes_id)
     if params
       params.each do |id, boolean|
         if boolean.to_i == 1
-        newsletter_class.where(user_id: user_id, attributes_id.to_sym => id).first_or_create
+        newsletter_class.where(student_id: student_id, attributes_id.to_sym => id).first_or_create
        end
       end
-       remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
+       remove_for_newsletter(params, student_id, newsletter_class, attributes_id)
     else
-      newsletter_class.destroy_all(user_id: user_id)
+      newsletter_class.destroy_all(student_id: student_id)
     end
   end
 
-  def remove_for_newsletter(params, user_id, newsletter_class, attributes_id)
-    newsletter_class.where(user_id: user_id).each do |n|
+  def remove_for_newsletter(params, student_id, newsletter_class, attributes_id)
+    newsletter_class.where(student_id: student_id).each do |n|
       if params[n.attributes[attributes_id].to_s].to_i == 0
         n.delete
       end

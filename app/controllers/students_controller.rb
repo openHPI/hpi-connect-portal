@@ -44,6 +44,12 @@ class StudentsController < ApplicationController
 
   def update
     update_from_params_for_languages_and_newsletters params, student_path(@student)
+
+    if @student.update student_params
+      respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
+    else
+      render_errors_and_action(@student, 'edit')
+    end
   end
 
   def destroy
@@ -54,8 +60,8 @@ class StudentsController < ApplicationController
 
   def matching
     authorize! :read, Student
-    @students = apply_scopes(Student.all).sort_by{ |x| [x.lastname, x.firstname] }
-    @students = @students.paginate(:page => params[:page], :per_page => 5 )
+    @students = Student.all.sort_by{ |x| [x.lastname, x.firstname] }
+    @students = @students.paginate page: params[:page], per_page: 5
     render "index"
   end
 
@@ -66,7 +72,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo, :cv])
     end
 
     def rescue_from_exception(exception)

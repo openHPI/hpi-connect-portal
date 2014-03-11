@@ -5,8 +5,8 @@ describe EmployersController do
   let(:deputy) { FactoryGirl.create(:staff) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
-  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction",
-      "head" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
+  let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
+      head: "Prof. Patrick Baudisch" , deputy_id: deputy.id } }
 
   let(:false_attributes) { { "name" => "HCI"} }
 
@@ -104,7 +104,7 @@ describe EmployersController do
 
       it "creates a new employer" do
         expect {
-          post :create, { employer: valid_attributes}
+          post :create, { employer: valid_attributes }
         }.to change(Employer, :count).by(2)
       end
 

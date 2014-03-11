@@ -31,32 +31,32 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
         <ul class="list-group">
-          <%= fields_for :programming_languages do |f2| %>
-          <% if @programming_languages %>
-            <% @programming_languages.each do |programming_language| %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-3">
-                  <%# Erstelle ein Label fuer jede Programmiersprache %>
-                  <%= f2.label programming_language.name, class: "control-label" %>
-                  </div>
-                  <div class="col-sm-9">
-                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                    <% if !user.new_record? %>
-                      <% pl = ProgrammingLanguagesUser.find_by_user_id_and_programming_language_id(student.id,programming_language.id) %>
-                    <% end %>
-                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
-                    <% (1..5).each do |i| %>
-                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
+          <%= simple_fields_for :programming_languages do |f2| %>
+            <% if @programming_languages %>
+              <% @programming_languages.each do |programming_language| %>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <%# Erstelle ein Label fuer jede Programmiersprache %>
+                      <%= f2.label programming_language.name, class: "control-label" %>
+                    </div>
+                    <div class="col-sm-9">
+                      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
+                      <% if student.persisted? %>
+                        <% pl = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                      <% end %>
+                      <%# Erzeuge 5 radio buttons fuer die Sterne %>
+                      <% (1..5).each do |i| %>
+                        <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                         <% if pl %>
                           <% if i == pl.skill %>
-                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class=>"star" %>
+                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class => "star" %>
                           <% else %>
-                            <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+                            <%= f2.radio_button programming_language.id, i, :class => "star" %>
                           <% end %>
                         <%# Erzeuge sonst einen unchecked radio button %>
                         <% else %>
-                          <%= f2.radio_button programming_language.id, i, :class=>"star" %>
+                          <%# f2.radio_button programming_language.id, i, :class => "star" %>
                         <% end %>
                       <% end %>
                     </div>
@@ -138,21 +138,21 @@
                   </div>
                   <div class="col-sm-9">
                     <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                    <% if !user.new_record? %>
-                      <% l = LanguagesUser.find_by_user_id_and_language_id(student.id,language.id) %>
+                    <% if student.persisted? %>
+                      <% l = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
                     <% end %>
                     <%# Erzeuge 5 radio buttons fuer die Sterne %>
                     <% (1..5).each do |i| %>
                       <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                       <% if l %>
                         <% if i == l.skill %>
-                          <%= f3.radio_button language.id, i, :checked => "checked", :class=>"star" %>
+                          <%= f3.radio_button language.id, i, :checked => "checked", :class => "star" %>
                         <% else %>
-                          <%= f3.radio_button language.id, i, :class=>"star" %>
+                          <%= f3.radio_button language.id, i, :class => "star" %>
                         <% end %>
                       <%# Erzeuge sonst einen unchecked radio button %>
                       <% else %>
-                        <%= f3.radio_button language.id, i, :class=>"star" %>
+                        <%# f3.radio_button language.id, i, :class => "star" %>
                       <% end %>
                     <% end %>
                   </div>
@@ -266,16 +266,16 @@
               </div>
               <div class="col-sm-9">
                 <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                <% if !@user.new_record? %>
-                  <% pl = ProgrammingLanguagesNewsletterInformation.find_by_user_id_and_programming_language_id(@user.id,programming_language.id) %>
+                <% if student.persisted? %>
+                  <% pl = ProgrammingLanguagesNewsletterInformation.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
                 <% end %>
                   <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                     <% if pl %>
                       <%= f2.check_box programming_language.id, :checked => "checked" %>
-                      <% else %>
-                        <%= f2.check_box programming_language.id %>
-                      <% end %>
-                     </div>
+                    <% else %>
+                      <%= f2.check_box programming_language.id %>
+                    <% end %>
+                </div>
               </div>    
             </li>
         <% end %>
@@ -298,8 +298,8 @@
               </div>
               <div class="col-sm-3">
                 <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                <% if !@user.new_record? %>
-                  <% pl = EmployersNewsletterInformation.find_by_user_id_and_employer_id(@user.id,employer.id) %>
+                <% if student.persisted? %>
+                  <% pl = EmployersNewsletterInformation.find_by_student_id_and_employer_id(student.id,employer.id) %>
                 <% end %>
                   <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
                     <% if pl %>

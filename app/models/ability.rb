@@ -10,7 +10,7 @@ class Ability
       can [:edit, :update, :read], User, id: user.id
       can :read, Staff
       initialize_admin and return if user.admin?
-      initialize_student and return if user.student?
+      initialize_student user and return if user.student?
       initialize_staff user and return if user.staff?
     end
   end
@@ -24,10 +24,11 @@ class Ability
     cannot :reopen, JobOffer, status: JobStatus.pending
   end
 
-  def initialize_student
+  def initialize_student(user)
     can :create, Application
     can :read, Faq
     cannot :index, User
+    can [:edit, :update, :read], Student, id: user.manifestation.id
     cannot :show, JobOffer, status: JobStatus.completed
     can :matching, JobOffer
   end
@@ -36,6 +37,8 @@ class Ability
     staff = user.manifestation
     employer_id = staff.employer_id
     staff_id = staff.id
+
+    can [:edit, :update, :read], Staff, id: user.manifestation.id
 
     can [:edit, :update], Employer, deputy_id: staff_id
     can [:edit, :update], Employer, id: employer_id
