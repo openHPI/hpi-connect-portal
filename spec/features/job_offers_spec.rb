@@ -36,7 +36,6 @@ describe "the job-offers page" do
   describe "student has already applied" do
     before(:each) do
       @student = FactoryGirl.create(:student)
-      @student.applications.delete_all
       FactoryGirl.create(:application, student: @student, job_offer: @job_offer_1)
       login @student.user
     end

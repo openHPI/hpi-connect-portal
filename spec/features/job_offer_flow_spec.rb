@@ -8,7 +8,7 @@ describe "the job offer flow" do
 
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:deputy) { employer.deputy }
+  let(:deputy) { FactoryGirl.create(:staff, employer: employer) }
   let(:first_applicant) { FactoryGirl.create(:student) }
   let(:second_applicant) { FactoryGirl.create(:student) }
 
@@ -19,6 +19,9 @@ describe "the job offer flow" do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
+
+    employer.deputy = deputy
+    employer.save
 
     ActionMailer::Base.deliveries = []
   end
@@ -57,6 +60,7 @@ describe "the job offer flow" do
     assert_equal(job_offer.end_date, Date.current + 2)
     assert_equal(job_offer.time_effort, 12)
     assert_equal(job_offer.compensation, 10.0)
+    assert_equal(job_offer.employer, creating_staff.employer)
 
     # deputy of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
@@ -69,6 +73,8 @@ describe "the job offer flow" do
     # deputy accepts the new job offer
     login deputy.user
     visit job_offer_path(job_offer)
+
+    current_path.should == job_offer_path(job_offer)
 
     should have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
     should have_link I18n.t("job_offers.decline"), decline_job_offer_path(job_offer)
@@ -153,7 +159,7 @@ describe "the job offer flow" do
     should have_content first_applicant.email
     should have_content second_applicant.email
 
-    find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, user: first_applicant).first)+"']").click
+    find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, student: first_applicant).first)+"']").click
 
     job_offer = job_offer.reload
     assert job_offer.running?
@@ -205,8 +211,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     assert job_offer.completed?
 
-    login FactoryGirl.create(:user, :admin)
-    # responsible user reopens the jobs
+    # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)
     find_link(I18n.t("job_offers.reopen_job")).click
 
@@ -222,7 +227,7 @@ describe "the job offer flow" do
 
     click_button I18n.t("links.save")
 
-    assert JobOffer.all.count == 2
+    assert_equal(JobOffer.all.count, 2)
     job_offer = JobOffer.last
 
     # the deputy gets notified about the new job

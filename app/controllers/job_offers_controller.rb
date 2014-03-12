@@ -27,7 +27,7 @@ class JobOffersController < ApplicationController
   end
 
   def show
-    if @job_offer.pending? and signed_in? and !user_is_staff_of_employer?(@job_offer) and !current_user.admin?
+    if @job_offer.pending? && signed_in? && !user_is_staff_of_employer?(@job_offer) && !current_user.admin?
       redirect_to job_offers_path
     end
 

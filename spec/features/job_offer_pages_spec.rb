@@ -113,7 +113,6 @@ describe "Job Offer pages" do
           end
 
           it { should have_link('Edit')}
-          it { should have_button('Apply') }
 
           it { should have_link('Accept') }
           it { should have_link('Decline') }

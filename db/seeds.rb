@@ -53,6 +53,9 @@ UserStatus.create!([
 
 Employer.delete_all
 User.delete_all
+Student.delete_all
+Staff.delete_all
+
 epic = Employer.new(
   name: "Enterprise Platform and Integration Concepts",
   description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
@@ -155,7 +158,6 @@ User.create!([{
 }])
 
 # Students
-Student.delete_all
 Student.create!([{
   user: User.new(
     email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
@@ -197,7 +199,6 @@ Student.create!([{
 }])
 
 # Staff
-Staff.delete_all
 Staff.create!([{
   user: User.new( 
     email: "johanna.appel@student.hpi.uni-potsdam.de", 

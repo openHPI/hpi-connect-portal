@@ -34,25 +34,25 @@ describe "the staff page" do
   end
   
 
-  describe "as an member of staff" do
+  describe "as a member of staff" do
 
     it "should not be visible " do
       FactoryGirl.create(:job_status, name: 'open')
       login @staff1.user
       visit staff_index_path
       current_path.should_not == staff_index_path
-      current_path.should == job_offers_path
+      current_path.should == root_path
     end
   end
 
-   describe "as an member of staff" do
+   describe "as a student" do
 
     it "should not be visible " do
       FactoryGirl.create(:job_status, name: 'open')
       login @student1.user
       visit staff_index_path
       current_path.should_not == staff_index_path
-      current_path.should == job_offers_path
+      current_path.should == root_path
     end
 
   end
