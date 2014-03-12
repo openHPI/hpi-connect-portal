@@ -27,7 +27,6 @@ class Ability
   def initialize_student(user)
     can :create, Application
     can :read, Faq
-    #cannot [:edit, :update, :read, :index], Student
     can [:edit, :update, :show], Student, id: user.manifestation.id
     cannot :show, JobOffer, status: JobStatus.completed
     can :matching, JobOffer
