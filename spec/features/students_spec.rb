@@ -7,27 +7,30 @@ describe "the students page" do
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
-    login staff.user
 
     login staff.user
     visit students_path
   end
 
-  describe "as a staff member" do 
+  describe "as a staff member" do
 
-      it "should view only names and status of a student on the overview" do
-        page.should have_content(
-          @student1.firstname,
-          @student1.lastname
-        )
-       
-      end
+    before(:each) do 
+      login staff.user
+      visit students_path
+    end
 
-      it "should contain a link for showing a profile and it should lead to profile page " do
-        find_link(@student1.firstname).click
-        current_path.should_not == students_path
-        current_path.should == student_path(@student1)
-      end
+    it "should view only names and status of a student on the overview" do
+      page.should have_content(
+        @student1.firstname,
+        @student1.lastname
+      )
+    end
+
+    it "should contain a link for showing a profile and it should lead to profile page " do
+      find_link(@student1.firstname).click
+      current_path.should_not == students_path
+      current_path.should == student_path(@student1)
+    end
   end
 
   describe "as a student" do
@@ -37,29 +40,31 @@ describe "the students page" do
       login @student1.user
       visit students_path
       current_path.should_not == students_path
-      current_path.should == job_offers_path
+      current_path.should == root_path
     end
   end
 
   describe "as an admin" do
 
-      it "should view only names and status of a student on the overview" do
-        page.should have_content(
-          @student1.firstname,
-          @student1.lastname
-        )
-      end
+    before(:each) do
+      login FactoryGirl.create(:user, :admin)
+      visit students_path
+    end
 
-      it "should contain a link for showing a profile and it should lead to profile page " do
-        find_link(@student1.firstname).click
-        current_path.should_not == students_path
-        current_path.should == student_path(@student1)
-      end
+    it "should view only names and status of a student on the overview" do
+      page.should have_content(
+        @student1.firstname,
+        @student1.lastname
+      )
+    end
+
+    it "should contain a link for showing a profile and it should lead to profile page " do
+      find_link(@student1.firstname).click
+      current_path.should_not == students_path
+      current_path.should == student_path(@student1)
+    end
   end
-
-
 end
-
 
 describe "the students editing page" do
 
@@ -82,13 +87,12 @@ describe "the students editing page" do
       "Picture",
       "Semester"
     )
-
   end
 
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
-    fill_in 'student_email', with: 'www.alex@hpi.uni-potsdam.de'
+    fill_in 'student_user_attributes_email', with: 'www.alex@hpi.uni-potsdam.de'
     find('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
@@ -109,9 +113,8 @@ describe "the students editing page" do
       page.should have_link("Edit")
       page.find_link("Edit").click
 
-
       fill_in 'student_facebook', with: 'www.face.com/alex'
-      fill_in 'student_email', with: 'www.alex@uni-potsdam.de'
+      fill_in 'student_user_attributes_email', with: 'www.alex@uni-potsdam.de'
       find('input[type="submit"]').click
 
       current_path.should == student_path(@student1)
@@ -121,7 +124,6 @@ describe "the students editing page" do
         "General information",
         "www.alex@uni-potsdam.de"
       )
-      
     end
 end
 
@@ -138,7 +140,7 @@ describe "the students profile page" do
 
   describe "of myself" do
     before(:each) do
-        visit student_path(@student1)
+      visit student_path(@student1)
     end
 
     it "should contain all the details of student1" do
@@ -164,7 +166,7 @@ describe "the students profile page" do
       visit student_path(@student2)
     end
 
-    it "should contain all the details of student1" do
+    it "should contain all the details of student2" do
       page.should have_content(
         @student2.firstname,
         @student2.lastname

@@ -29,10 +29,9 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  attr_accessor :should_redirect_to_profile
-  attr_accessor :username
+  attr_accessor :should_redirect_to_profile, :username
 
-  belongs_to :manifestation, polymorphic: true
+  belongs_to :manifestation, polymorphic: true, touch: true
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstname, :lastname, presence: true

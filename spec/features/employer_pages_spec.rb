@@ -56,7 +56,7 @@ describe "the employer page" do
       login(admin)
       visit new_employer_path
 
-      should have_select("employer[deputy_id]", options: [I18n.t("employers.select_deputy")] + User.students.map { |student| student.email })
+      should have_select("employer[deputy_id]", options: [I18n.t("employers.select_deputy")] + Staff.all.map { |staff| staff.email })
     end
 
   end

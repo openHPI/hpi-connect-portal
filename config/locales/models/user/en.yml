@@ -8,6 +8,7 @@ en:
         academic_program: "Program"
         birthday: "Birthdate"
         education: "Graduation"
+        login_information: "Login Information"
         additional_information: "Additional information"
         links: "Links"
         general_information: "General information"

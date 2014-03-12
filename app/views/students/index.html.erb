@@ -7,7 +7,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-md-12">
-                <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
+                <%= link_to student.full_name, student_path(student), :class => "h4" %>
               </div>
             </div>
           </li>
@@ -25,7 +25,4 @@
   <div class="col-md-3">
     <%= render 'studentsearch/search'%>
   </div>
-
 </div>
-
-

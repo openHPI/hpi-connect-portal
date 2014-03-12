@@ -33,9 +33,10 @@ class Student < ActiveRecord::Base
   has_many :languages, through: :languages_users
   has_many :possible_employers, through: :employers_newsletter_information
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
-  has_and_belongs_to_many :assigned_job_offers, class_name: "JobOffer"
+  has_many :assignments
+  has_many :assigned_job_offers, through: :assignments, source: :job_offer
 
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
@@ -64,7 +65,7 @@ class Student < ActiveRecord::Base
   scope :update_immediately, -> { where(frequency: 1) }
 
   def application(job_offer)
-    applications(job_offer).first
+    applications.where(job_offer: job_offer).first
   end
 
   def applied?(job_offer)

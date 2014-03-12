@@ -27,7 +27,8 @@ class JobOffer < ActiveRecord::Base
 
   has_many :applications
   has_many :students, through: :applications
-  has_and_belongs_to_many :assigned_students, class_name: "Student"
+  has_many :assignments
+  has_many :assigned_students, through: :assignments, source: :student
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer

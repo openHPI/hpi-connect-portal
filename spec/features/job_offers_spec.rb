@@ -36,7 +36,8 @@ describe "the job-offers page" do
   describe "student has already applied" do
     before(:each) do
       @student = FactoryGirl.create(:student)
-      FactoryGirl.create(:application, user: @student, job_offer: @job_offer_1)
+      @student.applications.delete_all
+      FactoryGirl.create(:application, student: @student, job_offer: @job_offer_1)
       login @student.user
     end
 
@@ -51,7 +52,7 @@ end
 describe "a job offer entry" do
 
   before(:each) do
-    @student1 = FactoryGirl.create(:user)
+    @student1 = FactoryGirl.create(:student)
     login @student1.user
 
     @employer = FactoryGirl.create(:employer)
@@ -79,7 +80,7 @@ end
 
 describe "job_offers_history" do
   before do
-    @student1 = FactoryGirl.create(:user)
+    @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)

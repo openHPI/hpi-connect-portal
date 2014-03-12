@@ -29,6 +29,7 @@ class StudentsController < ApplicationController
   end
 
   def index
+    authorize! :index, Student
     @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
   end
 
@@ -37,6 +38,7 @@ class StudentsController < ApplicationController
   end
 
   def edit
+    authorize! :edit, @student
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
     @employers = Employer.all
@@ -59,7 +61,7 @@ class StudentsController < ApplicationController
   end
 
   def matching
-    authorize! :read, Student
+    authorize! :read, Student.all
     @students = Student.all.sort_by{ |x| [x.lastname, x.firstname] }
     @students = @students.paginate page: params[:page], per_page: 5
     render "index"
@@ -81,7 +83,7 @@ class StudentsController < ApplicationController
       elsif [:edit, :destroy, :update].include? exception.action
         respond_and_redirect_to student_path(exception.subject), exception.message
       else
-        respond_and_redirect_to students_path, exception.message
+        respond_and_redirect_to root_path, exception.message
       end
     end
 end

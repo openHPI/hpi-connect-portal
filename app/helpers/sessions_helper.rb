@@ -30,7 +30,7 @@ module SessionsHelper
   end
 
   def user_type
-    current_user.manifestation_type.downcase
+    current_user.manifestation_type.downcase rescue 'generic'
   end
 
   def signed_in_user

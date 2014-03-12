@@ -50,7 +50,7 @@
       </table>
     </div>
 
-    <% if signed_in? && (current_user?(@student) || current_user.admin? || current_user.staff?) && !@job_offers.empty?%>
+    <% if signed_in? && (current_user?(@student.user) || current_user.admin? || current_user.staff?) && !@job_offers.empty? %>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4><%= t("activerecord.attributes.user.jobs")%></h4>
