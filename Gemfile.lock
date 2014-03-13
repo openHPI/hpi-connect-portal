@@ -84,6 +84,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    commonjs (0.2.7)
     configurable_engine (0.3.0)
       activerecord (> 3)
       rails (> 3)
@@ -133,6 +134,11 @@ GEM
     json (1.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
+    less (2.5.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.5.0)
+      actionpack (>= 3.1)
+      less (~> 2.5.0)
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -280,6 +286,7 @@ DEPENDENCIES
   jquery-star-rating-rails
   jquery-turbolinks
   jquery-ui-rails
+  less-rails
   newrelic_rpm (~> 3.7.1.188)
   paperclip!
   pg (~> 0.17.1)
