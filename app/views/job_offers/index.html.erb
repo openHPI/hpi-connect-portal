@@ -1,6 +1,6 @@
-<div class="row">
-  <div class="col-md-9">
-      <div id="buttons">
+<div class="wrapper-8 teaser">
+  <div class="col-md-8">
+      <div id="buttons" style="margin-top: 10px">
       <% if can?(:create, JobOffer) %>
         <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, class: "btn btn-default pull-right", style: "margin-bottom: 20px; margin-left: 5px;"%>
       <% end %>
@@ -12,7 +12,9 @@
        <%= render 'shared/jobs_listing_detailed', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
      </div>
   </div><!--/.span -->
-  <div class="col-md-3">
+</div>
+<div class="wrapper-5 teaser sidebar">
+  <div class="col-md-4">
   	<%= render 'shared/sort_filter_search', find_path: job_offers_path %>
   </div>
-</div> <!-- /row -->
+</div>

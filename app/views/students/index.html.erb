@@ -1,12 +1,12 @@
-<div class="row">
-  <div class="col-md-9">
+<div class="wrapper-8 teaser">
+  <div class="col-md-8">
     <h1><%= t("users.students_headline")%></h1>
       <% unless @users.empty? %>
         <ul class="list-group">
         <% @users.each do |student| %>
           <li class="list-group-item">
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-7">
                 <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
               </div>
             </div>
@@ -22,10 +22,9 @@
         </div>
       <% end %>
   </div>
-  <div class="col-md-3">
+</div>
+<div class="wrapper-5 teaser sidebar">
+  <div class="col-md-4">
     <%= render 'studentsearch/search'%>
   </div>
-
 </div>
-
-
