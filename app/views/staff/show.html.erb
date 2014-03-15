@@ -22,27 +22,13 @@
             <td><%= t("activerecord.attributes.user.email") %></td>
             <td><%= mail_to @staff.email %></td>
           </tr>
-           <tr>
+          <tr>
             <td><%= t("activerecord.attributes.user.employer") %></td>
             <td>
               <% if @staff.employer %>
                 <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
               <% end %>
-              </td>
-          </tr>
-          <tr>
-            <td><%= t("activerecord.attributes.user.cv")%></td>
-              <td>
-                <% if (@staff.user.cv.path).nil? %>
-                  <%= image_tag('file_thumbnails/missing.png', size: "16") %>
-                <% else %>
-                   <p class="text-muted">
-                    <%= link_to(@staff.user.cv.url) do %>
-                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= t('activerecord.attributes.user.cv') %>
-                    <% end %>
-                  </p>
-                <% end %>
-              </td>
+            </td>
           </tr>
         </tbody>
       </table>
