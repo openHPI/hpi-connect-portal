@@ -4,6 +4,5 @@ en:
       user_status:
         jobseeking: "Job-seeking"
         employed: "Employed"
-        employedext: "Externally employed"
+        employedseeking: "Employed but searching"
         nointerest: "No interest"
-        alumni: "Alumni"

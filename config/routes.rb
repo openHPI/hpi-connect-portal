@@ -1,63 +1,59 @@
 HpiHiwiPortal::Application.routes.draw do
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
+
   scope "(:locale)", locale: /en|de/ do
-    get "imprint/index"
 
-  get "imprint/index"
+    root to: "sessions#new"
 
-  namespace :admin do
-    resource :configurable, except: [:index]
-  end
-  
-  devise_scope :user do 
-    root :to => 'sessions#new'
-  end
+    get "imprint", to: "imprint#index"
 
-  resources :job_offers do
-    collection do
-      get "archive"
-      get "matching"
+    namespace :admin do
+      resource :configurable, except: [:index]
     end
-    member do
-      get "complete"
-      get "accept"
-      get "decline"
-      get "reopen"
-      put "prolong"
-      post "fire"
+
+    resources :job_offers do
+      collection do
+        get "archive"
+        get "matching"
+      end
+      member do
+        get "complete"
+        get "accept"
+        get "decline"
+        get "reopen"
+        put "prolong"
+        post "fire"
+      end
     end
-  end
 
-  get "employers/external", to: "employers#index_external", as: "external_employers"
+    get "employers/external", to: "employers#index_external", as: "external_employers"
 
-  resources :employers do
-  end
+    resources :employers
 
-  #resources :users, only: [:edit, :update]
-
-  resources :applications, only: [:create, :destroy] do
-    member do
-      get "accept"
-      get "decline"
+    resources :applications, only: [:create, :destroy] do
+      member do
+        get "accept"
+        get "decline"
+      end
     end
-  end
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+    resources :users, only: [:edit, :update]
 
-  resources :users, only: [:show, :edit, :update]
+    resources :sessions, only: [:new, :create, :destroy]
+    get '/signin' => 'sessions#new', as: 'signin'
+    delete '/signout' => 'sessions#destroy', as: 'signout'
 
-  resources :studentsearch
-  resources :faqs
+    resources :studentsearch
+    resources :faqs
 
-  resources :staff, except: [:new, :create] do
-  end
+    resources :staff, except: [:edit, :update]
 
-  resources :students do
-    collection do
-      get 'students/new' => 'students#new'
-      post 'students' => 'students#create'
-      get 'matching'
+    resources :students do
+      collection do
+        get 'students/new' => 'students#new'
+        post 'students' => 'students#create'
+        get 'matching'
+      end
     end
-  end
   end
 end

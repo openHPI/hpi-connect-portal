@@ -6,8 +6,8 @@
       <% end %>
       <%= link_to t("job_offers.archive"), archive_job_offers_path, class: "btn btn-default pull-right", style: "margin-bottom: 20px"  %>
       <% if current_user.student? %>
-        <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(language_ids: current_user.languages.map(&:id),
-          programming_language_ids: current_user.programming_languages.map(&:id)), class: "btn btn-default pull-right", style: "margin-left: 5px;" %>
+        <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(language_ids: current_user.manifestation.languages.map(&:id),
+          programming_language_ids: current_user.manifestation.programming_languages.map(&:id)), class: "btn btn-default pull-right", style: "margin-left: 5px;" %>
       <% end %>
        <%= render 'shared/jobs_listing_detailed', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
      </div>

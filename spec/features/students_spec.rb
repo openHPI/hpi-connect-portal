@@ -2,72 +2,75 @@ require 'spec_helper'
 
 describe "the students page" do
 
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { FactoryGirl.create(:staff) }
 
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:user, :student, :programming_languages =>[@programming_language])
-    login_as(staff, :scope => :user)
+    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
 
-    FactoryGirl.create(:role, :admin)
-
-    login_as(staff, :scope => :user)
+    login staff.user
     visit students_path
   end
 
-  describe "as a staff member" do 
+  describe "as a staff member" do
 
-      it "should view only names and status of a student on the overview" do
-        page.should have_content(
-          @student1.firstname,
-          @student1.lastname
-        )
-       
-      end
+    before(:each) do 
+      login staff.user
+      visit students_path
+    end
 
-      it "should contain a link for showing a profile and it should lead to profile page " do
-        find_link(@student1.firstname).click
-        current_path.should_not == students_path
-        current_path.should == student_path(@student1)
-      end
+    it "should view only names and status of a student on the overview" do
+      page.should have_content(
+        @student1.firstname,
+        @student1.lastname
+      )
+    end
+
+    it "should contain a link for showing a profile and it should lead to profile page " do
+      find_link(@student1.firstname).click
+      current_path.should_not == students_path
+      current_path.should == student_path(@student1)
+    end
   end
 
   describe "as a student" do
 
     it "is not available for students" do
       FactoryGirl.create(:job_status, name: 'open')
-      login_as(@student1, :scope => :user)
+      login @student1.user
       visit students_path
       current_path.should_not == students_path
-      current_path.should == job_offers_path
+      current_path.should == root_path
     end
   end
 
   describe "as an admin" do
 
-      it "should view only names and status of a student on the overview" do
-        page.should have_content(
-          @student1.firstname,
-          @student1.lastname
-        )
-      end
+    before(:each) do
+      login FactoryGirl.create(:user, :admin)
+      visit students_path
+    end
 
-      it "should contain a link for showing a profile and it should lead to profile page " do
-        find_link(@student1.firstname).click
-        current_path.should_not == students_path
-        current_path.should == student_path(@student1)
-      end
+    it "should view only names and status of a student on the overview" do
+      page.should have_content(
+        @student1.firstname,
+        @student1.lastname
+      )
+    end
+
+    it "should contain a link for showing a profile and it should lead to profile page " do
+      find_link(@student1.firstname).click
+      current_path.should_not == students_path
+      current_path.should == student_path(@student1)
+    end
   end
-
-
 end
-
 
 describe "the students editing page" do
 
   before(:each) do
-    @student1 = FactoryGirl.create(:user, :student)
-    login_as(@student1, :scope => :user)
+    @student1 = FactoryGirl.create(:student)
+    login @student1.user
   end
 
   it "should contain all attributes of a student" do
@@ -84,13 +87,12 @@ describe "the students editing page" do
       "Picture",
       "Semester"
     )
-
   end
 
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
-    fill_in 'user_facebook', :with => 'www.faceboook.com/alex'
-    fill_in 'user_email', :with => 'www.alex@hpi.uni-potsdam.de'
+    fill_in 'student_facebook', with: 'www.faceboook.com/alex'
+    fill_in 'student_user_attributes_email', with: 'www.alex@hpi.uni-potsdam.de'
     find('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
@@ -105,15 +107,14 @@ describe "the students editing page" do
 
     it "can be edited by an admin" do
       admin = FactoryGirl.create(:user, :admin)
-      login_as(admin)
+      login admin
       visit student_path(@student1)
 
       page.should have_link("Edit")
       page.find_link("Edit").click
 
-
-      fill_in 'user_facebook', :with => 'www.face.com/alex'
-      fill_in 'user_email', :with => 'www.alex@uni-potsdam.de'
+      fill_in 'student_facebook', with: 'www.face.com/alex'
+      fill_in 'student_user_attributes_email', with: 'www.alex@uni-potsdam.de'
       find('input[type="submit"]').click
 
       current_path.should == student_path(@student1)
@@ -123,7 +124,6 @@ describe "the students editing page" do
         "General information",
         "www.alex@uni-potsdam.de"
       )
-      
     end
 end
 
@@ -131,16 +131,16 @@ describe "the students profile page" do
 
   before(:each) do
     @job_offer =  FactoryGirl.create(:job_offer)
-    @student1 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
-    @student2 = FactoryGirl.create(:user, :student, :assigned_job_offers => [@job_offer])
+    @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
+    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
 
-    login_as(@student1, :scope => :user)
+    login @student1.user
    end
 
 
   describe "of myself" do
     before(:each) do
-        visit student_path(@student1)
+      visit student_path(@student1)
     end
 
     it "should contain all the details of student1" do
@@ -166,7 +166,7 @@ describe "the students profile page" do
       visit student_path(@student2)
     end
 
-    it "should contain all the details of student1" do
+    it "should contain all the details of student2" do
       page.should have_content(
         @student2.firstname,
         @student2.lastname
@@ -184,16 +184,11 @@ describe "the students profile page" do
     end
 
     it "can't be edited by staff members " do
-      staff = FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer))
-      login_as(staff)
+      staff = FactoryGirl.create(:staff)
+      login staff.user
       visit edit_student_path(@student1)
 
       page.should_not have_link('Edit')
     end 
-
-
   end
 end
-
-
-

@@ -1,13 +1,10 @@
 <tr>
-    <% if application.user.staff? %>
-        <% path_to_user = staff_path(id: application.user.id) %>
-    <% else %>
-        <% path_to_user = student_path(id: application.user.id) %>
-    <% end %>
 
-    <td class='clickable' href='<%= path_to_user %>'><%= application.user.firstname %></td>
-    <td class='clickable' href='<%= path_to_user %>'><%= application.user.lastname %></td>
-    <td class='clickable' href='<%= path_to_user %>'><%= application.user.email %></td>
+    <% path_to_user = student_path(application.student) %>
+
+    <td class='clickable' href='<%= path_to_user %>'><%= application.student.firstname %></td>
+    <td class='clickable' href='<%= path_to_user %>'><%= application.student.lastname %></td>
+    <td class='clickable' href='<%= path_to_user %>'><%= application.student.email %></td>
 
     <% if can?(:accept, application) %>
     	<td>

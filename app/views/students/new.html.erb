@@ -1,0 +1,10 @@
+<h1><%= t("users.new_student") %></h1>
+
+<%= simple_form_for @student do |f| %>
+
+    <%= render 'shared/object_errors', object: @student %>
+    <%= render 'registration_fields', student: @student, form: f %>
+
+    <br />
+    <%= f.submit "Register", class: "btn btn-large btn-primary" %>
+<% end %>
