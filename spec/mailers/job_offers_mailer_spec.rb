@@ -6,12 +6,12 @@ describe JobOffersMailer do
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
-    @user = FactoryGirl.create(:user)
-    @user2 = FactoryGirl.create(:user)
-    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @user, assigned_students: [FactoryGirl.create(:user, :student)])
-    @job_offer.employer.deputy = FactoryGirl.create(:user)
-    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @user2, assigned_students: [FactoryGirl.create(:user, :student)])
-    @job_offer2.employer.deputy = @user2
+    @staff = FactoryGirl.create(:staff)
+    @staff2 = FactoryGirl.create(:staff)
+    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @staff, assigned_students: [FactoryGirl.create(:student)])
+    @job_offer.employer.deputy = FactoryGirl.create(:staff)
+    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @staff2, assigned_students: [FactoryGirl.create(:student)])
+    @job_offer2.employer.deputy = @staff2
     @job_offers = [@job_offer, @job_offer2]
     ActionMailer::Base.deliveries = []
   end

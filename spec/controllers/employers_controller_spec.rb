@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe EmployersController do
 
-  let(:deputy) { FactoryGirl.create(:user, :staff) }
-  let(:admin) { FactoryGirl.create(:role, :admin) }
+  let(:deputy) { FactoryGirl.create(:staff) }
+  let(:admin) { FactoryGirl.create(:user, :admin) }
 
-  let(:valid_attributes) { { "name" => "HCI", "description" => "Human Computer Interaction",
-      "head" => "Prof. Patrick Baudisch" , "deputy_id" => deputy.id } }
+  let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
+      head: "Prof. Patrick Baudisch" , deputy_id: deputy.id } }
 
   let(:false_attributes) { { "name" => "HCI"} }
 
@@ -15,7 +15,7 @@ describe EmployersController do
     FactoryGirl.create(:job_status, :open)
     FactoryGirl.create(:job_status, :pending)
 
-    sign_in FactoryGirl.create(:user, :admin)
+    login admin
   end
 
   describe "GET index" do
@@ -47,7 +47,7 @@ describe EmployersController do
   describe "GET show" do
     it "assigns the requested employer as @employer" do
       employer = FactoryGirl.create(:employer)
-      get :show, {:id => employer.to_param}
+      get :show, { id: employer.to_param }
       assigns(:employer).should eq(employer)
     end
   end
@@ -63,14 +63,14 @@ describe EmployersController do
     describe "with sufficient access rights" do
       it "assigns the requested employer as @employer as admin" do
         employer = FactoryGirl.create(:employer)
-        get :edit, {:id => employer.to_param}
+        get :edit, { id: employer.to_param }
         assigns(:employer).should eq(employer)
       end
 
       it "assigns the requested employer as @employer as staff of employer" do
         employer = FactoryGirl.create(:employer)
-        sign_in FactoryGirl.create(:user, :staff, employer: employer)
-        get :edit, {:id => employer.to_param}
+        login FactoryGirl.create(:staff, employer: employer).user
+        get :edit, { id: employer.to_param }
         assigns(:employer).should eq(employer)
       end
     end
@@ -82,16 +82,16 @@ describe EmployersController do
       end
 
       it "as a student" do
-        sign_in FactoryGirl.create(:user, :student)
+        login FactoryGirl.create(:student).user
       end
 
       it "as a staff of another chair" do
         employer2 = FactoryGirl.create(:employer)
-        sign_in FactoryGirl.create(:user, :staff, employer: employer2)
+        login FactoryGirl.create(:staff, employer: employer2).user
       end
 
       after(:each) do
-        get :edit, {:id => @employer.to_param}
+        get :edit, { id: @employer.to_param }
         response.should redirect_to(employers_path)
         flash[:notice].should eql("You are not authorized to access this page.")
       end
@@ -104,7 +104,7 @@ describe EmployersController do
 
       it "creates a new employer" do
         expect {
-          post :create, { employer: valid_attributes}
+          post :create, { employer: valid_attributes }
         }.to change(Employer, :count).by(2)
       end
 
@@ -139,11 +139,14 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-      login_user FactoryGirl.create(:role, :student)
+      
+      before(:each) do
+        login FactoryGirl.create(:student).user
+      end
 
       it "redirects to the employers path" do
         employer = FactoryGirl.create(:employer)
-        post :create, {:id => employer.to_param}
+        post :create, { employer: valid_attributes }
         response.should redirect_to(employers_path)
         flash[:notice].should eql("You are not authorized to access this page.")
       end
@@ -176,7 +179,10 @@ describe EmployersController do
     end
 
     describe "with missing permission" do
-      login_user FactoryGirl.create(:role, :student)
+      
+      before(:each) do
+        login FactoryGirl.create(:student).user
+      end
 
       it "redirects to the employer index page" do
         employer = FactoryGirl.create(:employer)

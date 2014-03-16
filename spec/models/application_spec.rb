@@ -3,7 +3,7 @@
 # Table name: applications
 #
 #  id           :integer          not null, primary key
-#  user_id      :integer
+#  student_id   :integer
 #  job_offer_id :integer
 #  created_at   :datetime
 #  updated_at   :datetime
@@ -13,7 +13,7 @@ require 'spec_helper'
 
 describe Application do
   before(:each) do
-    @application = Application.new(job_offer: FactoryGirl.create(:job_offer), user: FactoryGirl.create(:user))
+    @application = Application.new(job_offer: FactoryGirl.create(:job_offer), student: FactoryGirl.create(:student))
   end
 
   subject { @application }
@@ -25,8 +25,8 @@ describe Application do
     it { should_not be_valid }
   end
 
-  describe "when user id is not present" do
-    before { @application.user_id = nil }
+  describe "when student is not present" do
+    before { @application.student_id = nil }
     it { should_not be_valid }
   end
 

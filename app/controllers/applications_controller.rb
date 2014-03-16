@@ -8,7 +8,7 @@ class ApplicationsController < ApplicationController
 
     authorize! :create, Application
     if @job_offer.open?
-      if Application.create_and_notify @job_offer, current_user, params
+      if Application.create_and_notify @job_offer, current_user.manifestation, params
         flash[:success] = 'Applied Successfully!'
       else
         flash[:error] = 'An error occured while applying. Please try again later.'

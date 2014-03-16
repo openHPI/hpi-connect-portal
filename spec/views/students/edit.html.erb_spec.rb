@@ -2,21 +2,22 @@ require 'spec_helper'
 
 describe "students/edit" do
   before(:each) do
-    @user = assign(:user, stub_model(User,
-      :firstname => "MyString",
-      :lastname => "MyString",
-      :semester => 1,
-      :user_status_id => 1,
-      :email => "MyString@example.com",
-      :birthday => "2014-01-10",
-      :academic_program => "MyString",
-      :education => "MyText",
-      :additional_information => "MyText",
-      :homepage => "MyString",
-      :github => "MyString",
-      :facebook => "MyString",
-      :xing => "MyString",
-      :linkedin => "MyString",
+    @student = assign(:student, stub_model(Student,
+      user: stub_model(User,
+        firstname: "First Name",
+        lastname: "Last Name",
+        email: "test@test.de"
+      ),
+      semester: 1,
+      academic_program: "Academic Program",
+      birthday: '2013-11-10',
+      education: "MyText",
+      additional_information: "MyText",
+      homepage: "Homepage",
+      github: "Github",
+      facebook: "Facebook",
+      xing: "Xing",
+      linkedin: "Linkedin"
     ))
   end
 
@@ -24,23 +25,19 @@ describe "students/edit" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form[action=?][method=?]", student_path(@user.id), "post" do
-      assert_select "input#user_email[name=?]", "user[email]"
-      assert_select "select#user_user_status_id[name=?]", "user[user_status_id]"
-      assert_select "select#user_birthday_1i[name=?]", "user[birthday(1i)]"
-      assert_select "select#user_birthday_2i[name=?]", "user[birthday(2i)]"
-      assert_select "select#user_birthday_3i[name=?]", "user[birthday(3i)]"
-      assert_select "input#user_semester[name=?]", "user[semester]"
-      assert_select "input#user_photo[name=?]", "user[photo]"
-      assert_select "input#user_cv[name=?]", "user[cv]"
-      assert_select "select#user_academic_program[name=?]", "user[academic_program]"
-      assert_select "select#user_education[name=?]", "user[education]"
-      assert_select "textarea#user_additional_information[name=?]", "user[additional_information]"
-      assert_select "input#user_homepage[name=?]", "user[homepage]"
-      assert_select "input#user_github[name=?]", "user[github]"
-      assert_select "input#user_facebook[name=?]", "user[facebook]"
-      assert_select "input#user_xing[name=?]", "user[xing]"
-      assert_select "input#user_linkedin[name=?]", "user[linkedin]"
+    assert_select "form[action=?][method=?]", student_path(@student.id), "post" do
+      assert_select "select#student_birthday_1i[name=?]", "student[birthday(1i)]"
+      assert_select "select#student_birthday_2i[name=?]", "student[birthday(2i)]"
+      assert_select "select#student_birthday_3i[name=?]", "student[birthday(3i)]"
+      assert_select "input#student_semester[name=?]", "student[semester]"
+      assert_select "select#student_academic_program[name=?]", "student[academic_program]"
+      assert_select "select#student_education[name=?]", "student[education]"
+      assert_select "textarea#student_additional_information[name=?]", "student[additional_information]"
+      assert_select "input#student_homepage[name=?]", "student[homepage]"
+      assert_select "input#student_github[name=?]", "student[github]"
+      assert_select "input#student_facebook[name=?]", "student[facebook]"
+      assert_select "input#student_xing[name=?]", "student[xing]"
+      assert_select "input#student_linkedin[name=?]", "student[linkedin]"
     end
   end
 end

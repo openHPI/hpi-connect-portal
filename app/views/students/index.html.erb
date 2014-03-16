@@ -1,26 +1,26 @@
 <div class="wrapper-8 teaser">
   <div class="col-md-8">
     <h1><%= t("users.students_headline")%></h1>
-      <% unless @users.empty? %>
-        <ul class="list-group">
-        <% @users.each do |student| %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-md-7">
-                <%= link_to student.firstname+" "+student.lastname, student_path(student), :class => "h4" %>
-              </div>
+    <% if @students.any? %>
+      <ul class="list-group">
+      <% @students.each do |student| %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-12">
+              <%= link_to student.full_name, student_path(student), :class => "h4" %>
             </div>
-          </li>
-        <% end %>
-        </ul>
-        <div class="pull-right">
-         <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
-        </div>
-      <% else %>
-        <div class="col-md-6 col-md-offset-3" style="margin-top:25%">
-          <h4><%= t("students.no_results") %></h4>
-        </div>
+          </div>
+        </li>
       <% end %>
+      </ul>
+      <div class="pull-right">
+       <%= will_paginate @students, renderer: BootstrapPagination::Rails %>
+      </div>
+    <% else %>
+      <div class="col-md-6 col-md-offset-3" style="margin-top:25%">
+        <h4><%= t("students.no_results") %></h4>
+      </div>
+    <% end %>
   </div>
 </div>
 <div class="wrapper-5 teaser sidebar">

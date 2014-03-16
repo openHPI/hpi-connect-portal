@@ -37,8 +37,8 @@ describe "FAQ page" do
   end 
 
   it 'should return a page for FAQ' do
-    @student = FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student))
-    login_as(@student, :scope => :user)
+    @student = FactoryGirl.create(:student)
+    login @student.user
     visit faqs_path
     expect(page).to have_content "FAQ"
   end
@@ -46,7 +46,7 @@ describe "FAQ page" do
 
   it 'should have a buttons for creating new FAQs' do
     admin = FactoryGirl.create(:user, :admin)
-    login_as(admin)
+    login admin
 
     visit faqs_path
     expect(page).to have_content "FAQ"
@@ -62,7 +62,7 @@ describe "FAQ page" do
 
   it 'should have a buttons for editing FAQs' do
     admin = FactoryGirl.create(:user, :admin)
-    login_as(admin)
+    login admin
 
     visit faqs_path
     expect(page).to have_content "FAQ"
@@ -74,5 +74,4 @@ describe "FAQ page" do
     find('input[type="submit"]').click
     expect(page).to have_content "How to add a new issue to FAQ." 
   end
-
 end

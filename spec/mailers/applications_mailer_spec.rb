@@ -10,9 +10,12 @@ describe ApplicationsMailer do
 	before(:each) do
 		ActionMailer::Base.delivery_method = :test
     	ActionMailer::Base.perform_deliveries = true
-    	@student = FactoryGirl.create(:user, email:'test@example.com')
-    	@job_offer = FactoryGirl.create(:job_offer, responsible_user: @student)
-    	@application = FactoryGirl.create(:application, user: @student, job_offer: @job_offer)
+    	@staff = FactoryGirl.create :staff
+    	@student = FactoryGirl.create :student
+    	@staff.user.update_column :email, 'staff@example.com'
+    	@student.user.update_column :email, 'student@example.com'
+    	@job_offer = FactoryGirl.create :job_offer, responsible_user: @staff
+    	@application = FactoryGirl.create :application, student: @student, job_offer: @job_offer
 
 		ActionMailer::Base.deliveries = []
 	end

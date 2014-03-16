@@ -1,17 +1,12 @@
 <div class="row">
   <div class="col-sm-6">
     <div class="pull-right">
-      <h1 align="right"><%= @user.firstname %> <%= @user.lastname %></h1>
-        <% if !(@user.user_status).nil? %>
-          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
-        <% end %>
+      <h1 align="right"><%= @staff.firstname %> <%= @staff.lastname %></h1>
     </div>
   </div>
   <div class="col-sm-6 text-left">
     <p>
-      <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <%= link_to t("links.edit"),  edit_staff_path(@user.id), class: "btn btn-default",
-    style: "float:right; display:inline;" %>
+      <%= image_tag(@staff.user.photo.url, size: "150", class: "img-thumbnail")  %>
     </p>
   </div>
 </div>
@@ -24,38 +19,18 @@
         <thead></thead>
         <tbody>
           <tr>
-            <td><%= t("activerecord.attributes.user.birthday") %></td>
-            <td><%= @user.birthday %></td>
+            <td><%= t("activerecord.attributes.user.email") %></td>
+            <td><%= mail_to @staff.email %></td>
           </tr>
           <tr>
-            <td><%= t("activerecord.attributes.user.email") %></td>
-            <td><%= mail_to @user.email %></td>
-          </tr>
-           <tr>
             <td><%= t("activerecord.attributes.user.employer") %></td>
             <td>
-              <% if @user.employer %>
-                <%= link_to @user.employer.name, employer_path(@user.employer) %>
+              <% if @staff.employer %>
+                <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
               <% end %>
-              </td>
-          </tr>
-          <tr>
-            <td><%= t("activerecord.attributes.user.cv")%></td>
-              <td>
-                <% if (@user.cv.path).nil? %>
-                  <%= image_tag('file_thumbnails/missing.png', size: "16") %>
-                <% else %>
-                   <p class="text-muted">
-                    <%= link_to(@user.cv.url) do %>
-                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= t('activerecord.attributes.user.cv') %>
-                    <% end %>
-                  </p>
-                <% end %>
-              </td>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <%= render 'users/user_profile', user: @user%>
 </div>

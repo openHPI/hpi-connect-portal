@@ -1,7 +1,7 @@
 <div class="wrapper-12 teaser">
   <div class="col-sm-12">
 
-    <% if @job_offer.pending? && can?(:accept, @job_offer) %>
+    <% if @job_offer.pending? #&& can?(:accept, @job_offer) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
     <% end %>
@@ -25,7 +25,7 @@
 
     <br><br>
 
-    <% if current_user.applied?(@job_offer) and !flash[:success] %>
+    <% if current_user.student? && current_user.manifestation.applied?(@job_offer) and !flash[:success] %>
       <br><br>
         <div class="panel panel-default panel-body">
         <div class="row">
@@ -122,7 +122,7 @@
         <div class="col-sm-6">
           <div class="panel panel-default">
             <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-              <%= render 'shared/user_list', user_list: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
+              <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
           </div>
         </div>
       <%end%>
@@ -130,7 +130,7 @@
 
     <div class="row">
       <div class="pull-right">
-        <% if !current_user.applied?(@job_offer) && can?(:create, Application.new) && @job_offer.open? %>
+        <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.open? %>
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
           <!-- Modal for sending an application email-->
           <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -140,7 +140,7 @@
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
                 </div>
-                <%= simple_form_for current_user.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
+                <%= simple_form_for current_user.manifestation.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
                   <div class="modal-body clearfix">
                     <%= f.input :job_offer_id, as: :hidden %>
                     <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, rows: 10, class: "col-md-12 form-control"  %>

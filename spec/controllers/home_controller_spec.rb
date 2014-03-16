@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe HomeController do
 
-  login_user FactoryGirl.create(:role, name: 'Student')
+  before(:each) do
+    login FactoryGirl.create(:student).user
+  end
 
   describe "GET 'index'" do
     it "returns http success" do

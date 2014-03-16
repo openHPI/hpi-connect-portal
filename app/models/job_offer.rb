@@ -26,12 +26,13 @@ class JobOffer < ActiveRecord::Base
   before_save :default_values
 
   has_many :applications
-  has_many :users, through: :applications
-  has_and_belongs_to_many :assigned_students, class_name: "User"
+  has_many :students, through: :applications
+  has_many :assignments
+  has_many :assigned_students, through: :assignments, source: :student
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer
-  belongs_to :responsible_user, class_name: "User"
+  belongs_to :responsible_user, class_name: "Staff"
   belongs_to :status, class_name: "JobStatus"
 
   accepts_nested_attributes_for :programming_languages
@@ -53,17 +54,12 @@ class JobOffer < ActiveRecord::Base
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
-    job_offer.responsible_user = current_user
-    unless parameters[:employer_id]
-      job_offer.employer = current_user.employer
-    end
-
+    job_offer.responsible_user = current_user.manifestation unless parameters[:responsible_user_id]
+    job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
     if job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver
-    else
-      if parameters[:flexible_start_date]
-        job_offer.flexible_start_date = true
-      end
+    elsif parameters[:flexible_start_date]
+      job_offer.flexible_start_date = true
     end
     job_offer
   end
@@ -130,7 +126,7 @@ class JobOffer < ActiveRecord::Base
   end
 
   def accept_application(application)
-    new_assigned_students = assigned_students << application.user
+    new_assigned_students = assigned_students << application.student
     if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
       application.delete
       if flexible_start_date

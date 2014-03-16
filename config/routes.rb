@@ -1,16 +1,17 @@
 HpiHiwiPortal::Application.routes.draw do
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
+
   scope "(:locale)", locale: /en|de/ do
 
-    get "home/index"
+	get "home/index"
     get "home/imprint"
+
+    root to: "sessions#new"
+
+    get "imprint", to: "imprint#index"
 
     namespace :admin do
       resource :configurable, except: [:index]
-    end
-    
-    devise_scope :user do 
-      root :to => 'sessions#new'
     end
 
     resources :job_offers do
@@ -30,10 +31,7 @@ HpiHiwiPortal::Application.routes.draw do
 
     get "employers/external", to: "employers#index_external", as: "external_employers"
 
-    resources :employers do
-    end
-
-    #resources :users, only: [:edit, :update]
+    resources :employers
 
     resources :applications, only: [:create, :destroy] do
       member do
@@ -42,15 +40,16 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    devise_for :users, controllers: { sessions: 'sessions' }
+    resources :users, only: [:edit, :update]
 
-    resources :users, only: [:show, :edit, :update]
+    resources :sessions, only: [:new, :create, :destroy]
+    get '/signin' => 'sessions#new', as: 'signin'
+    delete '/signout' => 'sessions#destroy', as: 'signout'
 
     resources :studentsearch
     resources :faqs
 
-    resources :staff, except: [:new, :create] do
-    end
+    resources :staff, except: [:edit, :update]
 
     resources :students do
       collection do

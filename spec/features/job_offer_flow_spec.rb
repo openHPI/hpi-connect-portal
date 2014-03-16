@@ -6,13 +6,13 @@ describe "the job offer flow" do
 
   include ApplicationHelper
 
-	let(:employer) { FactoryGirl.create(:employer) }
-	let(:creating_staff) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :staff), employer: employer) }
-	let(:deputy) { employer.deputy }
-  let(:first_applicant) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) }
-  let(:second_applicant) { FactoryGirl.create(:user, role: FactoryGirl.create(:role, :student)) }
+  let(:employer) { FactoryGirl.create(:employer) }
+  let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
+  let(:deputy) { FactoryGirl.create(:staff, employer: employer) }
+  let(:first_applicant) { FactoryGirl.create(:student) }
+  let(:second_applicant) { FactoryGirl.create(:student) }
 
-	subject { page }
+  subject { page }
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
@@ -20,25 +20,28 @@ describe "the job offer flow" do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
 
+    employer.deputy = deputy
+    employer.save
+
     ActionMailer::Base.deliveries = []
   end
 
   it "behaves correctly" do
     # staff creates a new job offer for his employer
-    login_as(creating_staff, :scope => :user)
+    login creating_staff.user
 
     visit job_offers_path
 
-	should have_link(I18n.t("job_offers.new_job_offer"))
-	click_on I18n.t("job_offers.new_job_offer")
-	current_path.should == new_job_offer_path
+    should have_link(I18n.t("job_offers.new_job_offer"))
+    click_on I18n.t("job_offers.new_job_offer")
+    current_path.should == new_job_offer_path
 
-    fill_in "job_offer_title", :with => "HPI-Career-Portal"
-    fill_in "job_offer_description", :with => "A new carrer portal for HPI students should be developed and deployed."
-    fill_in "job_offer_room_number", :with => "A-1.2"
-    fill_in "job_offer_end_date", :with => (Date.current + 2).to_s
-    fill_in "job_offer_time_effort", :with => "12"
-    fill_in "job_offer_vacant_posts", :with => "1"
+    fill_in "job_offer_title", with: "HPI-Career-Portal"
+    fill_in "job_offer_description", with: "A new carrer portal for HPI students should be developed and deployed."
+    fill_in "job_offer_room_number", with: "A-1.2"
+    fill_in "job_offer_end_date", with: (Date.current + 2).to_s
+    fill_in "job_offer_time_effort", with: "12"
+    fill_in "job_offer_vacant_posts", with: "1"
 
     JobOffer.delete_all
     expect {
@@ -57,6 +60,7 @@ describe "the job offer flow" do
     assert_equal(job_offer.end_date, Date.current + 2)
     assert_equal(job_offer.time_effort, 12)
     assert_equal(job_offer.compensation, 10.0)
+    assert_equal(job_offer.employer, creating_staff.employer)
 
     # deputy of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
@@ -67,8 +71,10 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # deputy accepts the new job offer
-    login_as(deputy, :scope => :user)
+    login deputy.user
     visit job_offer_path(job_offer)
+
+    current_path.should == job_offer_path(job_offer)
 
     should have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
     should have_link I18n.t("job_offers.decline"), decline_job_offer_path(job_offer)
@@ -87,7 +93,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # student A applies for the job
-    login_as(first_applicant, :scope => :user)
+    login first_applicant.user
     visit job_offer_path(job_offer)
 
     click_button I18n.t("job_offers.apply")
@@ -95,7 +101,7 @@ describe "the job offer flow" do
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
     message = "Hello Thomas, I would really like to work on the new portal!"
-    fill_in "message", :with => message
+    fill_in "message", with: message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
@@ -119,7 +125,7 @@ describe "the job offer flow" do
     should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
 
     # student B applies for the job
-    login_as(second_applicant, :scope => :user)
+    login second_applicant.user
     visit job_offer_path(job_offer)
 
     click_button I18n.t("job_offers.apply")
@@ -127,7 +133,7 @@ describe "the job offer flow" do
 
     file = File.join(fixture_path, "pdf/test_cv.pdf")
     message = "Hello Thomas, I would really like to work on the new portal!"
-    fill_in "message", :with => message
+    fill_in "message", with: message
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
@@ -146,14 +152,14 @@ describe "the job offer flow" do
     should_not have_button I18n.t("job_offers.apply")
 
     # responsible user accepts first application
-    login_as(creating_staff, :scope => :user)
+    login creating_staff.user
     visit job_offer_path(job_offer)
 
     # he sees the entries for the applicants
     should have_content first_applicant.email
     should have_content second_applicant.email
 
-    find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, user: first_applicant).first)+"']").click
+    find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, student: first_applicant).first)+"']").click
 
     job_offer = job_offer.reload
     assert job_offer.running?
@@ -171,7 +177,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     # responsible user prolongs the job offer
-    fill_in "job_offer_end_date", :with => (Date.current + 3).to_s
+    fill_in "job_offer_end_date", with: (Date.current + 3).to_s
     click_button I18n.t("job_offers.prolong")
 
     # the job offers end date is updated
@@ -205,8 +211,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     assert job_offer.completed?
 
-    login_as FactoryGirl.create(:user, :admin)
-    # responsible user reopens the jobs
+    # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)
     find_link(I18n.t("job_offers.reopen_job")).click
 
@@ -218,11 +223,11 @@ describe "the job offer flow" do
     should have_content mark_if_required(job_offer, :time_effort)
     should have_content mark_if_required(job_offer, :compensation)
 
-    fill_in "job_offer_vacant_posts", :with => "1"
+    fill_in "job_offer_vacant_posts", with: "1"
 
     click_button I18n.t("links.save")
 
-    assert JobOffer.all.count == 2
+    assert_equal(JobOffer.all.count, 2)
     job_offer = JobOffer.last
 
     # the deputy gets notified about the new job
