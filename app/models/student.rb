@@ -31,7 +31,9 @@ class Student < ActiveRecord::Base
   has_many :programming_languages, through: :programming_languages_users
   has_many :languages_users
   has_many :languages, through: :languages_users
+  has_many :employers_newsletter_informations
   has_many :possible_employers, through: :employers_newsletter_information
+  has_many :programming_languages_newsletter_informations
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
   has_many :assignments
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
