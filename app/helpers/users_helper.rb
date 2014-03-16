@@ -41,8 +41,8 @@ module UsersHelper
 
 
   def update_from_params_for_languages(params, redirect_to)
-    update_and_remove_for_language(params[:student][:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:student][:languages], params[:id], LanguagesUser, "language_id")
+    update_and_remove_for_language(params[:programming_language_skills], params[:id], ProgrammingLanguagesUser, "programming_language_id")
+    update_and_remove_for_language(params[:language_skill], params[:id], LanguagesUser, "language_id")
   end
 
   def update_and_remove_for_newsletter(params, student_id, newsletter_class, attributes_id)

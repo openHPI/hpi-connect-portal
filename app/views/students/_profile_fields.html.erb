@@ -80,26 +80,17 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-sm-3">
-                      <%# Erstelle ein Label fuer jede Programmiersprache %>
                       <%= f2.label programming_language.name, class: "control-label" %>
                     </div>
                     <div class="col-sm-9">
-                      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                       <% if student.persisted? %>
                         <% pl = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
                       <% end %>
-                      <%# Erzeuge 5 radio buttons fuer die Sterne %>
                       <% (1..5).each do |i| %>
-                        <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                        <% if pl %>
-                          <% if i == pl.skill %>
-                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class => "star" %>
-                          <% else %>
-                            <%= f2.radio_button programming_language.id, i, :class => "star" %>
-                          <% end %>
-                        <%# Erzeuge sonst einen unchecked radio button %>
+                        <% if pl && i == pl.skill %>
+                          <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
                         <% else %>
-                          <%# f2.radio_button programming_language.id, i, :class => "star" %>
+                          <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
                         <% end %>
                       <% end %>
                     </div>
@@ -170,32 +161,23 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages") %></h4></div>
       <ul class="list-group">
-        <%= fields_for :languages do |f3| %>
+        <%= simple_fields_for :languages do |f3| %>
           <% if @languages %>
             <% @languages.each do |language| %>
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-3">
-                    <%# Erstelle ein Label fuer jede Programmiersprache %>
                     <%= f3.label t("languages." + language.name), class: "control-label" %>
                   </div>
                   <div class="col-sm-9">
-                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                     <% if student.persisted? %>
                       <% l = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
                     <% end %>
-                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
                     <% (1..5).each do |i| %>
-                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                      <% if l %>
-                        <% if i == l.skill %>
-                          <%= f3.radio_button language.id, i, :checked => "checked", :class => "star" %>
-                        <% else %>
-                          <%= f3.radio_button language.id, i, :class => "star" %>
-                        <% end %>
-                      <%# Erzeuge sonst einen unchecked radio button %>
+                      <% if l && i == l.skill %>
+                        <%= radio_button :language_skill, language.id, i, :checked => "checked", :class => "star" %>
                       <% else %>
-                        <%# f3.radio_button language.id, i, :class => "star" %>
+                        <%= radio_button :language_skill, language.id, i, :class => "star" %>
                       <% end %>
                     <% end %>
                   </div>

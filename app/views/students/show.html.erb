@@ -11,7 +11,7 @@
     <p>
       <%= image_tag(@student.user.photo.url, size: "150", class: "img-thumbnail")  %>
       <% if can? :edit, @student %>
-        <%= link_to t("links.edit"),  edit_student_path(@student.id), class: "btn btn-default pull-right" %>
+        <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default pull-right" %>
       <% end %>
     </p>
   </div>
