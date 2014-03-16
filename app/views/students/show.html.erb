@@ -1,23 +1,24 @@
-<div class="row">
-  <div class="col-sm-6">
-    <div class="pull-right">
-      <h1 align="right"><%= @user.firstname %> <%= @user.lastname %></h1>
-        <% unless @user.user_status.nil? %>
-          <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+<div class="wrapper-12 teaser">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <h1 align="right"><%= @user.firstname %> <%= @user.lastname %></h1>
+          <% unless @user.user_status.nil? %>
+            <p class="userstatus text-right"><%= t("activerecord.attributes.user_status." +  @user.user_status.name) %></p>
+          <% end %>
+      </div>
+    </div>
+    <div class="col-sm-6 text-left">
+      <p>
+        <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
+        <% if can? :edit, @user %>
+          <%= link_to t("links.edit"),  edit_student_path(@user.id), class: "btn btn-default pull-right" %>
         <% end %>
+      </p>
     </div>
   </div>
-  <div class="col-sm-6 text-left">
-    <p>
-      <%= image_tag(@user.photo.url, size: "150", class: "img-thumbnail")  %>
-      <% if can? :edit, @user %>
-        <%= link_to t("links.edit"),  edit_student_path(@user.id), class: "btn btn-default pull-right" %>
-      <% end %>
-    </p>
-  </div>
 </div>
-
-<div class="row">
+<div class="wrapper-12 teaser">
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>

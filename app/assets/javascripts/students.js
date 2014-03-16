@@ -7,6 +7,7 @@
     $("div.bigheader").css({
         "margin-left": ($("body").width()/8) + "px"
     });
+    $("div#head_bottom").width($("body").width()*3/4-20);
     $("div.smallheader.headwrapper").css({
       width: $("body").width()*3/4 +"px",
       height: "148px"
