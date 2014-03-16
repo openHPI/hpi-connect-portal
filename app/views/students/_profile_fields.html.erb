@@ -175,9 +175,9 @@
                     <% end %>
                     <% (1..5).each do |i| %>
                       <% if l && i == l.skill %>
-                        <%= radio_button :language_skill, language.id, i, :checked => "checked", :class => "star" %>
+                        <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
                       <% else %>
-                        <%= radio_button :language_skill, language.id, i, :class => "star" %>
+                        <%= radio_button :language_skills, language.id, i, :class => "star" %>
                       <% end %>
                     <% end %>
                   </div>
