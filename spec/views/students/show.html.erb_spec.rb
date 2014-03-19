@@ -6,7 +6,8 @@ describe "students/show" do
       user: stub_model(User,
         firstname: "First Name",
         lastname: "Last Name",
-        email: "test@test.de"
+        email: "test@test.de",
+        activated: false
       ),
       semester: 1,
       academic_program: "Academic Program",
@@ -17,7 +18,7 @@ describe "students/show" do
       github: "Github",
       facebook: "Facebook",
       xing: "Xing",
-      linkedin: "Linkedin"
+      linkedin: "Linkedin",
     ))
 
     view.stub(:signed_in?) { false }

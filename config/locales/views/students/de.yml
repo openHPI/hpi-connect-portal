@@ -15,3 +15,4 @@ de:
         new_role_label: "Neue Rolle: "
         new_deputy_label: "Neuer verantwortlicher Mitarbeiter: "
         new_employer_label: "Neuer Arbeitgeber : "
+        activation_reminder: "Ihr Profil ist noch nicht freigeschaltet. Ein Administrator wird Ihr Profil in Kürze freischalten. Falls Sie ein HPI Student sind, können Sie sich auch selbst über OpenID freischalten: "

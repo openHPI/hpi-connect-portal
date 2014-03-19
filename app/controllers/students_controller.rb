@@ -12,6 +12,15 @@ class StudentsController < ApplicationController
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
+  def index
+    authorize! :index, Student
+    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+  end
+
+  def show
+    @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
+  end
+
   def new
     @student = Student.new
     @student.build_user
@@ -26,15 +35,6 @@ class StudentsController < ApplicationController
     else
       render 'new'
     end
-  end
-
-  def index
-    authorize! :index, Student
-    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
-  end
-
-  def show
-    @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
   def edit
@@ -65,6 +65,19 @@ class StudentsController < ApplicationController
     @students = Student.all.sort_by{ |x| [x.lastname, x.firstname] }
     @students = @students.paginate page: params[:page], per_page: 5
     render "index"
+  end
+
+  def activate
+    url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
+    authenticate_with_open_id url do |result, identity_url|
+      if result.successful?
+        current_user.update_column :activated, true
+        flash[:success] = 'Profile successfully activated.'
+      else
+        flash[:error] = 'Error during activation. Please try again later.'
+      end
+      redirect_to current_user.manifestation
+    end
   end
 
   private

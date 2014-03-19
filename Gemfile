@@ -46,7 +46,7 @@ group :development, :test do
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
 end
 
-gem 'simplecov', :group => :test, :require => nil
+gem 'simplecov', group: :test, require: nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
@@ -56,15 +56,15 @@ gem 'airbrake', '~> 3.1.15'
 # basic layouting
 # gem 'twitter-bootstrap-rails'
 
-#bootstrap 3
+# bootstrap 3
 gem 'bootstrap-rails-engine'
 
 # navigation
 gem 'simple-navigation', '~> 3.11'
 
-# authentication including support for oauth
-gem 'devise', '~> 3.2'
-gem 'devise_openid_authenticatable', '~> 1.1.5'
+# open ID gem for user activation
+gem 'ruby-openid'
+gem 'open_id_authentication'
 
 # authorizations in one place
 gem 'cancan'
@@ -75,8 +75,8 @@ gem 'rest-client'
 # command line parsing for project registration
 gem 'highline'
 
-#For picture Upload
-gem 'paperclip', :git => 'https://github.com/thoughtbot/paperclip.git'
+# for picture Upload
+gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
 
 # add some more UI controls
 gem 'jquery-ui-rails'
@@ -90,10 +90,10 @@ gem 'validates_timeliness', '~> 3.0'
 # simplify rspec integration testing
 gem 'capybara'
 
-#factory girl
+# factory girl for test factories
 gem 'factory_girl'
 
-#replacement for glyphicons
+# replacement for glyphicons
 gem 'font-awesome-rails', '~> 4.0.3.1'
 
 # pagination
@@ -102,7 +102,7 @@ gem 'will_paginate', '~> 3.0'
 # styles pagination with bootstrap
 gem 'will_paginate-bootstrap'
 
-gem 'active_enum', :git => 'https://github.com/adzap/active_enum.git'
+gem 'active_enum', git: 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
@@ -118,7 +118,7 @@ group :test do
   gem 'database_cleaner'
 end
 
-#Flags
+# flags
 gem 'famfamfam_flags_rails'
 
 # saves config settings in a database

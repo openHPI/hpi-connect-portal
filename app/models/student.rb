@@ -23,6 +23,8 @@ EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest'
 
 class Student < ActiveRecord::Base
 
+  attr_accessor :username
+
   has_one :user, as: :manifestation, dependent: :destroy
 
   has_many :applications
@@ -42,7 +44,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
-  delegate :firstname, :lastname, :full_name, :email, to: :user
+  delegate :firstname, :lastname, :full_name, :email, :activated, to: :user
 
   validates :semester, :academic_program, presence: true
   validates_inclusion_of :semester, :in => 1..12
