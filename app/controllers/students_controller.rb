@@ -21,8 +21,8 @@ class StudentsController < ApplicationController
     @student = Student.new student_params
     if @student.save
       sign_in @student.user
-      flash[:success] = "Welcome to HPI Career!"
-      redirect_to root_path
+      flash[:success] = I18n.t('users.messages.successfully_created')
+      redirect_to [:edit, @student]
     else
       render 'new'
     end
