@@ -13,10 +13,16 @@ JobStatus.create!(name: 'completed')
 
 Language.delete_all
 Language.create!([
-	{ name: 'english'},
+	{ name: 'english'},  
 	{ name: 'german'},
-	{ name: 'spanish'},
-	{ name: 'french'},
+	{ name: 'french'},     # common languages in school
+	{ name: 'spanish'},    
+	{ name: 'italian'},    
+	{ name: 'portuguese'}, 
+	{ name: 'polish'},     
+	{ name: 'russian'},    
+	{ name: 'swedish'},    # languages of students who studied abroad
+	{ name: 'finnish'},
 	{ name: 'chinese'}
 ])
 
@@ -46,10 +52,8 @@ ProgrammingLanguage.create!([
 UserStatus.delete_all
 UserStatus.create!([
 	{ name: 'jobseeking'},
-	{ name: 'employed'},
-	{ name: 'externally employed'},
-	{ name: 'no interest'},
-
+	{ name: 'employed but still looking'},
+	{ name: 'employed and not interested'},
 ])
 
 Employer.delete_all

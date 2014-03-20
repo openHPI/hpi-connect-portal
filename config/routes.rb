@@ -5,6 +5,9 @@ HpiHiwiPortal::Application.routes.draw do
 
   get "imprint/index"
 
+  get '/linkedin/auth/:id' => 'linkedin#auth'
+  get '/linkedin/callback/:id' => 'linkedin#callback'
+
   namespace :admin do
     resource :configurable, except: [:index]
   end

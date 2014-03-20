@@ -1,7 +1,6 @@
 <%= simple_form_for user, url: student_path(user.id), html: { multipart: true, class: 'form-horizontal', role: 'form' } do |f| %>
-
   <%= render 'shared/object_errors', object: user %>
-
+<%= link_to "Import Linkedin", "/linkedin/auth/#{user.id}", id: user.id %>
   <div class="row">
     <!--   Left -->
     <div class="col-sm-6">
