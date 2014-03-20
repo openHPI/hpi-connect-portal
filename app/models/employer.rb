@@ -14,6 +14,7 @@
 #  head                :string(255)      not null
 #  deputy_id           :integer
 #  external            :boolean          default(FALSE)
+#  activated           :boolean          default(FALSE), not null
 #
 
 class Employer < ActiveRecord::Base
