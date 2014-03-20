@@ -18,7 +18,7 @@ describe "students/show" do
       github: "Github",
       facebook: "Facebook",
       xing: "Xing",
-      linkedin: "Linkedin",
+      linkedin: "Linkedin"
     ))
 
     view.stub(:signed_in?) { false }

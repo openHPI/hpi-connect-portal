@@ -84,10 +84,10 @@
                     </div>
                     <div class="col-sm-9">
                       <% if student.persisted? %>
-                        <% pl = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                        <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
                       <% end %>
                       <% (1..5).each do |i| %>
-                        <% if pl && i == pl.skill %>
+                        <% if language_skill && i == language_skill.skill %>
                           <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
                         <% else %>
                           <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
@@ -171,10 +171,10 @@
                   </div>
                   <div class="col-sm-9">
                     <% if student.persisted? %>
-                      <% l = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
+                      <% language_skill = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
                     <% end %>
                     <% (1..5).each do |i| %>
-                      <% if l && i == l.skill %>
+                      <% if language_skill && i == language_skill.skill %>
                         <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
                       <% else %>
                         <%= radio_button :language_skills, language.id, i, :class => "star" %>
