@@ -1,18 +1,71 @@
-<%= form.simple_fields_for :user, user do |user_form| %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t("activerecord.attributes.user.login_information") %></h4>
+  </div>
+  <%= form.simple_fields_for :user, user do |user_form| %>
 
-    <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
-    <%= user_form.input :firstname %>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="input select optional user_user_status">
+              <%= user_form.input :firstname %>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field user_form, :lastname, t("activerecord.attributes.user.last_name") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="input select optional user_user_status">
+              <%= user_form.input :lastname %>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field user_form, :email, t("activerecord.attributes.user.email") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="input select optional user_user_status">
+              <%= user_form.input :email %>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field user_form, :password, t("activerecord.attributes.user.password") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="input select optional user_user_status">
+              <%= user_form.input :password %>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field user_form, :password_confirmation, t("activerecord.attributes.user.password_confirmation") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="input select optional user_user_status">
+              <%= user_form.input :password_confirmation %>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
 
-    <%= label_field user_form, :lastname, t("activerecord.attributes.user.last_name") %>
-    <%= user_form.input :lastname %>
-
-    <%= label_field user_form, :email, t("activerecord.attributes.user.email") %>
-    <%= user_form.input :email %>
-
-    <%= label_field user_form, :password, t("activerecord.attributes.user.password") %>
-    <%= user_form.input :password %>
-
-    <%= label_field user_form, :password_confirmation, t("activerecord.attributes.user.password_confirmation") %>
-    <%= user_form.input :password_confirmation %>
-
-<% end %>
+  <% end %>
+</div>

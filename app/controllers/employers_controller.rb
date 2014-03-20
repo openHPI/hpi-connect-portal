@@ -38,9 +38,8 @@ class EmployersController < ApplicationController
 
     if @employer.save
       sign_in @employer.deputy.user
-      respond_and_redirect_to @employer, I18n.t('users.messages.successfully_created.') , 'show', :created
+      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
     else
-      flash[:error] = 'Invalid content.'
       render_errors_and_action @employer, 'new'
     end
   end
@@ -51,7 +50,7 @@ class EmployersController < ApplicationController
 
   def update
     if @employer.update employer_params
-      respond_and_redirect_to @employer, I18n.t('users.messages.successfully_updated.')
+      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
     else
       render_errors_and_action @employer, 'edit'
     end

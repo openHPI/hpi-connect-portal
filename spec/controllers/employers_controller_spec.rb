@@ -126,16 +126,13 @@ describe EmployersController do
       it "renders new again" do
         post :create, { employer: false_attributes}
         response.should render_template("new")
-        flash[:error].should eql("Invalid content.")
       end
 
       it "does not create a new employer without deputy" do
         post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction",
       "head" => "Prof. Patrick Baudisch"}}
         response.should render_template("new")
-        flash[:error].should eql("Invalid content.")
       end
-
     end
 
     describe "with insufficient access rights" do
@@ -144,11 +141,10 @@ describe EmployersController do
         login FactoryGirl.create(:student).user
       end
 
-      it "redirects to the employers path" do
+      it "should also create an employer (there are no insufficient access rights)" do
         employer = FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
-        response.should redirect_to(employers_path)
-        flash[:notice].should eql("You are not authorized to access this page.")
+        response.should redirect_to(employer_path(Employer.last))
       end
     end
   end

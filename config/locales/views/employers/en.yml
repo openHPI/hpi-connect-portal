@@ -16,3 +16,7 @@ en:
         pending_job_offers: "Pending Job offers"
         external: "External"
         select_deputy: "Select a deputy..."
+        messages:
+            successfully_created: "Welcome to HPI Career!"
+            successfully_updated: "Profile was successfully updated."
+            successfully_deleted: "Profile was successfully deleted."
