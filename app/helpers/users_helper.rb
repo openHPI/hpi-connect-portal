@@ -34,15 +34,15 @@ module UsersHelper
   end
 
   def update_from_params_for_languages_and_newsletters(params, redirect_to) 
-    update_and_remove_for_newsletter(params[:student][:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
-    update_and_remove_for_newsletter(params[:student][:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
+    update_and_remove_for_newsletter(params[:employers_newsletter_information], params[:id], EmployersNewsletterInformation, "employer_id")
+    update_and_remove_for_newsletter(params[:programming_languages_newsletter_information], params[:id], ProgrammingLanguagesNewsletterInformation, "programming_language_id")
     update_from_params_for_languages(params, redirect_to)
   end
 
 
   def update_from_params_for_languages(params, redirect_to)
-    update_and_remove_for_language(params[:student][:programming_languages], params[:id], ProgrammingLanguagesUser, "programming_language_id")
-    update_and_remove_for_language(params[:student][:languages], params[:id], LanguagesUser, "language_id")
+    update_and_remove_for_language(params[:programming_language_skills], params[:id], ProgrammingLanguagesUser, "programming_language_id")
+    update_and_remove_for_language(params[:language_skills], params[:id], LanguagesUser, "language_id")
   end
 
   def update_and_remove_for_newsletter(params, student_id, newsletter_class, attributes_id)

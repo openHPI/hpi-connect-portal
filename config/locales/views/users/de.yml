@@ -15,6 +15,6 @@ de:
     new_staff: "Neuen Mitarbeiter anlegen"
     edit_staff: "Mitarbeiter bearbeiten"
     messages:
-        successfully_created: "Das Profil wurde erfolgreich erstellt."
+        successfully_created: "Willkommen bei HPI Career! Hier können Sie nun Ihr Profil ausfüllen."
         successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
         successfully_deleted: "Das Profil wurde erfolgreich gelöscht."

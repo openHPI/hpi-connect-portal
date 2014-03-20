@@ -3,20 +3,27 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .semester {
-	text-align: right;
-	margin-top: 10px;
-	margin-right: 5px;
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 5px;
 }
 
 .birthdate_select {
-	width: 33.3%;
+    width: 33.3%;
 }
 
 .languageDIV {
-	padding-left: 10px;
-	padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #student_id{
-	display:none;
+    display:none;
+}
+
+#open-id-field {
+    max-width: 200px;
+    display: inline;
+    padding: 1px;
+    height: 24px;
 }

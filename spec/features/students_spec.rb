@@ -159,6 +159,19 @@ describe "the students profile page" do
       page.find_link('Edit').click
       page.current_path.should == edit_student_path(@student1)
     end
+
+    it "should show a reminder with openID form if I am not activated" do
+      page.should have_content(I18n.t("students.activation_reminder"))
+      page.should have_css('input#open-id-field')
+    end
+
+    it "should not show a reminder if I am activated" do
+      @student1.user.update_column :activated, true
+      visit student_path(@student1)
+
+      page.should_not have_content(I18n.t("students.activation_reminder"))
+      page.should_not have_css('input#open-id-field')
+    end
   end
 
   describe "of another students" do
@@ -189,6 +202,11 @@ describe "the students profile page" do
       visit edit_student_path(@student1)
 
       page.should_not have_link('Edit')
-    end 
+    end
+
+    it "should not have a reminder about activation" do
+      page.should_not have_content(I18n.t("students.activation_reminder"))
+      page.should_not have_css('input#open-id-field')
+    end
   end
 end

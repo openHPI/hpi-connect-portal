@@ -119,10 +119,10 @@
           <tbody>
             <% student.languages_users.each do |languages_user| %>
               <tr>
-                <td><%= t("languages." + languages_student.language.name) %></td>
+                <td><%= t("languages." + languages_user.language.name) %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <%= radio_button_tag languages_student.language.name, i, i==languages_student.skill, disabled: true, class: "star" %>
+                    <%= radio_button_tag languages_user.language.name, i, i==languages_user.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>
