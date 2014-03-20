@@ -19,10 +19,10 @@
 class Employer < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
 
-  has_many :staff, foreign_key: 'employer_id', class_name: 'User'
+  has_many :staff_members, class_name: 'Staff'
   has_many :job_offers
-  has_many :interested_students, class_name: 'User', through: :employers_newsletter_information
-  belongs_to :deputy, class_name: "User"
+  has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
+  belongs_to :deputy, class_name: 'Staff'
 
   validates_attachment_size :avatar, less_than: 5.megabytes
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']

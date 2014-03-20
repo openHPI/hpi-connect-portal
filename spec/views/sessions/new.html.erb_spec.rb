@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-describe "devise/sessions/new" do
+describe "sessions/new" do
 
   it "renders sign in form" do
     render
-
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "form[action=?][method=?]", new_user_session_path, "post" do
-      assert_select "input#url_field[name=?]", "user[identity_url]"
+    assert_select "form[method=?]", "post" do
+      assert_select "input#session_email[name=?]", "session[email]"
+      assert_select "input#session_password[name=?]", "session[password]"
     end
   end
 end

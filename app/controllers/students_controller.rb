@@ -1,59 +1,81 @@
 class StudentsController < ApplicationController
   include UsersHelper
 
-  authorize_resource class: "User", except: [:destroy, :matching]
+  skip_before_filter :signed_in_user, only: [:new, :create]
 
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  authorize_resource except: [:destroy, :matching, :edit, :index]
+
+  before_action :set_student, only: [:show, :edit, :update, :destroy]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
-  # GET /students
-  # GET /students.json
+  def new
+    @student = Student.new
+    @student.build_user
+  end
+
+  def create
+    @student = Student.new student_params
+    if @student.save
+      sign_in @student.user
+      flash[:success] = "Welcome to HPI Career!"
+      redirect_to root_path
+    else
+      render 'new'
+    end
+  end
+
   def index
-    @users = apply_scopes(User.students).sort_by{|user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+    authorize! :index, Student
+    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
   end
 
-  # GET /students/1
-  # GET /students/1.json
   def show
-    @user = User.find params[:id]
-    redirect_to user_path @user unless @user.student?
-    @job_offers = @user.assigned_job_offers.paginate page: params[:page], per_page: 5
+    @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
-  # GET /students/1/edit
   def edit
-    @all_programming_languages = ProgrammingLanguage.all
-    @all_languages = Language.all
-    @all_employers = Employer.all
+    authorize! :edit, @student
+    @programming_languages = ProgrammingLanguage.all
+    @languages = Language.all
+    @employers = Employer.all
   end
 
-  # PATCH/PUT /students/1
-  # PATCH/PUT /students/1.json
   def update
-    update_from_params_for_languages_and_newsletters params, student_path(@user)
+    update_from_params_for_languages_and_newsletters params, student_path(@student)
+
+    if @student.update student_params
+      respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
+    else
+      render_errors_and_action(@student, 'edit')
+    end
   end
 
-  # DELETE /students/1
-  # DELETE /students/1.json
   def destroy
-    authorize! :destroy, @user
-    @user.destroy
+    authorize! :destroy, @student
+    @student.destroy
     respond_and_redirect_to(students_url, I18n.t('users.messages.successfully_deleted.'))
   end
 
-  # GET /students/matching
   def matching
-    authorize! :read, User
-    @users = apply_scopes(User.students).sort_by{|x| [x.lastname, x.firstname]}
-    @users = @users.paginate(:page => params[:page], :per_page => 5 )
+    authorize! :read, Student.all
+    @students = Student.all.sort_by{ |x| [x.lastname, x.firstname] }
+    @students = @students.paginate page: params[:page], per_page: 5
     render "index"
   end
 
   private
+
+    def set_student
+      @student = Student.find params[:id]
+    end
+
+    def student_params
+      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo, :cv])
+    end
 
     def rescue_from_exception(exception)
       if [:index].include? exception.action
@@ -61,21 +83,7 @@ class StudentsController < ApplicationController
       elsif [:edit, :destroy, :update].include? exception.action
         respond_and_redirect_to student_path(exception.subject), exception.message
       else
-        respond_and_redirect_to students_path, exception.message
+        respond_and_redirect_to root_path, exception.message
       end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find params[:id]
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(
-        :email,
-        :firstname, :lastname, :semester, :academic_program,
-        :birthday, :education, :additional_information, :homepage,
-        :github, :facebook, :xing, :photo, :cv, :linkedin, :user_status_id, :frequency)
     end
 end

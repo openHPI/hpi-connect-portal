@@ -39,7 +39,7 @@ class JobOffersMailer < ActionMailer::Base
   end
 
   def inform_interested_students_immediately(job_offer)
-    determine_interested_students(job_offer,User.update_immediately).each do |student|
+    determine_interested_students(job_offer, Student.update_immediately).each do |student|
       JobOffersMailer.new_job_offer_info_email(job_offer, student).deliver
     end
   end
@@ -49,12 +49,12 @@ class JobOffersMailer < ActionMailer::Base
    end
 
   def students_by_employer(job_offer, students)
-    employer_students = EmployersNewsletterInformation.where(employer: job_offer.employer).map(&:user)
+    employer_students = EmployersNewsletterInformation.where(employer: job_offer.employer).map(&:student)
     students & employer_students
   end
 
   def students_by_programming_language(job_offer, students)
     students & job_offer.programming_languages.map{ |programming_language|
-      ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", programming_language.id).map(&:user)}
+      ProgrammingLanguagesNewsletterInformation.where("programming_language_id = ?", programming_language.id).map(&:student)}
   end
 end

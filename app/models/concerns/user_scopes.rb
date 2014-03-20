@@ -5,7 +5,7 @@ module UserScopes
       scope :students, -> { joins(:role).where('roles.name = ?', 'Student') }
       scope :staff, -> { joins(:role).where('roles.name = ?', 'Staff') }
 
-      scope :update_immediately, ->{ joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student') }
+      scope :update_immediately, -> { joins(:role).where('frequency = ? AND roles.name= ?', 1, 'Student') }
     end
 
     add_filter_and_search_scopes user

@@ -15,6 +15,4 @@ en:
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
         external: "External"
-        demote_button: "Demote"
-        demote_confirm_question: "Do you really want to demote this user?"
         select_deputy: "Select a deputy..."

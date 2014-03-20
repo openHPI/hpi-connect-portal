@@ -31,6 +31,9 @@ gem 'has_scope'
 # Annotate database fields to model files
 gem 'annotate', '>=2.6.1'
 
+# Secure Password Hashes
+gem 'bcrypt-ruby', '~> 3.1.5'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0', require: false

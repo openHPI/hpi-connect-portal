@@ -23,7 +23,7 @@ FactoryGirl.define do
     description     "Makes beautiful websites"
 
     before(:create) do | employer |
-      employer.deputy = FactoryGirl.create(:user, :staff, employer: employer)
+      employer.deputy = FactoryGirl.create(:staff, employer: employer)
     end
   end
 end

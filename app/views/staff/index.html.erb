@@ -1,21 +1,21 @@
 <div class="row">
   <div class="col-md-9">
     <h1><%= t("users.staff_headline")%></h1>
-      <ul class="list-group">
-      <% @users.each do |staff| %>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-12">
-              <%= link_to staff.firstname+" "+staff.lastname, staff_path(staff), :class => "h4" %>
-            </div>
+    <ul class="list-group">
+    <% @staff_members.each do |staff| %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-12">
+            <%= link_to staff.firstname + " " + staff.lastname, staff_path(staff), :class => "h4" %>
           </div>
-        </li>
-      <% end %>
-      </ul>
-      <div class="pull-right">
-        <%= will_paginate @users, renderer: BootstrapPagination::Rails%>
-      </div>
+        </div>
+      </li>
+    <% end %>
+    </ul>
+    <div class="pull-right">
+      <%= will_paginate @staff_members, renderer: BootstrapPagination::Rails %>
+    </div>
   </div>
   <div class="col-md-3">
   </div>
-</div
+</div>

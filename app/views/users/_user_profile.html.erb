@@ -1,15 +1,15 @@
-<% if !user.programming_languages_users.empty? %>
+<% if !student.programming_languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
         <table class="table">
           <thead></thead>
           <tbody>
-            <% user.programming_languages_users.each do |programming_languages_user| %>
+            <% student.programming_languages_users.each do |programming_languages_student| %>
               <tr>
-                <td><%= programming_languages_user.programming_language.name %></td>
+                <td><%= programming_languages_student.programming_language.name %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <%= radio_button_tag programming_languages_user.programming_language.name, i, i==programming_languages_user.skill, disabled: true, class: "star" %>
+                    <%= radio_button_tag programming_languages_student.programming_language.name, i, i==programming_languages_student.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>
@@ -19,59 +19,59 @@
       </div>
     <% end %>
 
-    <% if ( !(user.homepage).nil? && !(user.homepage).empty? ) || ( !(user.github).nil? && !(user.github).empty? ) || ( !(user.facebook).nil? && !(user.facebook).empty? ) || ( !(user.xing).nil? && !(user.xing).empty? ) || ( !(user.linkedin).nil? && !(user.linkedin).empty? ) %>
+    <% if ( !(student.homepage).nil? && !(student.homepage).empty? ) || ( !(student.github).nil? && !(student.github).empty? ) || ( !(student.facebook).nil? && !(student.facebook).empty? ) || ( !(student.xing).nil? && !(student.xing).empty? ) || ( !(student.linkedin).nil? && !(student.linkedin).empty? ) %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.links")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
           <table class="table">
             <thead></thead>
             <tbody>
-              <% unless (user.homepage).empty? %>
+              <% unless (student.homepage).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "home 2x"%>
                   </td>
                   <td>
-                    <%= link_to user.homepage, url_with_protocol(user.homepage), :target => '_blank' %>
+                    <%= link_to student.homepage, url_with_protocol(student.homepage), :target => '_blank' %>
                   </td>
                 </tr>
               <% end %>
-              <% unless (user.github).empty? %>
+              <% unless (student.github).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "github-square 2x"%>
                   </td>
                   <td>
-                    <%= link_to user.github, url_with_protocol(user.github), :target => '_blank' %>
+                    <%= link_to student.github, url_with_protocol(student.github), :target => '_blank' %>
                   </td>
                 </tr>
               <% end %>
-              <% unless (user.facebook).empty? %>
+              <% unless (student.facebook).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "facebook-square 2x"%>
                   </td>
                   <td>
-                    <%= link_to user.facebook, url_with_protocol(user.facebook), :target => '_blank' %>
+                    <%= link_to student.facebook, url_with_protocol(student.facebook), :target => '_blank' %>
                   </td>
                 </tr>
               <% end %>
-              <% unless (user.xing).empty? %>
+              <% unless (student.xing).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "xing-square 2x"%>
                   </td>
                   <td>
-                    <%= link_to user.xing, url_with_protocol(user.xing), :target => '_blank' %>
+                    <%= link_to student.xing, url_with_protocol(student.xing), :target => '_blank' %>
                   </td>
                 </tr>
               <% end %>
-              <% unless (user.linkedin).empty? %>
+              <% unless (student.linkedin).empty? %>
                 <tr>
                   <td>
                     <%= fa_icon "linkedin-square 2x"%>
                   </td>
                   <td>
-                    <%= link_to user.linkedin, url_with_protocol(user.linkedin), :target => '_blank' %>
+                    <%= link_to student.linkedin, url_with_protocol(student.linkedin), :target => '_blank' %>
                   </td>
                 </tr>
               <% end %>
@@ -82,28 +82,28 @@
   </div>
 
   <div class="col-sm-6">
-    <% if !user.staff? && (!(user.semester).nil? || !(user.academic_program).nil? || !(user.education).nil?) %>
+    <% if !(student.semester).nil? || !(student.academic_program).nil? || !(student.education).nil? %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("users.carrier") %></h4></div>
           <table class="table">
             <thead></thead>
             <tbody>
-              <% unless (user.academic_program).nil? %>
+              <% unless (student.academic_program).nil? %>
                 <tr>
-                  <td><%= t("activerecord.attributes.user.academic_program")%></td>
-                  <td><%= user.academic_program %></td>
+                  <td><%= t("activerecord.attributes.student.academic_program")%></td>
+                  <td><%= student.academic_program %></td>
                 </tr>
               <% end %>
-              <% unless (user.semester).nil? %>
+              <% unless (student.semester).nil? %>
                 <tr>
-                  <td><%= t("activerecord.attributes.user.semester")%></td>
-                  <td><%= user.semester %></td>
+                  <td><%= t("activerecord.attributes.student.semester")%></td>
+                  <td><%= student.semester %></td>
                 </tr>
               <% end %>
-              <% if !(user.education).nil? %>
+              <% if !(student.education).nil? %>
                 <tr>
-                  <td><%= t("activerecord.attributes.user.education")%></td>
-                  <td><%= user.education.html_safe %></td>
+                  <td><%= t("activerecord.attributes.student.education")%></td>
+                  <td><%= student.education.html_safe %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -111,18 +111,18 @@
       </div>
     <% end %>
 
-    <% if !user.languages_users.empty? %>
+    <% if !student.languages_users.empty? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages")%></h4></div>
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
         <table class="table">
           <thead></thead>
           <tbody>
-            <% user.languages_users.each do |languages_user| %>
+            <% student.languages_users.each do |languages_user| %>
               <tr>
-                <td><%= t("languages." + languages_user.language.name) %></td>
+                <td><%= t("languages." + languages_student.language.name) %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <%= radio_button_tag languages_user.language.name, i, i==languages_user.skill, disabled: true, class: "star" %>
+                    <%= radio_button_tag languages_student.language.name, i, i==languages_student.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>
@@ -132,17 +132,17 @@
       </div>
     <% end %>
 
-    <% if !(user.additional_information).nil? && !(user.additional_information).empty?%>
+    <% if !(student.additional_information).nil? && !(student.additional_information).empty?%>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h4><%= t("activerecord.attributes.user.additional_information")%></h4>
+          <h4><%= t("activerecord.attributes.student.additional_information")%></h4>
         </div>
           <table class="table">
             <thead></thead>
             <tbody>
               <tr>
                 <td>
-                  <%= sanitize_html(user.additional_information.html_safe) %>
+                  <%= sanitize_html(student.additional_information.html_safe) %>
                 </td>
                </tr>
             </tbody>

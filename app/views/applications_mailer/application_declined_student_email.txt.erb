@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)
 
-Hallo <%= @application.user.firstname%>,
+Hallo <%= @application.student.firstname %>,
 
 leider wurde deine Berbung auf das Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> nicht bestätigt. Probier's doch einfach nochmal und stöber in unseren Jobangeboten <%=link_to('Jobangebote', '/de/job_overview')%>. Es warten viele spannende Angebote auf dich!
 
@@ -11,7 +11,7 @@ Das HPI-HiWi-Portal Team.
 
 ---------------------------------------------------------------------
 
-Dear <%= @application.user.firstname%>,
+Dear <%= @application.student.firstname %>,
 
 we're sorry, your application for the job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> has not been accepted. Why don't you try it again and have a look at our job offers <%=link_to('Jobangebote', '/en/job_overview')%>? Many interesting job offers are just waiting for you!
 

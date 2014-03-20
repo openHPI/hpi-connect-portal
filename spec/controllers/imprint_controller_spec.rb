@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe ImprintController do
 
-  login_user FactoryGirl.create(:role, name: 'Student')
+  before(:each) do
+    login FactoryGirl.create(:student).user
+  end
 
   describe "GET 'index'" do
     it "returns http success" do
@@ -10,5 +12,4 @@ describe ImprintController do
       response.should be_success
     end
   end
-
 end

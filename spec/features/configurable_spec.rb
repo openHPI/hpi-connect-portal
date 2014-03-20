@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Admin::ConfigurablesController do
 
-  let(:staff) { FactoryGirl.create(:user, :staff, employer: FactoryGirl.create(:employer)) }
+  let(:staff) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
-  let(:student) { FactoryGirl.create(:user, :student) }
+  let(:student) { FactoryGirl.create(:student) }
 
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
@@ -14,19 +14,19 @@ describe Admin::ConfigurablesController do
   end
 
   it "should not be visible for a member of the staff " do
-    login_as(staff, :scope => :user)
+    login(staff.user)
     visit admin_configurable_path
-    current_path.should eq job_offers_path
+    current_path.should eq root_path
   end
 
   it "should not be visible for a student " do
-    login_as(student, :scope => :user)
+    login(student.user)
     visit admin_configurable_path
-    current_path.should eq job_offers_path
+    current_path.should eq root_path
   end
 
   it "should be editable for an admin" do
-    login_as(admin, :scope => :user)
+    login(admin)
     visit admin_configurable_path
     current_path.should eq admin_configurable_path
     find('input[value="Save"]') 

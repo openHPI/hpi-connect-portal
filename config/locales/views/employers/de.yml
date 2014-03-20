@@ -15,6 +15,4 @@ de:
         running_job_offers: "Vergebene Stellenangebote"
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         external: "Extern"
-        demote_button: "Zurückstufen"
-        demote_confirm_question: "Sind Sie sicher, dass Sie diesen Nutzer zurückstufen wollen?"
         select_deputy: "Wählen Sie einen verantwortlichen Mitarbeiter..."
