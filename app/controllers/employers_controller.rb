@@ -1,6 +1,8 @@
 class EmployersController < ApplicationController
 
-  authorize_resource only: [:new, :edit, :update, :create]
+  skip_before_filter :signed_in_user, only: [:new, :create]
+
+  authorize_resource only: [:edit, :update]
   before_action :set_employer, only: [:show, :edit, :update]
 
   def index
@@ -26,10 +28,8 @@ class EmployersController < ApplicationController
 
   def new
     @employer = Employer.new
-  end
-
-  def edit
-    authorize! :edit, @employer
+    @employer.build_deputy
+    @employer.deputy.build_user
   end
 
   def create
@@ -37,12 +37,16 @@ class EmployersController < ApplicationController
     @employer.deputy.employer = @employer if @employer.deputy
 
     if @employer.save
+      sign_in @employer.deputy.user
       respond_and_redirect_to @employer, I18n.t('users.messages.successfully_created.') , 'show', :created
     else
-      @users = User.all
       flash[:error] = 'Invalid content.'
       render_errors_and_action @employer, 'new'
     end
+  end
+
+  def edit
+    authorize! :edit, @employer
   end
 
   def update
@@ -64,6 +68,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external)
+      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end
