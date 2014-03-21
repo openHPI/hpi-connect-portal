@@ -1,3 +1,4 @@
+<%= link_to "Import link", "/linkedin/auth/#{student.id}" %>
 <%= form.simple_fields_for :user, student.user do |user_form| %>
   <div class="panel panel-default">
     <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>

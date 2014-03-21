@@ -137,22 +137,22 @@ puts "das ist bis jetzt evaluiert: #{usefull}"
       puts "#{x} does not exist in our database"
     else
       lang_id = Language.where(name: get_language_name(x)).first.id
-      if(LanguagesUser.where(user_id: params[:id], language_id: lang_id).count == 0)  #create new entry
-        LanguagesUser.create(user_id: params[:id], language_id: lang_id, skill: y)
+      if(LanguagesUser.where(student_id: params[:id], language_id: lang_id).count == 0)  #create new entry
+        LanguagesUser.create(student_id: params[:id], language_id: lang_id, skill: y)
       else #update entry
-        LanguagesUser.where(user_id: params[:id], language_id: lang_id).first.update(skill: y)
+        LanguagesUser.where(student_id: params[:id], language_id: lang_id).first.update(skill: y)
       end
     end
   end
 
 
-User.find_by_id("#{params[:id]}").update(birthday: usefull["birthday"])
+Student.find_by_id("#{params[:id]}").update(birthday: usefull["birthday"])
 
-User.find_by_id("#{params[:id]}").update(user_status_id: UserStatus.find_by_name(usefull["user_status"]).id)
+Student.find_by_id("#{params[:id]}").update(user_status_id: UserStatus.find_by_name(usefull["user_status"]).id)
 
-User.find_by_id("#{params[:id]}").update(additional_information: "My interests: #{usefull["interests"]}|My jobs: #{usefull["jobs"]}|haves: #{usefull["haves"]}|wants: #{usefull["wants"]}|special: #{usefull["what_makes_me_special"]}")
+Student.find_by_id("#{params[:id]}").update(additional_information: "My interests: #{usefull["interests"]}|My jobs: #{usefull["jobs"]}|haves: #{usefull["haves"]}|wants: #{usefull["wants"]}|special: #{usefull["what_makes_me_special"]}")
 
-User.find_by_id("#{params[:id]}").update(linkedin: usefull["linkedin"])
+Student.find_by_id("#{params[:id]}").update(linkedin: usefull["linkedin"])
 
 puts "hhh}|"
 puts userdata["current-status"]
