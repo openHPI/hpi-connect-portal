@@ -55,7 +55,7 @@
                 <%= form.label :employment_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(student, :employment_status) %>
               </div>
               <div class="col-sm-9">
-                <%= form.select :employment_status_id, EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
+                <%= form.select :employment_status_id, Student::EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), Student::EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
               </div>
             </div>
           </li>
