@@ -12,6 +12,15 @@ class StudentsController < ApplicationController
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
 
+  def index
+    authorize! :index, Student
+    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+  end
+
+  def show
+    @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
+  end
+
   def new
     @student = Student.new
     @student.build_user
@@ -21,20 +30,11 @@ class StudentsController < ApplicationController
     @student = Student.new student_params
     if @student.save
       sign_in @student.user
-      flash[:success] = "Welcome to HPI Career!"
-      redirect_to root_path
+      flash[:success] = I18n.t('users.messages.successfully_created')
+      redirect_to [:edit, @student]
     else
       render 'new'
     end
-  end
-
-  def index
-    authorize! :index, Student
-    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
-  end
-
-  def show
-    @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
   def edit
@@ -67,6 +67,19 @@ class StudentsController < ApplicationController
     render "index"
   end
 
+  def activate
+    url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
+    authenticate_with_open_id url do |result, identity_url|
+      if result.successful?
+        current_user.update_column :activated, true
+        flash[:success] = 'Profile successfully activated.'
+      else
+        flash[:error] = 'Error during activation. Please try again later.'
+      end
+      redirect_to current_user.manifestation
+    end
+  end
+
   private
 
     def set_student
@@ -74,7 +87,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo, :cv])
+      params.require(:student).permit(:semester, :academic_program, :education, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo, :cv])
     end
 
     def rescue_from_exception(exception)

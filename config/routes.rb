@@ -56,6 +56,10 @@ HpiHiwiPortal::Application.routes.draw do
         post 'students' => 'students#create'
         get 'matching'
       end
+      member do
+        patch 'activate'
+        get 'activate'
+      end
     end
   end
 end

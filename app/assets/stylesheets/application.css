@@ -13,6 +13,7 @@
  *= require jquery-star-rating
  *= require_self
  *= require bootsy
+ *= require students
  *= require_tree .
  *= require font-awesome
  *= require famfamfam-flags
