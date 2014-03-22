@@ -5,7 +5,6 @@ HpiHiwiPortal::Application.routes.draw do
 
   root to: "sessions#new"
   get "imprint", to: "imprint#index"
-  get '/linkedin/auth/:id' => 'linkedin#auth'
   get '/linkedin/callback/:id' => 'linkedin#callback'
 
 
@@ -59,6 +58,7 @@ HpiHiwiPortal::Application.routes.draw do
       member do
         patch 'activate'
         get 'activate'
+        get 'request_linkedin_import'
       end
     end
   end

@@ -226,4 +226,34 @@ describe StudentsController do
       @student.languages.first.should eq(@language_1)
     end
   end
+
+  describe "GET request_linkedin_import" do
+
+    before(:each) do
+      @student = FactoryGirl.create(:student)
+    end
+
+    it "redirects to linkedin as admin" do
+      login FactoryGirl.create(:user, :admin)
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to assigns(:linkedin_client).request_token.authorize_url
+    end
+  
+    it "redirects to linkedin as student on own profile" do
+      login @student.user
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to assigns(:linkedin_client).request_token.authorize_url
+    end
+
+    it "cannot import linkedin data from other students" do
+      login FactoryGirl.create(:student).user
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to root_path
+    end
+  end
+
+  describe "GET insert_imported_data" do
+
+    it ""
+  end
 end

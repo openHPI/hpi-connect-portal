@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'linkedin'
-
 class LinkedinController < ApplicationController
  
 def get_language_name(n)

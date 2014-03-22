@@ -3,9 +3,9 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :matching, :edit, :index]
+  authorize_resource except: [:destroy, :matching, :edit, :index, :request_linkedin_import]
 
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :request_linkedin_import]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
@@ -80,10 +80,32 @@ class StudentsController < ApplicationController
     end
   end
 
+  def request_linkedin_import
+    authorize! :request_linkedin_import, @student
+    init_client
+    request_token = @linkedin_client.request_token(:oauth_callback => "http://#{request.host_with_port}/linkedin/callback/#{params[:id]}")
+    session[:rtoken] = request_token.token
+    session[:rsecret] = request_token.secret
+    redirect_to @linkedin_client.request_token.authorize_url
+  end
+
+  def insert_imported_data
+  end
+
   private
 
     def set_student
       @student = Student.find params[:id]
+    end
+
+    def init_client
+      key = "77sfagfnu662bn"
+      secret = "7HEaILeWfmauzlKp"
+      linkedin_configuration = { :site => 'https://api.linkedin.com',
+      :authorize_path => '/uas/oauth/authenticate',
+      :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
+      :access_token_path => '/uas/oauth/accessToken' }
+      @linkedin_client = LinkedIn::Client.new(key, secret,linkedin_configuration )
     end
 
     def student_params
