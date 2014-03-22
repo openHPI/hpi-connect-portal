@@ -19,9 +19,9 @@
 #  frequency              :integer          default(1), not null
 #
 
-EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
-
 class Student < ActiveRecord::Base
+
+  EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
 

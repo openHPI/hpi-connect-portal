@@ -43,14 +43,6 @@ ProgrammingLanguage.create!([
   { name: 'OpenGL'}
 ])
 
-UserStatus.delete_all
-UserStatus.create!([
-  { name: 'jobseeking'},
-  { name: 'employed'},
-  { name: 'externally employed'},
-  { name: 'no interest'},
-])
-
 Employer.delete_all
 User.delete_all
 Student.delete_all

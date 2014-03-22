@@ -51,14 +51,37 @@ describe "the employer page" do
 
   describe "creating a new employer" do
 
-    it "displays a select with all students for selecting the deputy" do
+    it "displays a form to create the first staff member as deputy" do
       admin = FactoryGirl.create(:user, :admin)
       login(admin)
       visit new_employer_path
 
-      should have_select("employer[deputy_id]", options: [I18n.t("employers.select_deputy")] + Staff.all.map { |staff| staff.email })
+      should have_css("input#employer_deputy_attributes_user_attributes_firstname")
     end
 
+    it "should always create an inactive employer" do
+      visit new_employer_path
+
+      fill_in 'employer_name', with: 'Test Employer' 
+      fill_in 'employer_head', with: 'Employers Head'
+      fill_in 'employer_description', with: 'Desctiption for an Employer.'
+      fill_in 'employer_deputy_attributes_user_attributes_firstname', with: 'Max'
+      fill_in 'employer_deputy_attributes_user_attributes_lastname', with: 'Mustermann'
+      fill_in 'employer_deputy_attributes_user_attributes_email', with: 'deputy@test.com'
+      fill_in 'employer_deputy_attributes_user_attributes_password', with: 'password'
+      fill_in 'employer_deputy_attributes_user_attributes_password_confirmation', with: 'password'
+      find('input[type="submit"]').click
+
+      page.should have_content(
+        I18n.t('employers.messages.successfully_created'),
+        "General information",
+        "Max Mustermann"
+      )
+
+      employer = Employer.last
+      expect(employer.name).to eq('Test Employer')
+      expect(employer.activated).to eq(false)      
+    end
   end
 
   describe "editing an existing employer" do
