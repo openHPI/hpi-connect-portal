@@ -18,5 +18,7 @@ en:
         select_deputy: "Select a deputy..."
         messages:
             successfully_created: "Welcome to HPI Career!"
-            successfully_updated: "Profile was successfully updated."
-            successfully_deleted: "Profile was successfully deleted."
+            successfully_updated: "Profile successfully updated."
+            successfully_deleted: "Profile successfully deleted."
+            successfully_activated: "Profile successfully activated."
+            unsuccessfully_activated: "Error during activation. Please try again later."

@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   skip_before_filter :signed_in_user, only: [:new, :create]
 
   authorize_resource except: [:destroy, :matching, :edit, :index]
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
@@ -67,13 +67,14 @@ class StudentsController < ApplicationController
   end
 
   def activate
+    admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
     authenticate_with_open_id url do |result, identity_url|
       if result.successful?
         current_user.update_column :activated, true
-        flash[:success] = 'Profile successfully activated.'
+        flash[:success] = I18n.t('users.messages.successfully_activated')
       else
-        flash[:error] = 'Error during activation. Please try again later.'
+        flash[:error] = I18n.t('users.messages.unsuccessfully_activated')
       end
       redirect_to current_user.manifestation
     end
@@ -97,5 +98,11 @@ class StudentsController < ApplicationController
       else
         respond_and_redirect_to root_path, exception.message
       end
+    end
+
+    def admin_activation
+      @student.update_column :activated, true
+      flash[:success] = I18n.t('users.messages.successfully_activated')
+      redirect_to @student
     end
 end
