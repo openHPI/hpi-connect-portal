@@ -28,7 +28,11 @@ HpiHiwiPortal::Application.routes.draw do
 
     get "employers/external", to: "employers#index_external", as: "external_employers"
 
-    resources :employers
+    resources :employers do 
+      member do
+        get "activate"
+      end
+    end
 
     resources :applications, only: [:create, :destroy] do
       member do

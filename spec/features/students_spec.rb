@@ -98,11 +98,10 @@ describe "the students editing page" do
     current_path.should == student_path(@student1)
 
     page.should have_content(
-      "Profile was successfully updated",
+      I18n.t('users.messages.successfully_updated'),
       "General information",
       "www.alex@hpi.uni-potsdam.de"
     )
-
    end
 
     it "can be edited by an admin" do
@@ -120,7 +119,7 @@ describe "the students editing page" do
       current_path.should == student_path(@student1)
 
       page.should have_content(
-        "Profile was successfully updated",
+        I18n.t('users.messages.successfully_updated'),
         "General information",
         "www.alex@uni-potsdam.de"
       )

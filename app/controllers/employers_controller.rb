@@ -2,8 +2,8 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource only: [:edit, :update]
-  before_action :set_employer, only: [:show, :edit, :update]
+  authorize_resource only: [:edit, :update, :activate]
+  before_action :set_employer, only: [:show, :edit, :update, :activate]
 
   def index
     @employers = Employer.internal.sort_by { |employer| employer.name }
@@ -54,6 +54,12 @@ class EmployersController < ApplicationController
     else
       render_errors_and_action @employer, 'edit'
     end
+  end
+
+  def activate
+    @employer.update_column :activated, true
+    flash[:success] = I18n.t('employers.messages.successfully_activated')
+    redirect_to @employer
   end
 
   private

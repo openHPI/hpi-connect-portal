@@ -187,4 +187,41 @@ describe EmployersController do
       end
     end
   end
+
+  describe "GET activate" do
+    describe "as an admin" do
+
+      before :each do
+        login FactoryGirl.create(:user, :admin)
+        @employer = FactoryGirl.create(:employer)
+      end
+
+      it "should be accessible" do
+        get :activate, ({ id: @employer.id })
+        response.should redirect_to(@employer)
+      end
+
+      it "should activate the employer" do
+        get :activate, ({ id: @employer.id })
+        @employer.reload
+        assert @employer.activated
+      end
+    end
+
+    it "should not be accessible for staff members" do
+      staff = FactoryGirl.create(:staff)
+      login staff.user
+      get :activate, ({ id: FactoryGirl.create(:employer).id })
+      response.should redirect_to(employers_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
+    end
+
+    it "should not be accessible for students" do
+      student = FactoryGirl.create(:student)
+      login student.user
+      get :activate, ({ id: FactoryGirl.create(:employer).id })
+      response.should redirect_to(employers_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
+    end
+  end
 end

@@ -37,7 +37,7 @@ class Ability
     employer_id = staff.employer_id
     staff_id = staff.id
 
-    can [:edit, :update, :read], Staff, id: user.manifestation.id
+    can [:edit, :update, :read], Staff, id: staff.id
 
     can [:edit, :update], Employer, deputy_id: staff_id
     can [:edit, :update], Employer, id: employer_id

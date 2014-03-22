@@ -163,6 +163,54 @@ describe StudentsController do
     end
   end
 
+  describe "GET activate" do
+    describe "as an admin" do
+
+      before :each do
+        login FactoryGirl.create(:user, :admin)
+        @student = FactoryGirl.create(:student)
+      end
+
+      it "should be accessible" do
+        get :activate, ({ id: @student.id })
+        response.should redirect_to(@student)
+      end
+
+      it "should activate the student" do
+        get :activate, ({ id: @student.id })
+        @student.reload
+        assert @student.user.activated
+      end
+    end
+
+    describe "as a student" do
+
+      before :each do
+        @student = FactoryGirl.create(:student)
+        login @student.user
+      end
+
+      it "should be accessible for the own profile" do
+        get :activate, ({ id: @student.id, student: { username: 'max.mustermann' }})
+        response.should_not redirect_to(root_path)
+      end
+
+      it "should not be accessible for other profiles" do
+        get :activate, ({ id: FactoryGirl.create(:student).id })
+        response.should redirect_to(root_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
+      end
+    end
+
+    it "should not be accessible for staff members" do
+      staff = FactoryGirl.create(:staff)
+      login staff.user
+      get :activate, ({ id: FactoryGirl.create(:student).id })
+      response.should redirect_to(root_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
+    end
+  end
+
   describe "PUT update with programming languages skills" do
     before(:each) do
       @student = FactoryGirl.create(:student, valid_attributes)

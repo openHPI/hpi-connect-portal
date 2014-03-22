@@ -67,6 +67,7 @@ class StudentsController < ApplicationController
   end
 
   def activate
+    authorize! :activate, @student
     admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
     authenticate_with_open_id url do |result, identity_url|
@@ -92,16 +93,16 @@ class StudentsController < ApplicationController
 
     def rescue_from_exception(exception)
       if [:index].include? exception.action
-        respond_and_redirect_to root_path, exception.message
+        redirect_to root_path, notice: exception.message
       elsif [:edit, :destroy, :update].include? exception.action
-        respond_and_redirect_to student_path(exception.subject), exception.message
+        redirect_to student_path(exception.subject), notice: exception.message
       else
-        respond_and_redirect_to root_path, exception.message
+        redirect_to root_path, notice: exception.message
       end
     end
 
     def admin_activation
-      @student.update_column :activated, true
+      @student.user.update_column :activated, true
       flash[:success] = I18n.t('users.messages.successfully_activated')
       redirect_to @student
     end
