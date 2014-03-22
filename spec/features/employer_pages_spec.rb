@@ -51,22 +51,28 @@ describe "the employer page" do
 
   describe "can be activated" do
 
+    before :each do 
+      @employer = FactoryGirl.create(:employer, activated: false)
+    end
+
     it "by admin" do
       login FactoryGirl.create(:user, :admin)
-      visit employer_path(employer)
+      visit employer_path(@employer)
       should have_link 'Activate'
     end
 
     it "not by students" do
       login FactoryGirl.create(:student).user
-      visit employer_path(employer)
-      should_not have_link 'Activate'
+      expect {
+        visit employer_path(@employer)
+      }.to raise_error(ActionController::RoutingError)
     end
 
     it "not by staff members" do
       login FactoryGirl.create(:staff)
-      visit employer_path(employer)
-      should_not have_link 'Activate'
+      expect {
+        visit employer_path(@employer)
+      }.to raise_error(ActionController::RoutingError)
     end
   end
 

@@ -13,10 +13,11 @@ class StudentsController < ApplicationController
 
   def index
     authorize! :index, Student
-    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
   end
 
   def show
+    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 

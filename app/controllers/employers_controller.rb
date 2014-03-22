@@ -6,19 +6,22 @@ class EmployersController < ApplicationController
   before_action :set_employer, only: [:show, :edit, :update, :activate]
 
   def index
-    @employers = Employer.internal.sort_by { |employer| employer.name }
+    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
+    @employers = @employers.internal.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
     @internal = true
   end
 
   def index_external
-    @employers = Employer.external.sort_by { |employer| employer.name }
+    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
+    @employers = @employers.external.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
     @internal = false
     render 'index'
   end
 
   def show
+    not_found unless @employer.activated || can?(:activate, @employer) || (current_user.staff? && current_user.manifestation.employer == @employer)
     page = params[:page]
     @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
