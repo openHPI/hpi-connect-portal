@@ -14,6 +14,7 @@ de:
     staff_headline: "Mitarbeiterübersicht"
     new_staff: "Neuen Mitarbeiter anlegen"
     edit_staff: "Mitarbeiter bearbeiten"
+    inactive: "Deaktiviert"
     messages:
         successfully_created: "Willkommen bei HPI Career! Hier können Sie nun Ihr Profil ausfüllen."
         successfully_updated: "Das Profil wurde erfolgreich aktualisiert."

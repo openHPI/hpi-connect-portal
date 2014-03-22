@@ -15,6 +15,7 @@ en:
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
         external: "External"
+        inactive: "Deactivated"
         select_deputy: "Select a deputy..."
         messages:
             successfully_created: "Welcome to HPI Career!"

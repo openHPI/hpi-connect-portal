@@ -14,6 +14,7 @@ en:
     staff_headline: "Listing of staff"
     new_staff: "Create new staff"
     edit_staff: "Edit staff"
+    inactive: "Deactivated"
     messages:
         successfully_created: "Welcome to HPI Career! You can now complete your profile here."
         successfully_updated: "Profile successfully updated."
