@@ -208,4 +208,14 @@ describe "the students profile page" do
       page.should_not have_css('input#open-id-field')
     end
   end
+
+  describe "as admin" do
+    it "should have activate button" do
+      login FactoryGirl.create(:user, :admin)
+      student = FactoryGirl.create(:student)
+      visit student_path(student)
+      assert current_path == student_path(student)
+      page.should have_link 'Activate'
+    end
+  end
 end
