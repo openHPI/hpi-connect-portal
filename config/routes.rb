@@ -5,8 +5,6 @@ HpiHiwiPortal::Application.routes.draw do
 
   root to: "sessions#new"
   get "imprint", to: "imprint#index"
-  get '/linkedin/callback/:id' => 'linkedin#callback'
-
 
     namespace :admin do
       resource :configurable, except: [:index]
@@ -59,6 +57,7 @@ HpiHiwiPortal::Application.routes.draw do
         patch 'activate'
         get 'activate'
         get 'request_linkedin_import'
+        get 'insert_imported_data'
       end
     end
   end

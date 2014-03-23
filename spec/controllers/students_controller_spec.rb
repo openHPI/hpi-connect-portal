@@ -236,13 +236,13 @@ describe StudentsController do
     it "redirects to linkedin as admin" do
       login FactoryGirl.create(:user, :admin)
       get :request_linkedin_import, {id: @student.id}
-      response.should redirect_to assigns(:linkedin_client).request_token.authorize_url
+      response.should redirect_to assigns(:request_token).authorize_url
     end
   
     it "redirects to linkedin as student on own profile" do
       login @student.user
       get :request_linkedin_import, {id: @student.id}
-      response.should redirect_to assigns(:linkedin_client).request_token.authorize_url
+      response.should redirect_to assigns(:request_token).authorize_url
     end
 
     it "cannot import linkedin data from other students" do
@@ -254,6 +254,16 @@ describe StudentsController do
 
   describe "GET insert_imported_data" do
 
-    it ""
+    it "redirects to edit page when atoken is nil" do
+      student = FactoryGirl.create(:student)
+      login student.user
+      linkedin_client = Student.create_linkedin_client
+      allow(linkedin_client).to receive(:authorize_from_request).and_return([1,2])
+      allow(linkedin_client).to receive(:profile).and_return({})
+      Student.stub(:create_linkedin_client).and_return(linkedin_client)
+      get :insert_imported_data, {id: student.id}
+      response.should redirect_to edit_student_path(student)
+    end
+
   end
 end

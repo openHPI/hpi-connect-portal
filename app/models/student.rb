@@ -22,6 +22,12 @@
 EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
 class Student < ActiveRecord::Base
+  LINKEDIN_KEY = "77sfagfnu662bn"
+  LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
+  LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',
+      :authorize_path => '/uas/oauth/authenticate',
+      :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
+      :access_token_path => '/uas/oauth/accessToken' }
 
   attr_accessor :username
 
@@ -79,4 +85,30 @@ class Student < ActiveRecord::Base
   def employment_status
     EMPLOYMENT_STATUSES[employment_status_id]
   end
+
+  def update_from_linkedin(linkedin_client)
+    userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
+      "three_current_positions", "date-of-birth", "first-name", "last-name", "email-address"])
+    if !userdata["three_current_positions"].nil? && employment_status == "jobseeking"
+      update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
+    end
+    update_attributes!(
+      { birthday: userdata["date-of-birth"], 
+        linkedin: userdata["public_profile_url"]
+        }.reject{|key, value| value.blank? || value.nil?})
+    user.update_attributes!(
+      { firstname: userdata["first-name"], 
+        lastname: userdata["last-name"],
+        email: userdata["email-address"]
+        }.reject{|key, value| value.blank? || value.nil?})
+  end
+
+  def self.linkedin_request_token_for_callback(url) 
+    self.create_linkedin_client.request_token(oauth_callback: url)
+  end
+
+  def self.create_linkedin_client
+    LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
+  end
+
 end

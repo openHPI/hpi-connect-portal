@@ -41,6 +41,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-mocks'
   gem 'rake'
   gem 'factory_girl_rails', :require => false
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil

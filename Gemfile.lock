@@ -289,6 +289,7 @@ DEPENDENCIES
   rails_serve_static_assets
   rake
   rest-client
+  rspec-mocks
   rspec-rails (~> 2.0)
   ruby-openid
   sanitize
