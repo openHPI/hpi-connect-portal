@@ -58,14 +58,14 @@ describe Student do
     end
 
     it "doesn't update employment status if not jobseeking" do
-      student = FactoryGirl.create(:student, employment_status_id: EMPLOYMENT_STATUSES.index("employed"))
+      student = FactoryGirl.create(:student, employment_status_id: Student::EMPLOYMENT_STATUSES.index("employed"))
       allow(linkedin_client).to receive(:profile).and_return({"three_current_positions" => "bla"})
       student.update_from_linkedin(linkedin_client)
       student.reload.employment_status.should eq("employed")
     end
 
     it "updates employment_status if jobseeking" do
-      student = FactoryGirl.create(:student, employment_status_id: EMPLOYMENT_STATUSES.index("jobseeking"))
+      student = FactoryGirl.create(:student, employment_status_id: Student::EMPLOYMENT_STATUSES.index("jobseeking"))
       allow(linkedin_client).to receive(:profile).and_return({"three_current_positions" => "bla"})
       student.update_from_linkedin(linkedin_client)
       student.reload.employment_status.should eq("employedseeking")
