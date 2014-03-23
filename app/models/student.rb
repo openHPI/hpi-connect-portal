@@ -94,12 +94,12 @@ class Student < ActiveRecord::Base
     end
     update_attributes!(
       { birthday: userdata["date-of-birth"], 
-        linkedin: userdata["public_profile_url"]
-        }.reject{|key, value| value.blank? || value.nil?})
-    user.update_attributes!(
-      { firstname: userdata["first-name"], 
-        lastname: userdata["last-name"],
-        email: userdata["email-address"]
+        linkedin: userdata["public_profile_url"],
+        user_attributes: {
+          firstname: userdata["first-name"], 
+          lastname: userdata["last-name"],
+          email: userdata["email-address"]
+        }.reject{|key, value| value.blank? || value.nil?}
         }.reject{|key, value| value.blank? || value.nil?})
   end
 
