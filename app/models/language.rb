@@ -9,7 +9,6 @@
 #
 
 class Language < ActiveRecord::Base
-  #equal to has_and_belongs_to_many :users
   has_many :languages_users
   has_many :users, through: :languages_users
 

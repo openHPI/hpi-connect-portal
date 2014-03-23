@@ -4,7 +4,6 @@ class StudentsController < ApplicationController
   skip_before_filter :signed_in_user, only: [:new, :create]
 
   authorize_resource except: [:destroy, :matching, :edit, :index, :request_linkedin_import, :insert_imported_data]
-
   before_action :set_student, only: [:show, :edit, :update, :destroy, :request_linkedin_import, :insert_imported_data]
   
   has_scope :search_students, only: [:index, :matching], as: :q

@@ -19,7 +19,15 @@ class ApplicationsController < ApplicationController
     redirect_to @job_offer
   end
 
-  # GET accept
+  def destroy
+    @application = Application.find params[:id]
+    if @application.destroy
+      respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
+    else
+      render_errors_and_action @application.job_offer
+    end
+  end
+
   def accept
     @application = Application.find params[:id]
     @job_offer = @application.job_offer
@@ -33,23 +41,12 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  # GET decline
   def decline
     @application = Application.find params[:id]
     authorize! :decline, @application
 
     if @application.decline
       redirect_to @application.job_offer
-    else
-      render_errors_and_action @application.job_offer
-    end
-  end
-
-  # DELETE destroy
-  def destroy
-    @application = Application.find params[:id]
-    if @application.destroy
-      respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
     else
       render_errors_and_action @application.job_offer
     end

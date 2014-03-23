@@ -19,8 +19,6 @@
 #  frequency              :integer          default(1), not null
 #
 
-EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
-
 class Student < ActiveRecord::Base
   LINKEDIN_KEY = "77sfagfnu662bn"
   LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
@@ -28,6 +26,8 @@ class Student < ActiveRecord::Base
       :authorize_path => '/uas/oauth/authenticate',
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
+
+  EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
 
