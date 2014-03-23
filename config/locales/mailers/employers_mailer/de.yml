@@ -1,0 +1,4 @@
+de:
+  employers_mailer:
+    new_employer:
+      subject: 'Ein neuer Arbeitgeber wartet auf Freigabe'

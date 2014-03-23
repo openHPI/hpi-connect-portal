@@ -1,8 +1,9 @@
 require "spec_helper"
 
 describe JobOffersMailer do
-    include EmailSpec::Helpers
-    include EmailSpec::Matchers
+  include EmailSpec::Helpers
+  include EmailSpec::Matchers
+  
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
@@ -19,7 +20,7 @@ describe JobOffersMailer do
   describe "new job offer" do
     before(:each) do
       @email = JobOffersMailer.new_job_offer_email(@job_offer).deliver
-      end
+    end
 
     it "should include the link to the job offer" do
       @email.should have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))

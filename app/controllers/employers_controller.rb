@@ -42,6 +42,7 @@ class EmployersController < ApplicationController
     if @employer.save
       sign_in @employer.deputy.user
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      EmployersMailer.new_employer_email(@employer).deliver
     else
       render_errors_and_action @employer, 'new'
     end
