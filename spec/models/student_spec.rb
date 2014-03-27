@@ -91,5 +91,19 @@ describe Student do
       student.reload.user.email.should eq("bla@keks.de")
     end
 
+    it "updates programming languages" do
+      FactoryGirl.create(:programming_language, name: "C++")
+      FactoryGirl.create(:programming_language, name: "C")
+      allow(linkedin_client).to receive(:profile).and_return({"skills" => {"all" => [{"id"=> 3, "skill" => {"name" => "C++"}}, 
+                                                                                     {"id"=> 4, "skill" => {"name" => "C"}}, 
+                                                                                      {"id"=> 30, "skill" => {"name" => "Rotkohl"}}
+                                                                                      ]}})
+      student.update_from_linkedin(linkedin_client)
+      ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C++").id).should_not eq nil
+      ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C++").id).skill.should eq 3
+      ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).should_not eq nil
+      ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).skill.should eq 3
+    end
+
   end
 end

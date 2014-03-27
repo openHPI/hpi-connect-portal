@@ -88,7 +88,7 @@ class Student < ActiveRecord::Base
 
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
-      "three_current_positions", "date-of-birth", "first-name", "last-name", "email-address"])
+      "three_current_positions", "date-of-birth", "first-name", "last-name", "email-address", "skills"])
     if !userdata["three_current_positions"].nil? && employment_status == "jobseeking"
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
@@ -101,6 +101,16 @@ class Student < ActiveRecord::Base
           email: userdata["email-address"]
         }.reject{|key, value| value.blank? || value.nil?}
         }.reject{|key, value| value.blank? || value.nil?})
+    update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
+  end
+
+  def update_programming_language(skills)
+    programming_language_names = (skills.reject{|skill_wrapper| ProgrammingLanguage.where(name: skill_wrapper["skill"]["name"]).empty? }).map{|programming_language_wrap| programming_language_wrap["skill"]["name"]}
+    programming_language_names.each do |programming_language_name| 
+      unless ProgrammingLanguagesUser.does_skill_exist_for_programming_language_and_student(ProgrammingLanguage.find_by_name(programming_language_name), self)
+        ProgrammingLanguagesUser.create(student_id: self.id, programming_language_id: ProgrammingLanguage.find_by_name(programming_language_name).id, skill:3) 
+      end
+    end
   end
 
   def self.linkedin_request_token_for_callback(url) 
