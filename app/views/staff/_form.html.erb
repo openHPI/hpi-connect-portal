@@ -2,24 +2,7 @@
 
   <%= render 'shared/object_errors', object: staff %>
 
-  <%= f.simple_fields_for :user, staff.user do |user_form| %>
-
-    <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
-    <%= user_form.input :firstname %>
-
-    <%= label_field user_form, :lastname, t("activerecord.attributes.user.last_name") %>
-    <%= user_form.input :lastname %>
-
-    <%= label_field user_form, :email, t("activerecord.attributes.user.email") %>
-    <%= user_form.input :email %>
-
-    <%= label_field user_form, :password, t("activerecord.attributes.user.password") %>
-    <%= user_form.input :password %>
-
-    <%= label_field user_form, :password_confirmation, t("activerecord.attributes.user.password_confirmation") %>
-    <%= user_form.input :password_confirmation %>
-
-  <% end %>
+  <%= render 'form_fields', form: f, user: staff.user %>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
 <% end %>

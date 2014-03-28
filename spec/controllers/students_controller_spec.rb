@@ -174,12 +174,12 @@ describe StudentsController do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       @student.programming_languages_users.size.should eq(1)
       ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {id: @student.to_param, student: { programming_languages: { @programming_language_1.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
     end
 
     it "updates the requested student with a new programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { programming_languages: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } }, valid_session
       @student.reload
       @student.programming_languages_users.size.should eq(2)
       @student.programming_languages.first.should eq(@programming_language_1)
@@ -188,7 +188,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4'), FactoryGirl.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { programming_languages: { @programming_language_1.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
       @student.reload
       @student.programming_languages_users.size.should eq(1)
       @student.programming_languages.first.should eq(@programming_language_1)
@@ -206,12 +206,12 @@ describe StudentsController do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       @student.languages_users.size.should eq(1)
       LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {id: @student.to_param, student: { languages: { @language_1.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
     end
 
     it "updates the requested student with a new language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { languages: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }, valid_session
       @student.reload
       @student.languages_users.size.should eq(2)
       @student.languages.first.should eq(@language_1)
@@ -220,10 +220,50 @@ describe StudentsController do
 
     it "updates the requested student with a removed language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4'), FactoryGirl.create(:languages_user, language_id: @language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { languages: { @language_1.id.to_s => "2" } } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
       @student.reload
       @student.languages_users.size.should eq(1)
       @student.languages.first.should eq(@language_1)
     end
+  end
+
+  describe "GET request_linkedin_import" do
+
+    before(:each) do
+      @student = FactoryGirl.create(:student)
+    end
+
+    it "redirects to linkedin as admin" do
+      login FactoryGirl.create(:user, :admin)
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to assigns(:request_token).authorize_url
+    end
+  
+    it "redirects to linkedin as student on own profile" do
+      login @student.user
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to assigns(:request_token).authorize_url
+    end
+
+    it "cannot import linkedin data from other students" do
+      login FactoryGirl.create(:student).user
+      get :request_linkedin_import, {id: @student.id}
+      response.should redirect_to root_path
+    end
+  end
+
+  describe "GET insert_imported_data" do
+
+    it "redirects to edit page when atoken is nil" do
+      student = FactoryGirl.create(:student)
+      login student.user
+      linkedin_client = Student.create_linkedin_client
+      allow(linkedin_client).to receive(:authorize_from_request).and_return([1,2])
+      allow(linkedin_client).to receive(:profile).and_return({})
+      Student.stub(:create_linkedin_client).and_return(linkedin_client)
+      get :insert_imported_data, {id: student.id}
+      response.should redirect_to edit_student_path(student)
+    end
+
   end
 end

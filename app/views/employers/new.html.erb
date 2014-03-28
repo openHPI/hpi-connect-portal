@@ -1,3 +1,26 @@
 <h1><%= t('employers.new_employer') %></h1>
 
-<%= render 'form', employer: @employer %>
+<%= simple_form_for @employer, html: { multipart: true } do |f| %>
+  <%= render 'shared/object_errors', object: @employer %>
+
+  <%= render 'form_fields', form: f, employer: @employer, with_deputy_select: false %>
+
+  <%= f.simple_fields_for :deputy, @employer.deputy do |deputy_form| %>
+
+    <%= render 'staff/form_fields', form: deputy_form, user: @employer.deputy.user %>
+
+  <% end %>
+
+  <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h5>
+          <%= t("layouts.asterisk_description") %>
+        </h5>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+
+<% end %>

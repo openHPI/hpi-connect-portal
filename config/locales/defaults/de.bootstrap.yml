@@ -13,6 +13,7 @@ de:
     save: "Speichern"
     show: "Anzeigen"
     discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
+    verify: "Freischalten"
   titles:
     edit: "%{model} bearbeiten"
     save: "%{model} speichern"

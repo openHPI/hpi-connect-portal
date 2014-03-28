@@ -1,3 +1,4 @@
+<%= link_to "Import link", request_linkedin_import_student_path(student) %>
 <%= form.simple_fields_for :user, student.user do |user_form| %>
   <div class="panel panel-default">
     <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
@@ -55,9 +56,7 @@
                 <%= form.label :employment_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(student, :employment_status) %>
               </div>
               <div class="col-sm-9">
-                <div class="input select optional user_user_status">
-                  <%= select("user", "employment_status_id", EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'}) %>
-                </div>
+                <%= form.select :employment_status_id, Student::EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), Student::EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
               </div>
             </div>
           </li>
@@ -82,26 +81,17 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-sm-3">
-                      <%# Erstelle ein Label fuer jede Programmiersprache %>
                       <%= f2.label programming_language.name, class: "control-label" %>
                     </div>
                     <div class="col-sm-9">
-                      <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                       <% if student.persisted? %>
-                        <% pl = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                        <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
                       <% end %>
-                      <%# Erzeuge 5 radio buttons fuer die Sterne %>
                       <% (1..5).each do |i| %>
-                        <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                        <% if pl %>
-                          <% if i == pl.skill %>
-                            <%= f2.radio_button programming_language.id, i, :checked => "checked", :class => "star" %>
-                          <% else %>
-                            <%= f2.radio_button programming_language.id, i, :class => "star" %>
-                          <% end %>
-                        <%# Erzeuge sonst einen unchecked radio button %>
+                        <% if language_skill && i == language_skill.skill %>
+                          <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
                         <% else %>
-                          <%# f2.radio_button programming_language.id, i, :class => "star" %>
+                          <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
                         <% end %>
                       <% end %>
                     </div>
@@ -172,32 +162,23 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages") %></h4></div>
       <ul class="list-group">
-        <%= fields_for :languages do |f3| %>
+        <%= simple_fields_for :languages do |f3| %>
           <% if @languages %>
             <% @languages.each do |language| %>
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-3">
-                    <%# Erstelle ein Label fuer jede Programmiersprache %>
                     <%= f3.label t("languages." + language.name), class: "control-label" %>
                   </div>
                   <div class="col-sm-9">
-                    <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
                     <% if student.persisted? %>
-                      <% l = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
+                      <% language_skill = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
                     <% end %>
-                    <%# Erzeuge 5 radio buttons fuer die Sterne %>
                     <% (1..5).each do |i| %>
-                      <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                      <% if l %>
-                        <% if i == l.skill %>
-                          <%= f3.radio_button language.id, i, :checked => "checked", :class => "star" %>
-                        <% else %>
-                          <%= f3.radio_button language.id, i, :class => "star" %>
-                        <% end %>
-                      <%# Erzeuge sonst einen unchecked radio button %>
+                      <% if language_skill && i == language_skill.skill %>
+                        <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
                       <% else %>
-                        <%# f3.radio_button language.id, i, :class => "star" %>
+                        <%= radio_button :language_skills, language.id, i, :class => "star" %>
                       <% end %>
                     <% end %>
                   </div>
@@ -300,57 +281,53 @@
       </div>
       <div id="programming_language_newsletter" class="panel-collapse collapse">
         <%= fields_for :programming_languages_newsletter_information do |f2| %>
-        <% if @programming_languages %>
-          <% @programming_languages.each do |programming_language| %>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-3">
-                <%# Erstelle ein Label fuer jede Programmiersprache %>
-                <%= f2.label programming_language.name, class: "control-label" %>
-                </div>
-                <div class="col-sm-9">
-                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if student.persisted? %>
-                    <% pl = ProgrammingLanguagesNewsletterInformation.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
-                  <% end %>
-                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                      <% if pl %>
-                        <%= f2.check_box programming_language.id, :checked => "checked" %>
-                      <% else %>
-                        <%= f2.check_box programming_language.id %>
-                      <% end %>
+          <% if @programming_languages %>
+            <% @programming_languages.each do |programming_language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-9">
+                  <%= f2.label programming_language.name, programming_language.name, class: "control-label" %>
                   </div>
-                </div>    
+                  <div class="col-sm-3">
+                    <% if student.persisted? %>
+                      <% pl = ProgrammingLanguagesNewsletterInformation.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                    <% end %>
+                    <% if pl %>
+                      <%= f2.check_box programming_language.id, :checked => "checked"%>
+                    <% else %>
+                      <%= f2.check_box programming_language.id %>
+                    <% end %>
+                  </div>
+                </div>
               </li>
-          <% end %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"  data-toggle="collapse" data-target="#employer_newsletter"><h4><%= t("students.employers_newsletter") %></h4></div>
+      <div class="panel-heading"  data-toggle="collapse" data-target="#employer_newsletter">
+        <h4><%= t("students.employers_newsletter") %></h4>
+      </div>
       <div id="employer_newsletter" class="panel-collapse collapse">
         <%= fields_for :employers_newsletter_information do |f2| %>
-        <% if @employers %>
-          <% @employers.each do |employer| %>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-9">
-                <%# Erstelle ein Label fuer jede Programmiersprache %>
-                <%= f2.label employer.name, employer.name, class: "control-label" %>
-                </div>
-                <div class="col-sm-3">
-                  <%# Schau nach, ob es bereits eine Angabe der Skill-Wertung fuer die Programmierspr. gibt %>
-                  <% if student.persisted? %>
-                    <% pl = EmployersNewsletterInformation.find_by_student_id_and_employer_id(student.id,employer.id) %>
-                  <% end %>
-                    <%# Falls es eine Angabe gibt, ueberpruefe, ob der aktuelle Stern der Angabe enspricht %>
-                      <% if pl %>
-                        <%= f2.check_box employer.id, :checked => "checked"%>
-                      <% else %>
-                          <%= f2.check_box employer.id %>
-                      <% end %>
+          <% if @employers %>
+            <% @employers.each do |employer| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-9">
+                  <%= f2.label employer.name, employer.name, class: "control-label" %>
+                  </div>
+                  <div class="col-sm-3">
+                    <% if student.persisted? %>
+                      <% pl = EmployersNewsletterInformation.find_by_student_id_and_employer_id(student.id,employer.id) %>
+                    <% end %>
+                    <% if pl %>
+                      <%= f2.check_box employer.id, :checked => "checked"%>
+                    <% else %>
+                      <%= f2.check_box employer.id %>
+                    <% end %>
                   </div>
                 </div>
               </li>

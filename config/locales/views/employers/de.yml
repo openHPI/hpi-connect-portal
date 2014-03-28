@@ -16,3 +16,7 @@ de:
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         external: "Extern"
         select_deputy: "Wählen Sie einen verantwortlichen Mitarbeiter..."
+        messages:
+            successfully_created: "Willkommen bei HPI Career!"
+            successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
+            successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
