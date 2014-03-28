@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :matching, :edit, :index]
-  before_action :set_student, only: [:show, :edit, :update, :destroy]
+  authorize_resource except: [:destroy, :matching, :edit, :index, :request_linkedin_import, :insert_imported_data]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :request_linkedin_import, :insert_imported_data]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
@@ -79,7 +79,33 @@ class StudentsController < ApplicationController
     end
   end
 
+  def request_linkedin_import
+    authorize! :request_linkedin_import, @student
+    @request_token = Student.linkedin_request_token_for_callback(insert_imported_data_student_url(@student))
+    session[:rtoken] = @request_token.token
+    session[:rsecret] = @request_token.secret
+    redirect_to @request_token.authorize_url
+  end
+
+  def insert_imported_data
+    authorize! :request_linkedin_import, @student
+    linkedin_client = Student.create_linkedin_client
+    authorize_client linkedin_client
+    @student.update_from_linkedin(linkedin_client)
+    respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
+  end
+
   private
+    def authorize_client(linkedin_client)
+      if session[:atoken].nil?
+        pin = params[:oauth_verifier]
+        atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+        session[:atoken] = atoken
+        session[:asecret] = asecret
+      else
+        linkedin_client.authorize_from_access(session[:atoken], session[:asecret])
+      end
+    end
 
     def set_student
       @student = Student.find params[:id]

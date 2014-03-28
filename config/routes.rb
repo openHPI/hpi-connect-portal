@@ -3,9 +3,8 @@ HpiHiwiPortal::Application.routes.draw do
 
   scope "(:locale)", locale: /en|de/ do
 
-    root to: "sessions#new"
-
-    get "imprint", to: "imprint#index"
+  root to: "sessions#new"
+  get "imprint", to: "imprint#index"
 
     namespace :admin do
       resource :configurable, except: [:index]
@@ -57,6 +56,8 @@ HpiHiwiPortal::Application.routes.draw do
       member do
         patch 'activate'
         get 'activate'
+        get 'request_linkedin_import'
+        get 'insert_imported_data'
       end
     end
   end
