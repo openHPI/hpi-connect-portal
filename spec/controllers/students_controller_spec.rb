@@ -42,13 +42,13 @@ describe StudentsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested user" do
+      it "updates the requested student" do
         student = FactoryGirl.create(:student)
         Student.any_instance.should_receive(:update).with({ "semester" => "5" })
         put :update, {id: student.to_param, student: { semester: 5 }}, valid_session
       end
 
-      it "assigns the requested student as @user" do
+      it "assigns the requested student as @student" do
         student = FactoryGirl.create(:student)
         put :update, {id: student.to_param, student: valid_attributes}, valid_session
         assigns(:student).should eq(student)
@@ -62,7 +62,7 @@ describe StudentsController do
     end
 
     describe "with invalid params" do
-      it "assigns the student as @user" do
+      it "assigns the student as @student" do
         student = FactoryGirl.create(:student)
         Student.any_instance.stub(:save).and_return(false)
         put :update, {id: student.to_param, student: { semester: -1 }}, valid_session

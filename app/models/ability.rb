@@ -7,7 +7,7 @@ class Ability
 
     unless user.nil?
       can [:archive, :read], JobOffer
-      can [:edit, :update, :read], User, id: user.id
+      can [:edit, :update, :read, :update_password], User, id: user.id
       can :read, Staff
       initialize_admin and return if user.admin?
       initialize_student user and return if user.student?

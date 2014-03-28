@@ -55,9 +55,8 @@ class User < ActiveRecord::Base
     self.id.hash
   end
 
-  # just until the roles are removed completely
   def role
-    Role.find_or_create_by name: 'Student'
+    return admin? ? 'admin' : manifestation_type.downcase rescue 'student'
   end
 
   def student?
