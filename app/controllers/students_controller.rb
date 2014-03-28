@@ -92,7 +92,7 @@ class StudentsController < ApplicationController
     linkedin_client = Student.create_linkedin_client
     authorize_client linkedin_client
     @student.update_from_linkedin(linkedin_client)
-    redirect_to edit_student_path(@student)
+    respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
   end
 
   private
