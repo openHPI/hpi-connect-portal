@@ -4,6 +4,10 @@
     "margin-left": ($("body").width()/8-10) + "px",
     "width": $("body").width()*3/4+20 +"px"
     });
+    $("footer div.container").css({
+    "margin-left": ($("body").width()/8-10) + "px",
+    "width": $("body").width()*3/4+20 +"px"
+    });
     $("div.bigheader").css({
         "margin-left": ($("body").width()/8) + "px"
     });

@@ -57,19 +57,9 @@
 
   <div class="headbottom">
     <div id="head_bottom" class="collapse navbar-collapse">
-    <!-- left -->
-              <% if signed_in? %>
-                <%= render :partial => "layouts/navigation/admin" %>
-              <% end %>
-      <!-- <ul id="site_nav" class="site_nav">
-        <li><a href="#0" class="menu1">Lehrstuhl</a></li>
-        <li class="active"><a href="#0" class="menu2">Lehre</a></li>
-        <li><a href="#0" class="menu3">Security Tech</a></li>
-        <li><a href="#0" class="menu4">Kowledge Tech</a></li>
-        <li><a href="#0" class="menu5">Labs & Systems</a></li>
-        <li><a href="#0" class="">Publikationen</a></li>
-        <li class="search"><form><input type="text" placeholder="Suchbegriff"><button class="btn btn-default btn-xs">Suchen</button></form></li>
-      </ul> -->
+      <% if signed_in? %>
+        <%= render :partial => "layouts/navigation/admin" %>
+      <% end %>
     </div>
   </div>
 </div>
