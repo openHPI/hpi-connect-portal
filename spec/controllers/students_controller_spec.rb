@@ -16,7 +16,7 @@ describe StudentsController do
 
   describe "GET index" do
     it "assigns all students as @students" do
-      login staff.user
+      login FactoryGirl.create(:user, :admin)
 
       student = FactoryGirl.create(:student)
       get :index, {}, valid_session

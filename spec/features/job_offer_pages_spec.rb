@@ -51,6 +51,17 @@ describe "Job Offer pages" do
               should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
             end
           end
+
+          describe "not being activated" do
+            before do
+              student = FactoryGirl.create(:student)
+              student.user.update_column :activated, false
+              login student.user
+              visit job_offer_path(job_offer)
+            end
+
+            it { should_not have_button('Apply') }
+          end
         end
 
         describe "as a staff of the job offers employer" do

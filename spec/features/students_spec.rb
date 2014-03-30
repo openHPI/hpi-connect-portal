@@ -14,22 +14,11 @@ describe "the students page" do
 
   describe "as a staff member" do
 
-    before(:each) do 
+    it "is not available for students" do
       login staff.user
       visit students_path
-    end
-
-    it "should view only names and status of a student on the overview" do
-      page.should have_content(
-        @student1.firstname,
-        @student1.lastname
-      )
-    end
-
-    it "should contain a link for showing a profile and it should lead to profile page " do
-      find_link(@student1.firstname).click
       current_path.should_not == students_path
-      current_path.should == student_path(@student1)
+      current_path.should == root_path
     end
   end
 
