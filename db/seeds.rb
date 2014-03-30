@@ -13,11 +13,17 @@ JobStatus.create!(name: 'completed')
 
 Language.delete_all
 Language.create!([
-  { name: 'english'},
-  { name: 'german'},
-  { name: 'spanish'},
-  { name: 'french'},
-  { name: 'chinese'}
+	{ name: 'english'},  
+	{ name: 'german'},
+	{ name: 'french'},     # common languages in school
+	{ name: 'spanish'},    
+	{ name: 'italian'},    
+	{ name: 'portuguese'}, 
+	{ name: 'polish'},     
+	{ name: 'russian'},    
+	{ name: 'swedish'},    # languages of students who studied abroad
+	{ name: 'finnish'},
+	{ name: 'chinese'}
 ])
 
 #Create some ProgrammingLanguages

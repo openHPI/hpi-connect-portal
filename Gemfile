@@ -41,6 +41,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-mocks'
   gem 'rake'
   gem 'factory_girl_rails', :require => false
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
@@ -126,3 +127,9 @@ gem 'configurable_engine'
 
 # asset handling for heroku
 gem 'rails_serve_static_assets'
+
+# linked in
+gem 'linkedin'
+
+# xing
+gem 'xing_api', '~> 0.1'

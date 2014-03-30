@@ -11,4 +11,8 @@
 class ProgrammingLanguagesUser < ActiveRecord::Base
   belongs_to :student
   belongs_to :programming_language
+
+  def self.does_skill_exist_for_programming_language_and_student(programming_language, student)
+    !find_by_student_id_and_programming_language_id(student.id,  programming_language.id).nil?
+  end
 end
