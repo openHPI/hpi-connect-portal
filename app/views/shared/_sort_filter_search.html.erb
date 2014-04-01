@@ -26,7 +26,7 @@
                   <%= label_tag t("activerecord.attributes.job_offer.category") , nil, :class => "small" %>                          
                   <%= select_tag "category", 
                   options_for_select(
-                    JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, 0)), include_blank: true, :class => "form-control" %>           
+                    JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, 1)), include_blank: true, :class => "form-control" %>           
                 </div>
               <% end %>
 

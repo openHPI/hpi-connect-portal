@@ -47,7 +47,7 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
 
-  self.per_page = 5
+  self.per_page = 15
 
   def default_values
     self.status ||= JobStatus.pending
