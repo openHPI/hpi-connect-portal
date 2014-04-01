@@ -5,6 +5,7 @@ de:
         description: "Beschreibung"
         title: "Titel"
         employer: "Arbeitgeber"
+        category: "Jobart"
         start_date: "Anfangsdatum"
         end_date: "Enddatum"
         time_effort: "Zeitaufwand"

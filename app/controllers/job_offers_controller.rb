@@ -12,6 +12,7 @@ class JobOffersController < ApplicationController
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_employer, only: [:index, :archive], as: :employer
+  has_scope :filter_category, only: [:index, :archive], as: :category
   has_scope :filter_start_date, only: [:index, :archive], as: :start_date
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort

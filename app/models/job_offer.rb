@@ -45,6 +45,8 @@ class JobOffer < ActiveRecord::Base
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+
   self.per_page = 5
 
   def default_values
@@ -143,5 +145,9 @@ class JobOffer < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def category
+    CATEGORIES[category_id]
   end
 end

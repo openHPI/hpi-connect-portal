@@ -7,6 +7,7 @@ en:
         employer: "Employer"
         start_date: "Start date"
         end_date: "End date"
+        category: "Category"
         time_effort: "Time effort"
         compensation: "Compensation"
         room_number: "Room number"
