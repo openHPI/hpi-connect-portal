@@ -62,6 +62,10 @@ GEM
       remotipart (~> 1.2.1)
     builder (3.1.4)
     cancan (1.6.10)
+    capistrano (3.1.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
     capybara (2.2.1)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -125,6 +129,7 @@ GEM
     jquery-ui-rails (4.1.1)
       railties (>= 3.1.0)
     json (1.8.1)
+    kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
     libv8 (3.16.14.3)
@@ -141,6 +146,9 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.8.0)
     newrelic_rpm (3.7.1.188)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
@@ -173,6 +181,7 @@ GEM
       activesupport (= 4.0.2)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
@@ -222,7 +231,13 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sshkit (1.3.0)
+      net-scp (>= 1.1.2)
+      net-ssh
+      term-ansicolor
     subexec (0.2.3)
+    term-ansicolor (1.3.0)
+      tins (~> 1.0)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
@@ -231,6 +246,7 @@ GEM
       atomic
     tilt (1.4.1)
     timeliness (0.3.7)
+    tins (1.0.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -240,6 +256,10 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicorn (4.8.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     validates_timeliness (3.0.14)
       timeliness (~> 0.3.6)
     will_paginate (3.0.5)
@@ -261,6 +281,7 @@ DEPENDENCIES
   bootstrap-rails-engine
   bootsy (~> 2.0.6)
   cancan
+  capistrano
   capybara
   chronic (~> 0.10.2)
   codeclimate-test-reporter (~> 0.3.0)
@@ -300,6 +321,7 @@ DEPENDENCIES
   simplecov
   therubyracer (~> 0.12.0)
   uglifier (~> 2.4.0)
+  unicorn
   validates_timeliness (~> 3.0)
   will_paginate (~> 3.0)
   will_paginate-bootstrap
