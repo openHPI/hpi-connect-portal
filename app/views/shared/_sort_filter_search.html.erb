@@ -28,6 +28,12 @@
                   options_for_select(
                     JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, 1)), include_blank: true, :class => "form-control" %>           
                 </div>
+                <div class="form-group">
+                  <%= label_tag t("activerecord.attributes.job_offer.region") , nil, :class => "small" %>                          
+                  <%= select_tag "state", 
+                  options_for_select(
+                    JobOffer::STATES.each_with_index.collect {|state, index| [t("activerecord.attributes.job_offer.state." + state), index]}, params.fetch(:state, 3)), include_blank: true, :class => "form-control" %>           
+                </div>
               <% end %>
 
               <div class="form-group">
