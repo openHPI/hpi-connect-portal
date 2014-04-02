@@ -19,6 +19,7 @@ en:
         vacant_posts: "Vacant posts"
         responsible_user: "Responsible user"
         contact: "Contact"
+        region: "Region"
         state:
             BW: "Baden-Württemberg"
             BY: "Bavaria"

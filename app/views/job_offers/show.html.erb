@@ -60,7 +60,8 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div
+      >
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
@@ -100,6 +101,7 @@
                 </div>
               </li>
             <% end %>
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
             <% unless @job_offer.responsible_user.blank? %>

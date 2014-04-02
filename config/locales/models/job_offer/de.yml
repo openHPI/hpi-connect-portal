@@ -18,6 +18,7 @@ de:
         requirements: "Anforderungen"
         vacant_posts: "Verfügbare Stellen"
         contact: "Kontakt"
+        region: "Region"
         state:
             BW: "Baden-Württemberg"
             BY: "Bayern"
