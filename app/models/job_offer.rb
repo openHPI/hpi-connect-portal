@@ -46,6 +46,8 @@ class JobOffer < ActiveRecord::Base
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  STATES = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+
 
   self.per_page = 15
 
@@ -149,5 +151,9 @@ class JobOffer < ActiveRecord::Base
 
   def category
     CATEGORIES[category_id]
+  end
+
+  def state
+    STATES[state_id]
   end
 end
