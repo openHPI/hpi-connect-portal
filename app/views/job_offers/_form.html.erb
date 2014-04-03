@@ -119,7 +119,7 @@
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %><%= mark_if_required(@job_offer, :compensation) %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation.blank? ? 10.0 : job_offer.compensation) } %>
+                  <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation) } %>
                 </div>
               </div>
             </li>
