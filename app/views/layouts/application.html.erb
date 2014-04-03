@@ -32,7 +32,9 @@
      <div class="subsitebackhead">
       <div>
         <h1><a href="http://www.hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
-        
+          <% if signed_in? %>
+          <%= link_to t("layouts.logout"), signout_path, class: "logout", method: :delete %>
+          <% end %>
           <div id="social">
               <a href="" class="facebook" class="facebook" alt="facebook"></a>
               <a href="" class="twitter" class="twitter" alt="twitter"></a>
@@ -40,8 +42,8 @@
               <a href="" class="youtube" class="youtube" alt="youtube"></a>
               <a href="" class="vimeo" class="vimeo" alt="vimeo"></a>
               <ul class="lang_switcher">
-                <li><span>de</span></li>
-                <li><a href="#0">en</a></li>
+                <li><%= link_to "de", locale: "de" %></li>
+                <li><%= link_to "en", locale: "en" %></li>
               </ul>
           </div>
 
@@ -58,8 +60,9 @@
   <div class="headbottom">
     <div id="head_bottom" class="collapse navbar-collapse">
       <% if signed_in? %>
-        <%= render :partial => "layouts/navigation/admin" %>
+        <%= render :partial => "layouts/navigation/#{current_user.role.name.downcase}" %>
       <% end %>
+      
     </div>
   </div>
 </div>
