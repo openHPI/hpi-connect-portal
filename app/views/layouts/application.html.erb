@@ -8,7 +8,7 @@
 <meta name="author" content="">
 
 <title><%= content_for?(:title) ? yield(:title) : "HpiHiwiPortal" %></title>
-
+<%= csrf_meta_tags %>
 <%= stylesheet_link_tag "application", :media => "all" %>
 <%= javascript_include_tag "application" %>
 
@@ -69,7 +69,8 @@
 
 
 <div class="container">
-      <%= yield %>
+  <%= render 'shared/flash_messages' %>
+  <%= yield %>
 </div>
 
 

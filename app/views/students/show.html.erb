@@ -1,6 +1,6 @@
 <div class="wrapper-12 teaser">
   <% if can?(:activate, @student) && !@student.activated %>
-    <div class="col-md-12" style="background-color: transparent; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;">
+    <div class="col-md-12 flash-message">
       <div class="alert alert-warning">
         <p><%= t("students.activation_reminder") %></p>
         

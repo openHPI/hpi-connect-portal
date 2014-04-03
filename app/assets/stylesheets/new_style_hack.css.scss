@@ -33,3 +33,12 @@
 #social{
   width: 280px !important;
 }
+
+.col-md-12.flash-message{
+  background-color: transparent !important; 
+  -moz-box-shadow: none !important; 
+  -webkit-box-shadow: none !important; 
+  box-shadow: none !important;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
