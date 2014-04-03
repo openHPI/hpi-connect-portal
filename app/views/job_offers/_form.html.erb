@@ -55,15 +55,10 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.region", class: "control-label" %><%= mark_if_required(@job_offer, :state) %>
                 </div>
-                <div class="col-sm-9">
-                  <%= select_tag "state_id", 
-                  options_for_select(
-                    JobOffer::STATES.each_with_index.collect {|state, index| 
-                      [t("activerecord.attributes.job_offer.state." + state),
-                      #[state,
-                       index]}, @job_offer.state_id),
-                     include_blank: false, 
-                     :class => "form-control" %> 
+                <div class="col-sm-9">                   
+                     <%= f.select :state_id, JobOffer::STATES.each_with_index.collect {|state, index| 
+                      [t("activerecord.attributes.job_offer.state." + state), index]}, {}, 
+                      {id: 'state_id', class: 'select optional form-control'} %>
                 </div>
               </div>
             </li>
