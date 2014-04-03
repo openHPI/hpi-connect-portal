@@ -193,7 +193,7 @@ describe EmployersController do
 
       before :each do
         login FactoryGirl.create(:user, :admin)
-        @employer = FactoryGirl.create(:employer)
+        @employer = FactoryGirl.create(:employer, activated: false)
       end
 
       it "should be accessible" do
