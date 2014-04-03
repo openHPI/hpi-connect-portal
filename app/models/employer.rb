@@ -36,6 +36,7 @@ class Employer < ActiveRecord::Base
   validates :deputy, presence: true
   validate  :check_deputys_employer
 
+  scope :active, -> { where(activated: true) }
   scope :internal, -> { where(external: false) }
   scope :external, -> { where(external: true) }
 

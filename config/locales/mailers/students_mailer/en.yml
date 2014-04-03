@@ -1,0 +1,4 @@
+en:
+  students_mailer:
+    new_student:
+      subject: 'A new student is waiting for activation'

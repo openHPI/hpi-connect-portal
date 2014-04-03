@@ -1,0 +1,4 @@
+en:
+  employers_mailer:
+    new_employer:
+      subject: 'A new employer is waiting for activation'

@@ -55,6 +55,7 @@ class Student < ActiveRecord::Base
   validates :semester, :academic_program, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
+  scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }

@@ -30,22 +30,49 @@ describe "the employer page" do
     end
 
     it "by an admin" do
-        admin = FactoryGirl.create(:user, :admin)
-        login(admin)
-        visit employer_path(employer)
+      admin = FactoryGirl.create(:user, :admin)
+      login(admin)
+      visit employer_path(employer)
 
-        should have_link 'Edit'
-        visit edit_employer_path(employer)
-        current_path == edit_employer_path(employer)
+      should have_link 'Edit'
+      visit edit_employer_path(employer)
+      current_path == edit_employer_path(employer)
     end
 
     it "not by student" do
-        login(user)
-        visit employer_path(employer)
+      login(user)
+      visit employer_path(employer)
 
-        should_not have_link 'Edit'
-        visit edit_employer_path(employer)
-        current_path != edit_employer_path(employer)
+      should_not have_link 'Edit'
+      visit edit_employer_path(employer)
+      current_path != edit_employer_path(employer)
+    end
+  end
+
+  describe "can be activated" do
+
+    before :each do 
+      @employer = FactoryGirl.create(:employer, activated: false)
+    end
+
+    it "by admin" do
+      login FactoryGirl.create(:user, :admin)
+      visit employer_path(@employer)
+      should have_link 'Activate'
+    end
+
+    it "not by students" do
+      login FactoryGirl.create(:student).user
+      expect {
+        visit employer_path(@employer)
+      }.to raise_error(ActionController::RoutingError)
+    end
+
+    it "not by staff members" do
+      login FactoryGirl.create(:staff)
+      expect {
+        visit employer_path(@employer)
+      }.to raise_error(ActionController::RoutingError)
     end
   end
 

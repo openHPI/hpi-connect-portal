@@ -1,0 +1,4 @@
+de:
+  students_mailer:
+    new_student:
+      subject: 'Ein neuer Student wartet auf Freigabe'

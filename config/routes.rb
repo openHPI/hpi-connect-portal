@@ -27,7 +27,11 @@ HpiHiwiPortal::Application.routes.draw do
 
     get "employers/external", to: "employers#index_external", as: "external_employers"
 
-    resources :employers
+    resources :employers do 
+      member do
+        get "activate"
+      end
+    end
 
     resources :applications, only: [:create, :destroy] do
       member do
@@ -36,7 +40,9 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    resources :users, only: [:edit, :update]
+    resources :users, only: [:edit, :update] do
+      patch '/update_password' => 'users#update_password', as: 'update_password'
+    end
 
     resources :sessions, only: [:new, :create, :destroy]
     get '/signin' => 'sessions#new', as: 'signin'

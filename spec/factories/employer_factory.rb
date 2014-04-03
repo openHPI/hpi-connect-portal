@@ -22,6 +22,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "Employer #{n}" }
     head            "Mr. Boss"
     description     "Makes beautiful websites"
+    activated       true
 
     before(:create) do | employer |
       employer.deputy = FactoryGirl.create(:staff, employer: employer)
