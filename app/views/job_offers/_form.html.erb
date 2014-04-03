@@ -65,6 +65,17 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
+                  <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :state) %>
+                </div>
+                <div class="col-sm-9">                   
+                     <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, {}, 
+                      {id: 'category_id', class: 'select optional form-control'} %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %><%= mark_if_required(@job_offer, :room_number) %>
                 </div>
                 <div class="col-sm-9">
