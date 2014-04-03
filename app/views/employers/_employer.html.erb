@@ -1,8 +1,5 @@
 <li class="list-group-item">
     <%= link_to employer.name, employer, :class => "h4" %>
-    <% if employer.external %>
-      <span class="label label-warning"><%= t("employers.external")%></span>
-    <% end %>
     <div class="pull-right">
     	<%= t("activerecord.attributes.employer.head") %>: <%= employer.head %>
     </div>

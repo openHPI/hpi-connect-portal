@@ -6,16 +6,8 @@ class EmployersController < ApplicationController
   before_action :set_employer, only: [:show, :edit, :update]
 
   def index
-    @employers = Employer.internal.sort_by { |employer| employer.name }
+    @employers = Employer.all.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = true
-  end
-
-  def index_external
-    @employers = Employer.external.sort_by { |employer| employer.name }
-    @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = false
-    render 'index'
   end
 
   def show

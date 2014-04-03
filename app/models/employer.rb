@@ -36,9 +36,6 @@ class Employer < ActiveRecord::Base
   validates :deputy, presence: true
   validate  :check_deputys_employer
 
-  scope :internal, -> { where(external: false) }
-  scope :external, -> { where(external: true) }
-
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
   end
