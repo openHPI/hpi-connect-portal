@@ -1,11 +1,13 @@
-<h1><%= t('employers.editing_employer') %></h1>
+<div class="wrapper-12 teaser" style="margin-left:20px;">
+  <h1><%= t('employers.editing_employer') %></h1>
 
-<%= simple_form_for @employer, html: { multipart: true } do |f| %>
+  <%= simple_form_for @employer, html: { multipart: true } do |f| %>
 
-  <%= render 'shared/object_errors', object: @employer %>
+    <%= render 'shared/object_errors', object: @employer %>
 
-  <%= render 'form_fields', form: f, employer: @employer, with_deputy_select: true %>
+    <%= render 'form_fields', form: f, employer: @employer, with_deputy_select: true %>
 
-  <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
 
-<% end %>
+  <% end %>
+</div>

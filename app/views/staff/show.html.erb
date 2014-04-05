@@ -1,36 +1,38 @@
-<div class="row">
-  <div class="col-sm-6">
-    <div class="pull-right">
-      <h1 align="right"><%= @staff.firstname %> <%= @staff.lastname %></h1>
+<div class="wrapper-12 teaser">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <h1 align="right"><%= @staff.firstname %> <%= @staff.lastname %></h1>
+      </div>
+    </div>
+    <div class="col-sm-6 text-left">
+      <p>
+        <%= image_tag(@staff.user.photo.url, size: "150", class: "img-thumbnail")  %>
+      </p>
     </div>
   </div>
-  <div class="col-sm-6 text-left">
-    <p>
-      <%= image_tag(@staff.user.photo.url, size: "150", class: "img-thumbnail")  %>
-    </p>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <tr>
-            <td><%= t("activerecord.attributes.user.email") %></td>
-            <td><%= mail_to @staff.email %></td>
-          </tr>
-          <tr>
-            <td><%= t("activerecord.attributes.user.employer") %></td>
-            <td>
-              <% if @staff.employer %>
-                <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
-              <% end %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
+        <table class="table">
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td><%= t("activerecord.attributes.user.email") %></td>
+              <td><%= mail_to @staff.email %></td>
+            </tr>
+            <tr>
+              <td><%= t("activerecord.attributes.user.employer") %></td>
+              <td>
+                <% if @staff.employer %>
+                  <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
+                <% end %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>
 </div>

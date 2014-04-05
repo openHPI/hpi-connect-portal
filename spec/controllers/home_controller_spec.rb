@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ImprintController do
+describe HomeController do
 
   before(:each) do
     login FactoryGirl.create(:student).user
@@ -12,4 +12,12 @@ describe ImprintController do
       response.should be_success
     end
   end
+
+  describe "GET 'imprint'" do
+    it "returns http success" do
+      get 'imprint'
+      response.should be_success
+    end
+  end
+
 end

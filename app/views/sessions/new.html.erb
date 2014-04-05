@@ -1,12 +1,18 @@
-<h1> Login Page </h1>
+<div class="wrapper-12 teaser">
+  <div class="col-md-12">
+    <div class="col-md-11">
+      <h1> Login Page </h1>
 
-<%= simple_form_for :session, url: sessions_path do |f| %>
-    <%= f.input :email %>
-    <%= f.input :password %>
+      <%= simple_form_for :session, url: sessions_path do |f| %>
+          <%= f.input :email %>
+          <%= f.input :password %>
 
-    <br />
-    <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-<% end %>
+          <br />
+          <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+      <% end %>
 
-<br />
-<%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
+      <br />
+      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
+    </div>
+  </div>
+</div>
