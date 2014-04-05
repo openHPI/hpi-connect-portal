@@ -7,10 +7,6 @@ describe EmployersController do
       get("/employers").should route_to("employers#index")
     end
 
-    it "routes to #index_external" do
-      get("/employers/external").should route_to("employers#index_external")
-    end
-
     it "routes to #new" do
       get("/employers/new").should route_to("employers#new")
     end

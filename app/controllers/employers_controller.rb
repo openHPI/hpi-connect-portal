@@ -7,17 +7,8 @@ class EmployersController < ApplicationController
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = @employers.internal.sort_by { |employer| employer.name }
+    @employers = @employers.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = true
-  end
-
-  def index_external
-    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = @employers.external.sort_by { |employer| employer.name }
-    @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = false
-    render 'index'
   end
 
   def show
@@ -77,6 +68,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

@@ -4,11 +4,7 @@
   	<%= link_to t('employers.new_employer'), new_employer_path, :class => "btn btn-default pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
   	<% end %>
 	<h1 style="padding-bottom: 18px; padding-top: 18px;">
-		<% if @internal %>
-		<%= t('employers.employer_overview_internal') %>
-		<% else %>
-		<%= t('employers.employer_overview_external') %>
-		<% end %>
+		<%= t('employers.employer_overview') %>
 	</h1>
 
 	  <ul class="list-group">

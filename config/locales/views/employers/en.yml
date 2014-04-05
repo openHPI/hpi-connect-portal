@@ -2,8 +2,7 @@ en:
     employers:
         employer: "Employer"
         employers: "Employers"
-        employer_overview_internal: "Listing of chairs"
-        employer_overview_external: "Listing of external employers"
+        employer_overview: "Listing of employers"
         editing_employer: "Editing Employer"
         new_employer: "New Employer"
         staff: "Staff"
@@ -14,7 +13,6 @@ en:
         open_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
-        external: "External"
         inactive: "Deactivated"
         select_deputy: "Select a deputy..."
         messages:
