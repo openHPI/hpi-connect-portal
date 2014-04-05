@@ -60,7 +60,7 @@
   <div class="headbottom">
     <div id="head_bottom" class="collapse navbar-collapse">
       <% if signed_in? %>
-        <%= render :partial => "layouts/navigation/#{current_user.role.name.downcase}" %>
+       <%= render "layouts/navigation/#{current_user.role}" %>
       <% end %>
       
     </div>

@@ -1,0 +1,25 @@
+(For an English translation, scroll down.)<br />
+<br />
+Hallo Administratoren,<br />
+<br />
+soeben hat sich ein neuer Student registriert. Um Ihn freizuschalten besuchen sie sein Profil unter:<br />
+<%= link_to @student.full_name, url_for(controller:"students", action: "show", id: @student.id, only_path: false) %>
+<br />
+<br />
+Grüße,<br />
+Das HPI-HiWi-Portal Team.<br />
+<br />
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br />
+<br />
+<hr>
+<br />
+Dear Admins,<br />
+<br />
+a new student just registered. He can be activated on his profile:<br />
+<%= link_to @student.full_name, url_for(controller:"students", action: "show", id: @student.id, only_path: false) %>
+<br />
+<br />
+Regards,<br />
+The HPI-HiWi-Portal Team.<br />
+<br />
+(This is an automatically created email, please do not respond to it.)

@@ -16,7 +16,7 @@ describe StudentsController do
 
   describe "GET index" do
     it "assigns all students as @students" do
-      login staff.user
+      login FactoryGirl.create(:user, :admin)
 
       student = FactoryGirl.create(:student)
       get :index, {}, valid_session
@@ -42,13 +42,13 @@ describe StudentsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested user" do
+      it "updates the requested student" do
         student = FactoryGirl.create(:student)
         Student.any_instance.should_receive(:update).with({ "semester" => "5" })
         put :update, {id: student.to_param, student: { semester: 5 }}, valid_session
       end
 
-      it "assigns the requested student as @user" do
+      it "assigns the requested student as @student" do
         student = FactoryGirl.create(:student)
         put :update, {id: student.to_param, student: valid_attributes}, valid_session
         assigns(:student).should eq(student)
@@ -62,7 +62,7 @@ describe StudentsController do
     end
 
     describe "with invalid params" do
-      it "assigns the student as @user" do
+      it "assigns the student as @student" do
         student = FactoryGirl.create(:student)
         Student.any_instance.stub(:save).and_return(false)
         put :update, {id: student.to_param, student: { semester: -1 }}, valid_session
@@ -160,6 +160,55 @@ describe StudentsController do
       get :matching, ({ language_ids: [@language_1.id], programming_language_ids: [@programming_language_1.id]}), valid_session
       assert current_path.should == old_path
       assigns(:students).should eq(Student.all.sort_by{ |x| [x.lastname, x.firstname] }.paginate page: 1, per_page: 5)
+    end
+  end
+
+  describe "GET activate" do
+    describe "as an admin" do
+
+      before :each do
+        login FactoryGirl.create(:user, :admin)
+        @student = FactoryGirl.create(:student)
+        @student.user.update_column :activated, false
+      end
+
+      it "should be accessible" do
+        get :activate, ({ id: @student.id })
+        response.should redirect_to(@student)
+      end
+
+      it "should activate the student" do
+        get :activate, ({ id: @student.id })
+        @student.reload
+        assert @student.user.activated
+      end
+    end
+
+    describe "as a student" do
+
+      before :each do
+        @student = FactoryGirl.create(:student)
+        login @student.user
+      end
+
+      it "should be accessible for the own profile" do
+        get :activate, ({ id: @student.id, student: { username: 'max.mustermann' }})
+        response.should_not redirect_to(root_path)
+      end
+
+      it "should not be accessible for other profiles" do
+        get :activate, ({ id: FactoryGirl.create(:student).id })
+        response.should redirect_to(root_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
+      end
+    end
+
+    it "should not be accessible for staff members" do
+      staff = FactoryGirl.create(:staff)
+      login staff.user
+      get :activate, ({ id: FactoryGirl.create(:student).id })
+      response.should redirect_to(root_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
     end
   end
 

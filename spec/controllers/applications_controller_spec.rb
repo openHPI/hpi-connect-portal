@@ -207,6 +207,15 @@ describe ApplicationsController do
           post :create, { application: { job_offer_id: @job_offer.id}}
       }.to change(Application, :count).by(0)
     end
+
+    it "does not allow not activated students to create applications" do
+      student = FactoryGirl.create(:student)
+      student.user.update_column :activated, false
+      login student.user
+      expect{
+          post :create, { application: { job_offer_id: @job_offer.id}}
+      }.to change(Application, :count).by(0)
+    end
   end
 
   describe "DELETE destroy" do

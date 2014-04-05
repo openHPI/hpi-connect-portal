@@ -26,6 +26,9 @@
       <% if can? :edit, @student %>
         <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default pull-right" %>
       <% end %>
+      <% if can?(:activate, @student) && !@student.activated %>
+        <%= link_to t("links.activate"), activate_student_path(@student.id), class: "btn btn-default pull-right" %>
+      <% end %>
     </p>
   </div>
 </div>

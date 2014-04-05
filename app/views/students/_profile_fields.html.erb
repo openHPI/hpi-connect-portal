@@ -1,48 +1,4 @@
 <%= link_to "Import link", request_linkedin_import_student_path(student) %>
-<%= form.simple_fields_for :user, student.user do |user_form| %>
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
-            </div>
-            <div class="col-sm-9">
-              <div class="input select optional user_user_status">
-                <%= user_form.input :firstname %>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= label_field user_form, :lastname, t("activerecord.attributes.user.lastname") %>
-            </div>
-            <div class="col-sm-9">
-              <div class="input select optional user_user_status">
-                <%= user_form.input :lastname %>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= label_field user_form, :email, t("activerecord.attributes.user.email") %>
-            </div>
-            <div class="col-sm-9">
-              <div class="input select optional user_user_status">
-                <%= user_form.input :email %>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-  </div>
-<% end %>
-
 
 <div class="row">
   <!--   Left -->

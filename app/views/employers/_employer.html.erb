@@ -3,7 +3,10 @@
     <% if employer.external %>
       <span class="label label-warning"><%= t("employers.external")%></span>
     <% end %>
+    <% unless employer.activated %>
+      <span class="label label-danger"><%= t("employers.inactive")%></span>
+    <% end %>
     <div class="pull-right">
-    	<%= t("activerecord.attributes.employer.head") %>: <%= employer.head %>
+      <%= t("activerecord.attributes.employer.head") %>: <%= employer.head %>
     </div>
 </li>
