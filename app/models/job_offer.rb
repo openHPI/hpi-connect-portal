@@ -45,7 +45,7 @@ class JobOffer < ActiveRecord::Base
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
-  self.per_page = 5
+  self.per_page = 15
 
   def default_values
     self.status ||= JobStatus.pending

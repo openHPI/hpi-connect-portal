@@ -14,22 +14,11 @@ describe "the students page" do
 
   describe "as a staff member" do
 
-    before(:each) do 
+    it "is not available for students" do
       login staff.user
       visit students_path
-    end
-
-    it "should view only names and status of a student on the overview" do
-      page.should have_content(
-        @student1.firstname,
-        @student1.lastname
-      )
-    end
-
-    it "should contain a link for showing a profile and it should lead to profile page " do
-      find_link(@student1.firstname).click
       current_path.should_not == students_path
-      current_path.should == student_path(@student1)
+      current_path.should == root_path
     end
   end
 
@@ -92,39 +81,36 @@ describe "the students editing page" do
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
-    fill_in 'student_user_attributes_email', with: 'www.alex@hpi.uni-potsdam.de'
     find('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
     page.should have_content(
-      "Profile was successfully updated",
+      I18n.t('users.messages.successfully_updated'),
       "General information",
-      "www.alex@hpi.uni-potsdam.de"
+      "www.faceboook.com/alex"
     )
-
    end
 
-    it "can be edited by an admin" do
-      admin = FactoryGirl.create(:user, :admin)
-      login admin
-      visit student_path(@student1)
+  it "can be edited by an admin" do
+    admin = FactoryGirl.create(:user, :admin)
+    login admin
+    visit student_path(@student1)
 
-      page.should have_link("Edit")
-      page.find_link("Edit").click
+    page.should have_link("Edit")
+    page.find_link("Edit").click
 
-      fill_in 'student_facebook', with: 'www.face.com/alex'
-      fill_in 'student_user_attributes_email', with: 'www.alex@uni-potsdam.de'
-      find('input[type="submit"]').click
+    fill_in 'student_facebook', with: 'www.face.com/alex'
+    find('input[type="submit"]').click
 
-      current_path.should == student_path(@student1)
+    current_path.should == student_path(@student1)
 
-      page.should have_content(
-        "Profile was successfully updated",
-        "General information",
-        "www.alex@uni-potsdam.de"
-      )
-    end
+    page.should have_content(
+      I18n.t('users.messages.successfully_updated'),
+      "General information",
+      "www.face.com/alex"
+    )
+  end
 end
 
 describe "the students profile page" do
@@ -135,8 +121,7 @@ describe "the students profile page" do
     @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
 
     login @student1.user
-   end
-
+  end
 
   describe "of myself" do
     before(:each) do
@@ -160,17 +145,20 @@ describe "the students profile page" do
       page.current_path.should == edit_student_path(@student1)
     end
 
-    it "should show a reminder with openID form if I am not activated" do
-      page.should have_content(I18n.t("students.activation_reminder"))
-      page.should have_css('input#open-id-field')
-    end
-
     it "should not show a reminder if I am activated" do
       @student1.user.update_column :activated, true
       visit student_path(@student1)
 
       page.should_not have_content(I18n.t("students.activation_reminder"))
       page.should_not have_css('input#open-id-field')
+    end
+
+    it "should show a reminder with openID form if I am not activated" do
+      @student1.user.update_column :activated, false
+      visit student_path(@student1)
+
+      page.should have_content(I18n.t("students.activation_reminder"))
+      page.should have_css('input#open-id-field')
     end
   end
 
@@ -207,6 +195,17 @@ describe "the students profile page" do
     it "should not have a reminder about activation" do
       page.should_not have_content(I18n.t("students.activation_reminder"))
       page.should_not have_css('input#open-id-field')
+    end
+  end
+
+  describe "as admin" do
+    it "should have activate button" do
+      login FactoryGirl.create(:user, :admin)
+      student = FactoryGirl.create(:student)
+      student.user.update_column :activated, false
+      visit student_path(student)
+      assert current_path == student_path(student)
+      page.should have_link 'Activate'
     end
   end
 end

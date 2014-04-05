@@ -14,6 +14,7 @@ de:
     show: "Anzeigen"
     discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
     verify: "Freischalten"
+    activate: "Aktivieren"
   titles:
     edit: "%{model} bearbeiten"
     save: "%{model} speichern"
