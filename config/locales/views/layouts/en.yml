@@ -1,5 +1,6 @@
 en:
   layouts:
+    title: "Career Portal"
     job_offers: "Job offers"
     students: "Students"
     staff: "Staff"
