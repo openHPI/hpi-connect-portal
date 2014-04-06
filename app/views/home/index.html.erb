@@ -109,31 +109,35 @@
 
 <div class="wrapper-5 teaser sidebar">
 
-  <div class="col-md-4">
-    <h1><%= t("home.index.latest_job_offers", number_of_job_offers: @job_offers.length)%></h1>
-    <ul>
-      <% @job_offers.each do |job_offer| %>
-        <li> <%= link_to job_offer.title, job_offer %> </li>
-      <% end %>
-    </ul>
-  </div>
+  <% unless @job_offers.empty? %>
+    <div class="col-md-4" id="job_offers">
+      <h1><%= t("home.index.latest_job_offers", number_of_job_offers: @job_offers.length)%></h1>
+      <ul>
+        <% @job_offers.each do |job_offer| %>
+          <li> <%= link_to job_offer.title, job_offer %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div class="col-md-4">
-    <h1><%= t("home.index.latest_employers", number_of_employers: @employers.length)%></h1>
-    <ul>
-      <% @employers.each do |employer| %>
-        <li> <%= link_to employer.name, employer %> </li>
-      <% end %>
-    </ul>
-  </div>
-
+  <% unless @employers.empty? %>
+    <div class="col-md-4" id="employers">
+      <h1><%= t("home.index.latest_employers", number_of_employers: @employers.length)%></h1>
+      <ul>
+        <% @employers.each do |employer| %>
+          <li> <%= link_to employer.name, employer %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
   <% unless signed_in? %>
     <div class="col-md-4">
       <h1> Login Page </h1>
 
       <%= simple_form_for :session, url: home_index_path do |f| %>
-          <%= f.input :email %>
-          <%= f.input :password %>
+          <%= f.input :email, id: "email" %>
+          <%= f.input :password, id: "password" %>
 
           <br />
           <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>

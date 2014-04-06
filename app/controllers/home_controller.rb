@@ -1,7 +1,6 @@
 class HomeController < ApplicationController
   skip_before_filter :signed_in_user
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :signed_in_user
 
   def index
     @job_offers = JobOffer.last 5
