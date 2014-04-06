@@ -27,6 +27,8 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
+  ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']     
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
@@ -84,6 +86,14 @@ class Student < ActiveRecord::Base
 
   def employment_status
     EMPLOYMENT_STATUSES[employment_status_id]
+  end
+
+  def academic_program
+    ACADEMIC_PROGRAMS[academic_program_id]
+  end
+
+  def graduation
+    GRADUATIONS[graduation_id]
   end
 
   def update_from_linkedin(linkedin_client)
