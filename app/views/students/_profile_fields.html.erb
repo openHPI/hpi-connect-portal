@@ -142,7 +142,7 @@
             <div class="col-sm-9">
             <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
             [t("activerecord.attributes.user.education_options." + grade), index]
-            }, {}, {id: ':graduation_id', class: 'select optional form-control'} %>
+            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
             </div>
           </div>
         </li>
