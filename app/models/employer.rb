@@ -34,6 +34,8 @@ class Employer < ActiveRecord::Base
   validates :description, presence: true
   validates :head, presence: true
   validates :deputy, presence: true
+  validates :number_of_employess, presence: true
+  validates :year_of_foundation, greater_than_or_equal_to 1800
   validate  :check_deputys_employer
 
   scope :active, -> { where(activated: true) }
