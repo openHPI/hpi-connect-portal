@@ -47,7 +47,7 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
   STATES = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
 
   self.per_page = 15
 
@@ -155,5 +155,9 @@ class JobOffer < ActiveRecord::Base
 
   def state
     STATES[state_id]
+  end
+
+  def minimum_degree
+    GRADUATIONS[graduation_id]
   end
 end

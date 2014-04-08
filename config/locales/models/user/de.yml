@@ -8,6 +8,7 @@ de:
         academic_program: "Studiengang"
         birthday: "Geburtsdatum"
         education: "Abschluss"
+        minimum_degree: "Mindestabschluss"
         login_information: "Login Informationen"
         general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Informationen"
