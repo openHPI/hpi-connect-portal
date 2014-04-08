@@ -23,18 +23,24 @@
                   <%= select_tag "employer", options_for_select(Employer.all.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control" %>
                 </div>
                 <div class="form-group">
+                  <%= label_tag t("activerecord.attributes.job_offer.region") , nil, :class => "small" %>                          
+                  <%= select_tag "state", 
+                  options_for_select(
+                    JobOffer::STATES.each_with_index.collect {|state, index| [t("activerecord.attributes.job_offer.state." + state), index]}, params.fetch(:state, 3)), include_blank: true, :class => "form-control" %>           
+                </div> 
+                <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.category") , nil, :class => "small" %>                          
                   <%= select_tag "category", 
                   options_for_select(
                     JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, nil)), include_blank: true, :class => "form-control" %>           
                 </div>
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.region") , nil, :class => "small" %>                          
-                  <%= select_tag "state", 
+                  <%= label_tag t("activerecord.attributes.user.education") , nil, :class => "small" %>                          
+                  <%= select_tag "graduation", 
                   options_for_select(
-                    JobOffer::STATES.each_with_index.collect {|state, index| [t("activerecord.attributes.job_offer.state." + state), index]}, params.fetch(:state, 3)), include_blank: true, :class => "form-control" %>           
-                </div>
-              <% end %>
+                    JobOffer::GRADUATIONS.each_with_index.collect {|degree, index| [t("activerecord.attributes.user.education_options." + degree), index]}, params.fetch(:graduation, 2)), include_blank: true, :class => "form-control" %>
+                     </div>
+                <% end %>
 
               <div class="form-group">
                 <%= check_box_tag :external_only, true, params.has_key?('external_only')  %> <%= t("job_offers.external_only") %>
