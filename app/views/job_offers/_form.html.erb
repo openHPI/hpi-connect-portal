@@ -74,6 +74,18 @@
               </div>
             </li>
             <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= f.label :graduation, t("activerecord.attributes.user.minimum_degree"), class: "control-label" %><%= mark_if_required(@job_offer, t("activerecord.attributes.user.education_options." + @job_offer.minimum_degree)) %>
+            </div>
+            <div class="col-sm-9">
+            <%= f.select :graduation_id, JobOffer::GRADUATIONS.each_with_index.collect {|grade, index|
+            [t("activerecord.attributes.user.education_options." + grade), index]
+            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+            <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %><%= mark_if_required(@job_offer, :room_number) %>
