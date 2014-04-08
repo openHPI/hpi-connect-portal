@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StudentsController do
 
-  let(:valid_attributes) { { "semester" => "3", "education" => "Master", "academic_program" => "Volkswirtschaftslehre" } }
+  let(:valid_attributes) { { "semester" => "3", "graduation_id" => "1", "academic_program_id" => "2" } }
   
   before(:each) do
     login FactoryGirl.create(:student).user
@@ -86,10 +86,8 @@ describe StudentsController do
     it "handles nil strings" do
 
       params = {
-        "academic_program" => nil,
         "additional_information" => nil,
         "birthday" => nil,
-        "education" => nil,
         "facebook" => nil,
         "github" => nil,
         "homepage" => nil,
@@ -174,12 +172,12 @@ describe StudentsController do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       @student.programming_languages_users.size.should eq(1)
       ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program_id: '0' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
     end
 
     it "updates the requested student with a new programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: '0' }, programming_language_skills: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } }, valid_session
       @student.reload
       @student.programming_languages_users.size.should eq(2)
       @student.programming_languages.first.should eq(@programming_language_1)
@@ -188,7 +186,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4'), FactoryGirl.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: '0' }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
       @student.reload
       @student.programming_languages_users.size.should eq(1)
       @student.programming_languages.first.should eq(@programming_language_1)
@@ -206,12 +204,12 @@ describe StudentsController do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       @student.languages_users.size.should eq(1)
       LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: '0' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
     end
 
     it "updates the requested student with a new language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: '0' }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }, valid_session
       @student.reload
       @student.languages_users.size.should eq(2)
       @student.languages.first.should eq(@language_1)
@@ -220,7 +218,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4'), FactoryGirl.create(:languages_user, language_id: @language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { academic_program: 'Bachelor' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program: '0' }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
       @student.reload
       @student.languages_users.size.should eq(1)
       @student.languages.first.should eq(@language_1)

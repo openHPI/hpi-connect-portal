@@ -54,7 +54,7 @@ class Student < ActiveRecord::Base
 
   delegate :firstname, :lastname, :full_name, :email, :activated, to: :user
 
-  validates :semester, :academic_program, presence: true
+  validates :semester, :academic_program_id, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
@@ -64,8 +64,8 @@ class Student < ActiveRecord::Base
           (lower(firstname) LIKE ?
           OR lower(lastname) LIKE ?
           OR lower(email) LIKE ?
-          OR lower(academic_program) LIKE ?
-          OR lower(education) LIKE ?
+          OR lower(academic_program_id) LIKE ?
+          OR lower(graduation_id) LIKE ?
           OR lower(homepage) LIKE ?
           OR lower(github) LIKE ?
           OR lower(facebook) LIKE ?

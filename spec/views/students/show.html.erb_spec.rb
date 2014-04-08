@@ -10,9 +10,9 @@ describe "students/show" do
         activated: false
       ),
       semester: 1,
-      academic_program: "Academic Program",
+      academic_program_id: 3,
       birthday: '2013-11-10',
-      education: "MyText",
+      graduation_id: 3,
       additional_information: "MyText",
       homepage: "Homepage",
       github: "Github",
