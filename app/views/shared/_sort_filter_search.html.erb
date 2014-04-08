@@ -38,7 +38,7 @@
                   <%= label_tag t("activerecord.attributes.user.education") , nil, :class => "small" %>                          
                   <%= select_tag "graduation", 
                   options_for_select(
-                    JobOffer::GRADUATIONS.each_with_index.collect {|degree, index| [t("activerecord.attributes.user.education_options." + degree), index]}, params.fetch(:graduation, 2)), include_blank: true, :class => "form-control" %>
+                    JobOffer::GRADUATIONS.each_with_index.collect {|degree, index| [t("activerecord.attributes.user.degrees." + degree), index]}, params.fetch(:graduation, 2)), include_blank: true, :class => "form-control" %>
                      </div>
                 <% end %>
 

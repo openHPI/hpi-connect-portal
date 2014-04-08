@@ -28,11 +28,9 @@ en:
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Others"
-        education_options:
+        degrees:
             abitur: "General Qualification for University Entrance"
             secondary_education: "General Certificate of Secondary Education"
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Others"

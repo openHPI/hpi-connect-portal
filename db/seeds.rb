@@ -183,7 +183,6 @@ Student.create!([{
   academic_program_id: 0,
   graduation_id: 2,
   birthday: '1990-12-30',
-  education:'Abitur',
   additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
   homepage: 'https://twitter.com/FraBle90',
   github: 'https://github.com/FraBle',

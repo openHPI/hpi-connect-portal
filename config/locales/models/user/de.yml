@@ -28,11 +28,9 @@ de:
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Andere"
-        education_options:
+        degrees:
             abitur: "Abitur"
             secondary_education: "Realschulabschluss"
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Andere"

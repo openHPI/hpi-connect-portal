@@ -137,11 +137,11 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :graduation, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.education_options." + student.graduation)) %>
+              <%= form.label :graduation, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.degrees." + student.graduation)) %>
             </div>
             <div class="col-sm-9">
             <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
-            [t("activerecord.attributes.user.education_options." + grade), index]
+            [t("activerecord.attributes.user.degrees." + grade), index]
             }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
             </div>
           </div>
