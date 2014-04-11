@@ -55,5 +55,30 @@ describe Employer do
       employer_with_same_name = @employer.dup
       assert employer_with_same_name.should be_invalid
     end
+
+    it "with year_of_foundation less than 1800" do
+      @employer.year_of_foundation = 1745
+      @employer.should be_invalid
+    end
+
+    it "with year_of_foundation greater than 1800" do
+      @employer.year_of_foundation = 1801
+      @employer.should be_valid
+    end
+
+    it "with future year_of_foundation" do
+      @employer.year_of_foundation = Time.now.year + 1
+      @employer.should be_invalid
+    end
+
+    it "with number_of_employees not present" do
+      @employer.number_of_employees = nil
+      @employer.should be_invalid
+    end
+
+    it "with place_of_business not present" do
+      @employer.place_of_business = nil
+      @employer.should be_invalid
+    end
   end
 end

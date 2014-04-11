@@ -68,6 +68,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :head, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

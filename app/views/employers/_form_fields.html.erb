@@ -66,6 +66,38 @@
         </div>
       </div>
     </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
+          <%= form.select :number_of_employees, ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"], {}, { class: "form-control" } %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
+          <%= form.input :place_of_business %>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :website, class: "control-label" %><%= mark_if_required(employer, :website) %>
+          <%= form.input :website %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :year_of_foundation, class: "control-label" %><%= mark_if_required(employer, :year_of_foundation) %>
+          <%= form.input :year_of_foundation %>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :line_of_business, class: "control-label" %><%= mark_if_required(employer, :line_of_business) %>
+          <%= form.input :line_of_business %>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 <% if with_deputy_select && Employer.validators.map(&:class).include?(ActiveRecord::Validations::PresenceValidator) %>

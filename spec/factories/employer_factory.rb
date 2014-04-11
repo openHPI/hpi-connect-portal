@@ -23,6 +23,11 @@ FactoryGirl.define do
     head            "Mr. Boss"
     description     "Makes beautiful websites"
     activated       true
+    place_of_business "Berlin"
+    website         "http://mrboss.de"
+    line_of_business "IT"
+    year_of_foundation 1991
+    number_of_employees "50 - 100"
 
     before(:create) do | employer |
       employer.deputy = FactoryGirl.create(:staff, employer: employer)

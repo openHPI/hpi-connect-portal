@@ -92,6 +92,8 @@ describe "the employer page" do
       fill_in 'employer_name', with: 'Test Employer' 
       fill_in 'employer_head', with: 'Employers Head'
       fill_in 'employer_description', with: 'Desctiption for an Employer.'
+      fill_in 'employer_year_of_foundation', with: 1992
+      fill_in 'employer_place_of_business', with: 'Potsdam'
       fill_in 'employer_deputy_attributes_user_attributes_firstname', with: 'Max'
       fill_in 'employer_deputy_attributes_user_attributes_lastname', with: 'Mustermann'
       fill_in 'employer_deputy_attributes_user_attributes_email', with: 'deputy@test.com'

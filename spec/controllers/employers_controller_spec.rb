@@ -6,7 +6,8 @@ describe EmployersController do
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
-      head: "Prof. Patrick Baudisch" , deputy_id: deputy.id } }
+      head: "Prof. Patrick Baudisch" , deputy_id: deputy.id, 
+      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998 } }
 
   let(:false_attributes) { { "name" => "HCI"} }
 

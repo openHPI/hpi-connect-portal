@@ -34,8 +34,11 @@ class Employer < ActiveRecord::Base
   validates :description, presence: true
   validates :head, presence: true
   validates :deputy, presence: true
-  validates :number_of_employess, presence: true
-  validates :year_of_foundation, greater_than_or_equal_to 1800
+  validates :number_of_employees, presence: true
+  validates :place_of_business, presence: true
+  validates :year_of_foundation, numericality: { only_integer: true, 
+    greater_than: 1800, 
+    less_than_or_equal_to: Time.now.year}
   validate  :check_deputys_employer
 
   scope :active, -> { where(activated: true) }
