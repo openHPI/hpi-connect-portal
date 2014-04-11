@@ -121,8 +121,8 @@ Student.create!([{
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
   ),
   semester: 5,
-  academic_program_id: 0,
-  graduation_id: 1,
+  academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
+  graduation_id: Student::GRADUATIONS.index("abitur"),
 }])
 
 Student.create!([{

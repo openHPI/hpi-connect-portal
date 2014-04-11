@@ -13,7 +13,7 @@ describe "the job-offers page" do
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @staff, status: @open)
     @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @staff, status: @open)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: 2, employer: @epic, responsible_user: @staff, status: @open)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, responsible_user: @staff, status: @open)
   end
 
   it "should include all jobs currently available" do

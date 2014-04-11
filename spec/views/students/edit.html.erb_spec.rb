@@ -9,9 +9,9 @@ describe "students/edit" do
         email: "test@test.de"
       ),
       semester: 1,
-      academic_program_id: 3,
+      academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
       birthday: '2013-11-10',
-      graduation_id: 2,
+      graduation_id: Student::GRADUATIONS.index("abitur"),
       additional_information: "MyText",
       homepage: "Homepage",
       github: "Github",
