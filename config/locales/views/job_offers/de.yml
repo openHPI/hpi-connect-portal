@@ -1,7 +1,7 @@
 de:
   job_offers:
     headline: "Stellenangebote"
-    starts: "beginnt am"
+    starts: "startet am"
     ends: "endet am"
     sortDate: "Datum"
     sortEmployer: "Arbeitgeber"
@@ -54,7 +54,6 @@ de:
     default_startdate: "Ab sofort"
     recommended_jobs: "empfohlene Stellen"
     vacant_posts_left: "offene Stelle(n) verfügbar"
-    external_only: "Nur externe Arbeitgeber anzeigen"
     messages:
         successfully_created: "Das Jobangebot wurde erfolgreich erstellt."
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."

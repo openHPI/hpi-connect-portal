@@ -1,12 +1,12 @@
 <% if defined?(name) %>
-  <h1> <%= t(name) %> </h1>
+  <h1 style="padding-bottom: 18px"> <%= t(name) %> </h1>
 <% end %>
 <% unless job_offer_list.empty? %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-5">
             <% if defined?(do_not_show_details) && do_not_show_details %>
               <h4><%= job_offer.title %>
             <% else %>
@@ -15,23 +15,23 @@
               <% if current_user.student? && current_user.manifestation.applied?(job_offer) %>
                 <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
               <% end %>
-            </h4>
-            <%= t("job_offers.category." + job_offer.category) %>
+            </h4> 
+            <%= t("job_offers.category." + job_offer.category) %>                    
           </div>
           <div class="col-md-3">
             <%= image_tag job_offer.employer.avatar.url, size: "100", class: "img-thumbnail"  %>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" style="float:right">
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
             <% unless job_offer.end_date.nil? %>
             <p class="startDate"><%= t("job_offers.ends") %> <%= l(job_offer.end_date) %></p>
             <% end %>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-11 col-md-offset-6">
+        <div class="row">                   
+          <div class="col-md-7 col-md-offset-5">
             <p class="employer"><%= job_offer.employer.name %></p>
-          </div>          
+          </div>           
         </div>
       </li>
     <%end%>

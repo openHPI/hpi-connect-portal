@@ -3,8 +3,10 @@ HpiHiwiPortal::Application.routes.draw do
 
   scope "(:locale)", locale: /en|de/ do
 
-  root to: "sessions#new"
-  get "imprint", to: "imprint#index"
+	get "home/index"
+    get "home/imprint"
+
+    root to: "sessions#new"
 
     namespace :admin do
       resource :configurable, except: [:index]
@@ -25,9 +27,11 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    get "employers/external", to: "employers#index_external", as: "external_employers"
-
-    resources :employers
+    resources :employers do 
+      member do
+        get "activate"
+      end
+    end
 
     resources :applications, only: [:create, :destroy] do
       member do
@@ -36,7 +40,9 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    resources :users, only: [:edit, :update]
+    resources :users, only: [:edit, :update] do
+      patch '/update_password' => 'users#update_password', as: 'update_password'
+    end
 
     resources :sessions, only: [:new, :create, :destroy]
     get '/signin' => 'sessions#new', as: 'signin'

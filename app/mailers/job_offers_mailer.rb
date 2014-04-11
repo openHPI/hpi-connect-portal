@@ -4,38 +4,38 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail(to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title))
+    mail to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
   end
 
   def new_job_offer_info_email(job_offer, user)
     @job_offer = job_offer
     @student = user
-     mail(to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject"))
+     mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
   end
 
   def deputy_accepted_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail(to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title))
+    mail to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
   end
 
   def deputy_declined_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail(to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title))
+    mail to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
   end
 
   def job_closed_email(job_offer)
     @job_offer = job_offer
-    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_closed.subject", job_title: @job_offer.title))
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_closed.subject", job_title: @job_offer.title)
   end
 
   def job_student_accepted_email(job_offer)
     @job_offer = job_offer
-    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.student_accepted.subject", job_title: @job_offer.title))
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.student_accepted.subject", job_title: @job_offer.title)
   end
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    mail(to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title))
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
   end
 
   def inform_interested_students_immediately(job_offer)

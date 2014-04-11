@@ -4,6 +4,9 @@ en:
       user:
         first_name: "First name"
         last_name: "Last name"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        old_password: "Old Password"
         semester: "Semester"
         academic_program: "Program"
         birthday: "Birthdate"

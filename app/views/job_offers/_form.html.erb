@@ -37,7 +37,7 @@
         <div class="row">
           <div class="col-sm-12">
             <%= f.label t "activerecord.attributes.job_offer.description", class: "control-label" %><%= mark_if_required(@job_offer, :description) %>
-            <%= f.bootsy_area :description, rows: 10, class: "col-md-12 form-control", placeholder: t("job_offers.enter_description") %>
+            <%= f.bootsy_area :description, rows: 10, class: "col-md-11 form-control", placeholder: t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
@@ -55,7 +55,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.region", class: "control-label" %><%= mark_if_required(@job_offer, :state) %>
                 </div>
-                <div class="col-sm-9">                   
+                <div class="col-sm-8 pull-right">                   
                      <%= f.select :state_id, JobOffer::STATES.each_with_index.collect {|state, index| 
                       [t("activerecord.attributes.job_offer.state." + state), index]}, {}, 
                       {id: 'state_id', class: 'select optional form-control'} %>
@@ -67,7 +67,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :state) %>
                 </div>
-                <div class="col-sm-9">                   
+                <div class="col-sm-8 pull-right">                   
                      <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, {}, 
                       {id: 'category_id', class: 'select optional form-control'} %>
                 </div>
@@ -78,7 +78,7 @@
             <div class="col-sm-3">
               <%= f.label :graduation, t("activerecord.attributes.user.minimum_degree"), class: "control-label" %><%= mark_if_required(@job_offer, t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-8 pull-right">
             <%= f.select :graduation_id, JobOffer::GRADUATIONS.each_with_index.collect {|grade, index|
             [t("activerecord.attributes.user.degrees." + grade), index]
             }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
@@ -90,7 +90,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %><%= mark_if_required(@job_offer, :room_number) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                   <%= f.input :room_number %>
                 </div>
               </div>
@@ -100,7 +100,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %><%= mark_if_required(@job_offer, :start_date) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                    <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.nil? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
@@ -110,7 +110,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.end_date", class: "control-label" %><%= mark_if_required(@job_offer, :end_date) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                    <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.nil? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
                 </div>
               </div>
@@ -120,7 +120,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.time_effort", class: "control-label" %><%= mark_if_required(@job_offer, :time_effort) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                   <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
                 </div>
               </div>
@@ -130,7 +130,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.compensation", class: "control-label" %><%= mark_if_required(@job_offer, :compensation) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                   <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation) } %>
                 </div>
               </div>
@@ -140,7 +140,7 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.vacant_posts", class: "control-label" %><%= mark_if_required(@job_offer, :vacant_posts) %>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-8 pull-right">
                    <%= f.input :vacant_posts, input_html: {value: (job_offer.vacant_posts.blank? ? 1 : job_offer.vacant_posts)} %>
                 </div>
               </div>

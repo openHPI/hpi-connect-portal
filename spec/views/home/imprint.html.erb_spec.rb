@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "imprint/index" do
+describe "home/imprint" do
   it "should render all the necessary information" do
     render
 

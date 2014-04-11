@@ -1,11 +1,11 @@
-<div class="row">
-  <div class="col-md-9">
+<div class="wrapper-12 teaser">
+  <div class="col-md-12">
     <h1><%= t("users.staff_headline")%></h1>
     <ul class="list-group">
     <% @staff_members.each do |staff| %>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-11">
             <%= link_to staff.firstname + " " + staff.lastname, staff_path(staff), :class => "h4" %>
           </div>
         </div>
@@ -16,6 +16,4 @@
       <%= will_paginate @staff_members, renderer: BootstrapPagination::Rails %>
     </div>
   </div>
-  <div class="col-md-3">
-  </div>
-</div>
+</div

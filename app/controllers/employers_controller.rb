@@ -2,23 +2,17 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource only: [:edit, :update]
-  before_action :set_employer, only: [:show, :edit, :update]
+  authorize_resource only: [:edit, :update, :activate]
+  before_action :set_employer, only: [:show, :edit, :update, :activate]
 
   def index
-    @employers = Employer.internal.sort_by { |employer| employer.name }
+    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
+    @employers = @employers.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = true
-  end
-
-  def index_external
-    @employers = Employer.external.sort_by { |employer| employer.name }
-    @employers = @employers.paginate page: params[:page], per_page: 15
-    @internal = false
-    render 'index'
   end
 
   def show
+    not_found unless @employer.activated || can?(:activate, @employer) || (current_user.staff? && current_user.manifestation.employer == @employer)
     page = params[:page]
     @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
@@ -39,6 +33,7 @@ class EmployersController < ApplicationController
     if @employer.save
       sign_in @employer.deputy.user
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      EmployersMailer.new_employer_email(@employer).deliver
     else
       render_errors_and_action @employer, 'new'
     end
@@ -56,6 +51,12 @@ class EmployersController < ApplicationController
     end
   end
 
+  def activate
+    @employer.update_column :activated, true
+    flash[:success] = I18n.t('employers.messages.successfully_activated')
+    redirect_to @employer
+  end
+
   private
 
     def rescue_from_exception(exception)
@@ -67,6 +68,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, :external, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :head, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

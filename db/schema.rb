@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20140408141025) do
     t.datetime "avatar_updated_at"
     t.string   "head",                                null: false
     t.integer  "deputy_id"
-    t.boolean  "external",            default: false
     t.boolean  "activated",           default: false, null: false
   end
 

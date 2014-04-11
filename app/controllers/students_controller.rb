@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
   skip_before_filter :signed_in_user, only: [:new, :create]
 
   authorize_resource except: [:destroy, :matching, :edit, :index, :request_linkedin_import, :insert_imported_data]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :request_linkedin_import, :insert_imported_data]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
   has_scope :search_students, only: [:index, :matching], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
@@ -13,10 +13,11 @@ class StudentsController < ApplicationController
 
   def index
     authorize! :index, Student
-    @students = apply_scopes(Student.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)
   end
 
   def show
+    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
@@ -31,6 +32,7 @@ class StudentsController < ApplicationController
       sign_in @student.user
       flash[:success] = I18n.t('users.messages.successfully_created')
       redirect_to [:edit, @student]
+      StudentsMailer.new_student_email(@student).deliver
     else
       render 'new'
     end
@@ -67,13 +69,15 @@ class StudentsController < ApplicationController
   end
 
   def activate
+    authorize! :activate, @student
+    admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
     authenticate_with_open_id url do |result, identity_url|
       if result.successful?
         current_user.update_column :activated, true
-        flash[:success] = 'Profile successfully activated.'
+        flash[:success] = I18n.t('users.messages.successfully_activated')
       else
-        flash[:error] = 'Error during activation. Please try again later.'
+        flash[:error] = I18n.t('users.messages.unsuccessfully_activated')
       end
       redirect_to current_user.manifestation
     end
@@ -117,11 +121,17 @@ class StudentsController < ApplicationController
 
     def rescue_from_exception(exception)
       if [:index].include? exception.action
-        respond_and_redirect_to root_path, exception.message
+        redirect_to root_path, notice: exception.message
       elsif [:edit, :destroy, :update].include? exception.action
-        respond_and_redirect_to student_path(exception.subject), exception.message
+        redirect_to student_path(exception.subject), notice: exception.message
       else
-        respond_and_redirect_to root_path, exception.message
+        redirect_to root_path, notice: exception.message
       end
+    end
+
+    def admin_activation
+      @student.user.update_column :activated, true
+      flash[:success] = I18n.t('users.messages.successfully_activated')
+      redirect_to @student
     end
 end

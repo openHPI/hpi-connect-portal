@@ -54,7 +54,6 @@ en:
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
     vacant_posts_left: "open position(s) left"
-    external_only: "Show external employers only"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."
