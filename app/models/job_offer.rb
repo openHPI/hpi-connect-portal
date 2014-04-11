@@ -39,7 +39,7 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   validates :title, :description, :employer, :start_date, :time_effort, presence: true
-  validates :compensation, :time_effort, :vacant_posts, :numericality => { :greater_than_or_equal_to => 0 }, :allow_nil => true
+  validates :compensation, :time_effort, :vacant_posts, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :vacant_posts, :numericality => { :greater_than_or_equal_to => 1 }, on: :create
   validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
