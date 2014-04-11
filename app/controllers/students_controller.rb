@@ -63,8 +63,8 @@ class StudentsController < ApplicationController
 
   def matching
     authorize! :read, Student.all
-    @students = Student.all.sort_by{ |x| [x.lastname, x.firstname] }
-    @students = @students.paginate page: params[:page], per_page: 5
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active)
+    @students = @students.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)  
     render "index"
   end
 
