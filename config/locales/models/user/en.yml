@@ -10,7 +10,7 @@ en:
         semester: "Semester"
         academic_program: "Program"
         birthday: "Birthdate"
-        education: "Graduation"
+        degree: "Degree"
         minimum_degree: "Minimum degree"
         login_information: "Login Information"
         additional_information: "Additional information"

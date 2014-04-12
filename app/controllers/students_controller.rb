@@ -10,6 +10,8 @@ class StudentsController < ApplicationController
   has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
   has_scope :filter_semester, only: [:index, :matching],  as: :semester
+  has_scope :filter_academic_program, only: [:index, :matching],  as: :academic_program_id
+  has_scope :filter_graduation, only: [:index, :matching],  as: :graduation_id
 
   def index
     authorize! :index, Student

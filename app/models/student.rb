@@ -61,6 +61,8 @@ class Student < ActiveRecord::Base
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
+  scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f)}
+  scope :filter_graduation, -> graduation_id { where('graduation_id = ?', graduation_id.to_f)}
   scope :search_students, -> string { where("
           (lower(firstname) LIKE ?
           OR lower(lastname) LIKE ?
