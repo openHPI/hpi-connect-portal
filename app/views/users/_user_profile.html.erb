@@ -4,12 +4,12 @@
         <table class="table">
           <thead></thead>
           <tbody>
-            <% student.programming_languages_users.each do |programming_languages_student| %>
+            <% student.programming_languages_users.each do |programming_languages_users| %>
               <tr>
-                <td><%= programming_languages_student.programming_language.name %></td>
+                <td><%= programming_languages_users.programming_language.name %></td>
                 <td>
                   <% (1..5).each do |i| %>
-                    <%= radio_button_tag programming_languages_student.programming_language.name, i, i==programming_languages_student.skill, disabled: true, class: "star" %>
+                    <%= radio_button_tag programming_languages_users.programming_language.name, i, i==programming_languages_users.skill, disabled: true, class: "star" %>
                   <% end %>
                 </td>
               </tr>

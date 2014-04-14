@@ -1,4 +1,4 @@
-<div class="well sidebar-nav">
+<div class="sidebar-nav">
         <%= form_tag find_path, :method => :get, :id => 'Form' do %>
           <ul class="nav nav-list">
 
@@ -23,10 +23,6 @@
                   <%= select_tag "employer", options_for_select(Employer.all.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control"%>
                 </div>
               <% end %>
-
-              <div class="form-group">
-                <%= check_box_tag :external_only, true, params.has_key?('external_only')  %> <%= t("job_offers.external_only") %>
-              </div>
 
               <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, :class => "small" %>

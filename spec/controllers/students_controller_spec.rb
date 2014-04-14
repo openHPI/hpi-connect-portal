@@ -169,6 +169,7 @@ describe StudentsController do
       before :each do
         login FactoryGirl.create(:user, :admin)
         @student = FactoryGirl.create(:student)
+        @student.user.update_column :activated, false
       end
 
       it "should be accessible" do

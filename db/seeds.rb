@@ -54,14 +54,14 @@ User.delete_all
 Student.delete_all
 Staff.delete_all
 
-epic = Employer.new(
-  name: "Enterprise Platform and Integration Concepts",
-  description: "Prof. Dr. Hasso Plattner's research group Enterprise Platform and Integration Concepts (EPIC) focuses on the technical aspects of business software and the integration of different software systems into an overall system to meet customer requirements. This involves studying the conceptual and technological aspects of basic systems and components for business processes. In customer-centered business software development, the focus is on the users. And developing solutions tailored to user needs in a timely manner requires well-designed methods, tools and software platforms.",
+hpi = Employer.new(
+  name: "Hasso-Plattner-Institut",
+  description: "This is the Hasso-Plattner-Institut.",
   head: "Hasso Plattner",
   deputy: nil,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
-epic_deputy = Staff.new(
+hpi_deputy = Staff.new(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
@@ -69,63 +69,18 @@ epic_deputy = Staff.new(
     lastname: "Kroschk", 
     firstname: "Axel",
   ),
-  employer: epic
+  employer: hpi
 )
 
-epic.deputy = epic_deputy
-epic.save!
-epic_deputy.save!
-
-os = Employer.new(
-  name: "OS and Middleware",
-  description: "Prof. Andreas Polze's group Operating Systems and Middleware develops programming paradigms, design patterns and description methods for large, distributed component systems. The group’s work focuses on the integration of middleware with embedded systems and the predictability of their behavior with respect to real-time capability, fault tolerance and safety.",
-  head: "Andreas Polze",
-  deputy: nil,
-    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'andreas-polze.jpg'))
-)
-os_deputy = Staff.new(
-  user: User.new(
-    password: 'password',
-    password_confirmation: 'password',
-    email: "os.chair@example.com",
-    lastname: "Müller", 
-    firstname: "Jasper",
-  ),
-  employer: os
-)
-
-os.deputy = os_deputy
-os.save!
-os_deputy.save!
-
-dschool = Employer.new(
-  name: "HPI School of Design Thinking",
-  description: "At the d.school, we help to create “T-shaped” students. They bring a deep set of skills, knowledge and approach to problem solving from their own field; we help them develop the breadth and creative confidence to collaborate with people from vastly different disciplines. This equips students to tackle the big, ambiguous challenges they’ll encounter out in the world that can’t be solved with a single approach.",
-  head: "Uli Weinberg",
-  deputy: nil,
-    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'uli-weinberg.jpg'))
-)
-dschool_deputy = Staff.new(
-  user: User.new(
-    password: 'password',
-    password_confirmation: 'password',
-    email: "dschool.deputy@example.com",
-    lastname: "Weinberg", 
-    firstname: "Uli",
-  ),
-  employer: dschool
-)
-
-dschool.deputy = dschool_deputy
-dschool.save!
-dschool_deputy.save!
+hpi.deputy = hpi_deputy
+hpi.save!
+hpi_deputy.save!
 
 sap = Employer.new(
   name: "SAP",
   description: "SAP",
   head: "Hasso Plattner",
   deputy: nil,
-  external: true,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
 sap_deputy = Staff.new(
@@ -206,7 +161,7 @@ Staff.create!([{
     password_confirmation: 'password',
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-2.jpg'))
   ),
-  employer: os,
+  employer: hpi,
 }])
 
 Staff.create!([{
@@ -218,7 +173,7 @@ Staff.create!([{
     password_confirmation: 'password',
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'employee-2.jpg'))
   ),
-  employer: epic,
+  employer: hpi,
 }])
 
 JobOffer.delete_all
@@ -228,7 +183,7 @@ JobOffer.delete_all
 JobOffer.create!([{
   title: "HPI Career Portal", 
   description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.', 
-  employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
+  employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+2, 
   time_effort: 9,
@@ -242,7 +197,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Genome project", 
   description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.', 
-  employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
+  employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+15, 
   time_effort: 38,
@@ -256,7 +211,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Hyrise Developer", 
   description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.', 
-  employer: Employer.where(:name => "Enterprise Platform and Integration Concepts").first, 
+  employer: hpi, 
   status: JobStatus.where(:name => "running").first,
   start_date: Date.current+15, 
   time_effort: 38,
@@ -273,7 +228,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Tutor for Operating systems", 
   description: 'You have to control the assignments for the Operating Systems I lecture.', 
-  employer: Employer.where(:name => "OS and Middleware").first, 
+  employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+3, 
   time_effort: 5,
@@ -288,7 +243,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Supporting the lab operations of the chair", 
   description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
-  employer: Employer.where(:name => "OS and Middleware").first,
+  employer: hpi,
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+100, 
   time_effort: 8,
@@ -302,7 +257,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "OpenHPI supporter", 
   description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.', 
-  employer: Employer.where(:name => "OS and Middleware").first,
+  employer: hpi,
   status: JobStatus.where(:name => "running").first,
   start_date: Date.current+100, 
   time_effort: 8,
@@ -319,7 +274,7 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "HANA developer", 
   description: 'A developer for SAPs leading in-memory database HANA is needed. Strong teamskills required.', 
-  employer: Employer.where(:name => "SAP").first,
+  employer: hpi,
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+100, 
   time_effort: 38,

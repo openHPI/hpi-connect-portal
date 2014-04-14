@@ -3,8 +3,10 @@ HpiHiwiPortal::Application.routes.draw do
 
   scope "(:locale)", locale: /en|de/ do
 
-  root to: "sessions#new"
-  get "imprint", to: "imprint#index"
+	get "home/index"
+    get "home/imprint"
+
+    root to: "sessions#new"
 
     namespace :admin do
       resource :configurable, except: [:index]
@@ -24,8 +26,6 @@ HpiHiwiPortal::Application.routes.draw do
         post "fire"
       end
     end
-
-    get "employers/external", to: "employers#index_external", as: "external_employers"
 
     resources :employers do 
       member do

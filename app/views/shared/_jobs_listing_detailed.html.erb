@@ -1,12 +1,12 @@
 <% if defined?(name) %>
-  <h1> <%= t(name) %> </h1>
+  <h1 style="padding-bottom: 18px"> <%= t(name) %> </h1>
 <% end %>
 <% unless job_offer_list.empty? %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <% if defined?(do_not_show_details) && do_not_show_details %>
               <h4><%= job_offer.title %>
             <% else %>
@@ -17,7 +17,7 @@
               <% end %>
             </h4>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3" style="float:right">
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
           </div>
         </div>
