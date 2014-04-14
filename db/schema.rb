@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140408141025) do
+ActiveRecord::Schema.define(version: 20140408074441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(version: 20140408141025) do
 
   create_table "students", force: true do |t|
     t.integer  "semester"
+    t.string   "academic_program"
+    t.text     "education"
     t.text     "additional_information"
     t.date     "birthday"
     t.string   "homepage"

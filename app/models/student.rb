@@ -20,6 +20,7 @@
 #
 
 class Student < ActiveRecord::Base
+
   LINKEDIN_KEY = "77sfagfnu662bn"
   LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
   LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',
@@ -131,5 +132,4 @@ class Student < ActiveRecord::Base
   def self.create_linkedin_client
     LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
   end
-
 end
