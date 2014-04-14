@@ -20,6 +20,7 @@
 #
 
 class Student < ActiveRecord::Base
+  
   LINKEDIN_KEY = "77sfagfnu662bn"
   LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
   LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',

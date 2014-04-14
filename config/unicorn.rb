@@ -3,7 +3,7 @@ rails_env = ENV['RAILS_ENV'] || 'production'
 worker_processes 4
 preload_app true
 timeout 30
-listen RAILS_ROOT + 'tmp/sockets/unicorn.sock', :backlog => 64
+listen '/tmp/unicorn.hpi-career.sock', :backlog => 64
 
 before_fork do |server, worker|
   pid_old = RAILS_ROOT + 'tmp/pids/unicorn.pid.oldbin'
