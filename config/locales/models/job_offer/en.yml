@@ -21,6 +21,7 @@ en:
         contact: "Contact"
         region: "Region"
         state:
+            OUTLAND: "Outland"
             BW: "Baden-Württemberg"
             BY: "Bavaria"
             BE: "Berlin"
