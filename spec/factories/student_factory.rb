@@ -22,9 +22,11 @@
 FactoryGirl.define do
   factory :student do
     semester          1
-    academic_program  'Master'
+    academic_program_id  Student::ACADEMIC_PROGRAMS.index("bachelor")
     birthday          '1970-12-10'
-    education         'Abitur'
+    graduation_id         Student::GRADUATIONS.index("secondary_education")
+
+
 
     before(:create) do |student|
       student.user = FactoryGirl.create(:user, manifestation: student)

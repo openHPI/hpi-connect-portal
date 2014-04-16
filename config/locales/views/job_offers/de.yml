@@ -1,7 +1,8 @@
 de:
   job_offers:
     headline: "Stellenangebote"
-    starts: "beginnt"
+    starts: "startet am"
+    ends: "endet am"
     sortDate: "Datum"
     sortEmployer: "Arbeitgeber"
     searchLabel: "Suche nach:"
@@ -64,4 +65,10 @@ de:
         choose_valid_end_date: "Bitte geben Sie ein valides Datum ein."
     no_results: "Zu deiner Suchanfrage wurde kein passendes Stellenangebot gefunden"
     fire: "Arbeitsverhältnis beenden"
+    category:
+        traineeship: "Praktikum"
+        sideline: "Nebenjob"
+        graduate_job: "Absolventenstelle"
+        HPI_assistant: "HPI-Hiwi"
+        working_student: "Werkstudent"
 
