@@ -20,6 +20,10 @@
 //= require_tree .
 
 
+$(document).ready( function() {
+    $('.dropdown-toggle').dropdown();
+});
+
 $(function() {
     $(".datepicker").datepicker({
         dateFormat: 'dd-mm-yy'

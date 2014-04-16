@@ -133,3 +133,10 @@ gem 'linkedin'
 
 # xing
 gem 'xing_api', '~> 0.1'
+
+# deployment with nginx and unicorn
+gem 'unicorn'
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano-bundler'
+gem 'capistrano-rvm'

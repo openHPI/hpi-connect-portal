@@ -23,6 +23,10 @@ class JobOffer < ActiveRecord::Base
   include Bootsy::Container
   include JobOfferScopes
 
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  STATES = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']
+   
   before_save :default_values
 
   has_many :applications
