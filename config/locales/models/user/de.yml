@@ -11,6 +11,7 @@ de:
         academic_program: "Studiengang"
         birthday: "Geburtsdatum"
         education: "Abschluss"
+        minimum_degree: "Mindestabschluss"
         login_information: "Login Informationen"
         general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Informationen"
@@ -30,11 +31,9 @@ de:
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Andere"
-        education_options:
+        degrees:
             abitur: "Abitur"
             secondary_education: "Realschulabschluss"
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Andere"

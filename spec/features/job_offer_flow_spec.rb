@@ -42,6 +42,7 @@ describe "the job offer flow" do
     fill_in "job_offer_end_date", with: (Date.current + 2).to_s
     fill_in "job_offer_time_effort", with: "12"
     fill_in "job_offer_vacant_posts", with: "1"
+    fill_in "job_offer_compensation", with: "11"
 
     JobOffer.delete_all
     expect {
@@ -59,7 +60,7 @@ describe "the job offer flow" do
     assert_equal(job_offer.flexible_start_date, true)
     assert_equal(job_offer.end_date, Date.current + 2)
     assert_equal(job_offer.time_effort, 12)
-    assert_equal(job_offer.compensation, 10.0)
+    assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
 
     # deputy of the employers get acceptance pending email

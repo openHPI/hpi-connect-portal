@@ -24,69 +24,80 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster - placed here only for testing th compenentes easier-->
 </head>
-<body class="subpage accent3 "><div class="headbg">
-  <div class="headtop">
-    <div class="smallheader headwrapper">
-      <h1><a href="">HPI Job-Portal</a></h1>
-    </div>
-     <div class="subsitebackhead">
-      <div>
-        <h1><a href="http://www.hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
-          <% if signed_in? %>
-          <%= link_to t("layouts.logout"), signout_path, class: "logout", method: :delete %>
-          <% end %>
-          <div id="social">
-              <a href="" class="facebook" class="facebook" alt="facebook"></a>
-              <a href="" class="twitter" class="twitter" alt="twitter"></a>
-              <a href="" class="rss" class="rss" alt="rss"></a>
-              <a href="" class="youtube" class="youtube" alt="youtube"></a>
-              <a href="" class="vimeo" class="vimeo" alt="vimeo"></a>
-              <ul class="lang_switcher">
-                <li><%= link_to "de", locale: "de" %></li>
-                <li><%= link_to "en", locale: "en" %></li>
-              </ul>
+  <body class="subpage accent3 ">
+    <div class="headbg">
+      <div class="headtop">
+        <div class="smallheader headwrapper">
+          <h1><a href="">HPI Job-Portal</a></h1>
+        </div>
+        <div class="subsitebackhead">
+          <div>
+            <h1><a href="http://www.hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
+              <% if signed_in? %>
+                <li class="dropdown menu-dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <%= "#{current_user.firstname} #{current_user.lastname}" %>
+                    <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% if current_user.staff? %>
+                      <li><%= link_to t('layouts.my_chair'), current_user.manifestation.employer %></li>
+                    <% elsif current_user.student? %>
+                      <li><%= link_to t('layouts.my_profile'), current_user.manifestation %></li>
+                    <% end %>
+                    <li><%= link_to t("users.settings"), [:edit, current_user] %>
+                    <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>
+                  </ul>
+                </li>
+              <% end %>
+              <div id="social">
+                  <a href="" class="facebook" class="facebook" alt="facebook"></a>
+                  <a href="" class="twitter" class="twitter" alt="twitter"></a>
+                  <a href="" class="rss" class="rss" alt="rss"></a>
+                  <a href="" class="youtube" class="youtube" alt="youtube"></a>
+                  <a href="" class="vimeo" class="vimeo" alt="vimeo"></a>
+                  <ul class="lang_switcher">
+                    <li><%= link_to "de", locale: "de" %></li>
+                    <li><%= link_to "en", locale: "en" %></li>
+                  </ul>
+              </div>
+            </h1>
           </div>
-
-        </h1>
+           
+        </div>
+        <div class="bigheader">
+          <div id="csshack_header_image">
+            <a href="<%= root_path %>"><%= image_tag("hpi_logo_fb_InternetTechnologien_web80.png", alt:"") %></a>  
+          </div>
+        </div>
       </div>
-       
-     </div>
-    <div class="bigheader"><div id="csshack_header_image">
-        <a href=<%= root_path %>><%= image_tag("hpi_logo_fb_InternetTechnologien_web80.png", alt:"") %></a>  
-      </div>
-  </div>
- </div>
 
-  <div class="headbottom">
-    <div id="head_bottom" class="collapse navbar-collapse">
-      <% if signed_in? %>
-       <%= render "layouts/navigation/#{current_user.role}" %>
-      <% end %>
+      <div class="headbottom">
+        <div id="head_bottom" class="collapse navbar-collapse">
+          <% if signed_in? %>
+           <%= render "layouts/navigation/#{current_user.role}" %>
+          <% end %>   
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
+    </div>
       
-    </div>
-  </div>
-</div>
-
-
-<div class="container">
-  <%= render 'shared/flash_messages' %>
-  <%= yield %>
-</div>
-
-
-  
-<footer>
-  <div class="container">
-    <div>
-    <ul class="footer-links">
-      <li>Copyright Hasso-Plattner-Institut 2014</li>
-      <li><a href="">Impressum</a></li>
-      <li><a href="">Kontakt</a></li>
-      <li><a href="">Sitemap</a></li>
-    </ul>
-    </div>
-  </div>
-</footer>
+    <footer>
+      <div class="container">
+        <div>
+        <ul class="footer-links">
+          <li>Copyright Hasso-Plattner-Institut 2014</li>
+          <li><a href="">Impressum</a></li>
+          <li><a href="">Kontakt</a></li>
+          <li><a href="">Sitemap</a></li>
+        </ul>
+        </div>
+      </div>
+    </footer>
 
   </body>
 </html>

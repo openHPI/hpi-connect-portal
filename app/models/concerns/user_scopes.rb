@@ -20,8 +20,8 @@ module UserScopes
                   (lower(firstname) LIKE ?
                   OR lower(lastname) LIKE ?
                   OR lower(email) LIKE ?
-                  OR lower(academic_program) LIKE ?
-                  OR lower(education) LIKE ?
+                  OR lower(academic_program_id) LIKE ?
+                  OR lower(graduation_id) LIKE ?
                   OR lower(homepage) LIKE ?
                   OR lower(github) LIKE ?
                   OR lower(facebook) LIKE ?

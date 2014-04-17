@@ -60,7 +60,8 @@
     </div>
 
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div
+      >
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
@@ -78,6 +79,9 @@
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
           <ul class="list-group">
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>          
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
             <% unless @job_offer.room_number.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>
             <% end %>
@@ -99,9 +103,11 @@
                   </div>
                 </div>
               </li>
-            <% end %>
+            <% end %>            
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
+            <% unless @job_offer.compensation.nil? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
+            <% end %>
             <% unless @job_offer.responsible_user.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), content: (link_to @job_offer.responsible_user.full_name, @job_offer.responsible_user) %>
             <% end %>
