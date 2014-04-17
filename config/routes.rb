@@ -3,10 +3,7 @@ HpiHiwiPortal::Application.routes.draw do
 
   scope "(:locale)", locale: /en|de/ do
 
-	get "home/index"
-    get "home/imprint"
-
-    root to: "sessions#new"
+    root to: "home#index"
 
     namespace :admin do
       resource :configurable, except: [:index]
@@ -44,9 +41,10 @@ HpiHiwiPortal::Application.routes.draw do
       patch '/update_password' => 'users#update_password', as: 'update_password'
     end
 
-    resources :sessions, only: [:new, :create, :destroy]
-    get '/signin' => 'sessions#new', as: 'signin'
-    delete '/signout' => 'sessions#destroy', as: 'signout'
+    resources :home, only: [:index, :create, :destroy, :imprint]
+    get 'home/imprint'
+    get '/signin' => 'home#index', as: 'signin'
+    delete '/signout' => 'home#destroy', as: 'signout'
 
     resources :studentsearch
     resources :faqs
