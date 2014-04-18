@@ -1,4 +1,4 @@
-RAILS_ROOT = '/var/rails/hpi-hiwi-portal/'
+RAILS_ROOT = '/var/www/hpi-career/'
 rails_env = ENV['RAILS_ENV'] || 'production'
 worker_processes 4
 preload_app true

@@ -11,7 +11,7 @@
 set -e
 
 TIMEOUT=${TIMEOUT-60}
-APP_ROOT=/var/rails/hpi-hiwi-portal/current
+APP_ROOT=/var/www/hpi-career/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
 CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
 AS_USER=preinhardt

@@ -1,58 +1,70 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+# server variables
+set :application, "hpi-career"
+set :deploy_user, "preinhardt"
+set :deploy_via, :remote_cache
+set :use_sudo, false
 
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+# repository variables
+set :scm, "git"
+set :repo_url, "git@github.com:hpi-swt2/hpi-hiwi-portal.git"
 
-# Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+# deployment variables
+set :keep_releases, 5
 
-# Default value for :scm is :git
-# set :scm, :git
+# files we want symlinking to specific entries in shared.
+set :linked_files, %w{config/database.yml}
 
-# Default value for :format is :pretty
-# set :format, :pretty
+# dirs we want symlinking to shared
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-# Default value for :log_level is :debug
-# set :log_level, :debug
+# config files that should be copied by deplay:setup_config
+set(:config_files, %w(
+  nginx.conf
+  unicorn.rb
+  unicorn_init.sh
+))
 
-# Default value for :pty is false
-# set :pty, true
+# config files that should be made executable by deplay:setup_config
+set(:executable_config_files, %w(
+  unicorn_init.sh
+))
 
-# Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
-
-# Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-
-# Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
-
-# Default value for keep_releases is 5
-# set :keep_releases, 5
+# files that need to be symlinked
+set(:symlinks, [
+  {
+    source: "nginx.conf",
+    link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
+  },
+  {
+    source: "unicorn_init.sh",
+    link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
+  }
+])
 
 namespace :deploy do
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
+  # make sure we're deploying what we think we're deploying
+  before :deploy, "deploy:check_revision"
 
-  after :publishing, :restart
+  # only allow a deploy with passing tests to deployed
+  # before :deploy, "deploy:run_tests"
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
+  # compile assets locally then rsync
+  after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
+  after :finishing, 'deploy:cleanup'
 
+  # remove the default nginx configuration as it will tend
+  # to conflict with our configs.
+  before 'deploy:setup_config', 'nginx:remove_default_vhost'
+
+  # reload nginx to it will pick up any modified vhosts from
+  # setup_config
+  after 'deploy:setup_config', 'nginx:reload'
+
+  # As of Capistrano 3.1, the `deploy:restart` task is not called
+  # automatically.
+  after 'deploy:publishing', 'deploy:restart'
 end
