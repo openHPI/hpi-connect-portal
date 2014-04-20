@@ -7,7 +7,7 @@ set :branch, "feature/deployment"
 set :full_app_name, "#{fetch(:application)}_#{fetch(:stage)}"
 set :server_name, "hpi-career"
 
-server 'hpi-career', user: 'preinhardt', roles: %w{web app db}, primary: true
+server 'hpi-career', user: "#{fetch(:deploy_user)}", roles: %w{web app db}, primary: true
 
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
