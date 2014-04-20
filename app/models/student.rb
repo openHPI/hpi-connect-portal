@@ -20,7 +20,7 @@
 #
 
 class Student < ActiveRecord::Base
-  
+
   LINKEDIN_KEY = "77sfagfnu662bn"
   LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
   LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',
@@ -28,6 +28,8 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
+  ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']     
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
@@ -53,7 +55,7 @@ class Student < ActiveRecord::Base
 
   delegate :firstname, :lastname, :full_name, :email, :activated, to: :user
 
-  validates :semester, :academic_program, presence: true
+  validates :semester, :academic_program_id, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
@@ -64,8 +66,8 @@ class Student < ActiveRecord::Base
           (lower(firstname) LIKE ?
           OR lower(lastname) LIKE ?
           OR lower(email) LIKE ?
-          OR lower(academic_program) LIKE ?
-          OR lower(education) LIKE ?
+          OR lower(academic_program_id) LIKE ?
+          OR lower(graduation_id) LIKE ?
           OR lower(homepage) LIKE ?
           OR lower(github) LIKE ?
           OR lower(facebook) LIKE ?
@@ -86,6 +88,14 @@ class Student < ActiveRecord::Base
 
   def employment_status
     EMPLOYMENT_STATUSES[employment_status_id]
+  end
+
+  def academic_program
+    ACADEMIC_PROGRAMS[academic_program_id]
+  end
+
+  def graduation
+    GRADUATIONS[graduation_id]
   end
 
   def update_from_linkedin(linkedin_client)
@@ -122,5 +132,4 @@ class Student < ActiveRecord::Base
   def self.create_linkedin_client
     LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
   end
-
 end

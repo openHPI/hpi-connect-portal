@@ -82,7 +82,7 @@
   </div>
 
   <div class="col-sm-6">
-    <% if !(student.semester).nil? || !(student.academic_program).nil? || !(student.education).nil? %>
+    <% if !(student.semester).nil? || !(student.academic_program).nil? || !(student.graduation).nil? %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("users.carrier") %></h4></div>
           <table class="table">
@@ -91,7 +91,8 @@
               <% unless (student.academic_program).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.student.academic_program")%></td>
-                  <td><%= student.academic_program %></td>
+                  <td><%= t("activerecord.attributes.user.academic_rank_options." + 
+                  student.academic_program) %></td>
                 </tr>
               <% end %>
               <% unless (student.semester).nil? %>
@@ -100,10 +101,11 @@
                   <td><%= student.semester %></td>
                 </tr>
               <% end %>
-              <% if !(student.education).nil? %>
+              <% unless (student.graduation).nil? %>
                 <tr>
                   <td><%= t("activerecord.attributes.student.education")%></td>
-                  <td><%= student.education.html_safe %></td>
+                  <td><%= t("activerecord.attributes.user.degrees." + 
+                  student.graduation) %></td>
                 </tr>
               <% end %>
             </tbody>

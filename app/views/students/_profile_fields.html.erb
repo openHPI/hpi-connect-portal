@@ -1,4 +1,4 @@
-<%= link_to "Import link", request_linkedin_import_student_path(student) %>
+<%= link_to "Import from LinkedIn", request_linkedin_import_student_path(student) %>
 
 <div class="row">
   <!--   Left -->
@@ -73,15 +73,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(student, :academic_program) %>
+              <%= form.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.academic_rank_options." + student.academic_program)) %>
             </div>
-            <div class="col-sm-9">
-              <%= form.select :academic_program, [
-                t("activerecord.attributes.user.academic_rank_options.bachelor"),
-                t("activerecord.attributes.user.academic_rank_options.master"),
-                t("activerecord.attributes.user.academic_rank_options.phd"),
-                t("activerecord.attributes.user.academic_rank_options.others")
-                ], {}, class: "select form-control" %>
+            <div class="col-sm-9">              
+                <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
             </div>
           </div>
         </li>
@@ -98,17 +93,12 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :education, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, :education) %>
+              <%= form.label :graduation, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.degrees." + student.graduation)) %>
             </div>
             <div class="col-sm-9">
-              <%= form.select :education, [
-                t("activerecord.attributes.user.education_options.abitur"),
-                t("activerecord.attributes.user.education_options.secondary_education"),
-                t("activerecord.attributes.user.education_options.bachelor"),
-                t("activerecord.attributes.user.education_options.master"),
-                t("activerecord.attributes.user.education_options.phd"),
-                t("activerecord.attributes.user.education_options.others")
-                ], {}, class: "select form-control" %>
+            <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
+            [t("activerecord.attributes.user.degrees." + grade), index]
+            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
             </div>
           </div>
         </li>

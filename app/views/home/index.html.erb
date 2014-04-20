@@ -1,7 +1,7 @@
 <div class="wrapper-8 teaser">
   <div class="col-md-8">
-    <h1><a href="">Home</a> > <a href="">Lehre</a> > Master-Projekte</h1>
-    <h2>Master Projekte</h2>
+    <h1>Job Portal</h1>
+    <h2>Job Portal</h2>
     <p>Das sind die Masterprojekte, die am Lehrstuhl von Prof. Dr. Christoph Meinel angeboten und betreut werden:</p>
     
 
@@ -107,68 +107,44 @@
 </div>
 
 
-<div class="wrapper-5 teaser sidebar">
+<div class="wrapper-4 teaser sidebar">
+  <% unless signed_in? %>
+    <div class="col-md-4">
+      <h1> Login Page </h1>
 
- <div class="col-md-4">
-    <h1><a href="">Leitung</a></h1>
-    <p><b>Prof. Dr. sc. nat. Christoph Meinel</b></p>
-    <p>Raum H-1.05</p>
-    <p>Mobil +49 (0)176 10010727</p>
-    <p><a href="">meinel@hpi.uni-potsdam.de</a></p>
+      <%= simple_form_for :session, url: home_index_path do |f| %>
+          <%= f.input :email, id: "email", style: "height: auto; !important" %>
+          <%= f.input :password, id: "password", style: "height: auto; !important" %>
 
-    <p class="margintop">Assistant
-    <p><b>Michaela Schmitz</b></p>
-    <p>Raum H-1.06</p>
-    <p><a href="">office-meinel@hpi.uni-potsdam.de</a></p>
-    <p>Tel.  +49(0)331 5509 222</p>
-    <p>Fax +49(0)331 5509 325</p>
-    <p>Postfach 90 04 60, D-14440 Potsdam</p>
-  </div>
+          <br />
+          <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+      <% end %>
 
-  <div class="col-md-4">
-    <h1><a href="">Publikationen</a></h1>
-    <a href=""><%= image_tag("forschung_publikationen.jpg", alt: "") %></a>
-    <h2><a href="">Internetworking – <br>Technische Grundlagen und Anwendungen</a></h2>
-    <p>Christoph Meinel, Harald Sack (Hasso-Plattner-Institut)</p>
-  </div>
+      <br />
+      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
+    </div>
+  <% end %>
 
-  <div class="col-md-4">
-    <h1><a href="">Weiterführende Links</a></h1>
-    <ul>
-      <li><a href="">Internetworking-Blog</a></li>
-      <li><a href="">Security Tech</a></li>
-      <li><a href="">Knowledge Tech</a></li>
-      <li><a href="">Design Thinking</a></li>
-      <li><a href="">Tele-Lectures</a></li>
-      <li><a href="">MOOCs</a></li>
-      <li><a href="">Publikationen</a></li>
-      <li><a href="">Patente</a></li>
-    </ul>
-  </div>
+  <% unless @job_offers.empty? %>
+    <div class="col-md-4" id="job_offers">
+      <h1><%= t("home.index.latest_job_offers", number_of_job_offers: @job_offers.length)%></h1>
+      <ul>
+        <% @job_offers.each do |job_offer| %>
+          <li> <%= link_to job_offer.title, job_offer %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div class="col-md-4">
-    <h1><a href="">News</a></h1>
-    <p>In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. </p>
-  </div>
-
-  <div class="col-md-4">
-    <h1><a href="">Termine</a></h1>
-
-    <h2><a href="">08.08.2013 | <b>HPI-Kolloquium: Prof. Idit Keidar</b></a></h2>
-    <p>Am 8. August referiert Prof. Keidar (Technion) zum Thema „In-Network Analytics". <a href="#0">> mehr</a></p>
-
-    <h2><a href="">27.08.2013 | <b>Eröffnung HPI-Schülerkolleg</b></a></h2>
-    <p>Informatikbegeisterte Schüler werden im HPI-Schülerkolleg ein Jahr lang besonders gefördert. <a href="#0">> mehr</a></p>
-  </div>
-
-  <div class="col-md-4">
-    <h1><a href="">Veranstaltungen</a></h1>
-
-    <h2><a href="">08.08.2013 | <b>HPI-Kolloquium: Prof. Idit Keidar</b></a></h2>
-    <p>Am 8. August referiert Prof. Keidar (Technion) zum Thema „In-Network Analytics". <a href="#0">> mehr</a></p>
-
-    <h2><a href="">27.08.2013 | <b>Eröffnung HPI-Schülerkolleg</b></a></h2>
-    <p>Informatikbegeisterte Schüler werden im HPI-Schülerkolleg ein Jahr lang besonders gefördert. <a href="#0">> mehr</a></p>
-  </div>
+  <% unless @employers.empty? %>
+    <div class="col-md-4" id="employers">
+      <h1><%= t("home.index.latest_employers", number_of_employers: @employers.length)%></h1>
+      <ul>
+        <% @employers.each do |employer| %>
+          <li> <%= link_to employer.name, employer %> </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 </div>

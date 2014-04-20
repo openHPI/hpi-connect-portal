@@ -8,7 +8,7 @@
               <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_user_status">
+              <div class="input select optional user_firstname">
                 <%= user_form.input :firstname %>
               </div>
             </div>
@@ -20,7 +20,7 @@
               <%= label_field user_form, :lastname, t("activerecord.attributes.user.last_name") %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_user_status">
+              <div class="input select optional user_lastname">
                 <%= user_form.input :lastname %>
               </div>
             </div>
@@ -32,7 +32,7 @@
               <%= label_field user_form, :email, t("activerecord.attributes.user.email") %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_user_status">
+              <div class="input select optional user_email">
                 <%= user_form.input :email %>
               </div>
             </div>
@@ -44,7 +44,7 @@
               <%= label_field user_form, :password, t("activerecord.attributes.user.password") %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_user_status">
+              <div class="input select optional user_password">
                 <%= user_form.input :password %>
               </div>
             </div>
@@ -56,7 +56,7 @@
               <%= label_field user_form, :password_confirmation, t("activerecord.attributes.user.password_confirmation") %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_user_status">
+              <div class="input select optional user_password_confirmation">
                 <%= user_form.input :password_confirmation %>
               </div>
             </div>
@@ -69,7 +69,7 @@
             <%= label_field form, :semester, t("activerecord.attributes.user.semester") %>
           </div>
           <div class="col-sm-9">
-            <div class="input select optional user_user_status">
+            <div class="input select optional user_semester">
               <%= form.input :semester %>
             </div>
           </div>
@@ -81,8 +81,8 @@
             <%= label_field form, :academic_program, t("activerecord.attributes.user.academic_program") %>
           </div>
           <div class="col-sm-9">
-            <div class="input select optional user_user_status">
-              <%= form.input :academic_program %>
+            <div class="input select optional user_academic_program">
+              <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
             </div>
           </div>
         </div>

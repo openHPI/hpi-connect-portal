@@ -3,15 +3,15 @@ require 'spec_helper'
 describe "students/edit" do
   before(:each) do
     @student = assign(:student, stub_model(Student,
-      user: stub_model(User,
+      user: stub_model(User,  
         firstname: "First Name",
         lastname: "Last Name",
         email: "test@test.de"
       ),
       semester: 1,
-      academic_program: "Academic Program",
+      academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
       birthday: '2013-11-10',
-      education: "MyText",
+      graduation_id: Student::GRADUATIONS.index("abitur"),
       additional_information: "MyText",
       homepage: "Homepage",
       github: "Github",
@@ -30,8 +30,8 @@ describe "students/edit" do
       assert_select "select#student_birthday_2i[name=?]", "student[birthday(2i)]"
       assert_select "select#student_birthday_3i[name=?]", "student[birthday(3i)]"
       assert_select "input#student_semester[name=?]", "student[semester]"
-      assert_select "select#student_academic_program[name=?]", "student[academic_program]"
-      assert_select "select#student_education[name=?]", "student[education]"
+      assert_select "select#academic_program_id[name=?]", "student[academic_program_id]"
+      assert_select "select#graduation_id[name=?]", "student[graduation_id]"
       assert_select "textarea#student_additional_information[name=?]", "student[additional_information]"
       assert_select "input#student_homepage[name=?]", "student[homepage]"
       assert_select "input#student_github[name=?]", "student[github]"

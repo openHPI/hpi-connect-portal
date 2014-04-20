@@ -1,5 +1,6 @@
 de:
   layouts:
+    title: "Career Portal"
     job_offers: "Stellenangebote"
     students: "Studenten"
     staff: "Mitarbeiter"

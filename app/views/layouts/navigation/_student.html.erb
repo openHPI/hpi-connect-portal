@@ -1,5 +1,6 @@
 <ul id="site_nav" class="site_nav">
   <% i = 0 %>
+  <li><%= link_to t('layouts.title'), root_path, class: ("menu#{i+=1}") %></li>
   <li><%= link_to t('layouts.job_offers'), job_offers_path, class: ("menu#{i+=1}") %></li>
-  <li><%= link_to t('layouts.employers'), employers_path, class: ("menu{i+=1}") %></li>
+  <li><%= link_to t('layouts.employers'), employers_path, class: ("menu#{i+=1}") %></li>
 </ul>
