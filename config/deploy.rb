@@ -32,22 +32,10 @@ set(:executable_config_files, %w(
   unicorn_init.sh
 ))
 
-# files that need to be symlinked
-set(:symlinks, [
-  {
-    source: "nginx.conf",
-    link: "/etc/nginx/sites-enabled/#{fetch(:full_app_name)}"
-  },
-  {
-    source: "unicorn_init.sh",
-    link: "/etc/init.d/unicorn_#{fetch(:full_app_name)}"
-  }
-])
-
 namespace :deploy do
 
   # make sure we're deploying what we think we're deploying
-  # before :deploy, "deploy:check_revision"
+  before :deploy, "deploy:check_revision"
 
   # only allow a deploy with passing tests to deployed
   # before :deploy, "deploy:run_tests"

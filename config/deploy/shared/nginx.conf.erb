@@ -53,5 +53,5 @@ server {
   ssl on;
   ssl_certificate <%= fetch(:deploy_to) %>/shared/ssl_cert.crt;
   ssl_certificate_key <%= fetch(:deploy_to) %>/shared/ssl_private_key.key;
-}#
+}
 <% end %>
