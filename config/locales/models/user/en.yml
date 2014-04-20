@@ -11,6 +11,7 @@ en:
         academic_program: "Program"
         birthday: "Birthdate"
         education: "Graduation"
+        minimum_degree: "Minimum degree"
         login_information: "Login Information"
         additional_information: "Additional information"
         links: "Links"
@@ -30,11 +31,9 @@ en:
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Others"
-        education_options:
+        degrees:
             abitur: "General Qualification for University Entrance"
             secondary_education: "General Certificate of Secondary Education"
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
-            others: "Others"

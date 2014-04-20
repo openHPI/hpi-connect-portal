@@ -23,6 +23,10 @@ class JobOffer < ActiveRecord::Base
   include Bootsy::Container
   include JobOfferScopes
 
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  STATES = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
+
   before_save :default_values
 
   has_many :applications
@@ -38,8 +42,8 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :languages
 
-  validates :title, :description, :employer, :start_date, :time_effort, :compensation, presence: true
-  validates :compensation, :time_effort, :vacant_posts, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :title, :description, :employer, :start_date, :time_effort, presence: true
+  validates :compensation, :time_effort, :vacant_posts, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :vacant_posts, :numericality => { :greater_than_or_equal_to => 1 }, on: :create
   validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
@@ -143,5 +147,17 @@ class JobOffer < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def category
+    CATEGORIES[category_id]
+  end
+
+  def state
+    STATES[state_id]
+  end
+
+  def minimum_degree
+    GRADUATIONS[graduation_id]
   end
 end
