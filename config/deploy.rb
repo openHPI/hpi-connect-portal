@@ -20,14 +20,14 @@ set :linked_files, %w{config/database.yml}
 # dirs we want symlinking to shared
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-# config files that should be copied by deplay:setup_config
+# config files that should be copied by deploy:setup_config
 set(:config_files, %w(
   nginx.conf
   unicorn.rb
   unicorn_init.sh
 ))
 
-# config files that should be made executable by deplay:setup_config
+# config files that should be made executable by deploy:setup_config
 set(:executable_config_files, %w(
   unicorn_init.sh
 ))
@@ -47,7 +47,7 @@ set(:symlinks, [
 namespace :deploy do
 
   # make sure we're deploying what we think we're deploying
-  before :deploy, "deploy:check_revision"
+  # before :deploy, "deploy:check_revision"
 
   # only allow a deploy with passing tests to deployed
   # before :deploy, "deploy:run_tests"
