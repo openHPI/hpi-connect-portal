@@ -3,7 +3,6 @@ lock '3.1.0'
 
 # server variables
 set :application, "hpi-career"
-set :deploy_user, "preinhardt"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
