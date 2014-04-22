@@ -18,6 +18,7 @@
 #
 
 class Employer < ActiveRecord::Base
+  NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
 
   has_many :staff_members, class_name: 'Staff'

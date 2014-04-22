@@ -70,7 +70,7 @@
       <div class="row">
         <div class="col-md-6">
           <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
-          <%= form.select :number_of_employees, ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"], {}, { class: "form-control" } %>
+          <%= form.select :number_of_employees, Employer::NUMBER_OF_EMPLOYEES_FIELDS, {}, { class: "form-control" } %>
         </div>
         <div class="col-md-6">
           <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
