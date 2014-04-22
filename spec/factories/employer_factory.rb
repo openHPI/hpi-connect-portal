@@ -20,7 +20,6 @@
 FactoryGirl.define do
   factory :employer do
     sequence(:name) { |n| "Employer #{n}" }
-    head            "Mr. Boss"
     description     "Makes beautiful websites"
     activated       true
     place_of_business "Berlin"

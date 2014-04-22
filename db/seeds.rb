@@ -57,7 +57,6 @@ Staff.delete_all
 hpi = Employer.new(
   name: "Hasso-Plattner-Institut",
   description: "This is the Hasso-Plattner-Institut.",
-  head: "Hasso Plattner",
   deputy: nil,
   number_of_employees: "50-100",
   place_of_business: "Potsdam - Brandenburg",
@@ -84,7 +83,6 @@ hpi_deputy.save!
 sap = Employer.new(
   name: "SAP",
   description: "SAP",
-  head: "Hasso Plattner",
   deputy: nil,
   number_of_employees: ">1000",
   place_of_business: "Baden-Württemberg",

@@ -36,11 +36,6 @@ describe Employer do
       @employer.should be_invalid
     end
 
-    it "with head not present" do
-      @employer.head = nil
-      @employer.should be_invalid
-    end
-
     it "with deputy not present" do
       @employer.deputy = nil
       @employer.should be_invalid

@@ -33,7 +33,6 @@ class Employer < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
-  validates :head, presence: true
   validates :deputy, presence: true
   validates :number_of_employees, presence: true
   validates :place_of_business, presence: true
