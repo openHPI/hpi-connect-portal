@@ -108,6 +108,9 @@ ActiveRecord::Schema.define(version: 20140422071648) do
     t.integer  "status_id",           default: 1
     t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
+    t.integer  "category_id",         default: 0,     null: false
+    t.integer  "state_id",            default: 3,     null: false
+    t.integer  "graduation_id",       default: 2,     null: false
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -194,6 +197,8 @@ ActiveRecord::Schema.define(version: 20140422071648) do
     t.datetime "updated_at"
     t.integer  "employment_status_id",   default: 0, null: false
     t.integer  "frequency",              default: 1, null: false
+    t.integer  "academic_program_id",    default: 0, null: false
+    t.integer  "graduation_id",          default: 0, null: false
   end
 
   create_table "users", force: true do |t|

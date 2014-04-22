@@ -129,8 +129,8 @@ Student.create!([{
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
   ),
   semester: 5,
-  academic_program: 'Bachelor',
-  education:'Abitur',
+  academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
+  graduation_id: Student::GRADUATIONS.index("abitur"),
 }])
 
 Student.create!([{
@@ -143,9 +143,9 @@ Student.create!([{
     photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
   ),
   semester: 5,
-  academic_program: 'Bachelor',
+  academic_program_id: 0,
+  graduation_id: 2,
   birthday: '1990-12-30',
-  education:'Abitur',
   additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
   homepage: 'https://twitter.com/FraBle90',
   github: 'https://github.com/FraBle',
@@ -191,6 +191,9 @@ JobOffer.delete_all
 JobOffer.create!([{
   title: "HPI Career Portal", 
   description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.', 
+  state_id: 0,
+  category_id: 1,
+  graduation_id: 3,
   employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+2, 
@@ -205,6 +208,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Genome project", 
   description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.', 
+  state_id: 2,
+  category_id: 1,
+  graduation_id: 3,
   employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+15, 
@@ -219,6 +225,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Hyrise Developer", 
   description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.', 
+  state_id: 3,
+  category_id: 2,
+  graduation_id: 4,
   employer: hpi, 
   status: JobStatus.where(:name => "running").first,
   start_date: Date.current+15, 
@@ -236,6 +245,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Tutor for Operating systems", 
   description: 'You have to control the assignments for the Operating Systems I lecture.', 
+  state_id: 6,
+  category_id: 0,
+  graduation_id: 1,
   employer: hpi, 
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+3, 
@@ -251,6 +263,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "Supporting the lab operations of the chair", 
   description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
+  state_id: 0,
+  category_id: 0,
+  graduation_id: 0,
   employer: hpi,
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+100, 
@@ -265,6 +280,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "OpenHPI supporter", 
   description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.', 
+  state_id: 4,
+  category_id: 3,
+  graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "running").first,
   start_date: Date.current+100, 
@@ -282,6 +300,9 @@ JobOffer.create!([{
 JobOffer.create!([{
   title: "HANA developer", 
   description: 'A developer for SAPs leading in-memory database HANA is needed. Strong teamskills required.', 
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "open").first,
   start_date: Date.current+100, 
