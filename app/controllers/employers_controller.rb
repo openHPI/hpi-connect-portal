@@ -9,17 +9,6 @@ class EmployersController < ApplicationController
     @employers = @employers.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15class EmployersController < ApplicationController
 
-  skip_before_filter :signed_in_user, only: [:new, :create]
-
-  authorize_resource only: [:edit, :update, :activate]
-  before_action :set_employer, only: [:show, :edit, :update, :activate]
-
-  def index
-    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = @employers.sort_by { |employer| employer.name }
-    @employers = @employers.paginate page: params[:page], per_page: 15
-  end
-
   def show
     not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer)
     page = params[:page]
@@ -81,52 +70,6 @@ class EmployersController < ApplicationController
     end
 end
 
-  end
-
-  def show
-    not_found unless @employer.activated || can?(:activate, @employer) || (current_user.staff? && current_user.manifestation.employer == @employer)
-    page = params[:page]
-    @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
-    @running_job_offers = @employer.job_offers.running.paginate page: page
-    @open_job_offers = @employer.job_offers.open.paginate page: page
-    @pending_job_offers = @employer.job_offers.pending.paginate page: page
-  end
-
-  def new
-    @employer = Employer.new
-    @employer.build_deputy
-    @employer.deputy.build_user
-  end
-
-  def create
-    @employer = Employer.new employer_params
-    @employer.deputy.employer = @employer if @employer.deputy
-
-    if @employer.save
-      sign_in @employer.deputy.user
-      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
-      EmployersMailer.new_employer_email(@employer).deliver
-    else
-      render_errors_and_action @employer, 'new'
-    end
-  end
-
-  def edit
-    authorize! :edit, @employer
-  end
-
-  def update
-    if @employer.update employer_params
-      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
-    else
-      render_errors_and_action @employer, 'edit'
-    end
-  end
-
-  def activate
-    @employer.update_column :activated, true
-    flash[:success] = I18n.t('employers.messages.successfully_activated')
-    redirect_to @employer
   end
 
   private
