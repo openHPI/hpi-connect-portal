@@ -47,7 +47,7 @@
                     <%= t("activerecord.attributes.employer.deputy") %>
                   </div>
                   <div class="col-sm-8">
-                    <%= link_to @employer.deputy.firstname+" "+@employer.deputy.lastname, @employer.deputy %>
+                    <%= link_to @employer.deputy.full_name, @employer.deputy %>
                   </div>
                 </div>
               </li>
