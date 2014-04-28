@@ -20,7 +20,7 @@ de:
         contact: "Kontakt"
         region: "Region"
         state:
-            OUTLAND: "Ausland"
+            ABROAD: "Ausland"
             BW: "Baden-Württemberg"
             BY: "Bayern"
             BE: "Berlin"
