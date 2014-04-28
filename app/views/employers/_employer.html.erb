@@ -3,7 +3,4 @@
     <% unless employer.activated %>
       <span class="label label-danger"><%= t("employers.inactive")%></span>
     <% end %>
-    <div class="pull-right">
-      <%= t("activerecord.attributes.employer.head") %>: <%= employer.head %>
-    </div>
 </li>

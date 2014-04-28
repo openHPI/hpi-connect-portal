@@ -13,7 +13,7 @@
     <span class="pull-right">
       <% if can?(:update, @job_offer) && !@job_offer.completed? %>
         <%= link_to t("job_offers.show_matching_students"),
-        matching_students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
+        students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
         :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
         <% unless @job_offer.running? %>
           <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>

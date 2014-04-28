@@ -18,6 +18,7 @@
 #
 
 class Employer < ActiveRecord::Base
+  NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
 
   has_many :staff_members, class_name: 'Staff'
@@ -32,8 +33,12 @@ class Employer < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
-  validates :head, presence: true
   validates :deputy, presence: true
+  validates :number_of_employees, presence: true
+  validates :place_of_business, presence: true
+  validates :year_of_foundation, numericality: { only_integer: true, 
+    greater_than: 1800, 
+    less_than_or_equal_to: Time.now.year}
   validate  :check_deputys_employer
 
   scope :active, -> { where(activated: true) }
