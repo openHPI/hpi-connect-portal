@@ -24,11 +24,15 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
+    get 'employers/home' => 'employers#home'
+
     resources :employers do 
       member do
         get "activate"
       end
     end
+
+
 
     resources :applications, only: [:create, :destroy] do
       member do

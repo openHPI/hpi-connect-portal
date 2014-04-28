@@ -57,6 +57,10 @@ class EmployersController < ApplicationController
     redirect_to @employer
   end
 
+  def home
+    render "home"
+  end
+
   private
 
     def rescue_from_exception(exception)
