@@ -155,7 +155,7 @@ class JobOffersController < ApplicationController
       if [:show].include?(exception.action) && @job_offer.completed?
         redirect_to archive_job_offers_path and return
       end
-      redirect_to root_url, notice: exception.message
+      redirect_to job_offers_path, notice: exception.message
     end
 
     def job_offer_params
