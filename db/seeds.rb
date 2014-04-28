@@ -57,8 +57,12 @@ Staff.delete_all
 hpi = Employer.new(
   name: "Hasso-Plattner-Institut",
   description: "This is the Hasso-Plattner-Institut.",
-  head: "Hasso Plattner",
   deputy: nil,
+  number_of_employees: "50-100",
+  place_of_business: "Potsdam - Brandenburg",
+  line_of_business: "IT",
+  website: "http://www.hpi.uni-potsdam.de",
+  year_of_foundation: 1998,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
 hpi_deputy = Staff.new(
@@ -79,8 +83,12 @@ hpi_deputy.save!
 sap = Employer.new(
   name: "SAP",
   description: "SAP",
-  head: "Hasso Plattner",
   deputy: nil,
+  number_of_employees: ">1000",
+  place_of_business: "Baden-Württemberg",
+  line_of_business: "IT",
+  website: "http://www.sap.de",
+  year_of_foundation: 1972,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
 sap_deputy = Staff.new(

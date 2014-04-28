@@ -16,16 +16,6 @@
               </div>
             </div>
         </div>
-        <div class="col-sm-6">
-          <div class="row">
-              <div class="col-sm-3">
-                <%= form.label t "activerecord.attributes.employer.head", class: "control-label" %><%= mark_if_required(employer, :head) %>
-              </div>
-              <div class="col-sm-9">
-                <%= form.input :head %>
-              </div>
-            </div>
-        </div>
       </div>
     </li>
     <li class="list-group-item">
@@ -63,6 +53,38 @@
         <div class="col-sm-12">
           <%= form.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
           <%= form.bootsy_area :description, :rows => 10, :class => "col-md-11 form-control", :placeholder => t("job_offers.enter_description") %>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
+          <%= form.select :number_of_employees, Employer::NUMBER_OF_EMPLOYEES_FIELDS, {}, { class: "form-control" } %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
+          <%= form.input :place_of_business %>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :website, class: "control-label" %><%= mark_if_required(employer, :website) %>
+          <%= form.input :website %>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :year_of_foundation, class: "control-label" %><%= mark_if_required(employer, :year_of_foundation) %>
+          <%= form.input :year_of_foundation %>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form.label :line_of_business, class: "control-label" %><%= mark_if_required(employer, :line_of_business) %>
+          <%= form.input :line_of_business %>
         </div>
       </div>
     </li>

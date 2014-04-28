@@ -6,7 +6,8 @@ describe EmployersController do
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
-      head: "Prof. Patrick Baudisch" , deputy_id: deputy.id } }
+      deputy_id: deputy.id, 
+      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998 } }
 
   let(:false_attributes) { { "name" => "HCI"} }
 
@@ -114,8 +115,7 @@ describe EmployersController do
       end
 
       it "does not create a new employer without deputy" do
-        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction",
-      "head" => "Prof. Patrick Baudisch"}}
+        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction"}}
         response.should render_template("new")
       end
     end
@@ -141,10 +141,8 @@ describe EmployersController do
       end
       
       it "updates the requested employer" do  
-        Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction",
-              "head" => "Prof. Patrick Baudisch" } )
-        put :update, { id: @employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction",
-              "head" => "Prof. Patrick Baudisch" } }
+        Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction" } )
+        put :update, { id: @employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction" } }
       end
 
       it "assigns the requested employer as @employer" do

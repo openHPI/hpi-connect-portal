@@ -90,8 +90,9 @@ describe "the employer page" do
       visit new_employer_path
 
       fill_in 'employer_name', with: 'Test Employer' 
-      fill_in 'employer_head', with: 'Employers Head'
       fill_in 'employer_description', with: 'Desctiption for an Employer.'
+      fill_in 'employer_year_of_foundation', with: 1992
+      fill_in 'employer_place_of_business', with: 'Potsdam'
       fill_in 'employer_deputy_attributes_user_attributes_firstname', with: 'Max'
       fill_in 'employer_deputy_attributes_user_attributes_lastname', with: 'Mustermann'
       fill_in 'employer_deputy_attributes_user_attributes_email', with: 'deputy@test.com'
@@ -126,7 +127,6 @@ describe "the employer page" do
   describe "should show the basic information of the employer" do
     it { should have_content(employer.name) }
     it { should have_content(employer.description) }
-    it { should have_content(employer.head) }
     it { should have_content(employer.deputy.firstname + " " + employer.deputy.lastname) }
   end
 
