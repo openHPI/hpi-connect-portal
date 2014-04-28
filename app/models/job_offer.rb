@@ -22,11 +22,7 @@
 class JobOffer < ActiveRecord::Base
   include Bootsy::Container
   include JobOfferScopes
-
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
-  STATES = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']
-   
+  
   before_save :default_values
 
   has_many :applications
@@ -51,7 +47,7 @@ class JobOffer < ActiveRecord::Base
 
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
-  STATES = ['OUTLAND', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+  STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
 
   self.per_page = 15
