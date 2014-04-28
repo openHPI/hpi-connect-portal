@@ -1,7 +1,9 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  load_and_authorize_resource except: [:edit]
+  skip_before_filter :signed_in_user, only: [:index]
+
+  load_and_authorize_resource except: [:index, :edit]
   skip_load_resource only: [:create] 
 
   #before_filter :new_job_offer, only: [:create]
@@ -153,7 +155,7 @@ class JobOffersController < ApplicationController
       if [:show].include?(exception.action) && @job_offer.completed?
         redirect_to archive_job_offers_path and return
       end
-      redirect_to job_offers_path, notice: exception.message
+      redirect_to root_url, notice: exception.message
     end
 
     def job_offer_params
