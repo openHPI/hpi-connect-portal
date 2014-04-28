@@ -75,8 +75,10 @@
       <div class="headbottom">
         <div id="head_bottom" class="collapse navbar-collapse">
           <% if signed_in? %>
-           <%= render "layouts/navigation/#{current_user.role}" %>
-          <% end %>   
+            <%= render "layouts/navigation/#{current_user.role}" %>
+          <% else %>
+            <%= render "layouts/navigation/guest" %>
+          <% end %>  
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 de:
   layouts:
     title: "Career Portal"
-    job_offers: "Stellenangebote"
-    students: "Studenten"
+    job_offers: "Jobangebote"
+    students: "Studentenprofile"
     staff: "Mitarbeiter"
-    employers: "Arbeitgeber"
+    employers: "Unternehmensprofile"
     users: "Benutzer"
     login: "Anmelden"
     logged_in: "Angemeldet"
