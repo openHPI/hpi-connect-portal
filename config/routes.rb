@@ -59,7 +59,6 @@ HpiHiwiPortal::Application.routes.draw do
       collection do
         get 'students/new' => 'students#new'
         post 'students' => 'students#create'
-        get 'matching'
       end
       member do
         patch 'activate'

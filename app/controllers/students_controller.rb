@@ -3,15 +3,15 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :matching, :edit, :index, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
-  has_scope :search_students, only: [:index, :matching], as: :q
-  has_scope :filter_programming_languages, type: :array, only: [:index, :matching], as: :programming_language_ids
-  has_scope :filter_languages, type: :array, only: [:index, :matching], as: :language_ids
-  has_scope :filter_semester, only: [:index, :matching],  as: :semester
-  has_scope :filter_academic_program, only: [:index, :matching],  as: :academic_program_id
-  has_scope :filter_graduation, only: [:index, :matching],  as: :graduation_id
+  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
+  has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
+  has_scope :filter_semester, only: [:index],  as: :semester
+  has_scope :filter_academic_program, only: [:index],  as: :academic_program_id
+  has_scope :filter_graduation, only: [:index],  as: :graduation_id
 
   def index
     authorize! :index, Student
@@ -61,13 +61,6 @@ class StudentsController < ApplicationController
     authorize! :destroy, @student
     @student.destroy
     respond_and_redirect_to(students_url, I18n.t('users.messages.successfully_deleted.'))
-  end
-
-  def matching
-    authorize! :read, Student.all
-    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active)
-    @students = @students.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 5)  
-    render "index"
   end
 
   def activate

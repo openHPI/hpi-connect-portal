@@ -155,7 +155,7 @@ describe StudentsController do
 
       login FactoryGirl.create(:user, :admin)
       old_path = current_path
-      get :matching, ({ language_ids: [@language_1.id], programming_language_ids: [@programming_language_1.id]}), valid_session
+      get :index, ({ language_ids: [@language_1.id], programming_language_ids: [@programming_language_1.id]}), valid_session
       assert current_path.should == old_path
       assigns(:students).should eq([@student1, @student2, @student5].sort_by{ |x| [x.lastname, x.firstname] }.paginate page: 1, per_page: 5)
     end
