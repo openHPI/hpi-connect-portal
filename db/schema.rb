@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20140422071648) do
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
+    t.integer  "academic_program_id"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -184,8 +185,6 @@ ActiveRecord::Schema.define(version: 20140422071648) do
 
   create_table "students", force: true do |t|
     t.integer  "semester"
-    t.string   "academic_program"
-    t.text     "education"
     t.text     "additional_information"
     t.date     "birthday"
     t.string   "homepage"

@@ -1,6 +1,6 @@
 class EmployersController < ApplicationController
 
-  skip_before_filter :signed_in_user, only: [:new, :create]
+  skip_before_filter :signed_in_user, only: [:show, :new, :create]
 
   authorize_resource only: [:edit, :update, :activate]
   before_action :set_employer, only: [:show, :edit, :update, :activate]
@@ -11,8 +11,8 @@ class EmployersController < ApplicationController
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
 
-  def show
-    not_found unless @employer.activated || can?(:activate, @employer) || (current_user.staff? && current_user.manifestation.employer == @employer)
+  def show     
+    not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer))
     page = params[:page]
     @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page

@@ -8,6 +8,20 @@
       <h5><%= label_tag t("job_offers.filterLabel") %></h5>
       <div class="form-group">
         <%= text_field_tag(:semester, params[:semester], :placeholder => t('students.semester'), :class => "form-control") %>
+      </div>      
+      <div class="form-group">
+         <%= label_tag t("activerecord.attributes.user.academic_program") , nil, :class => "small" %> 
+        <%= select_tag "academic_program_id", options_for_select( 
+        Student::ACADEMIC_PROGRAMS.each_with_index.collect {|program, index| 
+         [t("activerecord.attributes.user.academic_rank_options." + program), index]},
+         params.fetch(:academic_program_id, nil)), include_blank: true, :class => "form-control" %>
+      </div>
+      <div class="form-group">
+         <%= label_tag t("activerecord.attributes.user.degree") , nil, :class => "small" %> 
+        <%= select_tag "graduation_id", options_for_select( 
+        Student::GRADUATIONS.each_with_index.collect {|degree, index| 
+         [t("activerecord.attributes.user.degrees." + degree), index]},
+         params.fetch(:graduation_id, nil)), include_blank: true, :class => "form-control" %>
       </div>
       <div class="panel-group" id="languages_accordion">
         <div class="form-group">

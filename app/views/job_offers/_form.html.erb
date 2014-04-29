@@ -65,7 +65,7 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :state) %>
+                  <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :category) %>
                 </div>
                 <div class="col-sm-8 pull-right">                   
                      <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, {}, 
@@ -76,7 +76,22 @@
             <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= f.label :graduation, t("activerecord.attributes.user.minimum_degree"), class: "control-label" %><%= mark_if_required(@job_offer, t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
+              <%= f.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %>
+            </div>
+            <div class="col-sm-8 pull-right">
+              <% unless @job_offer.academic_program_id.nil? %>
+                <%= mark_if_required(@job_offer, t("activerecord.attributes.user.academic_rank_options." + @job_offer.academic_program)) %>
+                <% end %>
+            <%= f.select :academic_program_id, JobOffer::ACADEMIC_PROGRAMS.each_with_index.collect {|program, index|
+            [t("activerecord.attributes.user.academic_rank_options." + program), index]
+            }, {include_blank: true}, {id: 'graduation_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+            <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= f.label :graduation, t("activerecord.attributes.user.minimum_degree"), class: "control-label" %><%= mark_if_required(@job_offer, :graduation_id) %>
             </div>
             <div class="col-sm-8 pull-right">
             <%= f.select :graduation_id, JobOffer::GRADUATIONS.each_with_index.collect {|grade, index|
@@ -87,7 +102,7 @@
         </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <%= f.label t "activerecord.attributes.job_offer.room_number", class: "control-label" %><%= mark_if_required(@job_offer, :room_number) %>
                 </div>
                 <div class="col-sm-8 pull-right">
@@ -97,7 +112,7 @@
             </li>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <%= f.label t "activerecord.attributes.job_offer.start_date", class: "control-label" %><%= mark_if_required(@job_offer, :start_date) %>
                 </div>
                 <div class="col-sm-8 pull-right">
