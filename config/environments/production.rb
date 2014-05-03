@@ -93,4 +93,7 @@ HpiHiwiPortal::Application.configure do
     :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
+
+  # Mount this application to a unique subdirectory
+  config.relative_url_root = '/connect/jobportal'
 end
