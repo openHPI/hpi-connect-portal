@@ -7,10 +7,6 @@ server {
   listen 80;
   root <%= fetch(:deploy_to) %>/current/public;
 
-  location = / {
-    rewrite ^ /connect/jobportal break;
-  }
-
   location ^~ /assets/ {
     gzip_static on;
     expires max;
