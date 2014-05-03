@@ -12,7 +12,9 @@
 
     <span class="pull-right">
       <% if can?(:update, @job_offer) && !@job_offer.completed? %>
-        <%= link_to t("job_offers.show_matching_students"), matching_students_path(:language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
+        <%= link_to t("job_offers.show_matching_students"),
+        students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
+        :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
         <% unless @job_offer.running? %>
           <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
@@ -80,7 +82,10 @@
           <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
           <ul class="list-group">
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>          
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>
+            <% unless @job_offer.academic_program_id.nil? %>
+              <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.academic_program"), content: (t("activerecord.attributes.user.academic_rank_options." + @job_offer.academic_program)) %>  
+            <% end %>        
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
             <% unless @job_offer.room_number.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>

@@ -157,7 +157,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :student_id, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :student_id, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

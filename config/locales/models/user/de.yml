@@ -10,7 +10,7 @@ de:
         semester: "Semester"
         academic_program: "Studiengang"
         birthday: "Geburtsdatum"
-        education: "Abschluss"
+        degree: "Abschluss"
         minimum_degree: "Mindestabschluss"
         login_information: "Login Informationen"
         general_information: "Allgemeine Informationen"
@@ -31,6 +31,7 @@ de:
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."
+            alumnus: "Alumnus"
         degrees:
             abitur: "Abitur"
             secondary_education: "Realschulabschluss"
