@@ -11,14 +11,21 @@
 #  avatar_content_type :string(255)
 #  avatar_file_size    :integer
 #  avatar_updated_at   :datetime
-#  head                :string(255)      not null
 #  deputy_id           :integer
-#  external            :boolean          default(FALSE)
 #  activated           :boolean          default(FALSE), not null
+#  place_of_business   :string(255)
+#  website             :string(255)
+#  line_of_business    :string(255)
+#  year_of_foundation  :integer
+#  number_of_employees :string(255)
+#  requested_package   :integer          default(0), not null
+#  booked_package      :integer          default(0), not null
 #
 
 class Employer < ActiveRecord::Base
   NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
+  PACKAGES = ['free', 'partner', 'premium']
+
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
 
   has_many :staff_members, class_name: 'Staff'

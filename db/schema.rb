@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140422071648) do
+ActiveRecord::Schema.define(version: 20140503132744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20140422071648) do
     t.string   "line_of_business"
     t.integer  "year_of_foundation"
     t.string   "number_of_employees"
+    t.integer  "requested_package",   default: 0,     null: false
+    t.integer  "booked_package",      default: 0,     null: false
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
@@ -185,6 +187,8 @@ ActiveRecord::Schema.define(version: 20140422071648) do
 
   create_table "students", force: true do |t|
     t.integer  "semester"
+    t.string   "academic_program"
+    t.text     "education"
     t.text     "additional_information"
     t.date     "birthday"
     t.string   "homepage"

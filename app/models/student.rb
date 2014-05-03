@@ -17,6 +17,8 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
 #
 
 class Student < ActiveRecord::Base
