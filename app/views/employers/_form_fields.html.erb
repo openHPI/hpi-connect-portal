@@ -50,9 +50,30 @@
     </li>
 
     <li class="list-group-item">
-      <% Employer::PACKAGES.each_with_index do |package, index| %>
-        <%= form.radio_button :requested_package, index, class: 'package-select' %> <%= t("activerecord.attributes.employer.packages." + package) %>
-      <% end %>
+      <div class="package-div">
+        <%= form.radio_button :requested_package, 0, class: 'package-select' %>
+        <b><%= t("activerecord.attributes.employer.packages.free") %></b><br />
+        <ul> 
+          <li>Offer as many student jobs as you want </li>
+        </ul>
+      </div>
+      <div class="package-div">
+        <%= form.radio_button :requested_package, 1, class: 'package-select' %>
+        <b><%= t("activerecord.attributes.employer.packages.partner") %></b><br />
+        <ul> 
+          <li> Employer Profile </li>
+          <li> 4 full-time jobs per year </li>
+        </ul>
+      </div>
+      <div class="package-div">
+        <%= form.radio_button :requested_package, 2, class: 'package-select' %>
+        <b><%= t("activerecord.attributes.employer.packages.premium") %>
+        <ul> 
+          <li> 20 full-time jobs per year </li>
+          <li> View Student Profiles </li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
     </li>
 
     <div class="employers-extra-information">
