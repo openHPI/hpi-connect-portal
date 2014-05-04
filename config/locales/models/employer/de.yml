@@ -7,3 +7,7 @@ de:
         head: "Leiter"
         name: "Name"
         avatar: "Profilbild"
+        packages:
+            free: "Kostenlos"
+            partner: "Partner"
+            premium: "Premium"
