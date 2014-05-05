@@ -1,7 +1,9 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  load_and_authorize_resource except: [:edit]
+  skip_before_filter :signed_in_user, only: [:index]
+
+  load_and_authorize_resource except: [:index, :edit]
   skip_load_resource only: [:create] 
 
   #before_filter :new_job_offer, only: [:create]
