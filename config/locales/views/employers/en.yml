@@ -15,6 +15,12 @@ en:
         pending_job_offers: "Pending Job offers"
         inactive: "Deactivated"
         select_deputy: "Select a deputy..."
+        packages: "Packages"
+        package_descriptions:
+            student_jobs: "Offer as many student jobs as you want"
+            profile: "Employer Profile" 
+            full_time: "full-time jobs per year"
+            student_profile: "View Student Profiles"
         messages:
             successfully_created: "Welcome to HPI Career!"
             successfully_updated: "Profile successfully updated."

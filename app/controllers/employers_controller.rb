@@ -53,6 +53,7 @@ class EmployersController < ApplicationController
 
   def activate
     @employer.update_column :activated, true
+    @employer.update_column :booked_package_id, @employer.requested_package_id
     flash[:success] = I18n.t('employers.messages.successfully_activated')
     redirect_to @employer
   end
@@ -68,6 +69,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

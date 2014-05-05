@@ -2,24 +2,24 @@
 #
 # Table name: employers
 #
-#  id                  :integer          not null, primary key
-#  name                :string(255)
-#  description         :text
-#  created_at          :datetime
-#  updated_at          :datetime
-#  avatar_file_name    :string(255)
-#  avatar_content_type :string(255)
-#  avatar_file_size    :integer
-#  avatar_updated_at   :datetime
-#  deputy_id           :integer
-#  activated           :boolean          default(FALSE), not null
-#  place_of_business   :string(255)
-#  website             :string(255)
-#  line_of_business    :string(255)
-#  year_of_foundation  :integer
-#  number_of_employees :string(255)
-#  requested_package   :integer          default(0), not null
-#  booked_package      :integer          default(0), not null
+#  id                   :integer          not null, primary key
+#  name                 :string(255)
+#  description          :text
+#  created_at           :datetime
+#  updated_at           :datetime
+#  avatar_file_name     :string(255)
+#  avatar_content_type  :string(255)
+#  avatar_file_size     :integer
+#  avatar_updated_at    :datetime
+#  deputy_id            :integer
+#  activated            :boolean          default(FALSE), not null
+#  place_of_business    :string(255)
+#  website              :string(255)
+#  line_of_business     :string(255)
+#  year_of_foundation   :integer
+#  number_of_employees  :string(255)
+#  requested_package_id :integer          default(0), not null
+#  booked_package_id    :integer          default(0), not null
 #
 
 class Employer < ActiveRecord::Base
@@ -49,5 +49,13 @@ class Employer < ActiveRecord::Base
 
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
+  end
+
+  def requested_package
+    PACKAGES[requested_package_id]
+  end
+
+  def package
+    PACKAGES[booked_package_id]
   end
 end
