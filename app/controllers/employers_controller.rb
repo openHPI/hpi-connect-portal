@@ -44,7 +44,9 @@ class EmployersController < ApplicationController
   end
 
   def update
+    old_requested_package = @employer.requested_package_id
     if @employer.update employer_params
+      EmployersMailer.book_package_email(@employer).deliver if @employer.requested_package_id > old_requested_package
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
     else
       render_errors_and_action @employer, 'edit'

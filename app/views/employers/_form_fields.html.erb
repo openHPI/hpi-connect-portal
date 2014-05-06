@@ -54,14 +54,22 @@
         <%= form.label 'Packages', class: "control-label" %>
       </div>
       <div class="package-div">
-        <%= form.radio_button :requested_package_id, 0, class: 'package-select' %>
+        <% if employer.booked_package_id > 0 %>
+          <%= radio_button_tag :free, :free, 0, class: 'package-select', disabled: true %>
+        <% else %>
+          <%= form.radio_button :requested_package_id, 0, class: 'package-select' %>
+        <% end %>
         <b><%= t("activerecord.attributes.employer.packages.free") %></b><br />
         <ul> 
           <li><%= t("employers.package_descriptions.student_jobs") %></li>
         </ul>
       </div>
       <div class="package-div">
-        <%= form.radio_button :requested_package_id, 1, class: 'package-select' %>
+        <% if employer.booked_package_id > 1 %>
+          <%= radio_button_tag :partner, :partner, 0, class: 'package-select', disabled: true %>
+        <% else %>
+          <%= form.radio_button :requested_package_id, 1, class: 'package-select' %>
+        <% end %>
         <b><%= t("activerecord.attributes.employer.packages.partner") %></b><br />
         <ul> 
           <li><%= t("employers.package_descriptions.profile") %></li>

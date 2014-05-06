@@ -95,7 +95,6 @@ describe EmployersController do
       end
 
       it "assigns a newly created employer as @employer" do
-
         post :create, { employer: valid_attributes }
         assigns(:employer).should be_a(Employer)
         assigns(:employer).should be_persisted
@@ -104,6 +103,12 @@ describe EmployersController do
       it "redirects to the created employer" do
         post :create, { employer: valid_attributes }
         response.should redirect_to(Employer.last)
+      end
+
+      it "sends an email" do
+        old_count = ActionMailer::Base.deliveries.count
+        post :create, { employer: valid_attributes }
+        ActionMailer::Base.deliveries.count.should == old_count + 1
       end
     end
 
@@ -138,6 +143,7 @@ describe EmployersController do
     describe "with valid params" do
       before(:each) do
         @employer = FactoryGirl.create(:employer)
+        @employer.deputy.update_column :employer_id, @employer.id
       end
       
       it "updates the requested employer" do  
@@ -154,6 +160,12 @@ describe EmployersController do
         deputy.update(employer: @employer)
         put :update, { id: @employer.id, employer: valid_attributes }
         response.should redirect_to(@employer)
+      end
+
+      it "sends an email if a new package was booked" do
+        old_count = ActionMailer::Base.deliveries.count
+        put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: 2 } }
+        ActionMailer::Base.deliveries.count.should == old_count + 1
       end
     end
 

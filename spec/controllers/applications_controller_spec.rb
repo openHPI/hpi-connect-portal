@@ -87,9 +87,7 @@ describe ApplicationsController do
       it "changes the job status to 'running' if the last possible application is accepted" do
         @job_offer.vacant_posts = 1
         @job_offer.save
-
         running = FactoryGirl.create(:job_status, name: 'running')
-
         get :accept, {id: @application.id}
         assigns(:application).job_offer.status.should eq(running)
       end
@@ -104,17 +102,13 @@ describe ApplicationsController do
 
       it "sends two emails" do
         old_count = ActionMailer::Base.deliveries.count
-
         get :accept, {id: @application.id}
-
         ActionMailer::Base.deliveries.count.should == old_count + 2
       end
 
       it "renders errors if updating all objects failed" do
         working = FactoryGirl.create(:job_status, name: 'running')
-
         JobOffer.any_instance.stub(:save).and_return(false)
-
         get :accept, {id: @application.id}
         response.should redirect_to(@application.job_offer)
       end
@@ -122,7 +116,6 @@ describe ApplicationsController do
       it "updates the job offers start date to the current date if it is 'from now on'" do
         @job_offer.flexible_start_date = true
         @job_offer.save!
-
         get :accept, {id: @application.id}
         assert_equal(@job_offer.reload.start_date, Date.current)
       end

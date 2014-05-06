@@ -74,6 +74,14 @@ describe "the employer page" do
         visit employer_path(@employer)
       }.to raise_error(ActionController::RoutingError)
     end
+
+    it "can also be activated if a new package was booked" do
+      @employer.update_column :activated, true
+      @employer.update_column :requested_package_id, 1
+      login FactoryGirl.create(:user, :admin)
+      visit employer_path(@employer)
+      should have_link 'Activate'
+    end
   end
 
   describe "creating a new employer" do
