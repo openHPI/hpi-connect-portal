@@ -45,10 +45,12 @@ HpiHiwiPortal::Application.routes.draw do
         patch '/update_password' => 'users#update_password', as: 'update_password'
       end
 
-      resources :home, only: [:index, :create, :destroy, :imprint]
+      resources :home, only: [:index, :imprint]
       get 'home/imprint'
+      
+      resources :sessions, only: [:create]
       get '/signin' => 'home#index', as: 'signin'
-      delete '/signout' => 'home#destroy', as: 'signout'
+      delete '/signout' => 'sessions#destroy', as: 'signout'
 
       resources :studentsearch
       resources :faqs
