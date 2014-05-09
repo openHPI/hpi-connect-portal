@@ -14,7 +14,7 @@ server {
   }
 
   location ~* ^/connect/jobportal/ {
-    try_files @unicorn;
+    try_files $uri @unicorn;
   }
 
   try_files $uri/index.html $uri @unicorn;
