@@ -21,10 +21,10 @@ server {
     proxy_pass http://unicorn;
   }
 
-  location /connect/jobportal/ {
-    alias <%= fetch(:deploy_to) %>/current/public/;
-
-    try_files $uri @unicorn;
+  location ~* ^/connect/jobportal/ {
+    root   <%= fetch(:deploy_to) %>/current/public;
+    index  index.html index.htm;
+    proxy_pass http://unicorn;
   }
 
   error_page 500 502 503 504 /500.html;
