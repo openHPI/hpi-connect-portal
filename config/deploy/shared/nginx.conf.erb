@@ -13,17 +13,15 @@ server {
     add_header Cache-Control public;
   }
 
+  location ~* ^/connect/jobportal/ {
+    try_files @unicorn;
+  }
+
   try_files $uri/index.html $uri @unicorn;
   location @unicorn {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_pass http://unicorn;
-  }
-
-  location ~* ^/connect/jobportal/ {
-    root   <%= fetch(:deploy_to) %>/current/public;
-    index  index.html index.htm;
     proxy_pass http://unicorn;
   }
 
