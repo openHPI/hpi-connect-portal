@@ -2707,20 +2707,20 @@ html {
 }
 .carousel-control.right span {
   top: 35%;
-  background: url(<%= image_path('hpi_web_icons.png') %>) -218px -57px;
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background: url(<%= asset_path('hpi_web_icons.png', type: :image) %>) -218px -57px;
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   width: 30px;
   height: 50px;
 }
 .carousel-control.left span {
   top: 35%;
-  background: url(<%= image_path('hpi_web_icons.png') %>) -191px -57px;
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background: url(<%= asset_path('hpi_web_icons.png', type: :image) %>) -191px -57px;
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   width: 30px;
   height: 50px;
 }
 body {
-  background: url(<%= image_path("bg_hpi.jpg") %>) fixed no-repeat #dedfe0;
+  background: url(<%= asset_path("bg_hpi.jpg", type: :image) %>) fixed no-repeat #dedfe0;
   margin: 0;
   padding: 0;
   background-size: 100%;
@@ -2738,31 +2738,31 @@ body > .container:before {
   overflow: hidden;
 }
 body.theme1 {
-  background-image: url(<%= image_path("bg_hpi.jpg") %>);
+  background-image: url(<%= asset_path("bg_hpi.jpg", type: :image) %>);
 }
 body.theme1 > .container:before {
   background: rgba(177,6,58,0.6);
 }
 body.theme2 {
-  background-image: url(<%= image_path("bg_studium.jpg") %>);
+  background-image: url(<%= asset_path("bg_studium.jpg", type: :image) %>);
 }
 body.theme2 > .container:before {
   background: rgba(221,97,8,0.6);
 }
 body.theme3 {
-  background-image: url(<%= image_path("hpi_web_hintergrundbild_3.jpg") %>);
+  background-image: url(<%= asset_path("hpi_web_hintergrundbild_3.jpg", type: :image) %>);
 }
 body.theme3 > .container:before {
   background: rgba(0,122,158,0.6);
 }
 body.theme4 {
-  background-image: url(<%= image_path("bg_studium.jpg") %>);
+  background-image: url(<%= asset_path("bg_studium.jpg", type: :image) %>);
 }
 body.theme4 > .container:before {
   background: rgba(246,168,0,0.6);
 }
 body.theme5 {
-  background-image: url(<%= image_path("bg_studium.jpg") %>);
+  background-image: url(<%= asset_path("bg_studium.jpg", type: :image) %>);
 }
 body.theme5 > .container:before {
   background: rgba(90,96,101,0.6);
@@ -3050,8 +3050,8 @@ div.col-md-12 {
   height: 10px;
   margin-left: 5px;
   margin-right: 5px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -114px -70px;
 }
 .teaser .nav li a {
@@ -3175,8 +3175,8 @@ div.col-md-12 {
 }
 .sidebar .panel-title:after {
   content: " ";
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -9px -25px;
   width: 10px;
   height: 10px;
@@ -3363,8 +3363,8 @@ form + h3 {
   color: #5a6065;
   font-size: 10px;
   margin-right: 5px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -67px -40px;
 }
 .filelist a.folder:before {
@@ -3412,8 +3412,8 @@ form + h3 {
   text-indent: -9999px;
   width: 10px;
   height: 9px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -82px -25px;
 }
 .filtersearch,
@@ -3450,8 +3450,8 @@ button:before {
   height: 14px;
   display: inline-block;
   margin-left: 2px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -81px -25px;
   position: absolute;
   margin-top: 8px;
@@ -3463,8 +3463,8 @@ button:before {
   content: ' ';
   width: 9px;
   height: 7px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -9px -25px;
   display: inline-block;
   margin-left: 5px;
@@ -3950,8 +3950,8 @@ body.accent3 .breadcrumb > li a:hover {
   text-indent: -9999px;
   width: 36px;
   z-index: 25;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: 0px -55px;
   height: 31px;
 }
@@ -4229,8 +4229,8 @@ input:focus::-moz-placeholder {
   width: 25px;
   height: 25px;
   border: 4px solid #eeefef;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
   background-position: -280px -25px;
   background-color: transparent;
   margin-left: 8px;
@@ -4464,8 +4464,8 @@ input:focus::-moz-placeholder {
   width: 24px;
   height: 24px;
   margin-right: 6px;
-  background-image: url(<%= image_path('hpi_web_icons.png') %>);
-  background-image: url(<%= image_path('hpi_web_icons.svg') %>);
+  background-image: url(<%= asset_path('hpi_web_icons.png', type: :image) %>);
+  background-image: url(<%= asset_path('hpi_web_icons.svg', type: :image) %>);
 }
 .subpage #social {
   float: right;

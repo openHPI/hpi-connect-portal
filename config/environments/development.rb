@@ -41,4 +41,7 @@ HpiHiwiPortal::Application.configure do
     :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
+
+  config.relative_url_root = '/connect/jobportal'
+  config.assets.prefix = '/connect/jobportal/assets'
 end
