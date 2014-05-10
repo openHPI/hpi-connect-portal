@@ -31,8 +31,10 @@ describe "the job offer flow" do
 
     visit job_offers_path
 
-    should have_link(I18n.t("job_offers.new_job_offer"))
-    click_on I18n.t("job_offers.new_job_offer")
+    within ".wrapper-8.teaser" do
+        should have_link(I18n.t("job_offers.new_job_offer"))
+        click_on I18n.t("job_offers.new_job_offer")
+    end
     current_path.should == new_job_offer_path
 
     fill_in "job_offer_title", with: "HPI-Career-Portal"

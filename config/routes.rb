@@ -1,6 +1,9 @@
 HpiHiwiPortal::Application.routes.draw do
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
 
+  prefix = HpiHiwiPortal::Application.config.relative_url_root || ''
+
+  scope prefix do
   scope "(:locale)", locale: /en|de/ do
 
     root to: "home#index"
@@ -8,6 +11,13 @@ HpiHiwiPortal::Application.routes.draw do
     namespace :admin do
       resource :configurable, except: [:index]
     end
+      member do
+        get "close"
+        get "accept"
+        get "decline"
+        get "reopen"
+        put "prolong"
+        post "fire"
 
     resources :job_offers do
       collection do
@@ -29,6 +39,9 @@ HpiHiwiPortal::Application.routes.draw do
     resources :employers do 
       member do
         get "activate"
+      resources :employers do 
+        member do
+          get "activate"
       end
     end
 
@@ -43,10 +56,11 @@ HpiHiwiPortal::Application.routes.draw do
       patch '/update_password' => 'users#update_password', as: 'update_password'
     end
 
-    resources :home, only: [:index, :create, :destroy, :imprint]
+      resources :home, only: [:index, :imprint]
     get 'home/imprint'
+      resources :sessions, only: [:create]
     get '/signin' => 'home#index', as: 'signin'
-    delete '/signout' => 'home#destroy', as: 'signout'
+      delete '/signout' => 'sessions#destroy', as: 'signout'
 
     resources :studentsearch
     resources :faqs

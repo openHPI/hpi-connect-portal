@@ -144,33 +144,6 @@
         <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.active? %>
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
           <!-- Modal for sending an application email-->
-          <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel"><%= t "job_offers.send_application_headline" %></h4>
-                </div>
-                <%= simple_form_for current_user.manifestation.applications.build(job_offer_id: @job_offer.id), html: { multipart: true } do |f| %>
-                  <div class="modal-body clearfix">
-                    <%= f.input :job_offer_id, as: :hidden %>
-                    <%= text_area_tag :message, t("applications_mailer.students.apply.application"), as: :bootsy, rows: 10, class: "col-md-12 form-control"  %>
-                    <% unless (current_user.cv.path).nil? %>
-                      <br/>
-                      <%= check_box_tag :add_cv, nil, true %>
-                      <%= label_tag :add_cv, t("job_offers.add_cv_application") %>
-                      <small style="margin-left:10px;"><%= File.basename(current_user.cv.path) %></small>
-                    <% end %>
-                    <%= file_field_tag 'attached_files', multiple: true, name: "attached_files[file_attributes][][file]" %>
-                  </div>
-                  <div class="modal-footer">
-                    <span class="btn btn-default", data-dismiss="modal"><%= t("links.cancel") %></span>
-                    <%= f.submit t("job_offers.send_application"), class: 'btn btn-success apply-button' %>
-                  </div>
-                <% end %>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
         <% end %>
       </div>
 
@@ -199,3 +172,7 @@
 
   </div>
 </div>
+
+<% content_for :modals do %>
+  <%= render 'application_modal', job_offer: @job_offer %>
+<% end %>
