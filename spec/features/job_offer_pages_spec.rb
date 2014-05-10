@@ -143,10 +143,10 @@ describe "Job Offer pages" do
       end
     end
 
-    describe "closed job offer" do
+    describe "active job offer" do
       let(:deputy) { FactoryGirl.create(:staff)}
       let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_closed) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_active) }
 
       let(:student) { FactoryGirl.create(:student) }
 

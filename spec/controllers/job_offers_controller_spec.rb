@@ -197,7 +197,7 @@ describe JobOffersController do
 
   describe "GET close" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :closed), assigned_students: [FactoryGirl.create(:student)])
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active), assigned_students: [FactoryGirl.create(:student)])
     end
 
     it "marks jobs as completed if the user is staff of the employer" do
