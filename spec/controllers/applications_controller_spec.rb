@@ -5,11 +5,11 @@ describe ApplicationsController do
   let(:employer) { FactoryGirl.create(:employer) }
   let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:student)
     @student.user.email = 'test@example.com'
-    @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "open"))
+    @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "active"))
   end
 
   describe "GET decline" do
@@ -99,7 +99,7 @@ describe ApplicationsController do
         @job_offer.save
 
         get :accept, {id: @application.id}
-        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'open'))
+        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'active'))
       end
 
       it "sends two emails" do
@@ -155,7 +155,7 @@ describe ApplicationsController do
     end
 
     it "does create an application if job is open" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({
@@ -171,7 +171,7 @@ describe ApplicationsController do
     end
 
     it "handles failing save call" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       student = FactoryGirl.create(:student)
@@ -185,7 +185,7 @@ describe ApplicationsController do
     end
 
     it "forbids attachments that are not a PDF" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({

@@ -9,7 +9,7 @@ describe "job_offers/show" do
       :employer => @employer,
       :start_date => Date.current + 10,
       :responsible_user => FactoryGirl.create(:staff),
-      :status => FactoryGirl.create(:job_status, :name => "open")
+      :status => FactoryGirl.create(:job_status, :name => "active")
     ))
     view.stub(:can?) { false }
     view.stub(:current_user) { FactoryGirl.create(:user) }

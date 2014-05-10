@@ -4,79 +4,72 @@ HpiHiwiPortal::Application.routes.draw do
   prefix = HpiHiwiPortal::Application.config.relative_url_root || ''
 
   scope prefix do
-  scope "(:locale)", locale: /en|de/ do
 
-    root to: "home#index"
+    scope "(:locale)", locale: /en|de/ do
 
-    namespace :admin do
-      resource :configurable, except: [:index]
-    end
-      member do
-        get "close"
-        get "accept"
-        get "decline"
-        get "reopen"
-        put "prolong"
-        post "fire"
+      root to: "home#index"
 
-    resources :job_offers do
-      collection do
-        get "archive"
-        get "matching"
+      namespace :admin do
+        resource :configurable, except: [:index]
       end
-      member do
-        get "close"
-        get "accept"
-        get "decline"
-        get "reopen"
-        put "prolong"
-        post "fire"
+
+      resources :job_offers do
+        collection do
+          get "archive"
+          get "matching"
+        end
+        member do
+          get "close"
+          get "accept"
+          get "decline"
+          get "reopen"
+          put "prolong"
+          post "fire"
+        end
       end
-    end
 
-    get 'employers/home' => 'employers#home'
-
-    resources :employers do 
-      member do
-        get "activate"
-      resources :employers do 
+      resources :employers do
         member do
           get "activate"
+        end
       end
-    end
 
-    resources :applications, only: [:create, :destroy] do
-      member do
-        get "accept"
-        get "decline"
+      get 'employers/home' => 'employers#home'
+
+      resources :applications, only: [:create, :destroy] do
+        member do
+          get "accept"
+          get "decline"
+        end
       end
-    end
 
-    resources :users, only: [:edit, :update] do
-      patch '/update_password' => 'users#update_password', as: 'update_password'
-    end
+      resources :users, only: [:edit, :update] do
+        patch '/update_password' => 'users#update_password', as: 'update_password'
+      end
 
       resources :home, only: [:index, :imprint]
-    get 'home/imprint'
+      get 'home/imprint'
+      
       resources :sessions, only: [:create]
-    get '/signin' => 'home#index', as: 'signin'
+      get '/signin' => 'home#index', as: 'signin'
       delete '/signout' => 'sessions#destroy', as: 'signout'
 
-    resources :studentsearch
-    resources :faqs
+      resources :studentsearch
+      resources :faqs
 
-    resources :staff, except: [:edit, :update]
+      resources :staff, except: [:edit, :update]
 
-    resources :students do
-      collection do
-        get 'students/new' => 'students#new'
-        post 'students' => 'students#create'
-      end
-      member do
-        patch 'activate'
-        get 'activate'
-        get 'request_linkedin_import'
-        get 'insert_imported_data'
+      resources :students do
+        collection do
+          get 'students/new' => 'students#new'
+          post 'students' => 'students#create'
+        end
+        member do
+          patch 'activate'
+          get 'activate'
+          get 'request_linkedin_import'
+          get 'insert_imported_data'
+        end
       end
     end
   end
