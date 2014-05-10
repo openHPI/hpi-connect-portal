@@ -16,9 +16,8 @@ describe "the job offer flow" do
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
 
     employer.deputy = deputy
     employer.save
@@ -85,7 +84,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     current_path.should == job_offer_path(job_offer)
     should_not have_selector(".alert alert-danger")
-    assert job_offer.open?
+    assert job_offer.active?
 
     # responsible staff member gets notified that the job offer got accepted
     ActionMailer::Base.deliveries.count.should == 1
@@ -163,7 +162,6 @@ describe "the job offer flow" do
     find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, student: first_applicant).first)+"']").click
 
     job_offer = job_offer.reload
-    assert job_offer.running?
     assert Application.where(job_offer: job_offer).load.count == 0
     assert_equal(job_offer.assigned_students, [first_applicant])
 
@@ -182,10 +180,9 @@ describe "the job offer flow" do
     click_button I18n.t("job_offers.prolong")
 
     # the job offers end date is updated
-    job_offer.reload
+    job_offer = job_offer.reload
     current_path.should == job_offer_path(job_offer)
     assert_equal(job_offer.end_date, Date.current + 3)
-    assert_equal(job_offer.running?, true)
 
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1
@@ -210,7 +207,7 @@ describe "the job offer flow" do
     ActionMailer::Base.deliveries = []
 
     job_offer = job_offer.reload
-    assert job_offer.completed?
+    assert job_offer.closed?
 
     # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)

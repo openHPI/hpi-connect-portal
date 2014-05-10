@@ -240,7 +240,7 @@ describe JobOffer do
 
 
   it "returns job offers filtered by status" do
-    @status = FactoryGirl.create(:job_status, :name => "completed")
+    @status = FactoryGirl.create(:job_status, :name => "closed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);
     FactoryGirl.create(:job_offer, employer: @epic);
     filtered_job_offers = JobOffer.where(:status => @status)

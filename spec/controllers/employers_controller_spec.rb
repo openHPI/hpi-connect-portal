@@ -12,8 +12,7 @@ describe EmployersController do
   let(:false_attributes) { { "name" => "HCI"} }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :open)
+    FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :pending)
 
     login admin

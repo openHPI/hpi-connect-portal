@@ -11,17 +11,17 @@
     <% end %>
 
     <span class="pull-right">
-      <% if can?(:update, @job_offer) && !@job_offer.completed? %>
+      <% if can?(:update, @job_offer) && !@job_offer.closed? %>
         <%= link_to t("job_offers.show_matching_students"),
         students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
         :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
-        <% unless @job_offer.running? %>
+        <% unless @job_offer.active? %>
           <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
         <% end %>
       <% end %>
-      <% if can?(:complete, @job_offer) && @job_offer.running? %>
-        <%= link_to t("job_offers.job_completed"), complete_job_offer_path(@job_offer), :class => "btn btn-default" %>
+      <% if can?(:close, @job_offer) && @job_offer.active? %>
+        <%= link_to t("job_offers.job_completed"), close_job_offer_path(@job_offer), :class => "btn btn-default" %>
       <% end %>
     </span>
 
@@ -141,7 +141,7 @@
 
     <div class="row">
       <div class="pull-right">
-        <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.open? %>
+        <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.active? %>
           <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
           <!-- Modal for sending an application email-->
           <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -177,7 +177,7 @@
 
     </div>
 
-    <% if @job_offer.applications.any? && !@job_offer.completed? && can?(:read, @job_offer.applications.first) %>
+    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
       <div class="clearfix">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>

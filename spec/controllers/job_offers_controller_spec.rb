@@ -9,21 +9,23 @@ describe JobOffersController do
   let(:assigned_student) { FactoryGirl.create(:student) }
   let(:employer) { FactoryGirl.create(:employer) }
   let(:responsible_user) { FactoryGirl.create(:staff, employer: employer) }
-  let(:completed) {FactoryGirl.create(:job_status, :completed)}
+  let(:closed) {FactoryGirl.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :open), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
-  let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
-  let(:valid_attributes_status_completed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => completed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
+  #let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+   # "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+  let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+  let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+  
 
   let(:valid_session) { {} }
 
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
   end
 
   before(:each) do
@@ -35,12 +37,12 @@ describe JobOffersController do
     @employer_two = FactoryGirl.create(:employer)
     @employer_three = FactoryGirl.create(:employer)
 
-    @open = FactoryGirl.create(:job_status, name:"open")
+    @active = FactoryGirl.create(:job_status, name:"active")
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    @job_offer = FactoryGirl.create(:job_offer, status: @open)
+    @job_offer = FactoryGirl.create(:job_offer, status: @active)
 
     employer.deputy.update_column :employer_id, employer.id
   end
@@ -73,12 +75,12 @@ describe JobOffersController do
 
   describe "GET archive" do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
-      @job_offer.update!(status: completed)
+      @job_offer.update!(status: closed)
       get :archive, {}, valid_session
       assigns(:job_offers_list)[:items].should eq([@job_offer])
     end
 
-    it "does not assign non-completed jobs" do
+    it "does not assign non-closed jobs" do
       get :archive, {}, valid_session
       assert assigns(:job_offers_list)[:items].empty?
     end
@@ -100,7 +102,7 @@ describe JobOffersController do
     end
 
     it "redirects students when job is in archive" do
-      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
+      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
       response.should redirect_to(archive_job_offers_path)
     end
@@ -108,7 +110,7 @@ describe JobOffersController do
     it "shows archive job for admin" do
       login FactoryGirl.create(:user, :admin)
 
-      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "completed"))
+      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
       response.should_not redirect_to(archive_job_offers_path)
       response.should render_template("show")
@@ -140,10 +142,10 @@ describe JobOffersController do
   describe "GET find" do
     it "assigns @job_offers_list[:items] to all job offers with the specified employer" do
 
-      FactoryGirl.create(:job_offer, employer: @employer_two, status: @open)
-      FactoryGirl.create(:job_offer, employer: @employer_one, status: @open)
-      FactoryGirl.create(:job_offer, employer: @employer_three, status: @open)
-      FactoryGirl.create(:job_offer, employer: @employer_one, status: @open)
+      FactoryGirl.create(:job_offer, employer: @employer_two, status: @active)
+      FactoryGirl.create(:job_offer, employer: @employer_one, status: @active)
+      FactoryGirl.create(:job_offer, employer: @employer_three, status: @active)
+      FactoryGirl.create(:job_offer, employer: @employer_one, status: @active)
 
       job_offers = JobOffer.filter_employer(@employer_one.id)
       get :index, ({:employer => @employer_one.id}), valid_session
@@ -161,10 +163,10 @@ describe JobOffersController do
       language2 = FactoryGirl.create(:language)
 
       JobOffer.delete_all
-      job1 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language2])
-      job2 = FactoryGirl.create(:job_offer, status: @open, programming_languages: [programming_language1, programming_language2])
-      job3 = FactoryGirl.create(:job_offer, status: @open, languages: [language1], programming_languages: [programming_language1] )
-      job4 = FactoryGirl.create(:job_offer, status: @open, languages: [language2], programming_languages:[programming_language3])
+      job1 = FactoryGirl.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language2])
+      job2 = FactoryGirl.create(:job_offer, status: @active, programming_languages: [programming_language1, programming_language2])
+      job3 = FactoryGirl.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language1] )
+      job4 = FactoryGirl.create(:job_offer, status: @active, languages: [language2], programming_languages:[programming_language3])
 
       student = FactoryGirl.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
       login student.user
@@ -176,7 +178,7 @@ describe JobOffersController do
 
   describe "PUT prolong" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running))
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active))
       @staff = FactoryGirl.create(:staff, employer: @job_offer.employer)
       @job_offer.update({ responsible_user_id: @staff.id, end_date: Date.current + 10 })
       login @staff.user
@@ -193,20 +195,20 @@ describe JobOffersController do
     end
   end
 
-  describe "GET complete" do
+  describe "GET close" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :running), assigned_students: [FactoryGirl.create(:student)])
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :closed), assigned_students: [FactoryGirl.create(:student)])
     end
 
     it "marks jobs as completed if the user is staff of the employer" do
-      completed = FactoryGirl.create(:job_status, :completed)
+      closed = FactoryGirl.create(:job_status, :closed)
       login FactoryGirl.create(:staff, employer: @job_offer.employer).user
 
-      get :complete, { id: @job_offer.id }
-      assigns(:job_offer).status.should eq(completed)
+      get :close, { id: @job_offer.id }
+      assigns(:job_offer).status.should eq(closed)
     end
     it "prohibits user to mark jobs as completed if he is no staff of the employer" do
-      get :complete, { id: @job_offer.id}, valid_session
+      get :close, { id: @job_offer.id}, valid_session
       response.should redirect_to(@job_offer)
     end
   end
@@ -228,7 +230,7 @@ describe JobOffersController do
     it "accepts job offers" do
       login employer.deputy.user
       get :accept, {id: @job_offer.id}
-      assigns(:job_offer).status.should eq(JobStatus.open)
+      assigns(:job_offer).status.should eq(JobStatus.active)
       ActionMailer::Base.deliveries.count.should >= 1
       response.should redirect_to(@job_offer)
     end
@@ -258,7 +260,7 @@ describe JobOffersController do
 
       before(:each) do
         login responsible_user.user
-        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running), responsible_user: responsible_user)
+        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active), responsible_user: responsible_user)
       end
 
       it "assigns a new job_offer as @job_offer" do
@@ -278,10 +280,10 @@ describe JobOffersController do
         reopend_job_offer.assigned_students.should be_empty
       end
 
-      it "is pending and old job offer changes to completed" do
+      it "is pending and old job offer changes to closed" do
         get :reopen, {id: @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        @job_offer.reload.status.should eql(completed)
+        @job_offer.reload.status.should eql(closed)
       end
     end
   end
@@ -485,7 +487,7 @@ describe JobOffersController do
     end
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
-      @job_offer.update!(status: FactoryGirl.create(:job_status, :running))
+      @job_offer.update!(status: FactoryGirl.create(:job_status, :active))
       login @job_offer.responsible_user.user
 
       expect {
@@ -511,7 +513,7 @@ describe JobOffersController do
 
       assert_equal(old_offer.vacant_posts+1, @job_offer.reload.vacant_posts)
       assert_equal(0, @job_offer.reload.assigned_students.count)
-      assert_equal(@job_offer.reload.status, JobStatus.open)
+      assert_equal(@job_offer.reload.status, JobStatus.active)
     end
 
     describe "without the required permissions" do

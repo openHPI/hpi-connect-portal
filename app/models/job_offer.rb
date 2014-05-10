@@ -77,24 +77,20 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
-  def completed?
-    status && status == JobStatus.completed
+  def closed?
+    status && status == JobStatus.closed
   end
 
   def pending?
     status && status == JobStatus.pending
   end
 
-  def open?
-    status && status == JobStatus.open
-  end
-
-  def running?
-    status && status == JobStatus.running
+  def active?
+    status && status == JobStatus.active
   end
 
   def editable?
-    self.pending? || self.open?
+    self.pending? || self.active?
   end
 
   def human_readable_compensation
@@ -102,20 +98,20 @@ class JobOffer < ActiveRecord::Base
   end
 
   def check_remaining_applications
-    if vacant_posts == 0
-      if update({ status: JobStatus.running })
-        applications.each do | application |
-          application.decline
-        end
-      else
-        false
-      end
-    end
+   # if vacant_posts == 0
+   #   if update({ status: JobStatus.running })
+   #     applications.each do | application |
+   #       application.decline
+   #     end
+   #   else
+   #     false
+   #   end
+   # end
     true
   end
 
   def prolong(date)
-    if running? && end_date < date
+    if closed? && end_date < date
       update_column :end_date, date
       JobOffersMailer.job_prolonged_email(self).deliver
       true
@@ -127,7 +123,7 @@ class JobOffer < ActiveRecord::Base
   def fire(student)
     assigned_students.delete student
     save!
-    update!({vacant_posts: vacant_posts + 1, status: JobStatus.open})
+    update!({vacant_posts: vacant_posts + 1, status: JobStatus.active})
   end
 
   def accept_application(application)
@@ -137,9 +133,9 @@ class JobOffer < ActiveRecord::Base
       if flexible_start_date
         update!({ start_date: Date.current })
       end
-      if vacant_posts == 0
-        update!({status: JobStatus.running})
-      end
+      #if vacant_posts == 0
+      #  update!({status: JobStatus.running})
+      #end
 
       ApplicationsMailer.application_accepted_student_email(application).deliver
       JobOffersMailer.job_student_accepted_email(self).deliver

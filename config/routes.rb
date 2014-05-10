@@ -15,7 +15,7 @@ HpiHiwiPortal::Application.routes.draw do
         get "matching"
       end
       member do
-        get "complete"
+        get "close"
         get "accept"
         get "decline"
         get "reopen"
@@ -31,8 +31,6 @@ HpiHiwiPortal::Application.routes.draw do
         get "activate"
       end
     end
-
-
 
     resources :applications, only: [:create, :destroy] do
       member do
