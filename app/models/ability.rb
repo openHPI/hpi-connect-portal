@@ -17,10 +17,8 @@ class Ability
 
   def initialize_admin
     can :manage, :all
-    cannot :prolong, JobOffer, status: JobStatus.active
     cannot :prolong, JobOffer, status: JobStatus.pending
     cannot :prolong, JobOffer, status: JobStatus.closed
-    cannot :reopen, JobOffer, status: JobStatus.active
     cannot :reopen, JobOffer, status: JobStatus.pending
   end
 
@@ -53,16 +51,19 @@ class Ability
       cannot [:edit, :update], Student
 
       can [:create, :show], JobOffer
-      can :complete, JobOffer, employer: staff.employer
+      can :close, JobOffer, employer: staff.employer
+      can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
       can [:accept, :decline], JobOffer, employer: { deputy_id: staff_id }
+      can :prolong, JobOffer, responsible_user_id: staff_id, status: JobStatus.active
+      can :prolong, JobOffer, employer: { deputy_id: staff_id }, status: JobStatus.active
       can [:update, :destroy, :fire], JobOffer, responsible_user_id: staff_id
       can [:update, :destroy, :fire], JobOffer, employer: { deputy_id: staff_id }
       can [:update, :edit], JobOffer do |job|
         job.editable? && (job.responsible_user_id == staff_id || job.employer.deputy_id == staff_id)
       end
       #cannot :destroy, JobOffer do |job|
-      #  job.running?
+       # job.active?
       #end
 
       can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
