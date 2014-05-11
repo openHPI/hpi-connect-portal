@@ -183,9 +183,10 @@ describe "the job offer flow" do
     click_button I18n.t("job_offers.prolong")
 
     # the job offers end date is updated
-    job_offer = job_offer.reload
+    job_offer.reload
     current_path.should == job_offer_path(job_offer)
     assert_equal(job_offer.end_date, Date.current + 3)
+    assert_equal(job_offer.active?, true)
 
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1

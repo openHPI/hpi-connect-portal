@@ -189,9 +189,10 @@ describe "Job Offer pages" do
           visit edit_job_offer_path(job_offer)
         end
 
-        it "should not be editable" do
-          expect(current_path).to eq(job_offer_path(job_offer))
-        end
+        #Note: active jobs should be editable I think...
+        #it "should not be editable" do
+        #  expect(current_path).to eq(job_offer_path(job_offer))
+        #end
 
         it "shouldn't display a delete button" do
           should_not have_link I18n.t("links.destroy")

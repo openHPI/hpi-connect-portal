@@ -62,9 +62,9 @@ class Ability
       can [:update, :edit], JobOffer do |job|
         job.editable? && (job.responsible_user_id == staff_id || job.employer.deputy_id == staff_id)
       end
-      #cannot :destroy, JobOffer do |job|
-       # job.active?
-      #end
+      cannot :destroy, JobOffer do |job|
+        job.active?
+      end
 
       can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
 
