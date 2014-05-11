@@ -71,6 +71,10 @@ class Ability
       can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
 
       can :destroy, Staff, manifestation: { employer: { id: employer_id, deputy_id: staff_id }}
+
+      if staff.employer.premium?
+        can :index, Student, activated: true
+      end
     end
   end
 end

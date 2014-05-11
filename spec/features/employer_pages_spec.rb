@@ -4,7 +4,7 @@ describe "the employer page" do
 
   subject { page }
 
-  let(:employer) { FactoryGirl.create(:employer, name: 'EPIC' ) }
+  let(:employer) { FactoryGirl.create(:employer, name: 'EPIC', description: 'A description.', website: 'www.employer.com' ) }
   let(:user) { FactoryGirl.create(:user) }
   let(:deputy) { employer.deputy }
 
@@ -133,22 +133,35 @@ describe "the employer page" do
   end
 
   describe "should show the basic information of the employer" do
+    before :each do
+      visit employer_path(employer)
+    end
+
     it { should have_content(employer.name) }
-    it { should have_content(employer.description) }
-    it { should have_content(employer.deputy.firstname + " " + employer.deputy.lastname) }
+
+    it "but only show the complete profile for paying employers" do
+      should_not have_content(employer.description)
+      should_not have_content(employer.website)
+      
+      employer.update_column :booked_package_id, 1
+      visit employer_path(employer)
+      should have_content(employer.description)
+      should have_content(employer.website)
+    end
   end
 
   describe "shows running and open job offers for the employer" do
+    before :each do
+      employer.update_column :booked_package_id, 1
+      visit employer_path(employer)
+    end
 
     it { should have_content('Open') }
     it { should have_content('Running') }
-
     it { should have_content(@job_offer_open.title) }
     it { should have_content(@job_offer_running.title) }
-
     it { should have_content(@job_offer_open.start_date) }
     it { should have_content(@job_offer_running.start_date) }
-
   end
 
   describe "should show the pending job offers" do
@@ -159,7 +172,7 @@ describe "the employer page" do
       should_not have_content(@job_offer_pending.title)
     end
 
-    it "not for an employer of another chair" do
+    it "not for an employer of another employer" do
       staff = FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer))
       login(staff.user)
       visit employer_path(employer)
@@ -167,7 +180,8 @@ describe "the employer page" do
       should_not have_content(@job_offer_pending.title)
     end
 
-    it "for an employer of the chair" do
+    it "for an employer of a paying employer" do
+      employer.update_column :booked_package_id, 1
       staff = FactoryGirl.create(:staff, employer: employer)
       login(staff.user)
       visit employer_path(employer)

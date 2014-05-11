@@ -24,9 +24,10 @@ describe EmployersController do
       @employer = FactoryGirl.create(:employer)
     end
 
-    it "assigns all employers as @employers" do
+    it "assigns all paying employers as @employers" do
+      login FactoryGirl.create(:student).user
       get :index, {}
-      assigns(:employers).should eq([@employer])
+      assigns(:employers).should eq(Employer.paying)
     end
   end
 

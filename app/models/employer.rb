@@ -46,6 +46,7 @@ class Employer < ActiveRecord::Base
   validate  :check_deputys_employer
 
   scope :active, -> { where(activated: true) }
+  scope :paying, -> { where('booked_package_id >= ?', 1) }
 
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
@@ -57,5 +58,21 @@ class Employer < ActiveRecord::Base
 
   def package
     PACKAGES[booked_package_id]
+  end
+
+  def paying?
+    booked_package_id >= 1
+  end
+
+  def premium?
+    booked_package_id == 2
+  end
+
+  def graduate_job_count
+    job_offers.graduate_jobs.length
+  end
+
+  def can_create_job_offer?(category)
+    (category != 'graduate_job' || (paying? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
 end

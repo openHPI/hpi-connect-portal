@@ -7,7 +7,7 @@ describe "the job-offers page" do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
 
-    @epic = FactoryGirl.create(:employer, name:"EPIC")
+    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
     @open = FactoryGirl.create(:job_status, name:"open")
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)

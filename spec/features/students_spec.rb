@@ -14,11 +14,18 @@ describe "the students page" do
 
   describe "as a staff member" do
 
-    it "is not available for students" do
+    it "is not available for staff members of not paying employers" do
       login staff.user
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
+    end
+
+    it "is available for staff members of premium employers" do
+      staff.employer.update_column :booked_package_id, 2
+      login staff.user
+      visit students_path
+      current_path.should == students_path
     end
   end
 
