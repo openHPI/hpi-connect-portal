@@ -34,18 +34,9 @@ HpiHiwiPortal::Application.routes.draw do
       end 
       member do
         get "activate"
-      resources :employers do 
-        member do
-          get "activate"
         end
       end
 
-
-
-    resources :applications, only: [:create, :destroy] do
-      member do
-        get "accept"
-        get "decline"
       resources :applications, only: [:create, :destroy] do
         member do
           get "accept"
