@@ -8,7 +8,8 @@ describe "the job offer flow" do
 
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:deputy) { FactoryGirl.create(:staff, employer: employer) }
+  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
+  let(:admin) { FactoryGirl.create(:user, :admin)}
   let(:first_applicant) { FactoryGirl.create(:student) }
   let(:second_applicant) { FactoryGirl.create(:student) }
 
@@ -20,7 +21,6 @@ describe "the job offer flow" do
     FactoryGirl.create(:job_status, :running)
     FactoryGirl.create(:job_status, :completed)
 
-    employer.deputy = deputy
     employer.save
 
     ActionMailer::Base.deliveries = []
@@ -65,16 +65,16 @@ describe "the job offer flow" do
     assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
 
-    # deputy of the employers get acceptance pending email
+    # admin of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [deputy.email])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     css = 'a[href=3D"' + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + '"]'
     email.should have_selector('a')
     ActionMailer::Base.deliveries = []
 
     # deputy accepts the new job offer
-    login deputy.user
+    login admin
     visit job_offer_path(job_offer)
 
     current_path.should == job_offer_path(job_offer)
@@ -233,10 +233,10 @@ describe "the job offer flow" do
     assert_equal(JobOffer.all.count, 2)
     job_offer = JobOffer.last
 
-    # the deputy gets notified about the new job
+    # the admins get notified about the new job
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [deputy.email])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     email.should have_selector("a")
     ActionMailer::Base.deliveries = []
   end

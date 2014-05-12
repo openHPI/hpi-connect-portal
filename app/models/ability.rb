@@ -43,7 +43,6 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update], Employer, deputy_id: staff_id
     can [:edit, :update], Employer, id: employer_id
 
     if staff.employer.activated
@@ -56,13 +55,12 @@ class Ability
       can :complete, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.completed
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.running
-      can [:accept, :decline], JobOffer, employer: { deputy_id: staff_id }
       can :prolong, JobOffer, responsible_user_id: staff_id, status: JobStatus.running
-      can :prolong, JobOffer, employer: { deputy_id: staff_id }, status: JobStatus.running
+      can :prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.running
       can [:update, :destroy, :fire], JobOffer, responsible_user_id: staff_id
-      can [:update, :destroy, :fire], JobOffer, employer: { deputy_id: staff_id }
+      can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|
-        job.editable? && (job.responsible_user_id == staff_id || job.employer.deputy_id == staff_id)
+        job.editable? && (job.responsible_user_id == staff_id || job.employer.id == employer_id)
       end
       cannot :destroy, JobOffer do |job|
         job.running?
@@ -70,7 +68,7 @@ class Ability
 
       can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
 
-      can :destroy, Staff, manifestation: { employer: { id: employer_id, deputy_id: staff_id }}
+      can :destroy, Staff, manifestation: { employer: { id: employer_id }}
     end
   end
 end

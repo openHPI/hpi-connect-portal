@@ -8,10 +8,6 @@ module UsersHelper
     signed_in? && current_user.staff? && current_user.manifestation == job_offer.responsible_user
   end
 
-  def user_is_deputy_of_employer?(employer)
-    signed_in? && current_user.staff? && current_user.manifestation == employer.deputy
-  end
-
   def update_and_remove_for_language(params, student_id, language_class, language_id_attribute)
     if params
       params.each do |id, skill|
@@ -65,12 +61,5 @@ module UsersHelper
       end
     end
   end
-
-  def user_can_demote_staff?
-    return signed_in? && (current_user.admin? || user_is_deputy?)
-  end
-
-  def user_is_deputy?
-    current_user.staff? && current_user.manifestation.deputy?
-  end
+  
 end

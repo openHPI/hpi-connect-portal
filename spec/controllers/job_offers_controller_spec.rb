@@ -5,7 +5,7 @@ describe JobOffersController do
   before(:each) do
     login FactoryGirl.create(:student).user
   end
-
+  let(:admin) { FactoryGirl.create(:user, :admin) }
   let(:assigned_student) { FactoryGirl.create(:student) }
   let(:employer) { FactoryGirl.create(:employer) }
   let(:responsible_user) { FactoryGirl.create(:staff, employer: employer) }
@@ -41,8 +41,6 @@ describe JobOffersController do
     ActionMailer::Base.deliveries = []
 
     @job_offer = FactoryGirl.create(:job_offer, status: @open)
-
-    employer.deputy.update_column :employer_id, employer.id
   end
 
   describe "Check if views are rendered" do
@@ -219,14 +217,14 @@ describe JobOffersController do
       FactoryGirl.create(:programming_languages_newsletter_information)
     end
 
-    it "prohibits user to accept job offers if he is not the deputy" do
+    it "prohibits user to accept job offers if he is not the admin" do
       login @job_offer.responsible_user.user
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end
 
     it "accepts job offers" do
-      login employer.deputy.user
+      login admin
       get :accept, {id: @job_offer.id}
       assigns(:job_offer).status.should eq(JobStatus.open)
       ActionMailer::Base.deliveries.count.should >= 1
@@ -239,13 +237,13 @@ describe JobOffersController do
       @job_offer = FactoryGirl.create(:job_offer, employer: employer)
     end
 
-    it "prohibits user to decline job offers if he is not the deputy" do
+    it "prohibits user to decline job offers if he is not the admin" do
       get :decline, {id: @job_offer.id}
       response.should redirect_to(@job_offer)
     end
 
     it "declines job offers" do
-      login employer.deputy.user
+      login admin
       expect {
         get :decline, {id: @job_offer.id}
       }.to change(JobOffer, :count).by(-1)
@@ -392,7 +390,7 @@ describe JobOffersController do
         response.should render_template("new")
       end
 
-      it "should not send mail to deputy" do
+      it "should not send mail to admin" do
         job_offer = FactoryGirl.create(:job_offer)
         #expect
         JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
