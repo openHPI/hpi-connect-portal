@@ -114,7 +114,7 @@ describe EmployersController do
         response.should render_template("new")
       end
 
-      it "does not create a new employer without deputy" do
+      it "does not create a new employer without staff" do
         post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction"}}
         response.should render_template("new")
       end

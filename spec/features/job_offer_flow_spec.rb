@@ -73,7 +73,7 @@ describe "the job offer flow" do
     email.should have_selector('a')
     ActionMailer::Base.deliveries = []
 
-    # deputy accepts the new job offer
+    # admin accepts the new job offer
     login admin
     visit job_offer_path(job_offer)
 
