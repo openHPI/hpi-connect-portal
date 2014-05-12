@@ -125,17 +125,10 @@
         </div>
 
       <div class="col-md-6">
-        <% unless @open_job_offers.empty? %>
+        <% unless @active_job_offers.empty? %>
                 <div class="panel panel-default">
-                  <div class="panel-heading"><h4><%= t("employers.open_job_offers") %></h4></div>
-                  <%= render 'jobs_listing', job_offer_list: @open_job_offers %>
-                </div>
-            <% end %>
-
-            <% unless @running_job_offers.empty? %>
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4><%= t("employers.running_job_offers") %></h4></div>
-                    <%= render 'jobs_listing', job_offer_list: @running_job_offers %>
+                  <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
+                  <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
                 </div>
             <% end %>
 

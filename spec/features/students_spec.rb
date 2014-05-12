@@ -25,7 +25,7 @@ describe "the students page" do
   describe "as a student" do
 
     it "is not available for students" do
-      FactoryGirl.create(:job_status, name: 'open')
+      FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit students_path
       current_path.should_not == students_path

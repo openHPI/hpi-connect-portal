@@ -19,7 +19,7 @@ HpiHiwiPortal::Application.routes.draw do
           get "matching"
         end
         member do
-          get "complete"
+          get "close"
           get "accept"
           get "decline"
           get "reopen"

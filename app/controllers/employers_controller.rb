@@ -15,8 +15,7 @@ class EmployersController < ApplicationController
     not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer))
     page = params[:page]
     @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
-    @running_job_offers = @employer.job_offers.running.paginate page: page
-    @open_job_offers = @employer.job_offers.open.paginate page: page
+    @active_job_offers = @employer.job_offers.active.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
   end
 
