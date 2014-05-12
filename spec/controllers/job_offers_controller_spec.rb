@@ -367,13 +367,14 @@ describe JobOffersController do
         assert_equal(offer.flexible_start_date, true)
       end
 
-      it "does not create a joboffer if employer is deactivated" do
+      it "does create a pending joboffer if employer is deactivated" do
         staff = FactoryGirl.create :staff
         staff.employer.update_column :activated, false
         login staff.user
                 expect {
           post :create, {job_offer: valid_attributes}, valid_session
-        }.to change(JobOffer, :count).by(0)
+        }.to change(JobOffer, :count).by(1)
+        assigns(:job_offer).status.should eq(JobStatus.pending)
       end
     end
 

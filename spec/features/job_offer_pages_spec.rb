@@ -198,7 +198,7 @@ describe "Job Offer pages" do
           should_not have_link I18n.t("links.destroy")
         end
 
-        it { should have_button I18n.t('job_offers.fire') }
+        it { should_not have_button I18n.t('job_offers.fire') }
       end
 
       describe "as a admin" do
