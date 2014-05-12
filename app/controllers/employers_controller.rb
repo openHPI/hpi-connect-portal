@@ -57,7 +57,6 @@ class EmployersController < ApplicationController
   end
 
   def home
-
   end
 
   private
