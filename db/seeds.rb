@@ -82,6 +82,7 @@ hpi_deputy.save!
 
 sap = Employer.new(
   name: "SAP",
+  activated: true,
   description: "SAP",
   deputy: nil,
   number_of_employees: ">1000",
