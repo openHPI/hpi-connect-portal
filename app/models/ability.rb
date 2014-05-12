@@ -39,6 +39,8 @@ class Ability
     employer_id = staff.employer_id
     staff_id = staff.id
 
+    can [:create, :show], JobOffer
+
     can [:edit, :update, :read], Staff, id: staff.id
 
     can [:edit, :update], Employer, deputy_id: staff_id
@@ -50,7 +52,7 @@ class Ability
       can :show, Student, activated: true
       cannot [:edit, :update], Student
 
-      can [:create, :show], JobOffer
+
       can :close, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
