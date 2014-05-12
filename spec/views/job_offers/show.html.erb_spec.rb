@@ -27,15 +27,6 @@ describe "job_offers/show" do
     rendered.should_not match(/Apply/)
   end
 
- # it "hides the edit button if the job is running" do
- #   @job_offer.status = FactoryGirl.create(:job_status, :name => "running")
- #   @job_offer.save
-
- #   render
-
-  #  rendered.should_not match(/Edit/)
-  #end
-
   it "renders the default compensation text if applicable" do
     @job_offer.compensation = 10.0
     @job_offer.save

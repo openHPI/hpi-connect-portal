@@ -36,8 +36,6 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
-
-
       resources :applications, only: [:create, :destroy] do
         member do
           get "accept"

@@ -1,4 +1,4 @@
-  class JobOffersController < ApplicationController
+class JobOffersController < ApplicationController
   include UsersHelper
 
   skip_before_filter :signed_in_user, only: [:index]

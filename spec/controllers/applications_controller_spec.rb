@@ -84,16 +84,6 @@ describe ApplicationsController do
         }.to change(Application, :count).by(-3)
       end
 
-      #it "changes the job status to 'running' if the last possible application is accepted" do
-      #  @job_offer.vacant_posts = 1
-      #  @job_offer.save
-
-      # running = FactoryGirl.create(:job_status, name: 'running')
-
-       # get :accept, {id: @application.id}
-       # assigns(:application).job_offer.status.should eq(running)
-      #end
-
       it "keeps the job 'open' when there are still vacant_posts left" do
         @job_offer.vacant_posts = 2
         @job_offer.save
