@@ -133,9 +133,6 @@ class JobOffer < ActiveRecord::Base
       if flexible_start_date
         update!({ start_date: Date.current })
       end
-      #if vacant_posts == 0
-      #  update!({status: JobStatus.running})
-      #end
 
       ApplicationsMailer.application_accepted_student_email(application).deliver
       JobOffersMailer.job_student_accepted_email(self).deliver
