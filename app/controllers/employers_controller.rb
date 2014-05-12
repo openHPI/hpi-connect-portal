@@ -58,7 +58,7 @@ class EmployersController < ApplicationController
   end
 
   def home
-    render "home"
+
   end
 
   private
