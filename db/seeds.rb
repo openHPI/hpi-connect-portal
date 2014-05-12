@@ -54,10 +54,9 @@ User.delete_all
 Student.delete_all
 Staff.delete_all
 
-hpi = Employer.new(
+hpi = Employer.create!(
   name: "Hasso-Plattner-Institut",
   description: "This is the Hasso-Plattner-Institut.",
-  deputy: nil,
   number_of_employees: "50-100",
   place_of_business: "Potsdam - Brandenburg",
   line_of_business: "IT",
@@ -65,7 +64,7 @@ hpi = Employer.new(
   year_of_foundation: 1998,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
-hpi_deputy = Staff.new(
+hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
@@ -76,14 +75,9 @@ hpi_deputy = Staff.new(
   employer: hpi
 )
 
-hpi.deputy = hpi_deputy
-hpi.save!
-hpi_deputy.save!
-
-sap = Employer.new(
+sap = Employer.create!(
   name: "SAP",
   description: "SAP",
-  deputy: nil,
   number_of_employees: ">1000",
   place_of_business: "Baden-Württemberg",
   line_of_business: "IT",
@@ -91,7 +85,7 @@ sap = Employer.new(
   year_of_foundation: 1972,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
-sap_deputy = Staff.new(
+sap_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
@@ -101,10 +95,6 @@ sap_deputy = Staff.new(
   ),
   employer: sap
 )
-
-sap.deputy = sap_deputy
-sap.save!
-sap_deputy.save!
 
 # Admin Users
 

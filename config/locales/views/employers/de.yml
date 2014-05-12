@@ -6,7 +6,6 @@ de:
         editing_employer: "Arbeitgeber bearbeiten"
         new_employer: "Neuer Arbeitgeber"
         staff: "Mitarbeiter"
-        additional_staff: "Weitere Mitarbeiter"
         open: "Offen"
         running: "Laufend"
         general_information: "Allgemeine Informationen"
@@ -14,7 +13,6 @@ de:
         running_job_offers: "Vergebene Stellenangebote"
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         inactive: "Deaktiviert"
-        select_deputy: "Wählen Sie einen verantwortlichen Mitarbeiter..."
         messages:
             successfully_created: "Willkommen bei HPI Career!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."

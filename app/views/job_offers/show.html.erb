@@ -1,7 +1,7 @@
 <div class="wrapper-12 teaser">
   <div class="col-sm-12">
 
-    <% if @job_offer.pending? #&& can?(:accept, @job_offer) %>
+    <% if @job_offer.pending? && can?(:accept, @job_offer) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
       <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
     <% end %>

@@ -23,10 +23,6 @@ class Role < ActiveRecord::Base
     return 3
   end
 
-  def self.deputy_level
-    return 4
-  end
-
   def student_role?
     name == 'Student'
   end

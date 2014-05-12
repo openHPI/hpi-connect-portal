@@ -14,7 +14,7 @@ class EmployersController < ApplicationController
   def show
     not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer))
     page = params[:page]
-    @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
+    @staff =  @employer.staff_members.paginate page: page
     @running_job_offers = @employer.job_offers.running.paginate page: page
     @open_job_offers = @employer.job_offers.open.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
@@ -22,16 +22,16 @@ class EmployersController < ApplicationController
 
   def new
     @employer = Employer.new
-    @employer.build_deputy
-    @employer.deputy.build_user
+    @employer.staff_members.build
+    @employer.staff_members.first.build_user
   end
 
   def create
     @employer = Employer.new employer_params
-    @employer.deputy.employer = @employer if @employer.deputy
+    @employer.staff_members.first.employer = @employer unless @employer.staff_members.blank?
 
     if @employer.save
-      sign_in @employer.deputy.user
+      sign_in @employer.staff_members.first.user
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
     else
@@ -68,6 +68,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

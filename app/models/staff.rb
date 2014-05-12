@@ -19,7 +19,4 @@ class Staff < ActiveRecord::Base
 
   validates :employer, presence: true
 
-  def deputy?
-    employer && Employer.exists?(deputy: self)
-  end
 end

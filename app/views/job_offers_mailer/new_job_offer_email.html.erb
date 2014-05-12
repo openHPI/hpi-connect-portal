@@ -1,8 +1,8 @@
 (For an English translation, scroll down.)<br>
 <br>
-Hallo <%= @job_offer.employer.deputy.firstname %> <%= @job_offer.employer.deputy.lastname %>,<br>
+Hallo Admins des HPI-HiWi-Portal,<br>
 <br>
-ein Mitarbeiter deiner Abteilung oder Firma hat soeben ein neues Stellenangebot erstellt.<br>
+ein Mitarbeiter eines Unternehmens hat soeben ein beantragt ein Job-Angebot auf die Platform zu stellen.<br>
 Bitte entscheide baldmöglichst, ob du diese Stelle freigeben möchtest. Möglich ist dies unter:
 <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false%>
 <br>
@@ -13,9 +13,9 @@ Das HPI-HiWi-Portal Team.<br>
 <br>
 <hr>
 <br>
-Dear <%= @job_offer.employer.deputy.firstname %> <%= @job_offer.employer.deputy.lastname %>,<br>
+Dear admins of the HPI-HiWi-Portal,<br>
 <br>
-a staff member of your department or company has just created a new job offer.<br>
+an employer has just created a new job offer.<br>
 Please accept or decline this offer as soon as possible on this page:<br>
 <%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false %>
 <br>
