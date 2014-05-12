@@ -201,19 +201,10 @@ describe "the job offer flow" do
 
     # responsible user tries to delete the job offer
     should_not have_link I18n.t("links.destroy")
-
-    login creating_staff.user
-    visit edit_job_offer_path(job_offer)
-    # responsible user closes the job
-    #find_link(I18n.t("job_offers.job_completed")).click
-
-    # the administration of the HPI gets notified
-    #ActionMailer::Base.deliveries.count.should == 1
-    #email = ActionMailer::Base.deliveries[0]
-    #ActionMailer::Base.deliveries = []
-
-    #job_offer = job_offer.reload
-    #assert job_offer.closed?
+   
+    job_offer.update(status: JobStatus.closed)
+    job_offer = job_offer.reload
+    assert job_offer.closed?
 
     # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)
