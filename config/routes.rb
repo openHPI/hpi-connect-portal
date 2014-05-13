@@ -24,9 +24,10 @@ HpiHiwiPortal::Application.routes.draw do
       end
     end
 
-    get 'employers/home' => 'employers#home'
-
-    resources :employers do 
+    resources :employers do
+      collection do
+        get "home"
+      end 
       member do
         get "activate"
       end
