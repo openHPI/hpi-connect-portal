@@ -1,111 +1,50 @@
 <div class="wrapper-8 teaser">
   <div class="col-md-8">
-    <h1>Job Portal</h1>
-    <h2>Job Portal</h2>
-    <p>Das sind die Masterprojekte, die am Lehrstuhl von Prof. Dr. Christoph Meinel angeboten und betreut werden:</p>
-    
+    <% if I18n.locale == :en %>
+      <h1>Job Portal</h1>
+      <h2>Welcome to the HPI Connect Jobportal!</h2>
 
-        <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#ws1314">
-                  <span>Winter 2013/2014</span>
-                  Semantische Erschließung des tele-TASK-Archivs
-              </a>
-            </h4>
-          </div>
-          <div id="ws1314" class="panel-collapse collapse in">
-            <div class="panel-body">
-              <h2>Semantische Erschließung des tele-TASK-Archivs</h2>
-              <h3>Hintergrund</h3>
-              <p>Das Webportal von <a href="">www.tele-TASK.de</a> ist ein gewaltiges Archiv von Aufzeichnungen von Vorlesungen, Fachvorträgen, Kolloquien etc. Etwa 4.500 Aufnahmen mit über 15.000 Kapiteln und 1.700 Rednern sind bislang über die Suchfunktion zu finden. Des Weiteren können Aufnahmen mit Tags versehen, bewertet und annotiert werden. Folienextraktion aus den aufgezeichneten Videos und Texterkennung (OCR), sowie die Generierung von Vortragsstruktur/Inhaltsverzeichnis laufen automatisiert ab. Ein weiteres Forschungsthema ist die automatische Spracherkennung (ASR). Bei all diesen Schritten entstehen große Mengen an Metadaten, die nicht nur durchsuchbar sein sollten, sondern auch miteinander verknüpft werden sollen. Dazu muss der stetig wachsende Suchraum des tele-TASK-Vorlesungsarchivs semantisch erschlossen werden. Durch die Verwendung von Hintergrundwissen wird bei einer semantischen Suchmaschine die inhaltliche Bedeutung von Texten und Suchanfragen berücksichtigt. Es wird nicht nur nach Wörtern im Text, wie bei Keyword-basierten Suchmaschinen, gesucht. Dadurch kann eine Suchanfrage präziser erfasst und mit den inhaltlich relevanten Texten in Verbindung gebracht werden. Somit werden inhaltlich korrekte Suchergebnissen bereitgestellt. Semantische Suche imitiert gewissermaßen das menschliche Gehirn, indem Wissen und Assoziationen zur Suche genutzt werden.</p>
-              <p>Open Data bedeutet die freie Verfügbar- und Nutzbarkeit von, meist öffentlichen, Daten. Sie beruht auf der Annahme, dass vorteilhafte Entwicklungen eingeleitet werden, wenn Daten für jedermann frei zugänglich gemacht werden. Davon ausgehend besteht der Wunsch, das Archiv von tele-TASK zugänglicher zu machen und der Welt zu öffnen. So soll eine Suchanfrage, sowohl vom Portal aus gestartet, aber auch über externe Suchanbieter, nicht nur zum betreffenden Vorlesungsvideo, sondern auch gleich an die richtige Stelle im Video springen. Darüberhinaus soll von da aus eine intelligente Benutzerführung durch sinnvolle, thematisch passende Vorschläge, erfolgen und so den Lernprozess mit tele-TASK intensivieren. Außerdem sollen Suchergebnisse durch Hintergrundwissen und Assoziationen genauer werden.</p>
-              <h4>Beschreibung</h4>
-              <p>Die Aufgabe dieses Masterprojekts ist es, das tele-TASK-Webportal zu untersuchen und zu analysieren, welche Metadaten kreiert werden und wie diese akquiriert werden können. Ein semantisches Modell ist zu entwerfen und anschließend ist die Architektur des Portals dahingehend zu erweitern. Die Genauigkeit der Ergebnisse sowie die Nutzerakzeptanz sind zu untersuchen und auf weitere Verbesserungsmöglichkeiten zu prüfen.</p>
-              <h4>Kontakt</h4>
-              <p>Internet Technologien und -Systeme</p>
-              <ul>
-                <li>Prof. Dr. Christoph Meinel</li>
-                <li>Matthias Bauer, tele-TASK</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#ss13">
-                <span>Sommer 2013</span>
-                Gamification für openHPI (voraussichtlich)
-              </a>
-            </h4>
-          </div>
-          <div id="ss13" class="panel-collapse collapse">
-            <div class="panel-body">
-              <h2>Gamification openHPI</h2>
-              <h3>Hintergrund</h3>
-              Seit September 2012 bietet das Hasso-Plattner-Institut auf der Internet-Plattform „openHPI“ Online-Kurse im Stil der Massive Open Online Courses (MOOC) an [1]. openHPI erreicht damit in den bisher angebotenen Kursen zu den Themen „In-Memory Data Management“ und „Internetworking mit TCP/IP“ 10.000 bis 15.000 Teilnehmer, von denen 2.000 bis 2.500 Teilnehmer für einen Abschluss mit Zertifikat qualifizieren. </p>
-              <p>In den Kursen wird den Nutzern nicht nur speziell aufgearbeitetes Kursmaterial (großteils in Form von kurzen Video-Schnipseln) sondern auch Tools für Kursplanung, studentisches Self-Assessment, Question- und Feedback-Management sowie kollaboratives Lernen zur Verfügung gestellt. Interaktion zwischen den Teilnehmern findet dabei größtenteils im integrierten Diskussionsforum statt, wobei in der kurzfristig aufgebauten Community in 6 Wochen Kurslaufzeit teils über 3.000 Postings entstehen. Außerdem werden zwischen 80.000 und 100.000 Selbsttests sowie 15.000 bis 20.000 Hausaufgaben abgegeben, die als Multiple Choice-Tests (oder Varianten davon) konzipiert sind.</p>
-              <p>Sowohl Quiz-Umgebungen im Kontext von E-Learning Plattformen als auch Diskussionsforen eignen sich besonders gut für eine Aufwertung mit Konzepten aus dem Bereich der „Gamification“ und sind teilweise bereits damit durchsetzt. Gamification fasst Funktionalitäten oder Maßnahmen zusammen, die aus Designprinzipien für Spiele entliehen sind und in einer neuen Domäne implementiert werden um eine Motivationssteigerung bei den Nutzern zu bewirken. Beispiele dafür sind Ranglisten, Erfahrungspunkte, Fortschrittsbalken, Badges (bestens bekannt aus sozialen Netzwerken wie foursquare und Yelp! [2]), oder Quests.</p>
-              <p>Abbildung 1 zeigt  bspw. die Fortschritts-Anzeige in openHPI, in der die Teilnehmer sehen können, wie viele Lernmaterialien sie bereits bearbeitet haben und wie ihr aktueller Punktestand in Relation zu den bisher erreichbaren Gesamtpunkten steht.</p>
-              <p>Ein herausragendes Beispiel für gamifizierte Diskussionsforen sind die Seiten des Stack Exchange-Netzwerks (z.B. stackoverflow.com oder serverfault.com, [3]), bei denen die Nutzer für eine Vielzahl von Aktionen Punkte und Badges (siehe Abbildung 2) sammeln können (etwa für das Posten von Fragen und Antworten, für Votes auf Beiträge, für das Teilen von Threads in sozialen Netzen, etc.).</p>
-              <p>Als vielversprechend hat sich in den bisherigen Kursen auch die Integration von Crowd Sourcing-Konzepten in das Angebot von openHPI angedeutet. Trotz fehlender dedizierter technischer Möglichkeiten für Beiträge zum Kursinhalt aus der Community haben einzelne Nutzer dennoch die vorhandenen Interaktionskanäle für solche Contributions „zweckentfremdet“. Belohnungen in Form von „Punkten“ oder Badges für bspw. Transkriptionen, Übersetzungen, zusätzliches Kursmaterial, etc. sind also ebenfalls ein naheliegender Gamification-Aspekt für die Lernplattform.</p>
-              <p>Die aktuelle Implementierung von openHPI basiert auf dem Open Source Learning Management System (LMS) Canvas [4], das speziell für die Zwecke von openHPI massiv angepasst wurde. Dennoch wird im Betrieb der Plattform offensichtlich, dass ein LMS nicht die optimale Softwarelösung für Kurse nach dem openHPI-Prinzip sind. Aus diesem Grund wurde entschieden, aufbauend auf den Erfahrungen der ersten Kurse eine eigene Plattform zu entwickeln. Als Webframework wird dabei Ruby on Rails 3 eingesetzt.</p>
+      <p> 
+        <b>Students and alumni of the HPI can</b><br />
+        <br />
+        - view the current <%= link_to 'job offers', job_offers_path %><br />
+        - explore <%= link_to 'company profiles', employers_path %> of interesting employers <br />
+        - <%= link_to 'create', new_student_path %> an own profile to be found by potential employers <br />
+        <br />
+        To get access please use the login or registration form on the righthand side.
+      </p>
 
-              <h4>Beschreibung</h4>
-              <p>Im Rahmen des Masterprojekts sollen folgende Leistungen erbracht werden:</p>
-              <ul>
-                <li>Einarbeitung in die Prinzipien und Methoden der Gamification sowie die Mitarbeit an einem Gamification-Konzept für openHPI</li>
-                <li>Entwurf generischer Modelle für die Implementierung von Gamification-Features für die entstehende openHPI-Plattform</li>
-                <li>Implementierung von Gamification-Features für die Neuentwicklung (z.B. Forum oder Quizumgebung) auf Basis der entworfenen Modelle</li>
-                <li>(optional) Anbindung von openHPI an die Mozilla Open Badges Infrastruktur (einem offenen Portfolio für die plattformübergreifende Sammlung von erreichten Badges, siehe [5])</li>
-              </ul>
+      <p>
+        <b>As Complany you can get in contact with the students and alumni by</b><br />
+        <br />
+        - posting your current <%= link_to 'job openings', job_offers_path %><br />
+        - presenting yourself with an own <%= signed_in_staff? ? (link_to 'company profile', employer_path(current_user.manifestation.employer)) : 'company profile' %><br />
+        - and searching for <%= link_to 'potential employees', students_path %><br />
+      </p>
+    <% else %>
+      <h1>Job Portal</h1>
+      <h2>Willkommen im HPI Connect Jobportal!</h2>
 
-              <h4>Koontakt</h4>
-              <p>Internet Technologien und Systeme</p>
-              <ul>
-                <li>Prof. Dr. Christoph Meinel</li>
-                <li>Christian Willems, Michael Totschnig</li>
-              </ul>
+      <p> 
+        <b>Die Studierenden und Alumni des HPI haben hier die Möglichkeit</b><br />
+        <br />
+        - die aktuellen <%= link_to 'Jobangebote', job_offers_path %> einzusehen <br />
+        - <%= link_to 'Unternehmensprofile', employers_path %> interessanter Arbeitgeber zu sichten <br />
+        - ein eigens Profil zu <%= link_to 'erstellen', new_student_path %> um von potentiellen Arbeitgebern gefunden zu werden <br />
+        <br />
+        Bitte benutzen Sie dazu das Login Formular bzw. die Regisrierung rechts.
+      </p>
 
-              <h4>Referenzen</h4>
-              <ul class="linklist">
-                <li>[1] openHPI: <a href="https://openhpi.de">https://openhpi.de</a></li>
-                <li>[2] Foursquare: <a href="">www.foursquare.com</a>, Yelp: <a href="">www.yelp.com</a></li>
-                <li>[3] Stack Overflow: <a href="">www.stackoverflow.com</a>, <a href="">www.serverfault.com</a></li>
-                <li>[4] Canvas LMS: <a href="">https://github.com/canvas-lms</a></li>
-                <li>[5] Mozilla Open Badges: <a href="">openbadges.org</a></li>
-                <li>[6] G. Zichermann, C. Cunningham: Gamification by Design – Implementing Game Mechanics in Web and Mobile Apps, O’Reilly, 2011.</li>
-              </li>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#ws1213">
-                 <span>Winter 2012/13</span>
-                 Cybersecurity for the Masses
-              </a>
-            </h4>
-          </div>
-          <div id="ws1213" class="panel-collapse collapse">
-            <div class="panel-body">
-
-              <h2>Cybersecurity for the Masses</h2>
-              <h3>Hintergrund</h3>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-          </div>
-        </div>
-      </div> <!-- end of panel --> 
-
-
-    
+      <p>
+        <b>Als Unternehmen können Sie in dem Portal direkt mit den Studierenden und Alumni in Kontakt treten indem Sie</b><br />
+        <br />
+        - Ihre aktuellen <%= link_to 'Stellenangebote', job_offers_path %> einstellen <br />
+        - sich als Arbeitgeber mit einem eigenen <%= signed_in_staff? ? (link_to 'Unternehmensprofil', employer_path(current_user.manifestation.employer)) : 'Unternehmensprofil' %> präsentieren <br />
+        - und nach passenden <%= link_to 'potentiellen Mitarbeitern', students_path %> suchen <br />
+      </p>
+    <% end %>
   </div>
 </div>
-
 
 <div class="wrapper-4 teaser sidebar">
   <% unless signed_in? %>
@@ -146,5 +85,4 @@
       </ul>
     </div>
   <% end %>
-
 </div>
