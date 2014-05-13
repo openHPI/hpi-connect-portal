@@ -28,7 +28,7 @@ class EmployersController < ApplicationController
 
   def create
     @employer = Employer.new employer_params
-    @employer.staff_members.first.employer = @employer unless @employer.staff_members.blank?
+    @employer.staff_members.first.employer = @employer if @employer.staff_members.any?
 
     if @employer.save
       sign_in @employer.staff_members.first.user
