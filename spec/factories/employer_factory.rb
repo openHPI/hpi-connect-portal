@@ -27,9 +27,9 @@ FactoryGirl.define do
     line_of_business "IT"
     year_of_foundation 1991
     number_of_employees "50 - 100"
-    
+
     before(:create) do | employer |
-        FactoryGirl.create(:staff, employer: employer)
+      FactoryGirl.create(:staff, employer: employer)
     end
   end
 end
