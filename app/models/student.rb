@@ -17,6 +17,8 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
 #
 
 class Student < ActiveRecord::Base
@@ -58,7 +60,7 @@ class Student < ActiveRecord::Base
   validates :semester, :academic_program_id, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
-  scope :active, -> { joins(:user).where('students.activated = ?', true) }
+  scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }

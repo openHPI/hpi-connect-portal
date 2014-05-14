@@ -2,3 +2,5 @@ en:
   employers_mailer:
     new_employer:
       subject: 'A new employer is waiting for activation'
+    book_package:
+      subject: 'An employer booked a new package'

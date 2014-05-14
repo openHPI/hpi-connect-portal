@@ -48,7 +48,6 @@ class Ability
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
-      can :show, Student, activated: true
       cannot [:edit, :update], Student
 
 
@@ -69,6 +68,10 @@ class Ability
       can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
 
       can :destroy, Staff, manifestation: { employer: { id: employer_id }}
+
+      if staff.employer.premium?
+        can :read, Student, activated: true
+      end
     end
   end
 end

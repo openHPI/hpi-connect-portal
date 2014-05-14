@@ -62,12 +62,14 @@ ActiveRecord::Schema.define(version: 20140506074315) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "activated",           default: false, null: false
+    t.boolean  "activated",            default: false, null: false
     t.string   "place_of_business"
     t.string   "website"
     t.string   "line_of_business"
     t.integer  "year_of_foundation"
     t.string   "number_of_employees"
+    t.integer  "requested_package_id", default: 0,     null: false
+    t.integer  "booked_package_id",    default: 0,     null: false
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree

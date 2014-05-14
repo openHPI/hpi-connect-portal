@@ -4,6 +4,7 @@ module JobOfferScopes
       scope :pending, -> { where(status_id: JobStatus.pending.id) }
       scope :active, -> { where(status_id: JobStatus.active.id) }
       scope :closed, -> { where(status_id: JobStatus.closed.id) }
+      scope :graduate_jobs, -> { where(category_id: 2) }
     end
 
     add_filter_and_search_scopes job_offer

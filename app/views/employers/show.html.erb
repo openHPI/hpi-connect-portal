@@ -10,127 +10,131 @@
       <% if can? :edit, @employer %>
         <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
       <% end %>
-      <% if can?(:activate, @employer) && !@employer.activated %>
-        <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right" %>
+      <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
+        <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
       <% end %>
     </div>
-</div>
-
-<br><br>
-
-<div class="wrapper-12 teaser">
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
-    <ul class="list-group">
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-12">
-            <%= sanitize_html(@employer.description.html_safe) %>
-          </div>
-        </div>
-      </li>
-    </ul>
   </div>
 </div>
 
-<div class="wrapper-12 teaser">
-  <div class="row">
+<br /><br />
+
+<% if @employer.paying? %>
+  <div class="wrapper-12 teaser">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= sanitize_html(@employer.description.html_safe) %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrapper-12 teaser">
+    <div class="row">
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
-            <ul class="list-group">
-              <li class="list-group-item">
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.place_of_business") %>
-                  </div>
-                  <div class="col-sm-8">
-                    <%= @employer.place_of_business %>
-                  </div>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.place_of_business") %>
                 </div>
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.website") %>
-                  </div>
-                  <div class="col-sm-8">
-                    <%= link_to @employer.website %>
-                  </div>
+                <div class="col-sm-8">
+                  <%= @employer.place_of_business %>
                 </div>
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.line_of_business") %>
-                  </div>
-                  <div class="col-sm-8">
-                    <%= @employer.line_of_business %>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.number_of_employees") %>
-                  </div>
-                  <div class="col-sm-8">
-                    <%= @employer.number_of_employees %>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.year_of_foundation") %>
-                  </div>
-                  <div class="col-sm-8">
-                    <%= @employer.year_of_foundation %>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <% unless @staff.empty? %>
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
-              <ul class="list-group">
-                <% @staff.each do |user| %>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <%= link_to user.full_name, staff_path(user), :class => "h4" %>
-                      </div>
-                    </div>
-                  </li>
-                <%end%>
-              </ul>
-              <div class="pull-right">
-                <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
               </div>
-            </div>
-          <% end %>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.website") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= link_to @employer.website %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.line_of_business") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.line_of_business %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.number_of_employees") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.number_of_employees %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.employer.year_of_foundation") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @employer.year_of_foundation %>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
+<% else %>
+  <div class="wrapper-12 teaser">
+    <div class="row">
+      <div class="col-sm-6">
+<% end %>
 
-      <div class="col-md-6">
-        <% unless @active_job_offers.empty? %>
-                <div class="panel panel-default">
-                  <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
-                  <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
+      <% unless @staff.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.additional_staff") %></h4></div>
+          <ul class="list-group">
+            <% @staff.each do |user| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-6">
+                    <%= link_to user.full_name, staff_path(user), :class => "h4" %>
+                  </div>
                 </div>
-            <% end %>
+              </li>
+            <%end%>
+          </ul>
+          <div class="pull-right">
+            <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-            <% unless @pending_job_offers.empty? %>
-              <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
-                    <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
-                </div>
-              <% end %>
-            <% end %>
-      </div>
-
+    <div class="col-md-6">
+      <% unless @active_job_offers.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
+          <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
+        </div>
+      <% end %>
+      <% unless @pending_job_offers.empty? %>
+        <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
+            <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

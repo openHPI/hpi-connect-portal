@@ -5,13 +5,13 @@
     <%= simple_form_for @employer, html: { multipart: true } do |f| %>
       <%= render 'shared/object_errors', object: @employer %>
 
-      <%= render 'form_fields', form: f, employer: @employer %>
-
       <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
 
         <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
 
       <% end %>
+
+      <%= render 'form_fields', form: f, employer: @employer %>
 
       <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
         <div class="panel panel-default">

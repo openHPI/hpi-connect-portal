@@ -9,7 +9,7 @@ describe EmployersController do
       number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998,
       "staff_members_attributes"=>valid_staff_attributes } }
   let(:valid_staff_attributes) { {"0"=>{"user_attributes"=>{"firstname"=>"Bla", "lastname"=>"Keks", "email"=>"bla@keks.de", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}} }
-  let(:false_attributes) { { "name" => "HCI"} }
+  let(:false_attributes) { { name: '' } }
 
   before(:each) do
     FactoryGirl.create(:job_status, :active)
@@ -23,9 +23,10 @@ describe EmployersController do
       @employer = FactoryGirl.create(:employer)
     end
 
-    it "assigns all employers as @employers" do
+    it "assigns all paying employers as @employers" do
+      login FactoryGirl.create(:student).user
       get :index, {}
-      assigns(:employers).should eq([@employer])
+      assigns(:employers).should eq(Employer.paying)
     end
   end
 
@@ -94,7 +95,6 @@ describe EmployersController do
       end
 
       it "assigns a newly created employer as @employer" do
-
         post :create, { employer: valid_attributes }
         assigns(:employer).should be_a(Employer)
         assigns(:employer).should be_persisted
@@ -104,17 +104,18 @@ describe EmployersController do
         post :create, { employer: valid_attributes }
         response.should redirect_to(home_employers_path)
       end
+
+      it "sends an email" do
+        old_count = ActionMailer::Base.deliveries.count
+        post :create, { employer: valid_attributes }
+        ActionMailer::Base.deliveries.count.should == old_count + 1
+      end
     end
 
     describe "with invalid params" do
 
       it "renders new again" do
-        post :create, { employer: false_attributes}
-        response.should render_template("new")
-      end
-
-      it "does not create a new employer without staff" do
-        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction"}}
+        post :create, { employer: false_attributes }
         response.should render_template("new")
       end
     end
@@ -153,6 +154,12 @@ describe EmployersController do
         staff.update(employer: @employer)
         put :update, { id: @employer.id, employer: valid_attributes }
         response.should redirect_to(@employer)
+      end
+
+      it "sends an email if a new package was booked" do
+        old_count = ActionMailer::Base.deliveries.count
+        put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: 2 } }
+        ActionMailer::Base.deliveries.count.should == old_count + 1
       end
     end
 

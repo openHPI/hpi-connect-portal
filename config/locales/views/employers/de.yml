@@ -13,6 +13,12 @@ de:
         running_job_offers: "Vergebene Stellenangebote"
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         inactive: "Deaktiviert"
+        packages: "Pakete"
+        package_descriptions:
+            student_jobs: "Beliebig viele Studentenjobs an"
+            profile: "Unternehmensprofil" 
+            full_time: "Angebote für Vollzeitjobs pro Jahr"
+            student_profiles: "Einsicht in Studentenprofile"
         messages:
             successfully_created: "Willkommen bei HPI Career!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
