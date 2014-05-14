@@ -41,6 +41,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if current_user.staff? %>
+                      <li><%= link_to t('layouts.dashboard'), home_employers_path %></li>
                       <li><%= link_to t('layouts.my_chair'), current_user.manifestation.employer %></li>
                       <li><%= link_to t('layouts.new_offer'), new_job_offer_path %></li>
                     <% elsif current_user.student? %>
