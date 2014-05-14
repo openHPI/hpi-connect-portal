@@ -4,9 +4,9 @@ en:
       title: "A new job offer is pending"
       content: "Please check the new job offer under: "
       link: "new job offer"
-    deputy_declined:
+    admin_declined:
       title: "Your job offer has been declined."
       content: "The deput has declined your job offer."
-    deputy_accepted:
+    admin_accepted:
       title: "Your job offer has been accepted."
-      content: "Your job offer has been accepted by the deputy. It is now visible for the students."
+      content: "Your job offer has been accepted by the admins. It is now visible for the students."

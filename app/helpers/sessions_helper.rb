@@ -14,7 +14,7 @@ module SessionsHelper
   end
 
   def signed_in_staff?
-    !!current_user && user_type == 'student'
+    !!current_user && user_type == 'staff'
   end
 
   def current_user=(user)

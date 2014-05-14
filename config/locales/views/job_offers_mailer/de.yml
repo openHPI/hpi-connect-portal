@@ -4,9 +4,9 @@ de:
       title: "Ein neues Jobangebot wartet auf Freigabe"
       content: "Bitte überprüfen sie das neue Jobangebot unter: "
       link: "neues Jobangebot"
-    deputy_declined:
+    admin_declined:
       title: "Leider wurde ihr Jobangebot abgelehnt."
       content: "Das von Ihnen erstellte Jobangebot konnte leider nicht freigegeben werden, da es abgelehnt wurde"
-    deputy_accepted:
+    admin_accepted:
       title: "Ihr Jobangebot wurde freigeschaltet."
       content: "Das von Ihnen erstellte Jobangebot wurde freigegeben"
