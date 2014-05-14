@@ -8,9 +8,8 @@ describe Admin::ConfigurablesController do
 
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
   end
 
   it "should not be visible for a member of the staff " do

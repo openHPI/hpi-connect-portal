@@ -4,7 +4,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail to: @job_offer.employer.deputy.email, subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
   end
 
   def new_job_offer_info_email(job_offer, user)
@@ -13,12 +13,12 @@ class JobOffersMailer < ActionMailer::Base
      mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
   end
 
-  def deputy_accepted_job_offer_email(job_offer)
+  def admin_accepted_job_offer_email(job_offer)
     @job_offer = job_offer
     mail to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
   end
 
-  def deputy_declined_job_offer_email(job_offer)
+  def admin_declined_job_offer_email(job_offer)
     @job_offer = job_offer
     mail to: @job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
   end

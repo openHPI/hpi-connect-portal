@@ -8,12 +8,12 @@ describe "the job-offers page" do
     login @student1.user
 
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @open = FactoryGirl.create(:job_status, name:"open")
+    @active = FactoryGirl.create(:job_status, name:"active")
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @staff, status: @open)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @staff, status: @open)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, responsible_user: @staff, status: @open)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @staff, status: @active)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @staff, status: @active)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, responsible_user: @staff, status: @active)
   end
 
   it "should include all jobs currently available" do
@@ -60,7 +60,7 @@ describe "a job offer entry" do
       title: "TestJob",
       employer: @employer,
       responsible_user: @staff,
-      status: FactoryGirl.create(:job_status, :open)
+      status: FactoryGirl.create(:job_status, :active)
     )
 
     visit job_offers_path
@@ -83,9 +83,8 @@ describe "job_offers_history" do
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
-    @status = FactoryGirl.create(:job_status, :completed)
-    @open = FactoryGirl.create(:job_status, name:"open")
-    @running = FactoryGirl.create(:job_status, name:"running")
+    @status = FactoryGirl.create(:job_status, :closed)
+    @active = FactoryGirl.create(:job_status, name:"active")
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
       status: @status,

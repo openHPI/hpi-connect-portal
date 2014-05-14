@@ -31,19 +31,16 @@ class Employer < ActiveRecord::Base
   has_many :staff_members, class_name: 'Staff'
   has_many :job_offers
   has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
-  belongs_to :deputy, class_name: 'Staff'
 
-  accepts_nested_attributes_for :deputy
+  accepts_nested_attributes_for :staff_members
 
   validates_attachment_size :avatar, less_than: 5.megabytes
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
 
   validates :name, presence: true, uniqueness: true
-  validates :deputy, presence: true
   validates :year_of_foundation, numericality: { only_integer: true, 
     greater_than: 1800, 
-    less_than_or_equal_to: Time.now.year}
-  validate  :check_deputys_employer
+    less_than_or_equal_to: Time.now.year}, allow_nil: true
 
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }

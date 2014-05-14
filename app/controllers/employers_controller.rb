@@ -14,25 +14,24 @@ class EmployersController < ApplicationController
   def show
     not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer))
     page = params[:page]
-    @staff =  @employer.staff_members.where.not(id: @employer.deputy.id).paginate page: page
-    @running_job_offers = @employer.job_offers.running.paginate page: page
-    @open_job_offers = @employer.job_offers.open.paginate page: page
+    @staff =  @employer.staff_members.paginate page: page
+    @active_job_offers = @employer.job_offers.active.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
   end
 
   def new
     @employer = Employer.new
-    @employer.build_deputy
-    @employer.deputy.build_user
+    @employer.staff_members.build
+    @employer.staff_members.first.build_user
   end
 
   def create
     @employer = Employer.new employer_params
-    @employer.deputy.employer = @employer if @employer.deputy
+    @employer.staff_members.first.employer = @employer if @employer.staff_members.any?
 
     if @employer.save
-      sign_in @employer.deputy.user
-      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      sign_in @employer.staff_members.first.user if @employer.staff_members.any?
+      respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
     else
       render_errors_and_action @employer, 'new'
@@ -60,6 +59,10 @@ class EmployersController < ApplicationController
     redirect_to @employer
   end
 
+  def home
+
+  end
+
   private
 
     def rescue_from_exception(exception)
@@ -71,6 +74,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, :deputy_id, deputy_attributes: [ user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
     end
 end

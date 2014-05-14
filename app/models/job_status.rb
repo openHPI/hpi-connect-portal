@@ -15,15 +15,11 @@ class JobStatus < ActiveRecord::Base
     where(name: 'pending').first
   end
 
-  def self.open
-    where(name: 'open').first
+  def self.active
+    where(name: 'active').first
   end
 
-  def self.running
-    where(name: 'running').first
-  end
-
-  def self.completed
-    where(name: 'completed').first
+  def self.closed
+    where(name: 'closed').first
   end
 end

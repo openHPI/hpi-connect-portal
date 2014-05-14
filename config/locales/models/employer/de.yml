@@ -2,7 +2,6 @@ de:
   activerecord:
     attributes:
       employer:
-        deputy: "Verantwortlicher Mitarbeiter"
         description: "Beschreibung"
         head: "Leiter"
         name: "Name"

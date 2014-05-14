@@ -6,15 +6,13 @@ en:
         editing_employer: "Editing Employer"
         new_employer: "New Employer"
         staff: "Staff"
-        additional_staff: "Additional Staff"
         open: Open
         running: Running
         general_information: "General Information"
-        open_job_offers: "Open Job offers"
+        active_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
         inactive: "Deactivated"
-        select_deputy: "Select a deputy..."
         packages: "Packages"
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"

@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe EmployersController do
 
-  let(:deputy) { FactoryGirl.create(:staff) }
+  let(:staff) { FactoryGirl.create(:staff) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
-      deputy_id: deputy.id, 
-      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998 } }
-
-  let(:false_attributes) { { "name" => "HCI"} }
+      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998,
+      "staff_members_attributes"=>valid_staff_attributes } }
+  let(:valid_staff_attributes) { {"0"=>{"user_attributes"=>{"firstname"=>"Bla", "lastname"=>"Keks", "email"=>"bla@keks.de", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}} }
+  let(:false_attributes) { { name: '' } }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :open)
+    FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :pending)
 
     login admin
@@ -92,7 +91,7 @@ describe EmployersController do
       it "creates a new employer" do
         expect {
           post :create, { employer: valid_attributes }
-        }.to change(Employer, :count).by(2)
+        }.to change(Employer, :count).by(1)
       end
 
       it "assigns a newly created employer as @employer" do
@@ -103,7 +102,7 @@ describe EmployersController do
 
       it "redirects to the created employer" do
         post :create, { employer: valid_attributes }
-        response.should redirect_to(Employer.last)
+        response.should redirect_to(home_employers_path)
       end
 
       it "sends an email" do
@@ -116,12 +115,7 @@ describe EmployersController do
     describe "with invalid params" do
 
       it "renders new again" do
-        post :create, { employer: false_attributes}
-        response.should render_template("new")
-      end
-
-      it "does not create a new employer without deputy" do
-        post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction"}}
+        post :create, { employer: false_attributes }
         response.should render_template("new")
       end
     end
@@ -135,7 +129,7 @@ describe EmployersController do
       it "should also create an employer (there are no insufficient access rights)" do
         employer = FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
-        response.should redirect_to(employer_path(Employer.last))
+        response.should redirect_to(home_employers_path)
       end
     end
   end
@@ -144,7 +138,6 @@ describe EmployersController do
     describe "with valid params" do
       before(:each) do
         @employer = FactoryGirl.create(:employer)
-        @employer.deputy.update_column :employer_id, @employer.id
       end
       
       it "updates the requested employer" do  
@@ -158,7 +151,7 @@ describe EmployersController do
       end
 
       it "redirects to the employer" do
-        deputy.update(employer: @employer)
+        staff.update(employer: @employer)
         put :update, { id: @employer.id, employer: valid_attributes }
         response.should redirect_to(@employer)
       end

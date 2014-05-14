@@ -13,7 +13,6 @@ de:
         newsletter_description: "Du willst Emails erhalten, sobald ein neues Jobangebot erstellt wurde, das zu dir passt? Dann wähle hier die Programmiersprachen und Lehrstühle aus, die dich interssieren!"
         no_results: "Zu deiner Suchanfrage wurde kein passender Student gefunden"
         new_role_label: "Neue Rolle: "
-        new_deputy_label: "Neuer verantwortlicher Mitarbeiter: "
         new_employer_label: "Neuer Arbeitgeber : "
         activation_reminder: "Ihr Profil ist noch nicht freigeschaltet. Ein Administrator wird Ihr Profil in Kürze freischalten. Falls Sie ein HPI Student sind, können Sie sich auch selbst über OpenID freischalten: "
         successful_import: "Ihre Daten wurden erfolgreich importiert. Sie können nun zusätzliche Änderungen vornehmen."
