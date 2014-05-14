@@ -1,4 +1,4 @@
-<% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(job_offer) && job_offer.open? %>
+<% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(job_offer) && job_offer.active? %>
   <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

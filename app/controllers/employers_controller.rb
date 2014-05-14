@@ -15,8 +15,7 @@ class EmployersController < ApplicationController
     not_found unless @employer.activated || can?(:activate, @employer) || !current_user || (current_user && (current_user.staff? && current_user.manifestation.employer == @employer))
     page = params[:page]
     @staff =  @employer.staff_members.paginate page: page
-    @running_job_offers = @employer.job_offers.running.paginate page: page
-    @open_job_offers = @employer.job_offers.open.paginate page: page
+    @active_job_offers = @employer.job_offers.active.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
   end
 
@@ -32,7 +31,7 @@ class EmployersController < ApplicationController
 
     if @employer.save
       sign_in @employer.staff_members.first.user
-      respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
     else
       render_errors_and_action @employer, 'new'
@@ -55,6 +54,10 @@ class EmployersController < ApplicationController
     @employer.update_column :activated, true
     flash[:success] = I18n.t('employers.messages.successfully_activated')
     redirect_to @employer
+  end
+
+  def home
+
   end
 
   private

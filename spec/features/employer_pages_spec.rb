@@ -12,8 +12,7 @@ describe "the employer page" do
     @student1 = FactoryGirl.create(:student)
     login(@student1.user)
 
-    @job_offer_open = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :open))
-    @job_offer_running = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :running))
+    @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active))
     @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :pending))
     visit employer_path(employer)
   end
@@ -130,16 +129,13 @@ describe "the employer page" do
     it { should have_content(employer.staff_members.first.firstname + " " + employer.staff_members.first.lastname) }
   end
 
-  describe "shows running and open job offers for the employer" do
+  describe "shows open job offers for the employer" do
 
     it { should have_content('Open') }
-    it { should have_content('Running') }
 
-    it { should have_content(@job_offer_open.title) }
-    it { should have_content(@job_offer_running.title) }
+    it { should have_content(@job_offer_active.title) }
 
-    it { should have_content(@job_offer_open.start_date) }
-    it { should have_content(@job_offer_running.start_date) }
+    it { should have_content(@job_offer_active.start_date) }
 
   end
 

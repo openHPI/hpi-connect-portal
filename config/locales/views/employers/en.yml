@@ -9,7 +9,7 @@ en:
         open: Open
         running: Running
         general_information: "General Information"
-        open_job_offers: "Open Job offers"
+        active_job_offers: "Open Job offers"
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
         inactive: "Deactivated"
