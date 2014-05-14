@@ -37,26 +37,6 @@
   </div>
 </div>
 
-
-<div class="wrapper-4 teaser sidebar">
-  <% unless signed_in? %>
-    <div class="col-md-4">
-      <h1> Login Page </h1>
-
-      <%= simple_form_for :session, url: home_index_path do |f| %>
-          <%= f.input :email, id: "email", style: "height: auto; !important" %>
-          <%= f.input :password, id: "password", style: "height: auto; !important" %>
-
-          <br />
-          <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
-      <% end %>
-
-      <br />
-      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
-    </div>
-  <% end %>
-
-
     <div class="col-md-4">
       <h1><%= link_to "AGB", "" %></h1>
       <h1><%= link_to "Information", "" %></h1>

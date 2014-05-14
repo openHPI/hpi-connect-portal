@@ -31,7 +31,7 @@ class EmployersController < ApplicationController
 
     if @employer.save
       sign_in @employer.deputy.user
-      respond_and_redirect_to employers_home_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
     else
       render_errors_and_action @employer, 'new'
@@ -57,6 +57,7 @@ class EmployersController < ApplicationController
   end
 
   def home
+
   end
 
   private

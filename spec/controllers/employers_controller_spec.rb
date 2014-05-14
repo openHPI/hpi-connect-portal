@@ -102,7 +102,7 @@ describe EmployersController do
 
       it "redirects to the created employer" do
         post :create, { employer: valid_attributes }
-        response.should redirect_to(employers_home_path)
+        response.should redirect_to(home_employers_path)
       end
     end
 
@@ -128,7 +128,7 @@ describe EmployersController do
       it "should also create an employer (there are no insufficient access rights)" do
         employer = FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
-        response.should redirect_to(employers_home_path)
+        response.should redirect_to(home_employers_path)
       end
     end
   end
