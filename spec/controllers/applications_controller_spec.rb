@@ -5,11 +5,11 @@ describe ApplicationsController do
   let(:employer) { FactoryGirl.create(:employer) }
   let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "open"), "responsible_user_id" => responsible_user.id} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active"), "responsible_user_id" => responsible_user.id} }
   before(:each) do
     @student = FactoryGirl.create(:student)
     @student.user.email = 'test@example.com'
-    @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "open"))
+    @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "active"))
   end
 
   describe "GET decline" do
@@ -84,37 +84,23 @@ describe ApplicationsController do
         }.to change(Application, :count).by(-3)
       end
 
-      it "changes the job status to 'running' if the last possible application is accepted" do
-        @job_offer.vacant_posts = 1
-        @job_offer.save
-
-        running = FactoryGirl.create(:job_status, name: 'running')
-
-        get :accept, {id: @application.id}
-        assigns(:application).job_offer.status.should eq(running)
-      end
-
       it "keeps the job 'open' when there are still vacant_posts left" do
         @job_offer.vacant_posts = 2
         @job_offer.save
 
         get :accept, {id: @application.id}
-        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'open'))
+        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'active'))
       end
 
       it "sends two emails" do
         old_count = ActionMailer::Base.deliveries.count
-
         get :accept, {id: @application.id}
-
         ActionMailer::Base.deliveries.count.should == old_count + 2
       end
 
       it "renders errors if updating all objects failed" do
-        working = FactoryGirl.create(:job_status, name: 'running')
-
+        working = FactoryGirl.create(:job_status, name: 'active')
         JobOffer.any_instance.stub(:save).and_return(false)
-
         get :accept, {id: @application.id}
         response.should redirect_to(@application.job_offer)
       end
@@ -122,7 +108,6 @@ describe ApplicationsController do
       it "updates the job offers start date to the current date if it is 'from now on'" do
         @job_offer.flexible_start_date = true
         @job_offer.save!
-
         get :accept, {id: @application.id}
         assert_equal(@job_offer.reload.start_date, Date.current)
       end
@@ -145,7 +130,7 @@ describe ApplicationsController do
 
   describe "POST create" do
     it "does not create an application if job is not open" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'running')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'pending')
       @job_offer.save
 
       login FactoryGirl.create(:student).user
@@ -155,7 +140,7 @@ describe ApplicationsController do
     end
 
     it "does create an application if job is open" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({
@@ -171,7 +156,7 @@ describe ApplicationsController do
     end
 
     it "handles failing save call" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       student = FactoryGirl.create(:student)
@@ -185,7 +170,7 @@ describe ApplicationsController do
     end
 
     it "forbids attachments that are not a PDF" do
-      @job_offer.status = FactoryGirl.create(:job_status, name: 'open')
+      @job_offer.status = FactoryGirl.create(:job_status, name: 'active')
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({

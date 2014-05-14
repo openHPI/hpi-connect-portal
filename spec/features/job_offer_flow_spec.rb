@@ -8,7 +8,8 @@ describe "the job offer flow" do
 
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:deputy) { FactoryGirl.create(:staff, employer: employer) }
+  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
+  let(:admin) { FactoryGirl.create(:user, :admin)}
   let(:first_applicant) { FactoryGirl.create(:student) }
   let(:second_applicant) { FactoryGirl.create(:student) }
 
@@ -16,11 +17,9 @@ describe "the job offer flow" do
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
 
-    employer.deputy = deputy
     employer.save
 
     ActionMailer::Base.deliveries = []
@@ -65,16 +64,16 @@ describe "the job offer flow" do
     assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
 
-    # deputy of the employers get acceptance pending email
+    # admin of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [deputy.email])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     css = 'a[href=3D"' + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + '"]'
     email.should have_selector('a')
     ActionMailer::Base.deliveries = []
 
-    # deputy accepts the new job offer
-    login deputy.user
+    # admin accepts the new job offer
+    login admin
     visit job_offer_path(job_offer)
 
     current_path.should == job_offer_path(job_offer)
@@ -87,7 +86,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     current_path.should == job_offer_path(job_offer)
     should_not have_selector(".alert alert-danger")
-    assert job_offer.open?
+    assert job_offer.active?
 
     # responsible staff member gets notified that the job offer got accepted
     ActionMailer::Base.deliveries.count.should == 1
@@ -165,7 +164,7 @@ describe "the job offer flow" do
     find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, student: first_applicant).first)+"']").click
 
     job_offer = job_offer.reload
-    assert job_offer.running?
+    assert job_offer.active?
     assert Application.where(job_offer: job_offer).load.count == 0
     assert_equal(job_offer.assigned_students, [first_applicant])
 
@@ -187,7 +186,7 @@ describe "the job offer flow" do
     job_offer.reload
     current_path.should == job_offer_path(job_offer)
     assert_equal(job_offer.end_date, Date.current + 3)
-    assert_equal(job_offer.running?, true)
+    assert_equal(job_offer.active?, true)
 
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1
@@ -197,22 +196,15 @@ describe "the job offer flow" do
 
     # responsible user tries to edit the job offer
     visit edit_job_offer_path(job_offer)
-    current_path.should == job_offer_path(job_offer)
+    current_path.should_not == job_offer_path(job_offer)
     should_not have_link I18n.t("links.edit")
 
     # responsible user tries to delete the job offer
     should_not have_link I18n.t("links.destroy")
-
-    # responsible user closes the job
-    find_link(I18n.t("job_offers.job_completed")).click
-
-    # the administration of the HPI gets notified
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
-    ActionMailer::Base.deliveries = []
-
+   
+    job_offer.update(status: JobStatus.closed)
     job_offer = job_offer.reload
-    assert job_offer.completed?
+    assert job_offer.closed?
 
     # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)
@@ -233,10 +225,10 @@ describe "the job offer flow" do
     assert_equal(JobOffer.all.count, 2)
     job_offer = JobOffer.last
 
-    # the deputy gets notified about the new job
+    # the admins get notified about the new job
     ActionMailer::Base.deliveries.count.should == 1
     email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [deputy.email])
+    assert_equal(email.to, [Configurable.mailToAdministration])
     email.should have_selector("a")
     ActionMailer::Base.deliveries = []
   end

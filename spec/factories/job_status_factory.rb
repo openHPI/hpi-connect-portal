@@ -18,15 +18,11 @@ FactoryGirl.define do
     name 'pending'
   end
 
-  trait :open do
-    name 'open'
+  trait :active do
+    name 'active'
   end
 
-  trait :running do
-    name 'running'
-  end
-
-  trait :completed do
-    name 'completed'
+  trait :closed do
+    name 'closed'
   end
 end

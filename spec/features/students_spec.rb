@@ -14,18 +14,29 @@ describe "the students page" do
 
   describe "as a staff member" do
 
-    it "is not available for students" do
+    it "is not available for staff members of not paying employers" do
       login staff.user
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
+      staff.employer.update_column :booked_package_id, 1
+      visit students_path
+      current_path.should_not == students_path
+      current_path.should == root_path
+    end
+
+    it "is available for staff members of premium employers" do
+      staff.employer.update_column :booked_package_id, 2
+      login staff.user
+      visit students_path
+      current_path.should == students_path
     end
   end
 
   describe "as a student" do
 
     it "is not available for students" do
-      FactoryGirl.create(:job_status, name: 'open')
+      FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit students_path
       current_path.should_not == students_path
@@ -195,6 +206,31 @@ describe "the students profile page" do
     it "should not have a reminder about activation" do
       page.should_not have_content(I18n.t("students.activation_reminder"))
       page.should_not have_css('input#open-id-field')
+    end
+  end
+
+  describe "as a member of the staff" do
+    before :each do
+      @student = FactoryGirl.create(:student)
+      @employer = FactoryGirl.create(:employer)
+      @staff = FactoryGirl.create(:staff, employer: @employer)
+      login @staff.user
+    end
+
+    it "should not be accessible for staff of free or partner employers" do
+      visit student_path(@student)
+      current_path.should_not == student_path(@student)
+      current_path.should == root_path
+      @employer.update_column :booked_package_id, 1
+      visit student_path(@student)
+      current_path.should_not == student_path(@student)
+      current_path.should == root_path
+    end
+
+    it "should be accessible for staff of premium employers" do
+      @employer.update_column :booked_package_id, 2
+      visit student_path(@student)
+      current_path.should == student_path(@student)
     end
   end
 

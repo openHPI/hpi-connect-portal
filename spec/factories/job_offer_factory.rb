@@ -15,8 +15,12 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  flexible_start_date :boolean          default(FALSE)
 #  vacant_posts        :integer
+#  flexible_start_date :boolean          default(FALSE)
+#  category_id         :integer          default(0), not null
+#  state_id            :integer          default(3), not null
+#  graduation_id       :integer          default(2), not null
+#  academic_program_id :integer
 #
 
 FactoryGirl.define do

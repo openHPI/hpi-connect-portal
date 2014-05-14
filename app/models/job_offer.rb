@@ -15,13 +15,22 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  flexible_start_date :boolean          default(FALSE)
 #  vacant_posts        :integer
+#  flexible_start_date :boolean          default(FALSE)
+#  category_id         :integer          default(0), not null
+#  state_id            :integer          default(3), not null
+#  graduation_id       :integer          default(2), not null
+#  academic_program_id :integer
 #
 
 class JobOffer < ActiveRecord::Base
   include Bootsy::Container
   include JobOfferScopes
+
+  ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
   before_save :default_values
 
@@ -44,18 +53,9 @@ class JobOffer < ActiveRecord::Base
   validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
-
-  ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
-  STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
+  validate :can_be_created, on: :create
 
   self.per_page = 15
-
-  def default_values
-    self.status ||= JobStatus.pending
-    self.vacant_posts ||= 1
-  end
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
@@ -66,7 +66,7 @@ class JobOffer < ActiveRecord::Base
     elsif parameters[:flexible_start_date]
       job_offer.flexible_start_date = true
     end
-    job_offer
+    return job_offer
   end
 
   def self.sort(order_attribute)
@@ -77,24 +77,29 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
-  def completed?
-    status && status == JobStatus.completed
+  def default_values
+    self.status ||= JobStatus.pending
+    self.vacant_posts ||= 1
+  end
+
+  def can_be_created
+    errors[:base] << I18n.t('job_offers.messages.cannot_create') unless employer && employer.can_create_job_offer?(category)
+  end
+
+  def closed?
+    status && status == JobStatus.closed
   end
 
   def pending?
     status && status == JobStatus.pending
   end
 
-  def open?
-    status && status == JobStatus.open
-  end
-
-  def running?
-    status && status == JobStatus.running
+  def active?
+    status && status == JobStatus.active
   end
 
   def editable?
-    self.pending? || self.open?
+    self.pending? || self.active?
   end
 
   def human_readable_compensation
@@ -103,50 +108,43 @@ class JobOffer < ActiveRecord::Base
 
   def check_remaining_applications
     if vacant_posts == 0
-      if update({ status: JobStatus.running })
+      if update({ status: JobStatus.active })
         applications.each do | application |
           application.decline
         end
       else
-        false
+        return false
       end
     end
-    true
+    return true
   end
 
   def prolong(date)
-    if running? && end_date < date
+    if active? && end_date < date
       update_column :end_date, date
       JobOffersMailer.job_prolonged_email(self).deliver
-      true
+      return true
     else
-      false
+      return false
     end
   end
 
   def fire(student)
     assigned_students.delete student
     save!
-    update!({vacant_posts: vacant_posts + 1, status: JobStatus.open})
+    update!({vacant_posts: vacant_posts + 1, status: JobStatus.active})
   end
 
   def accept_application(application)
     new_assigned_students = assigned_students << application.student
     if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
       application.delete
-      if flexible_start_date
-        update!({ start_date: Date.current })
-      end
-      if vacant_posts == 0
-        update!({status: JobStatus.running})
-      end
-
+      update!({ start_date: Date.current }) if flexible_start_date
       ApplicationsMailer.application_accepted_student_email(application).deliver
       JobOffersMailer.job_student_accepted_email(self).deliver
-
-      true
+      return true
     else
-      false
+      return false
     end
   end
 

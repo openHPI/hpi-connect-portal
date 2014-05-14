@@ -1,0 +1,54 @@
+<div class="wrapper-8 teaser">
+  <div class="col-md-8">
+    <h1>Home</h1>
+    <h2>Home</h2>    
+        <div class="panel-group" id="accordion">
+          <div id="ws1314" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <p>Mein <%= link_to 'Kontaktprofil bearbeiten', [:edit, current_user] %></p>
+              <p>Ich möchte folgendes Produkt buchen:</p>
+              <br><p><h1>Kostenlose Angebote</h1></p>
+              <ul><div class="panel-body">
+                <li>○ Praktikum oder Studentenjob online stellen</li>
+              </div></ul>
+              <br>              
+              <p><h1>Kostenpflichtige Angebote</h1>(<i>aktuelle Preise können Sie bei 
+                <%= mail_to "connect@hpi.uni-potsdam.de" %> erfragen</i>)</p><br>
+                <ul><div class="panel-body">
+                <li>○ Stellenangebot online stellen</li>
+                <li>○ Firmenprofil veröffentlichen</li>
+                <li>○ Basispaket buchen</li>
+                <ul><div class="panel-body">
+                  <li> - 4 Stellenangebote pro Jahr</li>
+                  <li> - 1 Firmenprofil für 1 Jahr</li></div>
+                </ul>
+                <li>○ Partnerpaket buchen</li>
+                <ul><div class="panel-body">
+                  <li> - 24 Stellenangebote pro Jahr</li>
+                  <li> - 1 Firmenprofil für 1 Jahr</li>
+                  <li> - Recherchezugriff auf die Profildatenbank der Studenten und Alumni</div>
+                </ul>
+              </div></ul>
+              <p><%= link_to "Weiter", ""%></p>
+              <p>Gerne beraten wir Sie zu unseren Angeboten.<br>Kontaktieren Sie uns jederzeit.</p>
+          </div>
+        </div>
+      </div> <!-- end of panel -->   
+  </div>
+</div>
+
+    <div class="col-md-4">
+      <h1><%= link_to "AGB", "" %></h1>
+      <h1><%= link_to "Information", "" %></h1>
+      <h1>Kontakt</h1>
+      <p>Hasso-Plattner-Institut für<br>Softwaresystemtechnik GmbH
+      <br>Prof.-Dr.-Helmert-Str. 2-3
+      <br>D-14482 Potsdam</p>
+      <br>
+      <p>E-Mail: <%= mail_to "connect@hpi.uni-potsdam.de" %></p>
+      <br><p>Nadja Antoine - <br>Fon(49) 0331 5509 107</p>
+      <br><p>Claudia Koch - <br>Fon(49) 0331 5509 291</p>
+      <br><p><%= link_to "www.hpi.uni-potsdam.de/connect"%></p>
+      
+    </div>
+</div>
