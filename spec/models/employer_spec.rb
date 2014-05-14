@@ -36,16 +36,6 @@ describe Employer do
       @employer.should be_invalid
     end
 
-    it "with deputy not present" do
-      @employer.deputy = nil
-      @employer.should be_invalid
-    end
-
-    it "with deputies employer is not the employer itself" do
-      @employer.deputy.employer = nil
-      @employer.should be_invalid
-    end
-
     it "with name is not unique" do
       employer_with_same_name = @employer.dup
       assert employer_with_same_name.should be_invalid

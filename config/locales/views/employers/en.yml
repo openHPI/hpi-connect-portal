@@ -6,7 +6,6 @@ en:
         editing_employer: "Editing Employer"
         new_employer: "New Employer"
         staff: "Staff"
-        additional_staff: "Additional Staff"
         open: Open
         running: Running
         general_information: "General Information"
@@ -14,7 +13,6 @@ en:
         running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
         inactive: "Deactivated"
-        select_deputy: "Select a deputy..."
         messages:
             successfully_created: "Welcome to HPI Career!"
             successfully_updated: "Profile successfully updated."

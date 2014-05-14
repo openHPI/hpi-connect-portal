@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe EmployersController do
 
-  let(:deputy) { FactoryGirl.create(:staff) }
+  let(:staff) { FactoryGirl.create(:staff) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
-      deputy_id: deputy.id, 
-      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998 } }
-
+      number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998,
+      "staff_members_attributes"=>valid_staff_attributes } }
+  let(:valid_staff_attributes) { {"0"=>{"user_attributes"=>{"firstname"=>"Bla", "lastname"=>"Keks", "email"=>"bla@keks.de", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}} }
   let(:false_attributes) { { "name" => "HCI"} }
 
   before(:each) do
@@ -90,7 +90,7 @@ describe EmployersController do
       it "creates a new employer" do
         expect {
           post :create, { employer: valid_attributes }
-        }.to change(Employer, :count).by(2)
+        }.to change(Employer, :count).by(1)
       end
 
       it "assigns a newly created employer as @employer" do
@@ -113,7 +113,7 @@ describe EmployersController do
         response.should render_template("new")
       end
 
-      it "does not create a new employer without deputy" do
+      it "does not create a new employer without staff" do
         post :create, { employer: {"name" => "HCI", "description" => "Human Computer Interaction"}}
         response.should render_template("new")
       end
@@ -150,7 +150,7 @@ describe EmployersController do
       end
 
       it "redirects to the employer" do
-        deputy.update(employer: @employer)
+        staff.update(employer: @employer)
         put :update, { id: @employer.id, employer: valid_attributes }
         response.should redirect_to(@employer)
       end

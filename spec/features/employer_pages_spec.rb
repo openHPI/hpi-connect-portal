@@ -6,7 +6,7 @@ describe "the employer page" do
 
   let(:employer) { FactoryGirl.create(:employer, name: 'EPIC' ) }
   let(:user) { FactoryGirl.create(:user) }
-  let(:deputy) { employer.deputy }
+  let(:staff) { employer.staff_members.first }
 
   before do
     @student1 = FactoryGirl.create(:student)
@@ -77,12 +77,12 @@ describe "the employer page" do
 
   describe "creating a new employer" do
 
-    it "displays a form to create the first staff member as deputy" do
+    it "displays a form to create the first staff member as admin" do
       admin = FactoryGirl.create(:user, :admin)
       login(admin)
       visit new_employer_path
 
-      should have_css("input#employer_deputy_attributes_user_attributes_firstname")
+      should have_css("input#employer_staff_members_attributes_0_user_attributes_firstname")
     end
 
     it "should always create an inactive employer" do
@@ -92,11 +92,11 @@ describe "the employer page" do
       fill_in 'employer_description', with: 'Desctiption for an Employer.'
       fill_in 'employer_year_of_foundation', with: 1992
       fill_in 'employer_place_of_business', with: 'Potsdam'
-      fill_in 'employer_deputy_attributes_user_attributes_firstname', with: 'Max'
-      fill_in 'employer_deputy_attributes_user_attributes_lastname', with: 'Mustermann'
-      fill_in 'employer_deputy_attributes_user_attributes_email', with: 'deputy@test.com'
-      fill_in 'employer_deputy_attributes_user_attributes_password', with: 'password'
-      fill_in 'employer_deputy_attributes_user_attributes_password_confirmation', with: 'password'
+      fill_in 'employer_staff_members_attributes_0_user_attributes_firstname', with: 'Max'
+      fill_in 'employer_staff_members_attributes_0_user_attributes_lastname', with: 'Mustermann'
+      fill_in 'employer_staff_members_attributes_0_user_attributes_email', with: 'staff@test.com'
+      fill_in 'employer_staff_members_attributes_0_user_attributes_password', with: 'password'
+      fill_in 'employer_staff_members_attributes_0_user_attributes_password_confirmation', with: 'password'
       find('input[type="submit"]').click
 
       page.should have_content(
@@ -112,21 +112,21 @@ describe "the employer page" do
   end
 
   describe "editing an existing employer" do
-    it "displays a select with all staff members of the employer for selecting the deputy" do
+    it "does not have a select for former deputy" do
       admin = FactoryGirl.create(:user, :admin)
       employer = FactoryGirl.create(:employer)
       staff = FactoryGirl.create(:staff, employer: employer)
       login(admin)
       visit edit_employer_path(employer)
 
-      should have_select("employer[deputy_id]", options: employer.staff_members.map { |staff| staff.email })
+      should_not have_select("employer[deputy_id]")
     end
   end
 
   describe "should show the basic information of the employer" do
     it { should have_content(employer.name) }
     it { should have_content(employer.description) }
-    it { should have_content(employer.deputy.firstname + " " + employer.deputy.lastname) }
+    it { should have_content(employer.staff_members.first.firstname + " " + employer.staff_members.first.lastname) }
   end
 
   describe "shows open job offers for the employer" do

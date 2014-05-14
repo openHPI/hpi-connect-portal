@@ -5,11 +5,11 @@
     <%= simple_form_for @employer, html: { multipart: true } do |f| %>
       <%= render 'shared/object_errors', object: @employer %>
 
-      <%= render 'form_fields', form: f, employer: @employer, with_deputy_select: false %>
+      <%= render 'form_fields', form: f, employer: @employer %>
 
-      <%= f.simple_fields_for :deputy, @employer.deputy do |deputy_form| %>
+      <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
 
-        <%= render 'staff/form_fields', form: deputy_form, user: @employer.deputy.user %>
+        <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
 
       <% end %>
 

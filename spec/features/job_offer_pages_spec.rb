@@ -143,9 +143,9 @@ describe "Job Offer pages" do
       end
     end
 
-    describe "active job offer" do
-      let(:deputy) { FactoryGirl.create(:staff)}
-      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
+    describe "running job offer" do
+      let(:employer) { FactoryGirl.create(:employer) }
+      let(:staff) { employer.staff_members.first }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_active) }
 
       let(:student) { FactoryGirl.create(:student) }
@@ -178,7 +178,7 @@ describe "Job Offer pages" do
               )
         end
 
-        it { should_not have_button I18n.t('job_offers.fire') }
+        it { should have_button I18n.t('job_offers.fire') }
       end
 
       describe "as the responsible user" do
@@ -215,13 +215,13 @@ describe "Job Offer pages" do
     describe "pending job offer" do
 
       let(:employer) { FactoryGirl.create(:employer) }
-      let(:deputy) { employer.deputy }
+      let(:staff) { employer.staff_members.first }
       let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_pending) }
 
       let(:student) { FactoryGirl.create(:student) }
 
       before do
-        deputy.update(:employer => employer)
+        staff.update(:employer => employer)
       end
 
       describe "as a student" do
@@ -260,13 +260,13 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the employer" do
+      describe "as staff of the employer" do
         before do
-          login deputy.user
+          login staff.user
           visit job_offer_path(job_offer)
         end
 
-        it "should be editable for the deputy" do
+        it "should be editable for any staff" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
@@ -276,10 +276,10 @@ describe "Job Offer pages" do
           expect(current_path).to eq(edit_job_offer_path(job_offer))
         end
 
-        it "is possible to accept or decline the job offer" do
-
-          should have_link('Accept')
-          should have_link('Decline')
+        it "is not possible to accept or decline the job offer" do
+          #This is now Admin Job
+          should_not have_link('Accept')
+          should_not have_link('Decline')
         end
       end
 
@@ -291,7 +291,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it "should be editable for the deputy" do
+        it "should be editable for the any staff" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 

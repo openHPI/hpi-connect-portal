@@ -29,7 +29,7 @@ FactoryGirl.define do
     number_of_employees "50 - 100"
 
     before(:create) do | employer |
-      employer.deputy = FactoryGirl.create(:staff, employer: employer)
+      FactoryGirl.create(:staff, employer: employer)
     end
   end
 end
