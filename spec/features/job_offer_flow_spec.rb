@@ -16,9 +16,8 @@ describe "the job offer flow" do
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :open)
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :completed)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
 
     employer.deputy = deputy
     employer.save
@@ -87,7 +86,7 @@ describe "the job offer flow" do
     job_offer = job_offer.reload
     current_path.should == job_offer_path(job_offer)
     should_not have_selector(".alert alert-danger")
-    assert job_offer.open?
+    assert job_offer.active?
 
     # responsible staff member gets notified that the job offer got accepted
     ActionMailer::Base.deliveries.count.should == 1
@@ -165,7 +164,7 @@ describe "the job offer flow" do
     find("a[href='"+accept_application_path(Application.where(job_offer: job_offer, student: first_applicant).first)+"']").click
 
     job_offer = job_offer.reload
-    assert job_offer.running?
+    assert job_offer.active?
     assert Application.where(job_offer: job_offer).load.count == 0
     assert_equal(job_offer.assigned_students, [first_applicant])
 
@@ -187,7 +186,7 @@ describe "the job offer flow" do
     job_offer.reload
     current_path.should == job_offer_path(job_offer)
     assert_equal(job_offer.end_date, Date.current + 3)
-    assert_equal(job_offer.running?, true)
+    assert_equal(job_offer.active?, true)
 
     # the administration of the HPI gets notified of the change
     ActionMailer::Base.deliveries.count.should == 1
@@ -197,22 +196,15 @@ describe "the job offer flow" do
 
     # responsible user tries to edit the job offer
     visit edit_job_offer_path(job_offer)
-    current_path.should == job_offer_path(job_offer)
+    current_path.should_not == job_offer_path(job_offer)
     should_not have_link I18n.t("links.edit")
 
     # responsible user tries to delete the job offer
     should_not have_link I18n.t("links.destroy")
-
-    # responsible user closes the job
-    find_link(I18n.t("job_offers.job_completed")).click
-
-    # the administration of the HPI gets notified
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
-    ActionMailer::Base.deliveries = []
-
+   
+    job_offer.update(status: JobStatus.closed)
     job_offer = job_offer.reload
-    assert job_offer.completed?
+    assert job_offer.closed?
 
     # employer of staff user reopens the jobs
     visit job_offer_path(job_offer)

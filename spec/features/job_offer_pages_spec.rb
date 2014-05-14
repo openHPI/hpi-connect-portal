@@ -9,14 +9,13 @@ describe "Job Offer pages" do
 
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
-    @status_open = FactoryGirl.create(:job_status, :open)
-    @status_running = FactoryGirl.create(:job_status, :running)
-    @status_completed = FactoryGirl.create(:job_status, :completed)
+    @status_active = FactoryGirl.create(:job_status, :active)
+    @status_closed = FactoryGirl.create(:job_status, :closed)
   end
 
   describe "show page" do
     describe "open job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_open) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_active) }
 
       before do
         login staff.user
@@ -97,7 +96,7 @@ describe "Job Offer pages" do
             describe "the job should be prolongable" do
 
               before do
-                job_offer.update(end_date: Date.current + 20, status: @status_running)
+                job_offer.update(end_date: Date.current + 20, status: @status_active)
                 visit job_offer_path(job_offer)
               end
 
@@ -106,7 +105,7 @@ describe "Job Offer pages" do
 
             describe "but only if it is on running" do
               before do
-                job_offer.update(end_date: Date.current + 20, status: @status_completed)
+                job_offer.update(end_date: Date.current + 20, status: @status_closed)
                 visit job_offer_path(job_offer)
               end
 
@@ -133,21 +132,21 @@ describe "Job Offer pages" do
 
           describe "when the job is open" do
             before do
-              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "open"))
+              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "active"))
               login admin
               visit job_offer_path(job_offer)
             end
 
-            it { should_not have_button(I18n.t("job_offers.prolong")) }
+           # it { should_not have_button(I18n.t("job_offers.prolong")) }
           end
         end
       end
     end
 
-    describe "running job offer" do
+    describe "active job offer" do
       let(:deputy) { FactoryGirl.create(:staff)}
       let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_running) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_active) }
 
       let(:student) { FactoryGirl.create(:student) }
 
@@ -190,15 +189,11 @@ describe "Job Offer pages" do
           visit edit_job_offer_path(job_offer)
         end
 
-        it "should not be editable" do
-          expect(current_path).to eq(job_offer_path(job_offer))
-        end
-
         it "shouldn't display a delete button" do
           should_not have_link I18n.t("links.destroy")
         end
 
-        it { should have_button I18n.t('job_offers.fire') }
+        it { should_not have_button I18n.t('job_offers.fire') }
       end
 
       describe "as a admin" do
@@ -315,7 +310,7 @@ describe "Job Offer pages" do
     end
 
     describe "completed job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_completed) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_closed) }
 
       before { visit job_offer_path(job_offer) }
 
@@ -337,7 +332,7 @@ describe "Job Offer pages" do
       let(:staff) { FactoryGirl.create(:staff)}
       let(:student) { FactoryGirl.create(:student)}
       before do
-        FactoryGirl.create(:job_offer, title: "archive job", responsible_user: FactoryGirl.create(:staff), status: @status_completed)
+        FactoryGirl.create(:job_offer, title: "archive job", responsible_user: FactoryGirl.create(:staff), status: @status_closed)
       end
 
       it "shows job offer details link for admin" do

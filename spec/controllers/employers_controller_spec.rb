@@ -12,8 +12,7 @@ describe EmployersController do
   let(:false_attributes) { { "name" => "HCI"} }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :running)
-    FactoryGirl.create(:job_status, :open)
+    FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :pending)
 
     login admin
@@ -103,7 +102,7 @@ describe EmployersController do
 
       it "redirects to the created employer" do
         post :create, { employer: valid_attributes }
-        response.should redirect_to(Employer.last)
+        response.should redirect_to(employers_home_path)
       end
     end
 
@@ -129,7 +128,7 @@ describe EmployersController do
       it "should also create an employer (there are no insufficient access rights)" do
         employer = FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
-        response.should redirect_to(employer_path(Employer.last))
+        response.should redirect_to(employers_home_path)
       end
     end
   end

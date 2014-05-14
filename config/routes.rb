@@ -19,7 +19,7 @@ HpiHiwiPortal::Application.routes.draw do
           get "matching"
         end
         member do
-          get "complete"
+          get "close"
           get "accept"
           get "decline"
           get "reopen"
@@ -28,7 +28,9 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
-      resources :employers do 
+      get 'employers/home' => 'employers#home'
+      
+      resources :employers do
         member do
           get "activate"
         end

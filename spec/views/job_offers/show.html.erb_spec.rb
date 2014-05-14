@@ -9,7 +9,7 @@ describe "job_offers/show" do
       :employer => @employer,
       :start_date => Date.current + 10,
       :responsible_user => FactoryGirl.create(:staff),
-      :status => FactoryGirl.create(:job_status, :name => "open")
+      :status => FactoryGirl.create(:job_status, :name => "active")
     ))
     view.stub(:can?) { false }
     view.stub(:current_user) { FactoryGirl.create(:user) }
@@ -25,15 +25,6 @@ describe "job_offers/show" do
     render
     rendered.should_not match(/Applications/)
     rendered.should_not match(/Apply/)
-  end
-
-  it "hides the edit button if the job is running" do
-    @job_offer.status = FactoryGirl.create(:job_status, :name => "running")
-    @job_offer.save
-
-    render
-
-    rendered.should_not match(/Edit/)
   end
 
   it "renders the default compensation text if applicable" do

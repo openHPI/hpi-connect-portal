@@ -7,7 +7,7 @@ class ApplicationsController < ApplicationController
     @job_offer = JobOffer.find application_params[:job_offer_id]
 
     authorize! :create, Application
-    if @job_offer.open?
+    if @job_offer.active?
       if Application.create_and_notify @job_offer, current_user.manifestation, params
         flash[:success] = 'Applied Successfully!'
       else

@@ -7,9 +7,8 @@ Role.create!(name: 'Admin', level: 3)
 #Create Standart Job Status
 JobStatus.delete_all
 JobStatus.create!(name: 'pending')
-JobStatus.create!(name: 'open')
-JobStatus.create!(name: 'running')
-JobStatus.create!(name: 'completed')
+JobStatus.create!(name: 'active')
+JobStatus.create!(name: 'closed')
 
 Language.delete_all
 Language.create!([
@@ -196,7 +195,7 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+2, 
   time_effort: 9,
   compensation: 13.50,
@@ -213,7 +212,7 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   time_effort: 38,
   compensation: 12.0,
@@ -230,7 +229,7 @@ JobOffer.create!([{
   category_id: 2,
   graduation_id: 4,
   employer: hpi, 
-  status: JobStatus.where(:name => "running").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   time_effort: 38,
   compensation: 12.0,
@@ -250,7 +249,7 @@ JobOffer.create!([{
   category_id: 0,
   graduation_id: 1,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+3, 
   time_effort: 5,
   compensation: 12.00,
@@ -268,7 +267,7 @@ JobOffer.create!([{
   category_id: 0,
   graduation_id: 0,
   employer: hpi,
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 8,
   compensation: 10.00,
@@ -285,7 +284,7 @@ JobOffer.create!([{
   category_id: 3,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "running").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 8,
   compensation: 10.00,
@@ -305,7 +304,7 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 38,
   compensation: 20.00,
