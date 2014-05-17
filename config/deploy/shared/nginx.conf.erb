@@ -7,10 +7,11 @@ server {
   listen 80;
   root <%= fetch(:deploy_to) %>/current/public;
 
-  location ^~ (/assets/|/system/) {
+  location ^~ /(assets|system)/ {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
+    break;
   }
 
   rewrite ^/(.*)$ /connect/jobportal/$1;
