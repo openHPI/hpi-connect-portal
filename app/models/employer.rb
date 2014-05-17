@@ -26,7 +26,7 @@ class Employer < ActiveRecord::Base
   NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
   PACKAGES = ['free', 'partner', 'premium']
 
-  has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/images/:style/missing.png"
+  has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/assets/placeholder/:style/missing.png"
 
   has_many :staff_members, class_name: 'Staff'
   has_many :job_offers

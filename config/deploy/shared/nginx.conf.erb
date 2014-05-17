@@ -9,7 +9,7 @@ server {
 
   rewrite ^/(.*)$ /connect/jobportal/$1;
 
-  location ^~ /assets/ {
+  location ^~ (/assets/|/system/) {
     gzip_static on;
     expires max;
     add_header Cache-Control public;
