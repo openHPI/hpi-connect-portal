@@ -7,8 +7,6 @@ server {
   listen 80;
   root <%= fetch(:deploy_to) %>/current/public;
 
-  try_files $uri/index.html $uri @unicorn;
-
   location ^~ /(assets|system)/ {
     gzip_static on;
     expires max;
@@ -17,7 +15,8 @@ server {
   }
 
   location / {
-    rewrite ^/(.*)$ /connect/jobportal/$1;
+    # rewrite ^/(.*)$ /connect/jobportal/$1;
+    try_files $uri/index.html $uri /connect/jobportal/$uri /connect/jobportal/@unicorn;
   }
 
   location @unicorn {
