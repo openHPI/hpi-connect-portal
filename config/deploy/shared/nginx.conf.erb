@@ -14,7 +14,7 @@ server {
     break;
   }
 
-  # rewrite ^/(.*)$ /connect/jobportal/$1;
+  rewrite ^/(.*)$ /connect/jobportal/$1;
 
   try_files $uri/index.html $uri @unicorn;
   location @unicorn {
