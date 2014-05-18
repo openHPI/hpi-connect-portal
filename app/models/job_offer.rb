@@ -104,10 +104,6 @@ class JobOffer < ActiveRecord::Base
     (self.compensation == 10.0) ? I18n.t('job_offers.default_compensation') : self.compensation.to_s + " " + I18n.t("job_offers.compensation_description")
   end
 
-  def check_remaining_applications
-    return true
-  end
-
   def prolong(date)
     if active? && end_date < date
       update_column :end_date, date
@@ -121,6 +117,7 @@ class JobOffer < ActiveRecord::Base
   def fire(student)
     assigned_students.delete student
     save!
+    update!({status: JobStatus.active})
   end
 
   def accept_application(application)
