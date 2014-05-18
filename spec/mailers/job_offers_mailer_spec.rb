@@ -70,7 +70,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.staff.email])
+      @email.to.should eq([@job_offer.first_staff.email])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
@@ -92,7 +92,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.staff.email])
+      @email.to.should eq([@job_offer.first_staff.email])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
