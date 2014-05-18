@@ -33,7 +33,6 @@ FactoryGirl.define do
     time_effort       9
     association       :status, factory: :job_status
     association       :responsible_user, factory: :staff
-    vacant_posts      1
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)

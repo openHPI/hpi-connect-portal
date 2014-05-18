@@ -47,7 +47,7 @@ describe "the employer page" do
       current_path != edit_employer_path(employer)
     end
   end
-
+describe "GET show" do
   describe "can be activated" do
 
     before :each do 
@@ -62,16 +62,15 @@ describe "the employer page" do
 
     it "not by students" do
       login FactoryGirl.create(:student).user
-      expect {
-        visit employer_path(@employer)
-      }.to raise_error(ActionController::RoutingError)
+      get :show, {id: @employer.id}
+      response.should redirect_to(root_path)
     end
 
     it "not by staff members" do
       login FactoryGirl.create(:staff)
-      expect {
-        visit employer_path(@employer)
-      }.to raise_error(ActionController::RoutingError)
+      visit employer_path(@employer)
+      current_path.should eq root_path
+      assert_equal(flash, 'You are not authorized to access this page.')
     end
 
     it "can also be activated if a new package was booked" do
@@ -82,6 +81,7 @@ describe "the employer page" do
       should have_link 'Activate'
     end
   end
+end
 
   describe "creating a new employer" do
 

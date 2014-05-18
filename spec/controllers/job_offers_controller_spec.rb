@@ -11,13 +11,11 @@ describe JobOffersController do
   let(:responsible_user) { FactoryGirl.create(:staff, employer: employer) }
   let(:closed) {FactoryGirl.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
-  #let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   # "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "responsible_user_id" => responsible_user.id } }
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id }}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id}}
   
 
   let(:valid_session) { {} }
@@ -558,7 +556,6 @@ describe JobOffersController do
 
       post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
 
-      assert_equal(old_offer.vacant_posts+1, @job_offer.reload.vacant_posts)
       assert_equal(0, @job_offer.reload.assigned_students.count)
       assert_equal(@job_offer.reload.status, JobStatus.active)
     end

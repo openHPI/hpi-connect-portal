@@ -48,8 +48,7 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :languages
 
   validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
-  validates :compensation, :time_effort, :vacant_posts, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :vacant_posts, :numericality => { greater_than_or_equal_to: 1 }, on: :create
+  validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
@@ -79,7 +78,6 @@ class JobOffer < ActiveRecord::Base
 
   def default_values
     self.status ||= JobStatus.pending
-    self.vacant_posts ||= 1
   end
 
   def can_be_created
@@ -107,15 +105,6 @@ class JobOffer < ActiveRecord::Base
   end
 
   def check_remaining_applications
-    if vacant_posts == 0
-      if update({ status: JobStatus.active })
-        applications.each do | application |
-          application.decline
-        end
-      else
-        return false
-      end
-    end
     return true
   end
 
@@ -132,12 +121,11 @@ class JobOffer < ActiveRecord::Base
   def fire(student)
     assigned_students.delete student
     save!
-    update!({vacant_posts: vacant_posts + 1, status: JobStatus.active})
   end
 
   def accept_application(application)
     new_assigned_students = assigned_students << application.student
-    if update({ assigned_students: new_assigned_students, vacant_posts: vacant_posts - 1 })
+    if update({ assigned_students: new_assigned_students })
       application.delete
       update!({ start_date: Date.current }) if flexible_start_date
       ApplicationsMailer.application_accepted_student_email(application).deliver

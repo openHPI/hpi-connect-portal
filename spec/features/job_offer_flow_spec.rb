@@ -42,7 +42,6 @@ describe "the job offer flow" do
     fill_in "job_offer_room_number", with: "A-1.2"
     fill_in "job_offer_end_date", with: (Date.current + 2).to_s
     fill_in "job_offer_time_effort", with: "12"
-    fill_in "job_offer_vacant_posts", with: "1"
     fill_in "job_offer_compensation", with: "11"
 
     JobOffer.delete_all
@@ -217,8 +216,6 @@ describe "the job offer flow" do
     should have_content mark_if_required(job_offer, :room_number)
     should have_content mark_if_required(job_offer, :time_effort)
     should have_content mark_if_required(job_offer, :compensation)
-
-    fill_in "job_offer_vacant_posts", with: "1"
 
     click_button I18n.t("links.save")
 
