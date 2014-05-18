@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)
 
-Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>,
+Hallo <%=@job_offer.staff.firstname%> <%=@job_offer.staff.lastname%>,
 
 Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
 
@@ -11,7 +11,7 @@ Das HPI-HiWi-Portal Team.
 
 -------------------------------------------------------------
 
-Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>
+Dear <%=@job_offer.staff.firstname%> <%=@job_offer.staff.lastname%>
 
 unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
 

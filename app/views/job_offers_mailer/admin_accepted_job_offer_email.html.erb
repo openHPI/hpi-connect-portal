@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)<br>
 <br>
-Hallo <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>,<br>
+Hallo <%=@job_offer.staff.firstname%> <%=@job_offer.staff.lastname%>,<br>
 <br>
 dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde bestätigt. Studenten können sich jetzt für dein Angebot bewerben.<br>
 <br>
@@ -10,7 +10,7 @@ Das HPI-HiWi-Portal Team.<br>
 (Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
 <hr>
 <br>
-Dear <%=@job_offer.responsible_user.firstname%> <%=@job_offer.responsible_user.lastname%>,<br>
+Dear <%=@job_offer.staff.firstname%> <%=@job_offer.staff.lastname%>,<br>
 <br>
 your job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been accepted. Students can now apply for this job.<br>
 <br>

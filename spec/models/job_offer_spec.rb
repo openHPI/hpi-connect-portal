@@ -31,7 +31,6 @@ describe JobOffer do
       @epic = FactoryGirl.create(:employer, name: "EPIC")
       @os = FactoryGirl.create(:employer, name: "OS and Middleware")
       @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
-      @responsible_user = FactoryGirl.create(:staff)
   end
 
   describe 'applying' do
@@ -54,7 +53,7 @@ describe JobOffer do
 
   it "does create a joboffer if all required attributes are set and valid" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
+      start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if the start_date is in the past" do
@@ -69,7 +68,7 @@ describe JobOffer do
 
   it "does create a joboffer if end_date is after start_date" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user).valid?
+      start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if compensation is not a number" do

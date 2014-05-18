@@ -11,9 +11,9 @@ describe "the job-offers page" do
     @active = FactoryGirl.create(:job_status, name:"active")
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
-    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, responsible_user: @staff, status: @active)
-    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, responsible_user: @staff, status: @active)
-    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, responsible_user: @staff, status: @active)
+    @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
+    @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, status: @active)
+    @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, status: @active)
   end
 
   it "should include all jobs currently available" do
@@ -59,7 +59,6 @@ describe "a job offer entry" do
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      responsible_user: @staff,
       status: FactoryGirl.create(:job_status, :active)
     )
 
@@ -89,7 +88,6 @@ describe "job_offers_history" do
       title: "Closed Job Touch Floor",
       status: @status,
       employer: @employer,
-      responsible_user: @staff
       )
   end
 

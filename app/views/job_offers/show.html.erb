@@ -113,8 +113,8 @@
             <% unless @job_offer.compensation.nil? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
             <% end %>
-            <% unless @job_offer.responsible_user.blank? %>
-              <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), content: (link_to @job_offer.responsible_user.full_name, @job_offer.responsible_user) %>
+            <% unless @job_offer.staff.blank? %>
+              <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), content: (link_to @job_offer.staff.full_name, @job_offer.staff) %>
             <% end %>
           </ul>
         </div>

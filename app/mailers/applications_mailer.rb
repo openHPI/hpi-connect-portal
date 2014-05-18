@@ -35,6 +35,6 @@ class ApplicationsMailer < ActionMailer::Base
     def send_mail_for_application_to_wimi(application, message, subject)
       @application = application
       @message = message
-      mail(to: @application.job_offer.responsible_user.email, subject: subject)
+      mail(to: @application.job_offer.staff.email, subject: subject)
     end
 end

@@ -9,8 +9,8 @@ describe JobOffersMailer do
     ActionMailer::Base.perform_deliveries = true
     @staff = FactoryGirl.create(:staff)
     @staff2 = FactoryGirl.create(:staff)
-    @job_offer = FactoryGirl.create(:job_offer, responsible_user: @staff, assigned_students: [FactoryGirl.create(:student)])
-    @job_offer2 = FactoryGirl.create(:job_offer, responsible_user: @staff2, assigned_students: [FactoryGirl.create(:student)])
+    @job_offer = FactoryGirl.create(:job_offer, assigned_students: [FactoryGirl.create(:student)])
+    @job_offer2 = FactoryGirl.create(:job_offer, assigned_students: [FactoryGirl.create(:student)])
     @staff2.update(employer: @job_offer2.employer)
     @job_offers = [@job_offer, @job_offer2]
     ActionMailer::Base.deliveries = []
@@ -70,7 +70,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.responsible_user.email])
+      @email.to.should eq([@job_offer.staff.email])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do
@@ -92,7 +92,7 @@ describe JobOffersMailer do
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.responsible_user.email])
+      @email.to.should eq([@job_offer.staff.email])
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do

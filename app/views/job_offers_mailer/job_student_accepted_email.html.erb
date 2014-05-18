@@ -8,7 +8,6 @@ Bitte hinterlegen Sie folgende Informationen im System:<br>
   <li><%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%></li>
   <li><%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %></li>
   <li><%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%></li>
-  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
   <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
   <li><%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %></li>
   <li><%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %></li>
@@ -29,7 +28,6 @@ Please use the following information to update your system:<br>
   <li><%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%></li>
   <li><%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %>
   <li><%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%></li>
-  <li><%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %></li>
   <li><%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %></li>
   <li><%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %></li>
   <li><%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %></li>

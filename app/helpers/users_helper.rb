@@ -4,10 +4,6 @@ module UsersHelper
     signed_in? && current_user.staff? && current_user.manifestation.employer == job_offer.employer
   end
 
-  def user_is_responsible_user?(job_offer)
-    signed_in? && current_user.staff? && current_user.manifestation == job_offer.responsible_user
-  end
-
   def update_and_remove_for_language(params, student_id, language_class, language_id_attribute)
     if params
       params.each do |id, skill|

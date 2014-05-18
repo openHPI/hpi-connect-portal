@@ -41,7 +41,6 @@ class JobOffersController < ApplicationController
 
   def new
     @job_offer = JobOffer.new
-    @job_offer.responsible_user = current_user.manifestation
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
@@ -126,7 +125,6 @@ class JobOffersController < ApplicationController
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.closed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
-      @job_offer.responsible_user = current_user.manifestation
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer
@@ -159,7 +157,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
