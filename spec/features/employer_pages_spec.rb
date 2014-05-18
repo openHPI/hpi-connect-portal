@@ -62,15 +62,16 @@ describe "GET show" do
 
     it "not by students" do
       login FactoryGirl.create(:student).user
-      get :show, {id: @employer.id}
-      response.should redirect_to(root_path)
+      visit employer_path(@employer)
+      current_path.should eq root_path
+      should have_content "You are not authorized to access this page."
     end
 
     it "not by staff members" do
       login FactoryGirl.create(:staff)
       visit employer_path(@employer)
       current_path.should eq root_path
-      assert_equal(flash, 'You are not authorized to access this page.')
+      should have_content "You are not authorized to access this page."
     end
 
     it "can also be activated if a new package was booked" do

@@ -553,9 +553,7 @@ describe JobOffersController do
     it "fires the student" do
 
       old_offer = @job_offer
-
       post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
-
       assert_equal(0, @job_offer.reload.assigned_students.count)
       assert_equal(@job_offer.reload.status, JobStatus.active)
     end
