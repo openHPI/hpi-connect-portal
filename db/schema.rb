@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20140518230410) do
     t.float    "compensation"
     t.string   "room_number"
     t.integer  "employer_id"
+    t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
@@ -184,6 +185,8 @@ ActiveRecord::Schema.define(version: 20140518230410) do
 
   create_table "students", force: true do |t|
     t.integer  "semester"
+    t.string   "academic_program"
+    t.text     "education"
     t.text     "additional_information"
     t.date     "birthday"
     t.string   "homepage"
