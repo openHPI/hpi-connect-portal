@@ -76,11 +76,6 @@ describe JobOffer do
       start_date: Date.current + 1, compensation: "i gonna be rich", time_effort: 9).valid?
   end
 
-  it "does not create a joboffer without a responsible user" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
-  end
-
   it "returns job offers sorted by created_at" do
 
     FactoryGirl.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, employer: @epic)

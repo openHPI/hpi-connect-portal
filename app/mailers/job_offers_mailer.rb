@@ -15,12 +15,16 @@ class JobOffersMailer < ActionMailer::Base
 
   def admin_accepted_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail to: @job_offer.first_staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
+    @job_offer.employer.staff_members.each { |staff| 
+      @staff_name = staff
+      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)).deliver }
   end
 
   def admin_declined_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail to: @job_offer.first_staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)
+    @job_offer.employer.staff_members.each { |staff| 
+      @staff_name = staff
+      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_declined.subject", job_title: @job_offer.title)).deliver }
   end
 
   def job_closed_email(job_offer)

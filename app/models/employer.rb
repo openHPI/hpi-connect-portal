@@ -45,10 +45,6 @@ class Employer < ActiveRecord::Base
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
 
-  def first_staff
-    Staff.where(:employer_id => employer_id).first
-  end
-
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
   end

@@ -9,6 +9,7 @@ describe "the job offer flow" do
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:staff) { FactoryGirl.create(:staff, employer: employer) }
+  let(:staff2) { FactoryGirl.create(:staff, employer: employer) }
   let(:admin) { FactoryGirl.create(:user, :admin)}
   let(:first_applicant) { FactoryGirl.create(:student) }
   let(:second_applicant) { FactoryGirl.create(:student) }
@@ -87,8 +88,8 @@ describe "the job offer flow" do
     should_not have_selector(".alert alert-danger")
     assert job_offer.active?
 
-    # responsible staff member gets notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == 1
+    # staff members get notified that the job offer got accepted
+    ActionMailer::Base.deliveries.count.should == 3
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [creating_staff.email])
     ActionMailer::Base.deliveries = []
@@ -106,7 +107,8 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    ActionMailer::Base.deliveries.count.should == 1
+    # who gets this email?
+    ActionMailer::Base.deliveries.count.should == 3
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [creating_staff.email])
     email.should have_content message
@@ -138,7 +140,8 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    ActionMailer::Base.deliveries.count.should == 1
+    # all 3 staff members get an email
+    ActionMailer::Base.deliveries.count.should == 3
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [creating_staff.email])
     email.should have_content message
@@ -152,7 +155,7 @@ describe "the job offer flow" do
     assert Application.where(job_offer: job_offer).load.count == 2
     should_not have_button I18n.t("job_offers.apply")
 
-    # responsible user accepts first application
+    # staff accepts first application
     login creating_staff.user
     visit job_offer_path(job_offer)
 
@@ -175,7 +178,7 @@ describe "the job offer flow" do
     assert_equal(email.to, [Configurable.mailToAdministration])
     ActionMailer::Base.deliveries = []
 
-    # responsible user prolongs the job offer
+    # staff prolongs the job offer
     fill_in "job_offer_end_date", with: (Date.current + 3).to_s
     click_button I18n.t("job_offers.prolong")
 

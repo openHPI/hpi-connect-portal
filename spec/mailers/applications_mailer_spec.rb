@@ -72,7 +72,7 @@ describe ApplicationsMailer do
 			})
 
 		  	@message = "Testmessage"
-		  	@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }).deliver
+		  	@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }, @staff).deliver
 
 			html = get_message_part(@email, /html/)
 			@html_body = html.body.raw_source
@@ -82,7 +82,8 @@ describe ApplicationsMailer do
 		end
 
 		it "should have be send to the responsible wimi" do
-			@email.to.should eq([@job_offer.staff.email])
+			@job_offer.employer.staff_members.each { |staff|      		
+			@email.to.should eq([staff.email]) }
 		end
 
 		it "should be send from 'hpi.hiwi.portal@gmail.com'" do

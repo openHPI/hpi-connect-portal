@@ -19,7 +19,7 @@ describe ApplicationsController do
     describe "having sufficient permissions" do
 
       before(:each) do
-        login @job_offer.staff.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "deletes application" do
@@ -62,7 +62,7 @@ describe ApplicationsController do
 
     describe "having sufficient permissions" do
       before(:each) do
-        login @job_offer.staff.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "accepts a student and he/her is included in @job_offer.assigned_students" do

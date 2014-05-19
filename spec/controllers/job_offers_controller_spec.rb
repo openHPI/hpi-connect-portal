@@ -129,12 +129,6 @@ describe JobOffersController do
       get :edit, {id: @job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(@job_offer)
     end
-
-    it "only allows the responsible user to edit" do
-      login FactoryGirl.create(:staff).user
-      get :edit, {id: @job_offer.to_param}, valid_session
-      response.should redirect_to(@job_offer)
-    end
   end
 
   describe "GET find" do
@@ -220,7 +214,7 @@ describe JobOffersController do
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
-      login @job_offer.staff.user
+      login @job_offer.employer.staff_members[0].user
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end
@@ -465,7 +459,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      login @job_offer.staff.user
+      login @job_offer.employer.staff_members[0].user
     end
 
     describe "with valid params" do
@@ -517,7 +511,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      login @job_offer.staff.user
+      login @job_offer.employer.staff[0].user
     end
 
     it "destroys the requested job_offer" do
@@ -533,7 +527,7 @@ describe JobOffersController do
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
       @job_offer.update!(status: FactoryGirl.create(:job_status, :active))
-      login @job_offer.staff.user
+      login @job_offer.employer.staff[0].user
 
       expect {
         delete :destroy, {id: @job_offer.to_param}, valid_session
@@ -547,7 +541,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
       @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
-      login @job_offer.staff.user
+      login @job_offer.employer.staff[0].user
     end
 
     it "fires the student" do
