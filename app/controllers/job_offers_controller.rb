@@ -104,7 +104,7 @@ class JobOffersController < ApplicationController
 
   def accept
     if @job_offer.update status: JobStatus.active
-      JobOffersMailer.admin_accepted_job_offer_email(@job_offer).deliver
+      JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
       JobOffersMailer.inform_interested_students_immediately(@job_offer)
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
     else
@@ -114,7 +114,7 @@ class JobOffersController < ApplicationController
 
   def decline
     if @job_offer.destroy
-      JobOffersMailer.admin_declined_job_offer_email(@job_offer).deliver
+      JobOffersMailer.admin_declined_job_offer_email(@job_offer)
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer

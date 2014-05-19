@@ -77,8 +77,8 @@ describe "Job Offer pages" do
 
           it { should have_selector('td[href="' + student_path(@application.student) + '"]') }
 
-          it { should_not have_link('Accept') }
-          it { should_not have_link('Decline') }
+          it { should have_link('Accept') }
+          it { should have_link('Decline') }
 
           describe "as a responsible user of the job" do
 
@@ -184,7 +184,7 @@ describe "Job Offer pages" do
 
         before do
           job_offer.assigned_students = [student]
-          login job_offer.staff.user
+          login job_offer.employer.staff_members[0].user
           visit edit_job_offer_path(job_offer)
         end
 

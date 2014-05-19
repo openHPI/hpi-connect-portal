@@ -65,8 +65,8 @@ describe JobOffersMailer do
       @email = JobOffersMailer.admin_accepted_job_offer_email(@job_offer).deliver
     end
 
-    it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+    it "should send an email to both staffs" do
+      ActionMailer::Base.deliveries.count.should == 2
     end
 
     it "should have be send to the responsible WiMi" do
@@ -87,8 +87,8 @@ describe JobOffersMailer do
       @email = JobOffersMailer.admin_declined_job_offer_email(@job_offer).deliver
     end
 
-    it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+    it "should send an email to both staffs" do
+      ActionMailer::Base.deliveries.count.should == 2
     end
 
     it "should have be send to the responsible WiMi" do

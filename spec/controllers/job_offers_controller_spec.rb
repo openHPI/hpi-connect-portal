@@ -511,7 +511,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      login @job_offer.employer.staff[0].user
+      login @job_offer.employer.staff_members[0].user
     end
 
     it "destroys the requested job_offer" do
@@ -527,7 +527,7 @@ describe JobOffersController do
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
       @job_offer.update!(status: FactoryGirl.create(:job_status, :active))
-      login @job_offer.employer.staff[0].user
+      login @job_offer.employer.staff_members[0].user
 
       expect {
         delete :destroy, {id: @job_offer.to_param}, valid_session
@@ -541,7 +541,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
       @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
-      login @job_offer.employer.staff[0].user
+      login @job_offer.employer.staff_members[0].user
     end
 
     it "fires the student" do

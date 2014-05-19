@@ -72,7 +72,7 @@ describe ApplicationsMailer do
 			})
 
 		  	@message = "Testmessage"
-		  	@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] }, @staff).deliver
+		  	@email = ApplicationsMailer.new_application_notification_email(@application, @message, false, {:file_attributes => [:file => @test_file] })
 
 			html = get_message_part(@email, /html/)
 			@html_body = html.body.raw_source

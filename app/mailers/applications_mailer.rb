@@ -37,6 +37,7 @@ class ApplicationsMailer < ActionMailer::Base
       @message = message      
       @application.job_offer.employer.staff_members.each { |staff| 
         @staff_name = staff;
-        mail(to: staff.email, subject: subject).deliver }
+        mail(to: staff.email, subject: subject).deliver
+        p @application.job_offer.employer.staff_members.length}
     end
 end

@@ -8,7 +8,6 @@ describe "the job offer flow" do
 
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:staff2) { FactoryGirl.create(:staff, employer: employer) }
   let(:admin) { FactoryGirl.create(:user, :admin)}
   let(:first_applicant) { FactoryGirl.create(:student) }
@@ -63,6 +62,8 @@ describe "the job offer flow" do
     assert_equal(job_offer.time_effort, 12)
     assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
+    assert_equal(job_offer.employer, staff2.employer)
+    assert_equal(employer.staff_members.length, 3)
 
     # admin of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
@@ -107,7 +108,8 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    # who gets this email?
+    # all 3 staff members get an email
+    p employer.staff_members.length
     ActionMailer::Base.deliveries.count.should == 3
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [creating_staff.email])
