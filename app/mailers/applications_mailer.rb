@@ -9,11 +9,11 @@ class ApplicationsMailer < ActionMailer::Base
     send_mail_for_application_to_user(application, (t "applications_mailer.students.declined.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
   end
   
-  def new_application_notification_email(application, message = t("applications_mailer.wimi.new_application.content"), add_cv = nil, attached_files = nil)
+  def new_application_notification_email(application, message = t("applications_mailer.wimi.new_application.content"), add_cv = false, attached_files = nil)
     student = application.student
     cv = student.user.cv
 
-    if !cv.path.nil? and !add_cv.nil?
+    if !cv.path.nil? and add_cv
       attachments[student.user.cv_file_name] = File.read cv.path
     end
     
