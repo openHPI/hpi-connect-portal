@@ -21,6 +21,8 @@
 #  state_id            :integer          default(3), not null
 #  graduation_id       :integer          default(2), not null
 #  academic_program_id :integer
+#  prolonged           :boolean          default(FALSE)
+#  prolonged_at        :datetime
 #
 
 class JobOffer < ActiveRecord::Base
@@ -119,14 +121,15 @@ class JobOffer < ActiveRecord::Base
     return true
   end
 
-  def prolong(date)
-    if active? && end_date < date
-      update_column :end_date, date
-      JobOffersMailer.job_prolonged_email(self).deliver
-      return true
-    else
-      return false
-    end
+  def prolong
+    prolonged_at = Time.now
+    prolonged = true
+    save!
+    # send email to users
+  end
+
+  def immediately_prolongable
+    category_id < 2 && not prolonged
   end
 
   def fire(student)

@@ -10,7 +10,7 @@ class JobOffersController < ApplicationController
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :fire]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_employer, only: [:index, :archive], as: :employer
@@ -79,13 +79,17 @@ class JobOffersController < ApplicationController
     @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
-  def prolong
-    if @job_offer.prolong @date
-      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_prolonged')
+  def request_prolong
+    if @job_offer.immediately_prolongable
+      @job_offer.prolong
     else
-      flash[:error] = I18n.t('job_offers.messages.prolonging_failed')
-      render_errors_and_action @job_offer
+      # send email to admins
     end
+  end
+
+  def prolong
+    @job_offer.prolong
+    respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_prolonged')
   end
 
   def matching
