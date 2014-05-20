@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20140520172346) do
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
     t.integer  "academic_program_id"
+    t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
   end

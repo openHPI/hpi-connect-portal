@@ -8,7 +8,6 @@ class JobOffersController < ApplicationController
 
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
-  before_filter :check_new_end_date_is_valid, only: [:prolong]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
@@ -83,6 +82,7 @@ class JobOffersController < ApplicationController
     if @job_offer.immediately_prolongable
       @job_offer.prolong
     else
+      @job_offer.update_column :prolong_requested, true
       # send email to admins
     end
   end
@@ -181,11 +181,5 @@ class JobOffersController < ApplicationController
       unless @job_offer.editable?
         redirect_to @job_offer
       end
-    end
-
-    def check_new_end_date_is_valid
-      @date = Date.parse params[:job_offer][:end_date]
-    rescue ArgumentError
-      respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.choose_valid_end_date')
     end
 end
