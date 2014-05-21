@@ -1,5 +1,5 @@
 <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(job_offer) && job_offer.active? %>
-  <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal fade" id="applicationEmailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -16,7 +16,8 @@
               <%= label_tag :add_cv, t("job_offers.add_cv_application") %>
               <small style="margin-left:10px;"><%= File.basename(current_user.cv.path) %></small>
             <% end %>
-            <%= file_field_tag 'attached_files', multiple: true, name: "attached_files[file_attributes][][file]" %>
+            <%= label_tag :cv,t("job_offers.upload_cv_application"),class: "col-md-2 "%>
+            <%= file_field_tag 'attached_files', multiple: true, name: "attached_files[file_attributes][][file]", class: "col-md-10 "  %>
           </div>
           <div class="modal-footer">
             <span class="btn btn-default", data-dismiss="modal"><%= t("links.cancel") %></span>
