@@ -9,12 +9,12 @@ class ApplicationsController < ApplicationController
     authorize! :create, Application
     if @job_offer.active?
       if Application.create_and_notify @job_offer, current_user.manifestation, params
-        flash[:success] = 'Applied Successfully!'
+        flash[:success] = t("applications.applied_successfully")
       else
-        flash[:error] = 'An error occured while applying. Please try again later.'
+        flash[:error] = t("applications.error")
       end
     else
-      flash[:error] = 'This job offer is currently not open.'
+      flash[:error] = t("applications.error_not_found")
     end
     redirect_to @job_offer
   end
@@ -22,7 +22,7 @@ class ApplicationsController < ApplicationController
   def destroy
     @application = Application.find params[:id]
     if @application.destroy
-      respond_and_redirect_to @application.job_offer, 'Application has been successfully deleted.'
+      respond_and_redirect_to @application.job_offer, t("applications.deleted_successfully")
     else
       render_errors_and_action @application.job_offer
     end
@@ -35,7 +35,7 @@ class ApplicationsController < ApplicationController
     authorize! :accept, @application
 
     if @job_offer.accept_application(@application) && @job_offer.check_remaining_applications
-      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
+      respond_and_redirect_to @job_offer, t("applications.accepted_successfully")
     else
       render_errors_and_action @job_offer
     end
@@ -46,7 +46,7 @@ class ApplicationsController < ApplicationController
     authorize! :decline, @application
 
     if @application.decline
-      redirect_to @application.job_offer
+      respond_and_redirect_to @application.job_offer, t("applications.declined_successfully")
     else
       render_errors_and_action @application.job_offer
     end
@@ -75,7 +75,7 @@ class ApplicationsController < ApplicationController
         file = file_params[:file_attributes][0][:file]
         unless file.content_type == "application/pdf"
           job_offer = JobOffer.find application_params[:job_offer_id]
-          flash[:error] = 'Please choose a valid attachment (PDF only).'
+          flash[:error] = t("applications.choose_pdf")
           respond_and_redirect_to job_offer
         end
       end
