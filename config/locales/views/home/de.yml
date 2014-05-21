@@ -3,6 +3,9 @@ de:
     index:
         latest_job_offers: "Die %{number_of_job_offers} neuesten Stellenangebote"
         latest_employers: "Die %{number_of_employers} neuesten Arbeitgeber"
+        sign_in: "Anmelden"
+        register_user: "Als Student registrieren"
+        register_company: "Als Unternehmen registrieren"
     imprint:
         headline: "Impressum"
         tel: "Telefon"
