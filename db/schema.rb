@@ -185,6 +185,8 @@ ActiveRecord::Schema.define(version: 20140422071648) do
 
   create_table "students", force: true do |t|
     t.integer  "semester"
+    t.string   "academic_program"
+    t.text     "education"
     t.text     "additional_information"
     t.date     "birthday"
     t.string   "homepage"
@@ -198,6 +200,7 @@ ActiveRecord::Schema.define(version: 20140422071648) do
     t.integer  "frequency",              default: 1, null: false
     t.integer  "academic_program_id",    default: 0, null: false
     t.integer  "graduation_id",          default: 0, null: false
+    t.integer  "visibility_id",          default: 0, null: false
   end
 
   create_table "users", force: true do |t|

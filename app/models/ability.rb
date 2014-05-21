@@ -26,12 +26,17 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :show, :activate, :request_linkedin_import, :insert_imported_data], Student, id: user.manifestation.id
+    can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data], Student, id: user.manifestation.id
+    can [:show], Student do |student|
+      student.id == user.manifestation.id || student.visibility == 2
+    end
     cannot :show, JobOffer, status: JobStatus.completed
 
     if user.activated
       can :create, Application
-      can :show, Student, activated: true
+      can [:show, :index], Student do |student|
+        student.activated? && (student.visibility == 2 || student.id == user.manifestation.id)
+      end      
       can :matching, JobOffer
     end
   end
@@ -49,7 +54,13 @@ class Ability
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
-      can :show, Student, activated: true
+      can [:show, :index], Student do |student|
+        student.activated? && student.visibility_id > 0
+      end
+
+       can [:show, :index], Student do |student|
+        student.activated? && student.visibility_id > 0
+
       cannot [:edit, :update], Student
 
       can [:create, :show], JobOffer
