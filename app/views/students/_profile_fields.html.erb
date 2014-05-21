@@ -19,6 +19,16 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
+                <%= form.label :visibility, t("activerecord.attributes.user.visibility"), class: "control-label" %><%= mark_if_required(student, :visibility) %>
+              </div>
+              <div class="col-sm-9">
+                <%= form.select :visibility_id, Student::VISIBILITYS.collect {|visibility| [ t("activerecord.attributes.user.visibility_options." +  visibility), Student::VISIBILITYS.index(visibility) ] }, {}, {id: 'visibility_id', class: 'select optional form-control'} %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
                 <%= form.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(student, :birthday) %>
               </div>
               <div class="col-sm-9">
