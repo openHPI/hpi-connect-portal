@@ -19,6 +19,7 @@ class StudentsController < ApplicationController
   end
 
   def show
+    authorize! :show, @student
     not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end

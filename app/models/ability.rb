@@ -28,14 +28,14 @@ class Ability
     can :read, Faq
     can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data], Student, id: user.manifestation.id
     can [:show], Student do |student|
-      student.id == user.manifestation.id || student.visibility == 2
+      (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
     cannot :show, JobOffer, status: JobStatus.completed
 
     if user.activated
       can :create, Application
       can [:show, :index], Student do |student|
-        student.activated? && (student.visibility == 2 || student.id == user.manifestation.id)
+        student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
       end      
       can :matching, JobOffer
     end
@@ -55,11 +55,8 @@ class Ability
       can :read, Application
       can :manage, Faq
       can [:show, :index], Student do |student|
-        student.activated? && student.visibility_id > 0
+        student.activated && student.visibility_id > 0
       end
-
-       can [:show, :index], Student do |student|
-        student.activated? && student.visibility_id > 0
 
       cannot [:edit, :update], Student
 
