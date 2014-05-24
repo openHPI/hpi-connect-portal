@@ -170,7 +170,7 @@ describe "the job offer flow" do
     should_not have_button I18n.t("job_offers.apply")
 
     # staff accepts first application
-    login creating_staff.user
+    login staff.user
     visit job_offer_path(job_offer)
 
     # he sees the entries for the applicants
@@ -181,7 +181,6 @@ describe "the job offer flow" do
 
     job_offer = job_offer.reload
     assert job_offer.active?
-    #assert Application.where(job_offer: job_offer).load.count == 0
     assert_equal(job_offer.assigned_students, [first_applicant])
 
     # accepted student and the HPI administration get notified
