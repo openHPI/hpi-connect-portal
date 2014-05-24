@@ -90,12 +90,12 @@ describe "the job offer flow" do
     assert job_offer.active?
 
     # staff members get notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == 3    
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length    
     emails = ActionMailer::Base.deliveries
-    #employer.staff_members.each { |staff| p staff.email + " admin accepted"}
-    #emails.each { |email| p email.to}
-    #assert_equal((emails[0].to == [creating_staff.email] || emails[1].to == [creating_staff.email] || emails[2].to == creating_staff.email), true)
-    assert_equal(emails[0].to, [creating_staff.email])
+    # each staff member gets notified
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }
     ActionMailer::Base.deliveries = []
 
     # student A applies for the job
@@ -111,20 +111,21 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    # all 3 staff members get an email
-    ActionMailer::Base.deliveries.count.should == 3
+    # all staff members get an email
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
     emails = ActionMailer::Base.deliveries
-    #employer.staff_members.each { |staff| p staff.email + " student applied"}
-    e#mails.each { |email| p email.to}
-
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
-    email.should have_content message
-    email.attachments.should have(1).attachment
-    attachment = email.attachments[0]
-    attachment.should be_a_kind_of(Mail::Part)
-    attachment.content_type.should be_start_with('application/pdf;')
-    attachment.filename.should == 'test_cv.pdf'
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }   
+     # each email has the desired content
+    emails.each { |email|
+        email.should have_content message
+        email.attachments.should have(1).attachment
+        attachment = email.attachments[0]
+        attachment.should be_a_kind_of(Mail::Part)
+        attachment.content_type.should be_start_with('application/pdf;')
+        attachment.filename.should == 'test_cv.pdf'
+    }
     ActionMailer::Base.deliveries = []
 
     assert Application.where(job_offer: job_offer).load.count == 1
@@ -148,16 +149,21 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    # all 3 staff members get an email
-    ActionMailer::Base.deliveries.count.should == 3
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
-    email.should have_content message
-    email.attachments.should have(1).attachment
-    attachment = email.attachments[0]
-    attachment.should be_a_kind_of(Mail::Part)
-    attachment.content_type.should be_start_with('application/pdf;')
-    attachment.filename.should == 'test_cv.pdf'
+    # all staff members get an email
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
+    emails = ActionMailer::Base.deliveries
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }
+    # each email has the desired content
+    emails.each { |email|
+        email.should have_content message
+        email.attachments.should have(1).attachment
+        attachment = email.attachments[0]
+        attachment.should be_a_kind_of(Mail::Part)
+        attachment.content_type.should be_start_with('application/pdf;')
+        attachment.filename.should == 'test_cv.pdf'
+    }    
     ActionMailer::Base.deliveries = []
 
     assert Application.where(job_offer: job_offer).load.count == 2
