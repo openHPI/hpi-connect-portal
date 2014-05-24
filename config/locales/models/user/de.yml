@@ -34,7 +34,6 @@ de:
             alumnus: "Alumnus"
         degrees:
             abitur: "Abitur"
-            secondary_education: "Realschulabschluss"
             bachelor: "Bachelor"
             master: "Master"
             phd: "Ph.D."

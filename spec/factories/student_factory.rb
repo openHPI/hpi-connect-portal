@@ -26,7 +26,7 @@ FactoryGirl.define do
     semester          1
     academic_program_id  Student::ACADEMIC_PROGRAMS.index("bachelor")
     birthday          '1970-12-10'
-    graduation_id         Student::GRADUATIONS.index("secondary_education")
+    graduation_id         Student::GRADUATIONS.index("abitur")
 
 
 
