@@ -47,7 +47,7 @@ describe "the employer page" do
       current_path != edit_employer_path(employer)
     end
   end
-describe "GET show" do
+
   describe "can be activated" do
 
     before :each do 
@@ -82,7 +82,7 @@ describe "GET show" do
       should have_link 'Activate'
     end
   end
-end
+
 
   describe "creating a new employer" do
 
