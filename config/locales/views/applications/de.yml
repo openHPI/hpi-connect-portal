@@ -1,8 +1,15 @@
 de:
   applications:
+    applied_successfully: "Bewerbung erfolgreich verschickt!"
+    error: "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal."
+    error_not_open: "Dieses Job Angebot ist zurzeit noch nicht freigegeben."
+    deleted_successfully: "Die Bewerbung wurde erfolgreich zurückgenommen."
+    accepted_successfully: "Die Bewerbung wurde akzeptiert."
     decline: "Ablehnen"
+    declined_successfully: "Die Bewerbung wurde abgelehnt."
     decline_confirmation: "Sind Sie sicher, dass Sie die Bewerbung ablehnen wollen?"
     accept: "Akzeptieren"
     accept_confirmation: "Sind Sie sicher, dass Sie die Bewerbung annehmen wollen?"
     delete: "Bewerbung zurückziehen"
     delete_confirmation: "Sind Sie sicher, dass Sie die Bewerbung zurückziehen wollen?"
+    choose_pdf: "Bitte wählen Sie eine PDF-Datei aus."

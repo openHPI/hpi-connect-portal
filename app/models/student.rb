@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
       :access_token_path => '/uas/oauth/accessToken' }
 
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']     
+  GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']     
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username

@@ -3,6 +3,9 @@ en:
     index:
         latest_job_offers: "The %{number_of_job_offers} latest Job Offers"
         latest_employers: "The %{number_of_employers} latest Employers"
+        sign_in: "Sign in"
+        register_user: "Register User"
+        register_company: "Register Company"
     imprint:
         headline: "Impressum"
         tel: "Telefon"

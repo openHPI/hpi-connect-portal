@@ -49,18 +49,18 @@
 <div class="wrapper-4 teaser sidebar">
   <% unless signed_in? %>
     <div class="col-md-4">
-      <h1> Login Page </h1>
+      <h1> Login </h1>
 
       <%= simple_form_for :session, url: sessions_path do |f| %>
           <%= f.input :email, id: "email", style: "height: auto; !important" %>
           <%= f.input :password, id: "password", style: "height: auto; !important" %>
 
           <br />
-          <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+          <%= f.submit t("home.index.sign_in"), class: "btn btn-large btn-primary" %>
       <% end %>
 
       <br />
-      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
+      <%= link_to t("home.index.register_user"), new_student_path %> | <%= link_to t("home.index.register_company"), new_employer_path %>
     </div>
   <% end %>
 
