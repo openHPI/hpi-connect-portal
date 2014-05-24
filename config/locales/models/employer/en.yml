@@ -4,8 +4,8 @@ en:
       employer:
         description: "Description"
         head: "Head"
-        name: "Name"
-        avatar: "Profile Picture"
+        name: "Company"
+        avatar: "Logo"
         packages:
             free: "Free"
             partner: "Basis Packet"
