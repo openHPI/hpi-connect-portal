@@ -8,7 +8,7 @@ describe "the job offer flow" do
 
   let(:employer) { FactoryGirl.create(:employer) }
   let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:staff2) { FactoryGirl.create(:staff, employer: employer) }
+  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:admin) { FactoryGirl.create(:user, :admin)}
   let(:first_applicant) { FactoryGirl.create(:student) }
   let(:second_applicant) { FactoryGirl.create(:student) }
@@ -62,7 +62,7 @@ describe "the job offer flow" do
     assert_equal(job_offer.time_effort, 12)
     assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
-    assert_equal(job_offer.employer, staff2.employer)
+    assert_equal(job_offer.employer, staff.employer)
     assert_equal(employer.staff_members.length, 3)
 
     # admin of the employers get acceptance pending email
@@ -90,9 +90,12 @@ describe "the job offer flow" do
     assert job_offer.active?
 
     # staff members get notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == 3
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
+    ActionMailer::Base.deliveries.count.should == 3    
+    emails = ActionMailer::Base.deliveries
+    #employer.staff_members.each { |staff| p staff.email + " admin accepted"}
+    #emails.each { |email| p email.to}
+    #assert_equal((emails[0].to == [creating_staff.email] || emails[1].to == [creating_staff.email] || emails[2].to == creating_staff.email), true)
+    assert_equal(emails[0].to, [creating_staff.email])
     ActionMailer::Base.deliveries = []
 
     # student A applies for the job
@@ -109,8 +112,11 @@ describe "the job offer flow" do
     click_button I18n.t("job_offers.send_application")
 
     # all 3 staff members get an email
-    p employer.staff_members.length
     ActionMailer::Base.deliveries.count.should == 3
+    emails = ActionMailer::Base.deliveries
+    #employer.staff_members.each { |staff| p staff.email + " student applied"}
+    e#mails.each { |email| p email.to}
+
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [creating_staff.email])
     email.should have_content message

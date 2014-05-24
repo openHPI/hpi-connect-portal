@@ -73,9 +73,6 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
-  def first_staff
-    Staff.where(:employer_id => self.employer_id).first
-  end
 
   def default_values
     self.status ||= JobStatus.pending
