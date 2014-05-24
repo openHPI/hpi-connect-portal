@@ -181,6 +181,7 @@ describe "the job offer flow" do
 
     job_offer = job_offer.reload
     assert job_offer.active?
+    assert Application.where(job_offer: job_offer).load.count == 1
     assert_equal(job_offer.assigned_students, [first_applicant])
 
     # accepted student and the HPI administration get notified
