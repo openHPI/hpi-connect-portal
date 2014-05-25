@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)<br>
 <br>
-Hallo <%=@staff_name.firstname%> <%=@staff_name.lastname%>,<br>
+Hallo <%=@staff.full_name%>,<br>
 <br>
 Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an die Admins des Portals: <%= Configurable[:mailToAdministration] %> .<br>
 <br>
@@ -11,7 +11,7 @@ Das HPI-HiWi-Portal Team.<br>
 <br>
 <hr>
 <br>
-Dear <%=@staff_name.firstname%> <%=@staff_name.lastname%>,<br>
+Dear <%=@staff.full_name%>,<br>
 <br>
 unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact the admins <%= Configurable[:mailToAdministration] %>.<br>
 <br>
