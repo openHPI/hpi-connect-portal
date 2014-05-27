@@ -10,6 +10,8 @@ de:
       subject: "Jobangebot %{job_title} geschlossen"
     job_offer_prolonged:
       subject: "Jobangebot %{job_title} verlängert"
+    prolong_requested:
+      subject: "Verlängerung von Angebot %{job_title} angefordert"
     student_accepted:
       subject: "Jobangebot %{job_title} vergeben"
     new_job_offer_info:

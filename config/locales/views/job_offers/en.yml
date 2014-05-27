@@ -50,6 +50,7 @@ en:
     required_programming_languages: "Required Programming Languages"
     required_languages: "Required Languages"
     prolong: "Prolong"
+    prolong_requested: "Prolongation requested!"
     default_compensation: "Standard compensation"
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"

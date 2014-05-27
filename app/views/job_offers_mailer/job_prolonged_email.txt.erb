@@ -2,7 +2,7 @@
 
 Sehr geehrte Damen und Herren,
 
-der Job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde soeben verlängert. Das neue Enddatum ist: <%=@job_offer.end_date%>.
+der Job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde soeben verlängert. Das neue Ablaufdatum ist: <%= @job_offer.expiration_date %>.
 
 Grüße,
 Das HPI-HiWi-Portal Team.
@@ -13,7 +13,7 @@ Das HPI-HiWi-Portal Team.
 
 Dear Sir or Madam
 
-the job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been prolonged. The new end date is: <%=@job_offer.end_date%>.
+the job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been prolonged. The new expiration date is: <%= @job_offer.expiration_date %>.
 
 Regards,
 The HPI-HiWi-Portal Team.

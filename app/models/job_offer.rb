@@ -126,7 +126,7 @@ class JobOffer < ActiveRecord::Base
     update_column :prolonged_at, Date.current
     update_column :prolonged, true
     update_column :prolong_requested, false
-    JobOffersMailer.offer_prolonged_email(@job_offer).deliver
+    JobOffersMailer.job_prolonged_email(self).deliver
   end
 
   def immediately_prolongable

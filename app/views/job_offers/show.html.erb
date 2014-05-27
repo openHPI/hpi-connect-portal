@@ -16,9 +16,9 @@
         <%= link_to t("job_offers.prolong"), prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
       <% elsif can?(:request_prolong, @job_offer) %>
         <% if @job_offer.prolong_requested %>
-          <a class="btn btn-default" disabled="disabled">Prolongation requested!</a>
+          <a class="btn btn-default" disabled="disabled"><%= t("job_offers.prolong_requested") %></a>
         <% else %>
-          This job offer will expire <%= @job_offer.expiration_date %>
+          <%= t("activerecord.attributes.job_offer.expiration_date") %>: <%= @job_offer.expiration_date %>
           <%= link_to t("job_offers.prolong"), request_prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
         <% end %>
       <% end %>

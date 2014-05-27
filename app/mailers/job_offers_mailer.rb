@@ -35,7 +35,12 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
+    mail to: job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
+  end
+
+  def prolong_requested_email(job_offer)
+    @job_offer = job_offer
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.prolong_requested.subject", job_title: @job_offer.title)
   end
 
   def inform_interested_students_immediately(job_offer)
