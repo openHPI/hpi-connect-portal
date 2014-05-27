@@ -184,14 +184,31 @@ describe JobOffersController do
       login @staff.user
     end
 
-    it "should prolong the job" do
-      put :prolong, {id: @job_offer.id, job_offer: { end_date: Date.current + 100 } }
-      assigns(:job_offer).end_date.should eq(Date.current + 100)
+    it "should immediately prolong the job once" do
+      get :request_prolong, {id: @job_offer.id}
+      response.should redirect_to(@job_offer)
+      assigns(:job_offer).prolonged_at.should eq(Date.current)
+      assigns(:job_offer).prolong_requested.should eq(false)
+      get :request_prolong, {id: @job_offer.id}
+      assigns(:job_offer).prolong_requested.should eq(true)
     end
 
-    it "should handle invalid end_dates" do
-      put :prolong, {id: @job_offer.id, job_offer: { end_date: '20-40-2014' } }
+    it "should not be possible to request for the staff of another employer" do
+      login FactoryGirl.create(:staff).user
+      get :request_prolong, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end
+
+    it "should not be possible to prolong for a staff member" do
+      get :prolong, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end
+
+    it "should only be possible for an admin" do
+      login FactoryGirl.create(:user, :admin)
+      get :prolong, {id: @job_offer.id}
       response.should redirect_to(@job_offer)
+      assigns(:job_offer).prolonged_at.should eq(Date.current)
     end
   end
 

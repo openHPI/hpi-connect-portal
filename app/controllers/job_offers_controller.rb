@@ -81,10 +81,13 @@ class JobOffersController < ApplicationController
   def request_prolong
     if @job_offer.immediately_prolongable
       @job_offer.prolong
+      message = I18n.t('job_offers.messages.successfully_prolonged')
     else
       @job_offer.update_column :prolong_requested, true
-      # send email to admins
+      message = I18n.t('job_offers.messages.successfully_prolong_requested')
+      JobOffersMailer.prolong_requested_email(@job_offer).deliver
     end
+    respond_and_redirect_to @job_offer, message
   end
 
   def prolong

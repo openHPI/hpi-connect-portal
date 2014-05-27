@@ -123,15 +123,18 @@ class JobOffer < ActiveRecord::Base
   end
 
   def prolong
-    prolonged_at = Time.now
-    prolonged = true
-    prolong_requested = false
-    save!
-    # send email to users
+    update_column :prolonged_at, Date.current
+    update_column :prolonged, true
+    update_column :prolong_requested, false
+    JobOffersMailer.offer_prolonged_email(@job_offer).deliver
   end
 
   def immediately_prolongable
     category_id < 2 && !prolonged
+  end
+
+  def expiration_date
+    (prolonged_at || created_at).to_date + 4.weeks
   end
 
   def fire(student)

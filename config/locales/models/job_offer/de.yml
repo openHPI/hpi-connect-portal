@@ -8,6 +8,7 @@ de:
         category: "Jobart"
         start_date: "Einstelldatum"
         end_date: "Enddatum"
+        expiration_date: "Ende des Angebots"
         time_effort: "Zeitaufwand"
         compensation: "Vergütung"
         room_number: "Raumnummer"

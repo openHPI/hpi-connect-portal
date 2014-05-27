@@ -59,6 +59,7 @@ de:
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."
         successfully_deleted: "Das Jobangebot wurde erfolgreich gelöscht."
         successfully_prolonged: "Das Jobangebot wurde erfolgreich verlängert."
+        successfully_prolong_requested: "Eine Verlängerung des Jobangebotes wurde angefordert."
         successfully_completed: "Das Jobangebot wurde erfolgreich als abgeschlossen markiert."
         successfully_opened: "Das Jobangebot wurde erfolgreich veröffentlicht."
         prolonging_failed: "Das Jobangebot konnte nicht verlängert werden."
