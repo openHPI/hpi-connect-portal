@@ -13,13 +13,13 @@ class ApplicationsMailer < ActionMailer::Base
     student = application.student
     cv = student.user.cv
 
-    if (!cv.path.nil?) and !add_cv.nil?
-      attachments[student.user.cv_file_name] = File.read(cv.path)
+    if !cv.path.nil? and add_cv
+      attachments[student.user.cv_file_name] = File.read cv.path
     end
     
     unless attached_files.nil?
       attached_files[:file_attributes].each do | file |
-        attachments[file[:file].original_filename] = file[:file].tempfile
+        attachments[file[:file].original_filename] = File.read file[:file].tempfile
       end
     end
 
