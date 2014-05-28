@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe "the user editing page" do
 
+  before :all do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before :each do
     @user = FactoryGirl.create :user
     login @user
