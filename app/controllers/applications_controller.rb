@@ -35,7 +35,7 @@ class ApplicationsController < ApplicationController
     authorize! :accept, @application
 
     if @job_offer.accept_application(@application)
-      respond_and_redirect_to @job_offer, 'Application was successfully accepted.'
+      respond_and_redirect_to @job_offer,  t("applications.accepted_successfully")
     else
       render_errors_and_action @job_offer
     end
