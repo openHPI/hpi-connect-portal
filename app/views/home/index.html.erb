@@ -60,7 +60,7 @@
       <% end %>
 
       <br />
-      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %>
+      <%= link_to 'Register User', new_student_path %> | <%= link_to 'Register Company', new_employer_path %> | <%= link_to t("devise.passwords.forgot_password"), "", data: {toggle: "modal", target: "#applicationEmailModal" } %>
     </div>
   <% end %>
 
@@ -86,3 +86,7 @@
     </div>
   <% end %>
 </div>
+
+<% content_for :modals do %>
+  <%= render 'forgot_password' %>
+<% end %>
