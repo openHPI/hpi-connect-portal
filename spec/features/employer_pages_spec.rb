@@ -9,11 +9,12 @@ describe "the employer page" do
   let(:staff) { employer.staff_members.first }
 
   before do
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :pending)
     @student1 = FactoryGirl.create(:student)
     login(@student1.user)
-
-    @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active))
-    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :pending))
+    @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.active)
+    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.pending)
     visit employer_path(employer)
   end
 
@@ -47,7 +48,7 @@ describe "the employer page" do
       current_path != edit_employer_path(employer)
     end
   end
-describe "GET show" do
+
   describe "can be activated" do
 
     before :each do 
@@ -82,7 +83,7 @@ describe "GET show" do
       should have_link 'Activate'
     end
   end
-end
+
 
   describe "creating a new employer" do
 
