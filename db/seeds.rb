@@ -194,7 +194,6 @@ JobOffer.create!([{
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
   responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-    vacant_posts: 1
 }])
 
 JobOffer.create!([{
@@ -210,8 +209,7 @@ JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
-  responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-  vacant_posts: 5
+  responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation
 }])
 
 JobOffer.create!([{
@@ -228,8 +226,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
   responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-  assigned_students: [User.where(firstname: "Pascal").first.manifestation],
-  vacant_posts: 1
+  assigned_students: [User.where(firstname: "Pascal").first.manifestation]
 }])
 
 # OS Jobs
@@ -247,8 +244,7 @@ JobOffer.create!([{
   compensation: 12.00,
   languages: Language.where(:name => ['german', 'english']), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-    vacant_posts: 1
+  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation
 }])
 
 
@@ -265,8 +261,7 @@ JobOffer.create!([{
   compensation: 10.00,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-    vacant_posts: 1
+  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation
 }])
 
 JobOffer.create!([{
@@ -283,8 +278,7 @@ JobOffer.create!([{
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
   responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-  assigned_students: [User.where(firstname: "Frank").first.manifestation],
-  vacant_posts: 1
+  assigned_students: [User.where(firstname: "Frank").first.manifestation]
 }])
 
 # SAP jobs
@@ -302,8 +296,7 @@ JobOffer.create!([{
   compensation: 20.00,
   languages: Language.where(:name => 'english'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-  vacant_posts: 1
+  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation
 }])
 
 # FAQs

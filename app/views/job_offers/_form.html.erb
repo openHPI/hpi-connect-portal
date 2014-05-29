@@ -150,16 +150,6 @@
                 </div>
               </div>
             </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-3">
-                  <%= f.label t "activerecord.attributes.job_offer.vacant_posts", class: "control-label" %><%= mark_if_required(@job_offer, :vacant_posts) %>
-                </div>
-                <div class="col-sm-8 pull-right">
-                   <%= f.input :vacant_posts, input_html: {value: (job_offer.vacant_posts.blank? ? 1 : job_offer.vacant_posts)} %>
-                </div>
-              </div>
-            </li>
           <ul>
         </div>
     </div>

@@ -22,7 +22,8 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    raise ActionController::RoutingError.new('Not Found')
+    flash[:error] = "You are not authorized to access this page."
+    redirect_to root_path
   end
 
   def render_errors_and_action(object, action = nil)

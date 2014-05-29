@@ -71,27 +71,6 @@ describe ApplicationsController do
         assigns(:application).job_offer.assigned_students.should include(@student)
       end
 
-      it "declines all other students after accepting the last possible application" do
-        @job_offer.vacant_posts = 1
-        @job_offer.save
-        student2 = FactoryGirl.create(:student)
-
-        application_2 = FactoryGirl.create(:application, student: student2, job_offer: @job_offer)
-        application_3 = FactoryGirl.create(:application, job_offer: @job_offer)
-
-        expect{
-          get :accept, { id: @application.id }
-        }.to change(Application, :count).by(-3)
-      end
-
-      it "keeps the job 'open' when there are still vacant_posts left" do
-        @job_offer.vacant_posts = 2
-        @job_offer.save
-
-        get :accept, {id: @application.id}
-        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'active'))
-      end
-
       it "sends two emails" do
         old_count = ActionMailer::Base.deliveries.count
         get :accept, {id: @application.id}

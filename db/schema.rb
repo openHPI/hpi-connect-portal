@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140506074315) do
+ActiveRecord::Schema.define(version: 20140518230410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,7 +107,6 @@ ActiveRecord::Schema.define(version: 20140506074315) do
     t.integer  "employer_id"
     t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false

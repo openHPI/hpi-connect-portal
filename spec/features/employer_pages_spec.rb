@@ -63,16 +63,16 @@ describe "the employer page" do
 
     it "not by students" do
       login FactoryGirl.create(:student).user
-      expect {
-        visit employer_path(@employer)
-      }.to raise_error(ActionController::RoutingError)
+      visit employer_path(@employer)
+      current_path.should eq root_path
+      should have_content "You are not authorized to access this page."
     end
 
     it "not by staff members" do
       login FactoryGirl.create(:staff)
-      expect {
-        visit employer_path(@employer)
-      }.to raise_error(ActionController::RoutingError)
+      visit employer_path(@employer)
+      current_path.should eq root_path
+      should have_content "You are not authorized to access this page."
     end
 
     it "can also be activated if a new package was booked" do
@@ -83,6 +83,7 @@ describe "the employer page" do
       should have_link 'Activate'
     end
   end
+
 
   describe "creating a new employer" do
 

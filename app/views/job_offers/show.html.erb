@@ -116,7 +116,6 @@
             <% unless @job_offer.responsible_user.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), content: (link_to @job_offer.responsible_user.full_name, @job_offer.responsible_user) %>
             <% end %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.vacant_posts"), content: @job_offer.vacant_posts %>
           </ul>
         </div>
       </div>
