@@ -3,9 +3,8 @@ require 'spec_helper'
 describe ApplicationsController do
 
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active"), "responsible_user_id" => responsible_user.id} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active")} }
   before(:each) do
     @student = FactoryGirl.create(:student)
     @student.user.email = 'test@example.com'
@@ -20,7 +19,7 @@ describe ApplicationsController do
     describe "having sufficient permissions" do
 
       before(:each) do
-        login @job_offer.responsible_user.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "deletes application" do
@@ -63,7 +62,7 @@ describe ApplicationsController do
 
     describe "having sufficient permissions" do
       before(:each) do
-        login @job_offer.responsible_user.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "accepts a student and he/her is included in @job_offer.assigned_students" do

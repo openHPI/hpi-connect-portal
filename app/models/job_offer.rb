@@ -41,7 +41,6 @@ class JobOffer < ActiveRecord::Base
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer
-  belongs_to :responsible_user, class_name: "Staff"
   belongs_to :status, class_name: "JobStatus"
 
   accepts_nested_attributes_for :programming_languages
@@ -49,7 +48,6 @@ class JobOffer < ActiveRecord::Base
 
   validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :responsible_user, presence: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
   validate :can_be_created, on: :create
@@ -58,7 +56,6 @@ class JobOffer < ActiveRecord::Base
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
-    job_offer.responsible_user = current_user.manifestation unless parameters[:responsible_user_id]
     job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
     if job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver

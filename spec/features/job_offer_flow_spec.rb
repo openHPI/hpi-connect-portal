@@ -62,6 +62,8 @@ describe "the job offer flow" do
     assert_equal(job_offer.time_effort, 12)
     assert_equal(job_offer.compensation, 11.0)
     assert_equal(job_offer.employer, creating_staff.employer)
+    assert_equal(job_offer.employer, staff.employer)
+    assert_equal(employer.staff_members.length, 3)
 
     # admin of the employers get acceptance pending email
     ActionMailer::Base.deliveries.count.should == 1
@@ -87,10 +89,13 @@ describe "the job offer flow" do
     should_not have_selector(".alert alert-danger")
     assert job_offer.active?
 
-    # responsible staff member gets notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
+    # staff members get notified that the job offer got accepted
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length    
+    emails = ActionMailer::Base.deliveries
+    # each staff member gets notified
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }
     ActionMailer::Base.deliveries = []
 
     # student A applies for the job
@@ -106,15 +111,21 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
-    email.should have_content message
-    email.attachments.should have(1).attachment
-    attachment = email.attachments[0]
-    attachment.should be_a_kind_of(Mail::Part)
-    attachment.content_type.should be_start_with('application/pdf;')
-    attachment.filename.should == 'test_cv.pdf'
+    # all staff members get an email
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
+    emails = ActionMailer::Base.deliveries
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }   
+     # each email has the desired content
+    emails.each { |email|
+        email.should have_content message
+        email.attachments.should have(1).attachment
+        attachment = email.attachments[0]
+        attachment.should be_a_kind_of(Mail::Part)
+        attachment.content_type.should be_start_with('application/pdf;')
+        attachment.filename.should == 'test_cv.pdf'
+    }
     ActionMailer::Base.deliveries = []
 
     assert Application.where(job_offer: job_offer).load.count == 1
@@ -138,22 +149,28 @@ describe "the job offer flow" do
     find("#attached_files").set(file)
     click_button I18n.t("job_offers.send_application")
 
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
-    assert_equal(email.to, [creating_staff.email])
-    email.should have_content message
-    email.attachments.should have(1).attachment
-    attachment = email.attachments[0]
-    attachment.should be_a_kind_of(Mail::Part)
-    attachment.content_type.should be_start_with('application/pdf;')
-    attachment.filename.should == 'test_cv.pdf'
+    # all staff members get an email
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
+    emails = ActionMailer::Base.deliveries
+    employer.staff_members.each { |each_staff|
+    assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
+    }
+    # each email has the desired content
+    emails.each { |email|
+        email.should have_content message
+        email.attachments.should have(1).attachment
+        attachment = email.attachments[0]
+        attachment.should be_a_kind_of(Mail::Part)
+        attachment.content_type.should be_start_with('application/pdf;')
+        attachment.filename.should == 'test_cv.pdf'
+    }    
     ActionMailer::Base.deliveries = []
 
     assert Application.where(job_offer: job_offer).load.count == 2
     should_not have_button I18n.t("job_offers.apply")
 
-    # responsible user accepts first application
-    login creating_staff.user
+    # staff accepts first application
+    login staff.user
     visit job_offer_path(job_offer)
 
     # he sees the entries for the applicants
@@ -164,7 +181,7 @@ describe "the job offer flow" do
 
     job_offer = job_offer.reload
     assert job_offer.active?
-    #assert Application.where(job_offer: job_offer).load.count == 0
+    assert Application.where(job_offer: job_offer).load.count == 1
     assert_equal(job_offer.assigned_students, [first_applicant])
 
     # accepted student and the HPI administration get notified
@@ -175,7 +192,7 @@ describe "the job offer flow" do
     assert_equal(email.to, [Configurable.mailToAdministration])
     ActionMailer::Base.deliveries = []
 
-    # responsible user prolongs the job offer
+    # staff prolongs the job offer
     fill_in "job_offer_end_date", with: (Date.current + 3).to_s
     click_button I18n.t("job_offers.prolong")
 
