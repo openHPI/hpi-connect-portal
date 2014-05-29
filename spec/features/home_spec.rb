@@ -2,8 +2,14 @@ require 'spec_helper'
 
 describe "the home page" do 
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
+
   it "renders the latest 5 job offers" do
-    6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}") }
+    6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active )}
     visit root_path
     page.should have_content(
       "Testjob2", "Testjob3", "Testjob4", "Testjob5", "Testjob6"

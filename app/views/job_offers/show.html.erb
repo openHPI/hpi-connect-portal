@@ -115,7 +115,7 @@
             <% end %>
             <% unless @job_offer.employer.staff_members.blank? %>
               <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), 
-              content: @job_offer.employer.staff_members.each {|staff| (link_to "test", staff)} %>           
+              content: (@job_offer.employer.staff_members.map {|staff| (link_to staff.full_name, staff)}.join('<br>').html_safe) %>              
             <% end %>
           </ul>
         </div>

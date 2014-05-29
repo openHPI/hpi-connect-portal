@@ -55,7 +55,6 @@ class Ability
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
       can :prolong, JobOffer, employer: staff.employer, status: JobStatus.active
-      can :prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
       can [:update, :destroy, :fire], JobOffer, employer: staff.employer
       can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|

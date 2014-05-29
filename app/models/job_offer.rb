@@ -73,7 +73,6 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
-
   def default_values
     self.status ||= JobStatus.pending
   end
