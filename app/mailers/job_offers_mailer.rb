@@ -43,6 +43,18 @@ class JobOffersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.prolong_requested.subject", job_title: @job_offer.title)
   end
 
+  def job_will_expire_email(job_offer)
+    @job_offer = job_offer
+    emails = job_offer.employer.staff_members.collect(&:email).join(',')
+    mail to: emails, subject: (t "job_offers_mailer.will_expire.subject", job_title: @job_offer.title)
+  end
+
+  def job_expired_email(job_offer)
+    @job_offer = job_offer
+    emails = job_offer.employer.staff_members.collect(&:email).join(',')
+    mail to: emails, subject: (t "job_offers_mailer.will_expire.subject", job_title: @job_offer.title)
+  end
+
   def inform_interested_students_immediately(job_offer)
     determine_interested_students(job_offer, Student.update_immediately).each do |student|
       JobOffersMailer.new_job_offer_info_email(job_offer, student).deliver

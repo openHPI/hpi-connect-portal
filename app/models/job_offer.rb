@@ -80,6 +80,17 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
+  def self.check_for_expired
+    active.each do |offer|
+      if offer.expiration_date == Date.today + 2.days
+        JobOffersMailer.job_will_expire_email(offer).deliver
+      elsif offer.expiration_date <= Date.today
+        offer.update_column :status_id, JobStatus.closed.id
+        JobOffersMailer.job_expired_email(offer).deliver
+      end
+    end
+  end
+
   def default_values
     self.status ||= JobStatus.pending
     self.vacant_posts ||= 1
@@ -126,7 +137,7 @@ class JobOffer < ActiveRecord::Base
     update_column :prolonged_at, Date.current
     update_column :prolonged, true
     update_column :prolong_requested, false
-    JobOffersMailer.job_prolonged_email(self).deliver
+    offersMailer.job_prolonged_email(self).deliver
   end
 
   def immediately_prolongable
