@@ -4,7 +4,7 @@
 # http://en.wikipedia.org/wiki/Cron
 
 every :day, at: '1am' do
-  JobOffer.check_for_expired
+  runner "JobOffer.check_for_expired"
 end
 
 # Learn more: http://github.com/javan/whenever
