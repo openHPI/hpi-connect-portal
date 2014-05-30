@@ -53,7 +53,6 @@ describe "the job-offers page" do
   end
 end
 
-
 describe "a job offer entry" do
 
   before(:each) do
@@ -84,6 +83,9 @@ end
 
 describe "job_offers_history" do
   before do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
