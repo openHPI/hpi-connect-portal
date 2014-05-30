@@ -35,7 +35,8 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    mail to: job_offer.responsible_user.email, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
+    emails = job_offer.employer.staff_members.collect(&:email).join(',')
+    mail to: emails, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
   end
 
   def prolong_requested_email(job_offer)
@@ -46,13 +47,13 @@ class JobOffersMailer < ActionMailer::Base
   def job_will_expire_email(job_offer)
     @job_offer = job_offer
     emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.will_expire.subject", job_title: @job_offer.title)
+    mail to: emails, subject: (t "job_offers_mailer.job_offer_will_expire.subject", job_title: @job_offer.title)
   end
 
   def job_expired_email(job_offer)
     @job_offer = job_offer
     emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.will_expire.subject", job_title: @job_offer.title)
+    mail to: emails, subject: (t "job_offers_mailer.job_offer_expired.subject", job_title: @job_offer.title)
   end
 
   def inform_interested_students_immediately(job_offer)
