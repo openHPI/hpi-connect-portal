@@ -3,9 +3,8 @@ require 'spec_helper'
 describe ApplicationsController do
 
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) {  FactoryGirl.create(:user, employer: employer, role: staff_role)}
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active"), "responsible_user_id" => responsible_user.id} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active")} }
   before(:each) do
     @student = FactoryGirl.create(:student)
     @student.user.email = 'test@example.com'
@@ -20,7 +19,7 @@ describe ApplicationsController do
     describe "having sufficient permissions" do
 
       before(:each) do
-        login @job_offer.responsible_user.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "deletes application" do
@@ -63,33 +62,12 @@ describe ApplicationsController do
 
     describe "having sufficient permissions" do
       before(:each) do
-        login @job_offer.responsible_user.user
+        login @job_offer.employer.staff_members[0].user
       end
 
       it "accepts a student and he/her is included in @job_offer.assigned_students" do
         get :accept, {id: @application.id}
         assigns(:application).job_offer.assigned_students.should include(@student)
-      end
-
-      it "declines all other students after accepting the last possible application" do
-        @job_offer.vacant_posts = 1
-        @job_offer.save
-        student2 = FactoryGirl.create(:student)
-
-        application_2 = FactoryGirl.create(:application, student: student2, job_offer: @job_offer)
-        application_3 = FactoryGirl.create(:application, job_offer: @job_offer)
-
-        expect{
-          get :accept, { id: @application.id }
-        }.to change(Application, :count).by(-3)
-      end
-
-      it "keeps the job 'open' when there are still vacant_posts left" do
-        @job_offer.vacant_posts = 2
-        @job_offer.save
-
-        get :accept, {id: @application.id}
-        assigns(:application).job_offer.status.should eq(FactoryGirl.create(:job_status, name: 'active'))
       end
 
       it "sends two emails" do

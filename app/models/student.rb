@@ -55,7 +55,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
-  delegate :firstname, :lastname, :full_name, :email, :activated, to: :user
+  delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
 
   validates :semester, :academic_program_id, presence: true
   validates_inclusion_of :semester, :in => 1..12

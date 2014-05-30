@@ -23,7 +23,7 @@ class ApplicationsMailer < ActionMailer::Base
       end
     end
 
-    send_mail_for_application_to_wimi(application, message, (t "applications_mailer.wimi.new_application.subject", job_title: application.job_offer.title))
+    send_mail_for_application_to_wimis(application, message, (t "applications_mailer.wimi.new_application.subject", job_title: application.job_offer.title))
   end
 
   private
@@ -32,9 +32,11 @@ class ApplicationsMailer < ActionMailer::Base
       mail(to: @application.student.email, subject: subject)
     end
     
-    def send_mail_for_application_to_wimi(application, message, subject)
+    def send_mail_for_application_to_wimis(application, message, subject)
       @application = application
-      @message = message
-      mail(to: @application.job_offer.responsible_user.email, subject: subject)
+      @message = message      
+      @application.job_offer.employer.staff_members.each { |staff| 
+        @staff = staff
+        mail(to: staff.email, subject: subject).deliver }
     end
 end

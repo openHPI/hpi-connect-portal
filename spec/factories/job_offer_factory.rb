@@ -13,9 +13,7 @@
 #  compensation        :float
 #  room_number         :string(255)
 #  employer_id         :integer
-#  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  vacant_posts        :integer
 #  flexible_start_date :boolean          default(FALSE)
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
@@ -35,12 +33,9 @@ FactoryGirl.define do
     compensation      10.5
     time_effort       9
     association       :status, factory: :job_status
-    association       :responsible_user, factory: :staff
-    vacant_posts      1
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)
-      job_offer.responsible_user = FactoryGirl.create(:staff, employer: job_offer.employer)
     end
   end
 end

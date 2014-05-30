@@ -105,9 +105,7 @@ ActiveRecord::Schema.define(version: 20140520172346) do
     t.float    "compensation"
     t.string   "room_number"
     t.integer  "employer_id"
-    t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false

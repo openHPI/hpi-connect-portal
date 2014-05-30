@@ -52,16 +52,16 @@ class Ability
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
       can :request_prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
-      can [:update, :destroy, :fire], JobOffer, responsible_user_id: staff_id
+      can [:update, :destroy, :fire], JobOffer, employer: staff.employer
       can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|
-        job.editable? && (job.responsible_user_id == staff_id || job.employer.id == employer_id)
+        job.editable? && job.employer.id == employer_id
       end
       cannot :destroy, JobOffer do |job|
         job.active?
       end
 
-      can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
+      can [:accept, :decline], Application, job_offer: { employer: staff.employer }
 
       can :destroy, Staff, manifestation: { employer: { id: employer_id }}
 

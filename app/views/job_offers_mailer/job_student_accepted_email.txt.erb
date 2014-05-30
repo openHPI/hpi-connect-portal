@@ -7,7 +7,6 @@ Bitte hinterlegen Sie folgende Informationen im System:
 	<%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%>
 	<%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %>
 	<%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%>
-	<%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %>
 	<%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %>
 	<%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %>
 	<%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %>
@@ -27,7 +26,6 @@ Please use the following information to update your system:
 	<%= t "activerecord.attributes.job_offer.title"%>: <%=@job_offer.title%>
 	<%= t "students.students"%>: <%= @job_offer.assigned_students.last.firstname + ' ' + @job_offer.assigned_students.last.lastname %>
 	<%= t "activerecord.attributes.job_offer.employer"%>: <%= @job_offer.employer%>
-	<%= t "activerecord.attributes.job_offer.responsible_user" %>: <%= @job_offer.responsible_user.email %>
 	<%= t "activerecord.attributes.job_offer.room_number" %>: <%= @job_offer.room_number %>
 	<%= t "applications_mailer.duration" %>: <%= l(@job_offer.start_date) %> - <%= l(@job_offer.end_date) if @job_offer.end_date %>
 	<%= t "activerecord.attributes.job_offer.compensation" %>: <%= @job_offer.human_readable_compensation %>
