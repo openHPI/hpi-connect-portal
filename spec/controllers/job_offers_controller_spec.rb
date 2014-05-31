@@ -422,7 +422,7 @@ describe JobOffersController do
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
         response.should render_template("new")
-        @staff.update_column :booked_package_id, 1
+        @employer.update_column :booked_package_id, 1
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
@@ -443,7 +443,7 @@ describe JobOffersController do
         response.should render_template("new")
       end
 
-      it "should not be possible to create 24 graduate job with the premium package" do
+      it "should be possible to create 24 graduate job with the premium package" do
         @employer.update_column :booked_package_id, 3
         login @staff.user
         24.times do

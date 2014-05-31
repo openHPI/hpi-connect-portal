@@ -2,19 +2,13 @@ require 'spec_helper'
 
 describe "the job-offers page" do
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
-
   before(:each) do
-
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :closed)
+    @active = FactoryGirl.create(:job_status, :active)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
-
-    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -57,6 +51,10 @@ end
 describe "a job offer entry" do
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @student1 = FactoryGirl.create(:student)
     login @student1.user
 
@@ -65,7 +63,7 @@ describe "a job offer entry" do
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      status: FactoryGirl.create(:job_status, :active)
+      status: JobStatus.active
     )
 
     visit job_offers_path
@@ -84,12 +82,13 @@ end
 
 describe "job_offers_history" do
   before do
+    FactoryGirl.create(:job_status, :pending)
+    @active = FactoryGirl.create(:job_status, :active)
+    @status = FactoryGirl.create(:job_status, :closed)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
-    @status = FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, name:"active")
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
       status: @status,

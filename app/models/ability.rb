@@ -49,8 +49,7 @@ class Ability
       can :read, Application
       can :manage, Faq
       cannot [:edit, :update], Student
-
-
+      
       can :close, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed

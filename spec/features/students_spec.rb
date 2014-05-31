@@ -19,14 +19,14 @@ describe "the students page" do
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
-      staff.employer.update_column :booked_package_id, 1
+      staff.employer.update_column :booked_package_id, 2
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
     end
 
     it "is available for staff members of premium employers" do
-      staff.employer.update_column :booked_package_id, 2
+      staff.employer.update_column :booked_package_id, 3
       login staff.user
       visit students_path
       current_path.should == students_path
@@ -222,14 +222,14 @@ describe "the students profile page" do
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
-      @employer.update_column :booked_package_id, 1
+      @employer.update_column :booked_package_id, 2
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
     end
 
     it "should be accessible for staff of premium employers" do
-      @employer.update_column :booked_package_id, 2
+      @employer.update_column :booked_package_id, 3
       visit student_path(@student)
       current_path.should == student_path(@student)
     end

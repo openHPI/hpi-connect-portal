@@ -62,7 +62,7 @@ class Employer < ActiveRecord::Base
   end
 
   def partner?
-    booked_package_id == 2
+    booked_package_id >= 2
   end
 
   def premium?
