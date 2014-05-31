@@ -35,6 +35,12 @@ describe UsersController do
       assert_redirected_to edit_user_path(@user)
     end
 
+    it "should not be possible to update parameters of other users" do
+      login FactoryGirl.create(:user)
+      put :update, {id: @user.to_param, user: valid_attributes}, valid_session
+      assert_redirected_to root_path
+    end
+
     describe "with valid params" do
       it "updates the requested user" do
         User.any_instance.should_receive(:update).with({ "email" => "test100@test.com" })
@@ -57,9 +63,9 @@ describe UsersController do
         User.any_instance.stub(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
         assigns(:user).should eq(@user)
-      end
+      end 
 
-      it "rrenders the 'edit' template" do
+      it "re-enders the 'edit' template" do
         User.any_instance.stub(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
         response.should render_template("edit")
