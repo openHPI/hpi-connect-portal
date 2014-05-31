@@ -80,9 +80,8 @@ HpiHiwiPortal::Application.configure do
 
   # Enable strict date parsing using the timeliness gem
   config.use_plugin_parser = true
-
   
-  config.action_mailer.default_url_options = { host: 'http://hpi-hiwi-portal.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'http://hpi.uni-potsdam.de/connect/jobportal' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

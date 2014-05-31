@@ -78,6 +78,7 @@ describe "the students editing page" do
     page.should have_content(
       "Career",
       "General Information",
+      "Photo",
       "Links",
       "Programming language skills",
       "Additional information",
