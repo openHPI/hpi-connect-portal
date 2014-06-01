@@ -95,6 +95,7 @@ describe UsersController do
     end    
 
     it "posts forgot_password" do
+      ActionMailer::Base.deliveries = []
       old_password = @user.password
       params = {forgot_password: {email: "user1@example.com"} }
       post :forgot_password, params
@@ -104,6 +105,7 @@ describe UsersController do
       # sends an email with the new password to the user
       ActionMailer::Base.deliveries.count==1  
       ActionMailer::Base.deliveries[0].should have_content(User.find(@user).password)
+      ActionMailer::Base.deliveries[0].to.count.should eq(1)
       ActionMailer::Base.deliveries[0].to[0].should eq(User.find(@user).email)
     end
 
