@@ -96,13 +96,15 @@ describe UsersController do
 
     it "posts forgot_password" do
       old_password = @user.password
-      params = {   email: "user1@example.com"  }
+      params = {forgot_password: {email: "user1@example.com"} }
       post :forgot_password, params
       response.should redirect_to(root_path)
       flash[:notice].should eq(I18n.t('devise.passwords.changed_password'))
       User.find(@user).password.should_not eq(old_password)
+      # sends an email with the new password to the user
       ActionMailer::Base.deliveries.count==1  
       ActionMailer::Base.deliveries[0].should have_content(User.find(@user).password)
+      ActionMailer::Base.deliveries[0].to[0].should eq(User.find(@user).email)
     end
 
   end
