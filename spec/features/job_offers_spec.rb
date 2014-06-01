@@ -14,7 +14,7 @@ describe "the job-offers page" do
     login @student1.user
 
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @active = JobStatus.active
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -89,7 +89,7 @@ describe "job_offers_history" do
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @status = FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @active = JobStatus.active
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
       status: @status,

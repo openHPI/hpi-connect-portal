@@ -31,12 +31,12 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
-    @user = User.find_by_email params[:forgot_password][:email]
+    @user = User.find_by_email params[:email]
     if @user
       char_pool = [('a'..'z'),('A'..'Z'),('0'..'9'),['_', '-']].map { |char| char.to_a }.flatten
       new_password = ""
       (0..10).each { new_password += char_pool[rand(char_pool.length-1)]}
-      @user.update_attributes(password: new_password, password_confirmation: new_password)
+      @user.update(password: new_password, password_confirmation: new_password)
       UsersMailer.new_password_mail(new_password, @user).deliver
       redirect_to root_path, notice: t('devise.passwords.changed_password')
     else

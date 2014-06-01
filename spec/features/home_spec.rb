@@ -45,4 +45,14 @@ describe "the home page" do
     page.should_not have_content "TestEmployer1"
   end
 
+  it "finds link and fills in email" do
+    visit root_path
+    user = FactoryGirl.create(:user, email: "new_password_email@test.de")
+    old_password = user.password
+    find_link(I18n.t("devise.passwords.forgot_password")).click
+    fill_in 'forgot_password_email', :with => '"new_password_email@test.de'
+    click_on I18n.t("devise.passwords.request")
+    current_path.should eq(root_path)      
+    User.find(user).password.should_not eq(old_password)
+  end   
 end

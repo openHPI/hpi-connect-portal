@@ -6,7 +6,7 @@ describe UsersController do
   let(:valid_session) { {} }
   
   before :each do
-   @user = FactoryGirl.create :user
+   @user = FactoryGirl.create(:user)
    login @user
   end
   
@@ -88,42 +88,22 @@ describe UsersController do
     end
   end
 
-
-  before :each do
-    @user = FactoryGirl.create :user
-    @user.update_attributes(email: "user1@example.com")
-  end   
-
-    describe "get forgotten password" do
-      it "finds link and fills in email" do
-      old_password = @user.password
-      visit root_path
-      find_link(I18n.t("devise.passwords.forgot_password")).click
-      fill_in 'forgot_password_email', :with => 'user1@example.com'
-      click_on I18n.t("devise.passwords.request")
-      current_path.should == root_path      
-      @user.reload.password.should_not eq(old_password)
+  describe "get forgotten password" do
+    before :each do
+      @user = FactoryGirl.create :user
+      @user.update_attributes(email: "user1@example.com")
     end    
-
-    it "sends 1 email to the user" do
-      ActionMailer::Base.deliveries.count==1  
-      ActionMailer::Base.deliveries=[]
-    end
 
     it "posts forgot_password" do
       old_password = @user.password
-      params = { forgot_password: { email: "user1@example.com" } }
+      params = {   email: "user1@example.com"  }
       post :forgot_password, params
       response.should redirect_to(root_path)
       flash[:notice].should eq(I18n.t('devise.passwords.changed_password'))
-      @user.reload
+      User.find(@user).password.should_not eq(old_password)
       ActionMailer::Base.deliveries.count==1  
-      ActionMailer::Base.deliveries[0].should have_content(@user.reload.password)
-      @user.reload.password.should_not eq(old_password)
+      ActionMailer::Base.deliveries[0].should have_content(User.find(@user).password)
     end
 
-    it "sends 1 email to the user" do
-      ActionMailer::Base.deliveries.count==1  
-    end
   end
 end
