@@ -102,11 +102,17 @@ describe UsersController do
       response.should redirect_to(root_path)
       flash[:notice].should eq(I18n.t('devise.passwords.changed_password'))
       User.find(@user).password.should_not eq(old_password)
+
       # sends an email with the new password to the user
-      ActionMailer::Base.deliveries.count==1  
-      ActionMailer::Base.deliveries[0].should have_content(User.find(@user).password)
-      ActionMailer::Base.deliveries[0].to.count.should eq(1)
-      ActionMailer::Base.deliveries[0].to[0].should eq(User.find(@user).email)
+      # because travis is so slow we have to assume that there are more than 1 email
+      password_mail_index = nil
+      ActionMailer::Base.deliveries.each_with_index { |mail, index| 
+          password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
+        }
+      password_mail_index.should_not eq(nil)
+      ActionMailer::Base.deliveries[password_mail_index].should have_content(User.find(@user).password)
+      ActionMailer::Base.deliveries[password_mail_index].to.count.should eq(1)
+      ActionMailer::Base.deliveries[password_mail_index].to[0].should eq(User.find(@user).email)
     end
 
   end
