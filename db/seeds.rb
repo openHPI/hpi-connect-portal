@@ -69,7 +69,7 @@ hpi_staff = Staff.create!(
     password: 'password',
     password_confirmation: 'password',
     email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-    lastname: "kroschk", 
+    lastname: "Kroschk", 
     firstname: "Axel",
   ),
   employer: hpi

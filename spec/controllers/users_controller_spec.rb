@@ -4,7 +4,7 @@ describe UsersController do
 
   let(:valid_attributes) { { "email" => "test@test.de", "firstname" => "Alex", "lastname" => "Musterwomen" } }
   let(:valid_session) { {} }
-  
+
   before :each do
    @user = FactoryGirl.create(:user)
    login @user
@@ -63,9 +63,9 @@ describe UsersController do
         User.any_instance.stub(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
         assigns(:user).should eq(@user)
-      end 
+      end
 
-      it "re-enders the 'edit' template" do
+      it "re-renders the 'edit' template" do
         User.any_instance.stub(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
         response.should render_template("edit")
