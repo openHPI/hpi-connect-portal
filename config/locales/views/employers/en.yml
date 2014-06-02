@@ -19,6 +19,10 @@ en:
             profile: "Employer Profile" 
             full_time: "full-time jobs per year"
             student_profile: "View Student Profiles"
+            insufficent: "Your package does not suffice"
+            upgrade_or_book: "You can now upgrade your package or book this single job offer with costs."
+            book_single_offer: "Book single job offer"
+            upgrade: "Upgrade package"
         messages:
             successfully_created: "Welcome to HPI Career!"
             successfully_updated: "Profile successfully updated."

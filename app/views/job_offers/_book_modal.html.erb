@@ -1,0 +1,23 @@
+<div class="modal fade" id="book_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%= t "employers.package_descriptions.insufficent" %></h4>
+      </div>
+      
+        <div class="modal-body clearfix">
+          <%= label_tag :upgrade_or_book, t("employers.package_descriptions.upgrade_or_book") %>
+         <br><br>
+
+         <%= link_to t('links.cancel'), new_employer_path, :class => "btn btn-default pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
+         <%= link_to t('employers.package_descriptions.upgrade'), new_employer_path, :class => "btn btn-success pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
+          <%= link_to t('employers.package_descriptions.book_single_offer'), new_employer_path, :class => "btn btn-success pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>  
+          
+            <br/>           
+        </div>
+        <div class="modal-footer"> 
+        </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

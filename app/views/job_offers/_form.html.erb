@@ -68,8 +68,13 @@
                   <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :category) %>
                 </div>
                 <div class="col-sm-8 pull-right">                   
-                     <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, {}, 
-                      {id: 'category_id', class: 'select optional form-control'} %>
+                     <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
+                      can_book = index!=2 || current_user.manifestation.employer.paying?
+                      [t("job_offers.category." + category), 
+                      index, 
+                      {'can_book'=> can_book}]
+                     }, {}, {id: 'category_id', class: 'select optional form-control', 
+                      :onchange =>"CheckForAllowedCategory(this.value)"} %>
                 </div>
               </div>
             </li>
@@ -205,5 +210,8 @@
   <div class="actions">
     <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
   </div>
-
+  <% content_for :modals do %>
+    <%= render 'book_modal' %>
+  <% end %>
 <% end %>
+
