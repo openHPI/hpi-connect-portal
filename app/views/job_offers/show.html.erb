@@ -1,5 +1,5 @@
-<div class="wrapper-12 teaser">
-  <div class="col-sm-12">
+<div class="wrapper-7">
+  <div class="col-md-7">
 
     <% if @job_offer.pending? && can?(:accept, @job_offer) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
@@ -47,7 +47,7 @@
     <% end %>
 
     <br>
-    <div class="row">
+    <div class="row teaser">
       <div class="col-sm-12">
         <h1 style="display:inline">
           <%= @job_offer.title %>
@@ -74,9 +74,12 @@
         </li>
       </ul>
     </div>
-
+  </div>
+</div>
+<div class="wrapper-4 sidebar">
+  <div class="col-md-4 transparent">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-12">
 
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
@@ -94,10 +97,10 @@
             <% unless @job_offer.end_date.blank? %>
               <li class="list-group-item">
                 <div class="row">
-                  <div class="col-sm-3">
+                  <div class="col-sm-6">
                     <%= t("activerecord.attributes.job_offer.end_date") %>
                   </div>
-                  <div class="col-sm-9">
+                  <div class="col-sm-6">
                     <%= l(@job_offer.end_date) %>
                     <% if can? :prolong, @job_offer%>
                       <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
