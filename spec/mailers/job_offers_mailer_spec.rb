@@ -51,8 +51,8 @@ describe JobOffersMailer do
       ActionMailer::Base.deliveries.count.should == 1
     end
 
-    it "should have be send to the administration" do
-      @email.to.should eq([Configurable[:mailToAdministration]])
+    it "should have be send to the staff members" do
+      @email.to.should eq(@job_offer.employer.staff_members.collect(&:email))
     end
 
     it "should be send from 'hpi.hiwi.portal@gmail.com'" do

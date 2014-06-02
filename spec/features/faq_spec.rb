@@ -20,7 +20,6 @@ describe Faq do
     it "with all necessary parameters present" do
       @faq.should be_valid
     end
-
   end
 end
 

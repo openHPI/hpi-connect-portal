@@ -2,19 +2,17 @@ require 'spec_helper'
 
 describe "the job-offers page" do
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
-
   before(:each) do
-
+    @active = JobStatus.active
     @student1 = FactoryGirl.create(:student)
     login @student1.user
+<<<<<<< HEAD
 
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
     @active = JobStatus.active
+=======
+    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
+>>>>>>> 3c9788c9b90ee263b2edfd2e914331017b580f24
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -53,7 +51,6 @@ describe "the job-offers page" do
   end
 end
 
-
 describe "a job offer entry" do
   
   before(:all) do
@@ -62,7 +59,17 @@ describe "a job offer entry" do
     FactoryGirl.create(:job_status, :closed)
   end
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
+
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @student1 = FactoryGirl.create(:student)
     login @student1.user
 
@@ -90,22 +97,28 @@ end
 
 describe "job_offers_history" do
 
+<<<<<<< HEAD
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :closed)
   end
 
+=======
+>>>>>>> 3c9788c9b90ee263b2edfd2e914331017b580f24
   before(:each) do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
+<<<<<<< HEAD
     @status = FactoryGirl.create(:job_status, :closed)
     @active = JobStatus.active
+=======
+>>>>>>> 3c9788c9b90ee263b2edfd2e914331017b580f24
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
-      status: @status,
+      status: JobStatus.closed,
       employer: @employer,
       )
   end

@@ -9,9 +9,11 @@ describe "the students page" do
   }
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
-
     login staff.user
     visit students_path
   end
@@ -23,14 +25,14 @@ describe "the students page" do
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
-      staff.employer.update_column :booked_package_id, 1
+      staff.employer.update_column :booked_package_id, 2
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
     end
 
     it "is available for staff members of premium employers" do
-      staff.employer.update_column :booked_package_id, 2
+      staff.employer.update_column :booked_package_id, 3
       login staff.user
       visit students_path
       current_path.should == students_path
@@ -71,7 +73,14 @@ end
 
 describe "the students editing page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
   end
@@ -130,7 +139,15 @@ end
 
 describe "the students profile page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @job_offer =  FactoryGirl.create(:job_offer)
     @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
     @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
@@ -225,14 +242,14 @@ describe "the students profile page" do
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
-      @employer.update_column :booked_package_id, 1
+      @employer.update_column :booked_package_id, 2
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
     end
 
     it "should be accessible for staff of premium employers" do
-      @employer.update_column :booked_package_id, 2
+      @employer.update_column :booked_package_id, 3
       visit student_path(@student)
       current_path.should == student_path(@student)
     end

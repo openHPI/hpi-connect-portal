@@ -16,6 +16,7 @@ de:
     edit_staff: "Mitarbeiter bearbeiten"
     settings: "Einstellungen"
     password_settings: "Passwort ändern"
+    forgot_password: 'Passwort vergessen'
     reset_password: "Passwort zurücksetzen"
     request_password: 'Neues Passwort anfordern'
     inactive: "Deaktiviert"
