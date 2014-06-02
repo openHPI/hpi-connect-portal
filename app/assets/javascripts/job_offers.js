@@ -1,8 +1,6 @@
 $(document).ready(function($) {
-	$('select').change(function(){
+	$('#category_id').change(function(){
        //var selected = $(this).find('option:selected');
-       //alert(extra);
-       //alert(selected);
        //hasAttribute
 
        	var category = document.getElementById('category_id')
@@ -14,11 +12,7 @@ $(document).ready(function($) {
        		$('#book_modal').modal('show')
 		}       	
     });
-      $(".clickable").click(function() {
-            window.document.location = $(this).attr("href");
-      });
+    $(".clickable").click(function() {
+        window.document.location = $(this).attr("href");
+    });
 });
-	function CheckForAllowedCategory(category)
-	{
-		//alert(category);
-	};
