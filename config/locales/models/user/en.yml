@@ -6,7 +6,6 @@ en:
         last_name: "Last name"
         password: "Password"
         password_confirmation: "Password Confirmation"
-        reset_password: "Passwort zurücksetzen"
         old_password: "Old Password"
         semester: "Semester"
         academic_program: "Program"

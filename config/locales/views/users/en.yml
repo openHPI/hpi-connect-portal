@@ -32,7 +32,7 @@ en:
         your_new_password: 'Your new password'
         forgot_password: 'Forgot password'
         send_new_password: 'Receive new password'
-        password_reset: 'Your password was successfully changed. Please have a look at Your E-mail inbox.'
+        password_reset: 'Your password was successfully resetted. Please have a look at Your E-mail inbox.'
         password_send_instructions: 'You will receive an email with your new password. Please use that to login the next time. Afterwards you can change your password.'
-        unknown_email: "Your Email addresse wasn't found in our database."
+        unknown_email: "Your email addresse wasn't found in our database."
       
