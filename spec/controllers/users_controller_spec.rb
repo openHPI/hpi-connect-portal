@@ -114,6 +114,5 @@ describe UsersController do
       ActionMailer::Base.deliveries[password_mail_index].to.count.should eq(1)
       ActionMailer::Base.deliveries[password_mail_index].to[0].should eq(User.find(@user).email)
     end
-
   end
 end
