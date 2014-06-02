@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  skip_before_filter :signed_in_user, only: [:forgot_password]
   before_action :set_user, only: [:edit, :update]
 
   def edit
@@ -27,6 +28,16 @@ class UsersController < ApplicationController
       flash[:error] = I18n.t('users.messages.password_wrong')
     end
     redirect_to [:edit, @user]
+  end
+
+  def forgot_password
+    @user = User.find_by_email params[:forgot_password][:email]
+    if @user
+      @user.set_random_password
+      redirect_to root_path, notice: t('devise.passwords.changed_password')
+    else
+      redirect_to root_path, notice: I18n.t('devise.confirmations.email_not_found')
+    end
   end
 
   private

@@ -44,6 +44,8 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
+      post '/forgot_password' => 'users#forgot_password'
+
       resources :users, only: [:edit, :update] do
         patch '/update_password' => 'users#update_password', as: 'update_password'
       end

@@ -14,7 +14,7 @@ describe "the job-offers page" do
     login @student1.user
 
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @active = JobStatus.active
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -55,6 +55,12 @@ end
 
 
 describe "a job offer entry" do
+  
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
 
   before(:each) do
     @student1 = FactoryGirl.create(:student)
@@ -65,7 +71,7 @@ describe "a job offer entry" do
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      status: FactoryGirl.create(:job_status, :active)
+      status: JobStatus.active
     )
 
     visit job_offers_path
@@ -83,13 +89,20 @@ describe "a job offer entry" do
 end
 
 describe "job_offers_history" do
-  before do
+
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
+
+  before(:each) do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @status = FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @active = JobStatus.active
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
       status: @status,

@@ -73,4 +73,12 @@ class User < ActiveRecord::Base
   def clean_manifestation
     manifestation.destroy if manifestation
   end
+
+  def set_random_password
+    char_pool = [('a'..'z'),('A'..'Z'),('0'..'9'),['_', '-']].map { |char| char.to_a }.flatten
+    new_password = ""
+    (0..10).each { new_password += char_pool[rand(char_pool.length-1)]}
+    self.update(password: new_password, password_confirmation: new_password)
+    UsersMailer.new_password_mail(new_password, self).deliver
+  end
 end
