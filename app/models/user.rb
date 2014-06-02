@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
     char_pool = [('a'..'z'),('A'..'Z'),('0'..'9'),['_', '-']].map { |char| char.to_a }.flatten
     new_password = ""
     (0..10).each { new_password += char_pool[rand(char_pool.length-1)]}
-    self.update(password: new_password, password_confirmation: new_password)
+    self.update password: new_password, password_confirmation: new_password
     UsersMailer.new_password_mail(new_password, self).deliver
   end
 end

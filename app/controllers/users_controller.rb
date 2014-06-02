@@ -34,9 +34,9 @@ class UsersController < ApplicationController
     @user = User.find_by_email params[:forgot_password][:email]
     if @user
       @user.set_random_password
-      redirect_to root_path, notice: t('devise.passwords.changed_password')
+      redirect_to root_path, notice: t('users.messages.password_resetted')
     else
-      redirect_to root_path, notice: I18n.t('devise.confirmations.email_not_found')
+      redirect_to root_path, notice: I18n.t('users.messages.unknown_email')
     end
   end
 
