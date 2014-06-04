@@ -8,16 +8,14 @@ describe JobOffersController do
   let(:admin) { FactoryGirl.create(:user, :admin) }
   let(:assigned_student) { FactoryGirl.create(:student) }
   let(:employer) { FactoryGirl.create(:employer) }
-  let(:responsible_user) { FactoryGirl.create(:staff, employer: employer) }
+  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:closed) {FactoryGirl.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 } }
-  #let(:valid_attributes_status_running) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   # "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :running), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student]}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student], "responsible_user_id" => responsible_user.id, "vacant_posts" => 1 }}
+   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student]}}
   
 
   let(:valid_session) { {} }
@@ -119,7 +117,7 @@ describe JobOffersController do
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
-      login responsible_user.user
+      login staff.user
 
       get :new, {}, valid_session
       assigns(:job_offer).should be_a_new(JobOffer)
@@ -130,12 +128,6 @@ describe JobOffersController do
     it "assigns the requested job_offer as @job_offer" do
       get :edit, {id: @job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(@job_offer)
-    end
-
-    it "only allows the responsible user to edit" do
-      login FactoryGirl.create(:staff).user
-      get :edit, {id: @job_offer.to_param}, valid_session
-      response.should redirect_to(@job_offer)
     end
   end
 
@@ -180,7 +172,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active))
       @staff = FactoryGirl.create(:staff, employer: @job_offer.employer)
-      @job_offer.update({ responsible_user_id: @staff.id, end_date: Date.current + 10 })
+      @job_offer.update({end_date: Date.current + 10 })
       login @staff.user
     end
 
@@ -222,7 +214,7 @@ describe JobOffersController do
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
-      login @job_offer.responsible_user.user
+      login @job_offer.employer.staff_members[0].user
       get :accept, { id: @job_offer.id }
       response.should redirect_to(job_offers_path)
     end
@@ -259,8 +251,8 @@ describe JobOffersController do
     describe "with valid params" do
 
       before(:each) do
-        login responsible_user.user
-        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active), responsible_user: responsible_user)
+        login staff.user
+        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active))
       end
 
       it "assigns a new job_offer as @job_offer" do
@@ -272,7 +264,7 @@ describe JobOffersController do
       it "has same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id, :responsible_user_id]
+        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id]
 
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil
@@ -291,7 +283,7 @@ describe JobOffersController do
   describe "POST create" do
 
     before(:each) do
-      login responsible_user.user
+      login staff.user
     end
 
     describe "with valid params" do
@@ -338,7 +330,7 @@ describe JobOffersController do
       it "automatically assigns the users employer as the new job offers employer" do
         post :create, {job_offer: valid_attributes}, valid_session
         offer = JobOffer.last
-        expect(offer.employer).to eq(responsible_user.employer)
+        expect(offer.employer).to eq(staff.employer)
       end
 
       it "automatically converts 'Haustarif'" do
@@ -467,7 +459,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      login @job_offer.responsible_user.user
+      login @job_offer.employer.staff_members[0].user
     end
 
     describe "with valid params" do
@@ -519,7 +511,7 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
 
-      login @job_offer.responsible_user.user
+      login @job_offer.employer.staff_members[0].user
     end
 
     it "destroys the requested job_offer" do
@@ -535,7 +527,7 @@ describe JobOffersController do
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
       @job_offer.update!(status: FactoryGirl.create(:job_status, :active))
-      login @job_offer.responsible_user.user
+      login @job_offer.employer.staff_members[0].user
 
       expect {
         delete :destroy, {id: @job_offer.to_param}, valid_session
@@ -549,16 +541,13 @@ describe JobOffersController do
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer)
       @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
-      login @job_offer.responsible_user.user
+      login @job_offer.employer.staff_members[0].user
     end
 
     it "fires the student" do
 
       old_offer = @job_offer
-
       post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
-
-      assert_equal(old_offer.vacant_posts+1, @job_offer.reload.vacant_posts)
       assert_equal(0, @job_offer.reload.assigned_students.count)
       assert_equal(@job_offer.reload.status, JobStatus.active)
     end

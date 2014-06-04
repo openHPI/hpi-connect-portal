@@ -3,8 +3,8 @@ class HomeController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    @job_offers = JobOffer.last 5
-    @employers = Employer.last 3
+    @job_offers = JobOffer.active.last 5
+    @employers = Employer.active.last 3
   end
 
   def imprint

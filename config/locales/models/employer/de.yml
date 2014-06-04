@@ -4,9 +4,9 @@ de:
       employer:
         description: "Beschreibung"
         head: "Leiter"
-        name: "Name"
-        avatar: "Profilbild"
+        name: "Unternehmen"
+        avatar: "Logo"
         packages:
             free: "Kostenlos"
-            partner: "Partner"
-            premium: "Premium"
+            partner: "Basispaket"
+            premium: "Partnerpaket"
