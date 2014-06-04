@@ -72,6 +72,10 @@ end
 
 describe "the students editing page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
@@ -130,6 +134,10 @@ describe "the students editing page" do
 end
 
 describe "the students profile page" do
+
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
 
   before(:each) do
     @job_offer =  FactoryGirl.create(:job_offer)
