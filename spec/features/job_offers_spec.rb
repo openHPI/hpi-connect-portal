@@ -95,8 +95,8 @@ describe "job_offers_history" do
     FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :closed)
   end
-  
-  before do
+
+  before(:each) do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)
