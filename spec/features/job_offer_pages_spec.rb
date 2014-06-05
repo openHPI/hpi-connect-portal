@@ -8,9 +8,9 @@ describe "Job Offer pages" do
   let(:staff) { FactoryGirl.create(:staff) }
 
   before(:each) do
-    @status_pending = FactoryGirl.create(:job_status, :pending)
-    @status_active = FactoryGirl.create(:job_status, :active)
-    @status_closed = FactoryGirl.create(:job_status, :closed)
+    @status_pending = JobStatus.pending
+    @status_active = JobStatus.active
+    @status_closed = JobStatus.closed
   end
 
   describe "show page" do

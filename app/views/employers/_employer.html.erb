@@ -1,6 +1,17 @@
 <li class="list-group-item">
-  <%= link_to employer.name, employer, :class => "h4" %>
-  <% unless employer.activated %>
-    <span class="label label-danger"><%= t("employers.inactive")%></span>
-  <% end %>
+  <div class="row">
+    <div class="col-md-5">
+      <% if employer.paying? %>
+        <%= link_to employer.name, employer, :class => "h4" %> 
+      <% else %>
+        <h4> <%= employer.name %> </h4>
+      <% end %>
+      <% unless employer.activated %>
+        <span class="label label-danger"><%= t("employers.inactive")%></span>
+      <% end %>
+    </div>
+    <div class="col-md-3 pull-right">
+      <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
+    </div>
+  </div>
 </li>

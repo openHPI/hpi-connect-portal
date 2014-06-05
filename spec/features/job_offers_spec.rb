@@ -2,12 +2,6 @@ require 'spec_helper'
 
 describe "the job-offers page" do
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
-
   before(:each) do
 
     @student1 = FactoryGirl.create(:student)
