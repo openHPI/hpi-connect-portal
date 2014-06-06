@@ -23,7 +23,8 @@ HpiHiwiPortal::Application.routes.draw do
           get "accept"
           get "decline"
           get "reopen"
-          put "prolong"
+          get "prolong"
+          get "request_prolong"
           post "fire"
         end
       end

@@ -11,6 +11,18 @@
     <% end %>
 
     <span class="pull-right">
+
+      <% if can?(:prolong, @job_offer) %>
+        <%= link_to t("job_offers.prolong"), prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+      <% elsif can?(:request_prolong, @job_offer) %>
+        <% if @job_offer.prolong_requested %>
+          <a class="btn btn-default" disabled="disabled"><%= t("job_offers.prolong_requested") %></a>
+        <% else %>
+          <%= t("activerecord.attributes.job_offer.expiration_date") %>: <%= @job_offer.expiration_date %>
+          <%= link_to t("job_offers.prolong"), request_prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+        <% end %>
+      <% end %>
+
       <% if can?(:update, @job_offer) && !@job_offer.closed? %>
         <%= link_to t("job_offers.show_matching_students"),
         students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
@@ -95,22 +107,7 @@
             <% end %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
             <% unless @job_offer.end_date.blank? %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-6">
-                    <%= t("activerecord.attributes.job_offer.end_date") %>
-                  </div>
-                  <div class="col-sm-6">
-                    <%= l(@job_offer.end_date) %>
-                    <% if can? :prolong, @job_offer%>
-                      <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
-                        <%= f.text_field :end_date, class: 'datepicker form-control' %>
-                        <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
+              <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
             <% end %>            
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
             <% unless @job_offer.compensation.nil? %>

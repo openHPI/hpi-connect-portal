@@ -47,7 +47,6 @@ describe "the job-offers page" do
   end
 end
 
-
 describe "a job offer entry" do
 
   before(:all) do
@@ -83,12 +82,6 @@ describe "a job offer entry" do
 end
 
 describe "job_offers_history" do
-
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
 
   before(:each) do
     @student1 = FactoryGirl.create(:student)
