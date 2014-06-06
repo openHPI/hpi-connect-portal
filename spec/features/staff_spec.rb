@@ -5,7 +5,10 @@ describe "the staff page" do
   let(:staff) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
-	before(:each) do
+  before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @staff1 = FactoryGirl.create(:staff)
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])

@@ -65,4 +65,10 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
+  config.before(:all) do
+    FactoryGirl.create(:job_status, :pending) unless JobStatus.pending
+    FactoryGirl.create(:job_status, :active) unless JobStatus.active
+    FactoryGirl.create(:job_status, :closed) unless JobStatus.closed
+  end
 end

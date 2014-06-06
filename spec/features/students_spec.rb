@@ -5,9 +5,11 @@ describe "the students page" do
   let(:staff) { FactoryGirl.create(:staff) }
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
-
     login staff.user
     visit students_path
   end
@@ -68,7 +70,14 @@ end
 
 describe "the students editing page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
   end
@@ -127,7 +136,15 @@ end
 
 describe "the students profile page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @job_offer =  FactoryGirl.create(:job_offer)
     @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
     @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])

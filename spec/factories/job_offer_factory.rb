@@ -13,14 +13,15 @@
 #  compensation        :float
 #  room_number         :string(255)
 #  employer_id         :integer
-#  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  vacant_posts        :integer
 #  flexible_start_date :boolean          default(FALSE)
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
 #  graduation_id       :integer          default(2), not null
 #  academic_program_id :integer
+#  prolong_requested   :boolean          default(FALSE)
+#  prolonged           :boolean          default(FALSE)
+#  prolonged_at        :datetime
 #
 
 FactoryGirl.define do

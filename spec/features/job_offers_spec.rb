@@ -3,9 +3,7 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, :active)
+    @active = JobStatus.active
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
@@ -47,8 +45,13 @@ describe "the job-offers page" do
   end
 end
 
-
 describe "a job offer entry" do
+
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
@@ -81,10 +84,8 @@ describe "a job offer entry" do
 end
 
 describe "job_offers_history" do
-  before do
-    FactoryGirl.create(:job_status, :pending)
-    @active = FactoryGirl.create(:job_status, :active)
-    @status = FactoryGirl.create(:job_status, :closed)
+
+  before(:each) do
     @student1 = FactoryGirl.create(:student)
     login @student1.user
     @employer = FactoryGirl.create(:employer)

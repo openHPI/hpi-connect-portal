@@ -11,7 +11,6 @@
 #  avatar_content_type  :string(255)
 #  avatar_file_size     :integer
 #  avatar_updated_at    :datetime
-#  deputy_id            :integer
 #  activated            :boolean          default(FALSE), not null
 #  place_of_business    :string(255)
 #  website              :string(255)
