@@ -43,7 +43,7 @@
       </div>
       <div class="package-div">
         <% if employer.booked_package_id > 0 %>
-          <%= radio_button_tag :free, :free, 0, class: 'package-select', disabled: true %>
+          <%= radio_button_tag :free, :free, 0, class: 'package-select-disabled', disabled: true %>
         <% else %>
           <%= form.radio_button :requested_package_id, 0, class: 'package-select' %>
         <% end %>
@@ -54,9 +54,20 @@
       </div>
       <div class="package-div">
         <% if employer.booked_package_id > 1 %>
-          <%= radio_button_tag :partner, :partner, 0, class: 'package-select', disabled: true %>
+          <%= radio_button_tag :profile, :profile, 0, class: 'package-select-disabled', disabled: true %>
         <% else %>
           <%= form.radio_button :requested_package_id, 1, class: 'package-select' %>
+        <% end %>
+        <b><%= t("activerecord.attributes.employer.packages.profile") %></b><br />
+        <ul> 
+          <li><%= t("employers.package_descriptions.profile") %></li>
+        </ul>
+      </div>
+      <div class="package-div">
+        <% if employer.booked_package_id > 2 %>
+          <%= radio_button_tag :partner, :partner, 0, class: 'package-select-disabled', disabled: true %>
+        <% else %>
+          <%= form.radio_button :requested_package_id, 2, class: 'package-select' %>
         <% end %>
         <b><%= t("activerecord.attributes.employer.packages.partner") %></b><br />
         <ul> 
@@ -65,12 +76,12 @@
         </ul>
       </div>
       <div class="package-div">
-        <%= form.radio_button :requested_package_id, 2, class: 'package-select' %>
+        <%= form.radio_button :requested_package_id, 3, class: 'package-select' %>
         <b><%= t("activerecord.attributes.employer.packages.premium") %></b>
-        <ul> 
+        <ul>
           <li><%= t("employers.package_descriptions.profile") %></li>
           <li> 24 <%= t("employers.package_descriptions.full_time") %></li>
-          <li><%= t("employers.package_descriptions.student_profiles") %></li>
+          <li><%= t("employers.package_descriptions.student_profile") %></li>
         </ul>
       </div>
       <div class="clearfix"></div>

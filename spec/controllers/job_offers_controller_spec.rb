@@ -423,7 +423,7 @@ describe JobOffersController do
       end
     end
 
-    describe "for employers with" do
+    describe "for employers" do
 
       before :each do
         @employer = FactoryGirl.create(:employer)
@@ -433,8 +433,13 @@ describe JobOffersController do
         @attributes["employer_id"] = nil
       end
 
-      it "should not be possible to create a graduate job with the free package" do
+      it "should not be possible to create a graduate job with the free or profile package" do
         login @staff.user
+        expect {
+          post :create, {job_offer: @attributes}, valid_session
+        }.to change(JobOffer, :count).by(0)
+        response.should render_template("new")
+        @employer.update_column :booked_package_id, 1
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
@@ -442,7 +447,7 @@ describe JobOffersController do
       end
 
       it "should only be possible to create 4 graduate job with the partner package" do
-        @employer.update_column :booked_package_id, 1
+        @employer.update_column :booked_package_id, 2
         login @staff.user
         4.times do
           expect {
@@ -455,8 +460,8 @@ describe JobOffersController do
         response.should render_template("new")
       end
 
-      it "should not be possible to create 24 graduate job with the premium package" do
-        @employer.update_column :booked_package_id, 2
+      it "should be possible to create 24 graduate job with the premium package" do
+        @employer.update_column :booked_package_id, 3
         login @staff.user
         24.times do
           expect {

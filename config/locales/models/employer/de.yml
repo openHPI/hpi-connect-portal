@@ -8,5 +8,6 @@ de:
         avatar: "Logo"
         packages:
             free: "Kostenlos"
+            profile: "Profilpaket"
             partner: "Basispaket"
             premium: "Partnerpaket"

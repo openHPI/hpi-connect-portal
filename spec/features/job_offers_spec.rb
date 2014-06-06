@@ -3,12 +3,10 @@ require 'spec_helper'
 describe "the job-offers page" do
 
   before(:each) do
-
+    @active = JobStatus.active
     @student1 = FactoryGirl.create(:student)
     login @student1.user
-
-    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -56,6 +54,10 @@ describe "a job offer entry" do
   end
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @student1 = FactoryGirl.create(:student)
     login @student1.user
 
@@ -64,7 +66,7 @@ describe "a job offer entry" do
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      status: FactoryGirl.create(:job_status, :active)
+      status: JobStatus.active
     )
 
     visit job_offers_path
@@ -88,11 +90,9 @@ describe "job_offers_history" do
     login @student1.user
     @employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
-    @status = FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, name:"active")
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
-      status: @status,
+      status: JobStatus.closed,
       employer: @employer,
       )
   end
