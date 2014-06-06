@@ -9,8 +9,6 @@ describe "the employer page" do
   let(:staff) { employer.staff_members.first }
 
   before do
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :pending)
     @student1 = FactoryGirl.create(:student)
     login(@student1.user)
     @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.active)

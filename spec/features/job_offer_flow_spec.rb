@@ -16,12 +16,7 @@ describe "the job offer flow" do
   subject { page }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-
     employer.save
-
     ActionMailer::Base.deliveries = []
   end
 

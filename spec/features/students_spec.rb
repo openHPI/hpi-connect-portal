@@ -70,6 +70,10 @@ end
 
 describe "the students editing page" do
 
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
+
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :active)
@@ -131,6 +135,10 @@ describe "the students editing page" do
 end
 
 describe "the students profile page" do
+
+  before(:all) do
+    FactoryGirl.create(:job_status, :active)
+  end
 
   before(:each) do
     FactoryGirl.create(:job_status, :pending)

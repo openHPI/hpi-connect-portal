@@ -21,6 +21,12 @@ describe SessionsController do
       post 'create', {session: {email: 'some_test@email.com', password: 'password'}}
       response.should redirect_to(root_path)
     end
+
+    it "redirects to employers home if staff logs in" do
+      staff = FactoryGirl.create :staff
+      post 'create', {session: {email: staff.email, password: "password123"}}
+      response.should redirect_to(home_employers_path)
+    end
   end
 
   describe "DELETE destroy" do

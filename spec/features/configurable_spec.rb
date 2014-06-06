@@ -6,12 +6,6 @@ describe Admin::ConfigurablesController do
   let(:admin) { FactoryGirl.create(:user, :admin) }
   let(:student) { FactoryGirl.create(:student) }
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
-
   it "should not be visible for a member of the staff " do
     login(staff.user)
     visit admin_configurable_path
