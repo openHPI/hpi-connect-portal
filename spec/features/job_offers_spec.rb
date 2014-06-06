@@ -92,7 +92,7 @@ describe "job_offers_history" do
     @staff = FactoryGirl.create(:staff)
     @job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
-      status: @status,
+      status: JobStatus.closed,
       employer: @employer,
       )
   end
