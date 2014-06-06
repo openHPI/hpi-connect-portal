@@ -4,10 +4,6 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:staff) }
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :active)
-  end
-
   before(:each) do
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
