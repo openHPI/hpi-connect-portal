@@ -50,6 +50,8 @@ class Student < ActiveRecord::Base
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
   has_many :assignments
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
+  has_many :cv_jobs, dependent: :destroy
+  has_many :cv_educations, dependent: :destroy
 
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
