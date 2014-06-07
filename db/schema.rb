@@ -56,9 +56,10 @@ ActiveRecord::Schema.define(version: 20140607082938) do
   create_table "cv_educations", force: true do |t|
     t.integer  "student_id"
     t.string   "degree"
+    t.string   "field"
     t.string   "institution"
-    t.date     "from"
-    t.date     "to"
+    t.date     "start_date"
+    t.date     "end_date"
     t.boolean  "current",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -68,8 +69,8 @@ ActiveRecord::Schema.define(version: 20140607082938) do
     t.integer  "student_id"
     t.string   "position"
     t.string   "employer"
-    t.date     "from"
-    t.date     "to"
+    t.date     "start_date"
+    t.date     "end_date"
     t.boolean  "current",     default: false
     t.text     "description"
     t.datetime "created_at"

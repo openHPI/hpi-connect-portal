@@ -4,8 +4,8 @@ class CreateCvJobs < ActiveRecord::Migration
       t.integer :student_id
       t.string :position
       t.string :employer
-      t.date :from
-      t.date :to
+      t.date :start_date
+      t.date :end_date
       t.boolean :current, default: false
       t.text :description
 

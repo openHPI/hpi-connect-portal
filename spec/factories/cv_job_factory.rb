@@ -14,14 +14,14 @@
 #  updated_at  :datetime
 #
 
-class CvJob < ActiveRecord::Base
-  belongs_to :student
-  
-  default_scope { order 'end_date DESC, start_date DESC' }
-
-  validates :student, presence: true
-  validates :position, presence: true
-  validates :employer, presence: true
-  validates :start_date, presence: true
-  validates :end_date, presence: true, unless: :current
+FactoryGirl.define do
+  factory :cv_job do
+    association   :student
+    position      'Ruby on Rails developer'
+    employer      'SAP AG'
+    description   'Developing a career portal'
+    start_date    Date.current - 100
+    end_date      Date.current - 10
+    current       false
+  end
 end
