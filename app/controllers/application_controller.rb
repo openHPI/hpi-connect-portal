@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
-  force_ssl if: :redirect_needed?
-
   protect_from_forgery with: :exception
 
   before_action :set_locale
@@ -59,9 +57,5 @@ class ApplicationController < ActionController::Base
 
     def rescue_from_exception(exception)
       redirect_to root_path
-    end
-
-    def redirect_needed?
-      Rails.env.production? && request.protocol == 'http://'
     end
 end
