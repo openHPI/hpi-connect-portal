@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
-  force_ssl if: :ssl_configured?
+  force_ssl if: :redirect_needed?
 
   protect_from_forgery with: :exception
 
@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
 
-    def ssl_configured?
-      Rails.env.production?
+    def redirect_needed?
+      Rails.env.production? && request.protocol == 'http://'
     end
 end
