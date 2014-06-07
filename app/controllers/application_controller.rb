@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
+  force_ssl if: :ssl_configured?
+
   protect_from_forgery with: :exception
 
   before_action :set_locale
@@ -57,5 +59,9 @@ class ApplicationController < ActionController::Base
 
     def rescue_from_exception(exception)
       redirect_to root_path
+    end
+
+    def ssl_configured?
+      !Rails.env.development?
     end
 end
