@@ -135,6 +135,12 @@
           </div>
         <% end %>
       <% end %>
+      <% unless @closed_job_offers.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
+          <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
