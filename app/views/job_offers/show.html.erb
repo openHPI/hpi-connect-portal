@@ -86,6 +86,35 @@
         </li>
       </ul>
     </div>
+
+    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
+      <div class="clearfix">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><%= t("job_offers.applicant_first_name") %></th>
+                <th><%= t("job_offers.applicant_last_name") %></th>
+                <th><%= t("job_offers.applicant_email") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @job_offer.applications %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+    <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
+            <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
+        </div>
+      </div>
+    <%end%>
   </div>
 </div>
 <div class="wrapper-4 sidebar">
@@ -129,14 +158,6 @@
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
       <% end %>
 
-      <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
-        <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-              <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
-          </div>
-        </div>
-      <%end%>
     </div>
 
     <div class="row">
@@ -149,26 +170,6 @@
 
 
     </div>
-
-    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
-      <div class="clearfix">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th><%= t("job_offers.applicant_first_name") %></th>
-                <th><%= t("job_offers.applicant_last_name") %></th>
-                <th><%= t("job_offers.applicant_email") %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render @job_offer.applications %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    <% end %>
 
   </div>
 </div>
