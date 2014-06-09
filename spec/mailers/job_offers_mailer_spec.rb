@@ -142,6 +142,10 @@ describe JobOffersMailer do
     it "should have job information in its body" do
       @email.body.should have_content(@job_offer.title)
     end
+
+    it "should have Employers Name in its body" do
+      @email.body.should have_content(@job_offer.employer.name)
+    end
   end
     describe "students are informed about new job offer" do
       before(:each) do
