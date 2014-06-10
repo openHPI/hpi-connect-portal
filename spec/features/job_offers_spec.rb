@@ -6,13 +6,7 @@ describe "the job-offers page" do
     @active = JobStatus.active
     @student1 = FactoryGirl.create(:student)
     login @student1.user
-<<<<<<< HEAD
-
-    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = JobStatus.active
-=======
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
->>>>>>> 3c9788c9b90ee263b2edfd2e914331017b580f24
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
