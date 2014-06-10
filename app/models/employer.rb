@@ -70,6 +70,7 @@ class Employer < ActiveRecord::Base
   end
 
   def can_create_job_offer?(category)
+    
     (category != 'graduate_job' || (paying? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
 end
