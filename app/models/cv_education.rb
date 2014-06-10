@@ -25,4 +25,8 @@ class CvEducation < ActiveRecord::Base
   validates :institution, presence: true
   validates :start_date, presence: true
   validates :end_date, presence: true, unless: :current
+
+  def self.too_blank?(attributes)
+    attributes['degree'].blank? && attributes['field'].blank? && attributes['institution'].blank?
+  end
 end

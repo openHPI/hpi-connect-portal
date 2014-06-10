@@ -1,5 +1,5 @@
-<h5> Berufserfahrung </h5>
-<ul class="list-group">
+<ul class="list-group cv-entry-fields cv-work">
+  <a class="btn btn-default cv-remove" data-id=".cv-work" href="#">Remove Work Experience</a>
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
@@ -26,7 +26,7 @@
         <%= label_field form, :start_date, t("activerecord.attributes.cv_jobs.start_date") %>
       </div>
       <div class="col-sm-9">
-        <%= form.input :start_date, discard_day: true %>
+        <%= form.input :start_date, discard_day: true, start_year: 1940 %>
       </div>
     </div>
   </li>
@@ -36,7 +36,7 @@
         <%= label_field form, :end_date, t("activerecord.attributes.cv_jobs.end_date") %>
       </div>
       <div class="col-sm-9">
-        <%= form.input :end_date, discard_day: true %>
+        <%= form.input :end_date, discard_day: true, start_year: 1940 %>
       </div>
     </div>
   </li>

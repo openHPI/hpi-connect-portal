@@ -127,17 +127,23 @@
 
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("users.career") %></h4></div>
-      <%= form.simple_fields_for :cv_jobs, student.cv_jobs do |job_builder| %>
-        <%= render 'job_fields', form: job_builder %>
-      <% end %>
-  
-      <button>Add Work Experience</button>
+      <div class="cv-group cv-work">
+        <h5> Berufserfahrung </h5>
+        <%= form.simple_fields_for :cv_jobs, student.cv_jobs do |job_builder| %>
+          <%= render 'job_fields', form: job_builder %>
+        <% end %>
+      </div>
 
-      <%= form.simple_fields_for :cv_educations, student.cv_educations do |education_builder| %>
-        <%=  render 'education_fields', form: education_builder %>
-      <% end %>
+      <a class="btn btn-default cv-add" data-id=".cv-work" href="#">Add Work Experience</a>
+      
+      <div class="cv-group cv-education">
+        <h5> Ausbildung </h5>
+        <%= form.simple_fields_for :cv_educations, student.cv_educations do |education_builder| %>
+          <%=  render 'education_fields', form: education_builder %>
+        <% end %>
+      </div>
 
-      <button class="btn btn-default">Add Education</button>
+      <a class="btn btn-default cv-add" data-id=".cv-education" href="#">Add Education</a>
     </div>
 
     <div class="panel panel-default">

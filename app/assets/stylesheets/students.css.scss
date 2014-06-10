@@ -27,3 +27,10 @@
     padding: 1px;
     height: 24px;
 }
+
+.cv-entry-fields {
+    border-top: 2px solid gray;
+}
+.cv-group .cv-entry-fields:first-of-type {
+    border-top: none;
+}
