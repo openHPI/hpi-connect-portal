@@ -45,6 +45,8 @@ class StudentsController < ApplicationController
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
     @employers = Employer.all
+    @student.cv_jobs << CvJob.new
+    @student.cv_educations << CvEducation.new
   end
 
   def update

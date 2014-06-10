@@ -1,0 +1,63 @@
+<h5> Ausbildung </h5>
+<ul class="list-group">
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :degree, t("activerecord.attributes.cv_educations.degree") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :degree %>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :field, t("activerecord.attributes.cv_educations.field") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :field %>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :institution, t("activerecord.attributes.cv_educations.institution") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :institution %>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :start_date, t("activerecord.attributes.cv_educations.start_date") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :start_date, discard_day: true %>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :end_date, t("activerecord.attributes.cv_educations.end_date") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :end_date, discard_day: true %>
+      </div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= label_field form, :current, t("activerecord.attributes.cv_educations.current") %>
+      </div>
+      <div class="col-sm-9">
+        <%= form.input :current %>
+      </div>
+    </div>
+  </li>
+</ul>

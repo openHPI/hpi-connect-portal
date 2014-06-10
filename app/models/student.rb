@@ -56,6 +56,8 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
+  accepts_nested_attributes_for :cv_jobs
+  accepts_nested_attributes_for :cv_educations
 
   delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
 
