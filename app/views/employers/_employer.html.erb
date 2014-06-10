@@ -1,7 +1,7 @@
 <li class="list-group-item">
   <div class="row">
     <div class="col-md-5">
-      <% if employer.paying? %>
+      <% if can?(:activate, employer) || employer.paying? %>
         <%= link_to employer.name, employer, :class => "h4" %> 
       <% else %>
         <h4> <%= employer.name %> </h4>
