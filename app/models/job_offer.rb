@@ -40,7 +40,7 @@ class JobOffer < ActiveRecord::Base
   has_many :assigned_students, through: :assignments, source: :student
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
-  belongs_to :employer, dependent: :destroy
+  belongs_to :employer, dependent: :delete
   belongs_to :status, class_name: "JobStatus"
 
   accepts_nested_attributes_for :programming_languages

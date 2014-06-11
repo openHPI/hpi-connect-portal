@@ -68,7 +68,9 @@ class EmployersController < ApplicationController
 
   def destroy
     if @employer.destroy
-      respond_and_redirect_to root_url, I18n.t('job_offers.messages.successfully_deleted')
+      respond_and_redirect_to employers_path, I18n.t('employers.messages.successfully_deleted')
+    else
+      respond_and_redirect_to employer_path(@employer), I18n.t('employers.messages.successfully_deleted')
     end
   end
 

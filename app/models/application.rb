@@ -12,7 +12,7 @@
 class Application < ActiveRecord::Base
   
   belongs_to :student
-  belongs_to :job_offer
+  belongs_to :job_offer, dependent: :delete
 
   validates_presence_of :student
   validates_presence_of :job_offer
