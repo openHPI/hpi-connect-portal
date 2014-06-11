@@ -35,9 +35,9 @@ class JobOffer < ActiveRecord::Base
   
   before_save :default_values
 
-  has_many :applications
+  has_many :applications, dependent: :destroy
   has_many :students, through: :applications
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :assigned_students, through: :assignments, source: :student
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
