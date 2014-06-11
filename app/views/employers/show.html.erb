@@ -14,7 +14,10 @@
         <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
       <% end %>
       <% if can?(:deactivate, @employer) && @employer.activated %>
-      <%= link_to t("links.deactivate"), deactivate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber deaktivieren möchten?' } %>
+        <%= link_to t("links.deactivate"), deactivate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber deaktivieren möchten?' } %>
+      <% end %>
+      <% if can?(:destroy, @employer) %>
+        <%= link_to t("links.destroy"), url_for(controller:"employers", action: "destroy", id: @employer.id, only_path: false), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber löschen möchten?' } %>
       <% end %>
     </div>
   </div>
