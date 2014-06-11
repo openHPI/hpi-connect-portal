@@ -4,7 +4,6 @@
 <% unless job_offer_list.empty? %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
-    <% if job_offer.employer.activated %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-5">
@@ -35,7 +34,6 @@
           </div>           
         </div>
       </li>
-      <%end%>
     <%end%>
   </ul>
   <div class="pull-right">
