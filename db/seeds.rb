@@ -56,6 +56,7 @@ Staff.delete_all
 hpi = Employer.create!(
   booked_package_id: Employer::PACKAGES.index("premium"),
   name: "Hasso-Plattner-Institut",
+  activated: true,
   description: "This is the Hasso-Plattner-Institut.",
   number_of_employees: "50-100",
   place_of_business: "Potsdam - Brandenburg",

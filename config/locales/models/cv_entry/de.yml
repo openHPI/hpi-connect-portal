@@ -1,0 +1,14 @@
+de:
+  activerecord:
+    attributes:
+      cv_entry:
+        degree: "Abschluss"
+        field: "Fach-/Studienrichtung"
+        institution: "Einrichtung"
+        start_date: "Beginn"
+        end_date: "Ende"
+        current_education: "Gegenwärtige Ausbildung"
+        current_job: "Gegenwärtige Arbeit"
+        position: "Position"
+        employer: "Unternehmen"
+        description: "Aufgaben"

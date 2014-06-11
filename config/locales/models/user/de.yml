@@ -2,6 +2,11 @@ de:
   activerecord:
     attributes:
       user:
+        visibility: "Profil sichtbar"
+        visibility_options:
+                    nobody: "für niemanden"
+                    employers_only: "nur für Arbeitgeber"
+                    employers_and_students: "für Arbeitgeber und Studenten"
         first_name: "Vorname"
         last_name: "Nachname"
         password: "Passwort"
@@ -27,6 +32,7 @@ de:
         photo: "Bild"
         employment_start_date: "Beginn der Anstellung"
         employer: "Arbeitgeber"
+        status: "Beschäftigungsstatus"
         academic_rank_options:
             bachelor: "Bachelor"
             master: "Master"

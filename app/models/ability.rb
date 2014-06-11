@@ -17,19 +17,22 @@ class Ability
 
   def initialize_admin
     can :manage, :all
-    cannot :prolong, JobOffer, status: JobStatus.pending
-    cannot :prolong, JobOffer, status: JobStatus.closed
     cannot :reopen, JobOffer, status: JobStatus.pending
   end
 
   def initialize_student(user)
     can :read, Faq
     can [:edit, :update, :show, :activate, :request_linkedin_import, :insert_imported_data], Student, id: user.manifestation.id
+    can [:show], Student do |student|
+      (student.id == user.manifestation.id) || (student.visibility_id == 2)
+    end
     cannot :show, JobOffer, status: JobStatus.closed
 
     if user.activated
       can :create, Application
-      can :show, Student, activated: true
+      can :show, Student do |student|
+        student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
+      end      
       can :matching, JobOffer
     end
   end
@@ -48,11 +51,15 @@ class Ability
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
+      can :show, Student do |student|
+        student.activated && student.visibility_id > 0
+      end
+
       cannot [:edit, :update], Student
       can :close, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
-      can :prolong, JobOffer, employer: staff.employer, status: JobStatus.active
+      can :request_prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
       can [:update, :destroy, :fire], JobOffer, employer: staff.employer
       can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|

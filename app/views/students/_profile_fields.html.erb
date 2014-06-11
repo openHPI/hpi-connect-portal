@@ -9,7 +9,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= form.label :employment_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(student, :employment_status) %>
+                <%= label_field form, :employers, t("activerecord.attributes.user.status") %>
               </div>
               <div class="col-sm-9">
                 <%= form.select :employment_status_id, Student::EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), Student::EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
@@ -19,7 +19,17 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= form.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(student, :birthday) %>
+                <%= label_field form, :visibility, t("activerecord.attributes.user.visibility") %>
+              </div>
+              <div class="col-sm-9">
+                <%= form.select :visibility_id, Student::VISIBILITYS.collect {|visibility| [ t("activerecord.attributes.user.visibility_options." +  visibility), Student::VISIBILITYS.index(visibility) ] }, {}, {id: 'visibility_id', class: 'select optional form-control'} %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_field form, :birthday, t("activerecord.attributes.user.birthday") %>
               </div>
               <div class="col-sm-9">
                 <%= form.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-4'} %>
@@ -88,22 +98,22 @@
   <!--     Right -->
   <div class="col-sm-6">
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("users.carrier") %></h4></div>
+      <div class="panel-heading"><h4><%= t("users.career") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.academic_rank_options." + student.academic_program)) %>
+              <%= label_field form, :academic_program, t("activerecord.attributes.user.academic_program") %>
             </div>
             <div class="col-sm-9">              
-                <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
+              <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
             </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %><%= mark_if_required(student, :semester) %>
+              <%= label_field form, :semester, t("activerecord.attributes.user.semester") %>
             </div>
             <div class="col-sm-9">
               <%= form.input :semester, as: :integer %>
@@ -113,7 +123,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= form.label :graduation, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.degrees." + student.graduation)) %>
+              <%= label_field form, :graduation, t("activerecord.attributes.user.graduation") %>
             </div>
             <div class="col-sm-9">
             <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
@@ -123,6 +133,27 @@
           </div>
         </li>
       </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("users.cv") %></h4></div>
+      <div class="cv-group cv-work">
+        <h5><%= t("students.work_experience") %></h5>
+        <%= form.simple_fields_for :cv_jobs, student.cv_jobs do |job_builder| %>
+          <%= render 'job_fields', form: job_builder %>
+        <% end %>
+      </div>
+
+      <a class="btn btn-default cv-add" data-id=".cv-work" href="#"><%= t("students.add_work_experience") %></a>
+      
+      <div class="cv-group cv-education">
+        <h5><%= t("students.education") %></h5>
+        <%= form.simple_fields_for :cv_educations, student.cv_educations do |education_builder| %>
+          <%=  render 'education_fields', form: education_builder %>
+        <% end %>
+      </div>
+
+      <a class="btn btn-default cv-add" data-id=".cv-education" href="#"><%= t("students.add_education") %></a>
     </div>
 
     <div class="panel panel-default">

@@ -8,5 +8,11 @@ de:
         avatar: "Logo"
         packages:
             free: "Kostenlos"
+            profile: "Profilpaket"
             partner: "Basispaket"
             premium: "Partnerpaket"
+        place_of_business: "Unternehmenssitz"
+        line_of_business: "Branche"
+        number_of_employees: "Anzahl an Mitarbeitern"
+        year_of_foundation: "Gründungsjahr"
+        website: "Website"

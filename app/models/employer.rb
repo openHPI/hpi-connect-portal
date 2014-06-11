@@ -11,7 +11,6 @@
 #  avatar_content_type  :string(255)
 #  avatar_file_size     :integer
 #  avatar_updated_at    :datetime
-#  deputy_id            :integer
 #  activated            :boolean          default(FALSE), not null
 #  place_of_business    :string(255)
 #  website              :string(255)
@@ -24,7 +23,7 @@
 
 class Employer < ActiveRecord::Base
   NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
-  PACKAGES = ['free', 'partner', 'premium']
+  PACKAGES = ['free', 'profile', 'partner', 'premium']
 
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/assets/placeholder/:style/missing.png"
 
@@ -61,8 +60,12 @@ class Employer < ActiveRecord::Base
     booked_package_id >= 1
   end
 
+  def partner?
+    booked_package_id >= 2
+  end
+
   def premium?
-    booked_package_id == 2
+    booked_package_id == 3
   end
 
   def graduate_job_count
@@ -70,6 +73,6 @@ class Employer < ActiveRecord::Base
   end
 
   def can_create_job_offer?(category)
-    (category != 'graduate_job' || (paying? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+    (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
 end

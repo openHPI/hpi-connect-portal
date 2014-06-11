@@ -1,5 +1,5 @@
 <div class="wrapper-12 teaser">
-  <div class="col-sm-6">
+  <div class="col-sm-6 white">
     <div class="pull-right">
       <h1 align="right">
         <%= @employer.name %>
@@ -107,7 +107,7 @@
 
       <% unless @staff.empty? %>
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.additional_staff") %></h4></div>
+          <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
           <ul class="list-group">
             <% @staff.each do |user| %>
               <li class="list-group-item">
@@ -140,6 +140,12 @@
             <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
           </div>
         <% end %>
+      <% end %>
+      <% unless @closed_job_offers.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
+          <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
+        </div>
       <% end %>
     </div>
   </div>

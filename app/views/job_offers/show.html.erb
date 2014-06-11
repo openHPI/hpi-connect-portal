@@ -1,5 +1,5 @@
-<div class="wrapper-12 teaser">
-  <div class="col-sm-12">
+<div class="wrapper-7">
+  <div class="col-md-7">
 
     <% if @job_offer.pending? && can?(:accept, @job_offer) %>
       <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
@@ -11,6 +11,18 @@
     <% end %>
 
     <span class="pull-right">
+
+      <% if can?(:prolong, @job_offer) %>
+        <%= link_to t("job_offers.prolong"), prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+      <% elsif can?(:request_prolong, @job_offer) %>
+        <% if @job_offer.prolong_requested %>
+          <a class="btn btn-default" disabled="disabled"><%= t("job_offers.prolong_requested") %></a>
+        <% else %>
+          <%= t("activerecord.attributes.job_offer.expiration_date") %>: <%= @job_offer.expiration_date %>
+          <%= link_to t("job_offers.prolong"), request_prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+        <% end %>
+      <% end %>
+
       <% if can?(:update, @job_offer) && !@job_offer.closed? %>
         <%= link_to t("job_offers.show_matching_students"),
         students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
@@ -48,7 +60,7 @@
 
     <br>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 white">
         <h1 style="display:inline">
           <%= @job_offer.title %>
             <% if @job_offer.pending? %>
@@ -75,8 +87,40 @@
       </ul>
     </div>
 
+    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
+      <div class="clearfix">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th><%= t("job_offers.applicant_first_name") %></th>
+                <th><%= t("job_offers.applicant_last_name") %></th>
+                <th><%= t("job_offers.applicant_email") %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @job_offer.applications %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
+    <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
+            <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>
+<div class="wrapper-4 sidebar">
+  <div class="col-md-4 transparent">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-12">
 
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
@@ -92,22 +136,7 @@
             <% end %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
             <% unless @job_offer.end_date.blank? %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <%= t("activerecord.attributes.job_offer.end_date") %>
-                  </div>
-                  <div class="col-sm-9">
-                    <%= l(@job_offer.end_date) %>
-                    <% if can? :prolong, @job_offer%>
-                      <%= simple_form_for [:prolong, @job_offer], method: :put, html: { id: 'prolong-form' } do |f| %>
-                        <%= f.text_field :end_date, class: 'datepicker form-control' %>
-                        <%= f.submit t("job_offers.prolong"), class: 'btn btn-info' %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
+              <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
             <% end %>            
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
             <% unless @job_offer.compensation.nil? %>
@@ -129,14 +158,6 @@
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
       <% end %>
 
-      <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
-        <div class="col-sm-6">
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-              <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
-          </div>
-        </div>
-      <%end%>
     </div>
 
     <div class="row">
@@ -149,26 +170,6 @@
 
 
     </div>
-
-    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
-      <div class="clearfix">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th><%= t("job_offers.applicant_first_name") %></th>
-                <th><%= t("job_offers.applicant_last_name") %></th>
-                <th><%= t("job_offers.applicant_email") %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render @job_offer.applications %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    <% end %>
 
   </div>
 </div>

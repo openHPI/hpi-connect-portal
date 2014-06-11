@@ -23,7 +23,8 @@ HpiHiwiPortal::Application.routes.draw do
           get "accept"
           get "decline"
           get "reopen"
-          put "prolong"
+          get "prolong"
+          get "request_prolong"
           post "fire"
         end
       end
@@ -45,6 +46,8 @@ HpiHiwiPortal::Application.routes.draw do
           get "destroy"
         end
       end
+
+      post '/forgot_password' => 'users#forgot_password'
 
       resources :users, only: [:edit, :update] do
         patch '/update_password' => 'users#update_password', as: 'update_password'
