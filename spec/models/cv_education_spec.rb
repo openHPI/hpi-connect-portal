@@ -106,11 +106,12 @@ describe CvEducation do
     before(:each) do
       @oldest = FactoryGirl.create(:cv_education, start_date: Date.today - 100.days, end_date: Date.today - 30.days)
       @middle = FactoryGirl.create(:cv_education, start_date: Date.today - 90.days, end_date: Date.today - 30.days)
-      @newest = FactoryGirl.create(:cv_education, start_date: Date.today - 90.days, end_date: Date.today - 15.days)
+      @newer = FactoryGirl.create(:cv_education, start_date: Date.today - 90.days, end_date: Date.today - 15.days)
+      @newest = FactoryGirl.create(:cv_education, start_date: Date.today - 90.days, end_date: Date.today - 20.days, current: true)
     end
 
     it "should be sorted by to and from date" do
-      CvEducation.all.should eq([@newest, @middle, @oldest])
+      CvEducation.all.should eq([@newest, @newer, @middle, @oldest])
     end
   end
 end

@@ -17,7 +17,7 @@
 class CvEducation < ActiveRecord::Base
   belongs_to :student
   
-  default_scope { order 'end_date DESC, start_date DESC' }
+  default_scope { order 'current DESC, end_date DESC, start_date DESC' }
 
   validates :student, presence: true
   validates :degree, presence: true
