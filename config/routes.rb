@@ -34,6 +34,7 @@ HpiHiwiPortal::Application.routes.draw do
       end 
       member do
         get "activate"
+        get "deactivate"
         end
       end
 

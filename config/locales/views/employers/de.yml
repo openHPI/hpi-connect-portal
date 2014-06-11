@@ -24,4 +24,6 @@ de:
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
             successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
             successfully_activated: "Das Profil wurde erfolgreich aktiviert."
-            unsuccessfully_activated: "Fehler während der aktivierung. Bitte versuchen Sie es später erneut."
+            unsuccessfully_activated: "Fehler während der Aktivierung. Bitte versuchen Sie es später erneut."            
+            successfully_deactivated: "Das Profil wurde erfolgreich deaktiviert."
+            unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."

@@ -2,8 +2,8 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
-  authorize_resource only: [:edit, :update, :activate]
-  before_action :set_employer, only: [:show, :edit, :update, :activate]
+  authorize_resource only: [:edit, :update, :activate, :deactivate]
+  before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate]
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active.paying
@@ -56,6 +56,13 @@ class EmployersController < ApplicationController
     @employer.update_column :activated, true
     @employer.update_column :booked_package_id, @employer.requested_package_id
     flash[:success] = I18n.t('employers.messages.successfully_activated')
+    redirect_to @employer
+  end
+
+  def deactivate
+    @employer.update_column :activated, false
+    @employer.update_column :booked_package_id, 0
+    flash[:success] = I18n.t('employers.messages.successfully_deactivated')
     redirect_to @employer
   end
 
