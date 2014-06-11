@@ -112,11 +112,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-<<<<<<< HEAD
-      params.require(:student).permit(:semester, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo, :cv])
-=======
-      params.require(:student).permit(:semester, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo])
->>>>>>> develop
+      params.require(:student).permit(:semester, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo])
     end
 
     def rescue_from_exception(exception)
