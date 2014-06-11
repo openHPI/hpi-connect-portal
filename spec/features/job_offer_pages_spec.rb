@@ -8,9 +8,9 @@ describe "Job Offer pages" do
   let(:staff) { FactoryGirl.create(:staff) }
 
   before(:each) do
-    @status_pending = FactoryGirl.create(:job_status, :pending)
-    @status_active = FactoryGirl.create(:job_status, :active)
-    @status_closed = FactoryGirl.create(:job_status, :closed)
+    @status_pending = JobStatus.pending
+    @status_active = JobStatus.active
+    @status_closed = JobStatus.closed
   end
 
   describe "show page" do
@@ -90,26 +90,6 @@ describe "Job Offer pages" do
             it { should have_link('Accept') }
             it { should have_link('Decline') }
             it { should have_link('Edit')}
-
-
-            describe "the job should be prolongable" do
-
-              before do
-                job_offer.update(end_date: Date.current + 20, status: @status_active)
-                visit job_offer_path(job_offer)
-              end
-
-              it { should have_button('Prolong') }
-            end
-
-            describe "but only if it is on running" do
-              before do
-                job_offer.update(end_date: Date.current + 20, status: @status_closed)
-                visit job_offer_path(job_offer)
-              end
-
-              it { should_not have_button(I18n.t("job_offers.prolong")) }
-            end
           end
         end
 

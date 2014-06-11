@@ -8,5 +8,6 @@ en:
         avatar: "Logo"
         packages:
             free: "Free"
+            profile: "Profile Packet"
             partner: "Basis Packet"
             premium: "Partner Packet"

@@ -17,8 +17,6 @@ class Ability
 
   def initialize_admin
     can :manage, :all
-    cannot :prolong, JobOffer, status: JobStatus.pending
-    cannot :prolong, JobOffer, status: JobStatus.closed
     cannot :reopen, JobOffer, status: JobStatus.pending
   end
 
@@ -58,12 +56,10 @@ class Ability
       end
 
       cannot [:edit, :update], Student
-
-
       can :close, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
-      can :prolong, JobOffer, employer: staff.employer, status: JobStatus.active
+      can :request_prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
       can [:update, :destroy, :fire], JobOffer, employer: staff.employer
       can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|
