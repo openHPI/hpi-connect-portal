@@ -1,9 +1,9 @@
 <ul class="list-group cv-entry-fields cv-work">
-  <a class="btn btn-default cv-remove" data-id=".cv-work" href="#">Remove Work Experience</a>
+  <a class="btn btn-default cv-remove" data-id=".cv-work" href="#"><%= t("students.remove_work_experience") %></a>
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :position, t("activerecord.attributes.cv_jobs.position") %>
+        <%= label_field form, :position, t("activerecord.attributes.cv_entry.position") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :position %>
@@ -13,7 +13,7 @@
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :employer, t("activerecord.attributes.cv_jobs.employer") %>
+        <%= label_field form, :employer, t("activerecord.attributes.cv_entry.employer") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :employer %>
@@ -23,7 +23,7 @@
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :start_date, t("activerecord.attributes.cv_jobs.start_date") %>
+        <%= label_field form, :start_date, t("activerecord.attributes.cv_entry.start_date") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :start_date, discard_day: true, start_year: 1940 %>
@@ -33,7 +33,7 @@
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :end_date, t("activerecord.attributes.cv_jobs.end_date") %>
+        <%= label_field form, :end_date, t("activerecord.attributes.cv_entry.end_date") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :end_date, discard_day: true, start_year: 1940 %>
@@ -43,7 +43,7 @@
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :current, t("activerecord.attributes.cv_jobs.current") %>
+        <%= label_field form, :current, t("activerecord.attributes.cv_entry.current_job") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :current %>
@@ -53,7 +53,7 @@
   <li class="list-group-item">
     <div class="row">
       <div class="col-sm-3">
-        <%= label_field form, :description, t("activerecord.attributes.cv_jobs.description") %>
+        <%= label_field form, :description, t("activerecord.attributes.cv_entry.description") %>
       </div>
       <div class="col-sm-9">
         <%= form.input :description %>

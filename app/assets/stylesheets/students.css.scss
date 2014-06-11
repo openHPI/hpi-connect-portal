@@ -34,3 +34,20 @@
 .cv-group .cv-entry-fields:first-of-type {
     border-top: none;
 }
+.cv-listing {
+    padding: 10px;
+    font-size: 15px;
+    line-height: 20px;
+    border-top: 2px solid gray;
+
+    p {
+        font-size: 15px;
+        line-height: 20px;
+    }
+    p:last-of-type {
+        margin-bottom: 0;
+    }
+}
+.cv-listing:first-of-type {
+    border-top: none;
+}
