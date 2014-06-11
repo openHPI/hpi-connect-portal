@@ -7,9 +7,8 @@ Role.create!(name: 'Admin', level: 3)
 #Create Standart Job Status
 JobStatus.delete_all
 JobStatus.create!(name: 'pending')
-JobStatus.create!(name: 'open')
-JobStatus.create!(name: 'running')
-JobStatus.create!(name: 'completed')
+JobStatus.create!(name: 'active')
+JobStatus.create!(name: 'closed')
 
 Language.delete_all
 Language.create!([
@@ -54,10 +53,10 @@ User.delete_all
 Student.delete_all
 Staff.delete_all
 
-hpi = Employer.new(
+hpi = Employer.create!(
+  booked_package_id: Employer::PACKAGES.index("premium"),
   name: "Hasso-Plattner-Institut",
   description: "This is the Hasso-Plattner-Institut.",
-  deputy: nil,
   number_of_employees: "50-100",
   place_of_business: "Potsdam - Brandenburg",
   line_of_business: "IT",
@@ -65,7 +64,7 @@ hpi = Employer.new(
   year_of_foundation: 1998,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
-hpi_deputy = Staff.new(
+hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
@@ -76,14 +75,11 @@ hpi_deputy = Staff.new(
   employer: hpi
 )
 
-hpi.deputy = hpi_deputy
-hpi.save!
-hpi_deputy.save!
-
-sap = Employer.new(
+sap = Employer.create!(
+  booked_package_id: Employer::PACKAGES.index("premium"),
   name: "SAP",
+  activated: true,
   description: "SAP",
-  deputy: nil,
   number_of_employees: ">1000",
   place_of_business: "Baden-Württemberg",
   line_of_business: "IT",
@@ -91,7 +87,7 @@ sap = Employer.new(
   year_of_foundation: 1972,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
 )
-sap_deputy = Staff.new(
+sap_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
@@ -101,10 +97,6 @@ sap_deputy = Staff.new(
   ),
   employer: sap
 )
-
-sap.deputy = sap_deputy
-sap.save!
-sap_deputy.save!
 
 # Admin Users
 
@@ -195,14 +187,12 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+2, 
   time_effort: 9,
   compensation: 13.50,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
-  responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-    vacant_posts: 1
 }])
 
 JobOffer.create!([{
@@ -212,14 +202,12 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   time_effort: 38,
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
-  programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++']),
-  responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-  vacant_posts: 5
+  programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++'])
 }])
 
 JobOffer.create!([{
@@ -229,15 +217,13 @@ JobOffer.create!([{
   category_id: 2,
   graduation_id: 4,
   employer: hpi, 
-  status: JobStatus.where(:name => "running").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   time_effort: 38,
   compensation: 12.0,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-  responsible_user:  User.where(:firstname=>"Carsten", :lastname=>"Meyer").first.manifestation,
-  assigned_students: [User.where(firstname: "Pascal").first.manifestation],
-  vacant_posts: 1
+  assigned_students: [User.where(firstname: "Pascal").first.manifestation]
 }])
 
 # OS Jobs
@@ -249,14 +235,12 @@ JobOffer.create!([{
   category_id: 0,
   graduation_id: 1,
   employer: hpi, 
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+3, 
   time_effort: 5,
   compensation: 12.00,
   languages: Language.where(:name => ['german', 'english']), 
-  programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-    vacant_posts: 1
+  programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java'])
 }])
 
 
@@ -267,14 +251,12 @@ JobOffer.create!([{
   category_id: 0,
   graduation_id: 0,
   employer: hpi,
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 8,
   compensation: 10.00,
   languages: Language.where(:name => 'german'), 
-  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-    vacant_posts: 1
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk'])
 }])
 
 JobOffer.create!([{
@@ -284,15 +266,13 @@ JobOffer.create!([{
   category_id: 3,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "running").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 8,
   compensation: 10.00,
   languages: Language.where(:name => 'german'), 
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-  assigned_students: [User.where(firstname: "Frank").first.manifestation],
-  vacant_posts: 1
+  assigned_students: [User.where(firstname: "Frank").first.manifestation]
 }])
 
 # SAP jobs
@@ -304,14 +284,12 @@ JobOffer.create!([{
   category_id: 1,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "open").first,
+  status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   time_effort: 38,
   compensation: 20.00,
   languages: Language.where(:name => 'english'), 
-  programming_languages: ProgrammingLanguage.where(:name => ['C']),
-  responsible_user: User.where(:firstname=>"Johanna", :lastname=>"Appel").first.manifestation,
-  vacant_posts: 1
+  programming_languages: ProgrammingLanguage.where(:name => ['C'])
 }])
 
 # FAQs

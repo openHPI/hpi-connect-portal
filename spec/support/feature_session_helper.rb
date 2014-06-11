@@ -1,6 +1,7 @@
 module FeatureSessionHelper
 
   def login(user) 
+    FactoryGirl.create(:job_status, :active)
     visit signin_path
     if page.has_link? "Log Out"
       page.click_link "Log Out"

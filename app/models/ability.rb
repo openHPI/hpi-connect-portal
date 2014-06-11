@@ -17,10 +17,8 @@ class Ability
 
   def initialize_admin
     can :manage, :all
-    cannot :prolong, JobOffer, status: JobStatus.open
     cannot :prolong, JobOffer, status: JobStatus.pending
-    cannot :prolong, JobOffer, status: JobStatus.completed
-    cannot :reopen, JobOffer, status: JobStatus.open
+    cannot :prolong, JobOffer, status: JobStatus.closed
     cannot :reopen, JobOffer, status: JobStatus.pending
   end
 
@@ -30,7 +28,7 @@ class Ability
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
-    cannot :show, JobOffer, status: JobStatus.completed
+    cannot :show, JobOffer, status: JobStatus.closed
 
     if user.activated
       can :create, Application
@@ -46,9 +44,10 @@ class Ability
     employer_id = staff.employer_id
     staff_id = staff.id
 
+    can [:create, :show], JobOffer
+
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update], Employer, deputy_id: staff_id
     can [:edit, :update], Employer, id: employer_id
 
     if staff.employer.activated
@@ -60,25 +59,27 @@ class Ability
 
       cannot [:edit, :update], Student
 
-      can [:create, :show], JobOffer
-      can :complete, JobOffer, employer: staff.employer
-      can :reopen, JobOffer, employer: staff.employer, status: JobStatus.completed
-      can :reopen, JobOffer, employer: staff.employer, status: JobStatus.running
-      can [:accept, :decline], JobOffer, employer: { deputy_id: staff_id }
-      can :prolong, JobOffer, responsible_user_id: staff_id, status: JobStatus.running
-      can :prolong, JobOffer, employer: { deputy_id: staff_id }, status: JobStatus.running
-      can [:update, :destroy, :fire], JobOffer, responsible_user_id: staff_id
-      can [:update, :destroy, :fire], JobOffer, employer: { deputy_id: staff_id }
+
+      can :close, JobOffer, employer: staff.employer
+      can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
+      can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
+      can :prolong, JobOffer, employer: staff.employer, status: JobStatus.active
+      can [:update, :destroy, :fire], JobOffer, employer: staff.employer
+      can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|
-        job.editable? && (job.responsible_user_id == staff_id || job.employer.deputy_id == staff_id)
+        job.editable? && job.employer.id == employer_id
       end
       cannot :destroy, JobOffer do |job|
-        job.running?
+        job.active?
       end
 
-      can [:accept, :decline], Application, job_offer: { responsible_user_id: staff_id }
+      can [:accept, :decline], Application, job_offer: { employer: staff.employer }
 
-      can :destroy, Staff, manifestation: { employer: { id: employer_id, deputy_id: staff_id }}
+      can :destroy, Staff, manifestation: { employer: { id: employer_id }}
+
+      if staff.employer.premium?
+        can :read, Student, activated: true
+      end
     end
   end
 end

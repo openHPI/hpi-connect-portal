@@ -2,9 +2,9 @@ module JobOfferScopes
   def self.included(job_offer)
     job_offer.class_eval  do
       scope :pending, -> { where(status_id: JobStatus.pending.id) }
-      scope :open, -> { where(status_id: JobStatus.open.id) }
-      scope :running, -> { where(status_id: JobStatus.running.id) }
-      scope :completed, -> { where(status_id: JobStatus.completed.id) }
+      scope :active, -> { where(status_id: JobStatus.active.id) }
+      scope :closed, -> { where(status_id: JobStatus.closed.id) }
+      scope :graduate_jobs, -> { where(category_id: 2) }
     end
 
     add_filter_and_search_scopes job_offer

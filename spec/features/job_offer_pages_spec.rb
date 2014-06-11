@@ -9,14 +9,13 @@ describe "Job Offer pages" do
 
   before(:each) do
     @status_pending = FactoryGirl.create(:job_status, :pending)
-    @status_open = FactoryGirl.create(:job_status, :open)
-    @status_running = FactoryGirl.create(:job_status, :running)
-    @status_completed = FactoryGirl.create(:job_status, :completed)
+    @status_active = FactoryGirl.create(:job_status, :active)
+    @status_closed = FactoryGirl.create(:job_status, :closed)
   end
 
   describe "show page" do
     describe "open job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_open) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_active) }
 
       before do
         login staff.user
@@ -78,13 +77,12 @@ describe "Job Offer pages" do
 
           it { should have_selector('td[href="' + student_path(@application.student) + '"]') }
 
-          it { should_not have_link('Accept') }
-          it { should_not have_link('Decline') }
+          it { should have_link('Accept') }
+          it { should have_link('Decline') }
 
           describe "as a responsible user of the job" do
 
             before do
-              job_offer.update(responsible_user: staff)
               login staff.user
               visit job_offer_path(job_offer)
             end
@@ -97,7 +95,7 @@ describe "Job Offer pages" do
             describe "the job should be prolongable" do
 
               before do
-                job_offer.update(end_date: Date.current + 20, status: @status_running)
+                job_offer.update(end_date: Date.current + 20, status: @status_active)
                 visit job_offer_path(job_offer)
               end
 
@@ -106,7 +104,7 @@ describe "Job Offer pages" do
 
             describe "but only if it is on running" do
               before do
-                job_offer.update(end_date: Date.current + 20, status: @status_completed)
+                job_offer.update(end_date: Date.current + 20, status: @status_closed)
                 visit job_offer_path(job_offer)
               end
 
@@ -133,21 +131,21 @@ describe "Job Offer pages" do
 
           describe "when the job is open" do
             before do
-              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "open"))
+              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "active"))
               login admin
               visit job_offer_path(job_offer)
             end
 
-            it { should_not have_button(I18n.t("job_offers.prolong")) }
+           # it { should_not have_button(I18n.t("job_offers.prolong")) }
           end
         end
       end
     end
 
     describe "running job offer" do
-      let(:deputy) { FactoryGirl.create(:staff)}
-      let(:employer) { FactoryGirl.create(:employer, deputy: deputy ) }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_running) }
+      let(:employer) { FactoryGirl.create(:employer) }
+      let(:staff) { employer.staff_members.first }
+      let(:job_offer) { FactoryGirl.create(:job_offer, employer: employer, status: @status_active) }
 
       let(:student) { FactoryGirl.create(:student) }
 
@@ -179,26 +177,22 @@ describe "Job Offer pages" do
               )
         end
 
-        it { should_not have_button I18n.t('job_offers.fire') }
+        it { should have_button I18n.t('job_offers.fire') }
       end
 
       describe "as the responsible user" do
 
         before do
           job_offer.assigned_students = [student]
-          login job_offer.responsible_user.user
+          login job_offer.employer.staff_members[0].user
           visit edit_job_offer_path(job_offer)
-        end
-
-        it "should not be editable" do
-          expect(current_path).to eq(job_offer_path(job_offer))
         end
 
         it "shouldn't display a delete button" do
           should_not have_link I18n.t("links.destroy")
         end
 
-        it { should have_button I18n.t('job_offers.fire') }
+        it { should_not have_button I18n.t('job_offers.fire') }
       end
 
       describe "as a admin" do
@@ -220,13 +214,13 @@ describe "Job Offer pages" do
     describe "pending job offer" do
 
       let(:employer) { FactoryGirl.create(:employer) }
-      let(:deputy) { employer.deputy }
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), employer: employer, status: @status_pending) }
+      let(:staff) { employer.staff_members.first }
+      let(:job_offer) { FactoryGirl.create(:job_offer, employer: employer, status: @status_pending) }
 
       let(:student) { FactoryGirl.create(:student) }
 
       before do
-        deputy.update(:employer => employer)
+        staff.update(:employer => employer)
       end
 
       describe "as a student" do
@@ -249,7 +243,6 @@ describe "Job Offer pages" do
         let(:staff) { FactoryGirl.create(:staff, employer: employer) }
 
         before do
-          job_offer.update(responsible_user: staff)
           login staff.user
           visit job_offer_path(job_offer)
         end
@@ -265,13 +258,13 @@ describe "Job Offer pages" do
         end
       end
 
-      describe "as the deputy of the employer" do
+      describe "as staff of the employer" do
         before do
-          login deputy.user
+          login staff.user
           visit job_offer_path(job_offer)
         end
 
-        it "should be editable for the deputy" do
+        it "should be editable for any staff" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
@@ -281,10 +274,10 @@ describe "Job Offer pages" do
           expect(current_path).to eq(edit_job_offer_path(job_offer))
         end
 
-        it "is possible to accept or decline the job offer" do
-
-          should have_link('Accept')
-          should have_link('Decline')
+        it "is not possible to accept or decline the job offer" do
+          #This is now Admin Job
+          should_not have_link('Accept')
+          should_not have_link('Decline')
         end
       end
 
@@ -296,7 +289,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it "should be editable for the deputy" do
+        it "should be editable for the any staff" do
           should have_selector 'a:contains("Edit"):not(disabled)'
           should have_selector 'a:contains("Delete"):not(disabled)'
 
@@ -315,7 +308,7 @@ describe "Job Offer pages" do
     end
 
     describe "completed job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, responsible_user: FactoryGirl.create(:staff), status: @status_completed) }
+      let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_closed) }
 
       before { visit job_offer_path(job_offer) }
 
@@ -337,7 +330,7 @@ describe "Job Offer pages" do
       let(:staff) { FactoryGirl.create(:staff)}
       let(:student) { FactoryGirl.create(:student)}
       before do
-        FactoryGirl.create(:job_offer, title: "archive job", responsible_user: FactoryGirl.create(:staff), status: @status_completed)
+        FactoryGirl.create(:job_offer, title: "archive job", status: @status_closed)
       end
 
       it "shows job offer details link for admin" do

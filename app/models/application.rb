@@ -20,8 +20,8 @@ class Application < ActiveRecord::Base
 
   def self.create_and_notify(job_offer, student, params)
     application = Application.new job_offer: job_offer, student: student
-    if application.save
-      ApplicationsMailer.new_application_notification_email(application, params[:message], params[:add_cv], params[:attached_files]).deliver
+    if application.save       
+      ApplicationsMailer.new_application_notification_email(application, params[:message], params[:add_cv], params[:attached_files])
       true
     else
       false

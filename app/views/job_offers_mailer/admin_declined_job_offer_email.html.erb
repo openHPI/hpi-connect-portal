@@ -1,0 +1,21 @@
+(For an English translation, scroll down.)<br>
+<br>
+Hallo <%=@staff.full_name%>,<br>
+<br>
+Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an die Admins des Portals: <%= Configurable[:mailToAdministration] %> .<br>
+<br>
+Grüße,<br>
+Das HPI-HiWi-Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
+<hr>
+<br>
+Dear <%=@staff.full_name%>,<br>
+<br>
+unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact the admins <%= Configurable[:mailToAdministration] %>.<br>
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
+(This is an automatically created email, please do not respond to it.)

@@ -103,15 +103,14 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      pending 'untill new image upload is getting implemented'
-      # test_file = ActionDispatch::Http::UploadedFile.new({
-      #   :filename => 'test_picture.jpg',
-      #   :type => 'image/jpeg',
-      #   :tempfile => fixture_file_upload('/images/test_picture.jpg')
-      # })
+      test_file = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_picture.jpg',
+        :type => 'image/jpeg',
+        :tempfile => fixture_file_upload('/images/test_picture.jpg')
+      })
 
-      # patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
-      # response.should redirect_to(student_path(@student))
+      patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
+      response.should redirect_to(student_path(@student))
     end
   end
 
@@ -311,6 +310,5 @@ describe StudentsController do
       get :insert_imported_data, {id: student.id}
       response.should redirect_to edit_student_path(student)
     end
-
   end
 end

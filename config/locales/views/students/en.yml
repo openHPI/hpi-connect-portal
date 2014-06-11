@@ -14,7 +14,6 @@ en:
         newsletter_description: "You want to get an email if there is a new job offer that might fit to you? Here you can choose programming languages and employers you are interested in!"
         no_results: "No student matches your search"
         new_role_label: "New Role: "
-        new_deputy_label: "New Deputy: "
         new_employer_label: "New Employer: "
         activation_reminder: "This Profile is not yet activated. Please wait until the administrator has verified and activated your account. If you are a student at HPI you can also verify yourself using OpenID: "
         successful_import: "Your data was succesfully imported. You can now go on making additional changes."

@@ -26,7 +26,6 @@ en:
     enter_description: "add a description"
     compensation_description: "€/hour"
     time_effort_description: "hours/week"
-    vacant_posts_description: "max accepted applicants"
     apply: "Apply"
     applications_headline: "Applications"
     applicant_first_name: "First name"
@@ -53,7 +52,6 @@ en:
     default_compensation: "Standard compensation"
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
-    vacant_posts_left: "open position(s) left"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."

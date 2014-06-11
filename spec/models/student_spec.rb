@@ -17,6 +17,8 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
 #
 
 require 'spec_helper'
@@ -104,6 +106,5 @@ describe Student do
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).should_not eq nil
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).skill.should eq 3
     end
-
   end
 end

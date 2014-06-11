@@ -17,6 +17,8 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
 #
 
 FactoryGirl.define do
@@ -24,7 +26,7 @@ FactoryGirl.define do
     semester          1
     academic_program_id  Student::ACADEMIC_PROGRAMS.index("bachelor")
     birthday          '1970-12-10'
-    graduation_id         Student::GRADUATIONS.index("secondary_education")
+    graduation_id         Student::GRADUATIONS.index("abitur")
 
 
 

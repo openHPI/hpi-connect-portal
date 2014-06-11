@@ -18,6 +18,9 @@
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
 #  visibility_id          :integer          default(0), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
+#
 
 class Student < ActiveRecord::Base
 
@@ -30,7 +33,7 @@ class Student < ActiveRecord::Base
 
   VISIBILITYS = ['nobody','employers_only','employers_and_students']    
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd']     
+  GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']     
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
@@ -54,12 +57,12 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
 
-  delegate :firstname, :lastname, :full_name, :email, :activated, to: :user
+  delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
 
   validates :semester, :academic_program_id, presence: true
   validates_inclusion_of :semester, :in => 1..12
 
-  scope :active, -> { joins(:user).where('students.activated = ?', true) }
+  scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }

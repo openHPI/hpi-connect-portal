@@ -20,7 +20,7 @@ HpiHiwiPortal::Application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this).
-  config.serve_static_assets = true
+  config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -80,9 +80,8 @@ HpiHiwiPortal::Application.configure do
 
   # Enable strict date parsing using the timeliness gem
   config.use_plugin_parser = true
-
   
-  config.action_mailer.default_url_options = { host: 'http://hpi-hiwi-portal.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'http://hpi.uni-potsdam.de/connect/jobportal' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -93,4 +92,8 @@ HpiHiwiPortal::Application.configure do
     :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
+
+  # Mount this application to a unique subdirectory
+  config.relative_url_root = '/connect/jobportal'
+  config.assets.prefix = '/connect/jobportal/assets'
 end

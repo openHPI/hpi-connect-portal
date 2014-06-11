@@ -34,15 +34,10 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :firstname, :lastname, presence: true
 
-  has_attached_file   :photo,
-            :url  => "/assets/students/:id/:style/:basename.:extension",
-            :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension",
-            :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :photo, styles: { :medium => "300x300>", :thumb => "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
 
-  has_attached_file   :cv,
-            :url  => "/assets/students/:id/:style/:basename.:extension",
-            :path => ":rails_root/public/assets/students/:id/:style/:basename.:extension"
+  has_attached_file   :cv
   validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
   after_destroy :clean_manifestation

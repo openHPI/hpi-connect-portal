@@ -5,6 +5,10 @@ describe "the staff page" do
   let(:staff) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)) }
   let(:admin) { FactoryGirl.create(:user, :admin) }
 
+  before(:all) do 
+    FactoryGirl.create(:job_status, :active)
+  end
+
 	before(:each) do
     @staff1 = FactoryGirl.create(:staff)
     @programming_language = FactoryGirl.create(:programming_language)
@@ -37,7 +41,7 @@ describe "the staff page" do
   describe "as a member of staff" do
 
     it "should not be visible " do
-      FactoryGirl.create(:job_status, name: 'open')
+      FactoryGirl.create(:job_status, name: 'active')
       login @staff1.user
       visit staff_index_path
       current_path.should_not == staff_index_path
@@ -48,7 +52,7 @@ describe "the staff page" do
    describe "as a student" do
 
     it "should not be visible " do
-      FactoryGirl.create(:job_status, name: 'open')
+      FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit staff_index_path
       current_path.should_not == staff_index_path

@@ -1,14 +1,16 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  load_and_authorize_resource except: [:edit]
+  skip_before_filter :signed_in_user, only: [:index]
+
+  load_and_authorize_resource except: [:index, :edit]
   skip_load_resource only: [:create] 
 
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
   before_filter :check_new_end_date_is_valid, only: [:prolong]
 
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :complete, :accept, :decline, :prolong, :fire]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
   has_scope :filter_employer, only: [:index, :archive], as: :employer
@@ -24,7 +26,7 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
-    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
@@ -39,7 +41,6 @@ class JobOffersController < ApplicationController
 
   def new
     @job_offer = JobOffer.new
-    @job_offer.responsible_user = current_user.manifestation
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
   end
@@ -73,7 +74,7 @@ class JobOffersController < ApplicationController
   end
 
   def archive
-    job_offers = apply_scopes(JobOffer.completed).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = apply_scopes(JobOffer.closed).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
@@ -87,13 +88,13 @@ class JobOffersController < ApplicationController
   end
 
   def matching
-    job_offers = apply_scopes(JobOffer.open).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
     render "index"
   end
 
-  def complete
-    if @job_offer.update status: JobStatus.completed
+  def close
+    if @job_offer.update status: JobStatus.closed
       JobOffersMailer.job_closed_email(@job_offer).deliver
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_completed')
     else
@@ -102,8 +103,8 @@ class JobOffersController < ApplicationController
   end
 
   def accept
-    if @job_offer.update status: JobStatus.open
-      JobOffersMailer.deputy_accepted_job_offer_email(@job_offer).deliver
+    if @job_offer.update status: JobStatus.active
+      JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
       JobOffersMailer.inform_interested_students_immediately(@job_offer)
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
     else
@@ -113,7 +114,7 @@ class JobOffersController < ApplicationController
 
   def decline
     if @job_offer.destroy
-      JobOffersMailer.deputy_declined_job_offer_email(@job_offer).deliver
+      JobOffersMailer.admin_declined_job_offer_email(@job_offer)
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer
@@ -122,9 +123,8 @@ class JobOffersController < ApplicationController
 
   def reopen
     old_job_offer = JobOffer.find params[:id]
-    if old_job_offer.update status: JobStatus.completed
+    if old_job_offer.update status: JobStatus.closed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
-      @job_offer.responsible_user = current_user.manifestation
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer
@@ -147,17 +147,17 @@ class JobOffersController < ApplicationController
     end
 
     def rescue_from_exception(exception)
-      if [:complete, :edit, :destroy, :update, :decline].include?(exception.action)
+      if [:close, :edit, :destroy, :update, :decline].include?(exception.action)
         redirect_to exception.subject, notice: exception.message and return
       end
-      if [:show].include?(exception.action) && @job_offer.completed?
+      if [:show].include?(exception.action) && @job_offer.closed?
         redirect_to archive_job_offers_path and return
       end
       redirect_to job_offers_path, notice: exception.message
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :responsible_user_id, :time_effort, :student_id, :vacant_posts, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

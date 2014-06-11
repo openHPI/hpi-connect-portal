@@ -20,18 +20,6 @@
     </li>
     <li class="list-group-item">
       <div class="row">
-        <% if with_deputy_select %>
-          <div class="col-sm-6">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= form.label t "activerecord.attributes.employer.deputy", class: "control-label" %><%= mark_if_required(employer, :deputy_id) %>
-              </div>
-              <div class="col-sm-9">
-                <%= form.collection_select :deputy_id, employer.staff_members, :id, :email, { prompt: t("employers.select_deputy")}, { class: "form-control" } %>
-              </div>
-            </div>
-          </div>
-        <% end %>
         <div class="col-sm-6">
             <div class="row">
               <div class="col-sm-3">
@@ -48,54 +36,87 @@
         </div>
       </div>
     </li>
+
     <li class="list-group-item">
-      <div class="row">
-        <div class="col-sm-12">
-          <%= form.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
-          <%= form.bootsy_area :description, :rows => 10, :class => "col-md-11 form-control", :placeholder => t("job_offers.enter_description") %>
-        </div>
+      <div>
+        <%= form.label 'Packages', class: "control-label" %>
       </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-6">
-          <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
-          <%= form.select :number_of_employees, Employer::NUMBER_OF_EMPLOYEES_FIELDS, {}, { class: "form-control" } %>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
-          <%= form.input :place_of_business %>
-        </div>
+      <div class="package-div">
+        <% if employer.booked_package_id > 0 %>
+          <%= radio_button_tag :free, :free, 0, class: 'package-select', disabled: true %>
+        <% else %>
+          <%= form.radio_button :requested_package_id, 0, class: 'package-select' %>
+        <% end %>
+        <b><%= t("activerecord.attributes.employer.packages.free") %></b><br />
+        <ul> 
+          <li><%= t("employers.package_descriptions.student_jobs") %></li>
+        </ul>
       </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-6">
-          <%= form.label :website, class: "control-label" %><%= mark_if_required(employer, :website) %>
-          <%= form.input :website %>
-        </div>
-        <div class="col-md-6">
-          <%= form.label :year_of_foundation, class: "control-label" %><%= mark_if_required(employer, :year_of_foundation) %>
-          <%= form.input :year_of_foundation %>
-        </div>
+      <div class="package-div">
+        <% if employer.booked_package_id > 1 %>
+          <%= radio_button_tag :partner, :partner, 0, class: 'package-select', disabled: true %>
+        <% else %>
+          <%= form.radio_button :requested_package_id, 1, class: 'package-select' %>
+        <% end %>
+        <b><%= t("activerecord.attributes.employer.packages.partner") %></b><br />
+        <ul> 
+          <li><%= t("employers.package_descriptions.profile") %></li>
+          <li> 4 <%= t("employers.package_descriptions.full_time") %></li>
+        </ul>
       </div>
-    </li>
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-6">
-          <%= form.label :line_of_business, class: "control-label" %><%= mark_if_required(employer, :line_of_business) %>
-          <%= form.input :line_of_business %>
-        </div>
+      <div class="package-div">
+        <%= form.radio_button :requested_package_id, 2, class: 'package-select' %>
+        <b><%= t("activerecord.attributes.employer.packages.premium") %></b>
+        <ul> 
+          <li> 24 <%= t("employers.package_descriptions.full_time") %></li>
+          <li><%= t("employers.package_descriptions.student_profiles") %></li>
+        </ul>
       </div>
+      <div class="clearfix"></div>
     </li>
+
+    <div class="employers-extra-information">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= form.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
+            <%= form.bootsy_area :description, :rows => 10, :class => "col-md-11 form-control", :placeholder => t("job_offers.enter_description") %>
+          </div>
+        </div>
+      </li>
+
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
+            <%= form.select :number_of_employees, Employer::NUMBER_OF_EMPLOYEES_FIELDS, {}, { class: "form-control" } %>
+          </div>
+          <div class="col-md-6">
+            <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
+            <%= form.input :place_of_business %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <%= form.label :website, class: "control-label" %><%= mark_if_required(employer, :website) %>
+            <%= form.input :website %>
+          </div>
+          <div class="col-md-6">
+            <%= form.label :year_of_foundation, class: "control-label" %><%= mark_if_required(employer, :year_of_foundation) %>
+            <%= form.input :year_of_foundation %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <%= form.label :line_of_business, class: "control-label" %><%= mark_if_required(employer, :line_of_business) %>
+            <%= form.input :line_of_business %>
+          </div>
+        </div>
+      </li>
+    </div>
   </ul>
 </div>
-<% if with_deputy_select && Employer.validators.map(&:class).include?(ActiveRecord::Validations::PresenceValidator) %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h5>
-        <%= t("layouts.asterisk_description") %>
-      </h5>
-    </div>
-  </div>
-<% end %>

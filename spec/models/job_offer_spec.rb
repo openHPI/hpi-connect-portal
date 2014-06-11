@@ -15,8 +15,12 @@
 #  employer_id         :integer
 #  responsible_user_id :integer
 #  status_id           :integer          default(1)
-#  flexible_start_date :boolean          default(FALSE)
 #  vacant_posts        :integer
+#  flexible_start_date :boolean          default(FALSE)
+#  category_id         :integer          default(0), not null
+#  state_id            :integer          default(3), not null
+#  graduation_id       :integer          default(2), not null
+#  academic_program_id :integer
 #
 
 require 'spec_helper'
@@ -27,7 +31,6 @@ describe JobOffer do
       @epic = FactoryGirl.create(:employer, name: "EPIC")
       @os = FactoryGirl.create(:employer, name: "OS and Middleware")
       @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
-      @responsible_user = FactoryGirl.create(:staff)
   end
 
   describe 'applying' do
@@ -50,7 +53,7 @@ describe JobOffer do
 
   it "does create a joboffer if all required attributes are set and valid" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user, vacant_posts: 1).valid?
+      start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if the start_date is in the past" do
@@ -65,22 +68,12 @@ describe JobOffer do
 
   it "does create a joboffer if end_date is after start_date" do
     assert JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user, vacant_posts: 1).valid?
+      start_date: Date.current + 1, end_date: Date.current + 2, compensation: 10.5, time_effort: 9).valid?
   end
 
   it "does not create a joboffer if compensation is not a number" do
     assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
       start_date: Date.current + 1, compensation: "i gonna be rich", time_effort: 9).valid?
-  end
-
-  it "does not create a joboffer without a responsible user" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
-  end
-
-  it "does not create a job_offer with a number of vacant_posts smaller than 0" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website", employer: @epic,
-      start_date: Date.current + 1, compensation: 10.5, time_effort: 9, responsible_user: @responsible_user, vacant_posts: -1).valid?
   end
 
   it "returns job offers sorted by created_at" do
@@ -240,7 +233,7 @@ describe JobOffer do
 
 
   it "returns job offers filtered by status" do
-    @status = FactoryGirl.create(:job_status, :name => "completed")
+    @status = FactoryGirl.create(:job_status, :name => "closed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status);
     FactoryGirl.create(:job_offer, employer: @epic);
     filtered_job_offers = JobOffer.where(:status => @status)

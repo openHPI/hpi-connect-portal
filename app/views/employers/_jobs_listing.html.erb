@@ -1,21 +1,21 @@
-  <ul class="list-group">
-    <% job_offer_list.each do |job_offer| %>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-md-7">
-            <h4><%= link_to job_offer.title, job_offer%>
-              <% if signed_in_student? && current_user.manifestation.applied?(job_offer) %>
-                <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
-              <% end %>
-            </h4>
-          </div>
-          <div class="col-sm-5">
-            <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
-          </div>
+<ul class="list-group">
+  <% job_offer_list.each do |job_offer| %>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-md-7">
+          <h4><%= link_to job_offer.title, job_offer%>
+            <% if signed_in_student? && current_user.manifestation.applied?(job_offer) %>
+              <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
+            <% end %>
+          </h4>
         </div>
-      </li>
-    <%end%>
-  </ul>
-    <div class="pull-right">
-      <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
-    </div>
+        <div class="col-sm-5">
+          <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
+        </div>
+      </div>
+    </li>
+  <%end%>
+</ul>
+<div class="pull-right">
+  <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
+</div>

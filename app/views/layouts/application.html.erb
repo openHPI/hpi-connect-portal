@@ -41,9 +41,14 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if current_user.staff? %>
-                      <li><%= link_to t('layouts.my_chair'), current_user.manifestation.employer %></li>
+                      <li><%= link_to t('layouts.dashboard'), home_employers_path %></li>
+                      <li><%= link_to t('layouts.my_employer'), current_user.manifestation.employer %></li>
+                      <li><%= link_to t('layouts.new_offer'), new_job_offer_path %></li>
                     <% elsif current_user.student? %>
                       <li><%= link_to t('layouts.my_profile'), current_user.manifestation %></li>
+                    <% end %>
+                    <% if current_user.admin? %>
+                      <li><%= link_to t('layouts.configuration'), admin_configurable_path %></li>
                     <% end %>
                     <li><%= link_to t("users.settings"), [:edit, current_user] %>
                     <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>
@@ -75,15 +80,17 @@
       <div class="headbottom">
         <div id="head_bottom" class="collapse navbar-collapse">
           <% if signed_in? %>
-           <%= render "layouts/navigation/#{current_user.role}" %>
-          <% end %>   
+            <%= render "layouts/navigation/#{current_user.role}" %>
+          <% else %>
+            <%= render "layouts/navigation/guest" %>
+          <% end %>  
         </div>
       </div>
     </div>
 
     <div class="container">
       <%= render 'shared/flash_messages' %>
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
       
     <footer>
@@ -108,6 +115,8 @@
       ga('create', 'UA-49601252-1', 'uni-potsdam.de');
       ga('send', 'pageview');
     </script>
-
+  
+    <!-- Modals -->
+    <%= yield :modals %>
   </body>
 </html>

@@ -2,8 +2,11 @@ de:
   activerecord:
     attributes:
       employer:
-        deputy: "Verantwortlicher Mitarbeiter"
         description: "Beschreibung"
         head: "Leiter"
-        name: "Name"
-        avatar: "Profilbild"
+        name: "Unternehmen"
+        avatar: "Logo"
+        packages:
+            free: "Kostenlos"
+            partner: "Basispaket"
+            premium: "Partnerpaket"

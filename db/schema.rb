@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521212723) do
+ActiveRecord::Schema.define(version: 20140518230410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,13 +62,14 @@ ActiveRecord::Schema.define(version: 20140521212723) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.integer  "deputy_id"
-    t.boolean  "activated",           default: false, null: false
+    t.boolean  "activated",            default: false, null: false
     t.string   "place_of_business"
     t.string   "website"
     t.string   "line_of_business"
     t.integer  "year_of_foundation"
     t.string   "number_of_employees"
+    t.integer  "requested_package_id", default: 0,     null: false
+    t.integer  "booked_package_id",    default: 0,     null: false
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
@@ -104,9 +105,7 @@ ActiveRecord::Schema.define(version: 20140521212723) do
     t.float    "compensation"
     t.string   "room_number"
     t.integer  "employer_id"
-    t.integer  "responsible_user_id"
     t.integer  "status_id",           default: 1
-    t.integer  "vacant_posts"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
@@ -200,7 +199,6 @@ ActiveRecord::Schema.define(version: 20140521212723) do
     t.integer  "frequency",              default: 1, null: false
     t.integer  "academic_program_id",    default: 0, null: false
     t.integer  "graduation_id",          default: 0, null: false
-    t.integer  "visibility_id",          default: 0, null: false
   end
 
   create_table "users", force: true do |t|
