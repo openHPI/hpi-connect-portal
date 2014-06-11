@@ -32,7 +32,7 @@ class Ability
 
     if user.activated
       can :create, Application
-      can [:show, :index], Student do |student|
+      can :show, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
       end      
       can :matching, JobOffer
@@ -53,7 +53,7 @@ class Ability
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
-      can [:show, :index], Student do |student|
+      can :show, Student do |student|
         student.activated && student.visibility_id > 0
       end
 
