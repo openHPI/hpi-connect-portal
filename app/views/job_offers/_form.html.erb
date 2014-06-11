@@ -15,6 +15,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.title", class: "control-label" %><%= mark_if_required(@job_offer, :title) %>
+                  <% p params[:book_single_job_offer] %>
                 </div>
                 <div class="col-sm-9">
                   <%= f.input :title %>
@@ -67,14 +68,17 @@
                 <div class="col-sm-3">
                   <%= f.label t "activerecord.attributes.job_offer.category", class: "control-label" %><%= mark_if_required(@job_offer, :category) %>
                 </div>
-                <div class="col-sm-8 pull-right">                   
+                <div class="col-sm-8 pull-right"> 
+                <% if params[:book_single_job_offer] %>
+                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"),2, {:disabled => true}]], {:disabled => true}, class: 'select optional form-control'%>
+                <% else %>                  
                      <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
                       can_book = index!=2 || current_user.manifestation.employer.paying?
                       [t("job_offers.category." + category), 
                       index, 
                       {'can_book'=> can_book}]
-                     }, {}, {id: 'category_id', class: 'select optional form-control', 
-                      :onchange =>"CheckForAllowedCategory(this.value)"} %>
+                     }, {}, {id: 'category_id', class: 'select optional form-control', } %>
+                <% end %>
                 </div>
               </div>
             </li>

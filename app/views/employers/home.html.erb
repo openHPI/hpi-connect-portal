@@ -18,7 +18,7 @@
           (<i>aktuelle Preise können Sie bei <%= mail_to "connect@hpi.uni-potsdam.de" %> erfragen</i>)</p><br>
           <div class="panel-body">
             <ul>
-              <li>○ einzelnes Stellenangebot <%= link_to 'buchen', new_job_offer_path%></li>
+              <li>○ einzelnes Stellenangebot <%= link_to 'buchen', new_job_offer_path(:book_single_job_offer => true)%></li>
               <div class="panel-body"></div>
               <li>○ Firmenprofil veröffentlichen</li>
               <div class="panel-body"></div>
