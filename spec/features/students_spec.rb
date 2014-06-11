@@ -142,7 +142,8 @@ describe "the students profile page" do
   before(:each) do
     @job_offer =  FactoryGirl.create(:job_offer)
     @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
-    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
+    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:2)
+    @student3 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:0)
 
     login @student1.user
   end
@@ -187,9 +188,23 @@ describe "the students profile page" do
   end
 
   describe "of another students" do
+      before(:each) do
+        visit student_path(@student3)
+    end
+
+    it "should contain all the details of student3" do
+        page.should_not have_content(
+          @student3.firstname,
+          @student3.lastname
+        )
+    end
+
+  end
+  describe "of another students" do
     before(:each) do
       visit student_path(@student2)
     end
+
 
     it "should contain all the details of student2" do
       page.should have_content(
