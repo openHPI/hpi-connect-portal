@@ -29,7 +29,7 @@ class Employer < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/assets/placeholder/:style/missing.png"
 
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
-  has_many :job_offers
+  has_many :job_offers, dependent: :destroy
   has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
 
   accepts_nested_attributes_for :staff_members

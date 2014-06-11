@@ -11,7 +11,7 @@
 class Staff < ActiveRecord::Base
 
   has_one :user, as: :manifestation, dependent: :destroy
-  belongs_to :employer, dependent: :delete
+  belongs_to :employer
 
   accepts_nested_attributes_for :user, update_only: true
 
