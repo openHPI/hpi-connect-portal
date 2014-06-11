@@ -4,6 +4,10 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:staff) }
 
+  before(:all){
+    FactoryGirl.create(:job_status, :active)
+  }
+
   before(:each) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :active)
@@ -38,7 +42,6 @@ describe "the students page" do
   describe "as a student" do
 
     it "is not available for students" do
-      FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit students_path
       current_path.should_not == students_path

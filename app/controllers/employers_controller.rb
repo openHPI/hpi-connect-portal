@@ -17,6 +17,7 @@ class EmployersController < ApplicationController
     @staff =  @employer.staff_members.paginate page: page
     @active_job_offers = @employer.job_offers.active.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
+    @closed_job_offers = @employer.job_offers.closed.paginate page: page
   end
 
   def new

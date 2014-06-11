@@ -1,6 +1,6 @@
 (For an English translation, scroll down.)<br>
 <br>
-Hallo <%= @staff.firstname %> <%= @staff.lastname %>,<br>
+Hallo <%= @staff.full_name %>,<br>
 <br>
 <%= @application.student.firstname %> <%= @application.student.lastname %> hat sich auf dein Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> beworben:<br>
 <p>
@@ -15,7 +15,7 @@ das HPI-HIWI-Portal<br>
 <br>
 <hr>
 <br>
-Dear <%= @staff.firstname%> <%= @staff.lastname %>,<br>
+Dear <%= @staff.full_name %>,<br>
 <br>
 <%= @application.student.firstname %> <%= @application.student.lastname %>has applied for you job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%>:<br>
 <p>
