@@ -1,7 +1,7 @@
 <% if defined?(name) %>
   <h1 style="padding-bottom: 18px"> <%= t(name) %> </h1>
 <% end %>
-<% unless job_offer_list.empty?%>
+<% unless job_offer_list.empty? %>
   <ul class="list-group">
     <% job_offer_list.each do |job_offer| %>
     <% if job_offer.employer.activated %>

@@ -43,7 +43,6 @@ HpiHiwiPortal::Application.routes.draw do
         member do
           get "accept"
           get "decline"
-          get "destroy"
         end
       end
 
