@@ -60,4 +60,8 @@ $(document).ready( function() {
             markForDeletion($(this));
         }
     });
+
+    $(document).on('change', '.current-item input[type=checkbox]', function() {
+        $(this).parents('.current-item').prev('.end-date-item').toggle();
+    });
 });

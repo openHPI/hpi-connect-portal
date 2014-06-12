@@ -40,7 +40,7 @@
       </div>
     </div>
   </li>
-  <li class="list-group-item">
+  <li class="list-group-item end-date-item" <%= raw('style="display: none;"') if form.object.current %>>
     <div class="row">
       <div class="col-sm-3">
         <%= label_field form, :end_date, t("activerecord.attributes.cv_entry.end_date") %>
@@ -50,7 +50,7 @@
       </div>
     </div>
   </li>
-  <li class="list-group-item">
+  <li class="list-group-item current-item">
     <div class="row">
       <div class="col-sm-3">
         <%= label_field form, :current, t("activerecord.attributes.cv_entry.current_education") %>
