@@ -24,7 +24,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster - placed here only for testing th compenentes easier-->
 </head>
-  <body class="subpage accent3 ">
+  <body class="subpage accent3">
     <div class="headbg">
       <div class="headtop">
         <div class="smallheader headwrapper">
@@ -72,7 +72,7 @@
         </div>
         <div class="bigheader">
           <div id="csshack_header_image">
-            <a href="<%= root_path %>"><%= image_tag("hpi_logo_fb_InternetTechnologien_web80.png", alt:"") %></a>  
+            <a href="<%= root_path %>"><%= image_tag("hpi_logo_fb_InternetTechnologien_web80.png", alt:"hpi-career") %></a>  
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
             <%= render "layouts/navigation/#{current_user.role}" %>
           <% else %>
             <%= render "layouts/navigation/guest" %>
-          <% end %>  
+          <% end %>
         </div>
       </div>
     </div>
@@ -98,9 +98,9 @@
         <div>
         <ul class="footer-links">
           <li>Copyright Hasso-Plattner-Institut 2014</li>
-          <li><a href="">Impressum</a></li>
-          <li><a href="">Kontakt</a></li>
-          <li><a href="">Sitemap</a></li>
+          <li><a href=""><span>Impressum</span></a></li>
+          <li><a href=""><span>Kontakt</span></a></li>
+          <li><a href=""><span>Sitemap</span></a></li>
         </ul>
         </div>
       </div>

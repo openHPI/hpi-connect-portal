@@ -1,0 +1,40 @@
+.menu-dropdown {
+    float: right;
+    font-size: 18px;
+    margin-top: 6px;
+    list-style: none;
+    position: relative;
+
+    a.dropdown-toggle {
+        color: #dedfe0;
+        height: 100%;
+        display: inline-block;
+        position: relative;
+        top: 3px;
+    }
+}
+
+#social {
+    width: 280px !important;
+}
+
+.container {
+    padding: 0;
+}
+
+@media (min-width: 1024px) {
+    .col-md-8 {
+        width: 644px;
+    }
+    .col-md-4 {
+        width: 312px;
+    }
+}
+@media (min-width: 1280px) {
+    .col-md-8 {
+        width: 780px;
+    }
+    .col-md-4 {
+        width: 380px;
+    }
+}

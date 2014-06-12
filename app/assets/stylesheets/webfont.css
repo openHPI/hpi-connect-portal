@@ -1,0 +1,23 @@
+
+@import url("https://fast.fonts.net/t/1.css?apiType=css&projectid=a234b211-6be5-4cdb-8a83-9fced25e59bd");
+
+@font-face{
+font-family:"Neo Sans W01 Italic";
+src:url("../fonts/f4875de8-7883-4489-958a-e2479fe77d29.eot?#iefix");
+src:url("../fonts/f4875de8-7883-4489-958a-e2479fe77d29.eot?#iefix") format("eot"),url("../fonts/740562f3-2434-4080-8b87-ac8084c724d4.woff") format("woff"),url("../fonts/cd590b5e-4e72-4828-955d-a84944bb3eda.ttf") format("truetype"),url("../fonts/fabf21ce-e10a-4847-bd79-116d2e06352d.svg#fabf21ce-e10a-4847-bd79-116d2e06352d") format("svg");
+}
+@font-face{
+font-family:"NeoSansW01-MediumItalic";
+src:url("../fonts/46228353-fa44-4946-aa72-d9c49319ef68.eot?#iefix");
+src:url("../fonts/46228353-fa44-4946-aa72-d9c49319ef68.eot?#iefix") format("eot"),url("../fonts/aa38b8f5-f338-48c6-8aa2-eac9e9498213.woff") format("woff"),url("../fonts/b54e6a91-f4ef-40b4-8f81-fee406bc1e4f.ttf") format("truetype"),url("../fonts/d8104530-e31f-4ad8-ae41-c65113c59931.svg#d8104530-e31f-4ad8-ae41-c65113c59931") format("svg");
+}
+@font-face{
+font-family:"Neo Sans W02 Medium";
+src:url("../fonts/5ec4623d-3b6a-4580-918c-cc0b1de4dc22.eot?#iefix");
+src:url("../fonts/5ec4623d-3b6a-4580-918c-cc0b1de4dc22.eot?#iefix") format("eot"),url("../fonts/fadc73d8-1cc6-42c1-8f2a-4d03770b8faa.woff") format("woff"),url("../fonts/9de9709d-f77a-44ad-96b9-6fea586f7efb.ttf") format("truetype"),url("../fonts/8e964c77-f043-4e9e-86fa-4166864f4411.svg#8e964c77-f043-4e9e-86fa-4166864f4411") format("svg");
+}
+@font-face{
+font-family:"Neo Sans W02";
+src:url("../fonts/d11711c0-50af-41c8-9f85-3997c9f6d80d.eot?#iefix");
+src:url("../fonts/d11711c0-50af-41c8-9f85-3997c9f6d80d.eot?#iefix") format("eot"),url("../fonts/a9edc9ca-e80b-4980-be72-a61233f08071.woff") format("woff"),url("../fonts/504947d7-98d6-4ce3-b301-33b0deb9e0e4.ttf") format("truetype"),url("../fonts/4b54c107-7313-4836-b298-f58ec6105a33.svg#4b54c107-7313-4836-b298-f58ec6105a33") format("svg");
+}
