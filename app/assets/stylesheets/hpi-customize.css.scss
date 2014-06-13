@@ -24,8 +24,20 @@
 .logo-container {
     overflow: hidden;
 }
+.smallheader.headwrapper h1 {
+    display: block;
+    margin-top: -30px;
+    width: 1180px;
+    margin-left: -10px;
+}
+.wrapper-12.teaser {
+    width: 100%;
+}
 
 @media (min-width: 1024px) {
+    .col-md-12 {
+        width: 976px;
+    }
     .col-md-8 {
         width: 644px;
     }
@@ -34,6 +46,12 @@
     }
 }
 @media (min-width: 1280px) {
+    .bigheader {
+        width: 1200px;
+    }
+    .col-md-12 {
+        width: 1180px;
+    }
     .col-md-8 {
         width: 780px;
     }
