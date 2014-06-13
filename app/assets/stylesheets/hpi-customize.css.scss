@@ -21,6 +21,9 @@
 .container {
     padding: 0;
 }
+.logo-container {
+    overflow: hidden;
+}
 
 @media (min-width: 1024px) {
     .col-md-8 {
