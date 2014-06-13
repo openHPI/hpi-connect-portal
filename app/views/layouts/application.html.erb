@@ -55,16 +55,18 @@
                   </ul>
                 </li>
               <% end %>
+              <div class="lang-container">
+                <ul class="lang_switcher">
+                  <li><span><%= (locale != :de) ? (link_to "de", locale: "de") : "de" %></span></li>
+                  <li><span><%= (locale != :en) ? (link_to "en", locale: "en") : "en" %></span></li>
+                </ul>
+              </div>
               <div id="social">
                   <a href="" class="facebook" class="facebook" alt="facebook"></a>
                   <a href="" class="twitter" class="twitter" alt="twitter"></a>
                   <a href="" class="rss" class="rss" alt="rss"></a>
                   <a href="" class="youtube" class="youtube" alt="youtube"></a>
                   <a href="" class="vimeo" class="vimeo" alt="vimeo"></a>
-                  <ul class="lang_switcher">
-                    <li><%= link_to "de", locale: "de" %></li>
-                    <li><%= link_to "en", locale: "en" %></li>
-                  </ul>
               </div>
             </h1>
           </div>
