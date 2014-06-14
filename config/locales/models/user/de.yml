@@ -27,6 +27,7 @@ de:
         photo: "Bild"
         employment_start_date: "Beginn der Anstellung"
         employer: "Arbeitgeber"
+        status: "Beschäftigungsstatus"
         academic_rank_options:
             bachelor: "Bachelor"
             master: "Master"

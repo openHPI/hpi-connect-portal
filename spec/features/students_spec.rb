@@ -98,7 +98,8 @@ describe "the students editing page" do
       "Python",
       "English",
       "Picture",
-      "Semester"
+      "Semester",
+      "Resume"
     )
   end
 

@@ -1,0 +1,6 @@
+<div class="cv-listing">
+    <%= l education.start_date, format: '%B %Y' %>
+    <% unless education.current %> - <%= l education.end_date, format: '%B %Y' %><% end %><br/>
+    <b><%= education.degree %></b> in <%= education.field %><br/>
+    <%= education.institution %>
+</div>
