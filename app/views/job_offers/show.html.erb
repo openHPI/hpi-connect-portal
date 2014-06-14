@@ -50,52 +50,27 @@
         <% end %>
       </p>
     </div>
-
-    <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
-      <div class="clearfix">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th><%= t("job_offers.applicant_first_name") %></th>
-                <th><%= t("job_offers.applicant_last_name") %></th>
-                <th><%= t("job_offers.applicant_email") %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render @job_offer.applications %>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    <% end %>
-
-    <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
-      <div class="col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-            <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
-        </div>
-      </div>
-    <%end%>
   </div>
 </div>
 
 <div class="wrapper-12 panel-wrapper">
   <% if current_user.student? && current_user.manifestation.applied?(@job_offer) and !flash[:success] %>
-    <div class="panel panel-default panel-body">
-      <div class="row">
-        <div class="col-sm-10">
-          <%= t("job_offers.already_applied") %>
-        </div>
-        <div class="col-sm-2">
-          <% unless @application.blank? %>
-            <%= simple_form_for @application, method: :delete do |f| %>
-                <div><%= f.input :id, as: :hidden %></div>
-                <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button pull-right', data: { confirm: t("applications.delete_confirmation") } %>
-            <% end %>
-          <% end %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default panel-body">
+          <div class="row">
+            <div class="col-sm-10">
+              <%= t("job_offers.already_applied") %>
+            </div>
+            <div class="col-sm-2">
+              <% unless @application.blank? %>
+                <%= simple_form_for @application, method: :delete do |f| %>
+                    <div><%= f.input :id, as: :hidden %></div>
+                    <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button pull-right', data: { confirm: t("applications.delete_confirmation") } %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
