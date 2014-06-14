@@ -112,7 +112,7 @@ describe "job_offers_history" do
 
   it "should have a job-offers-history" do
     visit job_offers_path
-    find("div#buttons").should have_link "Archive"
+    find(".wrapper-12.panel-wrapper .pull-right#top-links").should have_link "Archive"
     click_on "Archive"
 
     expect(current_path).to eq(archive_job_offers_path)

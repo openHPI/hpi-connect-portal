@@ -7,6 +7,9 @@ describe "staff/show" do
         firstname: "First Name",
         lastname: "Last Name",
         email: "staff@test.de"
+      ),
+      employer: stub_model(Employer,
+        name: "Employer"
       )
     ))
 
