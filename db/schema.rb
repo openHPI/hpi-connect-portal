@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20140607082938) do
     t.integer  "frequency",              default: 1, null: false
     t.integer  "academic_program_id",    default: 0, null: false
     t.integer  "graduation_id",          default: 0, null: false
+    t.integer  "visibility_id",          default: 0, null: false
   end
 
   create_table "users", force: true do |t|
