@@ -6,6 +6,10 @@ de:
         head: "Leiter"
         name: "Unternehmen"
         avatar: "Logo"
+        number_of_employees: "Anzahl der Beschäftigten"
+        place_of_business: "Unternehmenssitz"
+        website: "Website"
+        year_of_foundation: "Gründungsjahr"
         packages:
             free: "Kostenlos"
             profile: "Profilpaket"

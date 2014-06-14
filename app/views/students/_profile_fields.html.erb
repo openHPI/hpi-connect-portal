@@ -9,7 +9,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= label_field form, :employers, t("activerecord.attributes.user.status") %>
+                <%= label_field form, :employment_status_id, t("activerecord.attributes.user.status") %>
               </div>
               <div class="col-sm-9">
                 <%= form.select :employment_status_id, Student::EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), Student::EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
@@ -28,21 +28,17 @@
           </li>
           <li class="list-group-item">
             <div class="row">
-              <div class="col-sm-6">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <%= form.label :photo, class: "control-label" %><%= mark_if_required(student.user, :photo) %>
-                    </div>
-                    <div class="col-sm-9">
-                      <% unless student.photo.nil? %>
-                          <%= image_tag student.photo.url(:medium), class: " student-thumbnail", alt: student.full_name %>
-                      <% end %>
-                      <br><br>
-                      <%= form.simple_fields_for :user, student.user do |user_form| %>
-                        <%= user_form.file_field :photo %>
-                      <% end %>
-                    </div>
-                  </div>
+              <div class="col-sm-3">
+                <%= form.label :photo, class: "control-label" %><%= mark_if_required(student.user, :photo) %>
+              </div>
+              <div class="col-sm-9">
+                <% unless student.photo.nil? %>
+                  <%= image_tag student.photo.url(:medium), class: "student-thumbnail", alt: student.full_name %>
+                <% end %>
+                <br><br>
+                <%= form.simple_fields_for :user, student.user do |user_form| %>
+                  <%= user_form.file_field :photo %>
+                <% end %>
               </div>
             </div>
           </li>
@@ -50,39 +46,144 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
-        <ul class="list-group">
-          <%= simple_fields_for :programming_languages do |f2| %>
-            <% if @programming_languages %>
-              <% @programming_languages.each do |programming_language| %>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <%= f2.label programming_language.name, class: "control-label" %>
-                    </div>
-                    <div class="col-sm-9">
-                      <% if student.persisted? %>
-                        <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
-                      <% end %>
-                      <% (1..5).each do |i| %>
-                        <% if language_skill && i == language_skill.skill %>
-                          <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
-                        <% else %>
-                          <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
-                        <% end %>
-                      <% end %>
-                    </div>
+      <ul class="list-group">
+        <%= simple_fields_for :programming_languages do |f2| %>
+          <% if @programming_languages %>
+            <% @programming_languages.each do |programming_language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= f2.label programming_language.name, class: "control-label" %>
                   </div>
-                </li>
-              <% end %>
+                  <div class="col-sm-9">
+                    <% if student.persisted? %>
+                      <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                    <% end %>
+                    <% (1..5).each do |i| %>
+                      <% if language_skill && i == language_skill.skill %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
+                      <% else %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
             <% end %>
           <% end %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>
+        <% end %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages") %></h4></div>
+      <ul class="list-group">
+        <%= simple_fields_for :languages do |f3| %>
+          <% if @languages %>
+            <% @languages.each do |language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= f3.label t("languages." + language.name), class: "control-label" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <% if student.persisted? %>
+                      <% language_skill = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
+                    <% end %>
+                    <% (1..5).each do |i| %>
+                      <% if language_skill && i == language_skill.skill %>
+                        <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
+                      <% else %>
+                        <%= radio_button :language_skills, language.id, i, :class => "star" %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+        <% end %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12"><%= t("layouts.star_description_lang") %></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4>Links</h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= fa_icon "home 2x", class: "control-label"%>
             </div>
-          </li>
-        </ul>
-      </div>
+            <div class="col-sm-9">
+              <%= form.input :homepage %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= fa_icon "github-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= form.input :github %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= fa_icon "facebook-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= form.input :facebook %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= fa_icon "xing-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= form.input :xing %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= fa_icon "linkedin-square 2x", class: "control-label"%>
+            </div>
+            <div class="col-sm-9">
+              <%= form.input :linkedin %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= form.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <!--     Right -->
@@ -144,111 +245,6 @@
       </div>
 
       <a class="btn btn-default cv-add" data-id=".cv-education" href="#"><%= t("students.add_education") %></a>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.languages") %></h4></div>
-      <ul class="list-group">
-        <%= simple_fields_for :languages do |f3| %>
-          <% if @languages %>
-            <% @languages.each do |language| %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <%= f3.label t("languages." + language.name), class: "control-label" %>
-                  </div>
-                  <div class="col-sm-9">
-                    <% if student.persisted? %>
-                      <% language_skill = LanguagesUser.find_by_student_id_and_language_id(student.id,language.id) %>
-                    <% end %>
-                    <% (1..5).each do |i| %>
-                      <% if language_skill && i == language_skill.skill %>
-                        <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
-                      <% else %>
-                        <%= radio_button :language_skills, language.id, i, :class => "star" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% end %>
-          <% end %>
-        <% end %>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-12"><%= t("layouts.star_description_lang") %></div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4>Links</h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-               <%= fa_icon "home 2x", class: "control-label"%>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :homepage %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-               <%= fa_icon "github-square 2x", class: "control-label"%>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :github %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-               <%= fa_icon "facebook-square 2x", class: "control-label"%>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :facebook %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-               <%= fa_icon "xing-square 2x", class: "control-label"%>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :xing %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-               <%= fa_icon "linkedin-square 2x", class: "control-label"%>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :linkedin %>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.additional_information") %></h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-12">
-              <%= form.bootsy_area :additional_information, rows: "10", class: "form-control", type:"text"%>
-            </div>
-          </div>
-        </li>
-      </ul>
     </div>
 
     <div class="panel panel-default">

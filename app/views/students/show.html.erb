@@ -1,6 +1,6 @@
 <div class="wrapper-12 panel-wrapper">
   <% if can?(:activate, @student) && !@student.activated %>
-    <div class="col-md-12 flash-message">
+    <div class="col-md-12 flash-message on-profile">
       <div class="alert alert-warning">
         <p><%= t("students.activation_reminder") %></p>
         <%= simple_form_for @student, url: activate_student_url(@student) do |f| %>

@@ -1,7 +1,7 @@
 h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
     color: #e0671e;
 }
-.container h1 {
+.container .panel-wrapper h1 {
     border-bottom: 1px solid #ffffff;
     padding-bottom: 10px;
     color: #ffffff;
@@ -39,10 +39,11 @@ label {
 .flash-message .alert {
     margin-bottom: 0;
 }
-
-.panel {
-    margin-top: 20px;
+.flash-message.on-profile {
+    margin-left: 0;
+    margin-bottom: 20px;
 }
+
 .panel-default > .panel-heading {
     background-color: #EBEBEB;
 }
@@ -52,6 +53,11 @@ label {
 .wrapper-12.panel-wrapper {
     padding-left: 20px;
 }
+.wrapper-12.panel-wrapper label {
+    padding-top: 7px;
+}
+
+
 table.panel-table tbody {
     border-bottom: none;
 }

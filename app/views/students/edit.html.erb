@@ -1,4 +1,4 @@
-<div class="wrapper-12 teaser" style="margin-left: 20px;">
+<div class="wrapper-12 panel-wrapper">
     
   <h1><%= t("users.edit_student") %></h1>
 
@@ -8,6 +8,6 @@
       <%= render 'profile_fields', student: @student, form: f %>
 
       <br />
-      <%= f.submit t("links.save"), class: "btn btn-large btn-primary" %>
+      <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
   <% end %>
 </div>

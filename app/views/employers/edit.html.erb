@@ -1,4 +1,4 @@
-<div class="wrapper-12 teaser" style="margin-left:20px;">
+<div class="wrapper-12 panel-wrapper">
   <h1><%= t('employers.editing_employer') %></h1>
 
   <%= simple_form_for @employer, html: { multipart: true } do |f| %>
@@ -7,7 +7,7 @@
 
     <%= render 'form_fields', form: f, employer: @employer %>
 
-    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+    <%= f.submit t("links.save"), :class => "btn btn-primary pull-right" %>
 
   <% end %>
 </div>
