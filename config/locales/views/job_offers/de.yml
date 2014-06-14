@@ -52,7 +52,7 @@ de:
     prolong_requested: "Verlängerung angefordert!"
     default_compensation: "Haustarif"
     default_startdate: "Ab sofort"
-    recommended_jobs: "empfohlene Stellen"
+    recommended_jobs: "Empfohlene Stellen"
     messages:
         successfully_created: "Das Jobangebot wurde erfolgreich erstellt."
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."

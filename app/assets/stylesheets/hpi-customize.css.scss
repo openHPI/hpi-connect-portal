@@ -6,6 +6,18 @@ body {
     background-size: cover;
 }
 
+input[type=file] {
+    border: none;
+}
+select.form-control {
+    height: 36px;
+}
+
+.teaser h1 {
+    padding-bottom: 18px;
+    padding-top: 18px;
+}
+
 .menu-dropdown {
     float: right;
     font-size: 18px;
@@ -55,6 +67,10 @@ body {
 }
 .wrapper-12.teaser {
     width: 100%;
+}
+
+.teaser li a:before, .teaser .col-md-8 ul li:before {
+    content: none;
 }
 
 @media (min-width: 1024px) {

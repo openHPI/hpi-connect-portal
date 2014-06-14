@@ -1,0 +1,6 @@
+<li class="list-group-item">
+  <%= link_to student.full_name, student_path(student), :class => "h4" %>
+  <% unless student.activated %>
+    <span class="label label-danger"><%= t("users.inactive")%></span>
+  <% end %>
+</li>
