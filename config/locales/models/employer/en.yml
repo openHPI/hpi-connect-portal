@@ -15,3 +15,8 @@ en:
             profile: "Profile Packet"
             partner: "Basis Packet"
             premium: "Partner Packet"
+        place_of_business: "Place of Business"
+        line_of_business: "Line of Business"
+        number_of_employees: "Number of Employees"
+        year_of_foundation: "Year of Foundation"
+        website: "Website"

@@ -130,6 +130,7 @@ class JobOffer < ActiveRecord::Base
     update_column :prolonged_at, Date.current
     update_column :prolonged, true
     update_column :prolong_requested, false
+    update_column :status_id, JobStatus.active.id
     JobOffersMailer.job_prolonged_email(self).deliver
   end
 
