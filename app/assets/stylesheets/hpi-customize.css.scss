@@ -9,6 +9,9 @@ body {
 input[type=file] {
     border: none;
 }
+input[type=checkbox] {
+    box-shadow: none;
+}
 select.form-control {
     height: 36px;
 }
