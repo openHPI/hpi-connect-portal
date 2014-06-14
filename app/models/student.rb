@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  visibility_id          :integer          default(0), not null
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
 #
@@ -30,6 +31,7 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
+  VISIBILITYS = ['nobody','employers_only','employers_and_students']    
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']     
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
@@ -100,6 +102,10 @@ class Student < ActiveRecord::Base
 
   def graduation
     GRADUATIONS[graduation_id]
+  end
+
+  def visibility
+    VISIBILITYS[visibility_id]
   end
 
   def update_from_linkedin(linkedin_client)
