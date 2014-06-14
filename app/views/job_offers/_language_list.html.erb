@@ -1,16 +1,14 @@
-<div class="col-sm-12">
-  <div class="panel panel-default">
-    <div class="panel-heading"><h4><%= title %></h4></div>
-    <ul class="list-group">
-      <% languages.each do |language| %>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-12">
-              <%= t("languages." +  language.name) %>
-            </div>
+<div class="panel panel-default">
+  <div class="panel-heading"><h4><%= title %></h4></div>
+  <ul class="list-group">
+    <% languages.each do |language| %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= t("languages." +  language.name) %>
           </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>

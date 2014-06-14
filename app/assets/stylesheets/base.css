@@ -1,6 +1,11 @@
 h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
     color: #e0671e;
 }
+.container h1 {
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 10px;
+    color: #ffffff;
+}
 
 label {
     font-weight: normal;
@@ -26,13 +31,36 @@ label {
     color: #FFF;
 }
 
+.flash-message {
+    padding: 0;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.flash-message .alert {
+    margin-bottom: 0;
+}
+
 .panel {
     margin-top: 20px;
 }
-
 .panel-default > .panel-heading {
     background-color: #EBEBEB;
 }
+.panel-heading + .list-group .list-group-item:first-child {
+    border-top-width: 1px;
+}
+.wrapper-12.panel-wrapper {
+    padding-left: 20px;
+}
+table.panel-table tbody {
+    border-bottom: none;
+}
+body.accent3 table.table.panel-table tbody > tr > td, 
+body.accent3 table.table.panel-table thead > tr > th {
+    border-top-color: #dddddd;
+    border-bottom-color: #dddddd;
+}
+
 .wysihtml5-sandbox{
     resize: both;
 }
@@ -73,7 +101,7 @@ a:hover, a:focus, .btn-default:hover  {
    opacity: 0;
 }
 
-.dialog-select{
+.dialog-select {
     width: 100% !important;
 }
 
@@ -85,11 +113,11 @@ a:hover, a:focus, .btn-default:hover  {
 [data-toggle=collapse]{
     cursor: pointer;
 }
-
-[data-toggle=collapse]:hover{
+[data-toggle=collapse]:hover {
     background-color: #ddd;
 }
 
-input{
-    height: auto !important;
+.title-button {
+    margin-top: 10px;
+    margin-left: 5px;
 }

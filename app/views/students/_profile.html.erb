@@ -1,82 +1,90 @@
-  <% if !student.programming_languages_users.empty? %>
+  <% if student.programming_languages_users.any? %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <% student.programming_languages_users.each do |programming_languages_users| %>
-            <tr>
-              <td><%= programming_languages_users.programming_language.name %></td>
-              <td>
+      <ul class="list-group">
+        <% student.programming_languages_users.each do |programming_languages_users| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= programming_languages_users.programming_language.name %>
+              </div>
+              <div class="col-sm-8">
                 <% (1..5).each do |i| %>
                   <%= radio_button_tag programming_languages_users.programming_language.name, i, i==programming_languages_users.skill, disabled: true, class: "star" %>
                 <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
   <% if ( !(student.homepage).nil? && !(student.homepage).empty? ) || ( !(student.github).nil? && !(student.github).empty? ) || ( !(student.facebook).nil? && !(student.facebook).empty? ) || ( !(student.xing).nil? && !(student.xing).empty? ) || ( !(student.linkedin).nil? && !(student.linkedin).empty? ) %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
-        <table class="table">
-          <thead></thead>
-          <tbody>
-            <% unless (student.homepage).empty? %>
-              <tr>
-                <td>
-                  <%= fa_icon "home 2x"%>
-                </td>
-                <td>
-                  <%= link_to student.homepage, url_with_protocol(student.homepage), :target => '_blank' %>
-                </td>
-              </tr>
-            <% end %>
-            <% unless (student.github).empty? %>
-              <tr>
-                <td>
-                  <%= fa_icon "github-square 2x"%>
-                </td>
-                <td>
-                  <%= link_to student.github, url_with_protocol(student.github), :target => '_blank' %>
-                </td>
-              </tr>
-            <% end %>
-            <% unless (student.facebook).empty? %>
-              <tr>
-                <td>
-                  <%= fa_icon "facebook-square 2x"%>
-                </td>
-                <td>
-                  <%= link_to student.facebook, url_with_protocol(student.facebook), :target => '_blank' %>
-                </td>
-              </tr>
-            <% end %>
-            <% unless (student.xing).empty? %>
-              <tr>
-                <td>
-                  <%= fa_icon "xing-square 2x"%>
-                </td>
-                <td>
-                  <%= link_to student.xing, url_with_protocol(student.xing), :target => '_blank' %>
-                </td>
-              </tr>
-            <% end %>
-            <% unless (student.linkedin).empty? %>
-              <tr>
-                <td>
-                  <%= fa_icon "linkedin-square 2x"%>
-                </td>
-                <td>
-                  <%= link_to student.linkedin, url_with_protocol(student.linkedin), :target => '_blank' %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+      <ul class="list-group">
+        <% unless student.homepage.blank? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= fa_icon "home 2x"%>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to student.homepage, url_with_protocol(student.homepage), :target => '_blank' %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <% unless student.github.blank? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= fa_icon "github-square 2x"%>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to student.github, url_with_protocol(student.github), :target => '_blank' %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <% unless student.facebook.blank? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= fa_icon "facebook-square 2x"%>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to student.facebook, url_with_protocol(student.facebook), :target => '_blank' %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <% unless student.xing.blank? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= fa_icon "xing-square 2x"%>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to student.xing, url_with_protocol(student.xing), :target => '_blank' %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <% unless student.linkedin.blank? %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= fa_icon "linkedin-square 2x"%>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to student.linkedin, url_with_protocol(student.linkedin), :target => '_blank' %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 </div>
@@ -85,31 +93,38 @@
   <% if !(student.semester).nil? || !(student.academic_program).nil? || !(student.graduation).nil? %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("users.career") %></h4></div>
-        <table class="table">
-          <thead></thead>
-          <tbody>
-            <% unless (student.academic_program).nil? %>
-              <tr>
-                <td><%= t("activerecord.attributes.student.academic_program")%></td>
-                <td><%= t("activerecord.attributes.user.academic_rank_options." + 
-                student.academic_program) %></td>
-              </tr>
-            <% end %>
-            <% unless (student.semester).nil? %>
-              <tr>
-                <td><%= t("activerecord.attributes.student.semester")%></td>
-                <td><%= student.semester %></td>
-              </tr>
-            <% end %>
-            <% unless (student.graduation).nil? %>
-              <tr>
-                <td><%= t("activerecord.attributes.student.education")%></td>
-                <td><%= t("activerecord.attributes.user.degrees." + 
-                student.graduation) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.student.academic_program")%>
+            </div>
+            <div class="col-sm-8">
+              <%= t("activerecord.attributes.user.academic_rank_options." + student.academic_program) %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.student.semester")%>
+            </div>
+            <div class="col-sm-8">
+              <%= student.semester %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.student.education")%>
+            </div>
+            <div class="col-sm-8">
+              <%= t("activerecord.attributes.user.degrees." + student.graduation) %>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   <% end %>
 
@@ -131,32 +146,31 @@
     </div>
   <% end %>
 
-  <% if !student.languages_users.empty? %>
+  <% if student.languages_users.any? %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.languages")%></h4></div>
-      <table class="table">
-        <thead></thead>
-        <tbody>
-          <% student.languages_users.each do |languages_user| %>
-            <tr>
-              <td><%= t("languages." + languages_user.language.name) %></td>
-              <td>
+      <ul class="list-group">
+        <% student.languages_users.each do |languages_user| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("languages." + languages_user.language.name) %>
+              </div>
+              <div class="col-sm-8">
                 <% (1..5).each do |i| %>
                   <%= radio_button_tag languages_user.language.name, i, i==languages_user.skill, disabled: true, class: "star" %>
                 <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+              </div>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
   <% if !(student.additional_information).nil? && !(student.additional_information).empty?%>
     <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4><%= t("activerecord.attributes.student.additional_information")%></h4>
-      </div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></div>
         <table class="table">
           <thead></thead>
           <tbody>

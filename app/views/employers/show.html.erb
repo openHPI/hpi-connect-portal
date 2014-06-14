@@ -1,18 +1,20 @@
-<div class="wrapper-12 teaser">
-  <div class="col-sm-6 white">
-    <div class="pull-right">
-      <h1>
-        <%= @employer.name %>
-      </h1>
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <h1><%= @employer.name %></h1>
+      </div>
     </div>
     <div class="col-sm-6 text-left">
-      <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: "+@employer.name )  %>
-      <% if can? :edit, @employer %>
-        <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
-      <% end %>
-      <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
-        <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
-      <% end %>
+      <p>
+        <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  %>
+        <% if can? :edit, @employer %>
+          <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
+        <% end %>
+        <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
+          <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
+        <% end %>
+      </p>
     </div>
   </div>
 </div>
@@ -20,82 +22,96 @@
 <br /><br />
 
 <% if @employer.paying? %>
-  <div class="wrapper-12 teaser">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-12">
-              <%= sanitize_html(@employer.description.html_safe) %>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="wrapper-12 teaser">
+  <div class="wrapper-12 panel-wrapper">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
+          <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
           <ul class="list-group">
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.employer.place_of_business") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= @employer.place_of_business %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.employer.website") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= link_to @employer.website %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.employer.line_of_business") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= @employer.line_of_business %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.employer.number_of_employees") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= @employer.number_of_employees %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.employer.year_of_foundation") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= @employer.year_of_foundation %>
+                <div class="col-sm-12">
+                  <%= sanitize_html(@employer.description.html_safe) %>
                 </div>
               </div>
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper-12 panel-wrapper">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
+          <ul class="list-group">
+            <% unless @employer.place_of_business.blank? %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("activerecord.attributes.employer.place_of_business") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= @employer.place_of_business %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+            <% unless @employer.website.blank? %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("activerecord.attributes.employer.website") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= link_to @employer.website %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+            <% unless @employer.line_of_business.blank? %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("activerecord.attributes.employer.line_of_business") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= @employer.line_of_business %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+            <% unless @employer.number_of_employees.blank? %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("activerecord.attributes.employer.number_of_employees") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= @employer.number_of_employees %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+            <% unless @employer.year_of_foundation.blank? %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("activerecord.attributes.employer.year_of_foundation") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= @employer.year_of_foundation %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
 
 <% else %>
-  <div class="wrapper-12 teaser">
+  <div class="wrapper-12 panel-wrapper">
     <div class="row">
       <div class="col-sm-6">
 <% end %>

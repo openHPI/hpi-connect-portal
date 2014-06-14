@@ -18,7 +18,7 @@ de:
     start_date: "beginnt frühestens"
     end_date: "endet spätestens"
     archive: "Archiv"
-    job_completed: "zu Archiv verschieben"
+    job_completed: "In das Archiv verschieben"
     matching_job_offers: "Passende Jobangebote"
     overview: "Übersicht"
     create_new_job_offer: "Neues Stellenangebot anlegen"
@@ -64,7 +64,7 @@ de:
         prolonging_failed: "Das Jobangebot konnte nicht verlängert werden."
         choose_valid_end_date: "Bitte geben Sie ein valides Datum ein."
     no_results: "Zu deiner Suchanfrage wurde kein passendes Stellenangebot gefunden"
-    fire: "Arbeitsverhältnis beenden"
+    fire: "Kündigen"
     category:
         traineeship: "Praktikum"
         sideline: "Nebenjob"

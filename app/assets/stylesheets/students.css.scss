@@ -29,16 +29,18 @@
 }
 
 .cv-entry-fields {
-    border-top: 2px solid gray;
+    border-top: 1px solid #dddddd;
 }
 .cv-group .cv-entry-fields:first-of-type {
     border-top: none;
 }
+.cv-list {
+    padding: 5px;
+}
 .cv-listing {
     padding: 10px;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 20px;
-    border-top: 2px solid gray;
 
     p {
         font-size: 15px;
@@ -47,9 +49,6 @@
     p:last-of-type {
         margin-bottom: 0;
     }
-}
-.cv-listing:first-of-type {
-    border-top: none;
 }
 .cv-remove, .cv-add {
     margin: 5px;
