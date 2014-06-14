@@ -1,5 +1,5 @@
-<div class="wrapper-8 teaser">
-  <div class="col-md-8">
+<div class="wrapper-12 panel-wrapper">
+  <span class="pull-right">
     <% if can?(:create, JobOffer) %>
       <%= link_to t("job_offers.new_job_offer"), new_job_offer_path, class: "btn btn-default pull-right title-button" %>
     <% end %>
@@ -8,7 +8,13 @@
       <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(language_ids: current_user.manifestation.languages.map(&:id),
         programming_language_ids: current_user.manifestation.programming_languages.map(&:id)), class: "btn btn-default pull-right title-button"%>
     <% end %>
-    <%= render 'shared/jobs_listing_detailed', name: @job_offers_list[:name], job_offer_list: @job_offers_list[:items] %>
+  </span>
+  <h1> <%= t("job_offers.headline") %> </h1>
+</div>
+
+<div class="wrapper-8 teaser">
+  <div class="col-md-8 list-container">
+    <%= render 'shared/jobs_listing_detailed', job_offer_list: @job_offers_list[:items] %>
   </div><!--/.span -->
 </div>
 <div class="wrapper-5 teaser sidebar">

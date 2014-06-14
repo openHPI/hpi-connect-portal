@@ -1,7 +1,10 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1><%= t("users.staff_headline")%></h1>
+</div>
+
 <div class="wrapper-12 teaser">
-  <div class="col-md-12">
-    <h1><%= t("users.staff_headline")%></h1>
-    <ul class="list-group">
+  <div class="col-md-12 list-container">
+    <ul class="list-group list">
     <% @staff_members.each do |staff| %>
       <li class="list-group-item">
         <div class="row">
