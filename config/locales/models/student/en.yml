@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    attributes:
+      student:
+        education: "Education"
+        academic_program: "Academic Program"
+        semester: "Semester"
+        additional_information: "Additional Information"
+        programming_languages: "Programming Languages"
+        languages: "Languages"
