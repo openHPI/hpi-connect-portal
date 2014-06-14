@@ -5,6 +5,7 @@ en:
         new_student: "Create new student"
         edit_student: "Edit student"
         carrier: "Carrier"
+        visibility: "Visibility"
         name: "Name"
         semester: "Semester"
         newsletter_headline: "Notifications"

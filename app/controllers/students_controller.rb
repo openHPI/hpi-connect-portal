@@ -19,7 +19,8 @@ class StudentsController < ApplicationController
   end
 
   def show
-    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
+    authorize! :show, @student
+    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
@@ -113,7 +114,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
     def rescue_from_exception(exception)
