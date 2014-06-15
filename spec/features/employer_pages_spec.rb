@@ -185,5 +185,23 @@ describe "the employer page" do
     it { should have_content(I18n.t("employers.closed_job_offers")) }
     it { should have_content(@job_offer_closed.title) }
     it { should have_content(@job_offer_closed.start_date) }
+
+    it "should not have_link for students" do
+      should_not have_link @job_offer_closed.title
+    end
+
+    it "should have link" do
+      staff = FactoryGirl.create(:staff, employer: @job_offer_closed.employer)
+      login staff.user
+      visit employer_path(employer)
+      should have_link @job_offer_closed.title
+    end
+
+    it "should not have link for foreign staff" do
+      foreign_staff = FactoryGirl.create(:staff)
+      login foreign_staff.user
+      visit employer_path(employer)
+      should_not have_link @job_offer_closed.title
+    end
   end
  end
