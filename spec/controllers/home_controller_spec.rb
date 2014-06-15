@@ -32,10 +32,10 @@ describe HomeController do
       assigns(:job_offers).should_not include(pending_job)
     end
 
-    it "assigns latest 3 employers" do
-      4.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
+    it "assigns latest 5 employers" do
+      6.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
       get 'index'
-      assigns(:employers).length.should eq(3)
+      assigns(:employers).length.should eq(5)
       assigns(:employers).should_not include(JobOffer.find_by_title("TestEmployer1"))
     end
 
