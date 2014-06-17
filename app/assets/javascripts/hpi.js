@@ -372,23 +372,19 @@ function updateHeader() {
         $(this).innerWidth(width * anz).css('margin-left', ($('#content').innerWidth() - padding - width * anz) / 2);
     });
     if($(window).width() > 825) {
-        console.log($(this).scrollTop());
         if(($('body').hasClass('subpage') && $(this).scrollTop() > 100)) {
-            console.info('A');
             $('.smallheader').show();
             $('.bigheader').hide();
             $('.headbg').css('position', 'fixed').css('marginTop', -318);
             $('.submenu').css('position', 'fixed').css('marginTop', '-120px');
             $('body').css('marginTop', 260);
         } else if(!$('body').hasClass('subpage') && $(this).scrollTop() > 100) {
-            console.info('B');
             $('.smallheader').show();
             $('.bigheader').hide();
             $('.headbg').css('position', 'fixed').css('marginTop', -307);
             $('.submen.su').css('position', 'fixed').css('marginTop', '-100px');
             $('body').css('marginTop', 207);
         } else {
-            console.info('C');
             $('.smallheader').hide();
             $('.bigheader').show();
             $('.headbg').css('position', 'relative').css('marginTop', 0);
