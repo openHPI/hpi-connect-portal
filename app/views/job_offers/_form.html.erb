@@ -75,7 +75,7 @@
                   class: 'select optional form-control'%>
                 <% else %>                  
                      <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
-                      can_book = index!=2 || current_user.manifestation.employer.paying?
+                      can_book = @employer.can_create_job_offer?(index)
                       [t("job_offers.category." + category), 
                       index, 
                       {'can_book' => can_book}]
