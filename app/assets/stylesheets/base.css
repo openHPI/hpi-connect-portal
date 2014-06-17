@@ -1,0 +1,143 @@
+h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
+    color: #e0671e;
+}
+.container .panel-wrapper h1 {
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 10px;
+    color: #ffffff;
+}
+
+label {
+    font-weight: normal;
+}
+textarea.form-control {
+    min-height: 150px;
+}
+
+.btn-default {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.btn-warning {
+    background-color: #e0671e;
+    color: #FFF;
+}
+
+.btn-danger {
+    background-color: #e0671e;
+    color: #FFF;
+}
+
+.btn-danger:hover {
+    background-color: #b1063a;
+    color: #FFF;
+}
+
+.flash-message {
+    padding: 0;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.flash-message .alert {
+    margin-bottom: 0;
+}
+.flash-message.on-profile {
+    margin-left: 0;
+    margin-bottom: 20px;
+}
+
+.panel-default > .panel-heading {
+    background-color: #EBEBEB;
+}
+.panel-heading + .list-group .list-group-item:first-child {
+    border-top-width: 1px;
+}
+.wrapper-12.panel-wrapper {
+    padding-left: 20px;
+}
+.wrapper-12.panel-wrapper label {
+    padding-top: 7px;
+}
+
+
+table.panel-table tbody {
+    border-bottom: none;
+}
+body.accent3 table.table.panel-table tbody > tr > td, 
+body.accent3 table.table.panel-table thead > tr > th {
+    border-top-color: #dddddd;
+    border-bottom-color: #dddddd;
+}
+
+.wysihtml5-sandbox{
+    resize: both;
+}
+
+label.small {
+    color: #000000;
+}
+
+a:hover, a:focus, .btn-default:hover  {
+    color: #b1063a;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #e0671e;
+    border-color: #e0671e;
+}
+
+.center-cropped {
+    width: 40px;
+    height: 40px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: cover;
+    margin-bottom: 0px;
+}
+
+/* Set the image to fill its parent and make transparent */
+.center-cropped img {
+   min-height: 100%;
+   min-width: 100%;
+
+    /*IE 8 */
+   -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    /*IE 5-7 */
+   filter: alpha(opacity=0);
+   /* modern browsers */
+   opacity: 0;
+}
+
+.dialog-select {
+    width: 100% !important;
+}
+
+.profile-picture{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+[data-toggle=collapse]{
+    cursor: pointer;
+}
+[data-toggle=collapse]:hover {
+    background-color: #ddd;
+}
+
+.title-button {
+    margin-top: 15px;
+    margin-left: 5px;
+}
+
+.list-container {
+    padding-top: 10px;
+}
+.list-container .list .list-group-item {
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    margin-top: -1px;
+    min-height: 70px;
+}

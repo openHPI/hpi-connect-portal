@@ -26,7 +26,7 @@ describe "the job offer flow" do
 
     visit job_offers_path
 
-    within ".wrapper-8.teaser" do
+    within ".wrapper-12.panel-wrapper .pull-right#top-links" do
         should have_link(I18n.t("job_offers.new_job_offer"))
         click_on I18n.t("job_offers.new_job_offer")
     end

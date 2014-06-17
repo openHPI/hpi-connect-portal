@@ -5,16 +5,11 @@
   <ul class="list-group">
     <li class="list-group-item">
       <div class="row">
+        <div class="col-sm-3">
+          <%= label_field form, :name, t("activerecord.attributes.employer.name") %>
+        </div>
         <div class="col-sm-6">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= form.label t "activerecord.attributes.employer.name", class: "control-label" %><%= mark_if_required(employer, :name) %>
-              </div>
-              <div class="col-sm-9">
-                <%= form.input :name %>
-                <br>
-              </div>
-            </div>
+          <%= form.input :name %>
         </div>
       </div>
     </li>
@@ -23,7 +18,7 @@
         <div class="col-sm-6">
             <div class="row">
               <div class="col-sm-3">
-                <%= form.label :avatar, class: "control-label" %><%= mark_if_required(employer, :avatar) %>
+                <%= label_field form, :avatar, t("activerecord.attributes.employer.avatar") %>
               </div>
               <div class="col-sm-9">
                 <% unless employer.avatar.nil? %>
@@ -81,54 +76,70 @@
         <ul>
           <li><%= t("employers.package_descriptions.profile") %></li>
           <li> 24 <%= t("employers.package_descriptions.full_time") %></li>
-          <li><%= t("employers.package_descriptions.student_profile") %></li>
+          <li><%= t("employers.package_descriptions.student_profiles") %></li>
         </ul>
       </div>
       <div class="clearfix"></div>
     </li>
+  </ul>
+</div>
 
-    <div class="employers-extra-information">
+<div class="employers-extra-information">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4>
+    </div>
+    <ul class="list-group">
       <li class="list-group-item">
         <div class="row">
-          <div class="col-sm-12">
-            <%= form.label t "activerecord.attributes.employer.description", class: "control-label" %><%= mark_if_required(employer, :description) %>
+          <div class="col-sm-3">
+            <%= label_field form, :description, t("activerecord.attributes.employer.description") %>
+          </div>
+          <div class="col-sm-9">
             <%= form.input :description, placeholder: t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
-
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-6">
-            <%= form.label :number_of_employees, class: "control-label" %><%= mark_if_required(employer, :number_of_employees) %>
+          <div class="col-sm-3">
+            <%= label_field form, :number_of_employees, t("activerecord.attributes.employer.number_of_employees") %>
+          </div>
+          <div class="col-sm-9">
             <%= form.select :number_of_employees, Employer::NUMBER_OF_EMPLOYEES_FIELDS, {}, { class: "form-control" } %>
           </div>
-          <div class="col-md-6">
-            <%= form.label :place_of_business, class: "control-label" %><%= mark_if_required(employer, :place_of_business) %>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field form, :place_of_business, t("activerecord.attributes.employer.place_of_business") %>
+          </div>
+          <div class="col-sm-9">
             <%= form.input :place_of_business %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-6">
-            <%= form.label :website, class: "control-label" %><%= mark_if_required(employer, :website) %>
-            <%= form.input :website %>
+          <div class="col-sm-3">
+            <%= label_field form, :website, t("activerecord.attributes.employer.website") %>
           </div>
-          <div class="col-md-6">
-            <%= form.label :year_of_foundation, class: "control-label" %><%= mark_if_required(employer, :year_of_foundation) %>
-            <%= form.input :year_of_foundation %>
+          <div class="col-sm-9">
+            <%= form.input :website %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-6">
-            <%= form.label :line_of_business, class: "control-label" %><%= mark_if_required(employer, :line_of_business) %>
-            <%= form.input :line_of_business %>
+          <div class="col-sm-3">
+            <%= label_field form, :year_of_foundation, t("activerecord.attributes.employer.year_of_foundation") %>
+          </div>
+          <div class="col-sm-9">
+            <%= form.input :year_of_foundation %>
           </div>
         </div>
       </li>
-    </div>
-  </ul>
+    </ul>
+  </div>
 </div>

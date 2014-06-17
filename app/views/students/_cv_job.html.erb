@@ -1,6 +1,12 @@
 <div class="cv-listing">
-    <%= l job.start_date, format: '%B %Y' %>
-    <% unless job.current %> - <%= l job.end_date, format: '%B %Y' %><% end %><br/>
-    <b><%= job.position %></b> at <%= job.employer %><br/>
-    <%= simple_format job.description %>
+  <div class="row">
+    <div class="col-sm-4">
+      <%= l job.start_date, format: '%B %Y' %> - 
+      <% unless job.current %><%= l job.end_date, format: '%B %Y' %><% end %><br/>
+    </div>
+    <div class="col-sm-8">
+      <b><%= job.position %></b> at <%= job.employer %><br/>
+      <%= simple_format job.description %>
+    </div>
+  </div>
 </div>

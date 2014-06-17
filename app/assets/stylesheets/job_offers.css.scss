@@ -3,14 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .startDate {
-	text-align: right;
-	margin-top: 10px;
-	margin-right: 5px;
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 5px;
 }
 
 .small {
-	font-weight: normal;
-	font-size: 85%;
+    font-weight: normal;
+    font-size: 85%;
 }
 
 .btn-default {
@@ -18,34 +18,34 @@
 }
 
 .languageDIV {
-	padding-left: 10px;
-	padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 
 }
 
 #applicationEmailModal{
-	.modal-footer{
-		margin-top:0px;
-	}
-	#mail_body{
-		margin-bottom:0px;
-	}
+    .modal-footer{
+        margin-top:0px;
+    }
+    #mail_body{
+        margin-bottom:0px;
+    }
 }
 
 #prolong-form {
-	margin-top: 10px;
+    margin-top: 10px;
 
-	.form-control {
-		width: 50%;
-		display: inline-block;
-	}
+    .form-control {
+        width: 50%;
+        display: inline-block;
+    }
 }
 
 .form-control{
-	height: auto;
+    height: auto;
 }
 
 .languageDIV{
-	box-shadow: none !important;
-	-webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
 }

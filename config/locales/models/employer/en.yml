@@ -6,6 +6,10 @@ en:
         head: "Head"
         name: "Company"
         avatar: "Logo"
+        number_of_employees: "Number of Employees"
+        place_of_business: "Place of Business"
+        website: "Website"
+        year_of_foundation: "Year of Foundation"
         packages:
             free: "Free"
             profile: "Profile Packet"
