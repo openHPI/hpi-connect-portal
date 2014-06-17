@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 
   def index
     @job_offers = JobOffer.active.last(5).reverse
-    @employers = Employer.active.last(3).reverse
+    @employers = Employer.active.last(5).reverse
   end
 
   def imprint

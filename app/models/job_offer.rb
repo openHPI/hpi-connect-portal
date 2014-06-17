@@ -29,7 +29,7 @@ class JobOffer < ActiveRecord::Base
   include JobOfferScopes
 
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
