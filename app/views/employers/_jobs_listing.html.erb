@@ -3,10 +3,14 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-md-7">
-          <h4><%= link_to job_offer.title, job_offer%>
-            <% if signed_in_student? && current_user.manifestation.applied?(job_offer) %>
-              <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
-            <% end %>
+          <% if can?(:show, job_offer) %>
+            <h4><%= link_to job_offer.title, job_offer%></h4>
+          <% else %> 
+            <h4><%= job_offer.title %></h4>
+          <% end %>
+          <% if signed_in_student? && current_user.manifestation.applied?(job_offer) %>
+            <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
+          <% end %>
           </h4>
         </div>
         <div class="col-sm-5">

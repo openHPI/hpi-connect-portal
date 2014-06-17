@@ -4,10 +4,10 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-5">
-            <% if defined?(do_not_show_details) && do_not_show_details %>
-              <h4><%= job_offer.title %>
-            <% else %>
+            <% if can?(:show, job_offer) %>
               <h4><%= link_to job_offer.title, job_offer %>
+            <% else %>
+              <h4><%= job_offer.title %>
             <% end %>            
               <% if current_user && current_user.student? && current_user.manifestation.applied?(job_offer) %>
                 <span class="label label-success"><%= t("job_offers.already_applied_badge") %></span>

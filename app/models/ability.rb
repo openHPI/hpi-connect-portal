@@ -44,6 +44,9 @@ class Ability
 
     can [:create, :show], JobOffer
 
+    cannot :show, JobOffer, status: JobStatus.closed
+    can :show, JobOffer, status: JobStatus.closed, employer: staff.employer
+
     can [:edit, :update, :read], Staff, id: staff.id
 
     can [:edit, :update], Employer, id: employer_id

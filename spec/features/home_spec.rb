@@ -30,11 +30,11 @@ describe "the home page" do
     page.should_not have_css "#employers"
   end
 
-  it "renders the latest 3 employers" do
-    4.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
+  it "renders the latest 6 employers" do
+    6.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
     visit root_path
     page.should have_content(
-      "TestEmployer2", "TestEmployer3", "TestEmployer4"
+      "TestEmployer2", "TestEmployer3", "TestEmployer4", "TestEmployer5", "TestEmployer6"
     )
     page.should_not have_content "TestEmployer1"
   end

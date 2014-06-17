@@ -96,7 +96,7 @@
             <%= label_field form, :description, t("activerecord.attributes.employer.description") %>
           </div>
           <div class="col-sm-9">
-            <%= form.bootsy_area :description, :rows => 10, :class => "col-md-11 form-control", :placeholder => t("job_offers.enter_description") %>
+            <%= form.input :description, placeholder: t("job_offers.enter_description") %>
           </div>
         </div>
       </li>
