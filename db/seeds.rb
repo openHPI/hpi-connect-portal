@@ -55,6 +55,7 @@ Staff.delete_all
 
 hpi = Employer.create!(
   booked_package_id: Employer::PACKAGES.index("premium"),
+  requested_package_id: Employer::PACKAGES.index("premium"),
   name: "Hasso-Plattner-Institut",
   activated: true,
   description: "This is the Hasso-Plattner-Institut.",
@@ -78,6 +79,7 @@ hpi_staff = Staff.create!(
 
 sap = Employer.create!(
   booked_package_id: Employer::PACKAGES.index("premium"),
+  requested_package_id: Employer::PACKAGES.index("premium"),
   name: "SAP",
   activated: true,
   description: "SAP",
