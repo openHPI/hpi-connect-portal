@@ -141,3 +141,10 @@ a:hover, a:focus, .btn-default:hover  {
     margin-top: -1px;
     min-height: 70px;
 }
+
+.login-input {
+    margin: 5px 0;
+}
+.session_password .login-input {
+    margin-bottom: 10px;
+}
