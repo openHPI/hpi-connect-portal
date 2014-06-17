@@ -10,6 +10,9 @@ h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
 label {
     font-weight: normal;
 }
+textarea.form-control {
+    min-height: 150px;
+}
 
 .btn-default {
     background-color: #f5f5f5;
