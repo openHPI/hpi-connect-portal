@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607082938) do
+ActiveRecord::Schema.define(version: 20140618095929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 20140607082938) do
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
-    t.string   "room_number"
     t.integer  "employer_id"
     t.integer  "status_id",           default: 1
     t.boolean  "flexible_start_date", default: false

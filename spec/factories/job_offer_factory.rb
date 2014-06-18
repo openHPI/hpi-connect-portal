@@ -11,7 +11,6 @@
 #  end_date            :date
 #  time_effort         :float
 #  compensation        :float
-#  room_number         :string(255)
 #  employer_id         :integer
 #  status_id           :integer          default(1)
 #  flexible_start_date :boolean          default(FALSE)
