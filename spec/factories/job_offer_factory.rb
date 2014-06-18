@@ -17,7 +17,6 @@
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
 #  graduation_id       :integer          default(2), not null
-#  academic_program_id :integer
 #  prolong_requested   :boolean          default(FALSE)
 #  prolonged           :boolean          default(FALSE)
 #  prolonged_at        :datetime
