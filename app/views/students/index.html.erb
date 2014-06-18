@@ -1,20 +1,12 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1><%= t("users.students_headline")%></h1>
+</div>
+
 <div class="wrapper-8 teaser">
-  <div class="col-md-8">
-    <h1><%= t("users.students_headline")%></h1>
+  <div class="col-md-8 list-container">
     <% if @students.any? %>
-      <ul class="list-group">
-      <% @students.each do |student| %>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-md-7">
-              <%= link_to student.full_name, student_path(student), :class => "h4" %>
-              <% unless student.activated %>
-                <span class="label label-danger"><%= t("users.inactive")%></span>
-              <% end %>
-            </div>
-          </div>
-        </li>
-      <% end %>
+      <ul class="list-group list">
+        <%= render @students %>
       </ul>
       <div class="pull-right">
        <%= will_paginate @students, renderer: BootstrapPagination::Rails %>

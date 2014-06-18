@@ -1,21 +1,22 @@
-<div class="wrapper-12 teaser">
-  <div class="col-md-12">
-  	<% if can?(:create, Employer) %>
-  	<%= link_to t('employers.new_employer'), new_employer_path, :class => "btn btn-default pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
-  	<% end %>
-	<h1 style="padding-bottom: 18px; padding-top: 18px;">
-		<%= t('employers.employer_overview') %>
-	</h1>
-
-	  <ul class="list-group">
-	    <div class="row">
-	      <div class="col-md-11">
-	        <%= render @employers %>
-	      </div>
-	    </div>
-	  </ul>
-	</div>
+<div class="wrapper-12 panel-wrapper">
+  <span class="pull-right">
+     <% if can?(:create, Employer) %>
+      <%= link_to t('employers.new_employer'), new_employer_path, :class => "btn btn-default pull-right title-button" %>
+    <% end %>
+  </span>
+  <h1><%= t('employers.employer_overview') %></h1>
 </div>
 
-<%= will_paginate @employers, renderer: BootstrapPagination::Rails%>
+<div class="wrapper-12 teaser">
+  <div class="col-md-12 list-container">
+    <ul class="list-group list">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= render @employers %>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
 
+<%= will_paginate @employers, renderer: BootstrapPagination::Rails %>

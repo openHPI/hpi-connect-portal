@@ -17,6 +17,7 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
+#  visibility_id          :integer          default(0), not null
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
 #
@@ -30,8 +31,9 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
+  VISIBILITYS = ['nobody','employers_only','employers_and_students']    
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']     
+  GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
 
   attr_accessor :username
@@ -50,10 +52,14 @@ class Student < ActiveRecord::Base
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
   has_many :assignments
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
+  has_many :cv_jobs, dependent: :destroy
+  has_many :cv_educations, dependent: :destroy
 
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
+  accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
+  accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
 
   delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
 
@@ -100,6 +106,10 @@ class Student < ActiveRecord::Base
 
   def graduation
     GRADUATIONS[graduation_id]
+  end
+
+  def visibility
+    VISIBILITYS[visibility_id]
   end
 
   def update_from_linkedin(linkedin_client)

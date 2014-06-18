@@ -1,30 +1,27 @@
-<div class="wrapper-12 teaser">
-  <div class="col-md-12">
-    <h1><%= t('employers.new_employer') %></h1>
+<div class="wrapper-12 panel-wrapper">
+  <h1><%= t('employers.new_employer') %></h1>
 
-    <%= simple_form_for @employer, html: { multipart: true } do |f| %>
-      <%= render 'shared/object_errors', object: @employer %>
+  <%= simple_form_for @employer, html: { multipart: true } do |f| %>
+    <%= render 'shared/object_errors', object: @employer %>
 
-      <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
+    <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
 
-        <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
-
-      <% end %>
-
-      <%= render 'form_fields', form: f, employer: @employer %>
-
-      <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h5>
-              <%= t("layouts.asterisk_description") %>
-            </h5>
-          </div>
-        </div>
-      <% end %>
-
-      <%= f.submit t("links.save"), :class => "btn btn-warning pull-right" %>
+      <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
 
     <% end %>
-  </div>
+
+    <%= render 'form_fields', form: f, employer: @employer %>
+
+    <% if Employer.validators.map(&:class).include? ActiveRecord::Validations::PresenceValidator %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>
+            <%= t("layouts.asterisk_description") %>
+          </h5>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.submit t("links.register"), class: "btn btn-primary pull-right" %>
+  <% end %>
 </div>

@@ -52,10 +52,9 @@
       <h1> Login </h1>
 
       <%= simple_form_for :session, url: sessions_path do |f| %>
-          <%= f.input :email, id: "email", style: "height: auto; !important" %>
-          <%= f.input :password, id: "password", style: "height: auto; !important" %>
+          <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
+          <%= f.input :password, id: "password", placeholder: "Password", input_html: { class: "login-input" } %>
 
-          <br />
           <%= f.submit t("home.index.sign_in"), class: "btn btn-large btn-primary" %>
       <% end %>
 

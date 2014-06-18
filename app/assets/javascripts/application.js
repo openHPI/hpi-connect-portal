@@ -49,11 +49,3 @@ $(function(){
     });
     $("[data-toggle=collapse] h4").append(caret);
 });
-
-$("#csshack_header_image").width($("body").width()*3/4-20);
-$("div.container").first().css({
-    "margin-left": ($("body").width()/8-10) + "px"
-});
-$("div.bigheader").css({
-    "margin-left": ($("body").width()/8) + "px"
-});

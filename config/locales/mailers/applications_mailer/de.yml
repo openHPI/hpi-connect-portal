@@ -6,7 +6,7 @@ de:
       declined:
         subject: "Deine Bewerbung %{job_title} wurde abgelehnt"
       apply:
-        application: "Sehr geehrte Damen und Herren,\nhiermit bwerbe ich mich um die von Ihnen angebotene Stelle.\nMit freundlichen Grüßen"
+        application: "Sehr geehrte Damen und Herren,\nhiermit bewerbe ich mich um die von Ihnen angebotene Stelle.\nMit freundlichen Grüßen"
     wimi:
       new_application:
         subject: "Neue Bewerbung auf %{job_title}"

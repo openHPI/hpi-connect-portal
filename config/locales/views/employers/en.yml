@@ -3,15 +3,15 @@ en:
         employer: "Employer"
         employers: "Employers"
         employer_overview: "Listing of employers"
-        editing_employer: "Editing Employer"
+        editing_employer: "Edit Employer"
         new_employer: "New Employer"
         staff: "Staff"
         open: Open
         running: Running
         general_information: "General Information"
         active_job_offers: "Open Job offers"
-        running_job_offers: "Running Job offers"
         pending_job_offers: "Pending Job offers"
+        closed_job_offers: "Former Job offers"
         inactive: "Deactivated"
         packages: "Packages"
         package_descriptions:

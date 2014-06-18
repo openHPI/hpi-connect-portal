@@ -29,7 +29,7 @@ class JobOffer < ActiveRecord::Base
   include JobOfferScopes
 
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'HPI_assistant', 'working_student']
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
@@ -130,6 +130,7 @@ class JobOffer < ActiveRecord::Base
     update_column :prolonged_at, Date.current
     update_column :prolonged, true
     update_column :prolong_requested, false
+    update_column :status_id, JobStatus.active.id
     JobOffersMailer.job_prolonged_email(self).deliver
   end
 

@@ -245,9 +245,6 @@ describe JobOffer do
 
     before :each do
       JobOffer.delete_all
-      FactoryGirl.create(:job_status, :pending)
-      FactoryGirl.create(:job_status, :active)
-      FactoryGirl.create(:job_status, :closed)
       @job_offer_valid = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active)
       ActionMailer::Base.deliveries = []
     end
@@ -275,6 +272,13 @@ describe JobOffer do
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 4.weeks)
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks)
       ActionMailer::Base.deliveries.count.should eq(0)
+    end
+
+    it "should set the job status back to active after prolognation" do
+      @job_expired = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed)
+      @job_expired.prolong
+      assert_equal(@job_expired.reload.prolonged, true)
+      assert_equal(@job_expired.reload.status, JobStatus.active)
     end
   end
 end

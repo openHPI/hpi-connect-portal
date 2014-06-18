@@ -1,0 +1,14 @@
+en:
+  activerecord:
+    attributes:
+      cv_entry:
+        degree: "Degree"
+        field: "Field of studies"
+        institution: "Institution"
+        start_date: "Start"
+        end_date: "End"
+        current_education: "Current Education"
+        current_job: "Current Job"
+        position: "Position"
+        employer: "Employer"
+        description: "Tasks"
