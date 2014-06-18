@@ -26,7 +26,8 @@ de:
             successfully_activated: "Das Profil wurde erfolgreich aktiviert."
             unsuccessfully_activated: "Fehler während der aktivierung. Bitte versuchen Sie es später erneut."
         home:
-            edit_account_settings: "Mein Kontaktprofil bearbeiten"
+            edit_account_settings_html: "Mein %{account_settings} bearbeiten"
+            account_settings: "Kontaktprofil"
             book_product: "Ich möchte folgendes Produkt buchen:"
             service:
                 free:
@@ -34,18 +35,22 @@ de:
                     description: "Praktikum oder Studentenjob online stellen (4 Wochen)"
                 chargeable:
                     title: "Kostenpflichtige Angebote"
-                    help: "(aktuelle Preise können Sie bei connect@hpi.uni-potsdam.de erfragen)"
-                    open_positons: "Stellenangebot online stellen (4 Wochen)"
-                    company_profile: "Firmenprofil veröffentlichen (1 Jahr)"
+                    help_html: "(aktuelle Preise können Sie bei %{email} erfragen)"
+                    open_positions: "Stellenangebot online stellen (4 Wochen)"
+                    present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
+                    company_profile: "Firmenprofil"
             booking:
                 basis:
-                    title: "Basispaket buchen"
+                    title_html: "Basispaket %{book}"
+                    book: "buchen"
                     advertisements: "4 Stellenangebote pro Jahr"
                     company_profile: "1 Firmenprofil für 1 Jahr"
                 partner:
-                    title: "Partnerpaket buchen"
+                    title_html: "Partnerpaket %{book}"
+                    book: "buchen"
                     advertisements: "24 Stellenangebote pro Jahr"
                     company_profile: "1 Firmenprofil für 1 Jahr"
                     exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
             advise: "Gerne beraten wir Sie zu unseren Angeboten."
-            contact: "Kontaktieren Sie uns jederzeit."
+            contact_html: "Kontaktieren Sie uns jederzeit über %{email}"
+

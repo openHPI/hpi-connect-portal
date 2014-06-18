@@ -26,7 +26,8 @@ en:
             successfully_activated: "Profile successfully activated."
             unsuccessfully_activated: "Error during activation. Please try again later."
         home:
-            edit_account_settings: "Edit my account settings."
+            edit_account_settings_html: "Edit my %{account_settings}"
+            account_settings: "account settings"
             book_product: "I want to book the following product:"
             service:
                 free:
@@ -34,18 +35,21 @@ en:
                     description: "Announce an  internship or student job online (4 weeks)"
                 chargeable:
                     title: "Chargeable Services"
-                    help: "(You can request an overview of current prices at connect@hpi.uni-potsdam.de.)"
-                    open_positons: "Announce your open positions (4 weeks)"
-                    company_profile: "Present Your Company Profile (1 year)"
+                    help_html: "(You can request an overview of current prices at %{email})" #connect@hpi.uni-potsdam.de.)"
+                    open_positions: "Announce your open positions (4 weeks)"
+                    present_profile_html: "Present Your %{company_profile} (1 year)"
+                    company_profile: "Company Profile"
             booking:
                 basis:
-                    title: "Book a Basis Packet"
+                    title_html: "%{book} a Basis Packet"
+                    book: "Book"
                     advertisements: "4 job advertisements per year"
                     company_profile: "1 company profile for 1 year"
                 partner:
-                    title: "Book a Partner Packet"
+                    title_html: "%{book} a Partner Packet"
+                    book: "Book"
                     advertisements: "24 job advertisements per year"
                     company_profile: "1 company profile for 1 year"
                     exclusiv: "Exclusive research access to the profile database of HPI students and alumni for 1 year"
             advise: "We would be happy to advise you about our services."
-            contact: "Feel free to contact us at any time at connect@hpi.uni-potsdam.de"
+            contact_html: "Feel free to contact us at any time at %{email}"
