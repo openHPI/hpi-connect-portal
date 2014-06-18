@@ -281,7 +281,7 @@ describe JobOffersController do
       it "has same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id]
+        expected_attr = [:description, :title, :time_effort, :compensation, :employer_id]
 
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil
