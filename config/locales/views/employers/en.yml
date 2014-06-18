@@ -26,27 +26,26 @@ en:
             successfully_activated: "Profile successfully activated."
             unsuccessfully_activated: "Error during activation. Please try again later."
         home:
-            edit_account_settings:"Edit my account settings."
-            book_product:"I want to book the following product:"
+            edit_account_settings: "Edit my account settings."
+            book_product: "I want to book the following product:"
             service:
                 free:
                     title: "Free Services"
                     description: "Announce an  internship or student job online (4 weeks)"
                 chargeable:
-                    title:"Chargeable Services"
+                    title: "Chargeable Services"
                     help: "(You can request an overview of current prices at connect@hpi.uni-potsdam.de.)"
-                    open_positons:"Announce your open positions (4 weeks)"
-                    company_profile:"Present Your Company Profile (1 year)"
+                    open_positons: "Announce your open positions (4 weeks)"
+                    company_profile: "Present Your Company Profile (1 year)"
             booking:
                 basis:
-                    title:"Book a Basis Packet"
-                    advertisements:"4 job advertisements per year"
-                    company_profile:"1 company profile for 1 year"
+                    title: "Book a Basis Packet"
+                    advertisements: "4 job advertisements per year"
+                    company_profile: "1 company profile for 1 year"
                 partner:
-                    title:"Book a Partner Packet"
-                    advertisements:"24 job advertisements per year"
-                    company_profile:"1 company profile for 1 year"
-                    exclusiv:"Exclusive research access to the profile database of HPI students and alumni for 1 year"
-            advise:"We would be happy to advise you about our services."
-            contact:"Feel free to contact us at any time at connect@hpi.uni-potsdam.de
-"
+                    title: "Book a Partner Packet"
+                    advertisements: "24 job advertisements per year"
+                    company_profile: "1 company profile for 1 year"
+                    exclusiv: "Exclusive research access to the profile database of HPI students and alumni for 1 year"
+            advise: "We would be happy to advise you about our services."
+            contact: "Feel free to contact us at any time at connect@hpi.uni-potsdam.de"

@@ -25,27 +25,27 @@ de:
             successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
             successfully_activated: "Das Profil wurde erfolgreich aktiviert."
             unsuccessfully_activated: "Fehler während der aktivierung. Bitte versuchen Sie es später erneut."
-           home:
-            edit_account_settings:"Mein Kontaktprofil bearbeiten"
-            book_product:"Ich möchte folgendes Produkt buchen:"
+        home:
+            edit_account_settings: "Mein Kontaktprofil bearbeiten"
+            book_product: "Ich möchte folgendes Produkt buchen:"
             service:
                 free:
                     title: "Kostenlose Angebote"
                     description: "Praktikum oder Studentenjob online stellen (4 Wochen)"
                 chargeable:
-                    title:"Kostenpflichtige Angebote"
+                    title: "Kostenpflichtige Angebote"
                     help: "(aktuelle Preise können Sie bei connect@hpi.uni-potsdam.de erfragen)"
-                    open_positons:"Stellenangebot online stellen (4 Wochen)"
-                    company_profile:"Firmenprofil veröffentlichen (1 Jahr)"
+                    open_positons: "Stellenangebot online stellen (4 Wochen)"
+                    company_profile: "Firmenprofil veröffentlichen (1 Jahr)"
             booking:
                 basis:
-                    title:"Basispaket buchen"
-                    advertisements:"4 Stellenangebote pro Jahr"
-                    company_profile:"1 Firmenprofil für 1 Jahr"
+                    title: "Basispaket buchen"
+                    advertisements: "4 Stellenangebote pro Jahr"
+                    company_profile: "1 Firmenprofil für 1 Jahr"
                 partner:
-                    title:"Partnerpaket buchen"
-                    advertisements:"24 Stellenangebote pro Jahr"
-                    company_profile:"1 Firmenprofil für 1 Jahr"
-                    exclusiv:"Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
-            advise:"Gerne beraten wir Sie zu unseren Angeboten."
-            contact:"Kontaktieren Sie uns jederzeit."
+                    title: "Partnerpaket buchen"
+                    advertisements: "24 Stellenangebote pro Jahr"
+                    company_profile: "1 Firmenprofil für 1 Jahr"
+                    exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
+            advise: "Gerne beraten wir Sie zu unseren Angeboten."
+            contact: "Kontaktieren Sie uns jederzeit."
