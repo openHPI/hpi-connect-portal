@@ -122,9 +122,6 @@
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.academic_program"), content: (t("activerecord.attributes.user.academic_rank_options." + @job_offer.academic_program)) %>  
           <% end %>        
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
-          <% unless @job_offer.room_number.blank? %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>
-          <% end %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
           <% unless @job_offer.end_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
