@@ -1,8 +1,8 @@
-<div class="wrapper-12 teaser">
+<div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-6">
       <div class="pull-right">
-        <h1 align="right"><%= @staff.firstname %> <%= @staff.lastname %></h1>
+        <h1><%= @staff.firstname %> <%= @staff.lastname %></h1>
       </div>
     </div>
     <div class="col-sm-6 text-left">
@@ -13,26 +13,31 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
-        <table class="table">
-          <thead></thead>
-          <tbody>
-            <tr>
-              <td><%= t("activerecord.attributes.user.email") %></td>
-              <td><%= mail_to @staff.email %></td>
-            </tr>
-            <tr>
-              <td><%= t("activerecord.attributes.user.employer") %></td>
-              <td>
-                <% if @staff.employer %>
-                  <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
-                <% end %>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.email") %>
+              </div>
+              <div class="col-sm-8">
+                <%= mail_to @staff.email %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.employer") %>
+              </div>
+              <div class="col-sm-8">
+                <%= link_to @staff.employer.name, employer_path(@staff.employer) %>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

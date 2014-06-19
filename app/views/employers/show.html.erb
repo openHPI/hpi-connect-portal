@@ -1,10 +1,9 @@
-<div class="wrapper-12 teaser">
-  <div class="col-sm-6 white">
-    <div class="pull-right">
-      <h1 align="right">
-        <%= @employer.name %>
-      </h1>
-    </div>
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <h1><%= @employer.name %></h1>
+      </div>
     <div class="col-sm-6 text-left">
       <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: "+@employer.name )  %>
       <% if can? :edit, @employer %>

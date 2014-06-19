@@ -15,7 +15,7 @@ de:
         inactive: "Deaktiviert"
         packages: "Pakete"
         package_descriptions:
-            student_jobs: "Beliebig viele Studentenjobs an"
+            student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil" 
             full_time: "Angebote für Vollzeitjobs pro Jahr"
             student_profiles: "Einsicht in Studentenprofile"

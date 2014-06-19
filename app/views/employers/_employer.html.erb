@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-md-5">
       <% if can?(:activate, employer) || employer.paying? %>
-        <%= link_to employer.name, employer, :class => "h4" %> 
+        <h4><%= link_to employer.name, employer %></h4> 
       <% else %>
-        <h4> <%= employer.name %> </h4>
+        <h4 class="h4"><%= employer.name %></h4>
       <% end %>
       <% unless employer.activated %>
         <span class="label label-danger"><%= t("employers.inactive")%></span>

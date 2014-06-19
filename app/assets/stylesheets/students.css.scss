@@ -29,16 +29,21 @@
 }
 
 .cv-entry-fields {
-    border-top: 2px solid gray;
+    border-top: 1px solid #dddddd;
 }
 .cv-group .cv-entry-fields:first-of-type {
     border-top: none;
 }
+.cv-group h5 {
+    padding-left: 5px;
+}
+.cv-list {
+    padding: 5px;
+}
 .cv-listing {
     padding: 10px;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 20px;
-    border-top: 2px solid gray;
 
     p {
         font-size: 15px;
@@ -48,6 +53,12 @@
         margin-bottom: 0;
     }
 }
-.cv-listing:first-of-type {
-    border-top: none;
+.cv-remove, .cv-add {
+    margin: 5px;
+}
+
+.panel .list-group.cv-entry-fields .list-group-item {
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-radius: 0px;
 }
