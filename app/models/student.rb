@@ -40,17 +40,17 @@ class Student < ActiveRecord::Base
 
   has_one :user, as: :manifestation, dependent: :destroy
 
-  has_many :applications
+  has_many :applications, dependent: :destroy
   has_many :job_offers, through: :applications
-  has_many :programming_languages_users
+  has_many :programming_languages_users, dependent: :destroy
   has_many :programming_languages, through: :programming_languages_users
-  has_many :languages_users
+  has_many :languages_users, dependent: :destroy
   has_many :languages, through: :languages_users
-  has_many :employers_newsletter_informations
+  has_many :employers_newsletter_informations, dependent: :destroy
   has_many :possible_employers, through: :employers_newsletter_information
-  has_many :programming_languages_newsletter_informations
+  has_many :programming_languages_newsletter_informations, dependent: :destroy
   has_many :possible_programming_language, through: :programming_languages_newsletter_information
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
   has_many :cv_jobs, dependent: :destroy
   has_many :cv_educations, dependent: :destroy

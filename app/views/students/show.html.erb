@@ -29,6 +29,9 @@
         <% if can?(:activate, @student) && !@student.activated %>
           <%= link_to t("links.activate"), activate_student_path(@student.id), class: "btn btn-default pull-right" %>
         <% end %>
+        <% if can?(:destroy, @student) %>
+          <%= link_to t("links.destroy"), student_path(@student.id), :method => :delete, class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Studenten löschen möchten?' } %>
+        <% end %>
       </p>
     </div>
   </div>
