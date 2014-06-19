@@ -29,8 +29,8 @@ class Employer < ActiveRecord::Base
 
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
   has_many :job_offers, dependent: :destroy
-  has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information, dependent: :destroy
-  #has_many :employers_newsletter_information, dependent: :destroy
+  has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
+  has_many :employers_newsletter_information, dependent: :destroy
 
   accepts_nested_attributes_for :staff_members
 
