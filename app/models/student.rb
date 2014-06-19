@@ -142,7 +142,6 @@ class Student < ActiveRecord::Base
 
   def update_cv_jobs(jobs)   
     jobs.each do |job|
-      employer = !job["company"].nil? ? job["company"]["name"] : "Couldn't import employer" 
       description = !job["summary"].nil? ? job["summary"] : "No description given" 
       end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
       current = (job["is_current"].to_s == 'true')
