@@ -114,21 +114,21 @@ class Student < ActiveRecord::Base
 
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
-      "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions"])
-    #if userdata["three-current-positions"].nil? && employment_status == "jobseeking"
-     # update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
-    #end
-    #update_attributes!(
-     # { birthday: userdata["date-of-birth"], 
-      #  linkedin: userdata["public_profile_url"],
-       # cv_jobs: [CvJob.new(student: self, employer: 'SAP AG', position: 'Ruby on Rails developer', description: 'Developing a career portal', start_date: Date.current - 100, current: true)],
-        #user_attributes: {
-     #     firstname: userdata["first-name"], 
-      #    lastname: userdata["last-name"],
-       #   email: userdata["email-address"]
-        #}.reject{|key, value| value.blank? || value.nil?}
-      #}.reject{|key, value| value.blank? || value.nil?})
-    #update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
+    "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions"])
+    if userdata["three-current-positions"].nil? && employment_status == "jobseeking"
+      update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
+    end
+    update_attributes!(
+      { birthday: userdata["date-of-birth"], 
+        linkedin: userdata["public_profile_url"],
+        cv_jobs: [CvJob.new(student: self, employer: 'SAP AG', position: 'Ruby on Rails developer', description: 'Developing a career portal', start_date: Date.current - 100, current: true)],
+        user_attributes: {
+          firstname: userdata["first-name"], 
+          lastname: userdata["last-name"],
+          email: userdata["email-address"]
+        }.reject{|key, value| value.blank? || value.nil?}
+      }.reject{|key, value| value.blank? || value.nil?})
+    update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
     update_cv_jobs userdata["positions"]["all"] unless userdata["positions"].nil?
   end
 
