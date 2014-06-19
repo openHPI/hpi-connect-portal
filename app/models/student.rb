@@ -64,7 +64,7 @@ class Student < ActiveRecord::Base
   delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
 
   validates :semester, :academic_program_id, presence: true
-  validates_inclusion_of :semester, :in => 1..12
+  validates_inclusion_of :semester, :in => 1..20
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
