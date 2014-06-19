@@ -115,7 +115,7 @@ class Student < ActiveRecord::Base
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
     "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions"])
-    if userdata["three-current-positions"].nil? && employment_status == "jobseeking"
+    if !userdata["three-current-positions"].nil? && employment_status == "jobseeking"
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
     update_attributes!(
