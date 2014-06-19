@@ -226,13 +226,12 @@ describe JobOffersController do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, employer: employer)
-      FactoryGirl.create(:employers_newsletter_information, employer: employer)
-      FactoryGirl.create(:programming_languages_newsletter_information)
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
       login @job_offer.employer.staff_members[0].user
       get :accept, { id: @job_offer.id }
+      assigns(:job_offer).status.should eq(JobStatus.pending)
       response.should redirect_to(job_offers_path)
     end
 
