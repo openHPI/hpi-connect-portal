@@ -114,20 +114,22 @@ class Student < ActiveRecord::Base
 
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
-      "three_current_positions", "date-of-birth", "first-name", "last-name", "email-address", "skills"])
-    if !userdata["three_current_positions"].nil? && employment_status == "jobseeking"
-      update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
-    end
-    update_attributes!(
-      { birthday: userdata["date-of-birth"], 
-        linkedin: userdata["public_profile_url"],
-        user_attributes: {
-          firstname: userdata["first-name"], 
-          lastname: userdata["last-name"],
-          email: userdata["email-address"]
-        }.reject{|key, value| value.blank? || value.nil?}
-        }.reject{|key, value| value.blank? || value.nil?})
-    update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
+      "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions"])
+    #if userdata["three-current-positions"].nil? && employment_status == "jobseeking"
+     # update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
+    #end
+    #update_attributes!(
+     # { birthday: userdata["date-of-birth"], 
+      #  linkedin: userdata["public_profile_url"],
+       # cv_jobs: [CvJob.new(student: self, employer: 'SAP AG', position: 'Ruby on Rails developer', description: 'Developing a career portal', start_date: Date.current - 100, current: true)],
+        #user_attributes: {
+     #     firstname: userdata["first-name"], 
+      #    lastname: userdata["last-name"],
+       #   email: userdata["email-address"]
+        #}.reject{|key, value| value.blank? || value.nil?}
+      #}.reject{|key, value| value.blank? || value.nil?})
+    #update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
+    update_cv_jobs userdata["positions"]["all"] unless userdata["positions"].nil?
   end
 
   def update_programming_language(skills)
@@ -136,6 +138,24 @@ class Student < ActiveRecord::Base
       unless ProgrammingLanguagesUser.does_skill_exist_for_programming_language_and_student(ProgrammingLanguage.find_by_name(programming_language_name), self)
         ProgrammingLanguagesUser.create(student_id: self.id, programming_language_id: ProgrammingLanguage.find_by_name(programming_language_name).id, skill:3) 
       end
+    end
+  end
+
+  def update_cv_jobs(jobs)   
+    jobs.each do |job|
+      employer = !job["company"].nil? ? job["company"]["name"] : "Couldn't import employer" 
+      description = !job["summary"].nil? ? job["summary"] : "No description given" 
+      end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
+      current = (job["is_current"].to_s == 'true')
+      update_attributes!(
+        cv_jobs: self.cv_jobs << [CvJob.new(
+          student: self, 
+          employer: job["company"]["name"], 
+          position: job["title"], 
+          description: description, 
+          start_date: Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i), 
+          end_date: end_date,
+          current: current)])
     end
   end
 
