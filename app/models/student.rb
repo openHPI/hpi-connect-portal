@@ -121,7 +121,6 @@ class Student < ActiveRecord::Base
     update_attributes!(
       { birthday: userdata["date-of-birth"], 
         linkedin: userdata["public_profile_url"],
-        cv_jobs: [CvJob.new(student: self, employer: 'SAP AG', position: 'Ruby on Rails developer', description: 'Developing a career portal', start_date: Date.current - 100, current: true)],
         user_attributes: {
           firstname: userdata["first-name"], 
           lastname: userdata["last-name"],
