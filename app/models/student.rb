@@ -114,12 +114,13 @@ class Student < ActiveRecord::Base
 
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
-    "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions"])
+    "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions", "honors-awards", "volunteer"])
     if !userdata["three-current-positions"].nil? && employment_status == "jobseeking"
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
     update_attributes!(
-      { birthday: userdata["date-of-birth"], 
+      { additional_information: userdata.to_s,
+        birthday: userdata["date-of-birth"], 
         linkedin: userdata["public_profile_url"],
         user_attributes: {
           firstname: userdata["first-name"], 
@@ -129,6 +130,7 @@ class Student < ActiveRecord::Base
       }.reject{|key, value| value.blank? || value.nil?})
     update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
     update_cv_jobs userdata["positions"]["all"] unless userdata["positions"].nil?
+    update_additional_information userdata["volunteer"], userdata["honors-awards"]
   end
 
   def update_programming_language(skills)
@@ -142,7 +144,7 @@ class Student < ActiveRecord::Base
 
   def update_cv_jobs(jobs)   
     jobs.each do |job|
-      description = !job["summary"].nil? ? job["summary"] : "No description given" 
+      description = !job["summary"].nil? ? job["summary"] : " " 
       end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
       current = (job["is_current"].to_s == 'true')
       update_attributes!(
@@ -155,6 +157,23 @@ class Student < ActiveRecord::Base
           end_date: end_date,
           current: current)])
     end
+  end
+
+  def update_additional_information(volunteers, awards)
+    add_info = self.additional_information
+    if(!volunteers.nil?)
+      add_info += "I worked volunteerly "
+      volunteers["volunteer-experiences"]["all"].each do |volunteer|
+        add_info += " as " + volunteer["role"] + " for " + volunteer["organization"]["name"] + ","
+      end
+    end
+    if(!awards.nil?)
+      add_info += "I received "
+      awards["all"].each do |award|
+        add_info += " the " + award["name"] + ","
+      end
+    end
+    update_attributes!( additional_information: add_info)
   end
 
   def self.linkedin_request_token_for_callback(url) 
