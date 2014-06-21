@@ -119,8 +119,7 @@ class Student < ActiveRecord::Base
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
     update_attributes!(
-      { 
-        birthday: userdata["date-of-birth"], 
+      { birthday: userdata["date-of-birth"], 
         linkedin: userdata["public_profile_url"],
         user_attributes: {
           firstname: userdata["first-name"], 
