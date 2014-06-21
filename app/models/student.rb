@@ -114,12 +114,12 @@ class Student < ActiveRecord::Base
 
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
-    "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions", "honors-awards", "volunteer"])
+    "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions", "honors-awards", "volunteer", "educations"])
     if !userdata["three-current-positions"].nil? && employment_status == "jobseeking"
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
     update_attributes!(
-      { additional_information: userdata.to_s,
+      { 
         birthday: userdata["date-of-birth"], 
         linkedin: userdata["public_profile_url"],
         user_attributes: {
@@ -131,6 +131,7 @@ class Student < ActiveRecord::Base
     update_programming_language userdata["skills"]["all"] unless userdata["skills"].nil?
     update_cv_jobs userdata["positions"]["all"] unless userdata["positions"].nil?
     update_additional_information userdata["volunteer"], userdata["honors-awards"]
+    update_educations userdata["educations"]["all"] unless userdata["educations"].nil?
   end
 
   def update_programming_language(skills)
@@ -148,32 +149,58 @@ class Student < ActiveRecord::Base
       end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
       current = (job["is_current"].to_s == 'true')
       update_attributes!(
-        cv_jobs: self.cv_jobs << [CvJob.new(
-          student: self, 
-          employer: job["company"]["name"], 
-          position: job["title"], 
-          description: description, 
-          start_date: Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i), 
-          end_date: end_date,
-          current: current)])
+        cv_jobs: self.cv_jobs.push(
+          CvJob.new(
+            student: self, 
+            employer: job["company"]["name"], 
+            position: job["title"], 
+            description: description, 
+            start_date: Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i), 
+            end_date: end_date,
+            current: current)
+        )
+      ) 
     end
   end
 
   def update_additional_information(volunteers, awards)
-    add_info = self.additional_information
+    add_info = self.additional_information.nil? ? " " : self.additional_information
     if(!volunteers.nil?)
-      add_info += "I worked volunteerly "
+      add_info += "Volunteer-Experiences: "
       volunteers["volunteer-experiences"]["all"].each do |volunteer|
-        add_info += " as " + volunteer["role"] + " for " + volunteer["organization"]["name"] + ","
+        add_info += "\n " + volunteer["role"] + " in " + volunteer["organization"]["name"] + " "
       end
     end
     if(!awards.nil?)
-      add_info += "I received "
+      add_info += "\n \n Awards: "
       awards["all"].each do |award|
-        add_info += " the " + award["name"] + ","
+        add_info += "\n " + award["name"] + " "
       end
     end
     update_attributes!( additional_information: add_info)
+  end
+
+  def update_educations(educations)
+    educations.each do |education|
+
+      degree = (!education["degree"].nil? ? education["degree"] : "No degree given")
+      field = (!education["field-of-study"].nil? ? education["field-of-study"] : "No information given")
+      start_date = !education["start_date"].nil? ? Date.new(education["start_date"]["year"].to_i, 1) : Date.new(Time.now.strftime("%Y").to_i, Time.now.strftime("%m").to_i)
+      end_date = !education["end_date"].nil? ? Date.new(education["end_date"]["year"].to_i, 1) : Date.new(Time.now.strftime("%Y").to_i, Time.now.strftime("%m").to_i)
+      current = end_date > Date.current
+      update_attributes!(
+        cv_educations: self.cv_educations.push(
+          CvEducation.new(
+            student: self, 
+            degree: degree,            
+            field: field, 
+            institution: education["school-name"],
+            start_date: start_date,
+            end_date: end_date,
+            current: current))
+        )
+      
+    end
   end
 
   def self.linkedin_request_token_for_callback(url) 
