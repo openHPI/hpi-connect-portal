@@ -183,7 +183,7 @@ class Student < ActiveRecord::Base
     educations.each do |education|
 
       degree = (!education["degree"].nil? ? education["degree"] : "No degree given")
-      field = (!education["field-of-study"].nil? ? education["field-of-study"] : "No information given")
+      field = (!education["field-of-study"].nil? ? education["field-of-study"] : "No field-of-study given")
       start_date = !education["start_date"].nil? ? Date.new(education["start_date"]["year"].to_i, 1) : Date.new(Time.now.strftime("%Y").to_i, Time.now.strftime("%m").to_i)
       end_date = !education["end_date"].nil? ? Date.new(education["end_date"]["year"].to_i, 1) : Date.new(Time.now.strftime("%Y").to_i, Time.now.strftime("%m").to_i)
       current = end_date > Date.current

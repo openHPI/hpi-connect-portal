@@ -68,7 +68,7 @@ describe Student do
 
     it "updates employment_status if jobseeking" do
       student = FactoryGirl.create(:student, employment_status_id: Student::EMPLOYMENT_STATUSES.index("jobseeking"))
-      allow(linkedin_client).to receive(:profile).and_return({"three_current_positions" => "bla"})
+      allow(linkedin_client).to receive(:profile).and_return({"three-current-positions" => "bla"})
       student.update_from_linkedin(linkedin_client)
       student.reload.employment_status.should eq("employedseeking")
     end
@@ -105,6 +105,50 @@ describe Student do
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C++").id).skill.should eq 3
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).should_not eq nil
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).skill.should eq 3
+    end
+
+    it "updates minimum possible CV job" do
+      allow(linkedin_client).to receive(:profile).and_return(
+        {"positions" => 
+          {"all" => 
+            [{"summary" => "", 
+            "is_current" => "true", 
+            "company" => {"name" => "company_name"}, 
+            "title" => "position", 
+            "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
+            "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
+            }]
+          }
+        })
+      student.update_from_linkedin(linkedin_client)
+      student.reload.cv_jobs[0].should eq(
+        CvJob.new(
+          id: 1,
+          student: student, 
+          employer: "company_name", 
+          position: "position", 
+          description: "", 
+          start_date: Date.new(DateTime.now.year, DateTime.now.month), 
+          end_date: Date.new(Date.today.year+ 1, Date.today.month), 
+          current: true))
+      student.reload.cv_jobs.length.should eq(1)
+    end
+
+    it "updates minimum possible CV education" do
+      allow(linkedin_client).to receive(:profile).and_return(
+        {"educations" => {"all" => [{"school-name" => "HPI"}]}})
+      student.update_from_linkedin(linkedin_client)
+      student.reload.cv_educations[0].should eq(
+        CvEducation.new(
+          id: 1,
+          student: student, 
+          degree: "No degree given",
+          field: "No field-of-study given", 
+          institution: "HPI",
+          start_date: Date.new(Time.now.year, Time.now.month),
+          end_date: Date.new(Time.now.year, Time.now.month),
+          current: false))
+      student.reload.cv_educations.length.should eq(1)
     end
   end
 end
