@@ -113,24 +113,21 @@ describe Student do
           {"all" => 
             [{"summary" => "", 
             "is_current" => "true", 
-            "company" => {"name" => "company_name"}, 
-            "title" => "position", 
+            "company" => {"name" => "HPI"}, 
+            "title" => "junior researcher", 
             "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
             "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
             }]
           }
         })
       student.update_from_linkedin(linkedin_client)
-      student.reload.cv_jobs[0].should eq(
-        CvJob.new(
-          id: 1,
-          student: student, 
-          employer: "company_name", 
-          position: "position", 
-          description: "", 
-          start_date: Date.new(DateTime.now.year, DateTime.now.month), 
-          end_date: Date.new(Date.today.year+ 1, Date.today.month), 
-          current: true))
+      student.reload.cv_jobs[0].student.should eq(student)
+      student.reload.cv_jobs[0].employer.should eq("HPI")
+      student.reload.cv_jobs[0].position.should eq("junior researcher")
+      student.reload.cv_jobs[0].description.should eq("")
+      student.reload.cv_jobs[0].start_date.should eq(Date.new(DateTime.now.year, DateTime.now.month))
+      student.reload.cv_jobs[0].end_date.should eq(Date.new(Date.today.year+ 1, Date.today.month))
+      student.reload.cv_jobs[0].current.should eq(true)
       student.reload.cv_jobs.length.should eq(1)
     end
 
@@ -138,16 +135,13 @@ describe Student do
       allow(linkedin_client).to receive(:profile).and_return(
         {"educations" => {"all" => [{"school-name" => "HPI"}]}})
       student.update_from_linkedin(linkedin_client)
-      student.reload.cv_educations[0].should eq(
-        CvEducation.new(
-          id: 1,
-          student: student, 
-          degree: "No degree given",
-          field: "No field-of-study given", 
-          institution: "HPI",
-          start_date: Date.new(Time.now.year, Time.now.month),
-          end_date: Date.new(Time.now.year, Time.now.month),
-          current: false))
+      student.reload.cv_educations[0].student.should eq(student)
+      student.reload.cv_educations[0].degree.should eq("No degree given")
+      student.reload.cv_educations[0].field.should eq("No field-of-study given")
+      student.reload.cv_educations[0].institution.should eq("HPI")
+      student.reload.cv_educations[0].start_date.should eq(Date.new(Time.now.year, Time.now.month))
+      student.reload.cv_educations[0].end_date.should eq(Date.new(Time.now.year, Time.now.month))
+      student.reload.cv_educations[0].current.should eq(false)
       student.reload.cv_educations.length.should eq(1)
     end
   end
