@@ -16,12 +16,7 @@ describe "the job offer flow" do
   subject { page }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-
     employer.save
-
     ActionMailer::Base.deliveries = []
   end
 
@@ -31,7 +26,7 @@ describe "the job offer flow" do
 
     visit job_offers_path
 
-    within ".wrapper-8.teaser" do
+    within ".wrapper-12.panel-wrapper .pull-right#top-links" do
         should have_link(I18n.t("job_offers.new_job_offer"))
         click_on I18n.t("job_offers.new_job_offer")
     end
@@ -189,22 +184,6 @@ describe "the job offer flow" do
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [first_applicant.email])
     email = ActionMailer::Base.deliveries[1]
-    assert_equal(email.to, [Configurable.mailToAdministration])
-    ActionMailer::Base.deliveries = []
-
-    # staff prolongs the job offer
-    fill_in "job_offer_end_date", with: (Date.current + 3).to_s
-    click_button I18n.t("job_offers.prolong")
-
-    # the job offers end date is updated
-    job_offer.reload
-    current_path.should == job_offer_path(job_offer)
-    assert_equal(job_offer.end_date, Date.current + 3)
-    assert_equal(job_offer.active?, true)
-
-    # the administration of the HPI gets notified of the change
-    ActionMailer::Base.deliveries.count.should == 1
-    email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [Configurable.mailToAdministration])
     ActionMailer::Base.deliveries = []
 

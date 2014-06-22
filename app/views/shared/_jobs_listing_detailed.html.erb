@@ -1,30 +1,27 @@
-<% if defined?(name) %>
-  <h1 style="padding-bottom: 18px"> <%= t(name) %> </h1>
-<% end %>
 <% unless job_offer_list.empty? %>
-  <ul class="list-group">
+  <ul class="list-group list">
     <% job_offer_list.each do |job_offer| %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-5">
-            <% if defined?(do_not_show_details) && do_not_show_details %>
-              <h4><%= job_offer.title %>
-            <% else %>
+            <% if can?(:show, job_offer) %>
               <h4><%= link_to job_offer.title, job_offer %>
-            <% end %>            
+            <% else %>
+              <h4 class="h4"><%= job_offer.title %>
+            <% end %>
               <% if current_user && current_user.student? && current_user.manifestation.applied?(job_offer) %>
-                <span class="label label-success"><%= t("job_offers.already_applied_badge")%></span>
+                <span class="label label-success"><%= t("job_offers.already_applied_badge") %></span>
               <% end %>
             </h4> 
             <%= t("job_offers.category." + job_offer.category) %>                    
           </div>
           <div class="col-md-3">
-            <%= image_tag job_offer.employer.avatar.url, size: "100", class: "img-thumbnail"  %>
+            <%= image_tag job_offer.employer.avatar.url, size: "100", class: "img-thumbnail" %>
           </div>
           <div class="col-md-3" style="float:right">
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
             <% unless job_offer.end_date.nil? %>
-            <p class="startDate"><%= t("job_offers.ends") %> <%= l(job_offer.end_date) %></p>
+              <p class="startDate"><%= t("job_offers.ends") %> <%= l(job_offer.end_date) %></p>
             <% end %>
           </div>
         </div>
@@ -40,7 +37,7 @@
     <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
   </div>
 <% else %>
-  <div class="col-md-6 col-md-offset-3" style="margin-top:25%">
+  <div class="col-sm-6 col-sm-offset-3">
     <h4><%= t("job_offers.no_results") %></h4>
   </div>
 <% end %>

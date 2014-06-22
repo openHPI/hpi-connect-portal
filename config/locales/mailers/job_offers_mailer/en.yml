@@ -8,8 +8,14 @@ en:
       subject: "Job offer %{job_title} accepted "
     job_offer_closed:
       subject: "Job offer %{job_title} closed"
+    job_offer_will_expire:
+      subject: "Job offer %{job_title} will expire soon"
+    job_offer_expired:
+      subject: "Job offer %{job_title} expired"
     job_offer_prolonged:
       subject: "Job %{job_title} prolonged"
+    prolong_requested:
+      subject: "Prolongation of %{job_title} requested"
     student_accepted:
       subject: "Job %{job_title} assigned"
     new_job_offer_info:

@@ -18,7 +18,7 @@ describe "employers/index" do
     view.stub(:will_paginate)
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "a", :text => "HCI".to_s, :count => 2
+    assert_select "h4", :text => "HCI".to_s, :count => 2
   end
 
   it "only renders the new employer button for the admin" do

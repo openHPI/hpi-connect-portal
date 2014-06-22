@@ -4,14 +4,16 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:staff) }
 
-  before(:all) do
+  before(:all){
     FactoryGirl.create(:job_status, :active)
-  end
+  }
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
-
     login staff.user
     visit students_path
   end
@@ -23,14 +25,14 @@ describe "the students page" do
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
-      staff.employer.update_column :booked_package_id, 1
+      staff.employer.update_column :booked_package_id, 2
       visit students_path
       current_path.should_not == students_path
       current_path.should == root_path
     end
 
     it "is available for staff members of premium employers" do
-      staff.employer.update_column :booked_package_id, 2
+      staff.employer.update_column :booked_package_id, 3
       login staff.user
       visit students_path
       current_path.should == students_path
@@ -40,7 +42,6 @@ describe "the students page" do
   describe "as a student" do
 
     it "is not available for students" do
-      FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit students_path
       current_path.should_not == students_path
@@ -77,6 +78,9 @@ describe "the students editing page" do
   end
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
     @student1 = FactoryGirl.create(:student)
     login @student1.user
   end
@@ -94,7 +98,8 @@ describe "the students editing page" do
       "Python",
       "English",
       "Picture",
-      "Semester"
+      "Semester",
+      "Resume"
     )
   end
 
@@ -140,9 +145,14 @@ describe "the students profile page" do
   end
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @job_offer =  FactoryGirl.create(:job_offer)
     @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
-    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
+    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:2)
+    @student3 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:0)
 
     login @student1.user
   end
@@ -187,9 +197,23 @@ describe "the students profile page" do
   end
 
   describe "of another students" do
+      before(:each) do
+        visit student_path(@student3)
+    end
+
+    it "should contain all the details of student3" do
+        page.should_not have_content(
+          @student3.firstname,
+          @student3.lastname
+        )
+    end
+
+  end
+  describe "of another students" do
     before(:each) do
       visit student_path(@student2)
     end
+
 
     it "should contain all the details of student2" do
       page.should have_content(
@@ -234,14 +258,14 @@ describe "the students profile page" do
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
-      @employer.update_column :booked_package_id, 1
+      @employer.update_column :booked_package_id, 2
       visit student_path(@student)
       current_path.should_not == student_path(@student)
       current_path.should == root_path
     end
 
     it "should be accessible for staff of premium employers" do
-      @employer.update_column :booked_package_id, 2
+      @employer.update_column :booked_package_id, 3
       visit student_path(@student)
       current_path.should == student_path(@student)
     end

@@ -176,14 +176,31 @@ describe JobOffersController do
       login @staff.user
     end
 
-    it "should prolong the job" do
-      put :prolong, {id: @job_offer.id, job_offer: { end_date: Date.current + 100 } }
-      assigns(:job_offer).end_date.should eq(Date.current + 100)
+    it "should immediately prolong the job once" do
+      get :request_prolong, {id: @job_offer.id}
+      response.should redirect_to(@job_offer)
+      assigns(:job_offer).prolonged_at.should eq(Date.current)
+      assigns(:job_offer).prolong_requested.should eq(false)
+      get :request_prolong, {id: @job_offer.id}
+      assigns(:job_offer).prolong_requested.should eq(true)
     end
 
-    it "should handle invalid end_dates" do
-      put :prolong, {id: @job_offer.id, job_offer: { end_date: '20-40-2014' } }
+    it "should not be possible to request for the staff of another employer" do
+      login FactoryGirl.create(:staff).user
+      get :request_prolong, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end
+
+    it "should not be possible to prolong for a staff member" do
+      get :prolong, {id: @job_offer.id}
+      response.should redirect_to(job_offers_path)
+    end
+
+    it "should only be possible for an admin" do
+      login FactoryGirl.create(:user, :admin)
+      get :prolong, {id: @job_offer.id}
       response.should redirect_to(@job_offer)
+      assigns(:job_offer).prolonged_at.should eq(Date.current)
     end
   end
 
@@ -406,7 +423,7 @@ describe JobOffersController do
       end
     end
 
-    describe "for employers with" do
+    describe "for employers" do
 
       before :each do
         @employer = FactoryGirl.create(:employer)
@@ -416,8 +433,13 @@ describe JobOffersController do
         @attributes["employer_id"] = nil
       end
 
-      it "should not be possible to create a graduate job with the free package" do
+      it "should not be possible to create a graduate job with the free or profile package" do
         login @staff.user
+        expect {
+          post :create, {job_offer: @attributes}, valid_session
+        }.to change(JobOffer, :count).by(0)
+        response.should render_template("new")
+        @employer.update_column :booked_package_id, 1
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
@@ -425,7 +447,7 @@ describe JobOffersController do
       end
 
       it "should only be possible to create 4 graduate job with the partner package" do
-        @employer.update_column :booked_package_id, 1
+        @employer.update_column :booked_package_id, 2
         login @staff.user
         4.times do
           expect {
@@ -438,8 +460,8 @@ describe JobOffersController do
         response.should render_template("new")
       end
 
-      it "should not be possible to create 24 graduate job with the premium package" do
-        @employer.update_column :booked_package_id, 2
+      it "should be possible to create 24 graduate job with the premium package" do
+        @employer.update_column :booked_package_id, 3
         login @staff.user
         24.times do
           expect {

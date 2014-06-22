@@ -52,15 +52,14 @@
       <h1> Login </h1>
 
       <%= simple_form_for :session, url: sessions_path do |f| %>
-          <%= f.input :email, id: "email", style: "height: auto; !important" %>
-          <%= f.input :password, id: "password", style: "height: auto; !important" %>
+          <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
+          <%= f.input :password, id: "password", placeholder: "Password", input_html: { class: "login-input" } %>
 
-          <br />
           <%= f.submit t("home.index.sign_in"), class: "btn btn-large btn-primary" %>
       <% end %>
 
       <br />
-      <%= link_to t("home.index.register_user"), new_student_path %> | <%= link_to t("home.index.register_company"), new_employer_path %>
+      <%= link_to t("home.index.register_user"), new_student_path %> | <%= link_to t("home.index.register_company"), new_employer_path %> | <%= link_to t("users.forgot_password"), "", data: {toggle: "modal", target: "#applicationEmailModal" } %>
     </div>
   <% end %>
 
@@ -86,3 +85,7 @@
     </div>
   <% end %>
 </div>
+
+<% content_for :modals do %>
+  <%= render 'forgot_password' %>
+<% end %>

@@ -79,6 +79,9 @@ gem 'highline'
 # for picture Upload
 gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
 
+# for cron jobs
+gem 'whenever'
+
 # add some more UI controls
 gem 'jquery-ui-rails'
 

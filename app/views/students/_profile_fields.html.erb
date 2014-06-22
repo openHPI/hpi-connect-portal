@@ -1,5 +1,3 @@
-<%= link_to "Import from LinkedIn", request_linkedin_import_student_path(student) %>
-
 <div class="row">
   <!--   Left -->
   <div class="col-sm-6">
@@ -9,7 +7,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= form.label :employment_status, t("activerecord.attributes.user.status"), class: "control-label" %><%= mark_if_required(student, :employment_status) %>
+                <%= label_field form, :employment_status_id, t("activerecord.attributes.user.status") %>
               </div>
               <div class="col-sm-9">
                 <%= form.select :employment_status_id, Student::EMPLOYMENT_STATUSES.collect {|status| [ t("activerecord.attributes.user_status." +  status), Student::EMPLOYMENT_STATUSES.index(status) ] }, {}, {id: 'employment_status_id', class: 'select optional form-control'} %>
@@ -19,7 +17,17 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
-                <%= form.label :birthday, t("activerecord.attributes.user.birthday"), class: "control-label" %><%= mark_if_required(student, :birthday) %>
+                <%= label_field form, :visibility, t("activerecord.attributes.user.visibility") %>
+              </div>
+              <div class="col-sm-9">
+                <%= form.select :visibility_id, Student::VISIBILITYS.collect {|visibility| [ t("activerecord.attributes.user.visibility_options." +  visibility), Student::VISIBILITYS.index(visibility) ] }, {}, {id: 'visibility_id', class: 'select optional form-control'} %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= label_field form, :birthday, t("activerecord.attributes.user.birthday") %>
               </div>
               <div class="col-sm-9">
                 <%= form.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-4'} %>
@@ -28,21 +36,17 @@
           </li>
           <li class="list-group-item">
             <div class="row">
-              <div class="col-sm-6">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <%= form.label :photo, class: "control-label" %><%= mark_if_required(student.user, :photo) %>
-                    </div>
-                    <div class="col-sm-9">
-                      <% unless student.photo.nil? %>
-                          <%= image_tag student.photo.url(:medium), class: " student-thumbnail", alt: student.full_name %>
-                      <% end %>
-                      <br><br>
-                      <%= form.simple_fields_for :user, student.user do |user_form| %>
-                        <%= user_form.file_field :photo %>
-                      <% end %>
-                    </div>
-                  </div>
+              <div class="col-sm-3">
+                <%= form.label :photo, class: "control-label" %><%= mark_if_required(student.user, :photo) %>
+              </div>
+              <div class="col-sm-9">
+                <% unless student.photo.nil? %>
+                  <%= image_tag student.photo.url(:medium), class: "student-thumbnail", alt: student.full_name %>
+                <% end %>
+                <br><br>
+                <%= form.simple_fields_for :user, student.user do |user_form| %>
+                  <%= user_form.file_field :photo %>
+                <% end %>
               </div>
             </div>
           </li>
@@ -50,76 +54,35 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
-        <ul class="list-group">
-          <%= simple_fields_for :programming_languages do |f2| %>
-            <% if @programming_languages %>
-              <% @programming_languages.each do |programming_language| %>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <%= f2.label programming_language.name, class: "control-label" %>
-                    </div>
-                    <div class="col-sm-9">
-                      <% if student.persisted? %>
-                        <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
-                      <% end %>
-                      <% (1..5).each do |i| %>
-                        <% if language_skill && i == language_skill.skill %>
-                          <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
-                        <% else %>
-                          <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
-                        <% end %>
-                      <% end %>
-                    </div>
+      <ul class="list-group">
+        <%= simple_fields_for :programming_languages do |f2| %>
+          <% if @programming_languages %>
+            <% @programming_languages.each do |programming_language| %>
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= f2.label programming_language.name, class: "control-label" %>
                   </div>
-                </li>
-              <% end %>
+                  <div class="col-sm-9">
+                    <% if student.persisted? %>
+                      <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
+                    <% end %>
+                    <% (1..5).each do |i| %>
+                      <% if language_skill && i == language_skill.skill %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
+                      <% else %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
+                      <% end %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
             <% end %>
           <% end %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>
-            </div>
-          </li>
-        </ul>
-      </div>
-  </div>
-
-  <!--     Right -->
-  <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("users.carrier") %></h4></div>
-      <ul class="list-group">
+        <% end %>
         <li class="list-group-item">
           <div class="row">
-            <div class="col-sm-3">
-              <%= form.label :academic_program, t("activerecord.attributes.user.academic_program"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.academic_rank_options." + student.academic_program)) %>
-            </div>
-            <div class="col-sm-9">              
-                <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= form.label :semester, t("activerecord.attributes.user.semester"), class: "control-label" %><%= mark_if_required(student, :semester) %>
-            </div>
-            <div class="col-sm-9">
-              <%= form.input :semester, as: :integer %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= form.label :graduation, t("activerecord.attributes.user.education"), class: "control-label" %><%= mark_if_required(student, t("activerecord.attributes.user.degrees." + student.graduation)) %>
-            </div>
-            <div class="col-sm-9">
-            <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
-            [t("activerecord.attributes.user.degrees." + grade), index]
-            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
-            </div>
+            <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>
           </div>
         </li>
       </ul>
@@ -167,7 +130,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-               <%= fa_icon "home 2x", class: "control-label"%>
+              <%= fa_icon "home 2x", class: "control-label"%>
             </div>
             <div class="col-sm-9">
               <%= form.input :homepage %>
@@ -177,7 +140,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-               <%= fa_icon "github-square 2x", class: "control-label"%>
+              <%= fa_icon "github-square 2x", class: "control-label"%>
             </div>
             <div class="col-sm-9">
               <%= form.input :github %>
@@ -187,7 +150,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-               <%= fa_icon "facebook-square 2x", class: "control-label"%>
+              <%= fa_icon "facebook-square 2x", class: "control-label"%>
             </div>
             <div class="col-sm-9">
               <%= form.input :facebook %>
@@ -197,7 +160,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-               <%= fa_icon "xing-square 2x", class: "control-label"%>
+              <%= fa_icon "xing-square 2x", class: "control-label"%>
             </div>
             <div class="col-sm-9">
               <%= form.input :xing %>
@@ -207,7 +170,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-               <%= fa_icon "linkedin-square 2x", class: "control-label"%>
+              <%= fa_icon "linkedin-square 2x", class: "control-label"%>
             </div>
             <div class="col-sm-9">
               <%= form.input :linkedin %>
@@ -228,6 +191,68 @@
           </div>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <!--     Right -->
+  <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("users.career") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field form, :academic_program, t("activerecord.attributes.user.academic_program") %>
+            </div>
+            <div class="col-sm-9">              
+              <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field form, :semester, t("activerecord.attributes.user.semester") %>
+            </div>
+            <div class="col-sm-9">
+              <%= form.input :semester, as: :integer %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field form, :graduation, t("activerecord.attributes.user.graduation") %>
+            </div>
+            <div class="col-sm-9">
+            <%= form.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
+            [t("activerecord.attributes.user.degrees." + grade), index]
+            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("users.cv") %></h4></div>
+      <div class="cv-group cv-work">
+        <h5><%= t("students.work_experience") %></h5>
+        <%= form.simple_fields_for :cv_jobs, student.cv_jobs do |job_builder| %>
+          <%= render 'job_fields', form: job_builder %>
+        <% end %>
+      </div>
+
+      <a class="btn btn-default cv-add" data-id=".cv-work" href="#"><%= t("students.add_work_experience") %></a>
+      
+      <div class="cv-group cv-education">
+        <h5><%= t("students.education") %></h5>
+        <%= form.simple_fields_for :cv_educations, student.cv_educations do |education_builder| %>
+          <%=  render 'education_fields', form: education_builder %>
+        <% end %>
+      </div>
+
+      <a class="btn btn-default cv-add" data-id=".cv-education" href="#"><%= t("students.add_education") %></a>
     </div>
 
     <div class="panel panel-default">

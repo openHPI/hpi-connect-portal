@@ -3,7 +3,6 @@ $(document).ready(function($) {
         window.document.location = $(this).attr("href");
     });
     $("#submit").click(function(e) {
-      alert("hh");
       var category = document.getElementById('category_id')
       var selected_category = category.options[category.selectedIndex]
       var can_book = selected_category.getAttribute('can_book')=="true" ? true : false

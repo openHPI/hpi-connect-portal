@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518230410) do
+ActiveRecord::Schema.define(version: 20140607082938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,30 @@ ActiveRecord::Schema.define(version: 20140518230410) do
   end
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
+
+  create_table "cv_educations", force: true do |t|
+    t.integer  "student_id"
+    t.string   "degree"
+    t.string   "field"
+    t.string   "institution"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "current",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cv_jobs", force: true do |t|
+    t.integer  "student_id"
+    t.string   "position"
+    t.string   "employer"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "current",     default: false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "employers", force: true do |t|
     t.string   "name"
@@ -111,6 +135,9 @@ ActiveRecord::Schema.define(version: 20140518230410) do
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
     t.integer  "academic_program_id"
+    t.boolean  "prolong_requested",   default: false
+    t.boolean  "prolonged",           default: false
+    t.datetime "prolonged_at"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -199,6 +226,7 @@ ActiveRecord::Schema.define(version: 20140518230410) do
     t.integer  "frequency",              default: 1, null: false
     t.integer  "academic_program_id",    default: 0, null: false
     t.integer  "graduation_id",          default: 0, null: false
+    t.integer  "visibility_id",          default: 0, null: false
   end
 
   create_table "users", force: true do |t|

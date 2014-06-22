@@ -2,19 +2,12 @@ require 'spec_helper'
 
 describe "the job-offers page" do
 
-  before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-  end
-
   before(:each) do
-
+    @active = JobStatus.active
     @student1 = FactoryGirl.create(:student)
     login @student1.user
-
-    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 1)
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
+    @active = JobStatus.active
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
@@ -53,8 +46,13 @@ describe "the job-offers page" do
   end
 end
 
-
 describe "a job offer entry" do
+  
+  before(:all) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+  end
 
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
@@ -63,6 +61,10 @@ describe "a job offer entry" do
   end
 
   before(:each) do
+    FactoryGirl.create(:job_status, :pending)
+    FactoryGirl.create(:job_status, :active)
+    FactoryGirl.create(:job_status, :closed)
+
     @student1 = FactoryGirl.create(:student)
     login @student1.user
 
@@ -71,7 +73,7 @@ describe "a job offer entry" do
     @job_offer = FactoryGirl.create(:job_offer,
       title: "TestJob",
       employer: @employer,
-      status: FactoryGirl.create(:job_status, :active)
+      status: JobStatus.active
     )
 
     visit job_offers_path
@@ -96,23 +98,15 @@ describe "job_offers_history" do
     FactoryGirl.create(:job_status, :closed)
   end
 
-  before(:each) do
-    @student1 = FactoryGirl.create(:student)
-    login @student1.user
-    @employer = FactoryGirl.create(:employer)
-    @staff = FactoryGirl.create(:staff)
-    @status = FactoryGirl.create(:job_status, :closed)
-    @active = FactoryGirl.create(:job_status, name:"active")
-    @job_offer = FactoryGirl.create(:job_offer,
-      title: "Closed Job Touch Floor",
-      status: @status,
-      employer: @employer,
-      )
-  end
-
   it "should have a job-offers-history" do
+    student1 = FactoryGirl.create(:student)
+    login student1.user
+    job_offer = FactoryGirl.create(:job_offer,
+      title: "Closed Job Touch Floor",
+      status: JobStatus.closed
+      )
     visit job_offers_path
-    find("div#buttons").should have_link "Archive"
+    find(".wrapper-12.panel-wrapper .pull-right#top-links").should have_link "Archive"
     click_on "Archive"
 
     expect(current_path).to eq(archive_job_offers_path)
@@ -123,5 +117,31 @@ describe "job_offers_history" do
     page.should have_css "#search"
     find_button("Go").visible?
     first("ul.list-group li").should have_content "Closed Job Touch Floor"
+  end
+
+  describe "Show Archive Job Offers" do 
+    before :each do
+      staff1 = FactoryGirl.create(:staff)
+      staff2 = FactoryGirl.create(:staff)
+      @closed_job_offer_for_staff_1 = FactoryGirl.create(:job_offer, status: JobStatus.closed, employer: staff1.employer)
+      @closed_job_offer_for_staff_2 = FactoryGirl.create(:job_offer, status: JobStatus.closed, employer: staff2.employer)
+      login staff1.user
+      visit archive_job_offers_path
+    end
+
+    it "should be possible to show own archive jobs" do 
+      page.should have_link @closed_job_offer_for_staff_1.title  
+    end
+
+    it "should not be possible to show other archive jobs" do 
+      page.should_not have_link @closed_job_offer_for_staff_2.title 
+    end
+
+    it "should be possible to see all jobs for the admin" do 
+      login FactoryGirl.create(:user, :admin)
+      visit archive_job_offers_path
+      page.should have_link @closed_job_offer_for_staff_1.title  
+      page.should have_link @closed_job_offer_for_staff_2.title 
+    end
   end
 end

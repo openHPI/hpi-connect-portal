@@ -6,7 +6,7 @@ class EmployersController < ApplicationController
   before_action :set_employer, only: [:show, :edit, :update, :activate]
 
   def index
-    @employers = can?(:activate, Employer) ? Employer.all : Employer.active.paying
+    @employers = can?(:activate, Employer) ? Employer.all : Employer.active
     @employers = @employers.sort_by { |employer| employer.name }
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
@@ -17,6 +17,7 @@ class EmployersController < ApplicationController
     @staff =  @employer.staff_members.paginate page: page
     @active_job_offers = @employer.job_offers.active.paginate page: page
     @pending_job_offers = @employer.job_offers.pending.paginate page: page
+    @closed_job_offers = @employer.job_offers.closed.paginate page: page
   end
 
   def new
