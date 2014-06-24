@@ -8,6 +8,7 @@ en:
         avatar: "Logo"
         number_of_employees: "Number of Employees"
         place_of_business: "Place of Business"
+        place_of_business_break: "Place of Business"
         website: "Website"
         year_of_foundation: "Year of Foundation"
         packages:

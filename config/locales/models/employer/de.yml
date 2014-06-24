@@ -8,6 +8,7 @@ de:
         avatar: "Logo"
         number_of_employees: "Anzahl der Beschäftigten"
         place_of_business: "Unternehmenssitz"
+        place_of_business_break: "Unternehmens-sitz"
         website: "Website"
         year_of_foundation: "Gründungsjahr"
         packages:

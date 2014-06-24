@@ -14,6 +14,7 @@ en:
         closed_job_offers: "Former Job offers"
         inactive: "Deactivated"
         packages: "Packages"
+        contact: "Contact"
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
             profile: "Employer Profile" 
