@@ -4,7 +4,7 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-md-5">
-            <% if can?(:show, job_offer) %>
+            <% if (defined?(show_job_details_always) && show_job_details_always) || can?(:show, job_offer) %>
               <h4><%= link_to job_offer.title, job_offer %>
             <% else %>
               <h4 class="h4"><%= job_offer.title %>
