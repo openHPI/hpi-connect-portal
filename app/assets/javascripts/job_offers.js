@@ -13,7 +13,7 @@ $(document).ready(function($) {
       }         
     });
     $("#book_single").click(function(e) {
-        e.preventDefault();
+        //e.preventDefault();
         $("#submit").click()   
     });
 });
