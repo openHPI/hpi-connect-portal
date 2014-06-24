@@ -79,6 +79,15 @@ class EmployersController < ApplicationController
 
   end
 
+  def respond_and_redirect_to(url, notice = nil, action = nil, status = nil)
+    respond_to do |format|
+      format.html { redirect_to url, flash: (notice.is_a?(Hash) ? notice : {success: notice})}
+      if action && status
+        format.json { render action: action, status: status, location: object }
+      end
+    end
+  end
+
   private
 
     def rescue_from_exception(exception)
