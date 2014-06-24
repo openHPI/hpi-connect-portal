@@ -12,6 +12,7 @@ class StudentsController < ApplicationController
   has_scope :filter_semester, only: [:index],  as: :semester
   has_scope :filter_academic_program, only: [:index],  as: :academic_program_id
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
+  has_scope :search_users, only: [:index],  as: :q
 
   def index
     authorize! :index, Student

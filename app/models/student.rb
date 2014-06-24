@@ -73,21 +73,20 @@ class Student < ActiveRecord::Base
   scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f)}
   scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f)}
   scope :search_students, -> string { where("
-          (lower(firstname) LIKE ?
-          OR lower(lastname) LIKE ?
-          OR lower(email) LIKE ?
-          OR lower(academic_program_id) LIKE ?
-          OR lower(graduation_id) LIKE ?
-          OR lower(homepage) LIKE ?
+          (lower(homepage) LIKE ?
           OR lower(github) LIKE ?
           OR lower(facebook) LIKE ?
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
           ",
-          string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
           string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
   scope :update_immediately, -> { where(frequency: 1) }
-
+  scope :search_users, -> string { joins(:user).where("
+          (lower(firstname) LIKE ?
+          OR lower(lastname) LIKE ?
+          OR lower(email) LIKE ?)
+          ", string.downcase, string.downcase, string.downcase)}
+#manifestation_type = 'Student' AND
   def application(job_offer)
     applications.where(job_offer: job_offer).first
   end
