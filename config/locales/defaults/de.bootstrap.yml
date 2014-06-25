@@ -16,6 +16,7 @@ de:
     discard: "Wollen Sie wirklich alle Änderungen verwerfen?"
     verify: "Freischalten"
     activate: "Aktivieren"
+    deactivate: "Deaktivieren"
   titles:
     edit: "%{model} bearbeiten"
     save: "%{model} speichern"

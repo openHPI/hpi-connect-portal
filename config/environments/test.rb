@@ -47,4 +47,7 @@ HpiHiwiPortal::Application.configure do
     :password => 'GhZtKxHzt2sWjvaYwCV4',
     :authentication => 'plain',
     :enable_starttls_auto => true }
+
+  # Default locale for tests
+  config.i18n.default_locale = :en
 end

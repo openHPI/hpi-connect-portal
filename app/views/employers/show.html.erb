@@ -14,6 +14,12 @@
         <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
           <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
         <% end %>
+        <% if can?(:deactivate, @employer) && @employer.activated %>
+          <%= link_to t("links.deactivate"), deactivate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber deaktivieren möchten?' } %>
+        <% end %>
+        <% if can?(:destroy, @employer) %>
+          <%= link_to t("links.destroy"), employer_path(@employer), :method => :delete, class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber löschen möchten?' } %>
+        <% end %>
       </p>
     </div>
   </div>
@@ -21,10 +27,10 @@
 
 <br /><br />
 
-<% if @employer.paying? %>
-  <div class="wrapper-12 panel-wrapper">
-    <div class="row">
-      <div class="col-sm-12">
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <% if @employer.paying? %>
+      <div class="col-sm-8">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
           <ul class="list-group">
@@ -37,13 +43,34 @@
             </li>
           </ul>
         </div>
-      </div>
+    <% else %>
+      <div class="col-sm-12">
+    <% end %>
+      <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
+        <% if @active_job_offers.any? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
+            <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
+          </div>
+        <% end %>
+        <% if @pending_job_offers.any? %>
+          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
+            <div class="panel panel-default">
+              <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
+              <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
+            </div>
+          <% end %>
+        <% end %>
+        <% if @closed_job_offers.any? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
+            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
-  </div>
-
-  <div class="wrapper-12 panel-wrapper">
-    <div class="row">
-      <div class="col-sm-6">
+    <% if @employer.paying? %>
+      <div class="col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
@@ -51,7 +78,7 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.place_of_business") %>
+                    <%= t("activerecord.attributes.employer.place_of_business_break") %>
                   </div>
                   <div class="col-sm-8">
                     <%= @employer.place_of_business %>
@@ -109,20 +136,16 @@
             <% end %>
           </ul>
         </div>
-
-<% else %>
-  <div class="wrapper-12 panel-wrapper">
-    <div class="row">
-      <div class="col-sm-6">
-<% end %>
-
+    <% else %>
+      <div class="col-sm-12">
+    <% end %>
       <% if @staff.any? %>
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.staff") %></h4></div>
+          <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
           <ul class="list-group">
             <% @staff.each do |user| %>
               <li class="list-group-item">
-                <%= link_to user.full_name, staff_path(user), :class => "h4" %>
+                <h4><%= link_to user.full_name, staff_path(user) %></h4>
               </li>
             <%end%>
           </ul>
@@ -132,30 +155,5 @@
         </div>
       <% end %>
     </div>
-    
-    <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
-      <div class="col-sm-6">
-        <% if @active_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
-            <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
-          </div>
-        <% end %>
-        <% if @pending_job_offers.any? %>
-          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
-              <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
-            </div>
-          <% end %>
-        <% end %>
-        <% if @closed_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
-            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
   </div>
 </div>
