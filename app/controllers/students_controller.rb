@@ -6,13 +6,12 @@ class StudentsController < ApplicationController
   authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
-  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_students, only: [:index],  as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
   has_scope :filter_semester, only: [:index],  as: :semester
   has_scope :filter_academic_program, only: [:index],  as: :academic_program_id
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
-  has_scope :search_users, only: [:index],  as: :q
 
   def index
     authorize! :index, Student
