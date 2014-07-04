@@ -3,6 +3,7 @@ de:
     attributes:
       employer:
         description: "Beschreibung"
+        contact: "Kontakt"
         head: "Leiter"
         name: "Unternehmen"
         avatar: "Logo"

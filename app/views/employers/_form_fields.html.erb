@@ -103,6 +103,16 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
+            <%= label_field form, :contact, t("activerecord.attributes.employer.contact") %>
+          </div>
+          <div class="col-sm-9">
+            <%= form.input :contact, placeholder: t("job_offers.enter_description") %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
             <%= label_field form, :number_of_employees, t("activerecord.attributes.employer.number_of_employees") %>
           </div>
           <div class="col-sm-9">

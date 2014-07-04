@@ -154,6 +154,19 @@
           </div>
         </div>
       <% end %>
+      <% unless @employer.contact.blank? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12">
+                <%= @employer.contact %>
+              </div>
+            </div>
+          </li>
+        </div>
+      </div>
+      <% end %>
     </div>
   </div>
 </div>
