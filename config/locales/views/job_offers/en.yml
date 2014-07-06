@@ -3,6 +3,7 @@ en:
     headline: "Job offers"
     starts: "starts"
     ends: "ends"
+    released: "released"
     sortDate: "Date"
     sortEmployer: "Employer"
     searchLabel: "Search for:"

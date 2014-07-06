@@ -110,7 +110,7 @@ class JobOffersController < ApplicationController
   end
 
   def accept
-    if @job_offer.update status: JobStatus.active
+    if @job_offer.update status: JobStatus.active, release_date: Date.current
       JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
       JobOffersMailer.inform_interested_students_immediately(@job_offer)
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
