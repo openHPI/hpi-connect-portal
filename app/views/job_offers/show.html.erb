@@ -125,11 +125,15 @@
           <% unless @job_offer.room_number.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>
           <% end %>
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
+          <% unless @job_offer.release_date.nil? %> 
+            <%= render 'job_offers/list_group_item', title: t("job_offers.released"), content: l(@job_offer.release_date) %>
+          <% end %>
           <% unless @job_offer.end_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
-          <% end %>            
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
+          <% end %>   
+          <% unless @job_offer.time_effort.nil? %>         
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
+          <% end %>
           <% unless @job_offer.compensation.nil? %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
           <% end %>
