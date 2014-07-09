@@ -1,0 +1,8 @@
+de:
+  activerecord:
+    attributes:
+      alumni:
+        first_name: 'Vorname'
+        last_name: 'Nachname'
+        email: 'Weiterleitungs-Email'
+        alumni_email: 'Alumni-Email'

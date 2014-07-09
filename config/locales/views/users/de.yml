@@ -16,6 +16,7 @@ de:
     new_staff: "Neuen Mitarbeiter anlegen"
     edit_staff: "Mitarbeiter bearbeiten"
     settings: "Einstellungen"
+    import: "Alumni importieren"
     password_settings: "Passwort ändern"
     forgot_password: 'Passwort vergessen'
     reset_password: "Passwort zurücksetzen"

@@ -29,15 +29,15 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
-    resources :employers do
-      collection do
-        get "home"
-      end 
-      member do
-        get "activate"
-        get "deactivate"
+      resources :employers do
+        collection do
+          get "home"
+        end 
+        member do
+          get "activate"
+          get "deactivate"
+        end
       end
-    end
 
       resources :applications, only: [:create, :destroy] do
         member do
@@ -46,18 +46,24 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
-      post '/forgot_password' => 'users#forgot_password'
+      resources :alumnis, only: [:new, :create] do
+        collection do
+          post 'import' => 'alumni#create_from_csv'
+        end
+      end
+
+      post 'forgot_password' => 'users#forgot_password'
 
       resources :users, only: [:edit, :update] do
-        patch '/update_password' => 'users#update_password', as: 'update_password'
+        patch 'update_password' => 'users#update_password', as: 'update_password'
       end
 
       resources :home, only: [:index, :imprint]
       get 'home/imprint'
       
       resources :sessions, only: [:create]
-      get '/signin' => 'home#index', as: 'signin'
-      delete '/signout' => 'sessions#destroy', as: 'signout'
+      get 'signin' => 'home#index', as: 'signin'
+      delete 'signout' => 'sessions#destroy', as: 'signout'
 
       resources :studentsearch
       resources :faqs
@@ -65,10 +71,6 @@ HpiHiwiPortal::Application.routes.draw do
       resources :staff, except: [:edit, :update]
 
       resources :students do
-        collection do
-          get 'students/new' => 'students#new'
-          post 'students' => 'students#create'
-        end
         member do
           patch 'activate'
           get 'activate'

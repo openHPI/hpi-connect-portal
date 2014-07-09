@@ -19,6 +19,7 @@
 #  frequency              :integer          default(1), not null
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
+#  visibility_id          :integer          default(0), not null
 #
 
 require 'spec_helper'

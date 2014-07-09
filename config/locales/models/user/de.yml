@@ -33,6 +33,7 @@ de:
         employment_start_date: "Beginn der Anstellung"
         employer: "Arbeitgeber"
         status: "Beschäftigungsstatus"
+        alumni_file: "Alumnidatei"
         academic_rank_options:
             bachelor: "Bachelor"
             master: "Master"

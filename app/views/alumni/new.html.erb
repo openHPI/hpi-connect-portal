@@ -1,0 +1,83 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1> <%= t("users.import") %> </h1>
+
+  <%= form_tag upload_alumni, method: :post, multipart: true do %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.alumni_file") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional alumni_file">
+                <%= file_field_tag 'alumni_file' %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.import") %>" />
+    <br /><br />
+  <% end %>
+
+  <%= simple_form_for @alumni do |f| %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :firstname, t("activerecord.attributes.alumni.first_name") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional firstname">
+                <%= f.input :firstname %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :lastname, t("activerecord.attributes.alumni.last_name") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional lastname">
+                <%= f.input :lastname %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :email, t("activerecord.attributes.alumni.email") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional email">
+                <%= f.input :email %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :alumni_email, t("activerecord.attributes.alumni.alumni_email") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional alumni_email">
+                <%= f.input :alumni_email %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.import") %>" />
+    <br /><br />
+  <% end %>
+</div>
