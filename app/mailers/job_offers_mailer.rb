@@ -10,7 +10,7 @@ class JobOffersMailer < ActionMailer::Base
   def new_job_offer_info_email(job_offer, user)
     @job_offer = job_offer
     @student = user
-     mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
+    mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
   end
 
   def admin_accepted_job_offer_email(job_offer)

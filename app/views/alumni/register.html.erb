@@ -1,0 +1,22 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1> <%= t("alumnis.register_address") %> </h1>
+
+  <%= simple_form_for :session, url: alumni_link_path(token: @alumni.token) do |f| %>
+    <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
+    <%= f.input :password, id: "password", placeholder: "Password", input_html: { class: "login-input" } %>
+
+    <%= f.submit t("home.index.sign_in"), class: "btn btn-large btn-primary" %>
+  <% end %>
+
+  <%= simple_form_for :user, url: alumni_link_new_path(token: @alumni.token) do |f| %>
+
+    <%= f.input :firstname, value: @alumni.firstname %>
+    <%= f.input :lastname, value: @alumni.lastname %>
+    <%= f.input :email, value: @alumni.email %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+
+    <%= f.submit t("users.register"), class: "btn btn-large btn-primary" %>
+  <% end %>
+
+</div>

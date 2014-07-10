@@ -51,6 +51,9 @@ HpiHiwiPortal::Application.routes.draw do
           post 'import' => 'alumni#create_from_csv'
         end
       end
+      get 'alumni/:token/email' => 'alumni#register', as: 'alumni_email'
+      post 'alumni/:token/link' => 'alumni#link', as: 'alumni_link'
+      post 'alumni/:token/link_new' => 'alumni#link_new', as: 'alumni_link_new'
 
       post 'forgot_password' => 'users#forgot_password'
 

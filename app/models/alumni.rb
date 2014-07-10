@@ -32,4 +32,9 @@ class Alumni < ActiveRecord::Base
     code = SecureRandom.urlsafe_base64 while Alumni.exists? token: code
     update_column :token, code
   end
+
+  def link(user)
+    user.update_column :alumni_email, alumni_email
+    self.destroy
+  end
 end

@@ -3,12 +3,12 @@
 
   <%= form_tag upload_alumni, method: :post, multipart: true do %>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_list") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.user.alumni_file") %>
+              <%= t("activerecord.attributes.alumni.alumni_file") %>
             </div>
             <div class="col-sm-9">
               <div class="input select optional alumni_file">
@@ -25,7 +25,7 @@
 
   <%= simple_form_for @alumni do |f| %>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_single") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">

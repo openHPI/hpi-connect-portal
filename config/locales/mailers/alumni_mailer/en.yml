@@ -1,0 +1,4 @@
+de:
+  alumni_mailer:
+    creation_email:
+        subject: 'Your new alumni email is waiting for you!'
