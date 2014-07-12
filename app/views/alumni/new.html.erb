@@ -1,7 +1,7 @@
 <div class="wrapper-12 panel-wrapper">
   <h1> <%= t("users.import") %> </h1>
 
-  <%= form_tag upload_alumni, method: :post, multipart: true do %>
+  <%= form_tag import_alumni_index_path, method: :post, multipart: true do %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_list") %></h4></div>
       <ul class="list-group">
@@ -23,7 +23,8 @@
     <br /><br />
   <% end %>
 
-  <%= simple_form_for @alumni do |f| %>
+  <%= simple_form_for @alumni, url: alumni_index_path do |f| %>
+    <%= render 'shared/object_errors', object: @alumni %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_single") %></h4></div>
       <ul class="list-group">

@@ -57,10 +57,10 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
 
-  delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
+  delegate :firstname, :lastname, :full_name, :email, :alumni_email, :activated, :photo, to: :user
 
-  validates :semester, :academic_program_id, presence: true
-  validates_inclusion_of :semester, :in => 1..20
+  validates :academic_program_id, presence: true
+  validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }

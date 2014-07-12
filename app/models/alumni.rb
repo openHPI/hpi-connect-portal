@@ -13,12 +13,14 @@
 #
 
 class Alumni < ActiveRecord::Base
-  validate :email, presence: true
-  validate :alumni_email, presence: true
-  validate :token, presence: true, uniqueness: { case_sensitive: true }
+  
+  validates :email, presence: true
+  validates :alumni_email, presence: true, uniqueness: { case_sensitive: false }
+  validates :token, presence: true, uniqueness: { case_sensitive: true }
+  validate :uniqueness_of_alumni_email_on_user
 
   def self.create_from_row(row)
-    alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email] alumni_email: row[:alumni_email]
+    alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email], alumni_email: row[:alumni_email]
     alumni.generate_unique_token
     if alumni.save
       AlumniMailer.creation_email(alumni).deliver
@@ -27,14 +29,19 @@ class Alumni < ActiveRecord::Base
     return alumni
   end
 
+  def uniqueness_of_alumni_email_on_user
+    errors.add(:alumni_email, 'is already in use by another user.') if User.exists? alumni_email: alumni_email
+  end
+
   def generate_unique_token
     code = SecureRandom.urlsafe_base64
     code = SecureRandom.urlsafe_base64 while Alumni.exists? token: code
-    update_column :token, code
+    self.token = code
   end
 
   def link(user)
     user.update_column :alumni_email, alumni_email
+    user.update_column :activated, true
     self.destroy
   end
 end

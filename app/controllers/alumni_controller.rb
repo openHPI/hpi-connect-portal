@@ -1,6 +1,8 @@
 class AlumniController < ApplicationController
   authorize_resource
 
+  skip_before_filter :signed_in_user, only: [:register, :link, :link_new]
+
   def new
     @alumni = Alumni.new
   end
@@ -8,7 +10,7 @@ class AlumniController < ApplicationController
   def create
     alumni = Alumni.create_from_row alumni_params
     if alumni == :created
-      respond_and_redirect_to alumni_new_path, 'Alumni erfolgreich erstellt!' 
+      respond_and_redirect_to new_alumni_path, 'Alumni erfolgreich erstellt!' 
     else
       @alumni = alumni
       render 'new'
@@ -16,7 +18,7 @@ class AlumniController < ApplicationController
   end
 
   def create_from_csv
-    # require 'csv'
+    require 'csv'
     if params[:alumni_file].present?
       count, errors = 0, []
       CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol) do |row|
@@ -30,15 +32,16 @@ class AlumniController < ApplicationController
         notice = 'Alumni erfolgreich importiert!'
       end
     end
-    respond_and_redirect_to alumni_new_path, notice
+    respond_and_redirect_to new_alumni_path, notice
   end
 
   def register
-    @alumni = Alumni.find_by_token params[:token]
+    @alumni = Alumni.find_by_token! params[:token]
+    @user = User.new
   end
 
   def link
-    alumni = Alumni.find_by_token params[:token]
+    alumni = Alumni.find_by_token! params[:token]
     user = User.find_by_email params[:session][:email]
     if user && user.authenticate(params[:session][:password])
       alumni.link user
@@ -51,14 +54,17 @@ class AlumniController < ApplicationController
   end
 
   def link_new
-    @alumni = Alumni.find_by_token params[:token]
-    user = User.new link_params
-    user.manifestation = Student.new
-    if user.save
-      @alumni.link user
-      sign_in user
-      respond_and_redirect_to [:edit, user.manifestation], I18n.t('users.messages.successfully_created')
+    @alumni = Alumni.find_by_token! params[:token]
+    @user = User.new link_params
+    student = Student.create! academic_program_id: Student::ACADEMIC_PROGRAMS.index('alumnus')
+    @user.manifestation = student
+    if @user.save
+      @alumni.link @user
+      sign_in @user
+      StudentsMailer.new_student_email(@user.manifestation).deliver
+      respond_and_redirect_to [:edit, @user.manifestation], I18n.t('users.messages.successfully_created')
     else
+      student.destroy
       render 'register'
     end
   end

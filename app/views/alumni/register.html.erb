@@ -1,22 +1,110 @@
 <div class="wrapper-12 panel-wrapper">
-  <h1> <%= t("alumnis.register_address") %> </h1>
-
+  <h1> <%= t("alumni.register_address") %> </h1>
+  
   <%= simple_form_for :session, url: alumni_link_path(token: @alumni.token) do |f| %>
-    <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
-    <%= f.input :password, id: "password", placeholder: "Password", input_html: { class: "login-input" } %>
-
-    <%= f.submit t("home.index.sign_in"), class: "btn btn-large btn-primary" %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("alumni.already_have_account") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.email") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional email">
+                <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.password") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional password">
+                <%= f.input :password, id: "password", placeholder: "Password", input_html: { class: "login-input" } %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t('home.index.sign_in') %>" />
+    <br /><br />
+    <br />
   <% end %>
 
   <%= simple_form_for :user, url: alumni_link_new_path(token: @alumni.token) do |f| %>
-
-    <%= f.input :firstname, value: @alumni.firstname %>
-    <%= f.input :lastname, value: @alumni.lastname %>
-    <%= f.input :email, value: @alumni.email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
-
-    <%= f.submit t("users.register"), class: "btn btn-large btn-primary" %>
+    <%= render 'shared/object_errors', object: @user %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("alumni.register_account") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.alumni.first_name") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional alumni_firstname">
+                <%= f.input :firstname, input_html: { value: @alumni.firstname } %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.alumni.last_name") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional alumni_lastname">
+                <%= f.input :lastname, input_html: { value: @alumni.lastname } %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.email") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional user_email">
+                <%= f.input :email, input_html: { value: @alumni.email } %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.password") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional user_file">
+                <%= f.input :password %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.user.password_confirmation") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional user_file">
+                <%= f.input :password_confirmation %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t('links.register') %>" />
+    <br /><br />
   <% end %>
 
 </div>
