@@ -1,5 +1,5 @@
 class JobOffersMailer < ActionMailer::Base
-  default from: 'hpi.hiwi.portal@gmail.com'
+  default from: 'noreply-connect@hpi.de'
   layout "email"
 
   def new_job_offer_email(job_offer)
