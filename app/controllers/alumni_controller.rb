@@ -1,6 +1,5 @@
 class AlumniController < ApplicationController
-  authorize_resource
-
+  authorize_resource except: [:register, :link, :link_new]
   skip_before_filter :signed_in_user, only: [:register, :link, :link_new]
 
   def new

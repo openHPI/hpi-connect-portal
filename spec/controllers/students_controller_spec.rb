@@ -83,7 +83,7 @@ describe StudentsController do
       @student = FactoryGirl.create(:student)
     end
 
-    it "handles nil strings" do
+    it "handles nil strings and unrealistic values" do
 
       params = {
         "additional_information" => nil,
@@ -93,7 +93,7 @@ describe StudentsController do
         "homepage" => nil,
         "linkedin" => nil,
         "photo" => nil,
-        "semester" => nil,
+        "semester" => 100,
         "employer_status_id" => "1",
         "xing" => nil
       }

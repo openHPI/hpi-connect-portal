@@ -44,10 +44,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.alumni.first_name") %>
+              <%= f.label :firstname, t("activerecord.attributes.alumni.first_name"), class: "control-label" %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional alumni_firstname">
+              <div class="input select optional user_firstname">
                 <%= f.input :firstname, input_html: { value: @alumni.firstname } %>
               </div>
             </div>
@@ -56,10 +56,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.alumni.last_name") %>
+              <%= f.label :lastname, t("activerecord.attributes.alumni.last_name"), class: "control-label" %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional alumni_lastname">
+              <div class="input select optional user_lastname">
                 <%= f.input :lastname, input_html: { value: @alumni.lastname } %>
               </div>
             </div>
@@ -68,7 +68,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.user.email") %>
+              <%= f.label :email, t("activerecord.attributes.user.email"), class: "control-label" %>
             </div>
             <div class="col-sm-9">
               <div class="input select optional user_email">
@@ -80,10 +80,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.user.password") %>
+              <%= f.label :password, t("activerecord.attributes.user.password"), class: "control-label" %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_file">
+              <div class="input select optional user_password">
                 <%= f.input :password %>
               </div>
             </div>
@@ -92,10 +92,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.user.password_confirmation") %>
+            <%= f.label :password_confirmation, t("activerecord.attributes.user.password_confirmation"), class: "control-label" %>
             </div>
             <div class="col-sm-9">
-              <div class="input select optional user_file">
+              <div class="input select optional user_password_confirmation">
                 <%= f.input :password_confirmation %>
               </div>
             </div>

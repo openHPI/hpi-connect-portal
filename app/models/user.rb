@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   belongs_to :manifestation, polymorphic: true, touch: true
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }
-  validates :alumni_email, uniqueness: { case_sensitive: false }
+  validates :alumni_email, uniqueness: { case_sensitive: false }, unless: Proc.new { |u| u.alumni_email.blank? }
   validates :firstname, :lastname, presence: true
 
   has_attached_file :photo, styles: { :medium => "300x300>", :thumb => "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"

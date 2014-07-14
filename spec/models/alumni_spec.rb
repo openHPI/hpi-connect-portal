@@ -15,5 +15,34 @@
 require 'spec_helper'
 
 describe Alumni do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "validations" do
+    before(:each) do
+      @alumni = FactoryGirl.create :alumni
+    end
+    
+    it "should not be valid with empty attributes" do
+      assert !Alumni.new.valid?
+    end
+
+    it "should not be valid without email" do
+      @alumni.email = nil
+      @alumni.should be_invalid
+    end
+
+    it "should not be valid without alumni_email" do
+      @alumni.alumni_email = nil
+      @alumni.should be_invalid
+    end
+
+    it "should not be valid without token" do
+      @alumni.token = nil
+      @alumni.should be_invalid
+    end
+
+    it "should not be valid with an alumni email already registered on a user" do
+      FactoryGirl.create :user, alumni_email: 'alumni@alumni.de'
+      @alumni.alumni_email = 'alumni@alumni.de'
+      @alumni.should be_invalid
+    end
+  end
 end
