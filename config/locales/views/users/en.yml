@@ -16,6 +16,7 @@ en:
     new_staff: "Create new staff"
     edit_staff: "Edit staff"
     settings: "Account Settings"
+    import: "Import Alumni"
     password_settings: "Change Password"
     forgot_password: 'Forgot password'
     reset_password: "Reset password"

@@ -16,6 +16,8 @@ en:
     discard: "Are you sure you want to discard your changes?"
     verify: "Verify"
     activate: "Activate"
+    deactivate: "Deactivate"
+    import: "Import"
   titles:
     edit: "Edit %{model}"
     save: "Save %{model}"

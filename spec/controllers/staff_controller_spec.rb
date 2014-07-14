@@ -18,7 +18,7 @@ describe StaffController do
 
   describe "GET index" do
     it "assigns all staff as @staff" do
-      admin = FactoryGirl.create(:user, :admin)
+      admin = FactoryGirl.create :user, :admin
       login admin
 
       get :index, {}, valid_session
