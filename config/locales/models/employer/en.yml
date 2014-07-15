@@ -22,3 +22,9 @@ en:
         number_of_employees: "Number of Employees"
         year_of_foundation: "Year of Foundation"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Street"
+            zip_city: "ZIP-Code/City"
+            email: "E-Mail"
+            phone: "Telephon"

@@ -137,8 +137,6 @@
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), 
             content: (@job_offer.employer.staff_members.map {|staff| (link_to staff.full_name, staff)}.join('<br>').html_safe) %>
           <% end %>
-        </ul>
-      </div>
 
       <% unless @job_offer.programming_languages.blank? %>
         <%= render 'job_offers/language_list', title: t("job_offers.required_programming_languages"), languages: @job_offer.programming_languages %>
@@ -154,6 +152,19 @@
             <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
         </div>
       <%end%>
+      <% unless @job_offer.contact_is_empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-8">
+                  <%= simple_format @job_offer.merged_contact %>
+                </div>
+              </div>
+            </li>
+          </div>              
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715151635) do
+ActiveRecord::Schema.define(version: 20140715161115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,11 @@ ActiveRecord::Schema.define(version: 20140715151635) do
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
+    t.string   "contact_name"
+    t.string   "contact_street"
+    t.string   "contact_zip_city"
+    t.string   "contact_email"
+    t.string   "contact_phone"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
