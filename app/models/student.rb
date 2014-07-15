@@ -46,10 +46,6 @@ class Student < ActiveRecord::Base
   has_many :programming_languages, through: :programming_languages_users
   has_many :languages_users, dependent: :destroy
   has_many :languages, through: :languages_users
-  has_many :employers_newsletter_informations, dependent: :destroy
-  has_many :possible_employers, through: :employers_newsletter_information
-  has_many :programming_languages_newsletter_informations, dependent: :destroy
-  has_many :possible_programming_language, through: :programming_languages_newsletter_information
   has_many :assignments, dependent: :destroy
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
   has_many :cv_jobs, dependent: :destroy
@@ -61,10 +57,10 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
 
-  delegate :firstname, :lastname, :full_name, :email, :activated, :photo, to: :user
+  delegate :firstname, :lastname, :full_name, :email, :alumni_email, :activated, :photo, to: :user
 
-  validates :semester, :academic_program_id, presence: true
-  validates_inclusion_of :semester, :in => 1..20
+  validates :academic_program_id, presence: true
+  validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
@@ -72,21 +68,17 @@ class Student < ActiveRecord::Base
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
   scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f)}
   scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f)}
-  scope :search_students, -> string { where("
+  scope :update_immediately, -> { where(frequency: 1) }
+  scope :filter_students, -> q { joins(:user).where("
           (lower(firstname) LIKE ?
           OR lower(lastname) LIKE ?
           OR lower(email) LIKE ?
-          OR lower(academic_program_id) LIKE ?
-          OR lower(graduation_id) LIKE ?
           OR lower(homepage) LIKE ?
           OR lower(github) LIKE ?
           OR lower(facebook) LIKE ?
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
-          ",
-          string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
-          string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
-  scope :update_immediately, -> { where(frequency: 1) }
+          ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
 
   def application(job_offer)
     applications.where(job_offer: job_offer).first

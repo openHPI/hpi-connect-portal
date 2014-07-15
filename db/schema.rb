@@ -16,6 +16,16 @@ ActiveRecord::Schema.define(version: 20140715161115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "alumnis", force: true do |t|
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email",        null: false
+    t.string   "alumni_email", null: false
+    t.string   "token",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "applications", force: true do |t|
     t.integer  "student_id"
     t.integer  "job_offer_id"
@@ -110,11 +120,6 @@ ActiveRecord::Schema.define(version: 20140715161115) do
 
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
-  create_table "employers_newsletter_informations", force: true do |t|
-    t.integer "student_id"
-    t.integer "employer_id"
-  end
-
   create_table "faqs", force: true do |t|
     t.string   "question"
     t.text     "answer"
@@ -193,11 +198,6 @@ ActiveRecord::Schema.define(version: 20140715161115) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "programming_languages_newsletter_informations", force: true do |t|
-    t.integer "student_id"
-    t.integer "programming_language_id"
   end
 
   create_table "programming_languages_users", force: true do |t|

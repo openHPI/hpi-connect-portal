@@ -1,5 +1,5 @@
 class EmployersMailer < ActionMailer::Base
-  default from: 'hpi.hiwi.portal@gmail.com'
+  default from: 'noreply-connect@hpi.de'
 
   def new_employer_email(employer)
     @employer = employer
