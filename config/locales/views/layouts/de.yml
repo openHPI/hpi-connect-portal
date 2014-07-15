@@ -22,6 +22,7 @@ de:
     imprint: "Impressum"
     asterisk_description: "Felder, die mit * gekennzeichnet sind, sind Pflichtfelder"
     configuration: "Plattformeinstellungen"
+    import: "Alumni importieren"
     star_description_prog: "1 = Ich habe es mal benutzt; 3 = Allgemeine Kenntnisse; 5 = Ich bin Experte"
     star_description_lang: "1 = Grundkenntnisse; 3 = Erweiterte Kenntnisse; 5 = Muttersprache"
     messages:
