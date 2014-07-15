@@ -22,3 +22,9 @@ de:
         number_of_employees: "Anzahl an Mitarbeitern"
         year_of_foundation: "Gründungsjahr"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Straße"
+            zip_city: "PLZ/Ort"
+            email: "E-Mail"
+            phone: "Telephon"

@@ -76,4 +76,14 @@ class Employer < ActiveRecord::Base
   def can_create_job_offer?(category)
     (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
+
+  def contact_is_empty?
+    self.merged_contact.length == 0
+  end
+
+  def merged_contact
+    contact = ""
+    [contact_name, contact_street, contact_zip_city, contact_email, contact_phone].map{ |entry| (entry!=nil) ? contact += "#{entry}\n" : nil}
+    contact
+  end
 end
