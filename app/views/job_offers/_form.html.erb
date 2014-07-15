@@ -171,7 +171,8 @@
                   <%= label_field f, :contact_name, t("activerecord.attributes.employer.contacting.name") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_name %>
+                  <%= f.input :contact_name,  
+                  :input_html =>  @job_offer.contact_name.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_name } : nil %>
                 </div>
               </div>
             </li>
@@ -181,7 +182,8 @@
                   <%= label_field f, :contact_street, t("activerecord.attributes.employer.contacting.street") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_street%>
+                  <%= f.input :contact_street,  
+                  :input_html =>  @job_offer.contact_street.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_street } : nil %>
                 </div>
               </div>
             </li>
@@ -191,7 +193,8 @@
                   <%= label_field f, :contact_zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_zip_city%>
+                  <%= f.input :contact_zip_city,  
+                  :input_html =>  @job_offer.contact_zip_city.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_zip_city } : nil %>
                 </div>
               </div>
             </li>
@@ -201,7 +204,8 @@
                   <%= label_field f, :contact_email, t("activerecord.attributes.employer.contacting.email") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_email %>
+                  <%= f.input :contact_email,  
+                  :input_html =>  @job_offer.contact_email.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_email } : nil %>
                 </div>
               </div>
             </li>
@@ -211,7 +215,8 @@
                   <%= label_field f, :contact_phone, t("activerecord.attributes.employer.contacting.phone") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_phone %>
+                  <%= f.input :contact_phone,  
+                  :input_html =>  @job_offer.contact_phone.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_phone } : nil %>
                 </div>
               </div>
             </li>
