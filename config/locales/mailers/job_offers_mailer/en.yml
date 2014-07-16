@@ -3,17 +3,17 @@ en:
     new_job_offer:
       subject: 'Job offer %{job_title} is pending'
     job_offer_declined:
-      subject: "Job offer %{job_title} declined"
+      subject: "Your job offer has been rejected"
     job_offer_accepted:
-      subject: "Job offer %{job_title} accepted "
+      subject: "Your job offer on HPI Connect is activated"
     job_offer_closed:
       subject: "Job offer %{job_title} closed"
     job_offer_will_expire:
-      subject: "Job offer %{job_title} will expire soon"
+      subject: "Your job offer %{job_title} on HPI Connect will expire soon"
     job_offer_expired:
-      subject: "Job offer %{job_title} expired"
+      subject: "Your job offer on HPI Connect has expired"
     job_offer_prolonged:
-      subject: "Job %{job_title} prolonged"
+      subject: "Extension of your job offer on HPI Connect activated"
     prolong_requested:
       subject: "Prolongation of %{job_title} requested"
     student_accepted:

@@ -1,1 +1,44 @@
-  <%= @message %>
+(english version below)
+
+Guten Tag <%= @staff.full_name %>,
+
+<%= @application.student.firstname %> <%= @application.student.lastname %> hat sich auf Ihr Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> im HPI Connect Jobportal beworben.
+
+<%= @message %>
+
+
+Unter <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> können Sie die Bewerbung bestätigen.
+
+Freundliche Grüße
+
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
+
+------
+
+Dear <%= @staff.full_name %>, 
+
+<%= @application.student.firstname %> <%= @application.student.lastname %> has just applied for your job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%>in the HPI Connect Jobportal.
+
+<%= @message %>
+
+You can accept this application <%= link_to("here",  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> For further inquiries, we are happy to help you.
+
+Kind regards
+
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
+
+connect@hpi.uni-potsdam.de
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam
+Prof.-Dr.-Helmert-Str. 2-3
+D-14482 Potsdam
+www.hpi.de
+
+Amtsgericht Potsdam, HRB 12184
+Geschäftsführung: Prof. Dr. Christoph Meinel
+
+Design IT. Create Knowledge.
+
