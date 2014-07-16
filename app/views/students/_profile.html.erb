@@ -176,7 +176,7 @@
           <tbody>
             <tr>
               <td>
-                <%= sanitize_html(student.additional_information.html_safe) %>
+                <%= simple_format(student.additional_information.html_safe) %>
               </td>
              </tr>
           </tbody>
