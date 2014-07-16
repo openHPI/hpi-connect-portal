@@ -137,7 +137,8 @@
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), 
             content: (@job_offer.employer.staff_members.map {|staff| (link_to staff.full_name, staff)}.join('<br>').html_safe) %>
           <% end %>
-
+        </ul>
+      </div>
       <% unless @job_offer.programming_languages.blank? %>
         <%= render 'job_offers/language_list', title: t("job_offers.required_programming_languages"), languages: @job_offer.programming_languages %>
       <% end %>
