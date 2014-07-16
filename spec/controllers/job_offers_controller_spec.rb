@@ -226,13 +226,12 @@ describe JobOffersController do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, employer: employer)
-      FactoryGirl.create(:employers_newsletter_information, employer: employer)
-      FactoryGirl.create(:programming_languages_newsletter_information)
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
       login @job_offer.employer.staff_members[0].user
       get :accept, { id: @job_offer.id }
+      assigns(:job_offer).status.should eq(JobStatus.pending)
       response.should redirect_to(job_offers_path)
     end
 
@@ -281,7 +280,7 @@ describe JobOffersController do
       it "has same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :room_number, :employer_id]
+        expected_attr = [:description, :title, :time_effort, :compensation, :employer_id]
 
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil

@@ -22,6 +22,7 @@
 #  password_digest    :string(255)
 #  activated          :boolean          default(FALSE), not null
 #  admin              :boolean          default(FALSE), not null
+#  alumni_email       :string(255)      default(""), not null
 #
 
 FactoryGirl.define do

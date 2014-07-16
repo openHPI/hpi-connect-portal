@@ -1,5 +1,5 @@
 class UsersMailer < ActionMailer::Base
-  default from: 'hpi.hiwi.portal@gmail.com'
+  default from: 'noreply-connect@hpi.de'
 
   def new_password_mail(password, user)
     @password = password
