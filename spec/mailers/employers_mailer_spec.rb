@@ -29,8 +29,8 @@ describe EmployersMailer do
       @email.to.should eq([Configurable.mailToAdministration])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq([Configurable.mailToAdministration])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
   end
 end

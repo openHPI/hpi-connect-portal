@@ -6,7 +6,7 @@ class StudentsController < ApplicationController
   authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
-  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
   has_scope :filter_semester, only: [:index],  as: :semester
@@ -56,7 +56,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    update_from_params_for_languages_and_newsletters params, student_path(@student)
+    update_from_params_for_languages params, student_path(@student)
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
