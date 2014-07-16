@@ -19,6 +19,7 @@
 #  frequency              :integer          default(1), not null
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
+#  visibility_id          :integer          default(0), not null
 #
 
 require 'spec_helper'
@@ -68,7 +69,7 @@ describe Student do
 
     it "updates employment_status if jobseeking" do
       student = FactoryGirl.create(:student, employment_status_id: Student::EMPLOYMENT_STATUSES.index("jobseeking"))
-      allow(linkedin_client).to receive(:profile).and_return({"three_current_positions" => "bla"})
+      allow(linkedin_client).to receive(:profile).and_return({"three-current-positions" => "bla"})
       student.update_from_linkedin(linkedin_client)
       student.reload.employment_status.should eq("employedseeking")
     end
@@ -105,6 +106,44 @@ describe Student do
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C++").id).skill.should eq 3
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).should_not eq nil
       ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, ProgrammingLanguage.find_by_name("C").id).skill.should eq 3
+    end
+
+    it "updates minimum possible CV job" do
+      allow(linkedin_client).to receive(:profile).and_return(
+        {"positions" => 
+          {"all" => 
+            [{"summary" => "", 
+            "is_current" => "true", 
+            "company" => {"name" => "HPI"}, 
+            "title" => "junior researcher", 
+            "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
+            "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
+            }]
+          }
+        })
+      student.update_from_linkedin(linkedin_client)
+      student.reload.cv_jobs[0].student.should eq(student)
+      student.reload.cv_jobs[0].employer.should eq("HPI")
+      student.reload.cv_jobs[0].position.should eq("junior researcher")
+      student.reload.cv_jobs[0].description.should eq("")
+      student.reload.cv_jobs[0].start_date.should eq(Date.new(DateTime.now.year, DateTime.now.month))
+      student.reload.cv_jobs[0].end_date.should eq(Date.new(Date.today.year+ 1, Date.today.month))
+      student.reload.cv_jobs[0].current.should eq(true)
+      student.reload.cv_jobs.length.should eq(1)
+    end
+
+    it "updates minimum possible CV education" do
+      allow(linkedin_client).to receive(:profile).and_return(
+        {"educations" => {"all" => [{"school-name" => "HPI"}]}})
+      student.update_from_linkedin(linkedin_client)
+      student.reload.cv_educations[0].student.should eq(student)
+      student.reload.cv_educations[0].degree.should eq("No degree given")
+      student.reload.cv_educations[0].field.should eq("No field-of-study given")
+      student.reload.cv_educations[0].institution.should eq("HPI")
+      student.reload.cv_educations[0].start_date.should eq(Date.new(Time.now.year, Time.now.month))
+      student.reload.cv_educations[0].end_date.should eq(Date.new(Time.now.year, Time.now.month))
+      student.reload.cv_educations[0].current.should eq(false)
+      student.reload.cv_educations.length.should eq(1)
     end
   end
 end

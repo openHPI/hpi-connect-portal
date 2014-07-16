@@ -83,7 +83,7 @@ describe StudentsController do
       @student = FactoryGirl.create(:student)
     end
 
-    it "handles nil strings" do
+    it "handles nil strings and unrealistic values" do
 
       params = {
         "additional_information" => nil,
@@ -93,7 +93,7 @@ describe StudentsController do
         "homepage" => nil,
         "linkedin" => nil,
         "photo" => nil,
-        "semester" => nil,
+        "semester" => 100,
         "employer_status_id" => "1",
         "xing" => nil
       }
@@ -115,27 +115,44 @@ describe StudentsController do
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested student" do
+    it "destroys the requested student and redirects to students page" do
       student = FactoryGirl.create(:student)
       login FactoryGirl.create(:user, :admin)
       expect {
         delete :destroy, {id: student.to_param}, valid_session
       }.to change(Student, :count).by(-1)
+      response.should redirect_to students_path
     end
 
-    it "redirects to the students profile if access is denied" do
+    it "allows student to delete himself" do
       student = FactoryGirl.create(:student)
+      login student.user
       expect {
         delete :destroy, {id: student.to_param}, valid_session
-      }.to change(Student, :count).by(0)
-      response.should redirect_to student_path(student)
+      }.to change(Student, :count).by(-1)
+      response.should redirect_to students_path
     end
 
-    it "redirects to the students list" do
+    it "doesn't allow student to delete other students" do
+      student1 = FactoryGirl.create(:student)
+      student2 = FactoryGirl.create(:student)
+      login student1.user
+      expect {
+        delete :destroy, {id: student2.to_param}, valid_session
+      }.to change(Student, :count).by(0)
+      response.should redirect_to student_path(student2)
+    end
+
+    it "destroys related applications" do
+      employer = FactoryGirl.create(:employer, activated: true)
+      job_offer = FactoryGirl.create(:job_offer, employer: employer)
       student = FactoryGirl.create(:student)
+      application = FactoryGirl.create(:application, student: student, job_offer: job_offer)
+
       login FactoryGirl.create(:user, :admin)
-      delete :destroy, {id: student.to_param}, valid_session
-      response.should redirect_to(students_path)
+      expect {
+        delete :destroy, {id: student.to_param}, valid_session
+        }.to change(Student, :count).by (-1) and change(Application, :count).by (-1)
     end
   end
 

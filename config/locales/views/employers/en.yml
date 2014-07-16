@@ -14,6 +14,7 @@ en:
         closed_job_offers: "Former Job offers"
         inactive: "Deactivated"
         packages: "Packages"
+        contact: "Contact"
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
             profile: "Employer Profile" 
@@ -23,5 +24,8 @@ en:
             successfully_created: "Welcome to HPI Career!"
             successfully_updated: "Profile successfully updated."
             successfully_deleted: "Profile successfully deleted."
+            unsuccessfully_deleted: "Couldn't delete profile."
             successfully_activated: "Profile successfully activated."
             unsuccessfully_activated: "Error during activation. Please try again later."
+            successfully_deactivated: "Profile successfully deactivated."
+            unsuccessfully_deactivated: "Error during deactivation. Please try again later."

@@ -21,7 +21,7 @@
           <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
         <% end %>
 
-        <% if can? :reopen, @job_offer %>
+        <% if @job_offer.closed? && can?(:reopen, @job_offer) && %>
           <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-default " %>
         <% end %>
 

@@ -37,8 +37,8 @@ describe JobOffersMailer do
       @email.to.should eq([Configurable.mailToAdministration])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq([Configurable.mailToAdministration])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -55,8 +55,8 @@ describe JobOffersMailer do
       @email.to.should eq(@job_offer.employer.staff_members.collect(&:email))
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -73,8 +73,8 @@ describe JobOffersMailer do
       @email.to.should eq([@job_offer.employer.staff_members[0].email])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
 
     it "should have the title of the joboffer in the subject" do
@@ -95,8 +95,8 @@ describe JobOffersMailer do
       @email.to.should eq([@job_offer.employer.staff_members[0].email])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
 
     it "should have the title of the joboffer in the subject" do
@@ -117,8 +117,8 @@ describe JobOffersMailer do
       @email.to.should eq([Configurable.mailToAdministration])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq([Configurable.mailToAdministration])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -135,8 +135,8 @@ describe JobOffersMailer do
       @email.to.should eq([Configurable.mailToAdministration])
     end
 
-    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    it "should be send from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
 
     it "should have job information in its body" do
@@ -160,8 +160,8 @@ describe JobOffersMailer do
         @email.to.should eq([@job_offer.assigned_students.last.email])
       end
 
-      it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-        @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+      it "should be send from 'noreply-connect@hpi.de'" do
+        @email.from.should eq(['noreply-connect@hpi.de'])
       end
 
       it "should have job information in its body" do

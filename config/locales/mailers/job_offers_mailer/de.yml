@@ -20,7 +20,7 @@ de:
       subject: "Jobangebot %{job_title} vergeben"
     new_job_offer_info:
       subject: 'Neue Jobangebote für Dich'
-    general:
+    generamol:
       title: "Titel: "
       student: "Studentenname: "
       employer: "Arbeitgeber: "

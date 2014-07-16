@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    attributes:
+      alumni:
+        first_name: 'First Name'
+        last_name: 'Last Name'
+        email: 'Redirect Email'
+        alumni_email: 'Alumni Email'
+        alumni_file: 'Alumni File'
+        import_list: 'Importieren Alumni List'
+        import_single: 'Import Single Alumnus'
