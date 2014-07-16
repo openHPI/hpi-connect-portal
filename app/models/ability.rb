@@ -22,10 +22,12 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
+    can [:edit, :update, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
+    can [:activate], Student, id: user.manifestation.id
+    
     cannot :show, JobOffer, status: JobStatus.closed
 
     if user.activated
@@ -36,6 +38,7 @@ class Ability
       can :matching, JobOffer
     end
   end
+
 
   def initialize_staff(user)
     staff = user.manifestation
