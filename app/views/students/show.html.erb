@@ -63,6 +63,18 @@
               </div>
             </div>
           </li>
+          <% if @student.alumni_email %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.alumni.alumni_email") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= @student.alumni_email %>
+                </div>
+              </div>
+            </li>
+          <% end %>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-4">

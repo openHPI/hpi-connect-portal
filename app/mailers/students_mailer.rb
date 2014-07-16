@@ -1,5 +1,5 @@
 class StudentsMailer < ActionMailer::Base
-  default from: 'hpi.hiwi.portal@gmail.com'
+  default from: 'noreply-connect@hpi.de'
 
   def new_student_email(student)
     @student = student
