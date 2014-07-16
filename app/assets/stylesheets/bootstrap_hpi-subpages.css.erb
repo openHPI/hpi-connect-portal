@@ -2722,14 +2722,14 @@ html {
   height: 50px;
 }
 body {
-  background: url(<%= asset_path('bg_hpi.jpg', type: :image) %>) fixed no-repeat #dedfe0;
+  background: url(<%= asset_path('bg_connect.jpg', type: :image) %>) fixed no-repeat #dedfe0;
   margin: 0;
   padding: 0;
 }
 body > .container:before {
   width: 100%;
   position: absolute;
-  background: rgba(221,97,8,0.6);
+  background: rgba(0, 122, 158, 0.6);
   height: 100%;
   content: '';
   z-index: 1;
@@ -2739,7 +2739,7 @@ body > .container:before {
   overflow: hidden;
 }
 body.theme1 {
-  background-image: url(<%= asset_path('bg_hpi.jpg', type: :image) %>);
+  background-image: url(<%= asset_path('bg_connect.jpg', type: :image) %>);
 }
 body.theme1 > .container:before {
   background: rgba(177,6,58,0.6);

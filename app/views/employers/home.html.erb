@@ -5,40 +5,40 @@
     <div class="panel-group" id="accordion">
       <div id="ws1314" class="panel-collapse collapse in">
         <div class="panel-body">
-          <p>Mein <%= link_to 'Kontaktprofil bearbeiten', [:edit, current_user] %></p>
-          <p>Ich möchte folgendes Produkt buchen:</p>
-          <br><p><h1>Kostenlose Angebote</h1></p>
+          <p> <%=t("employers.home.edit_account_settings_html", account_settings: (link_to t("employers.home.account_settings") ,[:edit, current_user]))  %></p>
+          <p><%=t("employers.home.book_product")%></p>
+          <br><p><h1><%=t("employers.home.service.free.title")%></h1></p>
           <ul>
             <div class="panel-body">
-              <li>○ Praktikum oder Studentenjob online stellen</li>
+              <li>○ <%=t("employers.home.service.free.description")%></li>
             </div>
           </ul>
           <br>              
-          <p><h1>Kostenpflichtige Angebote</h1>
-          (<i>aktuelle Preise können Sie bei <%= mail_to "connect@hpi.uni-potsdam.de" %> erfragen</i>)</p><br>
+          <p><h1><%=t("employers.home.service.chargeable.title")%></h1>
+          <i> <%= t("employers.home.service.chargeable.help_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></i></p><br>
           <div class="panel-body">
             <ul>
-              <li>○ Stellenangebot online stellen</li>
-              <li>○ Firmenprofil <%= link_to 'veröffentlichen', edit_employer_path(current_user.manifestation.employer)%></li>
+              <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
+              <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <div class="panel-body"></div>
-              <li>○ Basispaket <%= link_to 'buchen', edit_employer_path(current_user.manifestation.employer)%></li>
+              <li>○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <ul>
                 <div class="panel-body">
-                  <li> - 4 Stellenangebote pro Jahr</li>
-                  <li> - 1 Firmenprofil für 1 Jahr</li>
+                  <li> - <%= t("employers.home.booking.basis.advertisements") %></li>
+                  <li> - <%= t("employers.home.booking.basis.company_profile") %></li>
                 </div>
               </ul>
-              <li>○ Partnerpaket <%= link_to 'buchen', edit_employer_path(current_user.manifestation.employer)%></li>
+              <li>○ <%= t("employers.home.booking.partner.title_html", book: (link_to t("employers.home.booking.partner.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <ul>
                 <div class="panel-body">
-                  <li> - 24 Stellenangebote pro Jahr</li>
-                  <li> - 1 Firmenprofil für 1 Jahr</li>
-                  <li> - Recherchezugriff auf die Profildatenbank der Studenten und Alumni </li>
+                  <li> - <%= t("employers.home.booking.partner.advertisements") %></li>
+                  <li> - <%= t("employers.home.booking.partner.company_profile") %></li>
+                  <li> - <%= t("employers.home.booking.partner.exclusiv") %> </li>
                 </div>
               </ul>
             </ul>
           </div>
-              <p>Gerne beraten wir Sie zu unseren Angeboten.<br>Kontaktieren Sie uns jederzeit.</p>
+              <p><%= t("employers.home.advise") %><br> <%= t("employers.home.contact_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></p>
           </div>
         </div>
       </div> <!-- end of panel -->   
