@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   def respond_and_redirect_to(url, notice = nil, action = nil, status = nil)
     respond_to do |format|
-      format.html { redirect_to url, flash: { success: notice } }
+      format.html { redirect_to url, flash: (notice.is_a?(Hash) ? notice : {success: notice})}
       if action && status
         format.json { render action: action, status: status, location: object }
       end

@@ -33,8 +33,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([@student.email])
 		end
 
-		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+		it "should be send from 'noreply-connect@hpi.de'" do
+			@email.from.should eq(['noreply-connect@hpi.de'])
 		end
 
 		it "should have the title of the joboffer in the body" do
@@ -54,8 +54,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([@student.email])
 		end
 
-		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+		it "should be send from 'noreply-connect@hpi.de'" do
+			@email.from.should eq(['noreply-connect@hpi.de'])
 		end
 
 		it "should have the title of the joboffer in the body" do
@@ -86,8 +86,8 @@ describe ApplicationsMailer do
 			@email.to.should eq([staff.email]) }
 		end
 
-		it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-			@email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+		it "should be send from 'noreply-connect@hpi.de'" do
+			@email.from.should eq(['noreply-connect@hpi.de'])
 		end
 
 		it "should have the personal application message in the body" do

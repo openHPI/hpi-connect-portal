@@ -14,6 +14,7 @@ de:
         closed_job_offers: "Ehemalige Stellenangebote"
         inactive: "Deaktiviert"
         packages: "Pakete"
+        contact: "Ansprechpartner"
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil" 
@@ -23,8 +24,11 @@ de:
             successfully_created: "Willkommen bei HPI Career!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
             successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
+            unsuccessfully_deleted: "Das Profil konnte nicht gelöscht werden."
             successfully_activated: "Das Profil wurde erfolgreich aktiviert."
-            unsuccessfully_activated: "Fehler während der aktivierung. Bitte versuchen Sie es später erneut."
+            unsuccessfully_activated: "Fehler während der Aktivierung. Bitte versuchen Sie es später erneut."
+            successfully_deactivated: "Das Profil wurde erfolgreich deaktiviert."
+            unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."
         home:
             edit_account_settings_html: "Mein %{account_settings} bearbeiten"
             account_settings: "Kontaktprofil"
@@ -53,4 +57,3 @@ de:
                     exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
             advise: "Gerne beraten wir Sie zu unseren Angeboten."
             contact_html: "Kontaktieren Sie uns jederzeit über %{email}"
-

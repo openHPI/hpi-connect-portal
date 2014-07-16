@@ -1,5 +1,5 @@
 class ApplicationsMailer < ActionMailer::Base
-  default from: 'hpi.hiwi.portal@gmail.com'
+  default from: 'noreply-connect@hpi.de'
   
   def application_accepted_student_email(application)
     send_mail_for_application_to_user(application, (t "applications_mailer.students.accepted.subject", job_title: application.job_offer.title, employer: application.job_offer.employer.name))
