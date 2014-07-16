@@ -13,6 +13,8 @@ describe JobOffersMailer do
     @job_offer2 = FactoryGirl.create(:job_offer, assigned_students: [FactoryGirl.create(:student)])
     @staff2.update(employer: @job_offer2.employer)
     @job_offers = [@job_offer, @job_offer2]
+    @job_offer.reload
+    @job_offer2.reload
     ActionMailer::Base.deliveries = []
   end
 
@@ -66,7 +68,7 @@ describe JobOffersMailer do
     end
 
     it "should send an email to both staffs" do
-      ActionMailer::Base.deliveries.count.should == 2
+      ActionMailer::Base.deliveries.count.should == @job_offer.reload.employer.staff_members.size
     end
 
     it "should have be send to the responsible WiMi" do
@@ -77,18 +79,15 @@ describe JobOffersMailer do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
-    it "should have the title of the joboffer in the subject" do
-      @email.subject.should have_content(@job_offer.title)
-    end
   end
 
   describe "admin declined application" do
     before(:each) do
-      @email = JobOffersMailer.admin_declined_job_offer_email(@job_offer).deliver
+      @email = JobOffersMailer.admin_declined_job_offer_email(@job_offer.reload).deliver
     end
 
     it "should send an email to both staffs" do
-      ActionMailer::Base.deliveries.count.should == 2
+      ActionMailer::Base.deliveries.count.should == @job_offer.reload.employer.staff_members.size
     end
 
     it "should have be send to the responsible WiMi" do
@@ -99,9 +98,6 @@ describe JobOffersMailer do
       @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
     end
 
-    it "should have the title of the joboffer in the subject" do
-      @email.subject.should have_content(@job_offer.title)
-    end
   end
 
   describe "responsible user closed job" do
@@ -147,25 +143,36 @@ describe JobOffersMailer do
       @email.body.should have_content(@job_offer.employer.name)
     end
   end
-    describe "students are informed about new job offer" do
-      before(:each) do
-        @email = JobOffersMailer.new_job_offer_info_email(@job_offer, @job_offer.assigned_students.last).deliver
-      end
-
-      it "should send an email" do
-        ActionMailer::Base.deliveries.count.should == 1
-      end
-
-      it "should have be send to user adress" do
-        @email.to.should eq([@job_offer.assigned_students.last.email])
-      end
-
-      it "should be send from 'hpi.hiwi.portal@gmail.com'" do
-        @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
-      end
-
-      it "should have job information in its body" do
-        @email.body.should have_content(@job_offer.title)
-      end
+  describe "students are informed about new job offer" do
+    before(:each) do
+      @email = JobOffersMailer.new_job_offer_info_email(@job_offer, @job_offer.assigned_students.last).deliver
     end
+
+    it "should send an email" do
+      ActionMailer::Base.deliveries.count.should == 1
+    end
+
+    it "should have be send to user adress" do
+      @email.to.should eq([@job_offer.assigned_students.last.email])
+    end
+
+    it "should be send from 'hpi.hiwi.portal@gmail.com'" do
+      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    end
+
+    it "should have job information in its body" do
+      @email.body.should have_content(@job_offer.title)
+    end
+  end
+
+  describe "will expire" do
+    before(:each) do
+      @email = JobOffersMailer.job_will_expire_email(@job_offer).deliver
+    end
+
+    it "should send an email" do
+      ActionMailer::Base.deliveries.count.should == @job_offer.employer.staff_members.size
+    end
+
+  end
 end

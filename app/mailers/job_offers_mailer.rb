@@ -10,14 +10,14 @@ class JobOffersMailer < ActionMailer::Base
   def new_job_offer_info_email(job_offer, user)
     @job_offer = job_offer
     @student = user
-     mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
+    mail to: user.email, subject: (t "job_offers_mailer.new_job_offer_info.subject")
   end
 
   def admin_accepted_job_offer_email(job_offer)
     @job_offer = job_offer
     @job_offer.employer.staff_members.each do |staff| 
       @staff = staff
-      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)).deliver
+      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title))
     end
   end
 
@@ -25,7 +25,7 @@ class JobOffersMailer < ActionMailer::Base
     @job_offer = job_offer
     @job_offer.employer.staff_members.each do |staff| 
       @staff = staff
-      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_declined.subject", job_title: @job_offer.title)).deliver 
+      mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_declined.subject", job_title: @job_offer.title)) 
     end
   end
 
@@ -41,8 +41,10 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
+    job_offer.employer.staff_members.each do |staff| 
+      @staff = staff
+      mail to: staff.email, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title) 
+    end
   end
 
   def prolong_requested_email(job_offer)
@@ -58,8 +60,10 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_expired_email(job_offer)
     @job_offer = job_offer
-    emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.job_offer_expired.subject", job_title: @job_offer.title)
+    job_offer.employer.staff_members.each do |staff| 
+      @staff = staff
+      mail to: staff.email, subject: (t "job_offers_mailer.job_offer_expired.subject") 
+    end
   end
 
   def inform_interested_students_immediately(job_offer)

@@ -9,5 +9,5 @@ en:
         application: "Dear Sir or Madam,\nI would like to apply for your job offer.\nKind regards,"
     wimi:
       new_application:
-        subject: "New application %{job_title}"
+        subject: "application on your job offer on HPI Connect"
     last_line: "Greetings from the HPI-Hiwi-Portal"
