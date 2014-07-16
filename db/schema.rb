@@ -132,14 +132,12 @@ ActiveRecord::Schema.define(version: 20140709164349) do
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
-    t.string   "room_number"
     t.integer  "employer_id"
     t.integer  "status_id",           default: 1
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
-    t.integer  "academic_program_id"
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
