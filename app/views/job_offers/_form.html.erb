@@ -79,7 +79,7 @@
                   disabled: true, 
                   class: 'select optional form-control'%>
                 <% else %>                  
-                     <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
+                  <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
                       can_book = current_user.admin? || current_user.manifestation.employer.can_create_job_offer?(category)
                       [t("job_offers.category." + category), 
                       index, 

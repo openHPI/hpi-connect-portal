@@ -48,7 +48,6 @@ class JobOffer < ActiveRecord::Base
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
-  #validate :can_be_created, on: :create
 
   self.per_page = 15
 
@@ -58,7 +57,6 @@ class JobOffer < ActiveRecord::Base
     if(!(job_offer.employer && job_offer.employer.can_create_job_offer?(job_offer.category)))
       job_offer.employer.add_one_single_booked_job
     end
-
 
     if job_offer.save && !job_offer.employer.can_create_job_offer?(job_offer.category)
       JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver
@@ -97,7 +95,7 @@ class JobOffer < ActiveRecord::Base
     if(!(employer && employer.can_create_job_offer?(category)))
       employer.add_one_single_booked_job
     end
-      return true
+    return true
   end
 
   def closed?

@@ -77,12 +77,10 @@ class Employer < ActiveRecord::Base
   end
 
   def add_one_single_booked_job
-    self.single_jobs_requested += 1
-    self.save
+    self.update_column :single_jobs_requested, self.single_jobs_requested+1
   end
 
   def remove_one_single_booked_job
-    self.single_jobs_requested -= 1
-    self.save
+    self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
 end

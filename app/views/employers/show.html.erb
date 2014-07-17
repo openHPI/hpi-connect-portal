@@ -147,7 +147,7 @@
               <li class="list-group-item">
                 <h4><%= link_to user.full_name, staff_path(user) %></h4>
               </li>
-            <%end%>            
+            <%end%>
           </ul>
           <div class="pull-right">
             <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
