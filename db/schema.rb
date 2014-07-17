@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709164349) do
+ActiveRecord::Schema.define(version: 20140717095955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20140709164349) do
     t.float    "time_effort"
     t.float    "compensation"
     t.integer  "employer_id"
-    t.integer  "status_id",           default: 1
+    t.integer  "status_id"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
