@@ -74,8 +74,8 @@
                 </div>
                 <div class="col-sm-8 pull-right"> 
                 <% if params[:book_single_job_offer] %>
-                <%= hidden_field_tag :book_single_job_offer, params[:book_single_job_offer] %>
-                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, disabled: true, selected: true]], 
+                  <%= hidden_field_tag :book_single_job_offer, params[:book_single_job_offer] %>
+                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, selected: true]], 
                   disabled: true, 
                   class: 'select optional form-control'%>
                 <% else %>                  
@@ -195,7 +195,8 @@
   </div>
 
   <div class="actions">
-    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit"  %>
+    <input name="other" value="<%= params[:book_single_job_offer] %>" type="hidden">
+    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit" %>
   </div>
   <% content_for :modals do %>
     <%= render 'book_modal' %>

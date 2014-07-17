@@ -11,7 +11,6 @@
 #  avatar_content_type  :string(255)
 #  avatar_file_size     :integer
 #  avatar_updated_at    :datetime
-#  deputy_id            :integer
 #  activated            :boolean          default(FALSE), not null
 #  place_of_business    :string(255)
 #  website              :string(255)
@@ -74,6 +73,16 @@ class Employer < ActiveRecord::Base
   end
 
   def can_create_job_offer?(category)
-    (category != 'graduate_job' || (paying? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+    (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+  end
+
+  def add_one_single_booked_job
+    self.single_jobs_requested += 1
+    self.save
+  end
+
+  def remove_one_single_booked_job
+    self.single_jobs_requested += 1
+    self.save
   end
 end

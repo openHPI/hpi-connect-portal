@@ -48,13 +48,18 @@ class JobOffer < ActiveRecord::Base
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
-  validate :can_be_created, on: :create
+  #validate :can_be_created, on: :create
 
   self.per_page = 15
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
     job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
+    p "penis #{job_offer.category}"
+    if(!(job_offer.employer && job_offer.employer.can_create_job_offer?(job_offer.category)))
+      job_offer.employer.add_one_single_booked_job
+    end
+
     if job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver
     elsif parameters[:flexible_start_date]
@@ -87,7 +92,10 @@ class JobOffer < ActiveRecord::Base
   end
 
   def can_be_created
-    errors[:base] << I18n.t('job_offers.messages.cannot_create') unless employer && employer.can_create_job_offer?(category)
+    if(!(employer && employer.can_create_job_offer?(category)))
+      employer.add_one_single_booked_job
+    end
+      return true
   end
 
   def closed?
