@@ -12,7 +12,7 @@
 #  time_effort         :float
 #  compensation        :float
 #  employer_id         :integer
-#  status_id           :integer          default(1)
+#  status_id           :integer
 #  flexible_start_date :boolean          default(FALSE)
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
