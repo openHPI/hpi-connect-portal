@@ -20,8 +20,8 @@ en:
             profile: "Employer Profile" 
             full_time: "full-time jobs per year"
             student_profile: "View Student Profiles"
-            insufficent: "Your package does not suffice"
-            upgrade_or_book: "You can now upgrade your package or book this single job offer with costs."
+            insufficent: "Your package does not suffice / Number of graduate jobs exceeded"
+            upgrade_or_book: "Unfortunately, your package does not allow you to book a graduate job or you've already booked as many graduate jobs as possible for your package. You can now upgrade your package or book this single job offer with costs."
             book_single_offer: "Book single job offer"
             upgrade: "Upgrade package"
         messages:

@@ -198,8 +198,10 @@
     <input name="other" value="<%= params[:book_single_job_offer] %>" type="hidden">
     <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit" %>
   </div>
-  <% content_for :modals do %>
-    <%= render 'book_modal' %>
+  <% if current_user.staff? %>
+    <% content_for :modals do %>
+      <%= render 'book_modal' %>
+    <% end %>
   <% end %>
 <% end %>
 

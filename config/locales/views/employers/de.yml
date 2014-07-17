@@ -20,8 +20,8 @@ de:
             profile: "Unternehmensprofil" 
             full_time: "Angebote für Vollzeitjobs pro Jahr"
             student_profiles: "Einsicht in Studentenprofile"
-            insufficent: "Ihr Paket reicht dazu leider nicht aus"
-            upgrade_or_book: "Sie können nun entweder Ihr Paket upgraden oder dieses einzelne Stellenangebot kostenpflichtig buchen."
+            insufficent: "Paket reicht nicht aus / erlaubte Anzahl überschritten"
+            upgrade_or_book: "Ihr Paket reicht zum Erstellen einer Absolventenstelle leider nicht aus bzw. Sie haben bereits alle mit diesem Paket möglichen Absolventenstellen gebucht. \nSie können nun entweder Ihr Paket upgraden oder dieses einzelne Stellenangebot kostenpflichtig buchen."
             book_single_offer: "Stellenangebot buchen"
             upgrade: "Paket upgraden"
         messages:
