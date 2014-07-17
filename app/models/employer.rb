@@ -82,7 +82,7 @@ class Employer < ActiveRecord::Base
   end
 
   def remove_one_single_booked_job
-    self.single_jobs_requested += 1
+    self.single_jobs_requested -= 1
     self.save
   end
 end
