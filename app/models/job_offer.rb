@@ -11,14 +11,12 @@
 #  end_date            :date
 #  time_effort         :float
 #  compensation        :float
-#  room_number         :string(255)
 #  employer_id         :integer
-#  status_id           :integer          default(1)
+#  status_id           :integer
 #  flexible_start_date :boolean          default(FALSE)
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
 #  graduation_id       :integer          default(2), not null
-#  academic_program_id :integer
 #  prolong_requested   :boolean          default(FALSE)
 #  prolonged           :boolean          default(FALSE)
 #  prolonged_at        :datetime
@@ -28,16 +26,15 @@ class JobOffer < ActiveRecord::Base
   include Bootsy::Container
   include JobOfferScopes
 
-  ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
   before_save :default_values
 
-  has_many :applications
+  has_many :applications, dependent: :destroy
   has_many :students, through: :applications
-  has_many :assignments
+  has_many :assignments, dependent: :destroy
   has_many :assigned_students, through: :assignments, source: :student
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
@@ -167,10 +164,6 @@ class JobOffer < ActiveRecord::Base
 
   def state
     STATES[state_id]
-  end
-
-  def academic_program
-    ACADEMIC_PROGRAMS[academic_program_id]
   end
 
   def minimum_degree

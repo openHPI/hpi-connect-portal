@@ -4,3 +4,5 @@ de:
       subject: 'Ein neuer Arbeitgeber wartet auf Freigabe'
     book_package:
       subject: 'Ein Arbeitgeber hat ein neues Packet gebucht'
+    registration_confirmation:
+      subject: 'Ihre Registrierung auf HPI Connect '

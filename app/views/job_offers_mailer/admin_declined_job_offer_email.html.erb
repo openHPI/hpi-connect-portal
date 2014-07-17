@@ -1,21 +1,37 @@
-(For an English translation, scroll down.)<br>
+(english version below)<br>
 <br>
-Hallo <%=@staff.full_name%>,<br>
+Guten Tag <%= @staff.full_name %>,<br>
 <br>
-Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an die Admins des Portals: <%= Configurable[:mailToAdministration] %> .<br>
+Ihr Jobangebot <%= @job_offer.title %> im HPI Connect Jobportal wurde leider abgelehnt. Es bleibt nun für die Nutzer des Portals nicht sichtbar. <br>
 <br>
-Grüße,<br>
-Das HPI-HiWi-Portal Team.<br>
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br>
 <br>
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+Freundliche Grüße<br>
 <br>
-<hr>
+HPI Connect<br>
+Claudia Koch - Fon (49) 0331 5509 291<br>
+Nadja Antoine  - Fon (49) 0331 5509 107<br>
 <br>
-Dear <%=@staff.full_name%>,<br>
+<hr> </hr>
 <br>
-unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact the admins <%= Configurable[:mailToAdministration] %>.<br>
+Dear <%= @staff.full_name %>, <br>
 <br>
-Regards,<br>
-The HPI-HiWi-Portal Team.<br>
+your job offer <%= @job_offer.title %> in the HPI Connect Jobportal has unfortunately been rejected.  For further inquiries, we are happy to help you.<br>
 <br>
-(This is an automatically created email, please do not respond to it.)
+Kind regards<br>
+<br>
+HPI Connect<br>
+Claudia Koch - Fon (49) 0331 5509 291<br>
+Nadja Antoine  - Fon (49) 0331 5509 107<br>
+<br>
+connect@hpi.uni-potsdam.de<br>
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br>
+Prof.-Dr.-Helmert-Str. 2-3<br>
+D-14482 Potsdam<br>
+www.hpi.de<br>
+<br>
+Amtsgericht Potsdam, HRB 12184<br>
+Geschäftsführung: Prof. Dr. Christoph Meinel<br>
+<br>
+Design IT. Create Knowledge.<br>
+

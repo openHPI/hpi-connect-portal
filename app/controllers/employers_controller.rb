@@ -2,8 +2,8 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
-  authorize_resource only: [:edit, :update, :activate]
-  before_action :set_employer, only: [:show, :edit, :update, :activate]
+  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy]
+  before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy]
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
@@ -34,6 +34,7 @@ class EmployersController < ApplicationController
       sign_in @employer.staff_members.first.user if @employer.staff_members.any?
       respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
+      EmployersMailer.registration_confirmation(@employer)
     else
       render_errors_and_action @employer, 'new'
     end
@@ -56,12 +57,24 @@ class EmployersController < ApplicationController
   def activate
     @employer.update_column :activated, true
     @employer.update_column :booked_package_id, @employer.requested_package_id
-    flash[:success] = I18n.t('employers.messages.successfully_activated')
-    redirect_to @employer
+    respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_activated')
+  end
+
+  def deactivate
+    @employer.update_column :activated, false
+    @employer.update_column :booked_package_id, 0
+    respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_deactivated')
+  end
+
+  def destroy
+    if @employer.destroy
+      respond_and_redirect_to employers_path, I18n.t('employers.messages.successfully_deleted')
+    else
+      respond_and_redirect_to @employer, { error: I18n.t('employers.messages.unsuccessfully_deleted') }
+    end
   end
 
   def home
-
   end
 
   private

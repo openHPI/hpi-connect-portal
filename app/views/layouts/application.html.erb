@@ -7,12 +7,12 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title><%= content_for?(:title) ? yield(:title) : "HpiHiwiPortal" %></title>
+<title><%= content_for?(:title) ? yield(:title) : "HPI Connect Jobportal" %></title>
 <%= csrf_meta_tags %>
 <%= stylesheet_link_tag "application", :media => "all" %>
 <%= javascript_include_tag "application" %>
 
-<script type="text/javascript" src="http://fast.fonts.net/jsapi/350d1b28-d257-4734-8083-4bd737fa0c7c.js"></script>
+<script type="text/javascript" src="https://fast.fonts.net/jsapi/350d1b28-d257-4734-8083-4bd737fa0c7c.js"></script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -28,7 +28,7 @@
     <div class="headbg">
       <div class="headtop">
         <div class="smallheader headwrapper">
-          <h1><a href="">HPI Job-Portal</a></h1>
+          <h1><a href="">HPI Connect Jobportal</a></h1>
         </div>
         <div class="subsitebackhead">
           <div>
@@ -49,6 +49,7 @@
                     <% end %>
                     <% if current_user.admin? %>
                       <li><%= link_to t('layouts.configuration'), admin_configurable_path %></li>
+                      <li><%= link_to t('layouts.import'), new_alumni_path %></li>
                     <% end %>
                     <li><%= link_to t("users.settings"), [:edit, current_user] %>
                     <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>
@@ -62,11 +63,10 @@
                 </ul>
               </div>
               <div id="social">
-                  <a href="" class="facebook" class="facebook" alt="facebook"></a>
-                  <a href="" class="twitter" class="twitter" alt="twitter"></a>
-                  <a href="" class="rss" class="rss" alt="rss"></a>
-                  <a href="" class="youtube" class="youtube" alt="youtube"></a>
-                  <a href="" class="vimeo" class="vimeo" alt="vimeo"></a>
+                  <a href="https://www.facebook.com/HassoPlattnerInstitute" target="_blank" class="facebook"></a>
+                  <a href="https://twitter.com/HPI_Online" target="_blank" class="twitter"></a>
+                  <a href="http://hpi.de/das-hpi/hpi-medien/rss-feeds.html" class="rss">&nbsp;</a>
+                  <a href="http://www.youtube.com/hpitv1" target="_blank" class="youtube"></a>
               </div>
             </h1>
           </div>
@@ -74,7 +74,7 @@
         </div>
         <div class="bigheader">
           <div class="logo-container">
-            <a href="<%= root_path %>"><%= image_tag("hpi_logo_fb_InternetTechnologien_web80.png", alt:"hpi-career") %></a>  
+            <a href="<%= root_path %>"><%= image_tag("hpi_logo_srgb_wb_sl1_web80.png", alt:"hpi-career") %></a>  
           </div>
         </div>
       </div>
@@ -100,9 +100,9 @@
         <div>
         <ul class="footer-links">
           <li>Copyright Hasso-Plattner-Institut 2014</li>
-          <li><a href=""><span>Impressum</span></a></li>
-          <li><a href=""><span>Kontakt</span></a></li>
-          <li><a href=""><span>Sitemap</span></a></li>
+          <li><a href="http://hpi.de/impressum.html"><span>Impressum</span></a></li>
+          <li><a href="http://hpi.de/kontakt.html"><span>Kontakt</span></a></li>
+          <li><a href="http://hpi.de/sitemap.html"><span>Sitemap</span></a></li>
         </ul>
         </div>
       </div>

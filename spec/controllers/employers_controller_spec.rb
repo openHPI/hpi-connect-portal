@@ -105,10 +105,10 @@ describe EmployersController do
         response.should redirect_to(home_employers_path)
       end
 
-      it "sends an email" do
+      it "sends 2 emails" do
         old_count = ActionMailer::Base.deliveries.count
         post :create, { employer: valid_attributes }
-        ActionMailer::Base.deliveries.count.should == old_count + 1
+        ActionMailer::Base.deliveries.count.should == old_count + 2
       end
     end
 
@@ -211,6 +211,18 @@ describe EmployersController do
       get :activate, ({ id: FactoryGirl.create(:employer).id })
       response.should redirect_to(employers_path)
       flash[:notice].should eql("You are not authorized to access this page.")
+    end
+
+    it "should delete staff and applications of an deleted employer" do
+      employer = FactoryGirl.create(:employer, activated: true)
+      staff = FactoryGirl.create(:staff, employer: employer)
+      staff2 = FactoryGirl.create(:staff, employer: employer)
+      job_offer = FactoryGirl.create(:job_offer, employer: employer)
+      student = FactoryGirl.create(:student)
+      application = FactoryGirl.create(:application, student: student, job_offer: job_offer)
+      expect {
+        delete :destroy, {id: employer.id}
+        }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1) and change(Application, :count).by(-1)
     end
   end
 end

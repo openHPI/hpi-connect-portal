@@ -14,6 +14,7 @@ de:
         closed_job_offers: "Ehemalige Stellenangebote"
         inactive: "Deaktiviert"
         packages: "Pakete"
+        contact: "Ansprechpartner"
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil" 
@@ -27,5 +28,36 @@ de:
             successfully_created: "Willkommen bei HPI Career!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
             successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
+            unsuccessfully_deleted: "Das Profil konnte nicht gelöscht werden."
             successfully_activated: "Das Profil wurde erfolgreich aktiviert."
             unsuccessfully_activated: "Fehler während der Aktivierung. Bitte versuchen Sie es später erneut."
+            successfully_deactivated: "Das Profil wurde erfolgreich deaktiviert."
+            unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."
+        home:
+            edit_account_settings_html: "Mein %{account_settings} bearbeiten"
+            account_settings: "Kontaktprofil"
+            book_product: "Ich möchte folgendes Produkt buchen:"
+            service:
+                free:
+                    title: "Kostenlose Angebote"
+                    description: "Praktikum oder Studentenjob online stellen (4 Wochen)"
+                chargeable:
+                    title: "Kostenpflichtige Angebote"
+                    help_html: "(aktuelle Preise können Sie bei %{email} erfragen)"
+                    open_positions: "Stellenangebot online stellen (4 Wochen)"
+                    present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
+                    company_profile: "Firmenprofil"
+            booking:
+                basis:
+                    title_html: "Basispaket %{book}"
+                    book: "buchen"
+                    advertisements: "4 Stellenangebote pro Jahr"
+                    company_profile: "1 Firmenprofil für 1 Jahr"
+                partner:
+                    title_html: "Partnerpaket %{book}"
+                    book: "buchen"
+                    advertisements: "24 Stellenangebote pro Jahr"
+                    company_profile: "1 Firmenprofil für 1 Jahr"
+                    exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
+            advise: "Gerne beraten wir Sie zu unseren Angeboten."
+            contact_html: "Kontaktieren Sie uns jederzeit über %{email}"
