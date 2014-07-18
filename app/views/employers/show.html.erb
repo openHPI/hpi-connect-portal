@@ -155,9 +155,9 @@
         </div>
       </div>
     <% end %>
-    <% if current_user.admin? || user_is_staff_of_employer(@job_offer)%>
+    <% if current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer) %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4>Gebuchte einzelne Stellenangebote: <%= @employer.single_jobs_requested %></h4></div>
+        <div class="panel-heading"><h4>  <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> <%= @employer.single_jobs_requested %></h4></div>
         </div>
       </div>
     <% end %>

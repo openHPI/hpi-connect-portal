@@ -433,15 +433,24 @@ describe JobOffersController do
       end
 
       it "should be possible to create a graduate job with the free or profile package" do
+        ActionMailer::Base.deliveries = []
         login @staff.user
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
+        ActionMailer::Base.deliveries.count.should == 1
+        email = ActionMailer::Base.deliveries[0]
+        assert_equal(email.to, [Configurable.mailToAdministration])
         #response.should render_template("new")
+
+        ActionMailer::Base.deliveries = []
         @employer.update_column :booked_package_id, 1
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
+        ActionMailer::Base.deliveries.count.should == 1
+        email = ActionMailer::Base.deliveries[0]
+        assert_equal(email.to, [Configurable.mailToAdministration])
         #response.should render_template("new")
       end
 
