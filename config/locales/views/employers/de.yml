@@ -47,6 +47,7 @@ de:
                     open_positions: "Stellenangebot online stellen (4 Wochen)"
                     present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
                     company_profile: "Firmenprofil"
+                    single_graduate_job: "Einzelne Absolventenstelle %{book}"
             booking:
                 basis:
                     title_html: "Basispaket %{book}"

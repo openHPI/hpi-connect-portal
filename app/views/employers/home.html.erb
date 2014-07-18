@@ -18,7 +18,7 @@
           <i> <%= t("employers.home.service.chargeable.help_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></i></p><br>
           <div class="panel-body">
             <ul>
-              <li>○ einzelnes Stellenangebot <%= link_to 'buchen', new_job_offer_path(:book_single_job_offer => true)%></li>
+              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => true)))%></li>
               <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
               <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <div class="panel-body"></div>

@@ -147,11 +147,6 @@ ActiveRecord::Schema.define(version: 20140717140659) do
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
-    t.string   "contact_name"
-    t.string   "contact_street"
-    t.string   "contact_zip_city"
-    t.string   "contact_email"
-    t.string   "contact_phone"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
