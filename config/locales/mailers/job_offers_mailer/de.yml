@@ -2,6 +2,8 @@ de:
   job_offers_mailer:
     new_job_offer:
       subject: 'Jobangebot %{job_title} wartet auf Freigabe'
+    new_single_job_offer:
+      subject: '%{employer} möchte das einzelne Jobangebot #{job_title} buchen'
     job_offer_declined:
       subject: "Ihr Stellenagebot wurde leider abgelehnt"
     job_offer_accepted:
