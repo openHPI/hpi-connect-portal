@@ -62,7 +62,7 @@ class Student < ActiveRecord::Base
   validates :academic_program_id, presence: true
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
-  scope :visible,  -> visibility_id { where('visibility_id > ?',visibility_id.to_f)}
+  scope :visible, -> visibility_id { where('visibility_id > ?',visibility_id.to_f)}
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
