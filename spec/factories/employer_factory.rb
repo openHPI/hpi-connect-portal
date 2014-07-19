@@ -19,11 +19,6 @@
 #  number_of_employees   :string(255)
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
-#  contact_name          :string(255)
-#  contact_street        :string(255)
-#  contact_zip_city      :string(255)
-#  contact_email         :string(255)
-#  contact_phone         :string(255)
 #  single_jobs_requested :integer          default(0), not null
 #
 

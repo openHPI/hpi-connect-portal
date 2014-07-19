@@ -24,7 +24,7 @@ class EmployersController < ApplicationController
     @employer = Employer.new
     @employer.staff_members.build
     @employer.staff_members.first.build_user
-    @employer.contact = Contact.new
+    @employer.counterpart = Contact.new
   end
 
   def create
@@ -43,7 +43,6 @@ class EmployersController < ApplicationController
 
   def edit
     authorize! :edit, @employer
-    @employer.contact.build
   end
 
   def update
@@ -90,6 +89,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :contact_name, :contact_street, :contact_zip_city, :contact_email, :contact_phone, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]], contact_attributes: [:employer_id, :name, :street, :zip_city, :email, :phone])
+      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]], contact_attributes: [:contact_name, :contact_street, :contact_zip_city, :contact_email, :contact_phone])
     end
 end

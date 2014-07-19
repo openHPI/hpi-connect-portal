@@ -154,7 +154,7 @@
           </div>
         </div>
       <% end %>
-      <% unless @employer.contact.contact_is_empty? %>
+      <% unless !@employer.contact %>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4><%= t("activerecord.attributes.employer.contact") %></h4>

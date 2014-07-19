@@ -19,11 +19,6 @@
 #  number_of_employees   :string(255)
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
-#  contact_name          :string(255)
-#  contact_street        :string(255)
-#  contact_zip_city      :string(255)
-#  contact_email         :string(255)
-#  contact_phone         :string(255)
 #  single_jobs_requested :integer          default(0), not null
 #
 
@@ -33,7 +28,7 @@ class Employer < ActiveRecord::Base
 
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/assets/placeholder/:style/missing.png"
 
-  has_one :contact, dependent: :destroy
+  has_one :contact, as: :counterpart, dependent: :destroy
 
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
   has_many :job_offers, dependent: :destroy
@@ -41,6 +36,8 @@ class Employer < ActiveRecord::Base
 
   accepts_nested_attributes_for :staff_members
   accepts_nested_attributes_for :contact
+
+  delegate :contact_name, :contact_street, :contact_zip_city, :contact_email, :contact_phone, to: :contact
 
   validates_attachment_size :avatar, less_than: 5.megabytes
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']

@@ -64,13 +64,13 @@ ActiveRecord::Schema.define(version: 20140719201723) do
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
   create_table "contacts", force: true do |t|
-    t.integer  "employer_id"
-    t.integer  "job_offer_id"
-    t.string   "name"
-    t.string   "street"
-    t.string   "zip_city"
-    t.string   "email"
-    t.string   "phone"
+    t.integer  "counterpart_id"
+    t.string   "counterpart_type"
+    t.string   "c_name"
+    t.string   "c_street"
+    t.string   "c_zip_city"
+    t.string   "c_email"
+    t.string   "c_phone"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -116,11 +116,6 @@ ActiveRecord::Schema.define(version: 20140719201723) do
     t.string   "number_of_employees"
     t.integer  "requested_package_id",  default: 0,     null: false
     t.integer  "booked_package_id",     default: 0,     null: false
-    t.string   "contact_name"
-    t.string   "contact_street"
-    t.string   "contact_zip_city"
-    t.string   "contact_email"
-    t.string   "contact_phone"
     t.integer  "single_jobs_requested", default: 0,     null: false
   end
 
@@ -159,11 +154,6 @@ ActiveRecord::Schema.define(version: 20140719201723) do
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
-    t.string   "contact_name"
-    t.string   "contact_street"
-    t.string   "contact_zip_city"
-    t.string   "contact_email"
-    t.string   "contact_phone"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
