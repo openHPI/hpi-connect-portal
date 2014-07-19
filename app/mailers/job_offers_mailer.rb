@@ -7,6 +7,12 @@ class JobOffersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
   end
 
+  def new_single_job_offer_email(job_offer, employer)
+    @job_offer = job_offer
+    @employer = employer
+    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.new_single_job_offer.subject", job_title: @job_offer.title, employer: @job_offer.employer)
+  end
+
   def new_job_offer_info_email(job_offer, user)
     @job_offer = job_offer
     @student = user
@@ -15,7 +21,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def admin_accepted_job_offer_email(job_offer)
     @job_offer = job_offer
-    @job_offer.employer.staff_members.each do |staff| 
+    job_offer.employer.staff_members.each do |staff| 
       @staff = staff
       mail(to: staff.email, subject: (t "job_offers_mailer.job_offer_accepted.subject", job_title: @job_offer.title)).deliver
     end
@@ -41,8 +47,10 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
-    emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title)
+    job_offer.employer.staff_members.each do |staff| 
+      @staff = staff
+      mail to: staff.email, subject: (t "job_offers_mailer.job_offer_prolonged.subject", job_title: @job_offer.title) 
+    end
   end
 
   def prolong_requested_email(job_offer)
@@ -58,8 +66,10 @@ class JobOffersMailer < ActionMailer::Base
 
   def job_expired_email(job_offer)
     @job_offer = job_offer
-    emails = job_offer.employer.staff_members.collect(&:email).join(',')
-    mail to: emails, subject: (t "job_offers_mailer.job_offer_expired.subject", job_title: @job_offer.title)
+    job_offer.employer.staff_members.each do |staff| 
+      @staff = staff
+      mail to: staff.email, subject: (t "job_offers_mailer.job_offer_expired.subject") 
+    end
   end
   
 end

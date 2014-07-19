@@ -85,4 +85,12 @@ class Employer < ActiveRecord::Base
     [contact_name, contact_street, contact_zip_city, contact_email, contact_phone].map{ |entry| (entry!=nil) ? contact += "#{entry}\n" : nil}
     contact
   end
+  
+  def add_one_single_booked_job
+    self.update_column :single_jobs_requested, self.single_jobs_requested+1
+  end
+
+  def remove_one_single_booked_job
+    self.update_column :single_jobs_requested, self.single_jobs_requested-1
+  end
 end

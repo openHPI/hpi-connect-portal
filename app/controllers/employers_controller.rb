@@ -34,6 +34,7 @@ class EmployersController < ApplicationController
       sign_in @employer.staff_members.first.user if @employer.staff_members.any?
       respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
+      EmployersMailer.registration_confirmation(@employer)
     else
       render_errors_and_action @employer, 'new'
     end

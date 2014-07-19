@@ -1,26 +1,4 @@
-  <% if student.programming_languages_users.any? %>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
-      <ul class="list-group">
-        <% student.programming_languages_users.each do |programming_languages_users| %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-4">
-                <%= programming_languages_users.programming_language.name %>
-              </div>
-              <div class="col-sm-8">
-                <% (1..5).each do |i| %>
-                  <%= radio_button_tag programming_languages_users.programming_language.name, i, i==programming_languages_users.skill, disabled: true, class: "star" %>
-                <% end %>
-              </div>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <% if ( !(student.homepage).nil? && !(student.homepage).empty? ) || ( !(student.github).nil? && !(student.github).empty? ) || ( !(student.facebook).nil? && !(student.facebook).empty? ) || ( !(student.xing).nil? && !(student.xing).empty? ) || ( !(student.linkedin).nil? && !(student.linkedin).empty? ) %>
+<% if ( !(student.homepage).nil? && !(student.homepage).empty? ) || ( !(student.github).nil? && !(student.github).empty? ) || ( !(student.facebook).nil? && !(student.facebook).empty? ) || ( !(student.xing).nil? && !(student.xing).empty? ) || ( !(student.linkedin).nil? && !(student.linkedin).empty? ) %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.student.links")%></h4></div>
       <ul class="list-group">
@@ -124,6 +102,28 @@
             </div>
           </div>
         </li>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if student.programming_languages_users.any? %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.programming_languages")%></h4></div>
+      <ul class="list-group">
+        <% student.programming_languages_users.each do |programming_languages_users| %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= programming_languages_users.programming_language.name %>
+              </div>
+              <div class="col-sm-8">
+                <% (1..5).each do |i| %>
+                  <%= radio_button_tag programming_languages_users.programming_language.name, i, i==programming_languages_users.skill, disabled: true, class: "star" %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
       </ul>
     </div>
   <% end %>

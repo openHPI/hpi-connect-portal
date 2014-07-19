@@ -147,7 +147,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link I18n.t('job_offers.job_completed') }
-        it { should have_link 'Reopen job offer'}
+        it { should_not have_link 'Reopen job offer'}
 
 
         it "shows the assigned students" do
@@ -185,7 +185,7 @@ describe "Job Offer pages" do
         end
 
         it { should have_link I18n.t('job_offers.job_completed') }
-        it { should have_link 'Reopen job offer'}
+        it { should_not have_link 'Reopen job offer'}
 
         it { should have_button I18n.t('job_offers.fire') }
       end

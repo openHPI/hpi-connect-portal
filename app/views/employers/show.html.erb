@@ -46,39 +46,39 @@
     <% else %>
       <div class="col-sm-12">
     <% end %>
-      <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
-        <% if @active_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
+    <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
+      <% if @active_job_offers.any? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
             <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
           </div>
-        <% end %>
-        <% if @pending_job_offers.any? %>
-          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
+      <% end %>
+      <% if @pending_job_offers.any? %>
+        <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
               <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
             </div>
-          <% end %>
-        <% end %>
-        <% if @closed_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
-            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
-          </div>
         <% end %>
       <% end %>
-    </div>
-    <% if @employer.paying? %>
-      <div class="col-sm-4">
+      <% if @closed_job_offers.any? %>
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
+          <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
+            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
+          </div>
+      <% end %>
+    <% end %>
+  </div>
+  <% if @employer.paying? %>
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
             <% unless @employer.place_of_business.blank? %>
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-4">
-                    <%= t("activerecord.attributes.employer.place_of_business_break") %>
+                    <%= t("activerecord.attributes.employer.place_of_business") %>
                   </div>
                   <div class="col-sm-8">
                     <%= @employer.place_of_business %>
@@ -139,9 +139,9 @@
     <% else %>
       <div class="col-sm-12">
     <% end %>
-      <% if @staff.any? %>
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
+    <% if @staff.any? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
           <ul class="list-group">
             <% @staff.each do |user| %>
               <li class="list-group-item">
@@ -155,8 +155,10 @@
         </div>
       <% end %>
       <% unless @employer.contact_is_empty? %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4><%= t("activerecord.attributes.employer.contact") %></h4>
+          </div>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-8">

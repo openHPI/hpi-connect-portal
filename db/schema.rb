@@ -109,6 +109,9 @@ ActiveRecord::Schema.define(version: 20140715161115) do
     t.string   "contact_zip_city"
     t.string   "contact_email"
     t.string   "contact_phone"
+    t.integer  "requested_package_id",  default: 0,     null: false
+    t.integer  "booked_package_id",     default: 0,     null: false
+    t.integer  "single_jobs_requested", default: 0,     null: false
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
@@ -137,14 +140,12 @@ ActiveRecord::Schema.define(version: 20140715161115) do
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
-    t.string   "room_number"
     t.integer  "employer_id"
-    t.integer  "status_id",           default: 1
+    t.integer  "status_id"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
-    t.integer  "academic_program_id"
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"

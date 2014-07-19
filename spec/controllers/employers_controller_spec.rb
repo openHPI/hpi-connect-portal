@@ -105,10 +105,10 @@ describe EmployersController do
         response.should redirect_to(home_employers_path)
       end
 
-      it "sends an email" do
+      it "sends 2 emails" do
         old_count = ActionMailer::Base.deliveries.count
         post :create, { employer: valid_attributes }
-        ActionMailer::Base.deliveries.count.should == old_count + 1
+        ActionMailer::Base.deliveries.count.should == old_count + 2
       end
     end
 
