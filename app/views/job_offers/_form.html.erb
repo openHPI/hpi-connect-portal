@@ -90,6 +90,18 @@
               </div>
             </li>
             <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= label_field f, :graduation_id, t("activerecord.attributes.user.minimum_degree") %>
+                </div>
+                <div class="col-sm-8 pull-right">
+                  <%= f.select :graduation_id, JobOffer::GRADUATIONS.each_with_index.collect {|grade, index|
+                  [t("activerecord.attributes.user.degrees." + grade), index]
+                  }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
           <div class="row">
             <div class="col-sm-4">
               <%= label_field f, :start_date, t("activerecord.attributes.job_offer.start_date") %>
