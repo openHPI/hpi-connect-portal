@@ -109,14 +109,7 @@ ActiveRecord::Schema.define(version: 20140717140659) do
     t.string   "contact_zip_city"
     t.string   "contact_email"
     t.string   "contact_phone"
-    t.integer  "requested_package_id",  default: 0,     null: false
-    t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
-    t.string   "contact_name"
-    t.string   "contact_street"
-    t.string   "contact_zip_city"
-    t.string   "contact_email"
-    t.string   "contact_phone"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
