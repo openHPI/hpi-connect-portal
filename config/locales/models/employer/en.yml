@@ -26,4 +26,4 @@ en:
             zip_city: "ZIP-Code/City"
             email: "E-Mail"
             phone: "Telephon"
-        number_of_requested_graduate_jobs: "Number of booked single graduate jobs: "
+        number_of_requested_graduate_jobs: "Number of single booked, not yet accepted graduate jobs: "

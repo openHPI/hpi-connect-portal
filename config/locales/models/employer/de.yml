@@ -25,4 +25,4 @@ de:
             zip_city: "PLZ/Ort"
             email: "E-Mail"
             phone: "Telephon"
-        number_of_requested_graduate_jobs: "Gebuchte einzelne Absolventenstellen: "
+        number_of_requested_graduate_jobs: "Anzahl einzeln gebuchter, noch nicht bestätigter Absolventenstellen: "

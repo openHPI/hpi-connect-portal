@@ -83,6 +83,14 @@
     </li>
   </ul>
 </div>
+      <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> 
+              <%= @employer.single_jobs_requested %>
+          </div>
+        </div>
+      <% end %>
 
 <div class="employers-extra-information">
   <div class="panel panel-default">
