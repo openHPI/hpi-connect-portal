@@ -152,16 +152,18 @@
     <div class="panel-heading">
       <h4><%= t("activerecord.attributes.employer.contact") %></h4>
     </div>
+    <%= form.simple_fields_for :contact, @employer.contact do |c| %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field form, :contact_name, t("activerecord.attributes.employer.contacting.name") %>
+            <%= label_field c, :contact_name, t("activerecord.attributes.employer.contacting.name") %>
           </div>
           <div class="col-sm-9">
-            <%= form.input :contact_name %>
+            <%= c.input :name %>
           </div>
         </div>
       </li>
+      <% end %>
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">

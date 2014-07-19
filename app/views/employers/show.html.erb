@@ -154,7 +154,7 @@
           </div>
         </div>
       <% end %>
-      <% unless @employer.contact_is_empty? %>
+      <% unless @employer.contact.contact_is_empty? %>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4><%= t("activerecord.attributes.employer.contact") %></h4>
@@ -162,7 +162,7 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-8">
-                <%= simple_format @employer.merged_contact %>
+                <%= simple_format @employer.contact.merged_contact %>
               </div>
             </div>
           </li>

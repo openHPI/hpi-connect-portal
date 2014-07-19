@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717140659) do
+ActiveRecord::Schema.define(version: 20140719201723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,18 @@ ActiveRecord::Schema.define(version: 20140717140659) do
   end
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
+
+  create_table "contacts", force: true do |t|
+    t.integer  "employer_id"
+    t.integer  "job_offer_id"
+    t.string   "name"
+    t.string   "street"
+    t.string   "zip_city"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cv_educations", force: true do |t|
     t.integer  "student_id"

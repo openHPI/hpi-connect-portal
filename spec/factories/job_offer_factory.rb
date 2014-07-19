@@ -20,6 +20,11 @@
 #  prolong_requested   :boolean          default(FALSE)
 #  prolonged           :boolean          default(FALSE)
 #  prolonged_at        :datetime
+#  contact_name        :string(255)
+#  contact_street      :string(255)
+#  contact_zip_city    :string(255)
+#  contact_email       :string(255)
+#  contact_phone       :string(255)
 #
 
 FactoryGirl.define do
