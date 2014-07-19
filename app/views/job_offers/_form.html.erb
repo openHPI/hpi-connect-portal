@@ -289,10 +289,8 @@
     <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit" %>
   </div>
 <% end %>
-  <% if current_user.staff? %>
-    <% content_for :modals do %>
-      <%= render 'book_modal' %>
-    <% end %>
+<% if current_user.staff? %>
+  <% content_for :modals do %>
+    <%= render 'book_modal' %>
   <% end %>
 <% end %>
-

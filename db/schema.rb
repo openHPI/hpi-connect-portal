@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715161115) do
+ActiveRecord::Schema.define(version: 20140717140659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 20140715161115) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "activated",            default: false, null: false
+    t.boolean  "activated",             default: false, null: false
     t.string   "place_of_business"
     t.string   "website"
     t.string   "line_of_business"
     t.integer  "year_of_foundation"
     t.string   "number_of_employees"
-    t.integer  "requested_package_id", default: 0,     null: false
-    t.integer  "booked_package_id",    default: 0,     null: false
+    t.integer  "requested_package_id",  default: 0,     null: false
+    t.integer  "booked_package_id",     default: 0,     null: false
     t.string   "contact_name"
     t.string   "contact_street"
     t.string   "contact_zip_city"
@@ -112,6 +112,11 @@ ActiveRecord::Schema.define(version: 20140715161115) do
     t.integer  "requested_package_id",  default: 0,     null: false
     t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
+    t.string   "contact_name"
+    t.string   "contact_street"
+    t.string   "contact_zip_city"
+    t.string   "contact_email"
+    t.string   "contact_phone"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
