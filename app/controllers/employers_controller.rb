@@ -24,7 +24,7 @@ class EmployersController < ApplicationController
     @employer = Employer.new
     @employer.staff_members.build
     @employer.staff_members.first.build_user
-    @employer.counterpart = Contact.new
+    @employer.build_contact
   end
 
   def create
@@ -43,6 +43,7 @@ class EmployersController < ApplicationController
 
   def edit
     authorize! :edit, @employer
+    @employer.build_contact
   end
 
   def update

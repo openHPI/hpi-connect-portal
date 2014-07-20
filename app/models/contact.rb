@@ -5,11 +5,11 @@
 #  id               :integer          not null, primary key
 #  counterpart_id   :integer
 #  counterpart_type :string(255)
-#  c_name           :string(255)
-#  c_street         :string(255)
-#  c_zip_city       :string(255)
-#  c_email          :string(255)
-#  c_phone          :string(255)
+#  name             :string(255)
+#  street           :string(255)
+#  zip_city         :string(255)
+#  email            :string(255)
+#  phone            :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
 #

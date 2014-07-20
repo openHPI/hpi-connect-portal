@@ -46,7 +46,7 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :contact
 
-  delegate :contact_name, :contact_street, :contact_zip_city, :contact_email, :contact_phone, to: :contact
+  delegate :name, :street, :zip_city, :email, :phone, to: :contact
 
   validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true

@@ -37,7 +37,7 @@ class Employer < ActiveRecord::Base
   accepts_nested_attributes_for :staff_members
   accepts_nested_attributes_for :contact
 
-  delegate :contact_name, :contact_street, :contact_zip_city, :contact_email, :contact_phone, to: :contact
+  delegate :name, :street, :zip_city, :email, :phone, to: :contact
 
   validates_attachment_size :avatar, less_than: 5.megabytes
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
