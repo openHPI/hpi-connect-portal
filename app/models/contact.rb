@@ -17,13 +17,13 @@
 class Contact < ActiveRecord::Base
 	belongs_to :counterpart, polymorphic: true, touch: true	
 
-	def contact_is_empty?
+	def is_empty?
     	self.merged_contact.length == 0
   	end
 
-  	def merged_contact
+  	def merged
     	contact = ""
-    	[contact_name, contact_street, contact_zip_city, contact_email, contact_phone].map{ |entry| (entry!=nil) ? contact += "#{entry}\n" : nil}
+    	[name, street, zip_city, email, phone].map{ |entry| (entry!=nil) ? contact += "#{entry}\n" : nil}
     	contact
  	end
 end
