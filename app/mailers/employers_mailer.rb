@@ -17,6 +17,8 @@ class EmployersMailer < ActionMailer::Base
   end
 
   def booked_package_confirmation_email(employer)
+    @employer = employer
+    mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.confirm_booking.subject")
   end
 
   def registration_confirmation(employer)
