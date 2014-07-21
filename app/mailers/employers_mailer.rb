@@ -11,6 +11,14 @@ class EmployersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: t("employers_mailer.book_package.subject")
   end
 
+  def requested_package_confirmation_email(employer)
+    @employer = employer
+    mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.confirm_request.subject")
+  end
+
+  def booked_package_confirmation_email(employer)
+  end
+
   def registration_confirmation(employer)
     @employer = employer
     employer.staff_members.each do |staff|
