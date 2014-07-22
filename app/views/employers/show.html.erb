@@ -142,24 +142,27 @@
     <% if @staff.any? %>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
-          <ul class="list-group">
-            <% @staff.each do |user| %>
-              <li class="list-group-item">
-                <h4><%= link_to user.full_name, staff_path(user) %></h4>
-              </li>
-            <%end%>
-          </ul>
-          <div class="pull-right">
-            <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
-          </div>
+        <ul class="list-group">
+          <% @staff.each do |user| %>
+            <li class="list-group-item">
+              <h4><%= link_to user.full_name, staff_path(user) %></h4>
+            </li>
+          <%end%>
+        </ul>
+        <div class="pull-right">
+          <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
         </div>
       </div>
     <% end %>
     <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4>  <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> <%= @employer.single_jobs_requested %></h4></div>
+        <div class="panel-heading">
+          <h4>
+            <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> <%= @employer.single_jobs_requested %>
+          </h4>
         </div>
       </div>
     <% end %>
+    </div>
   </div>
 </div>
