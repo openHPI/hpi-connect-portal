@@ -46,6 +46,7 @@ en:
     send_application_headline: "Application Email"
     add_cv_application: "Add CV to Application?"
     upload_cv_application: "CV"
+    upload_job_offer_pdf: "PDF"
     send_application: "Send Application"
     required_programming_languages: "Required Programming Languages"
     required_languages: "Required Languages"
