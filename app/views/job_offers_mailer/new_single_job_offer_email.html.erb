@@ -1,0 +1,30 @@
+(For an English translation, scroll down.)<br>
+<br>
+Hallo Admins des HPI-HiWi-Portal,<br>
+<br>
+ein Mitarbeiter von <%= @employer.name %> hat soeben beantragt, eine einzelne Absolventenstelle auf die Platform zu stellen.<br>
+Da das Unternehmen noch nicht das dazu benötigte Paket besitzt, solltest Du es bitten, die entsprechende Gebühr zu überweisen.
+Du findest die Stelle hier <br>
+<%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false %>
+und das Unternehmen hier <br>
+<%= link_to @employer.name, controller:"employers", action: "show", id: @employer.id, only_path: false %><br>
+<br>
+Grüße,<br>
+Das HPI Connect Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+<br>
+<hr>
+<br>
+Dear admins of the HPI-HiWi-Portal,<br>
+<br>
+an employer has just booked a single graduate job while the employer does not own a necessary package so you should ask him now to transfer the charge.<br>
+You find the job offer here<br>
+<%= link_to @job_offer.title, controller:"job_offers", action: "show", id: @job_offer.id, only_path: false %><br>
+and the employer here<br>
+<%= link_to @employer.name, controller:"employers", action: "show", id: @employer.id, only_path: false %><br>
+<br>
+Regards,<br>
+The HPI-HiWi-Portal Team.<br>
+<br>
+(This is an automatically created email, please do not respond to it.)

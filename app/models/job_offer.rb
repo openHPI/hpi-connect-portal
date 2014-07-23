@@ -12,7 +12,7 @@
 #  time_effort         :float
 #  compensation        :float
 #  employer_id         :integer
-#  status_id           :integer          default(1)
+#  status_id           :integer
 #  flexible_start_date :boolean          default(FALSE)
 #  category_id         :integer          default(0), not null
 #  state_id            :integer          default(3), not null
@@ -53,14 +53,19 @@ class JobOffer < ActiveRecord::Base
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
-  validate :can_be_created, on: :create
 
   self.per_page = 15
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
     job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
-    if job_offer.save
+    if(!(job_offer.employer && job_offer.employer.can_create_job_offer?(job_offer.category)))
+      job_offer.employer.add_one_single_booked_job
+    end
+
+    if job_offer.save && !job_offer.employer.can_create_job_offer?(job_offer.category)
+      JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver
+    elsif job_offer.save && job_offer.employer.can_create_job_offer?(job_offer.category)
       JobOffersMailer.new_job_offer_email(job_offer).deliver
     elsif parameters[:flexible_start_date]
       job_offer.flexible_start_date = true
@@ -92,7 +97,10 @@ class JobOffer < ActiveRecord::Base
   end
 
   def can_be_created
-    errors[:base] << I18n.t('job_offers.messages.cannot_create') unless employer && employer.can_create_job_offer?(category)
+    if(!(employer && employer.can_create_job_offer?(category)))
+      employer.add_one_single_booked_job
+    end
+    return true
   end
 
   def closed?

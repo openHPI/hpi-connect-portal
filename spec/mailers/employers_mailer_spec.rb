@@ -9,6 +9,8 @@ describe EmployersMailer do
     ActionMailer::Base.perform_deliveries = true
     @employer = FactoryGirl.create(:employer)
     ActionMailer::Base.deliveries = []
+    FactoryGirl.create(:staff, employer: @employer)
+    @employer.reload
   end
 
   describe "new employer" do
@@ -32,5 +34,21 @@ describe EmployersMailer do
     it "should be send from 'noreply-connect@hpi.de'" do
       @email.from.should eq(['noreply-connect@hpi.de'])
     end
+  end
+
+  describe "registration confirmation" do
+    
+    before(:each) do
+      @email = EmployersMailer.registration_confirmation(@employer)
+    end
+
+    it "should send email to both staff_members" do
+      ActionMailer::Base.deliveries.count.should == @employer.staff_members.size
+    end
+
+    it "should contain the subject" do
+      @email.subject.should have_content("Your registration on HPI Connect")
+    end
+
   end
 end

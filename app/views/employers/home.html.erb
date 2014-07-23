@@ -18,6 +18,7 @@
           <i> <%= t("employers.home.service.chargeable.help_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></i></p><br>
           <div class="panel-body">
             <ul>
+              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => true))).html_safe%></li>
               <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
               <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <div class="panel-body"></div>
@@ -46,8 +47,8 @@
 </div>
 
     <div class="col-md-4">
-      <h1><%= link_to "AGB", "" %></h1>
-      <h1><%= link_to "Information", "" %></h1>
+      <h1> <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), :class => "links" %> </h1>
+      <h1><%= link_to "Information", asset_path("HPI Connect Karriereportal.pdf"), :class => "links" %></h1>
       <h1>Kontakt</h1>
       <p>Hasso-Plattner-Institut für<br>Softwaresystemtechnik GmbH
       <br>Prof.-Dr.-Helmert-Str. 2-3

@@ -429,48 +429,65 @@ describe JobOffersController do
         @staff = FactoryGirl.create(:staff, employer: @employer)
         @attributes = valid_attributes
         @attributes["category_id"] = 2
-        @attributes["employer_id"] = nil
+        @attributes["employer_id"] = @employer.id
       end
 
-      it "should not be possible to create a graduate job with the free or profile package" do
+      it "should be possible to create a graduate job with the free or profile package" do
+        ActionMailer::Base.deliveries = []
         login @staff.user
         expect {
           post :create, {job_offer: @attributes}, valid_session
-        }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        }.to change(JobOffer, :count).by(1)
+        ActionMailer::Base.deliveries.count.should == 1
+        email = ActionMailer::Base.deliveries[0]
+        assert_equal(email.to, [Configurable.mailToAdministration])
+        #response.should render_template("new")
+
+        ActionMailer::Base.deliveries = []
         @employer.update_column :booked_package_id, 1
         expect {
           post :create, {job_offer: @attributes}, valid_session
-        }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        }.to change(JobOffer, :count).by(1)
+        ActionMailer::Base.deliveries.count.should == 1
+        email = ActionMailer::Base.deliveries[0]
+        assert_equal(email.to, [Configurable.mailToAdministration])
+        #response.should render_template("new")
       end
 
       it "should only be possible to create 4 graduate job with the partner package" do
         @employer.update_column :booked_package_id, 2
         login @staff.user
+        assert_equal(0, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         4.times do
           expect {
             post :create, {job_offer: @attributes}, valid_session
           }.to change(JobOffer, :count).by(1)
         end
+        assert_equal(0, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         expect {
           post :create, {job_offer: @attributes}, valid_session
-        }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        }.to change(JobOffer, :count).by(1)
+        assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)
+        #response.should render_template("new")
       end
 
       it "should be possible to create 24 graduate job with the premium package" do
         @employer.update_column :booked_package_id, 3
         login @staff.user
+        assert_equal(0, @employer.single_jobs_requested)
         24.times do
           expect {
             post :create, {job_offer: @attributes}, valid_session
           }.to change(JobOffer, :count).by(1)
         end
+        assert_equal(0, @employer.single_jobs_requested)
         expect {
           post :create, {job_offer: @attributes}, valid_session
-        }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        }.to change(JobOffer, :count).by(1)
+        assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)   
+        #assert_equal(flash[:success], I18n.t('employers.messages.successfully_created.'))
+        #response.should render_template("new")
+             
       end
     end
   end

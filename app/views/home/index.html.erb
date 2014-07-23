@@ -79,7 +79,11 @@
       <h1><%= t("home.index.latest_employers", number_of_employers: @employers.length)%></h1>
       <ul>
         <% @employers.each do |employer| %>
-          <li> <%= link_to employer.name, employer %> </li>
+          <% if can?(:activate, employer) || employer.paying? %>
+            <li> <%= link_to employer.name, employer %> </li>
+          <% else %> 
+            <li> <%= employer.name %> </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

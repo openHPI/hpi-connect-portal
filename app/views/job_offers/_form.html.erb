@@ -72,9 +72,20 @@
                 <div class="col-sm-3">
                   <%= label_field f, :category, t("activerecord.attributes.job_offer.category") %>
                 </div>
-                <div class="col-sm-8 pull-right">                   
-                  <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, {}, 
-                      {id: 'category_id', class: 'select optional form-control'} %>
+                <div class="col-sm-8 pull-right"> 
+                <% if params[:book_single_job_offer] %>
+                  <%= hidden_field_tag :book_single_job_offer, params[:book_single_job_offer] %>
+                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, selected: true]], 
+                  disabled: true, 
+                  class: 'select optional form-control'%>
+                <% else %>                  
+                  <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
+                      can_book = current_user.admin? || current_user.manifestation.employer.can_create_job_offer?(category)
+                      [t("job_offers.category." + category), 
+                      index, 
+                      {'can_book' => can_book}]
+                     }, {}, {id: 'category_id', class: 'select optional form-control', } %>
+                <% end %>
                 </div>
               </div>
             </li>
@@ -196,6 +207,13 @@
   </div>
 
   <div class="actions">
-    <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+    <input name="other" value="<%= params[:book_single_job_offer] %>" type="hidden">
+    <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit" %>
   </div>
+  <% if current_user.staff? %>
+    <% content_for :modals do %>
+      <%= render 'book_modal' %>
+    <% end %>
+  <% end %>
 <% end %>
+
