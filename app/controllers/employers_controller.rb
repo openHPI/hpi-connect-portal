@@ -43,7 +43,6 @@ class EmployersController < ApplicationController
 
   def edit
     authorize! :edit, @employer
-    @employer.build_contact
   end
 
   def update

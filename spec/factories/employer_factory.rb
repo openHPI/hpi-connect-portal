@@ -35,6 +35,7 @@ FactoryGirl.define do
 
     before(:create) do | employer |
       FactoryGirl.create(:staff, employer: employer)
+      employer.contact = FactoryGirl.create(:contact, counterpart: employer)
     end
   end
 end

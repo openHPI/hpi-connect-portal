@@ -49,7 +49,6 @@ class JobOffersController < ApplicationController
     authorize! :edit, @job_offer
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
-    @job_offer.build_contact
   end
 
   def create
@@ -139,6 +138,7 @@ class JobOffersController < ApplicationController
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.closed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
+      @job_offer.build_contact
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer

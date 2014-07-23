@@ -147,7 +147,7 @@
             <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
         </div>
       <% end %>
-      <% unless @job_offer.contact.is_empty? %>
+      <% if !@job_offer.contact.is_empty? %>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
             <li class="list-group-item">

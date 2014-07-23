@@ -14,14 +14,15 @@
 #  updated_at       :datetime
 #
 
-class Contact < ActiveRecord::Base
-	belongs_to :counterpart, polymorphic: true, touch: true	
+# Read about factories at https://github.com/thoughtbot/factory_girl
 
-	def is_empty?
-    	self.merged.length == 0
-  	end
+FactoryGirl.define do
+  factory :contact do
 
-  	def merged
-    	[name, street, zip_city, email, phone].reject { |x| x == '' || x == nil}.join("\n")
- 	end
+    sequence(:name)    		{ |n| "Contact #{n}" }
+    sequence(:street)    	{ |n| "Street #{n}" }
+    sequence(:zip_city)    	{ |n| "City #{n}" }
+    sequence(:email)  		{ |n| "contact_#{n}@example.com" }
+    phone 					"0815"
+  end
 end
