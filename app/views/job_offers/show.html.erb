@@ -131,6 +131,10 @@
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), 
             content: (@job_offer.employer.staff_members.map {|staff| (link_to staff.full_name, staff)}.join('<br>').html_safe) %>
           <% end %>
+          <% unless @job_offer.offer_as_pdf.blank? %>
+            <%= render 'job_offers/list_group_item', title: t("job_offers.upload_job_offer_pdf"), 
+            content: (link_to @job_offer.offer_as_pdf_file_name, @job_offer.offer_as_pdf.url(:original, false)) %>
+          <% end %>
         </ul>
       </div>
 

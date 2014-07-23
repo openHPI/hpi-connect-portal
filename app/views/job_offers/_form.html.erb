@@ -142,9 +142,21 @@
                 </div>
               </div>
             </li>
+            <li>
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_field f,:offer_as_pdf,t("job_offers.upload_job_offer_pdf") %>
+                </div>
+                <div class="col-sm-8 pull-right">
+                    <%= f.file_field :offer_as_pdf, multiple: false, accept:'application/pdf', class: "col-md-10 "  %>
+                </div>
+              </div>
+            </li>
           <ul>
         </div>
+    
     </div>
+
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
