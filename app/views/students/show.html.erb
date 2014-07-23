@@ -70,7 +70,7 @@
               </div>
             </div>
           </li>
-          <% if @student.alumni_email %>
+          <% unless @student.alumni_email.blank? %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-4">
