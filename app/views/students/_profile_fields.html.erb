@@ -231,6 +231,18 @@
             </div>
           </div>
         </li>
+
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field form, :cv_as_pdf, t("students.cv_as_pdf") %>
+            </div>
+            <div class="col-sm-9">
+            <%= form.file_field :cv_as_pdf , multiple: false, accept:'application/pdf' %>
+            </div>
+          </div>
+        </li>
+
       </ul>
     </div>
 
