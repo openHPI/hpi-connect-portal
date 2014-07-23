@@ -51,6 +51,8 @@ class Student < ActiveRecord::Base
   has_many :cv_jobs, dependent: :destroy
   has_many :cv_educations, dependent: :destroy
 
+  has_attached_file :cv_as_pdf
+
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
@@ -61,6 +63,8 @@ class Student < ActiveRecord::Base
 
   validates :academic_program_id, presence: true
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
+  validates_attachment_content_type :cv_as_pdf, content_type: ['application/pdf']
+
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
