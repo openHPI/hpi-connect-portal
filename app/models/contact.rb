@@ -22,8 +22,6 @@ class Contact < ActiveRecord::Base
   	end
 
   	def merged
-    	contact = ""
-    	[name, street, zip_city, email, phone].map{ |entry| (entry!=nil) ? contact += "#{entry}\n" : nil}
-    	contact
+    	[name, street, zip_city, email, phone].compact.join("\n")
  	end
 end

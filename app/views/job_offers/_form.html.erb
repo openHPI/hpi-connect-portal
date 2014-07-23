@@ -151,61 +151,63 @@
             <h4><%= t("activerecord.attributes.employer.contact") %></h4>
           </div>
           <ul class="list-group">
+            <%= f.simple_fields_for :contact, @job_offer.contact do |c| %>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :contact_name, t("activerecord.attributes.employer.contacting.name") %>
+                  <%= label_field f, :name, t("activerecord.attributes.employer.contacting.name") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_name,  
-                  :input_html =>  @job_offer.contact_name.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_name } : nil %>
+                  <%= c.input :name,  
+                  :input_html =>  @job_offer.contact.name.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.name } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :contact_street, t("activerecord.attributes.employer.contacting.street") %>
+                  <%= label_field f, :street, t("activerecord.attributes.employer.contacting.street") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_street,  
-                  :input_html =>  @job_offer.contact_street.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_street } : nil %>
+                  <%= c.input :street,  
+                  :input_html =>  @job_offer.contact.street.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.street } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :contact_zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
+                  <%= label_field f, :zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_zip_city,  
-                  :input_html =>  @job_offer.contact_zip_city.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_zip_city } : nil %>
+                  <%= c.input :zip_city,  
+                  :input_html =>  @job_offer.contact.zip_city.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.zip_city } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :contact_email, t("activerecord.attributes.employer.contacting.email") %>
+                  <%= label_field f, :email, t("activerecord.attributes.employer.contacting.email") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_email,  
-                  :input_html =>  @job_offer.contact_email.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_email } : nil %>
+                  <%= c.input :email,  
+                  :input_html =>  @job_offer.contact.email.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.email } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :contact_phone, t("activerecord.attributes.employer.contacting.phone") %>
+                  <%= label_field f, :phone, t("activerecord.attributes.employer.contacting.phone") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= f.input :contact_phone,  
-                  :input_html =>  @job_offer.contact_phone.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact_phone } : nil %>
+                  <%= c.input :phone,  
+                  :input_html =>  @job_offer.contact.phone.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.phone } : nil %>
                 </div>
               </div>
             </li>
+            <% end %>
           </ul>
         </div>
       </div>

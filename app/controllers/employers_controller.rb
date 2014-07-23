@@ -24,7 +24,7 @@ class EmployersController < ApplicationController
     @employer = Employer.new
     @employer.staff_members.build
     @employer.staff_members.first.build_user
-    @employer.contact = Contact.new
+    @employer.build_contact
   end
 
   def create

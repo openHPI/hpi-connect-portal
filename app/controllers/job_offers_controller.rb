@@ -42,12 +42,14 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.new
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
+    @job_offer.build_contact
   end
 
   def edit
     authorize! :edit, @job_offer
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
+    @job_offer.build_contact
   end
 
   def create

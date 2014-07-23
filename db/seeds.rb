@@ -48,17 +48,6 @@ ProgrammingLanguage.create!([
   { name: 'OpenGL'}
 ])
 
-Contact.delete_all
-#Contact.create!(
-#counterpart_id: 0,
-#counterpart_type: "employer", 
-#name: "Hasso Plattner", 
-#street: "Prof. Dr. Helmert Straße 2-3",
-#zip_city: "14482 Potsdam",
-#email: "plattner@hpi.de",
-#phone: "01000000"
-#  )
-
 Employer.delete_all
 User.delete_all
 Student.delete_all
@@ -78,6 +67,17 @@ hpi = Employer.create!(
   year_of_foundation: 1998,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
+
+Contact.delete_all
+Contact.create!(
+counterpart: hpi,
+name: "Hasso Plattner", 
+street: "Prof. Dr. Helmert Straße 2-3",
+zip_city: "14482 Potsdam",
+email: "plattner@hpi.de",
+phone: "01000000"
+)
+
 hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',

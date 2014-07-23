@@ -156,38 +156,37 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field c, :contact_name, t("activerecord.attributes.employer.contacting.name") %>
+            <%= label_field c, :name, t("activerecord.attributes.employer.contacting.name") %>
           </div>
           <div class="col-sm-9">
             <%= c.input :name %>
           </div>
         </div>
-      </li>
-      <% end %>
+      </li>      
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field form, :contact_street, t("activerecord.attributes.employer.contacting.street") %>
+            <%= label_field form, :street, t("activerecord.attributes.employer.contacting.street") %>
           </div>
           <div class="col-sm-9">
-            <%= c.input :street%>
+            <%= c.input :street %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field form, :contact_zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
+            <%= label_field form, :zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
           </div>
           <div class="col-sm-9">
-            <%= c.input :zip_city%>
+            <%= c.input :zip_city %>
           </div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field form, :contact_email, t("activerecord.attributes.employer.contacting.email") %>
+            <%= label_field form, :email, t("activerecord.attributes.employer.contacting.email") %>
           </div>
           <div class="col-sm-9">
             <%= c.input :email %>
@@ -197,12 +196,13 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
-            <%= label_field form, :contact_phone, t("activerecord.attributes.employer.contacting.phone") %>
+            <%= label_field form, :phone, t("activerecord.attributes.employer.contacting.phone") %>
           </div>
           <div class="col-sm-9">
             <%= c.input :phone %>
           </div>
         </div>
       </li>
+      <% end %>
   </div>
 </div>

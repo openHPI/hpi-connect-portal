@@ -146,14 +146,14 @@
           <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
             <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
         </div>
-      <%end%>
-      <% unless @job_offer.contact_is_empty? %>
+      <% end %>
+      <% unless @job_offer.contact.is_empty? %>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-8">
-                  <%= simple_format @job_offer.merged_contact %>
+                  <%= simple_format @job_offer.contact.merged %>
                 </div>
               </div>
             </li>
