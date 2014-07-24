@@ -156,10 +156,10 @@ describe EmployersController do
         response.should redirect_to(@employer)
       end
 
-      it "sends an email if a new package was booked" do
+      it "sends two emails to staff and admin if a new package was booked" do
         old_count = ActionMailer::Base.deliveries.count
         put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: 2 } }
-        ActionMailer::Base.deliveries.count.should == old_count + 1
+        ActionMailer::Base.deliveries.count.should == old_count + 2
       end
     end
 
