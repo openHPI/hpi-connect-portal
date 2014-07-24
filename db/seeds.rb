@@ -216,10 +216,10 @@ Contact.create!(
     compensation: 13.50,
     languages: Language.where(:name => 'german'), 
     programming_languages: ProgrammingLanguage.where(:name => ['Ruby'])),
-  name: "Hasso Plattner", 
+  name: "Portal Contact", 
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
-  email: "plattner@hpi.de",
+  email: "portal@hpi.de",
   phone: "01000000"
 )
 
@@ -348,10 +348,10 @@ Contact.create!(
     compensation: 20.00,
     languages: Language.where(:name => 'english'), 
     programming_languages: ProgrammingLanguage.where(:name => ['C'])),
-  name: "openHPI Contact", 
+  name: "HANA contact", 
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
-  email: "contact@open.hpi.de",
+  email: "hana@hpi.de",
   phone: "01000000"
 )
 

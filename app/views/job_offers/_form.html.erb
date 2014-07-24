@@ -158,7 +158,8 @@
                   <%= label_field f, :name, t("activerecord.attributes.employer.contacting.name") %>
                 </div>
                 <div class="col-sm-9">
-                  <%= c.input :name %>
+                  <%= c.input :name,  
+                  :input_html =>  @job_offer.contact.name.nil? && current_user.staff? && !current_user.manifestation.employer.nil? ? { :value => current_user.manifestation.employer.contact.name } : nil %>
                 </div>
               </div>
             </li>

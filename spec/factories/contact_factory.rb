@@ -19,10 +19,10 @@
 FactoryGirl.define do
   factory :contact do
 
-    sequence(:name)    		{ |n| "Contact #{n}" }
-    sequence(:street)    	{ |n| "Street #{n}" }
-    sequence(:zip_city)    	{ |n| "City #{n}" }
-    sequence(:email)  		{ |n| "contact_#{n}@example.com" }
-    phone 					"0815"
+    sequence(:name)         { |n| "Contact #{n}" }
+    sequence(:street)       { |n| "Street #{n}" }
+    sequence(:zip_city)     { |n| "City #{n}" }
+    sequence(:email)        { |n| "contact_#{n}@example.com" }
+    phone                   "0815"
   end
 end
