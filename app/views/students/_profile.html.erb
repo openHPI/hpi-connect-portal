@@ -68,43 +68,6 @@
 </div>
 
 <div class="col-sm-6">
-  <% if !(student.semester).nil? || !(student.academic_program).nil? || !(student.graduation).nil? %>
-    <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("users.career") %></h4></div>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-4">
-              <%= t("activerecord.attributes.student.academic_program")%>
-            </div>
-            <div class="col-sm-8">
-              <%= t("activerecord.attributes.user.academic_rank_options." + student.academic_program) %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-4">
-              <%= t("activerecord.attributes.student.semester")%>
-            </div>
-            <div class="col-sm-8">
-              <%= student.semester %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-4">
-              <%= t("activerecord.attributes.student.education")%>
-            </div>
-            <div class="col-sm-8">
-              <%= t("activerecord.attributes.user.degrees." + student.graduation) %>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  <% end %>
 
   <% if student.programming_languages_users.any? %>
     <div class="panel panel-default">
