@@ -1,21 +1,37 @@
-(For an English translation, scroll down.)
+(For an english translation please scroll down)
 
-Hallo <%=@staff.full_name%>,
+Guten Tag <%= @staff.full_name %>,
 
-Dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde leider nicht bestätigt und wird nicht auf dem HPI-HiWi-Portal zu finden sein. Bei Rückfragen wende dich bitte an <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
+Ihr Jobangebot <%= @job_offer.title %> im HPI Connect Jobportal wurde leider abgelehnt. Es bleibt nun für die Nutzer des Portals nicht sichtbar. 
 
-Grüße,
-Das HPI-HiWi-Portal Team.
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.
 
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
+Freundliche Grüße
 
--------------------------------------------------------------
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
 
-Dear <%=@staff.full_name%>
+------
 
-unfortunately, your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has not been accepted. It will not be displayed on the HPI-HiWi-Portal For further information please contact <%=@job_offer.employer.deputy.firstname%> <%=@job_offer.employer.deputy.firstname%>.
+Dear <%= @staff.full_name %>, 
 
-Regards,
-The HPI-HiWi-Portal Team.
+your job offer <%= @job_offer.title %> in the HPI Connect Jobportal has unfortunately been rejected.  For further inquiries, we are happy to help you.
 
-(This is an automatically created email, please do not respond to it.)
+Kind regards
+
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
+
+connect@hpi.uni-potsdam.de
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam
+Prof.-Dr.-Helmert-Str. 2-3
+D-14482 Potsdam
+www.hpi.de
+
+Amtsgericht Potsdam, HRB 12184
+Geschäftsführung: Prof. Dr. Christoph Meinel
+
+Design IT. Create Knowledge.
+

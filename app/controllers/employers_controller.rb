@@ -34,6 +34,7 @@ class EmployersController < ApplicationController
       sign_in @employer.staff_members.first.user if @employer.staff_members.any?
       respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
       EmployersMailer.new_employer_email(@employer).deliver
+      EmployersMailer.registration_confirmation(@employer)
     else
       render_errors_and_action @employer, 'new'
     end
@@ -46,7 +47,10 @@ class EmployersController < ApplicationController
   def update
     old_requested_package = @employer.requested_package_id
     if @employer.update employer_params
-      EmployersMailer.book_package_email(@employer).deliver if @employer.requested_package_id > old_requested_package
+      if @employer.requested_package_id > old_requested_package
+        EmployersMailer.book_package_email(@employer).deliver
+        EmployersMailer.requested_package_confirmation_email(@employer).deliver
+      end
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
     else
       render_errors_and_action @employer, 'edit'
@@ -55,6 +59,7 @@ class EmployersController < ApplicationController
 
   def activate
     @employer.update_column :activated, true
+    EmployersMailer.booked_package_confirmation_email(@employer).deliver if @employer.booked_package_id < @employer.requested_package_id
     @employer.update_column :booked_package_id, @employer.requested_package_id
     respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_activated')
   end

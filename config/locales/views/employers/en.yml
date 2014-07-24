@@ -20,6 +20,10 @@ en:
             profile: "Employer Profile" 
             full_time: "full-time jobs per year"
             student_profile: "View Student Profiles"
+            insufficent: "Your package does not suffice / Number of graduate jobs exceeded"
+            upgrade_or_book: "Unfortunately, your package does not allow you to book a graduate job or you've already booked as many graduate jobs as possible for your package. You can now upgrade your package or book this single job offer with costs."
+            book_single_offer: "Book single job offer"
+            upgrade: "Upgrade package"
         messages:
             successfully_created: "Welcome to HPI Career!"
             successfully_updated: "Profile successfully updated."
@@ -29,3 +33,32 @@ en:
             unsuccessfully_activated: "Error during activation. Please try again later."
             successfully_deactivated: "Profile successfully deactivated."
             unsuccessfully_deactivated: "Error during deactivation. Please try again later."
+        home:
+            edit_account_settings_html: "Edit my %{account_settings}"
+            account_settings: "account settings"
+            book_product: "I want to book the following product:"
+            service:
+                free:
+                    title: "Free Services"
+                    description: "Announce an  internship or student job online (4 weeks)"
+                chargeable:
+                    title: "Chargeable Services"
+                    help_html: "(You can request an overview of current prices at %{email})" #connect@hpi.uni-potsdam.de.)"
+                    open_positions: "Announce your open positions (4 weeks)"
+                    present_profile_html: "Present Your %{company_profile} (1 year)"
+                    company_profile: "Company Profile"
+                    single_graduate_job: "%{book} single graduate job"
+            booking:
+                basis:
+                    title_html: "%{book} a Basis Packet"
+                    book: "Book"
+                    advertisements: "4 job advertisements per year"
+                    company_profile: "1 company profile for 1 year"
+                partner:
+                    title_html: "%{book} a Partner Packet"
+                    book: "Book"
+                    advertisements: "24 job advertisements per year"
+                    company_profile: "1 company profile for 1 year"
+                    exclusiv: "Exclusive research access to the profile database of HPI students and alumni for 1 year"
+            advise: "We would be happy to advise you about our services."
+            contact_html: "Feel free to contact us at any time at %{email}"

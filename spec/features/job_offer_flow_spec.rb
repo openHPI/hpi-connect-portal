@@ -26,7 +26,7 @@ describe "the job offer flow" do
 
     visit job_offers_path
 
-    within ".wrapper-12.panel-wrapper .pull-right#top-links" do
+    within "#top-links" do
         should have_link(I18n.t("job_offers.new_job_offer"))
         click_on I18n.t("job_offers.new_job_offer")
     end
@@ -34,7 +34,6 @@ describe "the job offer flow" do
 
     fill_in "job_offer_title", with: "HPI-Career-Portal"
     fill_in "job_offer_description", with: "A new carrer portal for HPI students should be developed and deployed."
-    fill_in "job_offer_room_number", with: "A-1.2"
     fill_in "job_offer_end_date", with: (Date.current + 2).to_s
     fill_in "job_offer_time_effort", with: "12"
     fill_in "job_offer_compensation", with: "11"
@@ -50,7 +49,6 @@ describe "the job offer flow" do
 
     assert_equal(job_offer.title, "HPI-Career-Portal")
     assert_equal(job_offer.description, "A new carrer portal for HPI students should be developed and deployed.")
-    assert_equal(job_offer.room_number, "A-1.2")
     assert_equal(job_offer.start_date, Date.current + 1)
     assert_equal(job_offer.flexible_start_date, true)
     assert_equal(job_offer.end_date, Date.current + 2)
@@ -207,7 +205,6 @@ describe "the job offer flow" do
 
     should have_content mark_if_required(job_offer, :title)
     should have_content job_offer.description
-    should have_content mark_if_required(job_offer, :room_number)
     should have_content mark_if_required(job_offer, :time_effort)
     should have_content mark_if_required(job_offer, :compensation)
 

@@ -10,9 +10,9 @@
           <%= label_tag :upgrade_or_book, t("employers.package_descriptions.upgrade_or_book") %>
          <br><br>
 
-         <%= link_to '<button type="button">t('links.cancel')</button>', new_employer_path, :class => "btn btn-default pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
-         <%= link_to t('employers.package_descriptions.upgrade'), new_employer_path, :class => "btn btn-large btn-primary pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>
-          <%= link_to t('employers.package_descriptions.book_single_offer'), new_employer_path, :class => "btn btn-large btn-primary pull-right", :style => "margin-top: 9px;padding-bottom: 6px;" %>  
+        <span class="btn btn-default pull-right", data-dismiss="modal"><%= t("links.cancel") %></span>
+        <%= link_to t('employers.package_descriptions.upgrade'), edit_employer_path(@current_user.manifestation.employer), :class => "btn btn-default pull-right" %>
+        <%= link_to t('employers.package_descriptions.book_single_offer'), new_job_offer_path(book_single_job_offer: true), :class => "btn btn-default pull-right", :id => "book_single" %>    
           
             <br/>           
         </div>

@@ -112,6 +112,9 @@ class JobOffersController < ApplicationController
   def accept
     if @job_offer.update status: JobStatus.active
       JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
+      if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
+        @job_offer.employer.remove_one_single_booked_job
+      end
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
     else
       render_errors_and_action @job_offer
@@ -121,6 +124,9 @@ class JobOffersController < ApplicationController
   def decline
     if @job_offer.destroy
       JobOffersMailer.admin_declined_job_offer_email(@job_offer)
+      if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
+        @job_offer.employer.remove_one_single_booked_job
+      end
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer
@@ -163,7 +169,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :academic_program_id, :graduation_id, :room_number, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

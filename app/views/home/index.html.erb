@@ -15,7 +15,7 @@
       </p>
 
       <p>
-        <b>As Complany you can get in contact with the students and alumni by</b><br />
+        <b>As a company you can get in contact with the students and alumni by</b><br />
         <br />
         - posting your current <%= link_to 'job openings', job_offers_path %><br />
         - presenting yourself with an own <%= signed_in_staff? ? (link_to 'company profile', employer_path(current_user.manifestation.employer)) : 'company profile' %><br />
@@ -30,13 +30,13 @@
         <br />
         - die aktuellen <%= link_to 'Jobangebote', job_offers_path %> einzusehen <br />
         - <%= link_to 'Unternehmensprofile', employers_path %> interessanter Arbeitgeber zu sichten <br />
-        - ein eigens Profil zu <%= link_to 'erstellen', new_student_path %> um von potentiellen Arbeitgebern gefunden zu werden <br />
+        - ein eigens Profil zu <%= link_to 'erstellen', new_student_path %>, um von potentiellen Arbeitgebern gefunden zu werden <br />
         <br />
-        Bitte benutzen Sie dazu das Login Formular bzw. die Regisrierung rechts.
+        Bitte benutzen Sie dazu das Login Formular bzw. die Registrierung rechts.
       </p>
 
       <p>
-        <b>Als Unternehmen können Sie in dem Portal direkt mit den Studierenden und Alumni in Kontakt treten indem Sie</b><br />
+        <b>Als Unternehmen können Sie in dem Portal direkt mit den Studierenden und Alumni in Kontakt treten, indem Sie</b><br />
         <br />
         - Ihre aktuellen <%= link_to 'Stellenangebote', job_offers_path %> einstellen <br />
         - sich als Arbeitgeber mit einem eigenen <%= signed_in_staff? ? (link_to 'Unternehmensprofil', employer_path(current_user.manifestation.employer)) : 'Unternehmensprofil' %> präsentieren <br />
@@ -79,7 +79,11 @@
       <h1><%= t("home.index.latest_employers", number_of_employers: @employers.length)%></h1>
       <ul>
         <% @employers.each do |employer| %>
-          <li> <%= link_to employer.name, employer %> </li>
+          <% if can?(:activate, employer) || employer.paying? %>
+            <li> <%= link_to employer.name, employer %> </li>
+          <% else %> 
+            <li> <%= employer.name %> </li>
+          <% end %>
         <% end %>
       </ul>
     </div>

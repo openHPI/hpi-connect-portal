@@ -1,20 +1,45 @@
-(For an English translation, scroll down.)
+(For an english translation please scroll down)
 
-Hallo <%=@staff.full_name%>,
+Guten Tag <%= @staff.full_name %>,
 
-dein Jobangebot <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde bestätigt. Studenten können sich jetzt für dein Angebot bewerben.
+Ihr Jobangebot <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> im HPI Connect Jobportal wurde soeben freigeschaltet und ist nun für die Nutzer des Portals sichtbar. Registrierte Studierende und Alumni können sich nun auch direkt bewerben.
+Hier gelangen Sie zur <%= link_to("Ansicht", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>. 
 
-Grüße,
-Das HPI-HiWi-Portal Team.
+Die Laufzeit beträgt 4 Wochen. Sie bekommen vor Ablauf der Frist eine Benachrichtigung und haben die Möglichkeit, das Jobangebot zu verlängern. Sie können das Jobangebot jederzeit bearbeiten.
 
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
--------------------------------------------------------
+Falls Sie ein kostenpflichtiges Angebot gebucht haben (Absolventenstelle, Firmenprofil oder erstmalig ein Paket), bekommen Sie in Kürze eine Rechnung gemäß aktueller Preisliste.
 
-Dear <%=@staff.full_name%>
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.
 
-your job offer <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been accepted. Students can now apply for this job.
+Freundliche Grüße
 
-Regards,
-The HPI-HiWi-Portal Team.
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
 
-(This is an automatically created email, please do not respond to it.)
+------
+
+Dear <%= @staff.full_name %>, 
+
+your new job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> in the HPI Connect Jobportal has just been activated and is now online. Registered users are now able to directly apply.
+Click <%= link_to("here", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> to view your job offer.
+
+The running time is 4 weeks. You will get a notification prior to the deadline and have the opportunity to extend the job offer. You can edit the job offer at any time.   If you have booked an offer which is subject to charge (full time job, company profile, or a package for the first time), you will shortly receive an invoice in accordance with the current price list.   For further inquiries, we are happy to help you.
+
+Kind regards
+
+HPI Connect
+Claudia Koch - Fon (49) 0331 5509 291
+Nadja Antoine  - Fon (49) 0331 5509 107
+
+connect@hpi.uni-potsdam.de
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam
+Prof.-Dr.-Helmert-Str. 2-3
+D-14482 Potsdam
+www.hpi.de
+
+Amtsgericht Potsdam, HRB 12184
+Geschäftsführung: Prof. Dr. Christoph Meinel
+
+Design IT. Create Knowledge.
+
