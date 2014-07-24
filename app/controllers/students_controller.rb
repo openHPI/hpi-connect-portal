@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
     authorize! :activate, @student
     admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
-    authenticate_with_open_id url do |result, identity_url|
+    authenticate_with_open_id url, return_to: "#{request.protocol}#{request.host_with_port}#{request.fullpath}" do |result, identity_url|
       if result.successful?
         current_user.update_column :activated, true
         flash[:success] = I18n.t('users.messages.successfully_activated')
