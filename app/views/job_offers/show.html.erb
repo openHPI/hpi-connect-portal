@@ -1,12 +1,9 @@
 <div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-12">
-        <h1>
-          <%= @job_offer.title %>
           <% if @job_offer.pending? %>
             <span> - <%= t("job_status.pending") %></span>
           <% end %>
-        </h1>
         <div class="pull-right">
           <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.active? %>
             <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
@@ -81,7 +78,7 @@
   <div class="row">
     <div class="col-sm-8">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div>
+        <div class="panel-heading"><h4><%= @job_offer.title %></h4></div>
         <ul class="list-group">
           <li class="list-group-item">
             <div class="row">
