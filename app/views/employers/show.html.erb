@@ -2,12 +2,10 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="pull-right">
-        <h1><%= @employer.name %></h1>
       </div>
     </div>
     <div class="col-sm-6 text-left">
-      <p>
-        <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  %>
+      <p>        
         <% if can? :edit, @employer %>
           <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
         <% end %>
@@ -32,7 +30,7 @@
     <% if @employer.paying? %>
       <div class="col-sm-8">
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
+          <div class="panel-heading"><h4><%= @employer.name %></h4></div>
           <ul class="list-group">
             <li class="list-group-item">
               <div class="row">
@@ -71,6 +69,11 @@
     </div>
     <% if @employer.paying? %>
       <div class="col-sm-4">
+        <center>
+          <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  
+          %>
+        </center>
+        <br>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
@@ -141,7 +144,7 @@
     <% end %>
     <% if @staff.any? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
+        <div class="panel-heading"><h4><% unless @employer.paying? %><%=@employer.name%> - <% end %><%= t("employers.contact") %></h4></div>
           <ul class="list-group">
             <% @staff.each do |user| %>
               <li class="list-group-item">
@@ -152,12 +155,6 @@
           <div class="pull-right">
             <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
           </div>
-        </div>
-      </div>
-    <% end %>
-    <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4>  <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> <%= @employer.single_jobs_requested %></h4></div>
         </div>
       </div>
     <% end %>
