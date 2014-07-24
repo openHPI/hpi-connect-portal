@@ -15,13 +15,13 @@
 #
 
 class Contact < ActiveRecord::Base
-	belongs_to :counterpart, polymorphic: true, touch: true	
+    belongs_to :counterpart, polymorphic: true, touch: true 
 
-	def is_empty?
-    	self.merged.length == 0
-  	end
+    def is_empty?
+      self.merged.length == 0
+    end
 
-  	def merged
-    	[name, street, zip_city, email, phone].reject { |x| x == '' || x == nil}.join("\n")
- 	end
+    def merged
+      [name, street, zip_city, email, phone].reject { |x| x.blank?}.join("\n")
+    end
 end
