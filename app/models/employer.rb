@@ -79,7 +79,7 @@ class Employer < ActiveRecord::Base
   def can_create_job_offer?(category)
     (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
-  
+
   def add_one_single_booked_job
     self.update_column :single_jobs_requested, self.single_jobs_requested+1
   end
