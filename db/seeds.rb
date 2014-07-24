@@ -202,7 +202,7 @@ JobOffer.delete_all
 
 # EPIC Jobs
 
-career = JobOffer.create!([{
+career = JobOffer.create!(
   title: "HPI Career Portal",
   description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.',
   state_id: 0,
@@ -215,7 +215,7 @@ career = JobOffer.create!([{
   compensation: 13.50,
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
-}])
+)
 
 Contact.create!(
   counterpart: career,
@@ -226,7 +226,7 @@ Contact.create!(
   phone: "01000000"
 )
 
-genome = JobOffer.create!([{
+genome = JobOffer.create!(
   title: "Genome project",
   description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.',
   state_id: 2,
@@ -239,7 +239,7 @@ genome = JobOffer.create!([{
   compensation: 12.0,
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++'])
-}])
+)
 
 Contact.create!(
   counterpart: genome,
@@ -250,7 +250,7 @@ Contact.create!(
   phone: "01000000"
 )
 
-hyrise = JobOffer.create!([{
+hyrise = JobOffer.create!(
   title: "Hyrise Developer",
   description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.',
   state_id: 3,
@@ -264,7 +264,7 @@ hyrise = JobOffer.create!([{
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
   assigned_students: [User.where(firstname: "Pascal").first.manifestation]
-}])
+)
 
 Contact.create!(
   counterpart: hyrise,
@@ -277,7 +277,7 @@ Contact.create!(
 
 # OS Jobs
 
-tutor = JobOffer.create!([{
+tutor = JobOffer.create!(
   title: "Tutor for Operating systems",
   description: 'You have to control the assignments for the Operating Systems I lecture.',
   state_id: 6,
@@ -290,7 +290,7 @@ tutor = JobOffer.create!([{
   compensation: 12.00,
   languages: Language.where(:name => ['german', 'english']),
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java'])
-}])
+)
 
 Contact.create!(
   counterpart: tutor,
@@ -301,7 +301,7 @@ Contact.create!(
   phone: "01000000"
 )
 
-supporter = JobOffer.create!([{
+supporter = JobOffer.create!(
   title: "Supporting the lab operations of the chair",
   description: 'We want you to help in implementing a new modeling tool designed for embedded systems',
   state_id: 0,
@@ -314,7 +314,7 @@ supporter = JobOffer.create!([{
   compensation: 10.00,
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk'])
-}])
+)
 
 Contact.create!(
   counterpart: supporter,
@@ -325,7 +325,7 @@ Contact.create!(
   phone: "01000000"
 )
 
-openhpi = JobOffer.create!([{
+openhpi = JobOffer.create!(
   title: "OpenHPI supporter",
   description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.',
   state_id: 4,
@@ -339,7 +339,7 @@ openhpi = JobOffer.create!([{
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
   assigned_students: [User.where(firstname: "Frank").first.manifestation]
-}])
+)
 
 Contact.create!(
   counterpart: openhpi,
@@ -352,7 +352,7 @@ Contact.create!(
 
 # SAP jobs
 
-hana = JobOffer.create!([{
+hana = JobOffer.create!(
   title: "HANA developer",
   description: 'A developer for SAPs leading in-memory database HANA is needed. Strong teamskills required.',
   state_id: 1,
@@ -365,7 +365,7 @@ hana = JobOffer.create!([{
   compensation: 20.00,
   languages: Language.where(:name => 'english'),
   programming_languages: ProgrammingLanguage.where(:name => ['C'])
-}])
+)
 
 Contact.create!(
   counterpart: hana,
