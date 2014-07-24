@@ -3,7 +3,7 @@
     <div class="col-md-12 flash-message on-profile">
       <div class="alert alert-warning">
         <p><%= t("students.activation_reminder") %></p>
-        <%= simple_form_for @student, url: activate_student_url(@student) do |f| %>
+        <%= simple_form_for @student, url: activate_student_path(@student) do |f| %>
           https://openid.hpi.uni-potsdam.de/user/ <%= f.text_field :username, id: 'open-id-field', class: 'form-control' %>
           <%= f.submit t("links.verify"), class: 'btn btn-xs btn-primary' %>
       <% end %>
