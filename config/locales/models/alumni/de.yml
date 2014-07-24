@@ -5,7 +5,7 @@ de:
         first_name: 'Vorname'
         last_name: 'Nachname'
         email: 'Weiterleitungs-Email'
-        alumni_email: 'Alumni-Email'
+        alumni_email: 'Alumni-Email Login'
         alumni_file: 'Alumnidatei'
         import_list: 'Alumniliste importieren'
         import_single: 'Einzelnen Alumnus importieren'

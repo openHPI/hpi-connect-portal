@@ -1,30 +1,13 @@
-<% path = url_for(controller: 'alumni', action: 'register', token: @alumni.token, only_path: false) %>
-(For an English translation, scroll down.)<br>
-<br>
-Hallo <%= @alumni.firstname %>,<br>
+Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,<br>
 <br>
 Herzlichen Glückwunsch zu Ihrem Abschluss am HPI! <br />
 <br>
-Damit Sie auch weiterhin mit dem HPI und Ihren Komilitonen in Kontakt bleiben können, erhalten Sie hiermit Ihre neue Alumni-Email-Adresse. Diese können Sie mit einem Klick auf den folgenden Link zu einem bestehenden oder dann erstellten Career-Portal-Profil hinzufügen. Alle Emails an die Alumni-Adresse werden dann automatisch an Ihre normale Email weitergeleitet.<br />
+Den Alumni-Service des Hasso-Plattner-Instituts finden Sie ab jetzt auf dem neuen Karriereportal <%= link_to 'HPI Connect', root_url %>. Damit Sie auch weiterhin mit dem HPI und Ihren Kommilitonen in Kontakt bleiben können, folgen Sie bitte dem unten angegebenen Link.<br />
+Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet. Gleichzeitig erhalten Sie eine lebenslange E-Mail-Adresse vorname.nachname@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.<br />
 <br />
-<%= link_to 'Alumni-Email registrieren!', path %><br />
+<%= link_to 'Alumni-Email registrieren!', register_alumni_url(token: @alumni.token) %><br />
 <br />
 Mit freundlichen Grüßen,<br>
 Das HPI Career Portal Team.<br>
 <br>
-(Dies ist eine maschinell erstellte Email, bitte antworten Sie nicht darauf.)<br>
-<br>
-<hr>
-<br>
-Dear <%= @alumni.firstname %>,<br>
-<br>
-Congratulations to your degree at HPI!<br>
-<br />
-To help you stay in contact with HPI and your classmates you are receiving your new Alumni-Email-Address. Once this email address is linked to your career portal account, all emails sent to this address will be forwarded to your registered email. To link the email follow the link in this email. There you can add this email to an existing account or create a new account with it.<br />
-<br />
-<%= link_to 'Alumni-Email registrieren!', path %><br />
-<br />
-Regards,<br>
-The HPI-HiWi-Portal Team.<br>
-<br>
-(This is an automatically created email, please do not respond to it.)
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
