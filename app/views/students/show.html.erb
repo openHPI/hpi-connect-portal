@@ -10,19 +10,14 @@
       </div>
     </div>
   <% end %>
-
-  <div class="row">
-    <div class="col-sm-6">
+  <div class="col-sm-6">
       <div class="pull-right">
-        <h1><%= @student.firstname %> <%= @student.lastname %></h1>
-        <% unless @student.employment_status.nil? %>
-          <p class="userstatus text-right" style="color:#FFFFFF;"><%= t("activerecord.attributes.user_status." +  @student.employment_status) %></p>
-        <% end %>
       </div>
     </div>
+
+  <div class="row">    
     <div class="col-sm-6 text-left">
       <p>
-        <%= image_tag(@student.user.photo.url, size: "200", class: "img-thumbnail")  %>
         <% if can? :edit, @student %>
           <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default pull-right" %>
         <% end %>
@@ -41,8 +36,20 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.user.general_information") %></h4></div>
+        <div class="panel-heading"><h4><%= @student.firstname %> <%= @student.lastname %></h4></div>
         <ul class="list-group">
+          <% unless @student.employment_status.nil? %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.user.status") %>
+                </div>
+                <div class="col-sm-8">
+                  <%= t("activerecord.attributes.user_status." +  @student.employment_status) %>
+                </div>
+              </div>
+            </li>
+          <% end %>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-4">

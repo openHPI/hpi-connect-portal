@@ -106,7 +106,7 @@ describe "job_offers_history" do
       status: JobStatus.closed
       )
     visit job_offers_path
-    find(".wrapper-12.panel-wrapper .pull-right#top-links").should have_link "Archive"
+    find("#top-links").should have_link "Archive"
     click_on "Archive"
 
     expect(current_path).to eq(archive_job_offers_path)
