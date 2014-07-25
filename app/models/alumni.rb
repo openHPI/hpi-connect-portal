@@ -20,11 +20,8 @@ class Alumni < ActiveRecord::Base
   validate :uniqueness_of_alumni_email_on_user
 
   def self.create_from_row(row)
-    if row.key?(:login)
-      row[:firstname] ||= row[:login].split('.')[0].capitalize
-      row[:lastname] ||= row[:login].split('.')[1].capitalize
-      row[:alumni_email] = row[:login]
-    end
+    row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize
+    row[:lastname] ||= row[:alumni_email].split('.')[1].capitalize
     alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email], alumni_email: row[:alumni_email]
     alumni.generate_unique_token
     if alumni.save
