@@ -12,6 +12,7 @@ de:
         new_employer_label: "Neuer Arbeitgeber : "
         activation_reminder: "Ihr Profil ist noch nicht freigeschaltet. Ein Administrator wird Ihr Profil in Kürze freischalten. Falls Sie ein HPI Student sind, können Sie sich auch selbst über OpenID freischalten: "
         successful_import: "Ihre Daten wurden erfolgreich importiert. Sie können nun zusätzliche Änderungen vornehmen."
+        aborted: "Sie haben den Import abgebrochen. Es wurden keine Daten importiert."
         work_experience: "Berufserfahrung"
         education: "Ausbildung"
         add_work_experience: "Weitere Berufserfahrung hinzufügen"
