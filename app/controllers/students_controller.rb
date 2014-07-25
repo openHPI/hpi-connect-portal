@@ -99,7 +99,11 @@ class StudentsController < ApplicationController
 
   private
     def authorize_client(linkedin_client)
-      if session[:atoken].nil?
+      if session[:atoken].nil?        
+        problem = params[:oauth_problem]
+        if !problem.nil? && problem == "user_refused"          
+          respond_and_redirect_to edit_student_path(@student), t("students.aborted")
+        end
         pin = params[:oauth_verifier]
         atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
         session[:atoken] = atoken

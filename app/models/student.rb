@@ -137,7 +137,8 @@ class Student < ActiveRecord::Base
   def update_cv_jobs(jobs)   
     jobs.each do |job|
       description = !job["summary"].nil? ? job["summary"] : " " 
-      end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
+      start_date = !job["start_date"].nil? ? (!job["start_date"]["month"].nil? ? Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i) : Date.new(job["start_date"]["year"].to_i)) : nil
+      end_date = !job["end_date"].nil? ? (!job["end_date"]["month"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : Date.new(job["end_date"]["year"].to_i)) : nil
       current = (job["is_current"].to_s == 'true')
       update_attributes!(
         cv_jobs: self.cv_jobs.push(
@@ -146,7 +147,7 @@ class Student < ActiveRecord::Base
             employer: job["company"]["name"], 
             position: job["title"], 
             description: description, 
-            start_date: Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i), 
+            start_date: start_date, 
             end_date: end_date,
             current: current)
         )
