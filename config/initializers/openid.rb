@@ -8,14 +8,12 @@ module Rack
       reurldecode req, 'openid.op_endpoint'
       reurldecode req, 'openid.claimed_id'
       reurldecode req, 'openid1_claimed_id'
-      reurldecode req, 'openid.responce_nonce'
+      reurldecode req, 'openid.response_nonce'
       reurldecode req, 'openid.identity'
       reurldecode req, 'openid.return_to'
       reurldecode req, 'openid.signed'
       reurldecode req, 'openid.sig'
       reurldecode req, 'rp_nonce'
-
-      puts req.params
 
       if req.params["openid.mode"]
         complete_authentication(req, env)
@@ -42,8 +40,6 @@ module Rack
         consumer = ::OpenID::Consumer.new(session, @store)
         consumer.complete(flatten_params(req.params), req.url)
       }
-
-      puts oidresp.inspect
 
       env[RESPONSE] = oidresp
 

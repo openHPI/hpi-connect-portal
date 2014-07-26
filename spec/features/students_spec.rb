@@ -189,7 +189,7 @@ describe "the students profile page" do
 
     it "should show a reminder with openID form if I am not activated" do
       @student1.user.update_column :activated, false
-      visit student_path(@student1, activation: 'show')
+      visit student_path(@student1)
 
       page.should have_content(I18n.t("students.activation_reminder"))
       page.should have_css('input#open-id-field')
