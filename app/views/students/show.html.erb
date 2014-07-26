@@ -1,5 +1,5 @@
 <div class="wrapper-12 panel-wrapper">
-  <% if can?(:activate, @student) && !@student.activated %>
+  <% if params[:activation] == 'show' && can?(:activate, @student) && !@student.activated %>
     <div class="col-md-12 flash-message on-profile">
       <div class="alert alert-warning">
         <p><%= t("students.activation_reminder") %></p>
@@ -11,9 +11,8 @@
     </div>
   <% end %>
   <div class="col-sm-6">
-      <div class="pull-right">
-      </div>
-    </div>
+    <div class="pull-right"></div>
+  </div>
 
   <div class="row">    
     <div class="col-sm-6 text-left">
