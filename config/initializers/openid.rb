@@ -3,19 +3,19 @@ module Rack
     
     def call(env)
       req = Rack::Request.new(env)
-      
-      reurldecode req, 'openid.ns'
-      reurldecode req, 'openid.op_endpoint'
-      reurldecode req, 'openid.claimed_id'
-      reurldecode req, 'openid1_claimed_id'
-      reurldecode req, 'openid.response_nonce'
-      reurldecode req, 'openid.identity'
-      reurldecode req, 'openid.return_to'
-      reurldecode req, 'openid.signed'
-      reurldecode req, 'openid.sig'
-      reurldecode req, 'rp_nonce'
 
       if req.params["openid.mode"]
+        reurldecode req, 'openid.ns'
+        reurldecode req, 'openid.op_endpoint'
+        reurldecode req, 'openid.claimed_id'
+        reurldecode req, 'openid1_claimed_id'
+        reurldecode req, 'openid.response_nonce'
+        reurldecode req, 'openid.identity'
+        reurldecode req, 'openid.return_to'
+        reurldecode req, 'openid.signed'
+        reurldecode req, 'openid.sig'
+        reurldecode req, 'rp_nonce'
+
         complete_authentication(req, env)
       end
 
