@@ -7,11 +7,15 @@ module Rack
       reurldecode req, 'openid.ns'
       reurldecode req, 'openid.op_endpoint'
       reurldecode req, 'openid.claimed_id'
+      reurldecode req, 'openid1_claimed_id'
       reurldecode req, 'openid.responce_nonce'
       reurldecode req, 'openid.identity'
       reurldecode req, 'openid.return_to'
       reurldecode req, 'openid.signed'
       reurldecode req, 'openid.sig'
+      reurldecode req, 'rp_nonce'
+
+      puts req.params
 
       if req.params["openid.mode"]
         complete_authentication(req, env)
@@ -50,7 +54,7 @@ module Rack
     end
 
     def reurldecode(request, key)
-      request.update_param key, URI.unescape(request.params[key]) if request.params[key] && request.params[key].include?('%3A')
+      request.update_param key, URI.unescape(request.params[key]) if request.params[key] && request.params[key].include?('%')
     end
   end
 end
