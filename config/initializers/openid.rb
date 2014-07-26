@@ -1,7 +1,7 @@
 module Rack
   class OpenID
+    
     def call(env)
-
       req = Rack::Request.new(env)
       
       reurldecode req, 'openid.ns'
@@ -38,6 +38,8 @@ module Rack
         consumer = ::OpenID::Consumer.new(session, @store)
         consumer.complete(flatten_params(req.params), req.url)
       }
+
+      puts oidresp.inspect
 
       env[RESPONSE] = oidresp
 
