@@ -34,6 +34,7 @@ FactoryGirl.define do
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)
+      job_offer.contact = FactoryGirl.create(:contact, counterpart: job_offer)
     end
   end
 end
