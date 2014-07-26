@@ -49,7 +49,7 @@ class JobOffersController < ApplicationController
     authorize! :edit, @job_offer
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
-    if !@job_offer.contact
+    unless @job_offer.contact
       @job_offer.build_contact
     end
   end
