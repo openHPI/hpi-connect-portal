@@ -48,6 +48,18 @@ class Employer < ActiveRecord::Base
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
 
+  def self.check_for_expired
+    paying.each do |employer|
+      if employer.booked_at + 1.year == Date.today - 1.week
+        EmployersMailer.package_will_expire_email(employer).deliver
+      elsif employer.booked_at + 1.year <= Date.today
+        employer.update_column :requested_package_id, 0
+        employer.update_column :booked_package_id, 0
+        EmployersMailer.package_expired_email(employer).deliver
+      end
+    end
+  end
+
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
   end

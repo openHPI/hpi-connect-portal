@@ -56,4 +56,37 @@ describe Employer do
       @employer.should be_invalid
     end
   end
+
+  describe 'expiration' do
+
+    before :each do
+      Employer.delete_all
+      @paying_employer_reference = FactoryGirl.create(:employer, booked_package_id: 1, booked_at: Date.today)
+      ActionMailer::Base.deliveries = []
+    end
+
+    it "sends an email 1 week before expiration" do
+      @employer_warning = FactoryGirl.create(:employer, booked_package_id: 1, booked_at: Date.today - 1.year + 1.week)
+      Employer.check_for_expired
+      ActionMailer::Base.deliveries.count.should eq(1)
+      email = ActionMailer::Base.deliveries[0]
+      assert_equal(email.to, @employer_warning.staff_members.collect(&:email))
+    end
+
+    it "sends an email on expiration and resets the booked package" do
+      @employer_expire = FactoryGirl.create(:employer, booked_package_id: 1, booked_at: Date.today - 1.year)
+      Employer.check_for_expired
+      ActionMailer::Base.deliveries.count.should eq(1)
+      email = ActionMailer::Base.deliveries[0]
+      assert_equal(email.to, @employer_expire.staff_members.collect(&:email))
+      assert_equal(@employer_expire.reload.booked_package_id, 0)
+      assert_equal(@employer_expire.reload.requested_package_id, 0)
+    end
+
+    it "does only check for expiration of paying employers" do
+      @employer_expire = FactoryGirl.create(:employer, booked_package_id: 0, booked_at: Date.today - 2.year)
+      Employer.check_for_expired
+      ActionMailer::Base.deliveries.count.should eq(0)
+    end
+  end
 end

@@ -266,9 +266,10 @@ describe JobOffer do
 
     it "does only send emails with active status" do
       @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
+      @job_offer_warning_pending = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 4.weeks)
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks)
+      @job_offer_expire_pending = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks)
+      JobOffer.check_for_expired
       ActionMailer::Base.deliveries.count.should eq(0)
     end
 

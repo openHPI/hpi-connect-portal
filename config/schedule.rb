@@ -5,6 +5,7 @@
 
 every :day, at: '1am' do
   runner "JobOffer.check_for_expired"
+  runner "Employer.check_for_expired"
 end
 
 # Learn more: http://github.com/javan/whenever

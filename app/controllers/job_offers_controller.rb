@@ -6,7 +6,6 @@ class JobOffersController < ApplicationController
   load_and_authorize_resource except: [:index, :edit]
   skip_load_resource only: [:create] 
 
-  #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
@@ -114,7 +113,7 @@ class JobOffersController < ApplicationController
   def accept
     if @job_offer.update status: JobStatus.active
       JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
-      if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
+      unless @job_offer.employer.can_create_job_offer?(@job_offer.category)
         @job_offer.employer.remove_one_single_booked_job
       end
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
@@ -126,7 +125,7 @@ class JobOffersController < ApplicationController
   def decline
     if @job_offer.destroy
       JobOffersMailer.admin_declined_job_offer_email(@job_offer)
-      if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
+      unless @job_offer.employer.can_create_job_offer?(@job_offer.category)
         @job_offer.employer.remove_one_single_booked_job
       end
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
