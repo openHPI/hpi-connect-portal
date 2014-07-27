@@ -50,7 +50,7 @@ class Employer < ActiveRecord::Base
 
   def self.check_for_expired
     paying.each do |employer|
-      if employer.booked_at + 1.year == Date.today - 1.week
+      if employer.booked_at + 1.year - 1.week == Date.today
         EmployersMailer.package_will_expire_email(employer).deliver
       elsif employer.booked_at + 1.year <= Date.today
         employer.update_column :requested_package_id, 0
