@@ -68,14 +68,6 @@ hpi = Employer.create!(
 )
 
 Contact.delete_all
-Contact.create!(
-counterpart: hpi,
-name: "Hasso Plattner", 
-street: "Prof. Dr. Helmert Straße 2-3",
-zip_city: "14482 Potsdam",
-email: "plattner@hpi.de",
-phone: "01000000"
-)
 
 hpi_staff = Staff.create!(
   user: User.new(
@@ -215,15 +207,6 @@ career = JobOffer.create!(
   compensation: 13.50,
   languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
-)
-
-Contact.create!(
-  counterpart: career,
-  name: "Portal Contact", 
-  street: "Prof. Dr. Helmert Straße 2-3",
-  zip_city: "14482 Potsdam",
-  email: "portal@hpi.de",
-  phone: "01000000"
 )
 
 genome = JobOffer.create!(
