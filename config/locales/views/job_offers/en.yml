@@ -19,7 +19,7 @@ en:
     start_date: "starting at the earliest"
     end_date: "finishing at the latest"
     archive: "Archive"
-    job_completed: "m´Move to Archive"
+    job_completed: "Move to Archive"
     matching_job_offers: "Matching Job offers"
     overview: "Overview"
     create_new_job_offer: "Create new Job Offer"

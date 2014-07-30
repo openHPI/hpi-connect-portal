@@ -3,12 +3,11 @@ de:
     attributes:
       employer:
         description: "Beschreibung"
+        contact: "Kontakt"
         head: "Leiter"
         name: "Unternehmen"
         avatar: "Logo"
-        number_of_employees: "Anzahl der Beschäftigten"
-        place_of_business: "Unternehmenssitz"
-        place_of_business_break: "Unternehmens- sitz"
+        place_of_business: "Sitz"
         website: "Website"
         year_of_foundation: "Gründungsjahr"
         packages:
@@ -16,8 +15,14 @@ de:
             profile: "Profilpaket"
             partner: "Basispaket"
             premium: "Partnerpaket"
-        place_of_business: "Unternehmenssitz"
         line_of_business: "Branche"
-        number_of_employees: "Anzahl an Mitarbeitern"
+        number_of_employees: "Mitarbeiter"
         year_of_foundation: "Gründungsjahr"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Straße"
+            zip_city: "PLZ/Ort"
+            email: "E-Mail"
+            phone: "Telephon"
+        number_of_requested_graduate_jobs: "Anzahl einzeln gebuchter, noch nicht bestätigter Absolventenstellen: "

@@ -4,3 +4,9 @@ en:
       subject: 'A new employer is waiting for activation'
     book_package:
       subject: 'An employer booked a new package'
+    registration_confirmation:
+      subject: 'Your registration on HPI Connect'
+    confirm_request:
+      subject: 'Confirmation for your booking'
+    confirm_booking:
+      subject: 'Your packet was activated'

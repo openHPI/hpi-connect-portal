@@ -1,47 +1,46 @@
-<div>
-  <h1>
-    <%= t("faqs.headline") %>
-    <% if can?(:create, Faq) %>
+<div class="wrapper-12 panel-wrapper">
+  <% if can?(:create, Faq) %>
       <span class="pull-right">
         <%= link_to t("faqs.new_faq"), new_faq_path, :class => "btn btn-default", :style => "margin-bottom: 20px"%>
       </span>
     <% end %>
-  </h1>
-  <br>
+  <h1><%= t("faqs.headline") %></h1>
 </div>
 
-<div class="container">
-  <% @faqs.each_with_index do |faq, index| %>
-    <% if (faq.locale.to_s == locale.to_s) %>
-      <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= index.to_s %>">
-                <h4><%= faq.question %></h4>
-              </a>
-            </h4>
-          </div>
-          <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
-            <div class="panel-body">
-              <%= sanitize_html(faq.answer.html_safe) %>
-              <br><br>
-              <% if can?(:update, faq) ||  can?(:destroy, faq) %>
-                <div class="pull-right">
-                  <% if can?(:update, faq) %>
-                    <%= link_to t("links.edit"), edit_faq_path(faq), :class => "btn btn-default" %>
-                  <% end %>
-                  <% if can?(:delete, faq) %>
-                    <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-danger"%>
-                  <% end %>
-                </div>
-              <% end %>
-              <br>
+<div class="wrapper-12 teaser">
+  <div class="col-md-12 list-container">
+    <% @faqs.each_with_index do |faq, index| %>
+      <% if (faq.locale.to_s == locale.to_s) %>
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse<%= index.to_s %>">
+                  <h4><%= faq.question %></h4>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
+              <div class="panel-body">
+                <%= sanitize_html(faq.answer.html_safe) %>
+                <br><br>
+                <% if can?(:update, faq) ||  can?(:destroy, faq) %>
+                  <div class="pull-right">
+                    <% if can?(:update, faq) %>
+                      <%= link_to t("links.edit"), edit_faq_path(faq), :class => "btn btn-default" %>
+                    <% end %>
+                    <% if can?(:delete, faq) %>
+                      <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-danger"%>
+                    <% end %>
+                  </div>
+                <% end %>
+                <br>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <br>
+        <br>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>

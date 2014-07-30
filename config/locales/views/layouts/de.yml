@@ -1,6 +1,6 @@
 de:
   layouts:
-    title: "Jobportal"
+    title: "HPI Connect"
     job_offers: "Jobangebote"
     students: "Studentenprofile"
     staff: "Mitarbeiter"
@@ -10,7 +10,7 @@ de:
     logged_in: "Angemeldet"
     edit_profile: "Profil bearbeiten"
     my_profile: "Mein Profil"
-    my_employer: "Mein Arbeitgeber"
+    my_employer: "Mein Unternehmen"
     my_chair: "Mein Lehrstuhl"
     overview: "Übersicht"
     dashboard: "Dashboard"
@@ -22,6 +22,7 @@ de:
     imprint: "Impressum"
     asterisk_description: "Felder, die mit * gekennzeichnet sind, sind Pflichtfelder"
     configuration: "Plattformeinstellungen"
+    import: "Alumni importieren"
     star_description_prog: "1 = Ich habe es mal benutzt; 3 = Allgemeine Kenntnisse; 5 = Ich bin Experte"
     star_description_lang: "1 = Grundkenntnisse; 3 = Erweiterte Kenntnisse; 5 = Muttersprache"
     messages:

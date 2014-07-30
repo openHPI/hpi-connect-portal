@@ -1,21 +1,45 @@
-(For an English translation, scroll down.)<br>
-<br>
-Sehr geehrte Damen und Herren,<br>
-<br>
-der Job <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> wurde soeben verlängert. Das neue Ablaufdatum ist: <%= @job_offer.expiration_date %>.<br>
-<br>
-Grüße,<br>
-Das HPI-HiWi-Portal Team.<br>
-<br>
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
-<br>
-<hr>
-<br>
-Dear Sir or Madam, <br>
-<br>
-the job <%= link_to(@job_offer.title,  url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> has been prolonged. The new expiration date is: <%= @job_offer.expiration_date %>.<br>
-<br>
-Regards,<br>
-The HPI-HiWi-Portal Team.<br>
-<br>
-(This is an automatically created email, please do not respond to it.)<br>
+(For an english translation please scroll down)<br/>
+<br/>
+Guten Tag <%= @staff.full_name %>,<br/>
+<br/>
+die Verlängerung Ihres Jobangebots <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> im HPI Connect Jobportal wurde soeben freigeschaltet. Es bleibt nun für die Nutzer des Portals weiter sichtbar. Registrierte Studierende und Alumni können sich auch direkt bewerben.<br/>
+Hier gelangen Sie zur <%= link_to("Ansicht", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>. <br/>
+<br/>
+Die Laufzeit beträgt weitere 4 Wochen. Sie bekommen vor Ablauf der Frist wieder eine Benachrichtigung und haben die Möglichkeit, das Jobangebot erneut zu verlängern. Sie können das Jobangebot jederzeit bearbeiten.<br/>
+<br/>
+Falls Sie ein kostenpflichtiges Angebot gebucht haben (Absolventenstelle, Firmenprofil oder erstmalig ein Paket), bekommen Sie in Kürze eine Rechnung gemäß aktueller Preisliste.<br/>
+<br/>
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br/>
+<br/>
+Freundliche Grüße<br/>
+<br/>
+HPI Connect<br/>
+Claudia Koch - Fon (49) 0331 5509 291<br/>
+Nadja Antoine  - Fon (49) 0331 5509 107<br/>
+<br/>
+<hr/>
+<br/>
+Dear <%= @staff.full_name %>, <br/>
+<br/>
+The extension of your job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> in the HPI Connect Jobportal has just been activated It now remains online. Registered users are able to directly apply.<br/>
+Click <%= link_to("here", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> to view your job offer.<br/>
+<br/>
+The running time is again 4 weeks. You will get a notification prior to the new expiration deadline and have the opportunity to extend the job offer again. You can edit the job offer at any time.   If you have booked an offer which is subject to charge (full time job, company profile, or a package for the first time), you will shortly receive an invoice in accordance with the current price list.   For further inquiries, we are happy to help you.<br/>
+<br/>
+Kind regards<br/>
+<br/>
+HPI Connect<br/>
+Claudia Koch - Fon (49) 0331 5509 291<br/>
+Nadja Antoine  - Fon (49) 0331 5509 107<br/>
+<br/>
+connect@hpi.uni-potsdam.de<br/>
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br/>
+Prof.-Dr.-Helmert-Str. 2-3<br/>
+D-14482 Potsdam<br/>
+www.hpi.de<br/>
+<br/>
+Amtsgericht Potsdam, HRB 12184<br/>
+Geschäftsführung: Prof. Dr. Christoph Meinel<br/>
+<br/>
+Design IT. Create Knowledge.<br/>
+

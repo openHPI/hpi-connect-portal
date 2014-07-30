@@ -1,0 +1,16 @@
+Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,<br>
+<br>
+Sie sind derzeit im Alumni-Portal des Hasso-Plattner-Instituts als Nutzer angemeldet. Unser Alumni-Service zieht nun um:<br />
+<br />
+Den Alumni-Service des HPI finden Sie ab jetzt auf dem neuen Karriereportal <%= link_to 'HPI Connect', root_url %>.<br />
+<br />
+Damit Sie auch weiterhin mit dem HPI und Ihren Kommilitonen in Kontakt bleiben können, folgen Sie bitte dem unten angegebenen Link.
+<br /><br />
+Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet. Mit Ihrem Account erhalten Sie eine lebenslange E-Mail-Adresse vorname.nachname@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.<br />
+<br />
+<%= link_to 'Alumni-E-Mail auf HPI Connect registrieren!', alumni_email_url(token: @alumni.token) %><br />
+<br />
+Mit freundlichen Grüßen,<br>
+Das HPI Career Portal Team.<br>
+<br>
+(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>

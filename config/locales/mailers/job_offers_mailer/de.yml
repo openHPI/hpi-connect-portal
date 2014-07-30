@@ -2,18 +2,20 @@ de:
   job_offers_mailer:
     new_job_offer:
       subject: 'Jobangebot %{job_title} wartet auf Freigabe'
+    new_single_job_offer:
+      subject: '%{employer} möchte die einzelne Absolventenstelle #{job_title} buchen'
     job_offer_declined:
-      subject: "Jobangebot %{job_title} abgelehnt"
+      subject: "Ihr Stellenagebot wurde leider abgelehnt"
     job_offer_accepted:
-      subject: "Jobangebot %{job_title} freigeschaltet"
+      subject: "Freischaltung Ihres Stellenangebots auf HPI Connect"
     job_offer_closed:
       subject: "Jobangebot %{job_title} geschlossen"
     job_offer_will_expire:
-      subject: "Jobangebot %{job_title} läuft bald ab"
+      subject: "Ihr Stellenangebot %{job_title} auf HPI Connect läuft bald ab"
     job_offer_expired:
-      subject: "Jobangebot %{job_title} ist abgelaufen"
+      subject: "Ihr Stellenangebot auf HPI Connect ist abgelaufen"
     job_offer_prolonged:
-      subject: "Jobangebot %{job_title} verlängert"
+      subject: "Verlängerung Ihres Stellenangebots auf HPI Connect bestätigt"
     prolong_requested:
       subject: "Verlängerung von Angebot %{job_title} angefordert"
     student_accepted:

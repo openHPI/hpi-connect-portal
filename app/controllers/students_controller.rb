@@ -6,7 +6,7 @@ class StudentsController < ApplicationController
   authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
-  has_scope :search_students, only: [:index], as: :q
+  has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
   has_scope :filter_semester, only: [:index],  as: :semester
@@ -51,7 +51,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    update_from_params_for_languages_and_newsletters params, student_path(@student)
+    update_from_params_for_languages params, student_path(@student)
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
     authorize! :activate, @student
     admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
-    authenticate_with_open_id url do |result, identity_url|
+    authenticate_with_open_id url, return_to: "#{request.protocol}#{request.host_with_port}#{request.fullpath}" do |result, identity_url|
       if result.successful?
         current_user.update_column :activated, true
         flash[:success] = I18n.t('users.messages.successfully_activated')
@@ -101,7 +101,12 @@ class StudentsController < ApplicationController
     def authorize_client(linkedin_client)
       if session[:atoken].nil?
         pin = params[:oauth_verifier]
-        atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+        begin
+          atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+        rescue
+          problem = params[:oauth_problem]
+          respond_and_redirect_to edit_student_path(@student), (!problem.nil? && problem == "user_refused" ? t("students.aborted") : t("applications.error"))
+        end
         session[:atoken] = atoken
         session[:asecret] = asecret
       else

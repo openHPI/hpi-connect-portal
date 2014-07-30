@@ -66,6 +66,9 @@ hpi = Employer.create!(
   year_of_foundation: 1998,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
+
+Contact.delete_all
+
 hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',
@@ -89,6 +92,14 @@ sap = Employer.create!(
   website: "http://www.sap.de",
   year_of_foundation: 1972,
     avatar: File.open(Rails.root.join('public', 'photos', 'original', 'hasso-plattner.jpg'))
+)
+Contact.create!(
+  counterpart: sap,
+  name: "SAP Contact", 
+  street: "",
+  zip_city: "Waldorf",
+  email: "",
+  phone: "01000000"
 )
 sap_staff = Staff.create!(
   user: User.new(
@@ -183,93 +194,127 @@ JobOffer.delete_all
 
 # EPIC Jobs
 
-JobOffer.create!([{
-  title: "HPI Career Portal", 
-  description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.', 
+career = JobOffer.create!(
+  title: "HPI Career Portal",
+  description: 'A new carrer portal for the HPI should be developed. External and internal employers (e.h. chairs of the HPI) should be allowed to list different job offers. HPI students should then be offered the possibility to apply for those. Authentication should be done via HPI OpenID, the application itself should be written in Ruby on Rails in an agile environemt including Continous Integration and weekly Scrum meetings.',
   state_id: 0,
   category_id: 1,
   graduation_id: 3,
-  employer: hpi, 
+  employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+2, 
   release_date: Date.current-2,
   time_effort: 9,
   compensation: 13.50,
-  languages: Language.where(:name => 'german'), 
+  languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Ruby']),
-}])
+)
 
-JobOffer.create!([{
-  title: "Genome project", 
-  description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.', 
+genome = JobOffer.create!(
+  title: "Genome project",
+  description: 'Using up to date in-memory hardware and tools a genome analysis application shall be developed to assist biological reasearchers worldwide.',
   state_id: 2,
   category_id: 1,
   graduation_id: 3,
-  employer: hpi, 
+  employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   release_date: Date.current-4,
   time_effort: 38,
   compensation: 12.0,
-  languages: Language.where(:name => 'german'), 
+  languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Python', 'C', 'C++'])
-}])
+)
 
-JobOffer.create!([{
-  title: "Hyrise Developer", 
-  description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.', 
+Contact.create!(
+  counterpart: genome,
+  name: "Genome Contact", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "genome@hpi.de",
+  phone: "01000000"
+)
+
+hyrise = JobOffer.create!(
+  title: "Hyrise Developer",
+  description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.',
   state_id: 3,
   category_id: 2,
   graduation_id: 4,
-  employer: hpi, 
+  employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15, 
   release_date: Date.current-6,
   time_effort: 38,
   compensation: 12.0,
-  languages: Language.where(:name => 'german'), 
+  languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
   assigned_students: [User.where(firstname: "Pascal").first.manifestation]
-}])
+)
+
+Contact.create!(
+  counterpart: hyrise,
+  name: "Hyrise Contact", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "Hyrise@hpi.de",
+  phone: "01000000"
+)
 
 # OS Jobs
 
-JobOffer.create!([{
-  title: "Tutor for Operating systems", 
-  description: 'You have to control the assignments for the Operating Systems I lecture.', 
+tutor = JobOffer.create!(
+  title: "Tutor for Operating systems",
+  description: 'You have to control the assignments for the Operating Systems I lecture.',
   state_id: 6,
   category_id: 0,
   graduation_id: 1,
-  employer: hpi, 
+  employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+3, 
   release_date: Date.current-8,
   time_effort: 5,
   compensation: 12.00,
-  languages: Language.where(:name => ['german', 'english']), 
+  languages: Language.where(:name => ['german', 'english']),
   programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++', 'Java'])
-}])
+)
 
+Contact.create!(
+  counterpart: tutor,
+  name: "Tutor for OS", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "tutor@hpi.de",
+  phone: "01000000"
+)
 
-JobOffer.create!([{
-  title: "Supporting the lab operations of the chair", 
-  description: 'We want you to help in implementing a new modeling tool designed for embedded systems', 
+supporter = JobOffer.create!(
+  title: "Supporting the lab operations of the chair",
+  description: 'We want you to help in implementing a new modeling tool designed for embedded systems',
   state_id: 0,
   category_id: 0,
   graduation_id: 0,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
-  release_date: Date.current-8,
+  start_date: Date.current+100,
   time_effort: 8,
   compensation: 10.00,
-  languages: Language.where(:name => 'german'), 
+  languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python', 'Smalltalk'])
-}])
+)
 
-JobOffer.create!([{
-  title: "OpenHPI supporter", 
-  description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.', 
+Contact.create!(
+  counterpart: supporter,
+  name: "Supporter", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "supporter@hpi.de",
+  phone: "01000000"
+)
+
+openhpi = JobOffer.create!(
+  title: "OpenHPI supporter",
+  description: 'The chair is looking for someone to correct the handed-in exercises for the upcoming OpenHPI-cource on Parallel Computing.',
   state_id: 4,
   category_id: 3,
   graduation_id: 3,
@@ -280,16 +325,25 @@ JobOffer.create!([{
   release_date: Date.current-9,
   time_effort: 8,
   compensation: 10.00,
-  languages: Language.where(:name => 'german'), 
+  languages: Language.where(:name => 'german'),
   programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
   assigned_students: [User.where(firstname: "Frank").first.manifestation]
-}])
+)
+
+Contact.create!(
+  counterpart: openhpi,
+  name: "openHPI Contact", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "contact@open.hpi.de",
+  phone: "01000000"
+)
 
 # SAP jobs
 
-JobOffer.create!([{
-  title: "HANA developer", 
-  description: 'A developer for SAPs leading in-memory database HANA is needed. Strong teamskills required.', 
+hana = JobOffer.create!(
+  title: "HANA developer",
+  description: 'A developer for SAPs leading in-memory database HANA is needed. Strong teamskills required.',
   state_id: 1,
   category_id: 1,
   graduation_id: 3,
@@ -299,9 +353,19 @@ JobOffer.create!([{
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,
-  languages: Language.where(:name => 'english'), 
+  languages: Language.where(:name => 'english'),
   programming_languages: ProgrammingLanguage.where(:name => ['C'])
-}])
+)
+
+Contact.create!(
+  counterpart: hana,
+  name: "HANA contact", 
+  street: "Prof. Dr. Helmert Straße 2-3",
+  zip_city: "14482 Potsdam",
+  email: "hana@hpi.de",
+  phone: "01000000"
+)
+
 
 # FAQs
 

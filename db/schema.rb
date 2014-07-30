@@ -63,6 +63,18 @@ ActiveRecord::Schema.define(version: 20140730080541) do
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
+  create_table "contacts", force: true do |t|
+    t.integer  "counterpart_id"
+    t.string   "counterpart_type"
+    t.string   "name"
+    t.string   "street"
+    t.string   "zip_city"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "cv_educations", force: true do |t|
     t.integer  "student_id"
     t.string   "degree"

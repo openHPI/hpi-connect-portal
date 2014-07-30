@@ -9,5 +9,5 @@ de:
         application: "Sehr geehrte Damen und Herren,\nhiermit bewerbe ich mich um die von Ihnen angebotene Stelle.\nMit freundlichen Grüßen"
     wimi:
       new_application:
-        subject: "Neue Bewerbung auf %{job_title}"
+        subject: "Bewerbung auf Ihr Stellenangebot auf HPI Connect"
     last_line: "Viele Grüße das HPI-Hiwi-Portal"

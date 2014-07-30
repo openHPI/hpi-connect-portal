@@ -2,23 +2,24 @@
 #
 # Table name: employers
 #
-#  id                   :integer          not null, primary key
-#  name                 :string(255)
-#  description          :text
-#  created_at           :datetime
-#  updated_at           :datetime
-#  avatar_file_name     :string(255)
-#  avatar_content_type  :string(255)
-#  avatar_file_size     :integer
-#  avatar_updated_at    :datetime
-#  activated            :boolean          default(FALSE), not null
-#  place_of_business    :string(255)
-#  website              :string(255)
-#  line_of_business     :string(255)
-#  year_of_foundation   :integer
-#  number_of_employees  :string(255)
-#  requested_package_id :integer          default(0), not null
-#  booked_package_id    :integer          default(0), not null
+#  id                    :integer          not null, primary key
+#  name                  :string(255)
+#  description           :text
+#  created_at            :datetime
+#  updated_at            :datetime
+#  avatar_file_name      :string(255)
+#  avatar_content_type   :string(255)
+#  avatar_file_size      :integer
+#  avatar_updated_at     :datetime
+#  activated             :boolean          default(FALSE), not null
+#  place_of_business     :string(255)
+#  website               :string(255)
+#  line_of_business      :string(255)
+#  year_of_foundation    :integer
+#  number_of_employees   :string(255)
+#  requested_package_id  :integer          default(0), not null
+#  booked_package_id     :integer          default(0), not null
+#  single_jobs_requested :integer          default(0), not null
 #
 
 class Employer < ActiveRecord::Base
@@ -27,12 +28,14 @@ class Employer < ActiveRecord::Base
 
   has_attached_file :avatar, styles: { medium: "200x200" }, default_url: "/assets/placeholder/:style/missing.png"
 
+  has_one :contact, as: :counterpart, dependent: :destroy
+
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
   has_many :job_offers, dependent: :destroy
   has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
-  has_many :employers_newsletter_information, dependent: :destroy
 
   accepts_nested_attributes_for :staff_members
+  accepts_nested_attributes_for :contact
 
   validates_attachment_size :avatar, less_than: 5.megabytes
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
@@ -75,5 +78,13 @@ class Employer < ActiveRecord::Base
 
   def can_create_job_offer?(category)
     (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+  end
+
+  def add_one_single_booked_job
+    self.update_column :single_jobs_requested, self.single_jobs_requested+1
+  end
+
+  def remove_one_single_booked_job
+    self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
 end

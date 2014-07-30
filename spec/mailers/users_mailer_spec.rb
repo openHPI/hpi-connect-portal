@@ -28,8 +28,8 @@ describe UsersMailer do
       @email.to.should eq([@user.email])
     end
 
-    it "should be sent from 'hpi.hiwi.portal@gmail.com'" do
-      @email.from.should eq(['hpi.hiwi.portal@gmail.com'])
+    it "should be sent from 'noreply-connect@hpi.de'" do
+      @email.from.should eq(['noreply-connect@hpi.de'])
     end
 
     it "should have the new password in the body" do

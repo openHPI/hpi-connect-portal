@@ -3,12 +3,11 @@ en:
     attributes:
       employer:
         description: "Description"
+        contact: "Contact"
         head: "Head"
         name: "Company"
         avatar: "Logo"
-        number_of_employees: "Number of Employees"
         place_of_business: "Place of Business"
-        place_of_business_break: "Place of Business"
         website: "Website"
         year_of_foundation: "Year of Foundation"
         packages:
@@ -18,6 +17,13 @@ en:
             premium: "Partner Packet"
         place_of_business: "Place of Business"
         line_of_business: "Line of Business"
-        number_of_employees: "Number of Employees"
+        number_of_employees: "Employees"
         year_of_foundation: "Year of Foundation"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Street"
+            zip_city: "ZIP-Code/City"
+            email: "E-Mail"
+            phone: "Telephon"
+        number_of_requested_graduate_jobs: "Number of single booked, not yet accepted graduate jobs: "
