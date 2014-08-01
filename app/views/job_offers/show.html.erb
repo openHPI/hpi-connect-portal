@@ -110,6 +110,11 @@
     </div>
 
     <div class="col-sm-4">
+      <center>
+          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  
+          %>
+      </center>
+      <br>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
         <ul class="list-group">
