@@ -1,5 +1,6 @@
-h1, h2, h3, h4, h5, a, .h1, .h2, .h3, .h4, .h5, .a {
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
     color: #e0671e;
+    font-family: "Neo Sans W02 Medium", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .container .panel-wrapper h1 {
     border-bottom: 1px solid #ffffff;

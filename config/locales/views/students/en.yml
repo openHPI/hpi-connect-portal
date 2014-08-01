@@ -13,6 +13,7 @@ en:
         new_employer_label: "New Employer: "
         activation_reminder: "This Profile is not yet activated. Please wait until the administrator has verified and activated your account. If you are a student at HPI you can also verify yourself using OpenID: "
         successful_import: "Your data was succesfully imported. You can now go on making additional changes."
+        aborted: "You refused to allow us to use your LinkedIn data. We didn't import anything."
         work_experience: "Work Experience"
         education: "Education"
         add_work_experience: "Add Work Experience"
