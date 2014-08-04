@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
 
   def index
     authorize! :index, Student
-    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active.visible_for_employers).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
   def show
