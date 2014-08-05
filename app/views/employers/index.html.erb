@@ -16,6 +16,8 @@
       </div>
     </ul>
   </div>
+
+  <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
 </div>
 
-<%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
+
