@@ -35,6 +35,7 @@ class Student < ActiveRecord::Base
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
+  DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
 
   attr_accessor :username
 
@@ -103,6 +104,10 @@ class Student < ActiveRecord::Base
 
   def visibility
     VISIBILITYS[visibility_id]
+  end
+
+  def dschool_status
+    DSCHOOL_STATUSES[dschool_status_id]
   end
 
   def update_from_linkedin(linkedin_client)
