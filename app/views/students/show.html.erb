@@ -77,24 +77,22 @@
               </div>
             </li>
           <% end %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-4">
-                <%= t("activerecord.attributes.user.cv") %>
-              </div>
-              <div class="col-sm-8">
-                <% if (@student.user.cv.path).nil? %>
-                  <%= image_tag('file_thumbnails/missing.png', size: "16") %>
-                <% else %>
+          <% unless (@student.user.cv.path).nil? %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("activerecord.attributes.user.cv") %>
+                </div>
+                <div class="col-sm-8">
                   <p class="text-muted">
                     <%= link_to(@student.user.cv.url) do %>
                       <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= t('activerecord.attributes.user.cv') %>
                     <% end %>
                   </p>
-                <% end %>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          <% end %>
         </ul>
       </div>
 
