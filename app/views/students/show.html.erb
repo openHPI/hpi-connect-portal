@@ -35,20 +35,16 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= @student.firstname %> <%= @student.lastname %></h4></div>
+        <div class="panel-heading">
+          <h4>
+            <% if @student.employment_status.nil? %>
+              <%= @student.firstname %> <%= @student.lastname %>
+            <% else %> 
+              <%= @student.firstname %> <%= @student.lastname %> - <%= t("activerecord.attributes.user_status." +  @student.employment_status) %>
+            <% end %>
+          </h4>
+        </div>
         <ul class="list-group">
-          <% unless @student.employment_status.nil? %>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= t("activerecord.attributes.user.status") %>
-                </div>
-                <div class="col-sm-8">
-                  <%= t("activerecord.attributes.user_status." +  @student.employment_status) %>
-                </div>
-              </div>
-            </li>
-          <% end %>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-4">
