@@ -113,7 +113,7 @@ describe "job_offers_history" do
 
     page.should have_css "ul.list-group li"
     page.should have_css "#search"
-    page.should have_css "#filter"
+    page.should have_css "#filtering"
     page.should have_css "#search"
     find_button("Go").visible?
     first("ul.list-group li").should have_content "Closed Job Touch Floor"
