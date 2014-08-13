@@ -54,10 +54,6 @@ class Ability
 
     can [:edit, :update], Employer, id: employer_id
 
-    # can :read, Student do |student|
-    #     student.activated && student.visibility_id > 0
-    #  end
-
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
@@ -83,7 +79,7 @@ class Ability
 
       if staff.employer.premium?
         can :read, Student do |student|
-                  student.activated && student.visibility_id > 0
+          student.activated && student.visibility_id > 0
         end
       end
     end
