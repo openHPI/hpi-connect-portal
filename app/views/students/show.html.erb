@@ -16,17 +16,17 @@
 
   <div class="row">
     <div class="col-sm-6 text-left">
-      <p>
+      <span class="pull-right">
         <% if can? :edit, @student %>
-          <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default pull-right" %>
+          <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default title-button" %>
         <% end %>
         <% if current_user.admin? && !@student.activated %>
-          <%= link_to t("links.activate"), activate_student_path(@student.id), class: "btn btn-default pull-right" %>
+          <%= link_to t("links.activate"), activate_student_path(@student.id), class: "btn btn-default title-button" %>
         <% end %>
         <% if can?(:destroy, @student) %>
-          <%= link_to t("links.destroy"), student_path(@student.id), :method => :delete, class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Studenten löschen möchten?' } %>
+          <%= link_to t("links.destroy"), student_path(@student.id), :method => :delete, class: "btn btn-default title-button", data: { confirm: 'Sind Sie sicher, dass Sie diesen Studenten löschen möchten?' } %>
         <% end %>
-      </p>
+      </span>
     </div>
   </div>
 </div>
