@@ -121,7 +121,11 @@
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>  
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
+          <% if @job_offer.release_date.blank? %>
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
+          <% else %>
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.release_date"), content: l(@job_offer.release_date) %>
+          <% end %>
           <% unless @job_offer.end_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
           <% end %>

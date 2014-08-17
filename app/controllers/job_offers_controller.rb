@@ -112,7 +112,7 @@ class JobOffersController < ApplicationController
   end
 
   def accept
-    if @job_offer.update status: JobStatus.active
+    if @job_offer.update status: JobStatus.active, release_date: Date.current
       JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
       if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
         @job_offer.employer.remove_one_single_booked_job
