@@ -55,11 +55,6 @@ describe JobOffer do
       start_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
   end
 
-  it "does not create a joboffer if the start_date is in the past" do
-    assert !JobOffer.create(title:"Awesome Job", description: "Develope a website",
-      employer: @epic, start_date: Date.current - 1, compensation: 10.5, time_effort: 9).valid?
-  end
-
   it "does not create a joboffer if start_date is after end_date" do
     assert !JobOffer.create(title:"Awesome Job", description: "Develope a website",
       employer: @epic, start_date: Date.current + 2, end_date: Date.current + 1, compensation: 10.5, time_effort: 9).valid?
