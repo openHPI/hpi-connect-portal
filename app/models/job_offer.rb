@@ -28,7 +28,6 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
   before_save :default_values
 
@@ -177,6 +176,6 @@ class JobOffer < ActiveRecord::Base
   end
 
   def minimum_degree
-    GRADUATIONS[graduation_id]
+    Student::GRADUATIONS[graduation_id]
   end
 end
