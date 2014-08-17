@@ -8,3 +8,9 @@ de:
         additional_information: "Zusätzliche Informationen"
         programming_languages: "Programmiersprachen"
         languages: "Sprachen"
+        dschool_status: "D-School Status"
+        dschool_statuses:
+          nothing: "nicht belegt"
+          introduction: "Einführungskurs"
+          basictrack: "Basic Track"
+          advancedtrack: "Advanced Track"

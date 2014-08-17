@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
 
   def index
     authorize! :index, Student
-    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active.visible_for_employers).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -119,7 +119,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :dschool_status_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
     def rescue_from_exception(exception)

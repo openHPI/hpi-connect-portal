@@ -1,10 +1,10 @@
 <div class="wrapper-12 panel-wrapper">
 
-  <span class="pull-right" id="top-links">
-    <%= link_to 'Import from LinkedIn', request_linkedin_import_student_path(@student), class: 'btn btn-default title-button' %>
-  </span>
-
   <%= simple_form_for @student do |f| %>
+      <span class="pull-right" id="top-links">
+        <%= link_to 'Import from LinkedIn', request_linkedin_import_student_path(@student), class: 'btn btn-default title-button' %>
+        <%= f.submit t("links.save"), class: "btn btn-primary title-button" %>  
+      </span>
 
       <%= render 'shared/object_errors', object: @student %>
       <%= render 'profile_fields', student: @student, form: f %>

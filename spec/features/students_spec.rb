@@ -106,7 +106,7 @@ describe "the students editing page" do
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
@@ -126,7 +126,7 @@ describe "the students editing page" do
     page.find_link("Edit").click
 
     fill_in 'student_facebook', with: 'www.face.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
@@ -193,6 +193,16 @@ describe "the students profile page" do
 
       page.should have_content(I18n.t("students.activation_reminder"))
       page.should have_css('input#open-id-field')
+    end
+
+    it "should not show Dschool Status if I don't have one" do 
+      page.should_not have_content("D-School Status")
+    end
+
+    it "should show Dschool Status if there is one" do 
+      @student1.update(dschool_status_id: 1)
+      visit student_path(@student1)
+      page.should have_content("D-School Status")
     end
   end
 

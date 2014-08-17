@@ -35,6 +35,7 @@ class Student < ActiveRecord::Base
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
+  DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
 
   attr_accessor :username
 
@@ -63,6 +64,7 @@ class Student < ActiveRecord::Base
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
+  scope :visible_for_employers, ->  { where('visibility_id > ?', 0)}
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
@@ -102,6 +104,10 @@ class Student < ActiveRecord::Base
 
   def visibility
     VISIBILITYS[visibility_id]
+  end
+
+  def dschool_status
+    DSCHOOL_STATUSES[dschool_status_id]
   end
 
   def update_from_linkedin(linkedin_client)
