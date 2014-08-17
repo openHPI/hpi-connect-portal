@@ -7,6 +7,7 @@ de:
         employer: "Arbeitgeber"
         category: "Jobart"
         start_date: "Einstelldatum"
+        release_date: "Veröffentlicht am"
         end_date: "Enddatum"
         expiration_date: "Ende des Angebots"
         time_effort: "Zeitaufwand"

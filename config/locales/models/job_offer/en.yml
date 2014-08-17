@@ -6,6 +6,7 @@ en:
         title: "Title"
         employer: "Employer"
         start_date: "Date of hire"
+        release_date: "Release date"
         end_date: "End date"
         expiration_date: "Offer's Expiration"
         category: "Category"
