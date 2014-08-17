@@ -332,4 +332,27 @@ describe "Job Offer pages" do
       end
     end
   end
+
+  describe "index page" do
+
+    before :each do
+      @job_offer_with_bachelor = FactoryGirl.create(:job_offer, graduation_id: Student::GRADUATIONS.index('bachelor'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
+      @job_offer_with_abitur = FactoryGirl.create(:job_offer, graduation_id: Student::GRADUATIONS.index('abitur'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
+      visit job_offers_path
+    end
+
+    it "also displays job_offers with lower graduation" do
+      find('#graduation').find(:xpath, 'option[3]').select_option
+      find('#find_jobs_button').click
+      page.should have_content @job_offer_with_bachelor.title
+      page.should have_content @job_offer_with_abitur.title
+    end
+
+    it "does not display job_offer with higher graduation" do 
+      find('#graduation').find(:xpath, 'option[2]').select_option
+      find('#find_jobs_button').click
+      page.should have_content @job_offer_with_abitur.title
+      page.should_not have_content @job_offer_with_bachelor.title
+    end
+  end
 end
