@@ -15,8 +15,7 @@ $(document).ready( function() {
         if (next.length > 0) {
             var cvEntry = $('<ul class="list-group cv-entry-fields ' + element.data('id').substr(1) + '">');
             var index = next.attr('name').match(/\]\[.*\]\[/g)[0].slice(2,-2);
-            var newIndex = $('.cv-entry-fields' + element.data('id')).length;
-            next.updateIndex(index, newIndex);
+            next.updateIndex(index, index--);
             var destroyer = next.clone();
             destroyer.attr('id', destroyer.attr('id').replace('id', 'destroy'));
             destroyer.attr('name', destroyer.attr('name').replace('id', '_destroy'));

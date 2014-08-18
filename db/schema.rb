@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709164349) do
+ActiveRecord::Schema.define(version: 20140811112808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,18 @@ ActiveRecord::Schema.define(version: 20140709164349) do
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
 
+  create_table "contacts", force: true do |t|
+    t.integer  "counterpart_id"
+    t.string   "counterpart_type"
+    t.string   "name"
+    t.string   "street"
+    t.string   "zip_city"
+    t.string   "email"
+    t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "cv_educations", force: true do |t|
     t.integer  "student_id"
     t.string   "degree"
@@ -96,14 +108,15 @@ ActiveRecord::Schema.define(version: 20140709164349) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "activated",            default: false, null: false
+    t.boolean  "activated",             default: false, null: false
     t.string   "place_of_business"
     t.string   "website"
     t.string   "line_of_business"
     t.integer  "year_of_foundation"
     t.string   "number_of_employees"
-    t.integer  "requested_package_id", default: 0,     null: false
-    t.integer  "booked_package_id",    default: 0,     null: false
+    t.integer  "requested_package_id",  default: 0,     null: false
+    t.integer  "booked_package_id",     default: 0,     null: false
+    t.integer  "single_jobs_requested", default: 0,     null: false
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
@@ -132,14 +145,12 @@ ActiveRecord::Schema.define(version: 20140709164349) do
     t.date     "end_date"
     t.float    "time_effort"
     t.float    "compensation"
-    t.string   "room_number"
     t.integer  "employer_id"
-    t.integer  "status_id",           default: 1
+    t.integer  "status_id"
     t.boolean  "flexible_start_date", default: false
     t.integer  "category_id",         default: 0,     null: false
     t.integer  "state_id",            default: 3,     null: false
     t.integer  "graduation_id",       default: 2,     null: false
-    t.integer  "academic_program_id"
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
@@ -227,6 +238,7 @@ ActiveRecord::Schema.define(version: 20140709164349) do
     t.integer  "academic_program_id",    default: 0, null: false
     t.integer  "graduation_id",          default: 0, null: false
     t.integer  "visibility_id",          default: 0, null: false
+    t.integer  "dschool_status_id",      default: 0, null: false
   end
 
   create_table "users", force: true do |t|

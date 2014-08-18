@@ -3,6 +3,7 @@ en:
     attributes:
       employer:
         description: "Description"
+        contact: "Contact"
         head: "Head"
         name: "Company"
         avatar: "Logo"
@@ -19,3 +20,10 @@ en:
         number_of_employees: "Employees"
         year_of_foundation: "Year of Foundation"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Street"
+            zip_city: "ZIP-Code/City"
+            email: "E-Mail"
+            phone: "Telephon"
+        number_of_requested_graduate_jobs: "Number of single booked, not yet accepted graduate jobs: "

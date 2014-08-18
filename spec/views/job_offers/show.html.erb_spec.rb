@@ -3,11 +3,12 @@ require 'spec_helper'
 describe "job_offers/show" do
   before(:each) do
     @employer = FactoryGirl.create(:employer)
-    @job_offer = assign(:job_offer, stub_model(JobOffer,
+    @job_offer = assign(:job_offer, FactoryGirl.create(:job_offer,
       :description => "Description",
       :title => "Title",
       :employer => @employer,
       :start_date => Date.current + 10,
+      :end_date => Date.current + 20,
       :status => FactoryGirl.create(:job_status, :name => "active")
     ))
     view.stub(:can?) { false }

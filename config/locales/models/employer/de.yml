@@ -3,6 +3,7 @@ de:
     attributes:
       employer:
         description: "Beschreibung"
+        contact: "Kontakt"
         head: "Leiter"
         name: "Unternehmen"
         avatar: "Logo"
@@ -18,3 +19,10 @@ de:
         number_of_employees: "Mitarbeiter"
         year_of_foundation: "Gründungsjahr"
         website: "Website"
+        contacting:
+            name: "Name"
+            street: "Straße"
+            zip_city: "PLZ/Ort"
+            email: "E-Mail"
+            phone: "Telephon"
+        number_of_requested_graduate_jobs: "Anzahl einzeln gebuchter, noch nicht bestätigter Absolventenstellen: "

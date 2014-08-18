@@ -1,29 +1,43 @@
-(For an English translation, scroll down.)<br>
-<br>
-Hallo <%= @staff.full_name %>,<br>
-<br>
-<%= @application.student.firstname %> <%= @application.student.lastname %> hat sich auf dein Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> beworben:<br>
-<p>
-<i><%= @message %></i>
-</p>
-Gehe auf das HPI-HIWI-Portal, um diese Bewerbung zu bestätigen.<br>
-<br>
-Viele Grüße,<br> 
-das HPI-HIWI-Portal<br>
-<br>
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
-<br>
-<hr>
-<br>
-Dear <%= @staff.full_name %>,<br>
-<br>
-<%= @application.student.firstname %> <%= @application.student.lastname %>has applied for you job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%>:<br>
-<p>
-<i><%= @message %></i>
-</p>
-Visit HPI-HIWI-Portal to accept this application.<br>
-<br>
-Kind regards,<br> 
-your HPI-HIWI-Portal<br>
-<br>
-(This is an automatically created email, please do not respond to it.)<br>
+(For an english translation please scroll down)<br/>
+<br/>
+Guten Tag <%= @staff.full_name %>,<br/>
+<br/>
+<%= @application.student.firstname %> <%= @application.student.lastname %> hat sich auf Ihr Jobangebot <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> im HPI Connect Jobportal beworben.<br/>
+<br/>
+<i><%= @message %></i><br/>
+<br/>
+<br/>
+Unter <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> können Sie die Bewerbung bestätigen.<br/>
+<br/>
+Freundliche Grüße<br/>
+<br/>
+HPI Connect<br/>
+Claudia Koch - Fon (49) 0331 5509 291<br/>
+Nadja Antoine  - Fon (49) 0331 5509 107<br/>
+<br/>
+<hr/>
+<br/>
+Dear <%= @staff.full_name %>, <br/>
+<br/>
+<%= @application.student.firstname %> <%= @application.student.lastname %> has just applied for your job offer <%= link_to(@application.job_offer.title,  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%>in the HPI Connect Jobportal.<br/>
+<br/>
+<i><%= @message %></i><br/>
+You can accept this application <%= link_to("here",  url_for(controller:"job_offers", action: "show", id: @application.job_offer.id, only_path: false))%> For further inquiries, we are happy to help you.<br/>
+<br/>
+Kind regards<br/>
+<br/>
+HPI Connect<br/>
+Claudia Koch - Fon (49) 0331 5509 291<br/>
+Nadja Antoine  - Fon (49) 0331 5509 107<br/>
+<br/>
+connect@hpi.uni-potsdam.de<br/>
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br/>
+Prof.-Dr.-Helmert-Str. 2-3<br/>
+D-14482 Potsdam<br/>
+www.hpi.de<br/>
+<br/>
+Amtsgericht Potsdam, HRB 12184<br/>
+Geschäftsführung: Prof. Dr. Christoph Meinel<br/>
+<br/>
+Design IT. Create Knowledge.<br/>
+

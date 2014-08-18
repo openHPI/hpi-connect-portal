@@ -1,21 +1,41 @@
-(For an English translation, scroll down.)<br>
+(For an english translation please scroll down)<br>
 <br>
-Sehr geehrte Damen und Herren,<br>
+Guten Tag <%= @staff.full_name %>,<br>
 <br>
-der Job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> ist soeben abgelaufen. Um eine Verlängerung anzufordern, öffnen Sie obigen Link und klicken Sie auf 'Verlängern'.<br>
+Ihr Jobangebot <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> im HPI Connect Jobportal ist abgelaufen. Es ist nun nur noch im Archiv sichtbar. <br>
 <br>
-Grüße,<br>
-Das HPI-HiWi-Portal Team.<br>
+Gerne können Sie jederzeit ein neues Jobangebot einstellen oder einen unserer weiteren Services nutzn.<br>
 <br>
-(Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)<br>
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br>
 <br>
-<hr>
+Freundliche Grüße<br>
 <br>
-Dear Sir or Madam, <br>
+HPI Connect<br>
+Claudia Koch - Fon (49) 0331 5509 291<br>
+Nadja Antoine  - Fon (49) 0331 5509 107<br>
 <br>
-the job <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> just expired. To request a prolongation, please follow the link above and click on 'Prolong'.<br>
+<hr/>
 <br>
-Regards,<br>
-The HPI-HiWi-Portal Team.<br>
+Dear <%= @staff.full_name %>, <br>
 <br>
-(This is an automatically created email, please do not respond to it.)<br>
+your job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> in the HPI Connect Jobportal has expired. It has been moved to the archive now.<br>
+<br>
+You can publish a new job offer at any time.  For further inquiries, we are happy to help you.<br>
+<br>
+Kind regards<br>
+<br>
+HPI Connect<br>
+Claudia Koch - Fon (49) 0331 5509 291<br>
+Nadja Antoine  - Fon (49) 0331 5509 107<br>
+<br>
+connect@hpi.uni-potsdam.de<br>
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br>
+Prof.-Dr.-Helmert-Str. 2-3<br>
+D-14482 Potsdam<br>
+www.hpi.de<br>
+<br>
+Amtsgericht Potsdam, HRB 12184 <br>
+Geschäftsführung: Prof. Dr. Christoph Meinel<br>
+<br>
+Design IT. Create Knowledge.<br>
+

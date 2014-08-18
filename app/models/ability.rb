@@ -22,12 +22,10 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
+    can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
-    can [:activate], Student, id: user.manifestation.id
-    
     cannot :show, JobOffer, status: JobStatus.closed
 
     if user.activated
@@ -57,6 +55,9 @@ class Ability
     if staff.employer.activated
       can :read, Application
       can :manage, Faq
+      can :show, Student do |student|
+        student.visibility_id > 0 && staff.employer.premium? && student.activated
+      end
 
 
       cannot [:edit, :update], Student

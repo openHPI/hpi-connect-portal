@@ -1,12 +1,9 @@
 <div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-12">
-        <h1>
-          <%= @job_offer.title %>
           <% if @job_offer.pending? %>
             <span> - <%= t("job_status.pending") %></span>
           <% end %>
-        </h1>
         <div class="pull-right">
           <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.active? %>
             <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
@@ -38,7 +35,7 @@
 
         <% if can?(:update, @job_offer) && !@job_offer.closed? %>
           <%= link_to t("job_offers.show_matching_students"),
-          students_path(:academic_program_id => @job_offer.academic_program_id, :graduation_id => @job_offer.graduation_id, 
+          students_path(:graduation_id => @job_offer.graduation_id, 
           :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <% if can?(:edit, @job_offer) %>
             <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
@@ -81,7 +78,7 @@
   <div class="row">
     <div class="col-sm-8">
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.description") %></h4></div>
+        <div class="panel-heading"><h4><%= @job_offer.title %></h4></div>
         <ul class="list-group">
           <li class="list-group-item">
             <div class="row">
@@ -113,23 +110,24 @@
     </div>
 
     <div class="col-sm-4">
+      <center>
+          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  
+          %>
+      </center>
+      <br>
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
         <ul class="list-group">
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>
-          <% unless @job_offer.academic_program_id.nil? %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.academic_program"), content: (t("activerecord.attributes.user.academic_rank_options." + @job_offer.academic_program)) %>  
-          <% end %>        
+          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>  
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
-          <% unless @job_offer.room_number.blank? %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.room_number"), content: @job_offer.room_number %>
-          <% end %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
           <% unless @job_offer.end_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
-          <% end %>            
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
+          <% end %>
+          <% unless @job_offer.time_effort.blank? %>          
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
+          <% end %>
           <% unless @job_offer.compensation.nil? %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
           <% end %>
@@ -139,7 +137,6 @@
           <% end %>
         </ul>
       </div>
-
       <% unless @job_offer.programming_languages.blank? %>
         <%= render 'job_offers/language_list', title: t("job_offers.required_programming_languages"), languages: @job_offer.programming_languages %>
       <% end %>
@@ -153,7 +150,20 @@
           <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
             <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
         </div>
-      <%end%>
+      <% end %>
+      <% if @job_offer.contact && !@job_offer.contact.is_empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-8">
+                  <%= simple_format @job_offer.contact.merged %>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
