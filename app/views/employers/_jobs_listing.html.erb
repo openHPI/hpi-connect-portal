@@ -14,7 +14,11 @@
           </h4>
         </div>
         <div class="col-sm-5">
-          <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
+          <% if job_offer.release_date == nil  %>
+            <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
+          <% else %> 
+            <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.release_date) %></p>
+          <% end %>
         </div>
       </div>
     </li>

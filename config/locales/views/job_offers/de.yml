@@ -3,6 +3,7 @@ de:
     headline: "Stellenangebote"
     starts: "startet am"
     ends: "endet am"
+    released: "veröffentlicht am"
     sortDate: "Datum"
     sortEmployer: "Arbeitgeber"
     searchLabel: "Suche nach:"

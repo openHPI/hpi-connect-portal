@@ -105,7 +105,7 @@ describe "the students editing page" do
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
@@ -125,7 +125,7 @@ describe "the students editing page" do
     page.find_link("Edit").click
 
     fill_in 'student_facebook', with: 'www.face.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 

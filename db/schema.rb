@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20140811112808) do
     t.boolean  "prolong_requested",   default: false
     t.boolean  "prolonged",           default: false
     t.datetime "prolonged_at"
+    t.date     "release_date"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
