@@ -273,8 +273,9 @@ describe "the students profile page" do
       current_path.should == root_path
     end
 
-    it "should not be accessible for staff of premium employers" do
+    it "should not be accessible for staff of premium employers if student is not visible for him" do
       @employer.update_column :booked_package_id, 3
+      @student.update_column :visibility_id, 0
       visit student_path(@student)
       current_path.should_not == student_path(@student)
     end
