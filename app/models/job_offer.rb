@@ -34,6 +34,7 @@ class JobOffer < ActiveRecord::Base
 
   before_save :default_values
 
+  has_one :contact, as: :counterpart, dependent: :destroy
   has_many :applications, dependent: :destroy
   has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
@@ -45,6 +46,7 @@ class JobOffer < ActiveRecord::Base
 
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :languages
+  accepts_nested_attributes_for :contact
 
   validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
 

@@ -7,12 +7,12 @@ describe "job_offers/index" do
     job_offers = [stub_model(JobOffer,
         :employer => @employer,
         :title => "Title",
-        :start_date => '2013-11-10'
+        :release_date => '2013-11-10'
       ),
       stub_model(JobOffer,
         :employer => @employer,
         :title => "Title",
-        :start_date => '2013-11-11'
+        :release_date => '2013-11-11'
       )]
     assign(:job_offers_list, {:items => job_offers,
                         :name => "job_offers.archive"})

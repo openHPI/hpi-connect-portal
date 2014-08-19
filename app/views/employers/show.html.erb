@@ -2,12 +2,10 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="pull-right">
-        <h1><%= @employer.name %></h1>
       </div>
     </div>
     <div class="col-sm-6 text-left">
       <p>
-        <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  %>
         <% if can? :edit, @employer %>
           <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
         <% end %>
@@ -32,7 +30,7 @@
     <% if @employer.paying? %>
       <div class="col-sm-8">
         <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.description") %></h4></div>
+          <div class="panel-heading"><h4><%= @employer.name %></h4></div>
           <ul class="list-group">
             <li class="list-group-item">
               <div class="row">
@@ -46,31 +44,36 @@
     <% else %>
       <div class="col-sm-12">
     <% end %>
-      <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
-        <% if @active_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
+    <% if @active_job_offers.any? || @pending_job_offers.any? || @closed_job_offers.any? %>
+      <% if @active_job_offers.any? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.active_job_offers") %></h4></div>
             <%= render 'jobs_listing', job_offer_list: @active_job_offers %>
           </div>
-        <% end %>
-        <% if @pending_job_offers.any? %>
-          <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
+      <% end %>
+      <% if @pending_job_offers.any? %>
+        <% if user_is_staff_of_employer?(@pending_job_offers.first) || current_user.admin? %>
+          <div class="panel panel-default">
+            <div class="panel-heading"><h4><%= t("employers.pending_job_offers") %></h4></div>
               <%= render 'jobs_listing', job_offer_list: @pending_job_offers %>
             </div>
-          <% end %>
-        <% end %>
-        <% if @closed_job_offers.any? %>
-          <div class="panel panel-default">
-            <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
-            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
-          </div>
         <% end %>
       <% end %>
-    </div>
-    <% if @employer.paying? %>
+      <% if @closed_job_offers.any? %>
+        <div class="panel panel-default">
+          <div class="panel-heading"><h4><%= t("employers.closed_job_offers") %></h4></div>
+            <%= render 'jobs_listing', job_offer_list: @closed_job_offers %>
+          </div>
+      <% end %>
+    <% end %>
+  </div>
+  <% if @employer.paying? %>
       <div class="col-sm-4">
+        <center>
+          <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  
+          %>
+        </center>
+        <br>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
@@ -141,7 +144,7 @@
     <% end %>
     <% if @staff.any? %>
       <div class="panel panel-default">
-        <div class="panel-heading"><h4><%= t("employers.contact") %></h4></div>
+        <div class="panel-heading"><h4><% unless @employer.paying? %><%=@employer.name%> - <% end %><%= t("employers.contact") %></h4></div>
           <ul class="list-group">
             <% @staff.each do |user| %>
               <li class="list-group-item">
@@ -153,13 +156,22 @@
             <%= will_paginate @staff, renderer: BootstrapPagination::Rails %>
           </div>
         </div>
-      </div>
-    <% end %>
-    <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
-      <div class="panel panel-default">
-        <div class="panel-heading"><h4>  <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> <%= @employer.single_jobs_requested %></h4></div>
+      <% end %>
+      <% if @employer.contact && !@employer.contact.is_empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4><%= t("activerecord.attributes.employer.contact") %></h4>
+          </div>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-8">
+                <%= simple_format @employer.contact.merged %>
+              </div>
+            </div>
+          </li>
         </div>
       </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

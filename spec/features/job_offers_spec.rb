@@ -106,14 +106,14 @@ describe "job_offers_history" do
       status: JobStatus.closed
       )
     visit job_offers_path
-    find(".wrapper-12.panel-wrapper .pull-right#top-links").should have_link "Archive"
+    find("#top-links").should have_link "Archive"
     click_on "Archive"
 
     expect(current_path).to eq(archive_job_offers_path)
 
     page.should have_css "ul.list-group li"
     page.should have_css "#search"
-    page.should have_css "#filter"
+    page.should have_css "#filtering"
     page.should have_css "#search"
     find_button("Go").visible?
     first("ul.list-group li").should have_content "Closed Job Touch Floor"

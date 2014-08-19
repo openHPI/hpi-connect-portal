@@ -20,11 +20,18 @@ class Alumni < ActiveRecord::Base
   validate :uniqueness_of_alumni_email_on_user
 
   def self.create_from_row(row)
+    row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize
+    row[:lastname] ||= row[:alumni_email].split('.')[1].capitalize
     alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email], alumni_email: row[:alumni_email]
     alumni.generate_unique_token
     if alumni.save
-      AlumniMailer.creation_email(alumni).deliver
-      return :created
+      begin
+        AlumniMailer.creation_email(alumni).deliver
+        return :created
+      rescue => e
+        alumni.delete
+        logger.error "Sending mail of #{alumni.id} to #{alumni.email} raised the exception #{e.class.name} : #{e.message}"
+      end
     end
     return alumni
   end

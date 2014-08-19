@@ -55,7 +55,7 @@ class Ability
       can :read, Application
       can :manage, Faq
       can :show, Student do |student|
-        student.activated && student.visibility_id > 0
+        student.visibility_id > 0 && staff.employer.premium? && student.activated
       end
 
       cannot [:edit, :update], Student

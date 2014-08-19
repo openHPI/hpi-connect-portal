@@ -12,7 +12,7 @@ describe "the employer page" do
     @student1 = FactoryGirl.create(:student)
     login(@student1.user)
     @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.active)
-    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.pending)
+    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.pending, release_date: nil)
     @job_offer_closed = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.closed)
     visit employer_path(employer)
   end
@@ -152,7 +152,7 @@ describe "the employer page" do
   describe "shows open job offers for the employer" do
     it { should have_content('Open') }
     it { should have_content(@job_offer_active.title) }
-    it { should have_content(@job_offer_active.start_date) }
+    it { should have_content(@job_offer_active.release_date) }
   end
 
   describe "should show the pending job offers" do
@@ -184,7 +184,7 @@ describe "the employer page" do
   describe "should show closed job offers" do
     it { should have_content(I18n.t("employers.closed_job_offers")) }
     it { should have_content(@job_offer_closed.title) }
-    it { should have_content(@job_offer_closed.start_date) }
+    it { should have_content(@job_offer_closed.release_date) }
 
     it "should not have_link for students" do
       should_not have_link @job_offer_closed.title

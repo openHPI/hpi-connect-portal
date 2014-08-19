@@ -15,7 +15,7 @@ class StudentsController < ApplicationController
 
   def index
     authorize! :index, Student
-    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @students = apply_scopes(can?(:activate, Student) ? Student.all : Student.active.visible_for_employers).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
     authorize! :activate, @student
     admin_activation and return if current_user.admin?
     url = 'https://openid.hpi.uni-potsdam.de/user/' + params[:student][:username] rescue ''
-    authenticate_with_open_id url do |result, identity_url|
+    authenticate_with_open_id url, return_to: "#{request.protocol}#{request.host_with_port}#{request.fullpath}" do |result, identity_url|
       if result.successful?
         current_user.update_column :activated, true
         flash[:success] = I18n.t('users.messages.successfully_activated')
@@ -101,7 +101,12 @@ class StudentsController < ApplicationController
     def authorize_client(linkedin_client)
       if session[:atoken].nil?
         pin = params[:oauth_verifier]
-        atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+        begin
+          atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
+        rescue
+          problem = params[:oauth_problem]
+          respond_and_redirect_to edit_student_path(@student), (!problem.nil? && problem == "user_refused" ? t("students.aborted") : t("applications.error"))
+        end
         session[:atoken] = atoken
         session[:asecret] = asecret
       else
@@ -114,7 +119,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :dschool_status_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
     def rescue_from_exception(exception)
