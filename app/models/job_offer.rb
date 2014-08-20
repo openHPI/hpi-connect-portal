@@ -70,7 +70,7 @@ class JobOffer < ActiveRecord::Base
 
   def self.sort(job_offers, order_attribute)
     if order_attribute == "employer"
-      job_offers.sort_by {|job_offer| job_offer.employer.name}
+      job_offers.sort_by {|job_offer| job_offer.employer.name.downcase}
     else
       job_offers.sort_by {|job_offer| [job_offer.expiration_date, job_offer.created_at] }.reverse
     end
