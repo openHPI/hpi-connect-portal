@@ -25,7 +25,7 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
-    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
@@ -75,7 +75,7 @@ class JobOffersController < ApplicationController
   end
 
   def archive
-    job_offers = apply_scopes(JobOffer.closed).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.closed), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
@@ -97,7 +97,7 @@ class JobOffersController < ApplicationController
   end
 
   def matching
-    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
     render "index"
   end

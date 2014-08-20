@@ -78,11 +78,11 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, start_date: Date.current + 7, end_date: Date.current + 8, created_at: Date.current + 7, employer: @epic)
     FactoryGirl.create(:job_offer, start_date: Date.current + 4, end_date: Date.current + 5, created_at: Date.current + 4, employer: @epic)
 
-    sorted_job_offers = JobOffer.sort "date"
+    sorted_job_offers = JobOffer.sort(JobOffer.all, "date")
     (sorted_job_offers).each_with_index do |offer, index|
 
        if !sorted_job_offers.length == (index + 1)
-        offer.created_at.should <= sorted_job_offers[index+1].created_at
+        offer.expiration_date.should >= sorted_job_offers[index+1].expiration_date
        end
     end
   end
@@ -93,7 +93,7 @@ describe JobOffer do
     FactoryGirl.create(:job_offer, employer: @itas)
     FactoryGirl.create(:job_offer, employer: @os)
 
-    sorted_job_offers = JobOffer.sort "employer"
+    sorted_job_offers = JobOffer.sort(JobOffer.all, "employer")
     (sorted_job_offers).each_with_index do |offer, index|
 
        if sorted_job_offers.length == (index + 1)
@@ -173,14 +173,14 @@ describe JobOffer do
   it "returns job offers searched for programming languages filtered by time effort and sorted by employer" do
 
     FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
-    FactoryGirl.create(:job_offer, time_effort: 8, employer: @itas, description: "Ruby Programming")
+    job_offer_itas = FactoryGirl.create(:job_offer, time_effort: 8, employer: @itas, description: "Ruby Programming")
     FactoryGirl.create(:job_offer, time_effort: 5, employer: @epic, description: "Javascript Programming")
-    FactoryGirl.create(:job_offer, time_effort: 4, employer: @os, description: "Ruby Programming")
+    job_offer_os = FactoryGirl.create(:job_offer, time_effort: 4, employer: @os, description: "Ruby Programming")
 
-    filtered_job_offers = JobOffer.sort("employer").search("Ruby").filter_time_effort(8)
+    filtered_job_offers = JobOffer.search("Ruby").filter_time_effort(8)
     assert_equal(filtered_job_offers.length, 2);
-    assert_equal(filtered_job_offers[0].employer, @itas);
-    assert_equal(filtered_job_offers[1].employer, @os);
+    assert filtered_job_offers.include?(job_offer_itas)
+    assert filtered_job_offers.include?(job_offer_os)
   end
 
   it "return job offers which only have the specified programming languages" do
