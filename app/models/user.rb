@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
 
   has_attached_file :photo, styles: { :medium => "300x300>", :thumb => "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
+  validates_attachment_size :photo, :less_than => 5.megabytes, message: "should be less than 5MB"
 
   has_attached_file   :cv
   validates_attachment_content_type :cv, :content_type => ['application/pdf']
