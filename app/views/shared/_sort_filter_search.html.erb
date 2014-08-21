@@ -14,7 +14,7 @@
               <%= text_field_tag(:search, params[:search], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
             </div>
 
-            <div id="filter">
+            <div id="filtering">
               <h5><%= label_tag t("job_offers.filterLabel") %></h5>
 
               <% unless @employers.empty? %>

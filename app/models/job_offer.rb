@@ -30,8 +30,11 @@ class JobOffer < ActiveRecord::Base
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
+  has_attached_file :offer_as_pdf
+
   before_save :default_values
 
+  has_one :contact, as: :counterpart, dependent: :destroy
   has_many :applications, dependent: :destroy
   has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
@@ -43,6 +46,10 @@ class JobOffer < ActiveRecord::Base
 
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :languages
+  accepts_nested_attributes_for :contact
+
+  validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
+
 
   validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true

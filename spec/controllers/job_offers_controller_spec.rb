@@ -16,7 +16,6 @@ describe JobOffersController do
     "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student]}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student]}}
-  
 
   let(:valid_session) { {} }
 
@@ -225,7 +224,7 @@ describe JobOffersController do
   describe "GET accept" do
 
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, employer: employer)
+      @job_offer = FactoryGirl.create(:job_offer, employer: employer, release_date: nil)
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
@@ -241,6 +240,13 @@ describe JobOffersController do
       assigns(:job_offer).status.should eq(JobStatus.active)
       ActionMailer::Base.deliveries.count.should >= 1
       response.should redirect_to(@job_offer)
+    end
+
+    it "sets the release date when job offer is accepted" do
+      login admin
+      @job_offer.release_date.should eq(nil)
+      get :accept, {id: @job_offer.id}
+      assigns(:job_offer).release_date.should_not eq(nil)
     end
   end
 
