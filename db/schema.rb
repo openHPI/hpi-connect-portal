@@ -147,13 +147,17 @@ ActiveRecord::Schema.define(version: 20140811112808) do
     t.float    "compensation"
     t.integer  "employer_id"
     t.integer  "status_id"
-    t.boolean  "flexible_start_date", default: false
-    t.integer  "category_id",         default: 0,     null: false
-    t.integer  "state_id",            default: 3,     null: false
-    t.integer  "graduation_id",       default: 2,     null: false
-    t.boolean  "prolong_requested",   default: false
-    t.boolean  "prolonged",           default: false
+    t.boolean  "flexible_start_date",       default: false
+    t.integer  "category_id",               default: 0,     null: false
+    t.integer  "state_id",                  default: 3,     null: false
+    t.integer  "graduation_id",             default: 2,     null: false
+    t.boolean  "prolong_requested",         default: false
+    t.boolean  "prolonged",                 default: false
     t.datetime "prolonged_at"
+    t.string   "offer_as_pdf_file_name"
+    t.string   "offer_as_pdf_content_type"
+    t.integer  "offer_as_pdf_file_size"
+    t.datetime "offer_as_pdf_updated_at"
     t.date     "release_date"
   end
 

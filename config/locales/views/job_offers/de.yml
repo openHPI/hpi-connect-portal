@@ -47,6 +47,7 @@ de:
     send_application_headline: "Bewerbungsemail"  
     add_cv_application: "Lebenslauf der Bewerbung beilegen?" 
     upload_cv_application: "Lebenslauf" 
+    upload_job_offer_pdf: "PDF"
     send_application: "Bewerbung abschicken"
     required_programming_languages: "Erforderliche Programmiersprachen"
     required_languages: "Erforderliche Sprachkenntnisse"
