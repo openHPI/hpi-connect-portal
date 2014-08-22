@@ -162,7 +162,9 @@ describe JobOffersController do
       student = FactoryGirl.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
       login student.user
       get :matching, {language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id)}, valid_session
-      assigns(:job_offers_list)[:items].to_a.should eq([job3, job1])
+      items = assigns(:job_offers_list)[:items].to_a
+      assert items.include? job1
+      assert items.include? job3
     end
   end
 
