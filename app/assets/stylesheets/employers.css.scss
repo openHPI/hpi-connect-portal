@@ -15,3 +15,22 @@ span.label.label-warning {
         margin-left: 20px;
     }
 }
+
+.booked-package {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+    text-indent: 0px !important;
+    margin-left:-30px;
+
+}
+
+.booked-package li {
+    padding:0 0 0 30px ;
+}
+
+.package-indenting {
+    margin-left: 10px;
+/*    text-indent: 0px !important;
+*/}

@@ -9,7 +9,7 @@
           <p><%=t("employers.home.book_product")%></p>
           <br><p><h1><%=t("employers.home.service.free.title")%></h1></p>
           <ul>
-            <div class="panel-body">
+            <div class="panel-body package-indenting">
               <li>○ <%=t("employers.home.service.free.description")%></li>
             </div>
           </ul>
@@ -18,25 +18,45 @@
           <i> <%= t("employers.home.service.chargeable.help_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></i></p><br>
           <div class="panel-body">
             <ul>
-              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => true))).html_safe%></li>
-              <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
-              <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
-              <div class="panel-body"></div>
-              <li>○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
-              <ul>
-                <div class="panel-body">
-                  <li> - <%= t("employers.home.booking.basis.advertisements") %></li>
-                  <li> - <%= t("employers.home.booking.basis.company_profile") %></li>
+              <div class="panel-body">
+                <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => true))).html_safe%></li>
+                <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
+                <li>
+                  <div class="<%= 'booked-package' if current_user.manifestation.employer.profile? %>">
+                    ○ <%= t("employers.home.booking.profil.title_html", book: (link_to t("employers.home.booking.profil.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                    <ul>
+                      <div class="panel-body">
+                        <li> - <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
+                    </div>
+                    </ul>  
+                  </div>
+                </li>
+              
+                <li> 
+                  <div class="<%= 'booked-package' if current_user.manifestation.employer.partner? %>">
+                      ○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%> 
+                    <ul>
+                      <div class="panel-body">
+                        <li> - <%= t("employers.home.booking.basis.advertisements") %></li>
+                        <li> - <%= t("employers.home.booking.basis.company_profile") %></li>
+                      </div>
+                    </ul>
+                  </div>
+                </li>
+
+              <li>
+                <div class="<%= 'booked-package' if current_user.manifestation.employer.premium? %>">
+                  ○ <%= t("employers.home.booking.partner.title_html", book: (link_to t("employers.home.booking.partner.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                  <ul>
+                    <div class="panel-body">
+                      <li> - <%= t("employers.home.booking.partner.advertisements") %></li>
+                      <li> - <%= t("employers.home.booking.partner.company_profile") %></li>
+                      <li> - <%= t("employers.home.booking.partner.exclusiv") %> </li>
+                    </div>
+                  </ul>
                 </div>
-              </ul>
-              <li>○ <%= t("employers.home.booking.partner.title_html", book: (link_to t("employers.home.booking.partner.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
-              <ul>
-                <div class="panel-body">
-                  <li> - <%= t("employers.home.booking.partner.advertisements") %></li>
-                  <li> - <%= t("employers.home.booking.partner.company_profile") %></li>
-                  <li> - <%= t("employers.home.booking.partner.exclusiv") %> </li>
-                </div>
-              </ul>
+              </li>
+              </div>
             </ul>
           </div>
               <p><%= t("employers.home.advise") %><br> <%= t("employers.home.contact_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></p>
