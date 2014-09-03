@@ -64,8 +64,12 @@ class Employer < ActiveRecord::Base
     booked_package_id >= 1
   end
 
+  def profile?
+    booked_package_id == 1
+  end
+
   def partner?
-    booked_package_id >= 2
+    booked_package_id == 2
   end
 
   def premium?
@@ -77,7 +81,7 @@ class Employer < ActiveRecord::Base
   end
 
   def can_create_job_offer?(category)
-    (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+    (category != 'graduate_job' || ((partner? || premium?) && graduate_job_count < (premium? ? 24 : 4))) ? true : false
   end
 
   def add_one_single_booked_job
