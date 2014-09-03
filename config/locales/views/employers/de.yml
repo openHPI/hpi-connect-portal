@@ -16,9 +16,9 @@ de:
         packages: "Pakete"
         contact: "Ansprechpartner"
         package_descriptions:
-            student_jobs: "Beliebig viele Studentenjobs"
+            student_jobs: "Beliebig viele Studentenstellen"
             profile: "Unternehmensprofil" 
-            full_time: "Angebote für Vollzeitjobs pro Jahr"
+            full_time: "Angebote für Vollzeitstellen pro Jahr"
             student_profiles: "Einsicht in Studentenprofile"
             insufficent: "Paket reicht nicht aus / erlaubte Anzahl überschritten"
             upgrade_or_book: "Ihr Paket reicht zum Erstellen einer Absolventenstelle leider nicht aus bzw. Sie haben bereits alle mit diesem Paket möglichen Absolventenstellen gebucht. \nSie können nun entweder Ihr Paket upgraden oder dieses einzelne Stellenangebot kostenpflichtig buchen."
@@ -40,25 +40,29 @@ de:
             service:
                 free:
                     title: "Kostenlose Angebote"
-                    description: "Praktikum oder Studentenjob online stellen (4 Wochen)"
+                    description: "Praktikum oder Studentenstelle online stellen (4 Wochen)"
                 chargeable:
                     title: "Kostenpflichtige Angebote"
                     help_html: "(aktuelle Preise können Sie bei %{email} erfragen)"
                     open_positions: "Stellenangebot online stellen (4 Wochen)"
                     present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
-                    company_profile: "Firmenprofil"
+                    company_profile: "Unternehmensprofil"
                     single_graduate_job: "Einzelne Absolventenstelle %{book}"
             booking:
+                profil:
+                    title_html: "Profilpaket %{book}"
+                    book: "buchen"
+                    company_profile: "1 Unternehmensprofil für 1 Jahr"
                 basis:
                     title_html: "Basispaket %{book}"
                     book: "buchen"
-                    advertisements: "4 Stellenangebote pro Jahr"
-                    company_profile: "1 Firmenprofil für 1 Jahr"
+                    advertisements: "4 Vollzeitstellen pro Jahr"
+                    company_profile: "1 Unternehmensprofil für 1 Jahr"
                 partner:
                     title_html: "Partnerpaket %{book}"
                     book: "buchen"
-                    advertisements: "24 Stellenangebote pro Jahr"
-                    company_profile: "1 Firmenprofil für 1 Jahr"
+                    advertisements: "24 Vollzeitstellen pro Jahr"
+                    company_profile: "1 Unternehmensprofil für 1 Jahr"
                     exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
             advise: "Gerne beraten wir Sie zu unseren Angeboten."
             contact_html: "Kontaktieren Sie uns jederzeit über %{email}"
