@@ -49,16 +49,20 @@ de:
                     company_profile: "Unternehmensprofil"
                     single_graduate_job: "Einzelne Absolventenstelle %{book}"
             booking:
-                profil:
+                current_packet: "Aktuelles Paket: %{name}: Damit können Sie:"
+                profile:
+                    name: "Profilpaket"
                     title_html: "Profilpaket %{book}"
                     book: "buchen"
                     company_profile: "1 Unternehmensprofil für 1 Jahr"
                 basis:
+                    name: "Basispaket"
                     title_html: "Basispaket %{book}"
                     book: "buchen"
                     advertisements: "4 Vollzeitstellen pro Jahr"
                     company_profile: "1 Unternehmensprofil für 1 Jahr"
                 partner:
+                    name: "Partnerpaket"
                     title_html: "Partnerpaket %{book}"
                     book: "buchen"
                     advertisements: "24 Vollzeitstellen pro Jahr"

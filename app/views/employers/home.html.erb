@@ -23,7 +23,11 @@
                 <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
                 <li>
                   <div class="<%= 'booked-package' if current_user.manifestation.employer.profile? %>">
-                    ○ <%= t("employers.home.booking.profil.title_html", book: (link_to t("employers.home.booking.profil.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                    <% if current_user.manifestation.employer.profile?%>
+                       ○ <%= t("employers.home.booking.current_packet", name: t("employers.home.booking.profile.name")) %>
+                    <% else %>
+                      ○ <%= t("employers.home.booking.profile.title_html", book: (link_to t("employers.home.booking.profile.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                    <% end %>
                     <ul>
                       <div class="panel-body">
                         <li> - <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
@@ -34,7 +38,11 @@
               
                 <li> 
                   <div class="<%= 'booked-package' if current_user.manifestation.employer.partner? %>">
-                      ○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%> 
+                    <% if current_user.manifestation.employer.partner? %>
+                        ○ <%= t("employers.home.booking.current_packet", name: t("employers.home.booking.basis.name")) %>
+                    <% else %>
+                        ○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                    <% end %>  
                     <ul>
                       <div class="panel-body">
                         <li> - <%= t("employers.home.booking.basis.advertisements") %></li>
@@ -46,7 +54,11 @@
 
               <li>
                 <div class="<%= 'booked-package' if current_user.manifestation.employer.premium? %>">
-                  ○ <%= t("employers.home.booking.partner.title_html", book: (link_to t("employers.home.booking.partner.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                  <% if current_user.manifestation.employer.premium? %>
+                    ○ <%= t("employers.home.booking.current_packet", name: t("employers.home.booking.partner.name")) %>
+                  <% else %>
+                    ○ <%= t("employers.home.booking.partner.title_html", book: (link_to t("employers.home.booking.partner.book"), edit_employer_path(current_user.manifestation.employer)))%>
+                  <% end %>    
                   <ul>
                     <div class="panel-body">
                       <li> - <%= t("employers.home.booking.partner.advertisements") %></li>
