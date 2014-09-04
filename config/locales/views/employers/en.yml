@@ -49,7 +49,7 @@ en:
                     company_profile: "Company Profile"
                     single_graduate_job: "%{book} single graduate job"
             booking:
-                current_packet: "Current Packet: %{name}: With this you can upload:"
+                current_packet: "Current Packet: %{name}: With this you get:"
                 profile:
                     name: "Profile Packet"
                     title_html: "%{book} Profile Packet"
