@@ -7,7 +7,7 @@ class EmployersController < ApplicationController
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = @employers.sort_by { |employer| employer.name }
+    @employers = @employers.sort_by { |employer| employer.name.downcase }
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
 

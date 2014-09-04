@@ -47,6 +47,7 @@ en:
     send_application_headline: "Application Email"
     add_cv_application: "Add CV to Application?"
     upload_cv_application: "CV"
+    upload_job_offer_pdf: "PDF"
     send_application: "Send Application"
     required_programming_languages: "Required Programming Languages"
     required_languages: "Required Languages"
@@ -68,7 +69,7 @@ en:
     no_results: "No job offer matches your search"
     fire: "Fire"
     category:
-        traineeship: "Traineeship"
-        sideline: "Sideline"
+        traineeship: "Internship"
+        sideline: "Side Job"
         graduate_job: "Job for graduates"
         working_student: "Working student"

@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
-  VISIBILITYS = ['nobody','employers_only','employers_and_students']    
+  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']    
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
@@ -64,7 +64,10 @@ class Student < ActiveRecord::Base
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
-  scope :visible_for_employers, ->  { where('visibility_id > ?', 0)}
+  scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
+  scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
+  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')} 
+  scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
