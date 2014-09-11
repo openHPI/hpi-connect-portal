@@ -73,6 +73,8 @@ HpiHiwiPortal::Application.routes.draw do
 
       resources :staff, except: [:edit, :update]
 
+      resources :certificate
+
       resources :students do
         member do
           patch 'activate'

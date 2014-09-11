@@ -50,6 +50,7 @@ class Student < ActiveRecord::Base
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
   has_many :cv_jobs, dependent: :destroy
   has_many :cv_educations, dependent: :destroy
+  has_many :certificates, dependent: :destroy
 
   has_attached_file :cv_as_pdf
 
@@ -58,6 +59,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
+  accepts_nested_attributes_for :certificates
 
   delegate :firstname, :lastname, :full_name, :email, :alumni_email, :activated, :photo, to: :user
 
