@@ -112,6 +112,36 @@ describe StudentsController do
       patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
       response.should redirect_to(student_path(@student))
     end
+
+    it "saves uploaded certificates" do
+      @student.certificates.size.should eq(0)
+      test_certificate_1 = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_certificate_1.pdf',
+        :type => 'application/pdf',
+        :tempfile => fixture_file_upload('/pdf/test_certificate_1.pdf')
+      })
+      test_certificate_2 = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_certificate_2.pdf',
+        :type => 'application/pdf',
+        :tempfile => fixture_file_upload('/pdf/test_certificate_2.pdf')
+      })
+      test_certificate_3 = ActionDispatch::Http::UploadedFile.new({
+        :filename => 'test_certificate_3.pdf',
+        :type => 'application/pdf',
+        :tempfile => fixture_file_upload('/pdf/test_certificate_3.pdf')
+      })
+
+      certificates = Array.new
+      certificates << test_certificate_1
+      certificates << test_certificate_2
+      certificates << test_certificate_3
+
+      patch :update, { id: @student.id, student: {  "certificates" => certificates } }
+      response.should redirect_to(student_path(@student))
+      @student.reload
+      @student.certificates.size.should eq(3)
+    end
+
   end
 
   describe "DELETE destroy" do
