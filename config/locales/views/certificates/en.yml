@@ -1,0 +1,4 @@
+en:
+  certificates:
+    messages:
+      successfully_deleted: "Certificate successfully deleted."

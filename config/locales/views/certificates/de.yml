@@ -1,0 +1,4 @@
+de:
+    certificates:
+        messages:
+            successfully_deleted: "Das Zeugnis wurde erfolgreich gelöscht."
