@@ -30,6 +30,9 @@ class Ability
 
     if user.activated
       can :create, Application
+      can :destroy, Certificate do |certificate|
+        certificate.student_id == user.manifestation_id
+      end
       can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
       end      

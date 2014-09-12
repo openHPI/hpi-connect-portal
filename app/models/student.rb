@@ -51,17 +51,23 @@ class Student < ActiveRecord::Base
   has_many :assigned_job_offers, through: :assignments, source: :job_offer
   has_many :cv_jobs, dependent: :destroy
   has_many :cv_educations, dependent: :destroy
+  has_many :certificates, dependent: :destroy
+
+  has_attached_file :cv_as_pdf
 
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
+  accepts_nested_attributes_for :certificates
 
   delegate :firstname, :lastname, :full_name, :email, :alumni_email, :activated, :photo, to: :user
 
   validates :academic_program_id, presence: true
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
+  validates_attachment_content_type :cv_as_pdf, content_type: ['application/pdf']
+
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}

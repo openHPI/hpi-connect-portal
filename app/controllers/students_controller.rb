@@ -37,6 +37,7 @@ class StudentsController < ApplicationController
     authorize! :show, @student
     not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
+    @certificates = @student.certificates
   end
 
   def new
@@ -67,6 +68,11 @@ class StudentsController < ApplicationController
 
   def update
     update_from_params_for_languages params, student_path(@student)
+    if certificate_params[:certificates]
+        certificate_params[:certificates].each { |certificate|
+          @student.certificates.create(certificate_file: certificate)
+        }
+      end
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
@@ -133,8 +139,12 @@ class StudentsController < ApplicationController
       @student = Student.find params[:id]
     end
 
+    def certificate_params
+      params.require(:student).permit(:certificates=>[])
+    end
+
     def student_params
-      params.require(:student).permit(:semester, :dschool_status_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :dschool_status_id,:cv_as_pdf, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
     def rescue_from_exception(exception)

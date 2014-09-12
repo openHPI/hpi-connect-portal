@@ -20,3 +20,5 @@ en:
         add_education: "Add Education"
         remove_work_experience: "Remove Work Experience"
         remove_education: "Remove Education"
+        cv_as_pdf: "CV"
+        certificates: "Certificates"
