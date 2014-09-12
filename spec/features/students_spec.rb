@@ -41,11 +41,10 @@ describe "the students page" do
 
   describe "as a student" do
 
-    it "is not available for students" do
-      login @student1.user
+    it "is available for students" do
+      login FactoryGirl.create(:student).user 
       visit students_path
-      current_path.should_not == students_path
-      current_path.should == root_path
+      current_path.should == students_path
     end
   end
 
@@ -106,7 +105,7 @@ describe "the students editing page" do
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
@@ -126,7 +125,7 @@ describe "the students editing page" do
     page.find_link("Edit").click
 
     fill_in 'student_facebook', with: 'www.face.com/alex'
-    find('input[type="submit"]').click
+    first('input[type="submit"]').click
 
     current_path.should == student_path(@student1)
 
@@ -152,7 +151,7 @@ describe "the students profile page" do
     @job_offer =  FactoryGirl.create(:job_offer)
     @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
     @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:2)
-    @student3 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:0)
+    @student3 = FactoryGirl.create(:student, visibility_id:0)
 
     login @student1.user
   end
@@ -194,6 +193,16 @@ describe "the students profile page" do
       page.should have_content(I18n.t("students.activation_reminder"))
       page.should have_css('input#open-id-field')
     end
+
+    it "should not show Dschool Status if I don't have one" do 
+      page.should_not have_content("D-School Status")
+    end
+
+    it "should show Dschool Status if there is one" do 
+      @student1.update(dschool_status_id: 1)
+      visit student_path(@student1)
+      page.should have_content("D-School Status")
+    end
   end
 
   describe "of another students" do
@@ -201,7 +210,7 @@ describe "the students profile page" do
         visit student_path(@student3)
     end
 
-    it "should contain all the details of student3" do
+    it "should not contain all the details of student3" do
         page.should_not have_content(
           @student3.firstname,
           @student3.lastname
@@ -264,11 +273,20 @@ describe "the students profile page" do
       current_path.should == root_path
     end
 
-    it "should be accessible for staff of premium employers" do
+    it "should not be accessible for staff of premium employers if student is not visible for him" do
       @employer.update_column :booked_package_id, 3
+      @student.update_column :visibility_id, 0
+      visit student_path(@student)
+      current_path.should_not == student_path(@student)
+    end
+
+    it "should be accessible for staff of premium employers if student is visibile for him" do
+      @employer.update_column :booked_package_id, 3
+      @student.update_column :visibility_id, 2
       visit student_path(@student)
       current_path.should == student_path(@student)
     end
+
   end
 
   describe "as admin" do

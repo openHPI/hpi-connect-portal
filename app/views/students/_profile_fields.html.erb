@@ -234,6 +234,18 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
+              <%= label_field form, :dschool_status, t("activerecord.attributes.student.dschool_status") %>
+            </div>
+            <div class="col-sm-9">
+            <%= form.select :dschool_status_id, Student::DSCHOOL_STATUSES.each_with_index.collect {|status, index|
+            [t("activerecord.attributes.student.dschool_statuses." + status), index]
+            }, {}, {id: 'dschool_status_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
               <%= label_field form, :cv_as_pdf, t("students.cv_as_pdf") %>
             </div>
             <div class="col-sm-9">

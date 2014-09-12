@@ -33,12 +33,13 @@ class Ability
       can :destroy, Certificate do |certificate|
         certificate.student_id == user.manifestation_id
       end
-      can :show, Student do |student|
+      can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
       end      
       can :matching, JobOffer
     end
   end
+
 
   def initialize_staff(user)
     staff = user.manifestation
@@ -58,8 +59,9 @@ class Ability
       can :read, Application
       can :manage, Faq
       can :show, Student do |student|
-        student.activated && student.visibility_id > 0
+        student.visibility_id > 0 && staff.employer.premium? && student.activated
       end
+
 
       cannot [:edit, :update], Student
       can :close, JobOffer, employer: staff.employer
@@ -80,7 +82,9 @@ class Ability
       can :destroy, Staff, manifestation: { employer: { id: employer_id }}
 
       if staff.employer.premium?
-        can :read, Student, activated: true
+        can :read, Student do |student|
+          student.activated && student.visibility_id > 0
+        end
       end
     end
   end

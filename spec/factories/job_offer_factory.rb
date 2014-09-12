@@ -28,12 +28,14 @@ FactoryGirl.define do
     description       "Develop a website"
     start_date        Date.current + 1
     end_date          Date.current + 2
+    release_date      Date.current - 3
     compensation      10.5
     time_effort       9
     association       :status, factory: :job_status
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)
+      job_offer.contact = FactoryGirl.create(:contact, counterpart: job_offer)
     end
   end
 end

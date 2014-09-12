@@ -28,10 +28,12 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  GRADUATIONS = ['secondary_education', 'abitur',  'bachelor', 'master', 'phd'] 
   
+  has_attached_file :offer_as_pdf
+
   before_save :default_values
 
+  has_one :contact, as: :counterpart, dependent: :destroy
   has_many :applications, dependent: :destroy
   has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
@@ -43,10 +45,13 @@ class JobOffer < ActiveRecord::Base
 
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :languages
+  accepts_nested_attributes_for :contact
+
+  validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
+
 
   validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates_datetime :start_date, on_or_after: lambda { Date.current }, on_or_after_message: I18n.t("activerecord.errors.messages.in_future")
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
   self.per_page = 15
@@ -68,11 +73,11 @@ class JobOffer < ActiveRecord::Base
     return job_offer
   end
 
-  def self.sort(order_attribute)
+  def self.sort(job_offers, order_attribute)
     if order_attribute == "employer"
-      includes(:employer).order("employers.name ASC")
+      job_offers.sort_by {|job_offer| job_offer.employer.name.downcase}
     else
-      order('job_offers.created_at DESC')
+      job_offers.sort_by {|job_offer| [job_offer.expiration_date, job_offer.created_at] }.reverse
     end
   end
 
@@ -175,6 +180,6 @@ class JobOffer < ActiveRecord::Base
   end
 
   def minimum_degree
-    GRADUATIONS[graduation_id]
+    Student::GRADUATIONS[graduation_id]
   end
 end

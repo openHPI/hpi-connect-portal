@@ -8,3 +8,9 @@ en:
         additional_information: "Additional Information"
         programming_languages: "Programming Languages"
         languages: "Languages"
+        dschool_status: "D-School Status"
+        dschool_statuses:
+          nothing: "didn't take part"
+          introduction: "Introduction"
+          basictrack: "Basic Track"
+          advancedtrack: "Advanced Track"

@@ -53,6 +53,7 @@ kill_worker)
   ;;
 restart|reload)
   sig USR2 && echo reloaded OK && exit 0
+  echo <&2 "AS_USER = $AS_USER"
   echo >&2 "Couldn't reload, starting '$CMD' instead"
   run "$CMD"
   ;;

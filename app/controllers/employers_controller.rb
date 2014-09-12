@@ -7,7 +7,7 @@ class EmployersController < ApplicationController
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = @employers.sort_by { |employer| employer.name }
+    @employers = @employers.sort_by { |employer| employer.name.downcase }
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
 
@@ -24,6 +24,7 @@ class EmployersController < ApplicationController
     @employer = Employer.new
     @employer.staff_members.build
     @employer.staff_members.first.build_user
+    @employer.build_contact
   end
 
   def create
@@ -42,12 +43,16 @@ class EmployersController < ApplicationController
 
   def edit
     authorize! :edit, @employer
+    @employer.build_contact unless @employer.contact
   end
 
   def update
     old_requested_package = @employer.requested_package_id
     if @employer.update employer_params
-      EmployersMailer.book_package_email(@employer).deliver if @employer.requested_package_id > old_requested_package
+      if @employer.requested_package_id > old_requested_package
+        EmployersMailer.book_package_email(@employer).deliver
+        EmployersMailer.requested_package_confirmation_email(@employer).deliver
+      end
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
     else
       render_errors_and_action @employer, 'edit'
@@ -56,6 +61,7 @@ class EmployersController < ApplicationController
 
   def activate
     @employer.update_column :activated, true
+    EmployersMailer.booked_package_confirmation_email(@employer).deliver if @employer.booked_package_id < @employer.requested_package_id
     @employer.update_column :booked_package_id, @employer.requested_package_id
     respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_activated')
   end
@@ -88,6 +94,6 @@ class EmployersController < ApplicationController
     end
 
     def employer_params
-      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]])
+      params.require(:employer).permit(:name, :description, :avatar, :number_of_employees, :year_of_foundation, :line_of_business, :website, :place_of_business, :requested_package_id, staff_members_attributes: [user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation ]], contact_attributes: [:name, :street, :zip_city, :email, :phone])
     end
 end

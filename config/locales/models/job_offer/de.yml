@@ -7,6 +7,7 @@ de:
         employer: "Arbeitgeber"
         category: "Jobart"
         start_date: "Einstelldatum"
+        release_date: "Veröffentlicht am"
         end_date: "Enddatum"
         expiration_date: "Ende des Angebots"
         time_effort: "Zeitaufwand"
@@ -16,7 +17,7 @@ de:
         general_information: "Allgemeine Informationen"
         additional_information: "Zusätzliche Information"
         requirements: "Anforderungen"
-        contact: "Kontakt"
+        contact: "Mitarbeiter"
         region: "Region"
         state:
             ABROAD: "Ausland"

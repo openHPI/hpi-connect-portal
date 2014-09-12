@@ -31,10 +31,11 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
-  VISIBILITYS = ['nobody','employers_only','employers_and_students']    
+  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']    
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
+  DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
 
   attr_accessor :username
 
@@ -69,6 +70,10 @@ class Student < ActiveRecord::Base
 
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
+  scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
+  scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
+  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')} 
+  scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
@@ -110,6 +115,10 @@ class Student < ActiveRecord::Base
     VISIBILITYS[visibility_id]
   end
 
+  def dschool_status
+    DSCHOOL_STATUSES[dschool_status_id]
+  end
+
   def update_from_linkedin(linkedin_client)
     userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
     "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions", "honors-awards", "volunteer", "educations"])
@@ -143,7 +152,8 @@ class Student < ActiveRecord::Base
   def update_cv_jobs(jobs)   
     jobs.each do |job|
       description = !job["summary"].nil? ? job["summary"] : " " 
-      end_date = !job["end_date"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : nil
+      start_date = !job["start_date"].nil? ? (!job["start_date"]["month"].nil? ? Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i) : Date.new(job["start_date"]["year"].to_i)) : nil
+      end_date = !job["end_date"].nil? ? (!job["end_date"]["month"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : Date.new(job["end_date"]["year"].to_i)) : nil
       current = (job["is_current"].to_s == 'true')
       update_attributes!(
         cv_jobs: self.cv_jobs.push(
@@ -152,7 +162,7 @@ class Student < ActiveRecord::Base
             employer: job["company"]["name"], 
             position: job["title"], 
             description: description, 
-            start_date: Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i), 
+            start_date: start_date, 
             end_date: end_date,
             current: current)
         )

@@ -90,60 +90,127 @@
               </div>
             </li>
             <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= label_field f, :graduation_id, t("activerecord.attributes.user.minimum_degree") %>
+                </div>
+                <div class="col-sm-8 pull-right">
+                  <%= f.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
+                  [t("activerecord.attributes.user.degrees." + grade), index]
+                  }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
           <div class="row">
             <div class="col-sm-4">
-              <%= label_field f, :graduation_id, t("activerecord.attributes.user.minimum_degree") %>
+              <%= label_field f, :start_date, t("activerecord.attributes.job_offer.start_date") %>
             </div>
             <div class="col-sm-8 pull-right">
-            <%= f.select :graduation_id, JobOffer::GRADUATIONS.each_with_index.collect {|grade, index|
-            [t("activerecord.attributes.user.degrees." + grade), index]
-            }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
+               <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.nil? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
             </div>
           </div>
         </li>
-
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :end_date, t("activerecord.attributes.job_offer.end_date") %>
+            </div>
+            <div class="col-sm-8 pull-right">
+              <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.nil? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :time_effort, t("activerecord.attributes.job_offer.time_effort") %>
+            </div>
+            <div class="col-sm-8 pull-right">
+              <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field f, :compensation, t("activerecord.attributes.job_offer.compensation") %>
+            </div>
+            <div class="col-sm-8 pull-right">
+              <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation) } %>
+            </div>
+          </div>
+        </li>
+      <ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4><%= t("activerecord.attributes.employer.contact") %></h4>
+          </div>
+          <ul class="list-group">
+            <%= f.simple_fields_for :contact, @job_offer.contact do |c| %>
             <li class="list-group-item">
               <div class="row">
-                <div class="col-sm-4">
-                  <%= label_field f, :start_date, t("activerecord.attributes.job_offer.start_date") %>
+                <div class="col-sm-3">
+                  <%= label_field f, :name, t("activerecord.attributes.employer.contacting.name") %>
                 </div>
-                <div class="col-sm-8 pull-right">
-                   <%= f.text_field :start_date, class: 'datepicker form-control', value: (job_offer.start_date.nil? || job_offer.flexible_start_date ? t('job_offers.default_startdate') : job_offer.start_date.strftime('%d-%m-%Y'))%>
+                <div class="col-sm-9">
+                  <%= c.input :name,
+                  input_html: copy_employer_contact?(:name) ? { value: current_user.manifestation.employer.contact.name } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :end_date, t("activerecord.attributes.job_offer.end_date") %>
+                  <%= label_field f, :street, t("activerecord.attributes.employer.contacting.street") %>
                 </div>
-                <div class="col-sm-8 pull-right">
-                   <%= f.text_field :end_date, class: 'datepicker form-control', value: (job_offer.end_date.nil? ? '' : job_offer.end_date.strftime('%d-%m-%Y'))%>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-3">
-                  <%= label_field f, :time_effort, t("activerecord.attributes.job_offer.time_effort") %>
-                </div>
-                <div class="col-sm-8 pull-right">
-                  <%= f.input :time_effort, placeholder: t("job_offers.time_effort_description") %>
+                <div class="col-sm-9">
+                  <%= c.input :street,
+                  input_html: copy_employer_contact?(:street) ? { value: current_user.manifestation.employer.contact.street } : nil %>
                 </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-3">
-                  <%= label_field f, :compensation, t("activerecord.attributes.job_offer.compensation") %>
+                  <%= label_field f, :zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
                 </div>
-                <div class="col-sm-8 pull-right">
-                  <%= f.input :compensation, placeholder: t("job_offers.compensation_description"), input_html: { value: (job_offer.compensation) } %>
+                <div class="col-sm-9">
+                  <%= c.input :zip_city,
+                  input_html: copy_employer_contact?(:zip_city) ? { value: current_user.manifestation.employer.contact.zip_city } : nil %>
                 </div>
               </div>
             </li>
-          <ul>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_field f, :email, t("activerecord.attributes.employer.contacting.email") %>
+                </div>
+                <div class="col-sm-9">
+                  <%= c.input :email,
+                  input_html: copy_employer_contact?(:email) ? { value: current_user.manifestation.employer.contact.email } : nil %>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_field f, :phone, t("activerecord.attributes.employer.contacting.phone") %>
+                </div>
+                <div class="col-sm-9">
+                  <%= c.input :phone,
+                  input_html: copy_employer_contact?(:phone) ? { value: current_user.manifestation.employer.contact.phone } : nil %>
+                </div>
+              </div>
+            </li>
+            <% end %>
+          </ul>
         </div>
+      </div>
     </div>
     <div class="col-sm-6">
       <div class="panel panel-default">
@@ -198,10 +265,9 @@
     <input name="other" value="<%= params[:book_single_job_offer] %>" type="hidden">
     <%= f.submit t("links.save"), :class => "btn btn-warning pull-right", :id => "submit" %>
   </div>
-  <% if current_user.staff? %>
-    <% content_for :modals do %>
-      <%= render 'book_modal' %>
-    <% end %>
+<% end %>
+<% if current_user.staff? %>
+  <% content_for :modals do %>
+    <%= render 'book_modal' %>
   <% end %>
 <% end %>
-

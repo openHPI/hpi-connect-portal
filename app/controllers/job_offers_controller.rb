@@ -25,7 +25,7 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
-    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 
@@ -42,12 +42,14 @@ class JobOffersController < ApplicationController
     @job_offer = JobOffer.new
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
+    @job_offer.build_contact
   end
 
   def edit
     authorize! :edit, @job_offer
     @programming_languages = ProgrammingLanguage.all
     @languages = Language.all
+    @job_offer.build_contact unless @job_offer.contact
   end
 
   def create
@@ -73,7 +75,7 @@ class JobOffersController < ApplicationController
   end
 
   def archive
-    job_offers = apply_scopes(JobOffer.closed).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.closed), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.archive" }
   end
 
@@ -95,7 +97,7 @@ class JobOffersController < ApplicationController
   end
 
   def matching
-    job_offers = apply_scopes(JobOffer.active).sort(params[:sort]).paginate(page: params[:page])
+    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
     render "index"
   end
@@ -110,7 +112,7 @@ class JobOffersController < ApplicationController
   end
 
   def accept
-    if @job_offer.update status: JobStatus.active
+    if @job_offer.update status: JobStatus.active, release_date: Date.current
       JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
       if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
         @job_offer.employer.remove_one_single_booked_job
@@ -137,6 +139,7 @@ class JobOffersController < ApplicationController
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.closed
       @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
+      @job_offer.build_contact
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer
@@ -169,7 +172,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :employer_id, :state_id, :category_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []})
+      parameters = params.require(:job_offer).permit(:description, :title, :offer_as_pdf, :employer_id, :state_id, :category_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []}, contact_attributes: [:name, :street, :zip_city, :email, :phone])
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
