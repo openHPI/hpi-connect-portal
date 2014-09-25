@@ -65,6 +65,22 @@
               </div>
             </div>
           </li>
+          <%if @student.cv_as_pdf %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= t("students.cv_as_pdf") %>
+                </div>
+                <div class="col-sm-8">
+                  <div class="row">
+                    <%= link_to(@student.cv_as_pdf.url) do %>
+                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= @student.cv_as_pdf_file_name %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% end %>
           <% unless @student.alumni_email.blank? %>
             <li class="list-group-item">
               <div class="row">

@@ -249,33 +249,40 @@
               <%= label_field form, :cv_as_pdf, t("students.cv_as_pdf") %>
             </div>
             <div class="col-sm-9">
+            <%if @student.cv_as_pdf %>
+              <div class="row">
+                <%= link_to(@student.cv_as_pdf.url) do %>
+                  <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= @student.cv_as_pdf_file_name %>
+                <% end %>
+              </div>
+            <% end %>
             <%= form.file_field :cv_as_pdf , multiple: false, accept:'application/pdf' %>
             </div>
           </div>
         </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-sm-3">
-              <%= t("students.certificates") %>
-            </div>
+        <% if @student.certificates.any? %>
+           <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
+                <%= t("students.certificates") %>
+              </div>
             <div class="col-sm-9">
-              <% if @student.certificates.any? %>
-                <% @student.certificates.each do |certificate|%>
-                  <div class="row">
-                    <p class=" col-sm-10">
-                      <%= link_to(certificate.certificate_file.url) do %>
-                        <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= certificate.certificate_file_file_name %>
-                      <% end %>
-                    </p>
-                      <%= link_to certificate_path(certificate.id), :method => :delete, class: "col-sm-2", data: { confirm: 'Sind Sie sicher, dass Sie dieses Zeugnis löschen möchten?' } do %>
-                          <%= fa_icon "times"%>
-                      <% end %>
+              <% @student.certificates.each do |certificate|%>
+                <div class="row">
+                  <p class=" col-sm-10">
+                    <%= link_to(certificate.certificate_file.url) do %>
+                      <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= certificate.certificate_file_file_name %>
+                    <% end %>
+                  </p>
+                    <%= link_to certificate_path(certificate.id), :method => :delete, class: "col-sm-2", data: { confirm: 'Sind Sie sicher, dass Sie dieses Zeugnis löschen möchten?' } do %>
+                      <%= fa_icon "times"%>
+                    <% end %>
                   </div>   
-                <% end %>
-              <% end %>
+                  <% end %>
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
+        <% end %>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
