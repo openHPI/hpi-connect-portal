@@ -68,3 +68,13 @@ describe "the alumni flow" do
     end
   end
 end
+
+describe "the alumni index page" do
+  it "renders an index page for admins" do
+    alumni = FactoryGirl.create(:alumni, firstname: "Hans", lastname: "Peter")
+    login FactoryGirl.create(:user, :admin)
+    visit alumni_index_path
+    click_link "Hans Peter"
+    current_path.should eq(alumni_path(alumni))
+  end
+end

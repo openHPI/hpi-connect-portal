@@ -1,6 +1,21 @@
 class AlumniController < ApplicationController
-  authorize_resource except: [:register, :link, :link_new]
-  skip_before_filter :signed_in_user, only: [:register, :link, :link_new]
+  authorize_resource except: [:register, :link, :link_new, :index, :show]
+  skip_before_filter :signed_in_user, only: [:register, :link, :link_new, :index, :show]
+  before_action :set_alumni, only: [:show]
+
+  has_scope :firstname, only: [:index], as: :firstname
+  has_scope :lastname, only: [:index], as: :lastname
+  has_scope :email, only: [:index], as: :email
+  has_scope :alumni_email, only: [:index], as: :alumni_email
+
+  def index
+    authorize! :index, Alumni
+    @alumnis = apply_scopes(Alumni.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)  
+  end
+
+  def show
+    authorize! :show, @alumni
+  end
 
   def new
     @alumni = Alumni.new
@@ -69,6 +84,9 @@ class AlumniController < ApplicationController
   end
 
   private
+    def set_alumni
+      @alumni = Alumni.find params[:id]
+    end
 
     def alumni_params
       params.require(:alumni).permit(:firstname, :lastname, :email, :alumni_email)

@@ -18,6 +18,10 @@ class Alumni < ActiveRecord::Base
   validates :alumni_email, presence: true, uniqueness: { case_sensitive: false }
   validates :token, presence: true, uniqueness: { case_sensitive: true }
   validate :uniqueness_of_alumni_email_on_user
+  scope :firstname, -> firstname {where("lower(firstname) LIKE ?", firstname.downcase)}
+  scope :lastname, -> lastname {where("lower(lastname) LIKE ?", lastname.downcase)}
+  scope :email, -> email {where("lower(email) LIKE ?", email.downcase)}
+  scope :alumni_email, -> alumni_email {where("lower(alumni_email) LIKE ?", alumni_email.downcase)}
 
   def self.create_from_row(row)
     row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize
