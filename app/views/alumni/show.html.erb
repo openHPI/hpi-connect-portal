@@ -1,0 +1,33 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4> <%= @alumni.firstname + ' ' + @alumni.lastname %> </h4>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                Email
+              </div>
+              <div class="col-sm-8">
+                <%= @alumni.email %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                Alumni Email
+              </div>
+              <div class="col-sm-8">
+                <%= @alumni.alumni_email %>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

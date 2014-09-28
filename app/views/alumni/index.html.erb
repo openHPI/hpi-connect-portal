@@ -1,0 +1,49 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="col-md-12 flash-message on-profile">
+    <div class="alert alert-warning">
+      Die angezeigen Alumnis haben bisher noch nicht auf die Email reagiert und sich noch nicht im Portal registriert.
+    </div>
+  </div>
+</div>
+
+<div class="wrapper-8 teaser">
+  <div class="col-md-8 list-container">
+    <% if @alumnis.any? %>
+      <ul class="list-group list">
+        <% @alumnis.each do |alumni| %>
+          <li class="list-group-item">
+            <h4><%= link_to (alumni.firstname + ' ' + alumni.lastname), alumni_path(alumni) %></h4>
+          </li>
+        <% end %>
+      </ul>
+      <div class="pull-right">
+       <%= will_paginate @alumnis, renderer: BootstrapPagination::Rails %>
+      </div>
+    <% else %>
+      <div class="col-md-6 col-md-offset-3" style="margin-top:25%">
+        <h4><%= t("students.no_results") %></h4>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="wrapper-5 teaser sidebar">
+  <div class="col-md-4">
+    <div class="sidebar-nav">
+      <%= form_tag '', :method => :get do %>
+        <ul class="nav nav-list">
+          <div class="form-group">
+            <h5><%= label_tag "Vorname" %></h5>
+            <%= text_field_tag(:firstname, params[:firstname], :placeholder => 'firstname', :class => "form-control") %>
+            <h5><%= label_tag "Nachname" %></h5>
+            <%= text_field_tag(:lastname, params[:lastname], :placeholder => 'lastname', :class => "form-control") %>
+            <h5><%= label_tag "Email" %></h5>
+            <%= text_field_tag(:email, params[:email], :placeholder => 'email', :class => "form-control") %>
+            <h5><%= label_tag "Alumni Email" %></h5>
+            <%= text_field_tag(:alumni_email, params[:alumni_email], :placeholder => 'alumni_email', :class => "form-control") %>
+          </div>  
+          <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
