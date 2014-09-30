@@ -40,6 +40,9 @@ class Alumni < ActiveRecord::Base
     return alumni
   end
 
+  def self.email_invalid? email
+    email.include?("@hpi-alumni") || email.include?("@student.hpi") || email.include?("@hpi.")
+  end
   def uniqueness_of_alumni_email_on_user
     errors.add(:alumni_email, 'is already in use by another user.') if User.exists? alumni_email: alumni_email
   end

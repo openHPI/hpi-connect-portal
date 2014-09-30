@@ -60,6 +60,9 @@ class AlumniController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       alumni.link user
       sign_in user
+      if Alumni.email_invalid? params[:session][:email]
+        respond_and_redirect_to edit_user_path(user), {error: I18n.t('alumni.choose_another_email')} and return
+      end
       respond_and_redirect_to user.manifestation, 'Alumni-Email erfolgreich hinzugefügt!'
     else
       flash[:error] = 'Invalid email/password combination'
@@ -69,6 +72,9 @@ class AlumniController < ApplicationController
 
   def link_new
     @alumni = Alumni.find_by_token! params[:token]
+    if Alumni.email_invalid? link_params[:email]
+      respond_and_redirect_to alumni_email_path(token: @alumni.token), {error: I18n.t('alumni.choose_another_email')} and return
+    end
     @user = User.new link_params
     student = Student.create! academic_program_id: Student::ACADEMIC_PROGRAMS.index('alumnus')
     @user.manifestation = student
