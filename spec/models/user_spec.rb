@@ -53,5 +53,17 @@ describe User do
       @user.email = FactoryGirl.create(:user).email
       @user.should be_invalid
     end    
+
+    it 'as Alumnus with hpi email' do
+      @user.alumni_email = @user.firstname + ' ' + @user.lastname
+      @user.email = "test@hpi.de"
+      @user.should be_invalid
+      @user.email = "test@student.hpi.uni-potsdam.de"
+      @user.should be_invalid
+      @user.email = "test@hpi-alumni.de"
+      @user.should be_invalid
+      @user.email = "test@bla.de"
+      @user.should be_valid
+    end
   end
 end

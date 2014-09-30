@@ -32,3 +32,17 @@ describe "the user editing page" do
     page.should have_content(I18n.t('users.messages.password_changed'))
   end
 end
+
+describe "Login new Alumnus with old HPI Email adress" do
+  it "should ask me to change my mail" do
+    future_alumni = FactoryGirl.create(:student)
+    future_alumni.user.update(email: "test@hpi-alumni.de")
+    alumni = FactoryGirl.create(:alumni, firstname: future_alumni.firstname, lastname: future_alumni.lastname, alumni_email: "test")
+    visit alumni_email_path(token: alumni.token)
+    fill_in 'session_email', with: future_alumni.email
+    fill_in 'session_password', with: 'password123'
+    click_button I18n.t('home.index.sign_in')
+    current_path.should eq(edit_user_path(future_alumni.user))
+    page.should have_content I18n.t('alumni.choose_another_email')
+  end
+end

@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :alumni_email, uniqueness: { case_sensitive: false }, unless: Proc.new { |u| u.alumni_email.blank? }
   validates :firstname, :lastname, presence: true
+  validate :non_hpi_email_on_alumni
 
   has_attached_file :photo, styles: { :medium => "300x300>", :thumb => "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
@@ -44,6 +45,10 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :cv, :content_type => ['application/pdf']
 
   after_destroy :clean_manifestation
+
+  def non_hpi_email_on_alumni
+    errors.add(:email, 'please choose a non-HPI-Email.') unless alumni_email.blank? || !Alumni.email_invalid?(email)
+  end
 
   def eql?(other)
     other.kind_of?(self.class) && self.id == other.id
@@ -67,6 +72,10 @@ class User < ActiveRecord::Base
 
   def admin?
     admin
+  end
+
+  def alumni?
+    !alumni_email.blank?
   end
 
   def full_name

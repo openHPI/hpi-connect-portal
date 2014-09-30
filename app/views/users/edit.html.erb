@@ -1,6 +1,6 @@
 <div class="wrapper-12 panel-wrapper">
   <h1> <%= t("users.settings") %> </h1>
-
+  <%= render 'shared/object_errors', object: @user %>
   <%= simple_form_for @user do |f| %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.login_information") %></h4></div>

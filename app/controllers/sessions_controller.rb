@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
       if user.staff?
         redirect_back_or home_employers_path
       else
-        redirect_back_or root_path
+        if user.alumni? && Alumni.email_invalid?(user.email)
+          respond_and_redirect_to edit_user_path(user), {error: I18n.t('alumni.choose_another_email')}
+        else
+          redirect_back_or root_path
+        end
       end
     else
       flash.now[:error] = 'Invalid email/password combination'
