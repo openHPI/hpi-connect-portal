@@ -22,3 +22,6 @@ de:
         remove_education: "Ausbildung entfernen"
         cv_as_pdf: "CV"
         certificates: "Zeugnisse"
+        messages:
+            certificates_only_for_employers: "Zeugnisse sind nur für dich und Arbeitgeber sichtbar."
+

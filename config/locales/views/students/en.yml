@@ -22,3 +22,5 @@ en:
         remove_education: "Remove Education"
         cv_as_pdf: "CV"
         certificates: "Certificates"
+        messages:
+            certificates_only_for_employers: "Certificates are only visible for you and employers."
