@@ -65,6 +65,24 @@
               </div>
             </div>
           </li>
+          <%if (current_user?(@student.user) || current_user.staff?) && !@student.certificates.empty? %>
+            <li class="list-group-item">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= t("students.certificates") %>
+                  </div>
+                  <div class="col-sm-8">
+                    <% @student.certificates.each do |certificate| %>
+                      <div class="row">
+                        <%= link_to(certificate.certificate_file.url) do %>
+                          <%= image_tag('file_thumbnails/pdf.png', size: "16") %> <%= certificate.certificate_file_file_name %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+            </li>  
+          <% end %>
           <%if @student.cv_as_pdf %>
             <li class="list-group-item">
               <div class="row">
