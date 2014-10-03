@@ -72,6 +72,7 @@ class StudentsController < ApplicationController
         certificate_params[:certificates].each { |certificate|
           @student.certificates.create(certificate_file: certificate)
         }
+        flash[:notice] = I18n.t('students.messages.certificates_only_for_employers')
       end
 
     if @student.update student_params
