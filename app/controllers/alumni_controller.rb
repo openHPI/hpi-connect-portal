@@ -1,6 +1,21 @@
 class AlumniController < ApplicationController
-  authorize_resource except: [:register, :link, :link_new]
-  skip_before_filter :signed_in_user, only: [:register, :link, :link_new]
+  authorize_resource except: [:register, :link, :link_new, :index, :show]
+  skip_before_filter :signed_in_user, only: [:register, :link, :link_new, :index, :show]
+  before_action :set_alumni, only: [:show]
+
+  has_scope :firstname, only: [:index], as: :firstname
+  has_scope :lastname, only: [:index], as: :lastname
+  has_scope :email, only: [:index], as: :email
+  has_scope :alumni_email, only: [:index], as: :alumni_email
+
+  def index
+    authorize! :index, Alumni
+    @alumnis = apply_scopes(Alumni.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)  
+  end
+
+  def show
+    authorize! :show, @alumni
+  end
 
   def new
     @alumni = Alumni.new
@@ -45,6 +60,9 @@ class AlumniController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       alumni.link user
       sign_in user
+      if Alumni.email_invalid? params[:session][:email]
+        respond_and_redirect_to edit_user_path(user), {error: I18n.t('alumni.choose_another_email')} and return
+      end
       respond_and_redirect_to user.manifestation, 'Alumni-Email erfolgreich hinzugefügt!'
     else
       flash[:error] = 'Invalid email/password combination'
@@ -54,6 +72,9 @@ class AlumniController < ApplicationController
 
   def link_new
     @alumni = Alumni.find_by_token! params[:token]
+    if Alumni.email_invalid? link_params[:email]
+      respond_and_redirect_to alumni_email_path(token: @alumni.token), {error: I18n.t('alumni.choose_another_email')} and return
+    end
     @user = User.new link_params
     student = Student.create! academic_program_id: Student::ACADEMIC_PROGRAMS.index('alumnus')
     @user.manifestation = student
@@ -69,6 +90,9 @@ class AlumniController < ApplicationController
   end
 
   private
+    def set_alumni
+      @alumni = Alumni.find params[:id]
+    end
 
     def alumni_params
       params.require(:alumni).permit(:firstname, :lastname, :email, :alumni_email)

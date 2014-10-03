@@ -46,7 +46,7 @@ HpiHiwiPortal::Application.routes.draw do
         end
       end
 
-      resources :alumni, only: [:new, :create] do
+      resources :alumni, only: [:new, :create, :index, :show] do
         collection do
           post 'import' => 'alumni#create_from_csv'
         end

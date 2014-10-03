@@ -50,6 +50,7 @@
                     <% if current_user.admin? %>
                       <li><%= link_to t('layouts.configuration'), admin_configurable_path %></li>
                       <li><%= link_to t('layouts.import'), new_alumni_path %></li>
+                      <li><%= link_to t('layouts.index_alumni'), alumni_index_path %></li>
                     <% end %>
                     <li><%= link_to t("users.settings"), [:edit, current_user] %>
                     <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>

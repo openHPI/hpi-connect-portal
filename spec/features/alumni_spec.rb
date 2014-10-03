@@ -66,5 +66,44 @@ describe "the alumni flow" do
       assert Student.last.alumni_email == @alumni.alumni_email
       assert Student.last.activated
     end
+
+    it "should not be possible to register a hpi-email adress" do
+      page.should have_field('user_firstname', with: @alumni.firstname)
+      page.should have_field('user_lastname', with: @alumni.lastname)
+      page.should have_field('user_email', with: @alumni.email)
+      fill_in 'user_email', with: 'thorsten.test@hpi-alumni.de'
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'password123'
+      user_count = User.count
+      student_count = Student.count
+      click_button I18n.t('links.register')
+      assert User.count == user_count
+      assert Student.count == student_count
+      current_path.should eq(alumni_email_path(token: @alumni.token))
+      fill_in 'user_email', with: 'thorsten.test@hpi.de'
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'password123'
+      click_button I18n.t('links.register')
+      assert User.count == user_count
+      assert Student.count == student_count
+      current_path.should eq(alumni_email_path(token: @alumni.token))
+      fill_in 'user_email', with: 'thorsten.test@student.hpi.uni-potsdam.de'
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'password123'
+      click_button I18n.t('links.register')
+      assert User.count == user_count
+      assert Student.count == student_count
+      current_path.should eq(alumni_email_path(token: @alumni.token))
+    end
+  end
+end
+
+describe "the alumni index page" do
+  it "renders an index page for admins" do
+    alumni = FactoryGirl.create(:alumni, firstname: "Hans", lastname: "Peter")
+    login FactoryGirl.create(:user, :admin)
+    visit alumni_index_path
+    click_link "Hans Peter"
+    current_path.should eq(alumni_path(alumni))
   end
 end
