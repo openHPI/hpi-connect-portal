@@ -17,6 +17,7 @@ de:
     edit_staff: "Mitarbeiter bearbeiten"
     settings: "Einstellungen"
     import: "Alumni importieren"
+    remind: "Alumni erinnern"
     password_settings: "Passwort ändern"
     forgot_password: 'Passwort vergessen'
     reset_password: "Passwort zurücksetzen"

@@ -1,0 +1,25 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1> <%= t("users.remind") %> </h1>
+
+  <%= form_tag mail_csv_alumni_index_path, method: :post, multipart: true do %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.send_mail_list") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.alumni.email_file") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional email_file">
+                <%= file_field_tag 'email_file' %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="Email senden" />
+    <br /><br />
+  <% end %>
+</div>
