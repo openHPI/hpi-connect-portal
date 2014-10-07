@@ -48,7 +48,9 @@ HpiHiwiPortal::Application.routes.draw do
 
       resources :alumni, only: [:new, :create, :index, :show] do
         collection do
+          get 'remind_via_mail'
           post 'import' => 'alumni#create_from_csv'
+          post 'mail_csv' => 'alumni#send_mail_from_csv'
         end
       end
       get 'alumni/:token/email' => 'alumni#register', as: 'alumni_email'

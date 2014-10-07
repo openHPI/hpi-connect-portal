@@ -35,6 +35,28 @@ describe "the alumni flow" do
     end
   end
 
+  describe "send registration mail to alumni" do
+    before :each do
+      login FactoryGirl.create(:user, :admin)
+      FactoryGirl.create(:alumni, alumni_email: "alexander.ernst")
+      visit remind_via_mail_alumni_index_path
+      ActionMailer::Base.deliveries = []
+    end
+
+    it "should be possible to upload a csv file to send mails" do
+      file = File.join fixture_path, "csv/mail_file.csv"
+      find("#email_file").set(file)
+      first('input[type=submit]').click
+      ActionMailer::Base.deliveries.count.should == 1
+    end
+
+    it "should not be possible for non_admin" do
+      login FactoryGirl.create(:user)
+      visit remind_via_mail_alumni_index_path
+      current_path.should_not eq(remind_via_mail_alumni_index_path)
+    end
+  end
+
   describe "registering alumni addresses" do
     before :each do
       @alumni = FactoryGirl.create :alumni

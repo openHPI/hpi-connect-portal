@@ -8,4 +8,6 @@ de:
         alumni_email: 'Alumni-Email'
         alumni_file: 'Alumnidatei'
         import_list: 'Alumniliste importieren'
+        email_file: 'Emaildatei'
+        send_mail_list: 'Registrationsemail an Alumni senden'
         import_single: 'Einzelnen Alumnus importieren'

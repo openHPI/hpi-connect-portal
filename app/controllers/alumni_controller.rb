@@ -49,6 +49,31 @@ class AlumniController < ApplicationController
     respond_and_redirect_to new_alumni_path, notice
   end
 
+  def remind_via_mail
+  end
+
+  def send_mail_from_csv
+    require 'csv'
+    if params[:email_file].present?
+      count, errors = 0, []
+      CSV.foreach(params[:email_file].path, headers: true, header_converters: :symbol) do |row|
+        count += 1
+        alumni = Alumni.where("lower(alumni_email) = ?", row[:alumni_email].downcase).first
+        if alumni.nil?
+          errors << "Could not find Alumni " + '(' + count.to_s + ')' unless alumni == :created
+        else
+          AlumniMailer.creation_email(alumni).deliver
+        end
+      end
+      if errors.any?
+        notice = { error: 'The following lines (starting from 1) contain errors: ' + errors.join(', ')}
+      else
+        notice = 'Alumni Emails erfolgreich gesendet!'
+      end
+    end
+    respond_and_redirect_to remind_via_mail_alumni_index_path, notice
+  end
+
   def register
     @alumni = Alumni.find_by_token! params[:token]
     @user = User.new
