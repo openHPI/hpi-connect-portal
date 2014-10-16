@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.text-editor-body h1 {
+  color: #007a9e !important;
+}
+
 .startDate {
     text-align: right;
     margin-top: 10px;
