@@ -16,6 +16,9 @@ describe JobOffersController do
     "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student]}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student]}}
+   let(:valid_attributes_interesting_language) {{ "title"=>"C Job", "description" => "C required", "employer_id" => employer.id, "start_date" => Date.current + 1,
+    "programming_language_ids" => [1], "status" => FactoryGirl.create(:job_status, :pending)}}
+  
 
   let(:valid_session) { {} }
 
@@ -192,6 +195,7 @@ describe JobOffersController do
       response.should redirect_to(job_offers_path)
     end
 
+
     it "should not be possible to prolong for a staff member" do
       get :prolong, {id: @job_offer.id}
       response.should redirect_to(job_offers_path)
@@ -227,6 +231,9 @@ describe JobOffersController do
 
     before(:each) do
       @job_offer = FactoryGirl.create(:job_offer, employer: employer, release_date: nil)
+      @student = FactoryGirl.create(:student)
+      @student2 = FactoryGirl.create(:student)
+      ActionMailer::Base.deliveries = []
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
@@ -249,6 +256,41 @@ describe JobOffersController do
       @job_offer.release_date.should eq(nil)
       get :accept, {id: @job_offer.id}
       assigns(:job_offer).release_date.should_not eq(nil)
+    end
+
+    it "sends mail to students interested in employer" do
+      FactoryGirl.create(:employers_newsletter_information, employer: employer, student: @student)
+      FactoryGirl.create(:employers_newsletter_information, employer: employer, student: @student2)
+
+      login admin
+      get :accept, {id: @job_offer.id}
+
+      emails = ActionMailer::Base.deliveries
+      emails.count.should == 3
+      receiver = [["#{@student.email}"], ["#{@student2.email}"], ["#{employer.staff_members[0].email}"]]
+
+      # Validate that two emails are sent to the interested students and last one to the staff
+      emails.reject! {|x| receiver.include? x.to }
+      emails.count.should == 0
+    end
+
+    it "sends mail to students interested in programming language" do
+      @programming_language_c = FactoryGirl.create(:programming_language, name: "C")
+      @programming_language_java = FactoryGirl.create(:programming_language, name: "Java")
+      FactoryGirl.create(:programming_languages_newsletter_information, programming_language: @programming_language_c, student: @student)
+      FactoryGirl.create(:programming_languages_newsletter_information, programming_language: @programming_language_java, student: @student2)
+      @job_offer.programming_languages = [@programming_language_c, @programming_language_java]
+
+      login admin
+      get :accept, {id: @job_offer.id}
+
+      emails = ActionMailer::Base.deliveries
+      emails.count.should == 3
+      receiver = [["#{@student.email}"], ["#{@student2.email}"], ["#{employer.staff_members[0].email}"]]
+
+      # Validate that two emails are sent to the interested students and last one to the staff
+      emails.reject! {|x| receiver.include? x.to }
+      emails.count.should == 0
     end
   end
 
