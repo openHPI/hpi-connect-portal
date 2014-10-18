@@ -1,15 +1,13 @@
-(For an English translation, scroll down.)
+(For an English translation, please scroll down.)
 
 Hallo <%=@student.firstname%>,
 
-gute Nachrichten: Es gibt ein neues Jobangebote, das Dich interessieren könnten:
+gute Nachrichten! Es gibt ein neues Jobangebote, das Dich interessieren könnten:
 
 <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
 
-Vielleicht ist das ja was Passendes für dich?
-
-Grüße,
-Das HPI-HiWi-Portal Team.
+Viele Grüße,
+Das HPI Connect Team.
 
 (Dies ist eine maschinell erstellte Email, bitte antworte nicht darauf.)
 
@@ -21,9 +19,9 @@ good news! There is a new job offers that might be interesting for you:
 
 <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>
 
-Visit our HPI-HiWi-Portal if you're interested!
+Visit our Jobportal if you're interested!
 
-Regards,
-The HPI-HiWi-Portal Team.
+Kind Regards,
+The HPI Connect Team.
 
 (This is an automatically created email, please do not respond to it.)
