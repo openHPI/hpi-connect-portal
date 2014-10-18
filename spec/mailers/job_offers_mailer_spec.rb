@@ -173,6 +173,5 @@ describe JobOffersMailer do
     it "should send an email" do
       ActionMailer::Base.deliveries.count.should == @job_offer.employer.staff_members.size
     end
-
   end
 end

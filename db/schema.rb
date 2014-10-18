@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817122242) do
+ActiveRecord::Schema.define(version: 20141017223052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,11 @@ ActiveRecord::Schema.define(version: 20140817122242) do
 
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
 
+  create_table "employers_newsletter_informations", force: true do |t|
+    t.integer "student_id"
+    t.integer "employer_id"
+  end
+
   create_table "faqs", force: true do |t|
     t.string   "question"
     t.text     "answer"
@@ -154,11 +159,11 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.boolean  "prolong_requested",         default: false
     t.boolean  "prolonged",                 default: false
     t.datetime "prolonged_at"
+    t.date     "release_date"
     t.string   "offer_as_pdf_file_name"
     t.string   "offer_as_pdf_content_type"
     t.integer  "offer_as_pdf_file_size"
     t.datetime "offer_as_pdf_updated_at"
-    t.date     "release_date"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -204,6 +209,11 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "programming_languages_newsletter_informations", force: true do |t|
+    t.integer "student_id"
+    t.integer "programming_language_id"
   end
 
   create_table "programming_languages_users", force: true do |t|
