@@ -124,7 +124,6 @@ ActiveRecord::Schema.define(version: 20141018183419) do
     t.integer  "requested_package_id",  default: 0,     null: false
     t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
-    t.integer  "rating"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
@@ -135,11 +134,6 @@ ActiveRecord::Schema.define(version: 20141018183419) do
   end
 
   add_index "employers_job_offers", ["employer_id", "job_offer_id"], name: "index_employers_job_offers_on_employer_id_and_job_offer_id", unique: true, using: :btree
-
-  create_table "employers_newsletter_informations", force: true do |t|
-    t.integer "student_id"
-    t.integer "employer_id"
-  end
 
   create_table "faqs", force: true do |t|
     t.string   "question"

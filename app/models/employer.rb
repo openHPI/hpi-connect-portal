@@ -20,7 +20,6 @@
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
 #  single_jobs_requested :integer          default(0), not null
-#  rating                :integer
 #
 
 class Employer < ActiveRecord::Base
@@ -91,16 +90,11 @@ class Employer < ActiveRecord::Base
 
   def average_rating
     if rating_amount > 0
-      EmployerRating.where(employer: self).map{|x| x.rating}.inject(:+) / rating_amount
+      (EmployerRating.where(employer: self).map{|x| x.rating}.inject(:+) / rating_amount).round(1)
     end
   end
 
   def rating_amount
     EmployerRating.where(employer: self).count
-  end
-
-  def rated_by_student?(student)
-    p EmployerRating.where(employer: self, student: student).empty?
-    !EmployerRating.where(employer: self, student: student).empty?
   end
 end
