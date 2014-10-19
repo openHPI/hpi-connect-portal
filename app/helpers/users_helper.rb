@@ -10,7 +10,6 @@ module UsersHelper
         language = language_class.where(student_id: student_id, language_id_attribute.to_sym => id).first_or_create
         language.update_attributes(skill: skill)
       end
-
       remove_for_language(params, student_id, language_class, language_id_attribute)
     else
       language_class.destroy_all(student_id: student_id)
