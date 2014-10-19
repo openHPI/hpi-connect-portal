@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data, :rate]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data, :rate]
   
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -110,6 +110,18 @@ class StudentsController < ApplicationController
     authorize_client linkedin_client
     @student.update_from_linkedin(linkedin_client)
     respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
+  end
+
+  def rate
+    session[:return_to] ||= request.referer
+    if params[:rating] && params[:rating][:employer_id] && params[:rating][params[:rating][:employer_id]]
+      rating = params[:rating][params[:rating][:employer_id]]
+      employer_rating = EmployerRating.where(student_id: @student.id, employer_id: params[:rating][:employer_id]).first_or_create
+      employer_rating.update_attributes(rating: rating)
+    else #params[:rating] && params[:rating][:employer_id] #no rating given -> remove
+      EmployerRating.where(student_id: @student.id, employer_id: params[:rating][:employer_id]).destroy_all
+    end
+    respond_and_redirect_to session.delete(:return_to), t("students.successfully_rated")
   end
 
   private

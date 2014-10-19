@@ -20,3 +20,8 @@ en:
         add_education: "Add Education"
         remove_work_experience: "Remove Work Experience"
         remove_education: "Remove Education"
+        ratings: "Ratings"
+        stars: "Stars"
+        rate: "Rate"
+        successfully_rated: "We saved your rating. Thank you."
+        successfully_deleted_rating: "We successfully deleted your rating."

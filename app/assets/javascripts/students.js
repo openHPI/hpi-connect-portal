@@ -63,4 +63,12 @@ $(document).ready( function() {
     $(document).on('change', '.current-item input[type=checkbox]', function() {
         $(this).parents('.current-item').prev('.end-date-item').toggle();
     });
+
+    $( ".toggleRating" ).click( function(e) {
+        if($(this).next().css('display') == 'none')
+            $(this).next().show('fast');
+        else
+            $(this).next().hide('fast');
+    });
+
 });
