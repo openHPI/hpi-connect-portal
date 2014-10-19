@@ -328,4 +328,26 @@ describe StudentsController do
       response.should redirect_to edit_student_path(student)
     end
   end
+
+  describe "POST rate" do
+
+    before(:each) do
+      @employer = FactoryGirl.create(:employer)
+      @student1 = FactoryGirl.create(:student)
+      @student2 = FactoryGirl.create(:student)
+      @student3 = FactoryGirl.create(:student)
+    end
+
+    it "rates an employer" do
+      @employer.rating_amount.should eq 0
+      @employer.average_rating.should eq nil
+
+      FactoryGirl.create(:employer_rating, student: @student1, employer: @employer, rating: 1)
+      FactoryGirl.create(:employer_rating, student: @student2, employer: @employer, rating: 1)
+      FactoryGirl.create(:employer_rating, student: @student3, employer: @employer, rating: 2)
+
+      @employer.rating_amount.should eq 3
+      @employer.average_rating.should eq 1.3
+    end
+  end
 end

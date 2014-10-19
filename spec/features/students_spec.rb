@@ -286,7 +286,6 @@ describe "the students profile page" do
       visit student_path(@student)
       current_path.should == student_path(@student)
     end
-
   end
 
   describe "as admin" do
@@ -298,5 +297,63 @@ describe "the students profile page" do
       assert current_path == student_path(student)
       page.should have_link 'Activate'
     end
+  end
+end
+describe "at the employer index page" do
+
+  before :each do
+    @employer = FactoryGirl.create(:employer)
+  end
+
+  it "should have the possibility to rate employers for students" do
+    student1 = FactoryGirl.create(:student)
+    student2 = FactoryGirl.create(:student)
+
+    login student1.user
+    visit employers_path
+    page.should have_content "0 Ratings"
+    page.should have_selector('.rating', visible: false)
+
+    click_on('Rate')
+    # TODO: fire $('.toggleRating').click() 
+    #page.should have_selector('.rating', visible: true)
+    #click_on('1')
+    #page.find("Save").click 
+    FactoryGirl.create(:employer_rating, student: student1, employer: @employer, rating: 1)
+    # TODO create employer_rating by :rate
+    visit employers_path
+
+    page.should have_content "1.0 Stars (1 Ratings)"
+
+    login student2.user
+    visit employers_path
+    click_on('Rate')
+    # TODO: fire $('.toggleRating').click() 
+    #page.should have_selector('.rating', visible: true)
+    #click_on('4')
+    #page.find("Save").click 
+    FactoryGirl.create(:employer_rating, student: student2, employer: @employer, rating: 4)
+    # TODO create employer_rating by :rate
+    visit employers_path
+    page.should have_content "2.5 Stars (2 Ratings)"
+
+    login student1.user
+    EmployerRating.where(student: student1, employer: @employer).destroy_all
+    visit employers_path
+    page.should have_content "4.0 Stars (1 Ratings)"
+  end
+
+  it "should not be possible for admins to rate employers" do
+    login FactoryGirl.create(:user, :admin)
+    visit employers_path
+    page.should have_content "0 Ratings"
+    page.should_not have_content "Rate"
+  end
+
+  it "should not be possible for staffs to see the ratings" do
+    login FactoryGirl.create(:staff)
+    visit employers_path
+    page.should_not have_content "0 Ratings"
+    page.should_not have_content "Rate"
   end
 end
