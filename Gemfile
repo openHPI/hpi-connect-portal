@@ -143,3 +143,6 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rails', '~> 1.1.0'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
+
+# html5 wysiwig editor
+gem 'tinymce-rails'

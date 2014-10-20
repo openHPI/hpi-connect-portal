@@ -16,12 +16,23 @@
 //= require jquery.ui.datepicker
 //= require jquery.turbolinks
 //= require jquery-star-rating
+//= require tinymce-jquery
 //= require bootstrap/bootstrap
 //= require_tree .
 
 
 $(document).ready( function() {
     $('.dropdown-toggle').dropdown();
+
+	$('textarea.tinymce').tinymce({
+		    plugins: [
+		        "advlist autolink lists link image preview anchor",
+		        "searchreplace visualblocks code",
+		        "insertdatetime table contextmenu paste"
+		    ],
+		    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist outdent indent | link",
+			removed_menuitems: 'newdocument'
+	});
 });
 
 $(function() {
