@@ -336,11 +336,15 @@ describe "at the employer index page" do
     # TODO create employer_rating by :rate
     visit employers_path
     page.should have_content "2.5 Stars (2 Ratings)"
+    #page.assert_selector(:xpath, './/input[@class="star-rating-on"]')
+    #print page.html
+    #page.should have_css("star", :count => 3)    
 
     login student1.user
     EmployerRating.where(student: student1, employer: @employer).destroy_all
     visit employers_path
     page.should have_content "4.0 Stars (1 Ratings)"
+    #print page.html
   end
 
   it "should not be possible for admins to rate employers" do

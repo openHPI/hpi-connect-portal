@@ -65,6 +65,7 @@ $(document).ready( function() {
     });
 
     $( ".toggleRating" ).click( function(e) {
+        e.preventDefault();
         if($(this).next().css('display') == 'none')
             $(this).next().show('fast');
         else

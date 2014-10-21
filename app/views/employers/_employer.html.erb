@@ -7,11 +7,21 @@
         <h4 class="h4"><%= employer.name %></h4>
       <% end %>
       <% if current_user && (current_user.student? || current_user.admin?) %>
+        <% if employer.average_rating.nil? %>
+          <% (1..5).each do |i| %>
+            <%= radio_button_tag employer.id, i, false, disabled: true, class: "star" %>
+          <% end %>
+        <% else %>        
+          <% (1..5).each do |i| %>
+            <% if i == employer.average_rating.ceil && i != employer.average_rating %>
+              <%= radio_button_tag employer.id, i, i==employer.average_rating.ceil, disabled: true, class: "star star-percent star-percent-#{((employer.average_rating-employer.average_rating.to_s.split(".")[0].to_f)*100).to_s.split(".")[0]}" %>
+            <% else %>
+              <%= radio_button_tag employer.id, i, i==employer.average_rating.ceil, disabled: true, class: "star" %>
+            <% end %>
+          <% end %>   
+        <% end %>
         <%= !employer.average_rating.nil? ? "#{employer.average_rating} #{t("students.stars")}" : ""%>
         <%= "(#{employer.rating_amount} #{t("students.ratings")})" %> 
-        <% (1..5).each do |i| %>
-          <%= radio_button_tag employer.id, i, i==employer.average_rating, disabled: true, class: "star" %>
-        <% end %>   
       <% end %>
       <% unless employer.activated %>
         <span class="label label-danger"><%= t("employers.inactive")%></span>
