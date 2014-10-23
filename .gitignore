@@ -34,3 +34,6 @@
 
 # .orig Files
 .orig
+
+# ignore swap files
+*.swp

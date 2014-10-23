@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootsy
 //= require jquery.ui.datepicker
 //= require jquery.turbolinks
 //= require jquery-star-rating
