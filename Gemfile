@@ -112,7 +112,7 @@ gem 'simple_form'
 
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 4.1.5'
-gem 'sanitize'
+gem 'sanitize', '~> 3.0.2'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'

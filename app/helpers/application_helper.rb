@@ -9,10 +9,11 @@ module ApplicationHelper
   end 
 
   def sanitize_html(html)
-    Sanitize.clean(html, 
-      :elements => ['ul', 'li', 'b', 'u', 'i', 'tr', 'td', 'ol', 'blockquote', 'div', 'span', 
-        'br', 'a', 'h1', 'h2', 'h3'],
-      :attributes => {'a' => ['target', 'href'], 'span' => ['class']},
-      :protocols => {'a' => {'href' => ['http', 'https', 'mailto']}}).html_safe
+    Sanitize.fragment(html, 
+      :elements => ['ul', 'li', 'b', 'strong', 'em', 'u', 'i', 'table', 'tbody', 'tr', 'td', 'ol', 'blockquote', 'div', 'span', 
+        'br', 'a','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+      :attributes => {'a' => ['target', 'href'], 'span' => ['class'], :all => ['style']},
+      :protocols => {'a' => {'href' => ['http', 'https', 'mailto']}},
+      :css => { :properties => ['text-align','text-decoration', 'padding-left', 'color']}).html_safe
   end
 end
