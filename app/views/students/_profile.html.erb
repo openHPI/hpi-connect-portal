@@ -169,17 +169,10 @@
 
   <% if !(student.additional_information).nil? && !(student.additional_information).empty?%>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></div>
-        <table class="table">
-          <thead></thead>
-          <tbody>
-            <tr>
-              <td>
-                <%= sanitize_html(student.additional_information.html_safe) %>
-              </td>
-             </tr>
-          </tbody>
-        </table>
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.student.additional_information")%></h4></div>  
+	  <div class="panel-body">
+		   <%= sanitize_html(student.additional_information.html_safe) %>
+	  </div>
     </div>
   <% end %>
 </div>
