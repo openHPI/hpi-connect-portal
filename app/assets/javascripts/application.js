@@ -22,7 +22,11 @@
 
 $(document).ready( function() {
     $('.dropdown-toggle').dropdown();
+	
+	var language = window.locale === 'de' ? 'de' : 'en';
+	
 	$('textarea.tinymce').tinymce({
+			language : language,
 		    plugins: [
 		        "advlist autolink lists link image preview anchor",
 		        "searchreplace visualblocks code",

@@ -112,6 +112,7 @@ gem 'simple_form'
 
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 4.1.5'
+gem 'tinymce-rails-langs', '~> 4.20140129'
 gem 'sanitize', '~> 3.0.2'
 
 # Birthdate validation
