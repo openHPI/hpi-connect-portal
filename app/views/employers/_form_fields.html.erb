@@ -34,7 +34,18 @@
 
     <li class="list-group-item">
       <div>
-        <%= form.label 'Packages', class: "control-label" %>
+        <div class="package-div">
+            <%= form.label 'Packages', class: "control-label" %>
+        </div>
+        <div class="pay-div">
+            <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
+        <div class="pay-div">
+          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
+        <div class="pay-div">
+          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
       </div>
       <div class="package-div">
         <% if employer.booked_package_id > 0 %>
