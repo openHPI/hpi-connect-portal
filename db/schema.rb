@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817122242) do
+ActiveRecord::Schema.define(version: 20141106104217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,18 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "certificates", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "certificate_file_file_name"
+    t.string   "certificate_file_content_type"
+    t.integer  "certificate_file_file_size"
+    t.datetime "certificate_file_updated_at"
+    t.integer  "student_id"
+  end
+
+  add_index "certificates", ["student_id"], name: "index_certificates_on_student_id", using: :btree
 
   create_table "configurables", force: true do |t|
     t.string   "name"
@@ -154,11 +166,11 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.boolean  "prolong_requested",         default: false
     t.boolean  "prolonged",                 default: false
     t.datetime "prolonged_at"
+    t.date     "release_date"
     t.string   "offer_as_pdf_file_name"
     t.string   "offer_as_pdf_content_type"
     t.integer  "offer_as_pdf_file_size"
     t.datetime "offer_as_pdf_updated_at"
-    t.date     "release_date"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
@@ -198,6 +210,13 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.integer "student_id"
     t.integer "language_id"
     t.integer "skill"
+  end
+
+  create_table "newsletter_orders", force: true do |t|
+    t.integer  "student_id"
+    t.text     "search_params"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "programming_languages", force: true do |t|
@@ -244,6 +263,10 @@ ActiveRecord::Schema.define(version: 20140817122242) do
     t.integer  "graduation_id",          default: 0, null: false
     t.integer  "visibility_id",          default: 0, null: false
     t.integer  "dschool_status_id",      default: 0, null: false
+    t.string   "cv_as_pdf_file_name"
+    t.string   "cv_as_pdf_content_type"
+    t.integer  "cv_as_pdf_file_size"
+    t.datetime "cv_as_pdf_updated_at"
   end
 
   create_table "users", force: true do |t|
