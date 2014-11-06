@@ -22,7 +22,7 @@
             </div>
             <div id="collapse<%= index.to_s %>" class="accordion-body collapse">
               <div class="panel-body">
-                <%= sanitize_html(faq.answer.html_safe) %>
+                <%= sanitized_html(faq.answer) %>
                 <br><br>
                 <% if can?(:update, faq) ||  can?(:destroy, faq) %>
                   <div class="pull-right">

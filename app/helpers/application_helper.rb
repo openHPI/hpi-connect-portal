@@ -8,8 +8,8 @@ module ApplicationHelper
     "*" if object.class.validators_on(attribute).map(&:class).include? ActiveRecord::Validations::PresenceValidator
   end 
 
-  def sanitize_html(html)
-    Sanitize.fragment(html, 
+  def sanitized_html(text)
+    Sanitize.fragment(text.html_safe, 
       :elements => ['ul', 'li', 'b', 'strong', 'em', 'u', 'i', 'table', 'tbody', 'tr', 'td', 'caption', 'ol', 'blockquote', 'div', 'span', 
         'br', 'a','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
       :attributes => {'a' => ['target', 'href'], 'span' => ['class'], 'table'=>['border', 'cellspacing', 'cellpadding'], :all => ['style']},

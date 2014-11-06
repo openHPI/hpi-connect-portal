@@ -30,10 +30,10 @@ $(document).ready( function() {
 		    plugins: [
 		        "advlist autolink lists link image preview anchor",
 		        "searchreplace visualblocks code",
-		        "insertdatetime table contextmenu paste"
+		        "insertdatetime table contextmenu paste textcolor"
 		    ],
 			menubar: "table format view insert edit",
-		    toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist outdent indent | link | code"
+		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
 });
 
