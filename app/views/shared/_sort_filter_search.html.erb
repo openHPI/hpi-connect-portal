@@ -101,7 +101,8 @@
                   <%= text_field_tag :compensation, params.fetch(:compensation, ''),:placeholder => t('job_offers.compensation'), :class => "form-control" %>
                 </div>
               <div class="form-group">
-              <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right", :id => "find_jobs_button" %>
+                <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right", :id => "find_jobs_button" %>
+                <%= submit_tag "Als Newsletter anlegen", :class => "btn btn-default pull-right" %>
               </div>
             </div>
          </ul>

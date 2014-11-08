@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data, :create_newsletter]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
   
   has_scope :filter_students, only: [:index], as: :q
@@ -31,6 +31,10 @@ class StudentsController < ApplicationController
       end
     end
     @students = apply_scopes(indexedStudents).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+  end
+
+  def create_newsletter
+    @newsletter_params = params[:newsletter_params]
   end
 
   def show

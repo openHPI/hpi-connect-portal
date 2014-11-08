@@ -25,6 +25,11 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
+    if params[:commit] == "Als Newsletter anlegen"
+      # to fill current_scopes
+      apply_scopes(JobOffer.active)
+      redirect_to create_newsletter_student_path(current_user.manifestation, {newsletter_params: current_scopes})
+    end
     job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
