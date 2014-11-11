@@ -146,7 +146,8 @@ de:
         one: ! 'Konnte %{model} nicht speichern: ein Fehler.'
         other: ! 'Konnte %{model} nicht speichern: %{count} Fehler.'
     configuration:
-      invalid_email:  "Dies ist keine gültige Email Adresse!"
+      invalid_email:  "Dies ist keine gültige E-Mail-Adresse!"
+      invalid_email_or_password: "Deine E-Mail-Adresse und/oder Dein Passwort sind nicht korrekt."
   helpers:
     select:
       prompt: Bitte wählen

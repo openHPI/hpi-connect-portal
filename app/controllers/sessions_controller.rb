@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
         end
       end
     else
-      flash.now[:error] = 'Invalid email/password combination'
+      flash[:error] = I18n.t('errors.configuration.invalid_email_or_password')
       redirect_to root_path
     end
   end

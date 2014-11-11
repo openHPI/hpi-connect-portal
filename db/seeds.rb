@@ -297,6 +297,7 @@ supporter = JobOffer.create!(
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100,
+  release_date: Date.current-5,
   time_effort: 8,
   compensation: 10.00,
   languages: Language.where(:name => 'german'),

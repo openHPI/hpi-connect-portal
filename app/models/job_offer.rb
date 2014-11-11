@@ -23,7 +23,6 @@
 #
 
 class JobOffer < ActiveRecord::Base
-  include Bootsy::Container
   include JobOfferScopes
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
