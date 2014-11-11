@@ -82,6 +82,7 @@ HpiHiwiPortal::Application.routes.draw do
           get 'request_linkedin_import'
           get 'insert_imported_data'
           get 'create_newsletter'
+          get 'verify_newsletter_creation'
         end
       end
     end

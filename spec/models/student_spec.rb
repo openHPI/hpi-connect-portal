@@ -146,4 +146,17 @@ describe Student do
       student.reload.cv_educations.length.should eq(1)
     end
   end
+
+  describe "Deliver Newsletter" do
+    it "delivers newsletters" do
+      FactoryGirl.create(:student)
+      FactoryGirl.create(:student)
+      FactoryGirl.create(:newsletter_order, student:Student.first)
+      search_hash = {state: 1}
+      FactoryGirl.create(:newsletter_order, student: Student.last, search_params: search_hash)
+      FactoryGirl.create(:job_offer, )
+      Student.deliver_newsletters
+      ActionMailer::Base.deliveries.count.should == 2
+    end
+  end
 end

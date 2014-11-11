@@ -1,2 +1,14 @@
-<h1>Woooop Wooop</h1>
-<h1><%= @newsletter_params %></h1>
+<div class="wrapper-12 panel-wrapper">
+  <div class="wrapper-8 teaser">
+    <div class="col-md-8">
+      <h2>Woooop Wooop</h2>
+      <h2><%= @newsletter_params %></h2>
+      find a way how to display current choice!
+      <br/>
+      <%=link_to("Bestätigen", verify_newsletter_creation_student_path(@student, {newsletter_params: @newsletter_params}), class: "button btn btn-default") %>
+    </div>
+
+  </div>
+
+</div>
+

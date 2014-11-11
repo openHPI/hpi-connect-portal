@@ -212,4 +212,8 @@ class Student < ActiveRecord::Base
   def self.create_linkedin_client
     LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
   end
+
+  def self.deliver_newsletters
+
+  end
 end

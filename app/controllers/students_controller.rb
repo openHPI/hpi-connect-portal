@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data, :create_newsletter]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data, :create_newsletter, :verify_newsletter_creation]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data, :create_newsletter, :verify_newsletter_creation]
   
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -35,6 +35,11 @@ class StudentsController < ApplicationController
 
   def create_newsletter
     @newsletter_params = params[:newsletter_params]
+  end
+
+  def verify_newsletter_creation
+    NewsletterOrder.create(student:@student, search_params: params[:newsletter_params])
+    respond_and_redirect_to(job_offers_path, "Newsletter erfolgreich angelegt")
   end
 
   def show
