@@ -95,4 +95,5 @@ HpiHiwiPortal::Application.configure do
   # Mount this application to a unique subdirectory
   config.relative_url_root = '/connect/jobportal'
   config.assets.prefix = '/connect/jobportal/assets'
+  config.tinymce.base = 'connect/jobportal/assets/tinymce'
 end
