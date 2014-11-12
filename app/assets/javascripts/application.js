@@ -16,6 +16,7 @@
 //= require jquery.turbolinks
 //= require jquery-star-rating
 //= require tinymce-jquery
+//= 
 //= require bootstrap/bootstrap
 //= require_tree .
 
@@ -26,6 +27,7 @@ $(document).ready( function() {
 	var language = window.locale === 'de' ? 'de' : 'en';
 	
 	$('textarea.tinymce').tinymce({
+            document_base_url: "https://www.hpi.uni-potsdam.de/",
 			language : language,
 		    plugins: [
 		        "advlist autolink lists link image preview anchor",
