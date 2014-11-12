@@ -27,6 +27,7 @@ $(document).ready( function() {
 	var language = window.locale === 'de' ? 'de' : 'en';
 	
 	$('textarea.tinymce').tinymce({
+            relative_urls : false,
             document_base_url: "https://www.hpi.uni-potsdam.de/",
 			language : language,
 		    plugins: [
