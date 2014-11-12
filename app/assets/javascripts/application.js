@@ -27,8 +27,8 @@ $(document).ready( function() {
 	var language = window.locale === 'de' ? 'de' : 'en';
 	
 	$('textarea.tinymce').tinymce({
-            relative_urls : false,
-            document_base_url: "https://www.hpi.uni-potsdam.de/",
+            relative_urls : true,
+            document_base_url: "http://localhost:3000/assets/tinymce/",
 			language : language,
 		    plugins: [
 		        "advlist autolink lists link image preview anchor",
