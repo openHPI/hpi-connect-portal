@@ -39,7 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <%= label_field f, :description, t("activerecord.attributes.job_offer.description") %>
-                <%= f.input :description, placeholder: t("job_offers.enter_description") %>
+                <%= f.input :description, placeholder: t("job_offers.enter_description"), input_html: { class: 'tinymce' } %>
               </div>
             </div>
           </li>

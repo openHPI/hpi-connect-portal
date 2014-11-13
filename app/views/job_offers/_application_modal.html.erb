@@ -9,7 +9,7 @@
         <%= simple_form_for current_user.manifestation.applications.build(job_offer_id: job_offer.id), html: { multipart: true } do |f| %>
           <div class="modal-body clearfix">
             <%= f.input :job_offer_id, as: :hidden %>
-            <%= text_area_tag :message, t("applications_mailer.students.apply.application"), class: "col-md-12 form-control"  %>
+            <%= text_area_tag :message, t("applications_mailer.students.apply.application"), class: "col-md-12 form-control tinymce"  %>
             <% unless (current_user.cv.path).nil? %>
               <br/>
               <%= check_box_tag :add_cv, nil, true %>

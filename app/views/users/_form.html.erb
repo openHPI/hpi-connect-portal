@@ -93,7 +93,7 @@
         <div class="form-group">
           <%= f.label :education, class: "col-sm-2 control-label" %>
           <div class="col-sm-10">
-            <%= f.input :education %>
+            <%= f.input :education, input_html: { class: 'tinymce' } %>
           </div>
         </div>
       </li>
@@ -107,7 +107,7 @@
       <li class="list-group-item">
         <div class="form-group">
           <div class="col-sm-12">
-            <%= f.input :additional_information %>
+            <%= f.input :additional_information, input_html: { class: 'tinymce' } %>
           </div>
         </div>
       </li>
