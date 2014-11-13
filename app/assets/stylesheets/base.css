@@ -150,9 +150,8 @@ a:hover, a:focus, .btn-default:hover  {
     margin-bottom: 10px;
 }
 
-
 /* Override Bootstrap CSS for buttons in a tinymce editor */
-.mce-tinymce button:before{
+.mce-container button:before{
  content: '' !important;
  margin-right: 0px !important;
  display: inline !important;
