@@ -1,5 +1,4 @@
 HpiHiwiPortal::Application.routes.draw do
-  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
 
   prefix = HpiHiwiPortal::Application.config.relative_url_root || ''
 

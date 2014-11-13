@@ -111,8 +111,9 @@ gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
 # WYSIWYG Text Editor
-gem 'bootsy', '~> 2.0.6'
-gem 'sanitize'
+gem 'tinymce-rails', '~> 4.1.5'
+gem 'tinymce-rails-langs', '~> 4.20140129'
+gem 'sanitize', '~> 3.0.2'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'
@@ -143,3 +144,4 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rails', '~> 1.1.0'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
+
