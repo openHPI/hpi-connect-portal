@@ -1,0 +1,7 @@
+Guten Tag <%= @student.full_name %>,
+
+das Connect Portal hat <%= @job_offers.count %> neue Stellenangebote, die Ihren Suchkriterien entsprechen.
+<% @job_offers.each do |job_offer| %>
+    <%= job_offer.title %>
+    <%= truncate(job_offer.description, length:200, seperator: " ") %>...
+<% end %>

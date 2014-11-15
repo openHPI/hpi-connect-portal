@@ -249,10 +249,6 @@ ActiveRecord::Schema.define(version: 20141106155736) do
     t.integer  "graduation_id",          default: 0, null: false
     t.integer  "visibility_id",          default: 0, null: false
     t.integer  "dschool_status_id",      default: 0, null: false
-    t.string   "cv_as_pdf_file_name"
-    t.string   "cv_as_pdf_content_type"
-    t.integer  "cv_as_pdf_file_size"
-    t.datetime "cv_as_pdf_updated_at"
   end
 
   create_table "users", force: true do |t|

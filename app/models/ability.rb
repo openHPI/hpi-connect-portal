@@ -26,6 +26,7 @@ class Ability
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
+    can :destroy, NewsletterOrder, student: user.manifestation
     cannot :show, JobOffer, status: JobStatus.closed
 
     if user.activated

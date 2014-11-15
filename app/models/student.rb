@@ -36,6 +36,7 @@ class Student < ActiveRecord::Base
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
   DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
+  NEWSLETTER_DELIVERIES_CYCLE = 1.week
 
   attr_accessor :username
 
@@ -213,7 +214,51 @@ class Student < ActiveRecord::Base
     LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
   end
 
-  def self.deliver_newsletters
+  def self.apply_saved_scopes(job_offers, saved_scopes)
+    saved_scopes.each do |key, value|
+      if key == :state
+        job_offers = job_offers.filter_state(value)
+      end
+      if key == :employer
+        job_offers = job_offers.filter_employer(value)
+      end
+      if key == :category
+        job_offers = job_offers.filter_category(value)
+      end
+      if key == :graduations
+        job_offers = job_offers.filter_graduations(value)
+      end
+      if key == :start_date
+        job_offers = job_offers.filter_start_date(value)
+      end
+      if key == :end_date
+        job_offers = job_offers.filter_end_date(value)
+      end
+      if key == :time_effort
+        job_offers = job_offers.filter_time_effort(value)
+      end
+      if key == :compensation
+        job_offers = job_offers.filter_compensation(value)
+      end
+      if key == :language_ids
+        job_offers = job_offers.filter_languages(value)
+      end
+      if key == :programming_language_ids
+        job_offers = job_offers.filter_programming_languages(value)
+      end
+    end
+    return job_offers
+  end
 
+  def self.deliver_newsletters
+    possible_job_offers = JobOffer.active.where("created_at > ?", Student::NEWSLETTER_DELIVERIES_CYCLE.ago)
+    Student.all.each do |student|
+      student.newsletter_orders.each do |newsletter_order|
+        matching_jobs = apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
+        if matching_jobs.any?
+          StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver
+        end
+      end
+    end
   end
 end

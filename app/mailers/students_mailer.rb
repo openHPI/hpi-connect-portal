@@ -5,4 +5,11 @@ class StudentsMailer < ActionMailer::Base
     @student = student
     mail to: Configurable[:mailToAdministration], subject: t("students_mailer.new_student.subject")
   end
+
+  def newsletter(student, job_offers, newsletter_order)
+    @student = student
+    @job_offers = job_offers
+    @newsletter_order = newsletter_order
+    mail to: student.email, subject: t("students_mailer.newsletter.subject")
+  end
 end

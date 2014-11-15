@@ -84,6 +84,9 @@ HpiHiwiPortal::Application.routes.draw do
           get 'verify_newsletter_creation'
         end
       end
+
+      resources :newsletter_orders, only: [:destroy]
+
     end
   end
 end

@@ -150,11 +150,13 @@ describe Student do
   describe "Deliver Newsletter" do
     it "delivers newsletters" do
       FactoryGirl.create(:student)
+      search_hash_1 = {state: 1}
+      FactoryGirl.create(:newsletter_order, student: Student.first, search_params: search_hash_1)
       FactoryGirl.create(:student)
-      FactoryGirl.create(:newsletter_order, student:Student.first)
-      search_hash = {state: 1}
-      FactoryGirl.create(:newsletter_order, student: Student.last, search_params: search_hash)
-      FactoryGirl.create(:job_offer, )
+      search_hash_2 = {state: 1}
+      FactoryGirl.create(:newsletter_order, student: Student.last, search_params: search_hash_2)
+      FactoryGirl.create(:job_offer, state_id:1, status: JobStatus.active)
+      FactoryGirl.create(:job_offer, state_id:3, status: JobStatus.active)
       Student.deliver_newsletters
       ActionMailer::Base.deliveries.count.should == 2
     end
