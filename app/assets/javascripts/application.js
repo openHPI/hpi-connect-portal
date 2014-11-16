@@ -16,6 +16,7 @@
 //= require jquery.turbolinks
 //= require jquery-star-rating
 //= require tinymce-jquery
+//= 
 //= require bootstrap/bootstrap
 //= require_tree .
 
@@ -25,6 +26,8 @@ $(document).ready( function() {
 	
 	var language = window.locale === 'de' ? 'de' : 'en';
 	
+    tinymce.baseURL = '/connect/jobportal/assets/tinymce';
+    
 	$('textarea.tinymce').tinymce({
 			language : language,
 		    plugins: [
