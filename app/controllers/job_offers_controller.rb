@@ -25,7 +25,11 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
-    if params[:commit] == "Als Newsletter anlegen"
+    if params[:commit] == I18n.t("job_offers.create_as_newsletter")
+      unless signed_in?
+        store_location and redirect_to root_url, notice: I18n.t('layouts.messages.sign_in.') and return
+      end
+      authorize! :create, NewsletterOrder
       # to fill current_scopes
       apply_scopes(JobOffer.active)
       redirect_to create_newsletter_student_path(current_user.manifestation, {newsletter_params: current_scopes})

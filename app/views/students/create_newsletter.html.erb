@@ -1,14 +1,152 @@
 <div class="wrapper-12 panel-wrapper">
-  <div class="wrapper-8 teaser">
-    <div class="col-md-8">
-      <h2>Woooop Wooop</h2>
-      <h2><%= @newsletter_params %></h2>
-      find a way how to display current choice!
-      <br/>
-      <%=link_to("Bestätigen", verify_newsletter_creation_student_path(@student, {newsletter_params: @newsletter_params}), class: "button btn btn-default") %>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>Newsletter</h4>
+        </div>
+        <ul class="list-group" id="newsletter-items">
+          <% unless @newsletter_params["state"].nil? %>
+            <li>
+              <div class="row">
+                <div class="col-sm-6">
+                  <%= t("activerecord.attributes.job_offer.region") %>
+                </div>
+                <div class="col-sm-6">
+                  <%= t("activerecord.attributes.job_offer.state." + JobOffer::STATES[@newsletter_params["state"].to_i]) %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+
+          <% unless @newsletter_params["employer"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.employer") %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= Employer.find(@newsletter_params["employer"].to_i).name %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["category"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.category") %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= t("job_offers.category." + JobOffer::CATEGORIES[@newsletter_params["category"].to_i]) %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["graduation"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.user.degree") %>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.user.degrees." + Student::GRADUATIONS[@newsletter_params["graduation"].to_i]) %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+
+          <% unless @newsletter_params["start_date"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.start_date")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= @newsletter_params["start_date"] %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["end_date"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.end_date")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= @newsletter_params["end_date"] %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["programming_language_ids"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.programming_languages")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <% @newsletter_params["programming_language_ids"].each do |programming_language_id| %>
+                        <%= ProgrammingLanguage.find(programming_language_id).name %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["language_ids"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.languages")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <% @newsletter_params["language_ids"].each do |language_id| %>
+                        <%= t("languages." +  Language.find(language_id).name) %>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["time_effort"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.time_effort")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= @newsletter_params["time_effort"] %> <%= t("job_offers.time_effort_description") %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @newsletter_params["compensation"].nil? %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <%= t("activerecord.attributes.job_offer.compensation")%>
+                  </div>
+                  <div class="col-sm-6">
+                    <%= @newsletter_params["compensation"] %> <%= t("job_offers.compensation_description") %>
+                  </div>
+                </div>
+              </li>
+          <% end %>
+          <li></li>
+          <li>
+            <%= link_to(t("students.confirm"), newsletter_orders_path({newsletter_params: @newsletter_params}), method: "post", class: "button btn btn-default pull-right", id: "newsletter_creation_submit") %>
+          </li>
+        </ul>
+      </div>
     </div>
-
   </div>
-
 </div>
 
