@@ -80,8 +80,7 @@ class JobOffer < ActiveRecord::Base
     end
   end
 
-  def self.
-      or_expired
+  def self.check_for_expired
     active.each do |offer|
       if offer.expiration_date == Date.today + 2.days
         JobOffersMailer.job_will_expire_email(offer).deliver
