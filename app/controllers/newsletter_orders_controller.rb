@@ -8,8 +8,14 @@ class NewsletterOrdersController < ApplicationController
     respond_and_redirect_to(job_offers_path, "Newsletter erfolgreich gelöscht")
   end
 
+  def create
+    NewsletterOrder.create!(student:current_user.manifestation, search_params: params[:newsletter_params])
+    respond_and_redirect_to(job_offers_path, "Newsletter erfolgreich angelegt")
+  end
+
   private
     def set_newsletter_order
       @newsletter_order = NewsletterOrder.find params[:id]
     end
+
 end

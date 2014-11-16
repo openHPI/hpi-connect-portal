@@ -37,11 +37,6 @@ class StudentsController < ApplicationController
     @newsletter_params = params[:newsletter_params]
   end
 
-  def verify_newsletter_creation
-    NewsletterOrder.create(student:@student, search_params: params[:newsletter_params])
-    respond_and_redirect_to(job_offers_path, "Newsletter erfolgreich angelegt")
-  end
-
   def show
     authorize! :show, @student
     not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
