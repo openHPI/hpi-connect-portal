@@ -9,7 +9,8 @@ class NewsletterOrdersController < ApplicationController
   end
 
   def create
-    NewsletterOrder.create!(student:current_user.manifestation, search_params: params[:newsletter_params])
+    newsletter_params = params[:newsletter_params] || {}
+    NewsletterOrder.create!(student:current_user.manifestation, search_params: newsletter_params)
     respond_and_redirect_to(job_offers_path, "Newsletter erfolgreich angelegt")
   end
 

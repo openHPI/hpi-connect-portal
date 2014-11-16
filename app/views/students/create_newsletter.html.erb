@@ -6,6 +6,16 @@
           <h4>Newsletter</h4>
         </div>
         <ul class="list-group" id="newsletter-items">
+          <% if @newsletter_params.blank?
+               @newsletter_params = {} %>
+              <li>
+                <div class="row">
+                  <div class="col-sm-12">
+                    Einen Newsletter für sämtliche Jobs anlegen
+                  </div>
+                </div>
+              </li>
+          <% end %>
           <% unless @newsletter_params["state"].nil? %>
             <li>
               <div class="row">

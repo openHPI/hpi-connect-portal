@@ -175,5 +175,22 @@ describe Student do
         mail.to.should_not eq([student_without_newsletter_order.email])
       end
     end
+
+    it "delivers newsletter with empty search_hash" do
+      search_hash = {}
+      newsletter_order = FactoryGirl.create(:newsletter_order, search_params: search_hash)
+      FactoryGirl.create(:job_offer, status: JobStatus.active)
+      Student.deliver_newsletters
+      ActionMailer::Base.deliveries.count.should == 1
+      ActionMailer::Base.deliveries.first.to.should eq([newsletter_order.student.email])
+    end
+
+    it "does not deliver if search_hash doesn't match" do
+      search_hash = {state: 3}
+      FactoryGirl.create(:newsletter_order, search_params: search_hash)
+      FactoryGirl.create(:job_offer, state_id: 5, status: JobStatus.active)
+      Student.deliver_newsletters
+      ActionMailer::Base.deliveries.count.should == 0
+    end
   end
 end
