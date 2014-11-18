@@ -4,15 +4,14 @@ das Connect Portal hat <%= @job_offers.count %> neue Stellenangebote, die Ihren 
 <ul>
     <% @job_offers.each do |job_offer| %>
       <li>
-        <p>
         <h3><%= link_to(job_offer.title, url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false)) %></h3> <br/>
-        <%= truncate(job_offer.description, length:200, seperator: " ") %>...
-        </p>
+        <%= truncate(job_offer.description, length:200, seperator: " ") %>
       </li>
     <% end %>
 </ul>
 
-<%= link_to("Newsletter abbestellen", url_for(controller:"newsletter_orders", action: "destroy", id:@newsletter_order.id, only_path: false)) %> <br/>
+<%= link_to(t("newsletter_orders.unsubscribe"), url_for(controller:"newsletter_orders", action: "show", id:@newsletter_order.id, only_path: false)) %> <br/>
+<br/>
 Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br>
 <br>
 Freundliche Grüße<br>

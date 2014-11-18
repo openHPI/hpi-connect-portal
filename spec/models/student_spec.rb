@@ -192,5 +192,13 @@ describe Student do
       Student.deliver_newsletters
       ActionMailer::Base.deliveries.count.should == 0
     end
+
+    it "does not deliver if Job is too much in the past" do
+      search_hash = {state: 3}
+      FactoryGirl.create(:newsletter_order, search_params: search_hash)
+      FactoryGirl.create(:job_offer, state_id: 3, status: JobStatus.active, created_at: DateTime.current-Student::NEWSLETTER_DELIVERIES_CYCLE-1)
+      Student.deliver_newsletters
+      ActionMailer::Base.deliveries.count.should == 0
+    end
   end
 end

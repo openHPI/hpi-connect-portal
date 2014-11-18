@@ -44,4 +44,24 @@ describe NewsletterOrdersController do
       response.should redirect_to job_offers_path
     end
   end
+
+  describe "GET show" do
+
+    before(:each) do
+      search_hash = {state: 3}
+      @newsletter_order = FactoryGirl.create(:newsletter_order, search_params: search_hash)
+    end
+
+    it "should show newsletter_order" do
+      login @newsletter_order.student.user
+      get :show, {id: @newsletter_order.to_param}, {}
+      response.should render_template("show")
+    end
+
+    it "should not show newsletter_order if not allowed" do
+      login FactoryGirl.create(:student).user
+      get :show, {id: @newsletter_order.to_param}, {}
+      response.should redirect_to(root_path)
+    end
+  end
 end

@@ -1,0 +1,14 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>Newsletter</h4>
+        </div>
+        <% @newsletter_params = @newsletter_order.search_params %>
+        <%= render 'search_params' %>
+        <%= link_to(t("links.destroy"), newsletter_order_path(@newsletter_order), method: "delete", class: "button btn btn-default pull-right", id: "newsletter_delete") %>
+      </div>
+    </div>
+  </div>
+</div>
