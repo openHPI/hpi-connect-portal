@@ -134,6 +134,8 @@ GEM
     kgio (2.9.2)
     launchy (2.4.2)
       addressable (~> 2.3)
+    letter_opener (1.2.0)
+      launchy (~> 2.2)
     libv8 (3.16.14.3)
     linkedin (0.4.6)
       hashie (>= 1.2, < 2.1)
@@ -311,6 +313,7 @@ DEPENDENCIES
   jquery-star-rating-rails
   jquery-turbolinks
   jquery-ui-rails
+  letter_opener
   linkedin
   newrelic_rpm (~> 3.7.1.188)
   open_id_authentication
