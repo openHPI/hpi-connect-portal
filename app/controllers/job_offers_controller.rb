@@ -32,7 +32,7 @@ class JobOffersController < ApplicationController
       authorize! :create, NewsletterOrder
       # to fill current_scopes
       apply_scopes(JobOffer.active)
-      redirect_to create_newsletter_student_path(current_user.manifestation, {newsletter_params: current_scopes})
+      redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
     end
     job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }

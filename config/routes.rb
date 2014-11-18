@@ -80,11 +80,10 @@ HpiHiwiPortal::Application.routes.draw do
           get 'activate'
           get 'request_linkedin_import'
           get 'insert_imported_data'
-          get 'create_newsletter'
         end
       end
 
-      resources :newsletter_orders, only: [:destroy, :create]
+      resources :newsletter_orders, only: [:destroy, :create, :new, :show]
 
     end
   end

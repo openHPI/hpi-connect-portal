@@ -1,7 +1,14 @@
 class NewsletterOrdersController < ApplicationController
   load_and_authorize_resource
 
-  before_action :set_newsletter_order, only: [:delete]
+  before_action :set_newsletter_order, only: [:destroy, :show]
+
+  def new
+    @newsletter_params = params[:newsletter_params]
+  end
+
+  def show
+  end
 
   def destroy
     @newsletter_order.delete

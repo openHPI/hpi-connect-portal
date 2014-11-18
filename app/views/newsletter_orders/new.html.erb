@@ -1,0 +1,13 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>Newsletter</h4>
+        </div>
+        <%= render 'search_params' %>
+        <%= link_to(t("students.confirm"), newsletter_orders_path({newsletter_params: @newsletter_params}), method: "post", class: "button btn btn-default pull-right", id: "newsletter_creation_submit") %>
+      </div>
+    </div>
+  </div>
+</div>
