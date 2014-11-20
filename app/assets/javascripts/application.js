@@ -31,7 +31,7 @@ $(document).ready( function() {
 	$('textarea.tinymce').tinymce({
 			language : language,
 		    plugins: [
-		        "advlist autolink lists link image preview anchor",
+		        "advlist autolink lists link preview anchor",
 		        "searchreplace visualblocks code",
 		        "insertdatetime table contextmenu paste textcolor"
 		    ],
