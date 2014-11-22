@@ -140,11 +140,11 @@ ActiveRecord::Schema.define(version: 20141106155736) do
     t.boolean  "prolong_requested",         default: false
     t.boolean  "prolonged",                 default: false
     t.datetime "prolonged_at"
+    t.date     "release_date"
     t.string   "offer_as_pdf_file_name"
     t.string   "offer_as_pdf_content_type"
     t.integer  "offer_as_pdf_file_size"
     t.datetime "offer_as_pdf_updated_at"
-    t.date     "release_date"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
