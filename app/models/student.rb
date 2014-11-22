@@ -86,18 +86,18 @@ class Student < ActiveRecord::Base
           OR lower(linkedin) LIKE ?)
           ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
 
-	def self.filter_programming_languages(programming_language_ids)
-		requested_programming_language_ids = programming_language_ids.map(&:to_i)
-		fitting_student_ids = []
-		Student.all.map { |student| {student_id: student.id, student_prog_langs: student.programming_languages} }.each { 
-			|student_id_proglangs| 
-				student_programming_languages_ids = student_id_proglangs[:student_prog_langs].map(&:id).map(&:to_i)
-				if(requested_programming_language_ids.reject { |x| student_programming_languages_ids.include? x}.empty?)
-					fitting_student_ids << student_id_proglangs[:student_id]
-				end
-			}
-		where('"students"."id" IN (?)', fitting_student_ids)
-	end
+  def self.filter_programming_languages(programming_language_ids)
+    requested_programming_language_ids = programming_language_ids.map(&:to_i)
+    fitting_student_ids = []
+    Student.all.map { |student| {student_id: student.id, student_prog_langs: student.programming_languages} }.each { 
+      |student_id_proglangs| 
+        student_programming_languages_ids = student_id_proglangs[:student_prog_langs].map(&:id).map(&:to_i)
+        if(requested_programming_language_ids.reject { |x| student_programming_languages_ids.include? x}.empty?)
+          fitting_student_ids << student_id_proglangs[:student_id]
+        end
+      }
+    where('"students"."id" IN (?)', fitting_student_ids)
+  end
 
   def application(job_offer)
     applications.where(job_offer: job_offer).first
@@ -226,50 +226,50 @@ class Student < ActiveRecord::Base
   end
 
   def self.apply_saved_scopes(job_offers, saved_scopes)
-		saved_scopes.each do |key, value|
-			if key == :state
-				job_offers = job_offers.filter_state(value)
-			end
-			if key == :employer
-				job_offers = job_offers.filter_employer(value)
-			end
-			if key == :category
-				job_offers = job_offers.filter_category(value)
-			end
-			if key == :graduations
-				job_offers = job_offers.filter_graduations(value)
-			end
-			if key == :start_date
-				job_offers = job_offers.filter_start_date(value)
-			end
-			if key == :end_date
-				job_offers = job_offers.filter_end_date(value)
-			end
-			if key == :time_effort
-				job_offers = job_offers.filter_time_effort(value)
-			end
-			if key == :compensation
-				job_offers = job_offers.filter_compensation(value)
-			end
-			if key == :language_ids
-				job_offers = job_offers.filter_languages(value)
-			end
-			if key == :programming_language_ids
-				job_offers = job_offers.filter_programming_languages(value)
-			end
-		end
-		return job_offers
-	end
+    saved_scopes.each do |key, value|
+      if key == :state
+        job_offers = job_offers.filter_state(value)
+      end
+      if key == :employer
+        job_offers = job_offers.filter_employer(value)
+      end
+      if key == :category
+        job_offers = job_offers.filter_category(value)
+      end
+      if key == :graduations
+        job_offers = job_offers.filter_graduations(value)
+      end
+      if key == :start_date
+        job_offers = job_offers.filter_start_date(value)
+      end
+      if key == :end_date
+        job_offers = job_offers.filter_end_date(value)
+      end
+      if key == :time_effort
+        job_offers = job_offers.filter_time_effort(value)
+      end
+      if key == :compensation
+        job_offers = job_offers.filter_compensation(value)
+      end
+      if key == :language_ids
+        job_offers = job_offers.filter_languages(value)
+      end
+      if key == :programming_language_ids
+        job_offers = job_offers.filter_programming_languages(value)
+      end
+    end
+    return job_offers
+  end
 
-	def self.deliver_newsletters
-		possible_job_offers = JobOffer.active.where("created_at > ?", Student::NEWSLETTER_DELIVERIES_CYCLE.ago)
-		Student.all.each do |student|
-			student.newsletter_orders.each do |newsletter_order|
-				matching_jobs = apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
-				if matching_jobs.any?
-					StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver
-				end
-			end
-		end
-	end
+  def self.deliver_newsletters
+    possible_job_offers = JobOffer.active.where("created_at > ?", Student::NEWSLETTER_DELIVERIES_CYCLE.ago)
+    Student.all.each do |student|
+      student.newsletter_orders.each do |newsletter_order|
+        matching_jobs = apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
+        if matching_jobs.any?
+          StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver
+        end
+      end
+    end
+  end
 end
