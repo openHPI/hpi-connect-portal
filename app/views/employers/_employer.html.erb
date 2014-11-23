@@ -1,3 +1,4 @@
+<%= stylesheet_link_tag "rateit" %>
 <li class="list-group-item">
   <div class="row">
     <div class="col-md-5">
@@ -7,19 +8,10 @@
         <h4 class="h4"><%= employer.name %></h4>
       <% end %>
       <% if current_user && (current_user.student? || current_user.admin?) %>
-        <% if employer.average_rating.nil? %>
-          <% (1..5).each do |i| %>
-            <%= radio_button_tag employer.id, i, false, disabled: true, class: "star" %>
-          <% end %>
-        <% else %>    
-          <% (1..5).each do |i| %>
-            <% if i == employer.average_rating.ceil && i != employer.average_rating %>
-              <%= radio_button_tag employer.id, i, i==employer.average_rating.ceil, disabled: true, class: "star star-percent star-percent-#{((employer.average_rating-employer.average_rating.to_s.split(".")[0].to_f)*100).to_s.split(".")[0]}" %>
-            <% else %>
-              <%= radio_button_tag employer.id, i, i==employer.average_rating.ceil, disabled: true, class: "star" %>
-            <% end %>
-          <% end %>   
-        <% end %>
+          <%= simple_form_for :rating  do |f| %>  
+            <%= f.number_field("rating" + employer.name.to_s, min: 0, max: 5, step: 0.1, value: employer.average_rating) %>
+            <%= rateit_tag(backingfld: "#rating_rating" + employer.name.to_s, max: 5, min: 0, step: 0.1, resetable: "false", readonly: "true") %>  
+          <%end%>
         <%= !employer.average_rating.nil? ? "#{employer.average_rating} #{t("students.stars")}" : ""%>
         <%= "(#{employer.rating_amount} #{t("students.ratings")})" %> 
       <% end %>
@@ -32,7 +24,7 @@
         <a class="btn btn-sm toggleRating" href="#"><%= t("students.rate") %></a>
         <div class="ratingDiv", style = "display: none">
           <br>
-          <%= simple_form_for :rating, url: rate_student_path(current_user.manifestation.id) do |f| %>  
+          <%= simple_form_for :rating, url: rate_student_path(current_user.manifestation.id) do |f| %>            
             <% rating = EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).nil? ? 0 : EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).rating %>
             <% (1..5).each do |i| %>
               <% if i <= rating %>
