@@ -89,9 +89,9 @@ class Student < ActiveRecord::Base
   def self.filter_programming_languages(programming_language_ids)
     requested_programming_language_ids = programming_language_ids.map(&:to_i)
     fitting_student_ids = []
-    Student.all.map { |student| {student_id: student.id, student_prog_langs: student.programming_languages} }.each { 
+    Student.all.map { |student| {student_id: student.id, student_proglangs: student.programming_languages} }.each { 
       |student_id_proglangs| 
-        student_programming_languages_ids = student_id_proglangs[:student_prog_langs].map(&:id).map(&:to_i)
+        student_programming_languages_ids = student_id_proglangs[:student_proglangs].map(&:id).map(&:to_i)
         if(requested_programming_language_ids.reject { |x| student_programming_languages_ids.include? x}.empty?)
           fitting_student_ids << student_id_proglangs[:student_id]
         end
