@@ -361,3 +361,38 @@ describe "at the employer index page" do
     page.should_not have_content "Rate"
   end
 end
+
+describe "student newsletters" do
+
+  before(:each) do
+    employer = FactoryGirl.create(:employer, name:"Test Company")
+    FactoryGirl.create(:job_offer, state_id: 2,
+                       employer: employer,
+                       status: JobStatus.active,
+                       start_date: Date.current,
+                       end_date: Date.current + 14,
+                       compensation: 20,
+                       time_effort: 20,
+                       category_id: 2,
+                       graduation_id: 0,
+                      )
+  end
+
+  it "creates newsletter_order" do
+    student = FactoryGirl.create(:student)
+    login student.user
+    visit job_offers_path
+    select "Test Company", from: "employer"
+    select "Bavaria", from: "state"
+    select "Job for graduates", from: "category"
+    select "General Qualification for University Entrance", from: "graduation"
+    fill_in "start_date", with: Date.current
+    fill_in "end_date", with: Date.current + 14
+    fill_in "compensation", with: 20
+    fill_in "time_effort", with: 20
+    page.find("#create_newsletter_button").click
+    page.find("#newsletter_creation_submit").click
+    student.newsletter_orders.count.should == 1
+    student.newsletter_orders.first.search_params.count.should == 8
+  end
+end

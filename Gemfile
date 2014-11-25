@@ -43,6 +43,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'rspec-mocks'
   gem 'rake'
+  gem 'letter_opener'
   gem 'factory_girl_rails', :require => false
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
 end
@@ -111,8 +112,9 @@ gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
 # WYSIWYG Text Editor
-gem 'bootsy', '~> 2.0.6'
-gem 'sanitize'
+gem 'tinymce-rails', '~> 4.1.5'
+gem 'tinymce-rails-langs', '~> 4.20140129'
+gem 'sanitize', '~> 3.0.2'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'

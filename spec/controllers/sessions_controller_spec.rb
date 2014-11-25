@@ -12,9 +12,10 @@ describe SessionsController do
       assert current_user == @user
     end
 
-    it "redirects to root with incorrect password" do
+    it "redirects to root with incorrect password and shows flash message" do
       post 'create', {session: {email: @user.email, password: 'wrong password'}}
       response.should redirect_to(root_path)
+      flash[:error].should eql(I18n.t('errors.configuration.invalid_email_or_password'))
     end
 
     it "redirects to root with incorrect email" do

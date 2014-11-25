@@ -31,10 +31,16 @@ $(document).ready( function() {
         e.preventDefault();
         var cv = $('.cv-entry-fields' + $(this).data('id'));
         var newEntry = cv.first().clone();
-        newEntry.find('input, textarea, select').each(function() {
+        
+		// remove input values
+		newEntry.find('input, textarea, select').each(function() {
             $(this).updateIndex('0', cv.length);
             $(this).val('').removeAttr('checked').removeAttr('selected');
         });
+		
+		// make all form elements visible
+		newEntry.find('li').css('display','');
+		
         newEntry.appendTo($('.cv-group' + $(this).data('id')));
     });
 

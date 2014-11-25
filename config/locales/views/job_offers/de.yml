@@ -1,5 +1,6 @@
 de:
   job_offers:
+    create_as_newsletter: "Als Newsletter anlegen"
     headline: "Stellenangebote"
     starts: "startet am"
     ends: "endet am"

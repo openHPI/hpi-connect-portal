@@ -14,6 +14,7 @@ de:
         closed_job_offers: "Ehemalige Stellenangebote"
         inactive: "Deaktiviert"
         packages: "Pakete"
+        with_costs: "kostenpflichtig"
         contact: "Ansprechpartner"
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"

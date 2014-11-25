@@ -12,6 +12,11 @@
 <%= stylesheet_link_tag "application", :media => "all" %>
 <%= javascript_include_tag "application" %>
 
+<%= javascript_tag do %>
+	<!-- preferred language available for javascript-->
+	window.locale = '<%= locale %>';
+<% end %>
+
 <!-- script type="text/javascript" src="https://fast.fonts.net/jsapi/350d1b28-d257-4734-8083-4bd737fa0c7c.js"></script-->
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -51,6 +56,7 @@
                       <li><%= link_to t('layouts.configuration'), admin_configurable_path %></li>
                       <li><%= link_to t('layouts.import'), new_alumni_path %></li>
                       <li><%= link_to t('layouts.index_alumni'), alumni_index_path %></li>
+                      <li><%= link_to t('layouts.mail_alumni'), remind_via_mail_alumni_index_path %></li>
                     <% end %>
                     <li><%= link_to t("users.settings"), [:edit, current_user] %>
                     <li><%= link_to t("layouts.logout"), signout_path, method: :delete %>

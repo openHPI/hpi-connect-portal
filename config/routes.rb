@@ -1,5 +1,4 @@
 HpiHiwiPortal::Application.routes.draw do
-  mount Bootsy::Engine => '/bootsy', as: 'bootsy'
 
   prefix = HpiHiwiPortal::Application.config.relative_url_root || ''
 
@@ -84,6 +83,9 @@ HpiHiwiPortal::Application.routes.draw do
           post 'rate'
         end
       end
+
+      resources :newsletter_orders, only: [:destroy, :create, :new, :show]
+
     end
   end
 end

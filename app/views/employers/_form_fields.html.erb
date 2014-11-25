@@ -34,7 +34,18 @@
 
     <li class="list-group-item">
       <div>
-        <%= form.label 'Packages', class: "control-label" %>
+        <div class="package-div">
+            <%= form.label 'Packages', class: "control-label" %>
+        </div>
+        <div class="pay-div">
+            <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
+        <div class="pay-div">
+          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
+        <div class="pay-div">
+          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        </div>
       </div>
       <div class="package-div">
         <% if employer.booked_package_id > 0 %>
@@ -104,7 +115,7 @@
             <%= label_field form, :description, t("activerecord.attributes.employer.description") %>
           </div>
           <div class="col-sm-9">
-            <%= form.input :description, placeholder: t("job_offers.enter_description") %>
+            <%= form.input :description, placeholder: t("job_offers.enter_description"), input_html: { class: "tinymce" } %>
           </div>
         </div>
       </li>

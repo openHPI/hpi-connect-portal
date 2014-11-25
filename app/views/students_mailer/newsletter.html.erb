@@ -1,0 +1,32 @@
+Guten Tag <%= @student.full_name %>, <br/>
+<br/>
+das Connect Portal hat <%= @job_offers.count %> neue Stellenangebote, die Ihren Suchkriterien entsprechen.<br/>
+<ul>
+    <% @job_offers.each do |job_offer| %>
+      <li>
+        <h3><%= link_to(job_offer.title, url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false)) %> | <%= job_offer.employer.name %></h3>
+        <%= truncate(job_offer.description, length:200, seperator: " ") %>
+      </li>
+    <% end %>
+</ul>
+
+<%= link_to(t("newsletter_orders.unsubscribe"), url_for(controller:"newsletter_orders", action: "show", id:@newsletter_order.id, only_path: false)) %> <br/>
+<br/>
+Für Rückfragen stehen wir Ihnen gerne zur Verfügung.<br>
+<br>
+Freundliche Grüße<br>
+<br>
+HPI Connect<br>
+Claudia Koch - Fon (49) 0331 5509 291<br>
+Nadja Antoine  - Fon (49) 0331 5509 107<br>
+<br>
+connect@hpi.uni-potsdam.de<br>
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br>
+Prof.-Dr.-Helmert-Str. 2-3<br>
+D-14482 Potsdam<br>
+www.hpi.de<br>
+<br>
+Amtsgericht Potsdam, HRB 12184<br>
+Geschäftsführung: Prof. Dr. Christoph Meinel<br>
+<br>
+Design IT. Create Knowledge.<br>

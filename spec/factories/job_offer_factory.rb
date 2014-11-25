@@ -36,6 +36,7 @@ FactoryGirl.define do
     release_date      Date.current - 3
     compensation      10.5
     time_effort       9
+    state_id          0
     association       :status, factory: :job_status
 
     before(:create) do |job_offer, evaluator|
