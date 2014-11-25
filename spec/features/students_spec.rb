@@ -316,9 +316,11 @@ describe "at the employer index page" do
 
     click_on('Rate')
     # TODO: fire $('.toggleRating').click() 
-    #page.should have_selector('.rating', visible: true)
+    page.should have_selector('.rating', visible: true)
+    #page.execute_script("%Q($('.ratingDiv').css('display','block')");
     #click_on('1')
     #page.find("Save").click 
+    #puts page.body
     FactoryGirl.create(:employer_rating, student: student1, employer: @employer, rating: 1)
     # TODO create employer_rating by :rate
     visit employers_path

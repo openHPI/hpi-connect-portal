@@ -114,20 +114,17 @@ class StudentsController < ApplicationController
 
   def rate
     session[:return_to] ||= request.referer
-    if params[:rating] && params[:rating][:employer_id] && params[:rating][params[:rating][:employer_id]]
-      rating = params[:rating][params[:rating][:employer_id]]
-      employer_rating = EmployerRating.where(student_id: @student.id, employer_id: params[:rating][:employer_id]).first_or_create
-      employer_rating.update_attributes(rating: rating)
+    ratings = EmployerRating.where(student_id: @student.id, employer_id: params[:rating][:employer_id])
+    if params[:rating][params[:rating][:employer_id]]
+      ratings.first_or_create.update_attributes(rating: params[:rating][params[:rating][:employer_id]])
       respond_and_redirect_to session.delete(:return_to), t("students.successfully_rated")
-    elsif params[:rating] && params[:rating][:employer_id] #no rating given
-      if EmployerRating.find_by(student_id: @student.id, employer_id: params[:rating][:employer_id]).nil?
+    else
+      if ratings.first.nil?
         respond_and_redirect_to session.delete(:return_to), {notice: t("students.not_rated_yet")}
       else
-        EmployerRating.find_by(student_id: @student.id, employer_id: params[:rating][:employer_id]).destroy
+        ratings.first.destroy
         respond_and_redirect_to session.delete(:return_to), t("students.successfully_deleted_rating")
       end
-    else
-      respond_and_redirect_to session.delete(:return_to), t("applications.error")
     end
   end
 
