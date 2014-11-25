@@ -71,5 +71,4 @@ $(document).ready( function() {
         else
             $(this).next().hide('fast');
     });
-
 });

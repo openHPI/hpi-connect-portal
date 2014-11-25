@@ -25,3 +25,4 @@ en:
         rate: "Rate"
         successfully_rated: "We saved your rating. Thank you."
         successfully_deleted_rating: "We successfully deleted your rating."
+        not_rated_yet: "You haven't rated the company yet."

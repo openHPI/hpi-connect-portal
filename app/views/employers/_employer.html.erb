@@ -26,7 +26,8 @@
           <br>
           <%= simple_form_for :rating, url: rate_student_path(current_user.manifestation.id) do |f| %>            
             <% rating = EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).nil? ? 0 : EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).rating %>
-            <% (1..5).each do |i| %>
+            <%= f.radio_button employer.id, 1, :checked => "checked", :class => "star" %>
+            <% (2..5).each do |i| %>
               <% if i <= rating %>
                 <%= f.radio_button employer.id, i, :checked => "checked", :class => "star" %>
               <% else %>

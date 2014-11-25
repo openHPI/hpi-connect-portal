@@ -24,3 +24,4 @@ de:
         rate: "Bewerten"
         successfully_rated: "Danke, Deine Bewertung wurde gespeichert."
         successfully_deleted_rating: "Deine Bewertung wurde gelöscht."
+        not_rated_yet: "Du hast dieses Unternehmen noch nicht bewertet."
