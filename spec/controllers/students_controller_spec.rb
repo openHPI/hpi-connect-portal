@@ -328,4 +328,5 @@ describe StudentsController do
       response.should redirect_to edit_student_path(student)
     end
   end
+
 end

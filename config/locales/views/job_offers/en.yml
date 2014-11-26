@@ -1,5 +1,6 @@
 en:
   job_offers:
+    create_as_newsletter: "Create as Newsletter"
     headline: "Job offers"
     starts: "starts"
     ends: "ends"

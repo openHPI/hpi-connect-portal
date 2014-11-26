@@ -82,6 +82,9 @@ HpiHiwiPortal::Application.routes.draw do
           get 'insert_imported_data'
         end
       end
+
+      resources :newsletter_orders, only: [:destroy, :create, :new, :show]
+
     end
   end
 end

@@ -1,5 +1,6 @@
 en:
     students:
+        confirm: "Confirm"
         students: "Students"
         students_headline: "Student list"
         new_student: "Create new student"
