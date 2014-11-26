@@ -1,0 +1,26 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default newsletter_order_new">
+        <div class="panel-heading">
+          <h4><%=t("newsletter_orders.newsletter")%></h4>
+        </div>
+        <% if I18n.locale == :de %>
+            <div class="newsletter_description">
+              Mit der Newsletter-Funktion werden Sie jeden Donnerstag auf Stellenangebote aufmerksam gemacht, die auf die unten stehenden Suchkriterien zutreffen.<br>
+            </div>
+        <% end %>
+
+        <% if I18n.locale == :en %>
+            <div class="newsletter_description">
+              The newsletter informs you every thursday about job offers which match your search criteria.<br>
+            </div>
+        <% end %>
+        <br/>
+        <h4><%=t("newsletter_orders.search_criteria") %></h4>
+        <%= render 'search_params' %>
+        <%= link_to(t("students.confirm"), newsletter_orders_path({newsletter_params: @newsletter_params}), method: "post", class: "button btn btn-default pull-right", id: "newsletter_creation_submit") %>
+      </div>
+    </div>
+  </div>
+</div>

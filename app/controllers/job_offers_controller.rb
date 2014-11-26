@@ -25,6 +25,15 @@ class JobOffersController < ApplicationController
   has_scope :search, only: [:index, :archive]
 
   def index
+    if params[:commit] == I18n.t("job_offers.create_as_newsletter")
+      unless signed_in?
+        store_location and redirect_to root_url, notice: I18n.t('layouts.messages.sign_in.') and return
+      end
+      authorize! :create, NewsletterOrder
+      # to fill current_scopes
+      apply_scopes(JobOffer.active)
+      redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
+    end
     job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
