@@ -18,7 +18,7 @@
         <span class="label label-danger"><%= t("employers.inactive")%></span>
       <% end %>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-3">
       <% if current_user && current_user.student? %>
         <a class="btn btn-sm toggleRating" href="#"><%= t("students.rate") %></a>
         <div class="ratingDiv", style = "display: none">
@@ -35,7 +35,7 @@
             <% end %>            
             <%= f.hidden_field 'employer_id', :value => employer.id %>
             <%= hidden_field_tag 'id', current_user.id %>
-            <div class="col-md-10 pull-right">
+            <div class="col-md-5">
               <%= f.submit t("links.save"), class: "btn-default btn-sm" %>
             </div>
           <% end %>
