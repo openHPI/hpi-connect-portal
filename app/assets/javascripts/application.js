@@ -30,7 +30,7 @@ $(document).ready( function() {
     
 	$('textarea.tinymce').tinymce({
 			language : language,
-		    plugins: [
+      plugins: [
 		        "advlist autolink lists link image preview anchor",
 		        "searchreplace visualblocks code",
 		        "insertdatetime table contextmenu paste textcolor"
@@ -38,6 +38,11 @@ $(document).ready( function() {
 			menubar: "table format view insert edit",
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
+  
+  $('.tinymce_preview_button').click(function() {
+      tinymce.activeEditor.execCommand('mcePreview');
+  });
+  
 });
 
 $(function() {
