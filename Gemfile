@@ -46,6 +46,8 @@ group :development, :test do
   gem 'letter_opener'
   gem 'factory_girl_rails', :require => false
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 gem 'simplecov', group: :test, require: nil
