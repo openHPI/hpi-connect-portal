@@ -313,40 +313,32 @@ describe "at the employer index page" do
     visit employers_path
     page.should have_content "0 Ratings"
     page.should have_selector('.rating', visible: false)
+    #employer has a rating of 0 stars
+    find("#rating_rating" + @employer.id.to_s).value.should eq nil
 
     click_on('Rate')
-    # TODO: fire $('.toggleRating').click() 
+    #rating div is visible
     page.should have_selector('.rating', visible: true)
-    #page.execute_script("%Q($('.ratingDiv').css('display','block')");
-    #click_on('1')
-    #page.find("Save").click 
-    #puts page.body
-    FactoryGirl.create(:employer_rating, student: student1, employer: @employer, rating: 1)
-    # TODO create employer_rating by :rate
-    visit employers_path
+    #capybara does not recognize elements in div as visible because it does not support JQuery
+    find("#rating_" + @employer.id.to_s + "_1", visible: false).click
+    find_button("Save", visible: false).click 
 
+    find("#rating_rating" + @employer.id.to_s).value.should eq "1.0"
     page.should have_content "1.0 Stars (1 Ratings)"
 
     login student2.user
+    #capybara does not recognize selecting a star different to the preselected number 1
+    FactoryGirl.create(:employer_rating, student: student2, employer: @employer, rating: 2)
     visit employers_path
-    click_on('Rate')
-    # TODO: fire $('.toggleRating').click() 
-    #page.should have_selector('.rating', visible: true)
-    #click_on('4')
-    #page.find("Save").click 
-    FactoryGirl.create(:employer_rating, student: student2, employer: @employer, rating: 4)
-    # TODO create employer_rating by :rate
-    visit employers_path
-    page.should have_content "2.5 Stars (2 Ratings)"
-    #page.assert_selector(:xpath, './/input[@class="star-rating-on"]')
-    #print page.html
-    #page.should have_css("star", :count => 3)    
+    find("#rating_rating" + @employer.id.to_s).value.should eq "1.5"
+    page.should have_content "1.5 Stars (2 Ratings)"
+
+    EmployerRating.where(student: student1, employer: @employer).destroy_all
 
     login student1.user
-    EmployerRating.where(student: student1, employer: @employer).destroy_all
     visit employers_path
-    page.should have_content "4.0 Stars (1 Ratings)"
-    #print page.html
+    find("#rating_rating" + @employer.id.to_s).value.should eq "2.0"
+    page.should have_content "2.0 Stars (1 Ratings)"
   end
 
   it "should not be possible for admins to rate employers" do

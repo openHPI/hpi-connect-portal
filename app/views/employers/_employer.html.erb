@@ -8,8 +8,8 @@
       <% end %>
       <% if current_user && (current_user.student? || current_user.admin?) %>
           <%= simple_form_for :rating  do |f| %>  
-            <%= f.number_field("rating" + employer.name.to_s, min: 0, max: 5, step: 0.1, value: employer.average_rating) %>
-            <%= rateit_tag(backingfld: "#rating_rating" + employer.name.to_s, max: 5, min: 0, step: 0.1, resetable: "false", readonly: "true") %>  
+            <%= f.number_field("rating" + employer.id.to_s, min: 0, max: 5, step: 0.1, value: employer.average_rating) %>
+            <%= rateit_tag(backingfld: "#rating_rating" + employer.id.to_s, max: 5, min: 0, step: 0.1, resetable: "false", readonly: "true") %>  
           <%end%>
         <%= !employer.average_rating.nil? ? "#{employer.average_rating} #{t("students.stars")}" : ""%>
         <%= "(#{employer.rating_amount} #{t("students.ratings")})" %> 
@@ -34,7 +34,6 @@
               <% end %>
             <% end %>            
             <%= f.hidden_field 'employer_id', :value => employer.id %>
-            <%= hidden_field_tag 'id', current_user.id %>
             <div class="col-md-5">
               <%= f.submit t("links.save"), class: "btn-default btn-sm" %>
             </div>
