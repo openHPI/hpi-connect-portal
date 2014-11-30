@@ -39,8 +39,10 @@ $(document).ready( function() {
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
   
-  $('.tinymce_preview_button').click(function() {
-      tinymce.activeEditor.execCommand('mcePreview');
+  $('#job_offer_preview_button').click(function() {
+      //tinymce.activeEditor.execCommand('mcePreview');
+      $('#job_offer_preview_modal').modal('show');
+      //alert("hello");
   });
   
 });
