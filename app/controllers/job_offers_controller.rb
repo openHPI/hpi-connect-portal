@@ -8,7 +8,6 @@ class JobOffersController < ApplicationController
 
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
-  before_filter :redirect_to_https, :only => ["index"]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
