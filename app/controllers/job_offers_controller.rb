@@ -33,7 +33,7 @@ class JobOffersController < ApplicationController
       # to fill current_scopes
       apply_scopes(JobOffer.active)
       if Rails.env.production?
-        redirect_to CGI::escape(new_newsletter_order_path({newsletter_params: current_scopes}))
+        redirect_to URI.decode(new_newsletter_order_path({newsletter_params: current_scopes}))
       else
         redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
       end
