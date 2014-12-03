@@ -317,7 +317,7 @@ describe "student newsletters" do
                       )
   end
 
-  xit "creates newsletter_order" do
+  it "creates newsletter_order" do
     student = FactoryGirl.create(:student)
     login student.user
     visit job_offers_path

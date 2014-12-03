@@ -1,6 +1,6 @@
 class JobOffersController < ApplicationController
   include UsersHelper
-
+  force_ssl if: -> { current_user.present? }, unless: -> { Rails.env.in? ['development', 'test'] }
   skip_before_filter :signed_in_user, only: [:index]
 
   load_and_authorize_resource except: [:index, :edit]
