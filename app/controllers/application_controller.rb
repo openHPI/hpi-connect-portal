@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     rescue_from_exception exception
   end
 
+  def redirect_to_https
+    redirect_to :protocol => "https://" unless (request.ssl? || request.local? || Rails.env.test?)
+  end
+
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { locale: I18n.locale }
