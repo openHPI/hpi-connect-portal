@@ -4,6 +4,7 @@
 en:
   actions: "Actions"
   links:
+    close: "Close"
     back: "Back"
     cancel: "Cancel"
     confirm: "Are you sure?"

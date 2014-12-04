@@ -4,6 +4,7 @@
 de:
   actions: "Aktionen"
   links:
+    close: "Schließen"
     back: "Zurück"
     cancel: "Abbrechen"
     confirm: "Sind sie sich sicher?"
