@@ -2,3 +2,8 @@
   <h1><%= t("job_offers.new_job_offer") %></h1>
   <%= render 'form', job_offer: @job_offer %>
 </div>
+
+<% content_for :modals do %>
+  <%= render 'preview' %>
+<% end %>
+ 
