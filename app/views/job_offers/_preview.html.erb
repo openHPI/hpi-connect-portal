@@ -3,19 +3,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel"><%= t "users.messages.send_new_password" %></h4>
+          <h4 class="modal-title" id="myModalLabel"></h4>
         </div>
-        
-          <div class="modal-body clearfix">
-            <%= label_tag :send_instructions, t("users.messages.password_send_instructions") %>
-              <br/>           
-          </div>
-          <div class="modal-footer">        
-            <%= simple_form_for :forgot_password, url: forgot_password_path do |f| %>            
-            <%= f.input :email, id: "email", style: "height: auto; !important" %>
-            <%= f.submit t("users.request_password"), class: "btn btn-large btn-primary" %>
-            <% end %>   
-          </div>
+        <div class="modal-body text-editor-body clearfix">           
+        </div>  
+        <div class="modal-footer">        
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
