@@ -32,6 +32,7 @@ $(document).ready( function() {
 			language : language,
       plugins: [
 		        "advlist autolink lists link image anchor",
+
 		        "searchreplace visualblocks code",
 		        "insertdatetime table contextmenu paste textcolor"
 		    ],

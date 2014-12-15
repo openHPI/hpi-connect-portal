@@ -6,8 +6,8 @@
   </span>
 </div>
 
-<div class="wrapper-12 teaser">
-  <div class="col-md-12 list-container">
+<div class="wrapper-8 teaser">
+  <div class="col-md-8 list-container">
     <ul class="list-group list">
       <div class="row">
         <div class="col-sm-12">
@@ -16,8 +16,11 @@
       </div>
     </ul>
   </div>
-
   <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
 </div>
 
-
+<div class="wrapper-4 teaser sidebar">  
+  <div class="col-md-4">
+    <%= render "shared/contact" %>
+  </div>
+</div>

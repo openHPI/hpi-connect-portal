@@ -16,8 +16,12 @@
     <%= render 'shared/jobs_listing_detailed', job_offer_list: @job_offers_list[:items], create_link_to_details: true %>
   </div><!--/.span -->
 </div>
-<div class="wrapper-5 teaser sidebar">
+<div class="wrapper-4 teaser sidebar">
   <div class="col-md-4">
     <%= render 'shared/sort_filter_search', find_path: job_offers_path %>
+  </div>
+  
+  <div class="col-md-4">
+    <%= render "shared/contact" %>
   </div>
 </div>
