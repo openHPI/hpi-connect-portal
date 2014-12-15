@@ -63,8 +63,8 @@ jQuery(function($) {
     setPbEvents();
     resizepage();
     $('.carousel').carousel({
-        pause: true,
-        interval: false
+        //pause: true,
+        //interval: false
     });
     $('.collapse').collapse({
         toggle: false, parent: false

@@ -19,8 +19,36 @@
   <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
 </div>
 
-<div class="wrapper-4 teaser sidebar">  
+
+<div class="wrapper-4 teaser sidebar"> 
+  
+    <div class="col-md-4">
+    <h1>Our Partners</h1>
+         
+    <div id="myCarousel" class="slide carousel">
+    	 <div class="carousel-inner">      
+          <% @premium_employers.each_slice(3).to_a().each do |slice| %>
+          
+            <div class="item">
+              <% slice.each do |premium_employer| %>
+                <%= link_to premium_employer do %>
+                  <%= image_tag premium_employer.avatar.url, size: "100", class: "img" %>
+                <% end %>
+              <% end %>
+            </div>
+            <% end %>
+    	</div>
+    	<!-- Controls -->
+    	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"></a>
+    	<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"></a>
+    </div>        
+</div>
+
+ 
   <div class="col-md-4">
     <%= render "shared/contact" %>
   </div>
+  
+  
+  
 </div>

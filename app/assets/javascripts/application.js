@@ -38,6 +38,10 @@ $(document).ready( function() {
 			menubar: "table format view insert edit",
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
+  
+  $('#myCarousel .item').first().addClass("active");
+  $('#myCarousel').carousel({ interval: false, pause: true });
+  
 });
 
 $(function() {
