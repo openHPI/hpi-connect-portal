@@ -125,45 +125,45 @@ User.create!([{
 }])
 
 # Students
-Student.create!([{
-  user: User.new(
-    email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-    lastname: "Reinhardt", 
-    firstname: "Pascal",
-    password: 'password',
-    password_confirmation: 'password',
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
-  ),
-  semester: 5,
-  academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
-  graduation_id: Student::GRADUATIONS.index("abitur"),
-}])
+student_pascal = Student.create!(
+            user: User.new(
+              email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+              lastname: "Reinhardt", 
+              firstname: "Pascal",
+              password: 'password',
+              password_confirmation: 'password',
+              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
+              ),
+            semester: 5,
+            academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
+            graduation_id: Student::GRADUATIONS.index("abitur"),
+)
 
-Student.create!([{
-  user: User.new(
-    email: 'frank.blechschmidt@example.com', 
-    firstname: 'Frank', 
-    lastname: 'Blechschmidt',
-    password: 'password',
-    password_confirmation: 'password',
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
-  ),
-  semester: 5,
-  academic_program_id: 0,
-  graduation_id: 2,
-  birthday: '1990-12-30',
-  additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
-  homepage: 'https://twitter.com/FraBle90',
-  github: 'https://github.com/FraBle',
-  facebook: 'https://www.facebook.com/FraBle90',
-  xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
-  linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
-  languages: Language.where(:name => ['english']),
-  languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
-  programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-  programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-  employment_status_id: 2
-}])
+student_frank = Student.create!(
+    user: User.new(
+      email: 'frank.blechschmidt@example.com', 
+      firstname: 'Frank', 
+      lastname: 'Blechschmidt',
+      password: 'password',
+      password_confirmation: 'password',
+      photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
+    ),
+    semester: 5,
+    academic_program_id: 0,
+    graduation_id: 2,
+    birthday: '1990-12-30',
+    additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+    homepage: 'https://twitter.com/FraBle90',
+    github: 'https://github.com/FraBle',
+    facebook: 'https://www.facebook.com/FraBle90',
+    xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+    linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+    languages: Language.where(:name => ['english']),
+    languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
+    programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+    programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+    employment_status_id: 2
+)
 
 # Staff
 Staff.create!([{
@@ -365,6 +365,26 @@ Contact.create!(
   zip_city: "14482 Potsdam",
   email: "hana@hpi.de",
   phone: "01000000"
+)
+
+# Employer Ratings
+
+hpi_rating_genome = Rating.create!(
+  student: student_pascal,
+  employer: hpi,
+  job_offer: genome,
+  score: 5,
+  headline: "Deep insights in personalised medicine ...",
+  description: "Analysing genome sequences using in-memory technologies ..."
+)
+
+hpi_rating_hana = Rating.create!(
+  student: student_frank,
+  employer: hpi,
+  job_offer: hana,
+  score: 4,
+  headline: "Now a HANA expert ...",
+  description: "HANA rules !!! ..."
 )
 
 
