@@ -156,3 +156,19 @@ a:hover, a:focus, .btn-default:hover  {
  margin-right: 0px !important;
  display: inline !important;
 }
+
+/* Adapt bootstrap carousel (showing partner employers) */
+.inner-item {
+  text-align: center;
+  margin-left: 30px;
+}
+
+.inner-item img {
+  float: none !important;
+}
+
+.carousel-control{
+  padding-top:10%;
+}
+
+

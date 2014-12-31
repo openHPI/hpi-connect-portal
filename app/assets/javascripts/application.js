@@ -40,7 +40,11 @@ $(document).ready( function() {
 	});
   
   $('#myCarousel .item').first().addClass("active");
-  $('#myCarousel').carousel({ interval: false, pause: true });
+  
+  $('#myCarousel').carousel({
+    interval: 4000,
+    pause: "hover"
+  });
   
 });
 
