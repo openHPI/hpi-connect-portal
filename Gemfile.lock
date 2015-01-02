@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/bmc/jquery-raty-rails.git
+  revision: f362f17c0ff3ac039ab05b5e48e5db24a27794b3
+  specs:
+    jquery-raty-rails (0.0.1)
+      rails (>= 3.2.3)
+
+GIT
   remote: https://github.com/adzap/active_enum.git
   revision: 280548e3954d8f9e032968dd2757b7e5862cdf49
   specs:
@@ -310,6 +317,7 @@ DEPENDENCIES
   highline
   jbuilder (~> 2.0.2)
   jquery-rails (~> 3.1.0)
+  jquery-raty-rails!
   jquery-star-rating-rails
   jquery-turbolinks
   jquery-ui-rails

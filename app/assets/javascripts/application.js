@@ -15,8 +15,8 @@
 //= require jquery.ui.datepicker
 //= require jquery.turbolinks
 //= require jquery-star-rating
+//= require jquery.raty.min
 //= require tinymce-jquery
-//= 
 //= require bootstrap/bootstrap
 //= require_tree .
 
