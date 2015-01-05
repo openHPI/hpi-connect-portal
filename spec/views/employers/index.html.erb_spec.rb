@@ -10,6 +10,16 @@ describe "employers/index" do
         :name => "HCI", :description => "Human Computer Interaction"
       )
     ])
+        
+    assign(:premium_employers,[
+      stub_model(Employer,
+        :name => "Premium Employer", :description => "some description", :premium? => true
+      ),
+      stub_model(Employer,
+      :name => "Premium Employer", :description => "some description", :premium? => true
+      )  
+    ])
+            
     view.stub(:can?) { false }
     view.stub(:signed_in?) { false }
   end
