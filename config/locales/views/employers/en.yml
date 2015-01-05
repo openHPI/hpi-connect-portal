@@ -2,6 +2,7 @@ en:
     employers:
         employer: "Employer"
         employers: "Employers"
+        partner_employers: "Partners"
         employer_overview: "Listing of employers"
         editing_employer: "Edit Employer"
         new_employer: "New Employer"

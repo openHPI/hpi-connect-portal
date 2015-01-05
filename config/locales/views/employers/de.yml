@@ -2,6 +2,7 @@ de:
     employers:
         employer: "Arbeitgeber"
         employers: "Arbeitgeber"
+        partner_employers: "Partnerunternehmen"
         employer_overview: "Arbeitgeberübersicht"
         editing_employer: "Arbeitgeber bearbeiten"
         new_employer: "Neuer Arbeitgeber"
