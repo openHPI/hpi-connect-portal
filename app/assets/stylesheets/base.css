@@ -156,3 +156,12 @@ a:hover, a:focus, .btn-default:hover  {
  margin-right: 0px !important;
  display: inline !important;
 }
+
+/* provisorily CSS adaptions TODO: swap out of base.css file */
+.employer_rating_stars{cursor: pointer !important;}
+.popover{background:white !important;}
+
+
+
+
+

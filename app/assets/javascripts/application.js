@@ -22,11 +22,12 @@
 
 
 $(document).ready( function() {
-    $('.dropdown-toggle').dropdown();
+  $('.dropdown-toggle').dropdown();
 	
-	var language = window.locale === 'de' ? 'de' : 'en';
+  
+  var language = window.locale === 'de' ? 'de' : 'en';
 	
-    tinymce.baseURL = '/connect/jobportal/assets/tinymce';
+  tinymce.baseURL = '/connect/jobportal/assets/tinymce';
     
 	$('textarea.tinymce').tinymce({
 			language : language,
@@ -38,6 +39,27 @@ $(document).ready( function() {
 			menubar: "table format view insert edit",
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
+  
+  
+  var employer_ratings = $('div.employer_rating_stars');
+  
+  employer_ratings.raty({
+    score: function() {
+      return $(this).attr('data-score');
+    },
+    readOnly: true
+  });
+  
+  employer_ratings.popover({
+    placement:'bottom',
+    trigger: 'manual',
+  }).mouseenter(function(){
+    $(this).popover('show');
+  }).mouseleave(function(){
+    $(this).popover('hide');
+  });
+  
+  
 });
 
 $(function() {

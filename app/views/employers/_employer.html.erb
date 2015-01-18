@@ -8,8 +8,17 @@
       <% end %>
       <% unless employer.activated %>
         <span class="label label-danger"><%= t("employers.inactive")%></span>
-      <% end %>
+      <% end %>  
     </div>
+    
+    <% if current_user && (current_user.student? || current_user.admin?) %>
+      <div class="col-md-3"> 
+        <%= link_to employer_ratings_path(employer) do %>
+          <div class="employer_rating_stars" data-container="body" data-score="5" title="Dismissible popover" data-content="Click stars to see ratings!"></div>
+        <% end %>  
+      </div> 
+    <%end%>
+    
     <div class="col-md-3 pull-right">
       <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
     </div>
