@@ -54,9 +54,9 @@ $(document).ready( function() {
     placement:'bottom',
     trigger: 'manual',
   }).mouseenter(function(){
-    $(this).popover('show');
+    //$(this).popover('show');
   }).mouseleave(function(){
-    $(this).popover('hide');
+    //$(this).popover('hide');
   });
   
   

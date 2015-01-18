@@ -374,8 +374,8 @@ hpi_rating_genome = Rating.create!(
   employer: hpi,
   job_offer: genome,
   score: 5,
-  headline: "Deep insights in personalised medicine ...",
-  description: "Analysing genome sequences using in-memory technologies ..."
+  headline: "Deep insights in personalised medicine",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet molestie libero, vitae egestas sem pellentesque commodo. Sed eget dui leo. Nunc dui orci, auctor vel elit at, convallis laoreet mauris. Praesent scelerisque nibh sem, nec rutrum tortor fringilla sit amet. Nulla quis nisl at lectus dapibus convallis. Aenean iaculis purus in risus commodo, eu consequat neque dignissim. Ut pharetra sem ac varius molestie. Morbi congue vehicula est, eu pretium elit euismod id. Vestibulum sagittis velit vitae nulla fermentum dignissim. Maecenas dictum nunc non quam pretium egestas. Duis pulvinar augue in urna sollicitudin interdum."
 )
 
 hpi_rating_hana = Rating.create!(
@@ -383,8 +383,8 @@ hpi_rating_hana = Rating.create!(
   employer: hpi,
   job_offer: hana,
   score: 4,
-  headline: "Now a HANA expert ...",
-  description: "HANA rules !!! ..."
+  headline: "Now a HANA expert",
+  description: "HANA rules !!!"
 )
 
 

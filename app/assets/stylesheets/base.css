@@ -158,10 +158,13 @@ a:hover, a:focus, .btn-default:hover  {
 }
 
 /* provisorily CSS adaptions TODO: swap out of base.css file */
-.employer_rating_stars{cursor: pointer !important;}
+.employer_rating_stars{
+  cursor: pointer !important;
+  display:inline;
+}
 .popover{background:white !important;}
 
-
-
-
-
+span.rating_score{
+  font-weight: bold;
+  color: rgb(239,152,0);
+}

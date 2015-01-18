@@ -1,6 +1,6 @@
 <li class="list-group-item">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-sm-5">
       <% if can?(:activate, employer) || employer.paying? %>
         <h4><%= link_to employer.name, employer %></h4> 
       <% else %>
@@ -12,15 +12,20 @@
     </div>
     
     <% if current_user && (current_user.student? || current_user.admin?) %>
-      <div class="col-md-3"> 
+      <div class="col-sm-4"> 
+        <span class="rating_score"><%= employer.average_rating %></span> 
+        
         <%= link_to employer_ratings_path(employer) do %>
-          <div class="employer_rating_stars" data-container="body" data-score="5" title="Dismissible popover" data-content="Click stars to see ratings!"></div>
-        <% end %>  
+          <div class="employer_rating_stars" data-container="body" data-score="<%= employer.average_rating %>" title="Dismissible popover" data-content="Click stars to see ratings!"></div>
+        <% end %>
+        <br/>
+        <span>(<%= employer.rating_amount %>&nbsp;Ratings)</span> 
       </div> 
     <%end%>
     
-    <div class="col-md-3 pull-right">
+    <div class="col-sm-3 pull-right">
       <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
     </div>
+    
   </div>
 </li>
