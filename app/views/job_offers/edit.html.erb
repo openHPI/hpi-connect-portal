@@ -1,6 +1,8 @@
 <div class="wrapper-12 panel-wrapper">
-  <span class="pull-right">
-    <%= link_to t("links.show"), @job_offer, :class => "btn btn-default title-button", data: {:confirm => t("links.discard")} %>
-  </span>
   <%= render 'form', job_offer: @job_offer %>
 </div>
+
+<% content_for :modals do %>
+  <%= render 'preview' %>
+<% end %>
+ 

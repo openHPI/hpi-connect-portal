@@ -30,8 +30,9 @@ $(document).ready( function() {
     
 	$('textarea.tinymce').tinymce({
 			language : language,
-		    plugins: [
-		        "advlist autolink lists link preview anchor",
+      plugins: [
+		        "advlist autolink lists link image anchor",
+
 		        "searchreplace visualblocks code",
 		        "insertdatetime table contextmenu paste textcolor"
 		    ],
@@ -43,7 +44,17 @@ $(document).ready( function() {
   
   $('#employers_carousel').carousel({
     interval: 4000,
-    pause: "hover"
+    pause: "hover" 
+  });
+  
+  $('#job_offer_preview_button').click(function() {
+      
+    var job_offer_title = jQuery('.job_offer_title input').val(); 
+    var job_offer_description = tinymce.activeEditor.getContent();
+    
+    $('#job_offer_preview_modal').find(".modal-title").text(job_offer_title);
+    $('#job_offer_preview_modal').find(".modal-body").html(job_offer_description);
+    $('#job_offer_preview_modal').modal('show');
   });
   
 });

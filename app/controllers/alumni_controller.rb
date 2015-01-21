@@ -1,5 +1,5 @@
 class AlumniController < ApplicationController
-  authorize_resource except: [:register, :link, :link_new, :index, :show]
+  authorize_resource except: [:register, :link, :link_new, :show]
   skip_before_filter :signed_in_user, only: [:register, :link, :link_new, :index, :show]
   before_action :set_alumni, only: [:show]
 
@@ -50,6 +50,13 @@ class AlumniController < ApplicationController
   end
 
   def remind_via_mail
+  end
+
+  def remind_all
+    Alumni.all.each do |alumni|
+      alumni.send_reminder
+    end
+    respond_and_redirect_to alumni_index_path, "Erinnerungsemails gesendet"
   end
 
   def send_mail_from_csv

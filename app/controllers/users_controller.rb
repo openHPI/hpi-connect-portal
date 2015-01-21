@@ -31,12 +31,17 @@ class UsersController < ApplicationController
   end
 
   def forgot_password
-    @user = User.find_by_email params[:forgot_password][:email]
-    if @user
-      @user.set_random_password
-      redirect_to root_path, notice: t('users.messages.password_resetted')
-    else
+    email = params[:forgot_password][:email]
+    if email.blank?
       redirect_to root_path, notice: I18n.t('users.messages.unknown_email')
+    else
+      @user = User.where('lower(email) = ?', email.downcase).first
+      if @user
+        @user.set_random_password
+        redirect_to root_path, notice: t('users.messages.password_resetted')
+      else
+        redirect_to root_path, notice: I18n.t('users.messages.unknown_email')
+      end
     end
   end
 

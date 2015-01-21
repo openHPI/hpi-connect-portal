@@ -129,3 +129,16 @@ describe "the alumni index page" do
     current_path.should eq(alumni_path(alumni))
   end
 end
+
+describe "Alumni Reminder Email" do
+
+  it "sends mail" do
+    ActionMailer::Base.deliveries = []
+    login FactoryGirl.create(:user, :admin)
+    FactoryGirl.create(:alumni)
+    visit remind_via_mail_alumni_index_path
+    find("#remind-all-button").click
+    ActionMailer::Base.deliveries.count.should == 1
+  end
+
+end

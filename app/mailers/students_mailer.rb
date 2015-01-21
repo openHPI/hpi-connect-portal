@@ -1,5 +1,6 @@
 class StudentsMailer < ActionMailer::Base
   default from: 'noreply-connect@hpi.de'
+  add_template_helper ApplicationHelper
 
   def new_student_email(student)
     @student = student
