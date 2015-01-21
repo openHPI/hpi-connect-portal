@@ -39,9 +39,9 @@ $(document).ready( function() {
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
   
-  $('#myCarousel .item').first().addClass("active");
+  $('#employers_carousel .item').first().addClass("active");
   
-  $('#myCarousel').carousel({
+  $('#employers_carousel').carousel({
     interval: 4000,
     pause: "hover"
   });

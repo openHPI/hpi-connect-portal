@@ -24,7 +24,7 @@
     <div class="col-md-4">
     <h1><%= t('employers.partner_employers') %></h1>
          
-    <div id="myCarousel" class="slide carousel">
+    <div id="employers_carousel" class="slide carousel">
     	 <div class="carousel-inner">      
           <% @premium_employers.each_slice(2).to_a().each do |slice| %>    
             <div class="item">
@@ -40,8 +40,8 @@
     	</div>
       
     	<!-- Controls -->
-    	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><</a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">></a>      
+    	<a class="left carousel-control" href="#employers_carousel" role="button" data-slide="prev"><</a>
+      <a class="right carousel-control" href="#employers_carousel" role="button" data-slide="next">></a>      
     </div>        
 </div>
 
