@@ -5,7 +5,7 @@ class CreateRatings < ActiveRecord::Migration
       t.references :employer, index: true
       t.references :job_offer, index: true
       t.integer :score
-      t.text :headline
+      t.string :headline
       t.text :description
 
       t.timestamps

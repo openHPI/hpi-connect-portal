@@ -348,7 +348,7 @@ hana = JobOffer.create!(
   state_id: 1,
   category_id: 1,
   graduation_id: 3,
-  employer: hpi,
+  employer: sap,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   release_date: Date.current-9,
@@ -381,7 +381,7 @@ hpi_rating_genome = Rating.create!(
 hpi_rating_hana = Rating.create!(
   student: student_frank,
   employer: hpi,
-  job_offer: hana,
+  job_offer: genome,
   score: 4,
   headline: "Now a HANA expert",
   description: "HANA rules !!!"

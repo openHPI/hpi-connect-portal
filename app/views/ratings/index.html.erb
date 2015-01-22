@@ -1,3 +1,22 @@
+
+<div class="wrapper-12 panel-wrapper">
+
+  <%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
+  
+          
+      <%= f.hidden_field :score  %>
+      
+      <%= f.input :headline %>
+      
+      <%= f.association :job_offer, collection: @selectable_job_offers %>
+      
+      <%= f.input :description %>
+      <br />
+      <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+  <% end %>
+</div>
+
+
 <div class="wrapper-12 teaser">
   <div class="col-md-12 list-container">
     <ul class="list-group list">

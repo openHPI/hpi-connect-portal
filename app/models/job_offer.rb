@@ -37,6 +37,7 @@ class JobOffer < ActiveRecord::Base
   has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
   has_many :assigned_students, through: :assignments, source: :student
+  has_many :ratings, dependent: :nullify
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer

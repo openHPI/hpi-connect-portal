@@ -42,13 +42,15 @@ $(document).ready( function() {
   
   
   var employer_ratings = $('div.employer_rating_stars');
-  
   employer_ratings.raty({
     score: function() {
       return $(this).attr('data-score');
     },
     readOnly: true
   });
+  
+  $('div.rating_form_field').raty({});
+  
   
   employer_ratings.popover({
     placement:'bottom',

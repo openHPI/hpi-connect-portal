@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 20141215164107) do
     t.integer  "employer_id"
     t.integer  "job_offer_id"
     t.integer  "score"
-    t.text     "headline"
+    t.string   "headline"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
