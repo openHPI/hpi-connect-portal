@@ -60,6 +60,6 @@ class Alumni < ActiveRecord::Base
   end
 
   def send_reminder
-    AlumniMailer.delay.reminder_email(self.id).deliver
+    AlumniMailer.delay.reminder_email(id)
   end
 end

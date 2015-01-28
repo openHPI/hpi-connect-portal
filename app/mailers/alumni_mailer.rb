@@ -8,6 +8,8 @@ class AlumniMailer < ActionMailer::Base
 
   def reminder_email(alumni_id)
     @alumni_id = alumni_id
-    mail to: Alumni.find(alumni_id).email, subject: (t "alumni_mailer.reminder.subject")
+    alumni = Alumni.find(alumni_id)
+    puts alumni.email
+    mail to: alumni.email, subject: (t "alumni_mailer.reminder.subject")
   end
 end
