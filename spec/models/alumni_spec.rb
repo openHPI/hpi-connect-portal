@@ -49,10 +49,10 @@ describe Alumni do
   describe "send_reminder" do
 
     it "sends mail" do
-      ActionMailer::Base.deliveries = []
+      mailer_count = Sidekiq::Extensions::DelayedMailer.jobs.size
       alumni = FactoryGirl.create :alumni
       alumni.send_reminder
-      ActionMailer::Base.deliveries.count.should == 1
+      Sidekiq::Extensions::DelayedMailer.jobs.size.should == mailer_count + 1
     end
 
   end

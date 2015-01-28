@@ -5,9 +5,9 @@ describe "the home page" do
   it "renders the latest 5 job offers" do
     6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active )}
     visit root_path
-    page.should have_content(
-      "Testjob2", "Testjob3", "Testjob4", "Testjob5", "Testjob6"
-    )
+    5.times do |i|
+      page.should have_content("Testjob#{i+2}")
+    end
     page.should_not have_content "Testjob1"
   end
 

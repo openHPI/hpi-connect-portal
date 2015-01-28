@@ -133,12 +133,12 @@ end
 describe "Alumni Reminder Email" do
 
   it "sends mail" do
-    ActionMailer::Base.deliveries = []
+    mailer_count = Sidekiq::Extensions::DelayedMailer.jobs.size
     login FactoryGirl.create(:user, :admin)
     FactoryGirl.create(:alumni)
     visit remind_via_mail_alumni_index_path
     find("#remind-all-button").click
-    ActionMailer::Base.deliveries.count.should == 1
+    Sidekiq::Extensions::DelayedMailer.jobs.size.should == mailer_count + 1
   end
 
 end
