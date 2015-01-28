@@ -161,6 +161,16 @@ describe EmployersController do
         put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: 2 } }
         ActionMailer::Base.deliveries.count.should == old_count + 2
       end
+
+      xit "downgrades employer if admin" do
+        ActionMailer::Base.deliveries = []
+        login FactoryGirl.create(:user, :admin)
+        @employer.update(requested_package_id: 2, booked_package_id:2)
+        put :update,  { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: 0 } }
+        ActionMailer::Base.deliveries.count.should == 2
+        @employer.booked_package_id.should == 0
+        @employer.requested_package_id.should == 0
+      end
     end
 
     describe "with missing permission" do

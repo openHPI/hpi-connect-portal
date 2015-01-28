@@ -139,6 +139,9 @@ gem 'linkedin'
 # xing
 gem 'xing_api', '~> 0.1'
 
+#asynchronous emails
+gem 'sidekiq'
+
 # deployment with nginx and unicorn
 gem 'unicorn'
 gem 'capistrano', '~> 3.1.0'

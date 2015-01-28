@@ -8,8 +8,9 @@ describe AlumniMailer do
 
     it "delivers mail" do
       alumni = FactoryGirl.create(:alumni)
-      AlumniMailer.reminder_email(alumni).deliver
-      ActionMailer::Base.deliveries.count.should == 1
+      assert_equal 0, Sidekiq::Extensions::DelayedMailer.jobs.size
+      AlumniMailer.delay.reminder_email(alumni.id)
+      assert_equal 1, Sidekiq::Extensions::DelayedMailer.jobs.size
     end
   end
 end

@@ -1,4 +1,4 @@
-Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,
+<% @alumni=Alumni.find(@alumni_id) %>Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,
 
 mit Ihrem Status als Alumna/us des HPI steht Ihnen ein Nutzeraccount im Karriere- und Alumniportal <%= link_to 'HPI Connect', root_url %> zur Verfügung. 
 
