@@ -1,21 +1,35 @@
 
-<div class="wrapper-12 panel-wrapper">
-
-  <%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
+<div class="wrapper-12 teaser">
+  <div class="col-md-12 list-container">              
+    <%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
   
-          
-      <%= f.input :score  %>
+      <div class="form-group">
+        <%= label_tag t("activerecord.attributes.user.academic_program")%>
+        <div class="rating_form_field"></div>   
+        <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
+      </div>
       
-      <%= f.input :headline %>
+      <div class="form-group">
+        <%= label_tag t("activerecord.attributes.user.academic_program") %> 
+        <%= f.input :headline %>
+      </div>
       
-      <%= f.association :job_offer, collection: @selectable_job_offers %>
+      <div class="form-group">
+        <%= label_tag t("activerecord.attributes.user.academic_program") %> 
+        <%= f.association :job_offer, collection: @selectable_job_offers %>
+      </div>
       
-      <%= f.input :description %>
-      <br />
-      <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
-  <% end %>
-</div>
+      <div class="form-group">
+        <%= label_tag t("activerecord.attributes.user.academic_program") %> 
+        <%= f.input :description , input_html: { id: 'rating_score_input' } %>
+      </div>
+      
 
+      <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+  
+     <% end %>
+  </div>
+</div>
 
 <div class="wrapper-12 teaser">
   <div class="col-md-12 list-container">

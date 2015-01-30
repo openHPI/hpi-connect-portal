@@ -40,18 +40,20 @@ $(document).ready( function() {
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
   
-  
-  var employer_ratings = $('div.employer_rating_stars');
-  employer_ratings.raty({
+   $('div.employer_rating_stars').raty({
     score: function() {
       return $(this).attr('data-score');
     },
     readOnly: true
   });
-  
-  $('div.rating_form_field').raty({});
-  
-  
+    
+  $('div.rating_form_field').raty({
+    cancel:     true,
+    target:     '#rating_score_input',
+    targetKeep: true,
+    targetType: 'number'
+  });
+
   employer_ratings.popover({
     placement:'bottom',
     trigger: 'manual',
@@ -60,7 +62,6 @@ $(document).ready( function() {
   }).mouseleave(function(){
     //$(this).popover('hide');
   });
-  
   
 });
 
