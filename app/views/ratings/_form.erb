@@ -1,23 +1,23 @@
 <%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
   
   <div class="form-group">
-    <%= label_tag "Rating Score" %>
+    <%= label_tag t("activerecord.attributes.rating.score") %> 
     <div class="rating_form_field"></div>   
     <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
   </div>
   
   <div class="form-group">
-    <%= label_tag "Title" %> 
+    <%= label_tag t("activerecord.attributes.rating.headline") %> 
     <%= f.input :headline %>
   </div>
   
   <div class="form-group">
-    <%= label_tag "Job Offer" %> 
+    <%= label_tag t("activerecord.attributes.rating.job_offer") %> 
     <%= f.association :job_offer, collection: @selectable_job_offers %>
   </div>
   
   <div class="form-group">
-    <%= label_tag "Description" %> 
+    <%= label_tag t("activerecord.attributes.rating.description") %> 
     <%= f.input :description , input_html: { id: 'rating_score_input' } %>
   </div>
   

@@ -1,0 +1,8 @@
+de:
+  activerecord:
+    attributes:
+      rating:
+        score: "Bewertung"
+        headline: "Titel"
+        description: "Beschreibung"
+        job_offer: "Jobangebot"
