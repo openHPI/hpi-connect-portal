@@ -1,0 +1,27 @@
+<%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
+  
+  <div class="form-group">
+    <%= label_tag "Rating Score" %>
+    <div class="rating_form_field"></div>   
+    <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
+  </div>
+  
+  <div class="form-group">
+    <%= label_tag "Title" %> 
+    <%= f.input :headline %>
+  </div>
+  
+  <div class="form-group">
+    <%= label_tag "Job Offer" %> 
+    <%= f.association :job_offer, collection: @selectable_job_offers %>
+  </div>
+  
+  <div class="form-group">
+    <%= label_tag "Description" %> 
+    <%= f.input :description , input_html: { id: 'rating_score_input' } %>
+  </div>
+  
+  <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+  
+ <% end %>
+
