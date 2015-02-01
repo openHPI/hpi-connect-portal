@@ -2,14 +2,9 @@ class RatingsController < ApplicationController
   
   def index
     @ratings = Rating.where(employer_id: params[:employer_id])
-    @selectable_job_offers = JobOffer.where(employer_id: params[:employer_id])
-     
-    @rating  = Rating.new
   end
   
-  
-  def create     
-    @ratings = Rating.where(employer_id: params[:employer_id])
+  def create
     @selectable_job_offers = JobOffer.where(employer_id: params[:employer_id])
     
     @rating = Rating.new(rating_params)
@@ -20,8 +15,12 @@ class RatingsController < ApplicationController
       flash[:success] = 'Rating sucessfully created' #I18n.t('users.messages.successfully_created')
       redirect_to employer_ratings_path
     else
-      render_errors_and_action(@rating, 'index')
+      render_errors_and_action(@rating, 'new')
     end  
+  end
+  
+  def new
+    @rating  = Rating.new
   end
 
   private

@@ -21,6 +21,10 @@
     <%= f.input :description , input_html: { id: 'rating_score_input' } %>
   </div>
   
+  
+  
+  <%= link_to t("links.cancel"), employer_ratings_path, class: "btn btn-primary" %>
+  
   <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
   
  <% end %>
