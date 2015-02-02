@@ -1,14 +1,16 @@
 class RatingsController < ApplicationController
-  
+
+  before_action :set_ratings_for_index
   before_action :set_employer, only: [:new, :create, :edit, :update]
   before_action :set_job_offers_selection, only: [:new, :create, :edit, :update]
   
+  load_and_authorize_resource
+  skip_load_resource :only => [:create]
+  
   def index
-    @ratings = Rating.where(employer_id: params[:employer_id])
   end
   
   def new
-    @rating = Rating.new
   end
   
   def create
@@ -25,12 +27,10 @@ class RatingsController < ApplicationController
   end
   
   def edit
-    @rating = Rating.find(params[:id])
   end
   
   def update
-    @rating = Rating.find(params[:id])
-        
+            
     if @rating.update(rating_params)
       flash[:success] = 'Rating sucessfully updated'
       redirect_to employer_ratings_path
@@ -40,7 +40,6 @@ class RatingsController < ApplicationController
   end
   
   def destroy
-    @rating = Rating.find(params[:id])
     @rating.destroy
  
     redirect_to employer_ratings_path
@@ -51,6 +50,10 @@ class RatingsController < ApplicationController
       params.require(:rating).permit(:student_id, :employer_id, :job_offer_id, :score, :headline, :description)
     end
     
+    def set_ratings_for_index
+      @ratings = Rating.where(employer_id: params[:employer_id])
+    end
+    
     def set_employer
       @employer = Employer.find(params[:employer_id])
     end
@@ -59,16 +62,3 @@ class RatingsController < ApplicationController
       @selectable_job_offers = JobOffer.where(employer_id: params[:employer_id])
     end
 end  
-
-
-
-
-
-
-
-
-
-
-
-
-

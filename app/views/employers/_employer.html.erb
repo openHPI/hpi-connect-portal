@@ -11,7 +11,7 @@
       <% end %>  
     </div>
     
-    <% if current_user && (current_user.student? || current_user.admin?) %>
+    <!-- if current_user && (current_user.student? || current_user.admin?) -->
       <div class="col-sm-4"> 
         <span class="rating_score"><%= employer.average_rating %></span> 
         
@@ -21,7 +21,7 @@
         <br/>
         <span>(<%= employer.rating_amount %>&nbsp;Ratings)</span> 
       </div> 
-    <%end%>
+    <!-- end%> -->
     
     <div class="col-sm-3 pull-right">
       <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
