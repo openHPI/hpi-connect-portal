@@ -47,8 +47,10 @@ $(document).ready( function() {
     readOnly: true
   });
   
-    
   $('div.rating_form_field').raty({
+    score: function() {
+      return $(this).attr('data-score');
+    },
     cancel:     true,
     target:     '#rating_score_input',
     targetKeep: true,

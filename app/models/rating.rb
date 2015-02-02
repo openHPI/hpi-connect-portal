@@ -19,7 +19,6 @@ class Rating < ActiveRecord::Base
   belongs_to :job_offer
   
   validates :student, :employer, :score, :headline, :description, presence: true
-  validates :score, inclusion: { in: 0..5 }
-  
+  validates :score, inclusion: { in: 1..5 }
   
 end

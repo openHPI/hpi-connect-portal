@@ -2,7 +2,7 @@
   
   <div class="form-group">
     <%= label_tag t("activerecord.attributes.rating.score") %> 
-    <div class="rating_form_field"></div>   
+    <div class="rating_form_field" data-score="<%= @rating.score %>"></div>   
     <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
   </div>
   
@@ -22,10 +22,10 @@
   </div>
   
   
-  
-  <%= link_to t("links.cancel"), employer_ratings_path, class: "btn btn-primary" %>
-  
-  <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+  <div class="text-right">
+    <%= link_to t("links.cancel"), employer_ratings_path, class: "btn btn-primary" %>
+    <%= f.submit t("links.save"), class: "btn btn-primary" %>
+  </div>
   
  <% end %>
 
