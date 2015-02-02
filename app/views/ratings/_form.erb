@@ -1,4 +1,4 @@
-<%= simple_form_for @rating  ,url: employer_ratings_path do |f| %>
+<%= simple_form_for [@employer, @rating] do |f| %>
   
   <div class="form-group">
     <%= label_tag t("activerecord.attributes.rating.score") %> 

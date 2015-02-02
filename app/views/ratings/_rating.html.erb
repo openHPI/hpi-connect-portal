@@ -29,4 +29,10 @@
           <%= rating.description %>
         </div>  
       </div>
+          
+      <div class="row"> 
+        <div class="col-sm-12">
+          <%= link_to "Edit", edit_employer_rating_path(:id => rating.id), :class => "btn btn-primary pull-right" %>
+        </div>
+      </div>  
 </li>

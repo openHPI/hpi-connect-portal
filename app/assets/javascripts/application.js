@@ -46,21 +46,13 @@ $(document).ready( function() {
     },
     readOnly: true
   });
+  
     
   $('div.rating_form_field').raty({
     cancel:     true,
     target:     '#rating_score_input',
     targetKeep: true,
     targetType: 'number'
-  });
-
-  employer_ratings.popover({
-    placement:'bottom',
-    trigger: 'manual',
-  }).mouseenter(function(){
-    //$(this).popover('show');
-  }).mouseleave(function(){
-    //$(this).popover('hide');
   });
   
 });
