@@ -19,7 +19,9 @@
           <div class="employer_rating_stars" data-score="<%= employer.average_rating %>"></div>
         <% end %>
         <br/>
-        <span>(<%= employer.rating_amount %>&nbsp;Ratings)</span> 
+        <span>
+          (<%= employer.rating_amount %>&nbsp;<%= Rating.model_name.human(count: 2) %>)
+        </span> 
       </div> 
     <% end %>
     

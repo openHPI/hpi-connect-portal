@@ -1,5 +1,9 @@
 de:
   activerecord:
+    models:
+      rating:
+        one: "Bewertung"
+        other: "Bewertungen"
     attributes:
       rating:
         score: "Bewertung"

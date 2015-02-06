@@ -57,6 +57,7 @@ $(document).ready( function() {
     targetType: 'number'
   });
   
+  
 });
 
 $(function() {
