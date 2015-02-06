@@ -30,13 +30,19 @@
           <%= rating.description %>
         </div>  
       </div>
-          
-      <div class="row"> 
-        <div class="col-sm-12 text-right">
-          <%= link_to "Destroy", employer_rating_path(:id => rating.id), method: :delete, :class => "btn btn-primary", data: { confirm: 'Are you sure?' } %>          
-          <%= link_to "Edit", edit_employer_rating_path(:id => rating.id), :class => "btn btn-primary" %>
+      
+        <div class="row"> 
+          <div class="col-sm-12 text-right">
+            <% if can? :destroy, rating %>    
+              <%= link_to t("links.destroy"), employer_rating_path(:id => rating.id), method: :delete, :class => "btn btn-danger", data: { confirm: t('links.confirm') } %>
+            <% end %>
+            
+            <% if can? :update, rating %> 
+              <%= link_to t("links.edit"), edit_employer_rating_path(:id => rating.id), method: :get, :class => "btn btn-primary" %>
+            <% end %>
+          </div>
         </div>
-      </div>
+        
     </div>
   </div>
   

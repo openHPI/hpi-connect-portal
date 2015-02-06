@@ -1,7 +1,7 @@
 class RatingsController < ApplicationController
 
   before_action :set_ratings_for_index
-  before_action :set_employer, only: [:new, :create, :edit, :update]
+  before_action :set_employer, only: [:new, :create, :edit, :update, :index]
   before_action :set_job_offers_selection, only: [:new, :create, :edit, :update]
   
   load_and_authorize_resource

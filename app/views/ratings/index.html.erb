@@ -1,12 +1,13 @@
+<div class="wrapper-12 panel-wrapper">
+  <span class="pull-left" id="top-links">
+     <% if can?(:create, Rating) %>
+      <%= link_to t("ratings.rate_now", employer: @employer.name), new_employer_rating_path, :class => "btn btn-default title-button" %>
+    <% end %>
+  </span>
+</div>
+
 <div class="wrapper-12 teaser">
   <div class="col-md-12 list-container">
-    
-    <div class="row">
-      <div class="col-sm-12">
-        <%= link_to "Rate now", new_employer_rating_path, :class => "btn btn-primary" %>
-      </div>
-    </div>
-    
     <ul class="list-group list">            
       <div class="row">
         <div class="col-sm-12">
