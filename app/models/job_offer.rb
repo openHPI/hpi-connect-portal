@@ -25,7 +25,7 @@
 class JobOffer < ActiveRecord::Base
   include JobOfferScopes
 
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
   
   has_attached_file :offer_as_pdf
