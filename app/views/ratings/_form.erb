@@ -2,7 +2,8 @@
   
   <div class="form-group">
     <%= label_tag t("activerecord.attributes.rating.score") %> 
-    <div class="rating_form_field" data-score="<%= @rating.score %>"></div>   
+    
+    <div class="rating_form_field" data-score="<%= @rating.score %>" data-target="rating_score_input" ></div>   
     <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
   </div>
   

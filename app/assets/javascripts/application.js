@@ -40,23 +40,28 @@ $(document).ready( function() {
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
   
-   $('div.employer_rating_stars').raty({
+  $('div.employer_rating_stars').raty({
     score: function() {
       return $(this).attr('data-score');
     },
     readOnly: true
   });
   
-  $('div.rating_form_field').raty({
-    score: function() {
-      return $(this).attr('data-score');
-    },
-    cancel:     true,
-    target:     '#rating_score_input',
-    targetKeep: true,
-    targetType: 'number'
-  });
   
+  $('div.rating_form_field').each(function(){
+                
+    var tid = '#'+ $(this).attr('data-target');
+          
+    $(this).raty({
+        score: function() {
+          return $(this).attr('data-score');
+        },
+        target: tid,
+        cancel: true,
+        targetKeep: true,
+        targetType: 'number'
+    });
+  });
   
 });
 
