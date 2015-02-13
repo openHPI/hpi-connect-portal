@@ -178,6 +178,10 @@ class JobOffer < ActiveRecord::Base
     STATES[state_id]
   end
 
+  def student_group
+    Student::GROUPS[student_group_id]
+  end
+
   def minimum_degree
     Student::GRADUATIONS[graduation_id]
   end

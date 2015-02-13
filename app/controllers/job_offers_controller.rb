@@ -16,6 +16,7 @@ class JobOffersController < ApplicationController
   has_scope :filter_category, only: [:index, :archive], as: :category
   has_scope :filter_graduation, only: [:index, :archive], as: :graduation
   has_scope :filter_state, only: [:index, :archive], as: :state
+  has_scope :filter_student_group, only: [:index, :archive], as: :student_group
   has_scope :filter_start_date, only: [:index, :archive], as: :start_date
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort

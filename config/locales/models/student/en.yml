@@ -14,3 +14,8 @@ en:
           introduction: "Introduction"
           basictrack: "Basic Track"
           advancedtrack: "Advanced Track"
+        group: "Student Group"
+        groups:
+          hpi: "HPI Student"
+          dschool: "D-School Student"
+          both: "HPI and D-School Student"

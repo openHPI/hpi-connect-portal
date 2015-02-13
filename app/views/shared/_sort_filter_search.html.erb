@@ -18,6 +18,17 @@
               <h5><%= label_tag t("job_offers.filterLabel") %></h5>
 
               <% unless @employers.empty? %>
+                <% if current_user && current_user.manifestation && current_user.manifestation.group_id %>
+                  <% group_id = current_user.manifestation.group_id %>
+                <% else %>
+                  <% group_id = 0 %>
+                <% end %>
+                <div class="form-group">
+                  <%= label_tag t("job_offers.jobs_for") , nil, :class => "small" %>
+                  <%= select_tag "student_group",
+                    options_for_select(
+                    Student::GROUPS.each_with_index.collect{|group, index| [t("activerecord.attributes.student.groups." + group), index]}, params.fetch(:student_group_id, group_id)), include_blank: false, :class => "form-control" %>
+                </div>
                 <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, :class => "small" %>
                   <%= select_tag "employer", options_for_select(Employer.all.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control" %>
