@@ -251,6 +251,9 @@ class Student < ActiveRecord::Base
       if key == :programming_language_ids
         job_offers = job_offers.filter_programming_languages(value)
       end
+      if key == :student_group
+        job_offers = job_offers.filter_student_group(value)
+      end
     end
     return job_offers
   end
