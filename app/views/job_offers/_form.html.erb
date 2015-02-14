@@ -20,6 +20,20 @@
         <ul class="list-group">
           <li class="list-group-item">
             <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= label_field f, :student_group_id, t("job_offers.i_search") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.select :student_group_id, Student::GROUPS.each_with_index.collect { |group, index| [t("activerecord.attributes.student.groups." + group), index] }, {}, {id: 'student_group_id', class:'select optional form-control'} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
             <% if current_user.admin? %>
               <div class="col-sm-6">
             <% else %>
