@@ -1,4 +1,7 @@
 en:
   ratings:
       rate_now: "Rate %{employer}"
+      messages:
+          successfully_created: "Rating successfully created."
+          successfully_updated: "Rating successfully updated."
         

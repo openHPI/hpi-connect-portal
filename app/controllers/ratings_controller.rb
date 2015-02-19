@@ -19,7 +19,7 @@ class RatingsController < ApplicationController
     @rating.employer_id = params[:employer_id]
         
     if @rating.save       
-      flash[:success] = 'Rating sucessfully created' #I18n.t('users.messages.successfully_created')
+      flash[:success] = I18n.t('ratings.messages.successfully_created')
       redirect_to employer_ratings_path
     else
       render_errors_and_action(@rating, 'new')
@@ -32,7 +32,7 @@ class RatingsController < ApplicationController
   def update
             
     if @rating.update(rating_params)
-      flash[:success] = 'Rating sucessfully updated'
+      flash[:success] = I18n.t('ratings.messages.successfully_updated')
       redirect_to employer_ratings_path
     else
       render_errors_and_action(@rating, 'edit')      

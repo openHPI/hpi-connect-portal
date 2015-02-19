@@ -1,4 +1,8 @@
 de:
   ratings:
       rate_now: "%{employer} bewerten"
+      messages:
+          successfully_created: "Bewertung erfolgreich erstellt."
+          successfully_updated: "Bewertung erfolgreich aktualisiert."
+      
         
