@@ -47,7 +47,7 @@ class RatingsController < ApplicationController
   
   private
     def rating_params
-      params.require(:rating).permit(:student_id, :employer_id, :job_offer_id, :score, :headline, :description)
+      params.require(:rating).permit(:job_offer_id, :score, :headline, :description)
     end
     
     def set_ratings_for_index
