@@ -13,15 +13,7 @@
     
     <% if can? :read, Rating %>
       <div class="col-sm-4"> 
-        <span class="rating_score"><%= employer.average_rating %></span> 
-        
-        <%= link_to employer_ratings_path(employer) do %>
-          <div class="employer_rating_stars" data-score="<%= employer.average_rating %>"></div>
-        <% end %>
-        <br/>
-        <span>
-          (<%= employer.rating_amount %>&nbsp;<%= Rating.model_name.human(count: 2) %>)
-        </span> 
+        <%= render "ratings/employer_rating_stars", employer: employer %>
       </div> 
     <% end %>
     
