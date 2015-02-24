@@ -87,6 +87,10 @@ class Student < ActiveRecord::Base
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
           ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
+          
+  def self.group_id(group_name)
+    GROUPS.index(group_name)
+  end        
 
   def application(job_offer)
     applications.where(job_offer: job_offer).first
