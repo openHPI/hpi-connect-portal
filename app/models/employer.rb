@@ -87,4 +87,14 @@ class Employer < ActiveRecord::Base
   def remove_one_single_booked_job
     self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
+
+  def average_rating
+    if rating_amount > 0
+      (EmployerRating.where(employer: self).map{|x| x.rating}.inject(:+) / rating_amount.to_f).round(1)
+    end
+  end
+
+  def rating_amount
+    EmployerRating.where(employer: self).count
+  end
 end

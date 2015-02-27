@@ -46,6 +46,8 @@ group :development, :test do
   gem 'letter_opener'
   gem 'factory_girl_rails', :require => false
   gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 gem 'simplecov', group: :test, require: nil
@@ -146,3 +148,5 @@ gem 'capistrano-rails', '~> 1.1.0'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 
+#rateit stars
+gem 'rails-rateit'

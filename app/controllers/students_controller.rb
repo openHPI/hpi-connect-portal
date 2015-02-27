@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data, :rate]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data, :rate]
   
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -110,6 +110,22 @@ class StudentsController < ApplicationController
     authorize_client linkedin_client
     @student.update_from_linkedin(linkedin_client)
     respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
+  end
+
+  def rate
+    session[:return_to] ||= request.referer
+    ratings = EmployerRating.where(student_id: @student.id, employer_id: params[:rating][:employer_id])
+    if params[:rating][params[:rating][:employer_id]]
+      ratings.first_or_create.update_attributes(rating: params[:rating][params[:rating][:employer_id]])
+      respond_and_redirect_to session.delete(:return_to), t("students.successfully_rated")
+    else
+      if ratings.first.nil?
+        respond_and_redirect_to session.delete(:return_to), {notice: t("students.not_rated_yet")}
+      else
+        ratings.first.destroy
+        respond_and_redirect_to session.delete(:return_to), t("students.successfully_deleted_rating")
+      end
+    end
   end
 
   private

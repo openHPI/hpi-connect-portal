@@ -6,8 +6,39 @@
       <% else %>
         <h4 class="h4"><%= employer.name %></h4>
       <% end %>
+      <% if current_user && (current_user.student? || current_user.admin?) %>
+          <%= simple_form_for :rating  do |f| %>  
+            <%= f.number_field("rating" + employer.id.to_s, min: 0, max: 5, step: 0.1, value: employer.average_rating) %>
+            <%= rateit_tag(backingfld: "#rating_rating" + employer.id.to_s, max: 5, min: 0, step: 0.1, resetable: "false", readonly: "true") %>  
+          <%end%>
+        <%= !employer.average_rating.nil? ? "#{employer.average_rating} #{t("students.stars")}" : ""%>
+        <%= "(#{employer.rating_amount} #{t("students.ratings")})" %> 
+      <% end %>
       <% unless employer.activated %>
         <span class="label label-danger"><%= t("employers.inactive")%></span>
+      <% end %>
+    </div>
+    <div class="col-md-3">
+      <% if current_user && current_user.student? %>
+        <a class="btn btn-sm toggleRating" href="#"><%= t("students.rate") %></a>
+        <div class="ratingDiv", style = "display: none">
+          <br>
+          <%= simple_form_for :rating, url: rate_student_path(current_user.manifestation.id) do |f| %>            
+            <% rating = EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).nil? ? 0 : EmployerRating.find_by_student_id_and_employer_id(current_user.manifestation.id,employer.id).rating %>
+            <%= f.radio_button employer.id, 1, :checked => "checked", :class => "star" %>
+            <% (2..5).each do |i| %>
+              <% if i <= rating %>
+                <%= f.radio_button employer.id, i, :checked => "checked", :class => "star" %>
+              <% else %>
+                <%= f.radio_button employer.id, i, :class => "star" %>
+              <% end %>
+            <% end %>            
+            <%= f.hidden_field 'employer_id', :value => employer.id %>
+            <div class="col-md-5">
+              <%= f.submit t("links.save"), class: "btn-default btn-sm" %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
     </div>
     <div class="col-md-3 pull-right">
