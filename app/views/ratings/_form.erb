@@ -3,8 +3,8 @@
   <div class="form-group">
     <%= label_tag t("activerecord.attributes.rating.score") %> 
     
-    <div class="rating_form_field" data-score="<%= @rating.score %>" data-target="rating_score_input" ></div>   
-    <%= f.input :score, :as => :hidden, input_html: { id: 'rating_score_input' } %>
+    <div class="rating_form_field" data-score="<%= @rating.score_overall %>" data-target="rating_score_input" ></div>   
+    <%= f.input :score_overall, :as => :hidden, input_html: { id: 'rating_score_input' } %>
   </div>
   
   <div class="form-group">

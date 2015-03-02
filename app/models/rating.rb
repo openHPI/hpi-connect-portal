@@ -2,15 +2,17 @@
 #
 # Table name: ratings
 #
-#  id           :integer          not null, primary key
-#  student_id   :integer
-#  employer_id  :integer
-#  job_offer_id :integer
-#  score        :integer
-#  headline     :text
-#  description  :text
-#  created_at   :datetime
-#  updated_at   :datetime
+#  id                      :integer          not null, primary key
+#  student_id              :integer
+#  employer_id             :integer
+#  job_offer_id            :integer
+#  headline                :string(255)
+#  description             :text
+#  score_overall           :integer
+#  score_atmosphere        :integer
+#  score_salary            :integer
+#  score_work_life_balance :integer
+#  score_work_contents     :integer
 #
 
 class Rating < ActiveRecord::Base
@@ -18,7 +20,8 @@ class Rating < ActiveRecord::Base
   belongs_to :employer
   belongs_to :job_offer
   
-  validates :student, :employer, :score, :headline, :description, presence: true
-  validates :score, inclusion: { in: 1..5 }
+  validates :student, :employer, :score_overall, :headline, :description, presence: true
+  validates :score_overall, inclusion: { in: 1..5 }
+  validates :score_atmosphere, :score_salary, :score_work_life_balance, :score_work_contents, inclusion: { in: 1..5 }, :allow_nil => true
   
 end

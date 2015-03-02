@@ -77,7 +77,7 @@ describe RatingsController do
       
       it "returns errors in case of invalid attributes" do
         login student.user
-        up_rating.score = 10000
+        up_rating.score_overall = 10000
         put :update, { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }    
                 
         expect(assigns(:rating).errors.empty?).to_not be_true 

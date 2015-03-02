@@ -92,7 +92,7 @@ class Employer < ActiveRecord::Base
   
   def average_rating
     if rating_amount > 0
-      (Rating.where(employer: self).map{|x| x.score}.reduce(:+) / rating_amount.to_f).round(1)
+      (Rating.where(employer: self).map{|x| x.score_overall}.reduce(:+) / rating_amount.to_f).round(1)
     end
   end
 

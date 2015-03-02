@@ -44,10 +44,10 @@ class RatingsController < ApplicationController
  
     redirect_to employer_ratings_path
   end
-  
+    
   private
     def rating_params
-      params.require(:rating).permit(:job_offer_id, :score, :headline, :description)
+      params.require(:rating).permit(:job_offer_id, :headline, :description, :score_overall, :score_atmosphere, :score_salary, :score_work_life_balance, :score_work_contents)
     end
     
     def set_ratings_for_index
