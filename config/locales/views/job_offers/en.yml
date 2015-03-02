@@ -57,6 +57,8 @@ en:
     default_compensation: "Standard compensation"
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
+    dschool_jobs: "Design Thinking jobs"
+    hpi_jobs: "IT jobs"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."

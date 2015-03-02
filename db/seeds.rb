@@ -367,6 +367,42 @@ Contact.create!(
   phone: "01000000"
 )
 
+# job for Design Thinking students 
+
+dt_job = JobOffer.create!(
+  title: "Design Thinker",
+  description: 'Unlimited creativity ...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  student_group_id: Student.group_id('dschool')
+)
+
+# job for HPI students that completed the Design Thinking track
+
+hpi_dt_job = JobOffer.create!(
+  title: "Creative IT student",
+  description: '...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+  student_group_id: Student.group_id('both')
+)
 
 # FAQs
 

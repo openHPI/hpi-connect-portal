@@ -145,9 +145,9 @@ describe JobOffersController do
     
     context "student selects student group" do
     
-      subject(:hpi_group_id)     { Student::GROUPS.index("hpi") }
-      subject(:dschool_group_id) { Student::GROUPS.index("dschool") }
-      subject(:both_group_id)    { Student::GROUPS.index("both") }
+      subject(:hpi_group_id)     { Student.group_id("hpi") }
+      subject(:dschool_group_id) { Student.group_id("dschool") }
+      subject(:both_group_id)    { Student.group_id("both") }
       
       
       let!(:job_offers_hpi)     { [@job_offer] }

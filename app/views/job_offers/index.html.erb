@@ -7,6 +7,8 @@
     <% if current_user && current_user.student? %>
       <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(language_ids: current_user.manifestation.languages.map(&:id),
         programming_language_ids: current_user.manifestation.programming_languages.map(&:id)), class: "btn btn-default pull-right title-button"%>
+      <%= link_to t("job_offers.dschool_jobs"), job_offers_path(student_group: Student.group_id("dschool")), class: "btn btn-default pull-right title-button"%>
+      <%= link_to t("job_offers.hpi_jobs"), job_offers_path(student_group: Student.group_id("hpi")), class: "btn btn-default pull-right title-button"%>
     <% end %>
   </span>
 </div>
