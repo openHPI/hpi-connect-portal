@@ -59,6 +59,7 @@ de:
     recommended_jobs: "Empfohlene Stellen"
     dschool_jobs: "Design Thinking Stellen"
     hpi_jobs: "IT Stellen"
+    all_jobs: "Alle Stellen"
     messages:
         successfully_created: "Das Jobangebot wurde erfolgreich erstellt."
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."
