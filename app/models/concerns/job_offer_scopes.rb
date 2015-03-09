@@ -20,10 +20,10 @@ module JobOfferScopes
       scope :filter_category, -> category { where(category_id: category) }
       scope :filter_state, -> state { where(state_id: state) }
       scope :filter_student_group, -> student_group { if student_group == Student.group_id('hpi').to_s
-                                                        hpi_group | both_group
+                                                        where("student_group_id = ? OR student_group_id = ?", Student.group_id('hpi'), Student.group_id('both'))
                                                       elsif student_group == Student.group_id('dschool').to_s
-                                                        dschool_group | both_group
-                                                      end 
+                                                        where("student_group_id = ? OR student_group_id = ?", Student.group_id('dschool'), Student.group_id('both'))
+                                                      end
                                                     }
       scope :filter_graduation, -> graduation {where('graduation_id <= ?', graduation.to_f)}
       scope :filter_start_date, -> start_date { where('start_date >= ?', Date.parse(start_date)) }
