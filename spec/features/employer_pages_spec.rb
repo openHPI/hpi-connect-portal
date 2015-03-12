@@ -204,4 +204,17 @@ describe "the employer page" do
       should_not have_link @job_offer_closed.title
     end
   end
+
+  describe "Staff invitations" do
+
+    it "should invite others" do
+      ActionMailer::Base.deliveries = []
+      login staff.user
+      visit employer_path(employer)
+      page.find("#invite_staff_button").click
+      page.find("#send_application_button").click
+      page.should have_content "Email was send to your colleague"
+      ActionMailer::Base.deliveries.count.should == 1
+    end
+  end
  end
