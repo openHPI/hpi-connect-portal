@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data] #:deliver
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
 
   has_scope :filter_students, only: [:index], as: :q
@@ -111,12 +111,6 @@ class StudentsController < ApplicationController
     @student.update_from_linkedin(linkedin_client)
     respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
   end
-
-  #To test delivering the newsletters via url
-  #def deliver
-    #Student.deliver_newsletters
-    #redirect_to root_path
-  #end
 
   private
     def authorize_client(linkedin_client)
