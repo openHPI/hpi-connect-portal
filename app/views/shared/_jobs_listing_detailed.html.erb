@@ -19,7 +19,11 @@
             <%= image_tag job_offer.employer.avatar.url, size: "100", class: "img-thumbnail" %>
           </div>
           <div class="col-md-3" style="float:right">
-            <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.release_date) %></p>
+            <% if job_offer.prolonged? %>
+              <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.prolonged_at.to_date) %></p>
+            <% else %>
+              <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.release_date) %></p>
+            <% end %>
           </div>
         </div>
         <div class="row">                   
