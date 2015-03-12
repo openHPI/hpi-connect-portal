@@ -5,7 +5,7 @@ das Connect Portal hat <%= @job_offers.count %> neue Stellenangebote, die Ihren 
     <% @job_offers.each do |job_offer| %>
       <li>
         <h3><%= link_to(job_offer.title, url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false)) %> | <%= job_offer.employer.name %></h3>
-        <%= truncate( sanitized_html(job_offer.description), length:200, seperator: " ") %>
+        <%= truncate( strip_tags(job_offer.description), length:200, seperator: " ") %>
       </li>
     <% end %>
 </ul>

@@ -165,6 +165,12 @@ Student.create!([{
   employment_status_id: 2
 }])
 
+NewsletterOrder.delete_all
+NewsletterOrder.create!([{
+  student: User.find_by_firstname("Pascal").manifestation,
+  search_params: {},
+}])
+
 # Staff
 Staff.create!([{
   user: User.new( 
