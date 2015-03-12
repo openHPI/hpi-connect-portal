@@ -11,6 +11,7 @@ class StudentsMailer < ActionMailer::Base
     @student = student
     @job_offers = job_offers
     @newsletter_order = newsletter_order
+    @newsletter_params = newsletter_order.search_params
     mail to: student.email, subject: t("students_mailer.newsletter.subject")
   end
 end

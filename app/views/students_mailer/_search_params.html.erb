@@ -1,0 +1,82 @@
+<ul class="list-group" id="newsletter-items">
+  <% unless @newsletter_params["student_group"].nil? %>
+    <li>
+          <%= t("job_offers.jobs_for") %>:
+          <%= t("activerecord.attributes.student.groups." + Student::GROUPS[@newsletter_params["student_group"].to_i]) %>
+    </li>
+  <% end %>
+  <% unless @newsletter_params["state"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.region") %>:
+            <%= t("activerecord.attributes.job_offer.state." + JobOffer::STATES[@newsletter_params["state"].to_i]) %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["employer"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.employer") %>:
+            <%= Employer.find(@newsletter_params["employer"].to_i).name %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["category"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.category") %>:
+            <%= t("job_offers.category." + JobOffer::CATEGORIES[@newsletter_params["category"].to_i]) %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["graduation"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.user.degree") %>:
+            <%= t("activerecord.attributes.user.degrees." + Student::GRADUATIONS[@newsletter_params["graduation"].to_i]) %>
+      </li>
+  <% end %>
+
+
+  <% unless @newsletter_params["start_date"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.start_date")%>:
+            <%= @newsletter_params["start_date"] %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["end_date"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.end_date")%>:
+            <%= @newsletter_params["end_date"] %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["programming_language_ids"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.programming_languages")%>:
+            <% @newsletter_params["programming_language_ids"].each do |programming_language_id| %>
+                <%= ProgrammingLanguage.find(programming_language_id).name %>
+            <% end %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["language_ids"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.languages")%>:
+            <% @newsletter_params["language_ids"].each do |language_id| %>
+                <%= t("languages." +  Language.find(language_id).name) %>
+            <% end %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["time_effort"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.time_effort")%>:
+            <%= @newsletter_params["time_effort"] %> <%= t("job_offers.time_effort_description") %>
+      </li>
+  <% end %>
+
+  <% unless @newsletter_params["compensation"].nil? %>
+      <li>
+            <%= t("activerecord.attributes.job_offer.compensation")%>:
+            <%= @newsletter_params["compensation"] %> <%= t("job_offers.compensation_description") %>
+      </li>
+  <% end %>
+</ul>
