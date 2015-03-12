@@ -3,9 +3,9 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data] #:deliver
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
-  
+
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
@@ -35,7 +35,7 @@ class StudentsController < ApplicationController
 
   def show
     authorize! :show, @student
-    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
+    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
@@ -111,6 +111,12 @@ class StudentsController < ApplicationController
     @student.update_from_linkedin(linkedin_client)
     respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
   end
+
+  #To test delivering the newsletters via url
+  #def deliver
+    #Student.deliver_newsletters
+    #redirect_to root_path
+  #end
 
   private
     def authorize_client(linkedin_client)
