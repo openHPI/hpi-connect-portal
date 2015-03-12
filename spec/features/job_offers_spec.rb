@@ -32,6 +32,14 @@ describe "the job-offers page" do
     """.strip))
   end
 
+  it "should show prolonged Date if available" do
+    JobOffer.delete_all
+    job_offer = FactoryGirl.create(:job_offer, status: JobStatus.active, prolonged: true, prolonged_at: Date.current,
+                       release_date: Date.current-1)
+    visit job_offers_path
+    page.should have_content(job_offer.prolonged_at.to_date)
+  end
+
   describe "student has already applied" do
     before(:each) do
       @student = FactoryGirl.create(:student)
