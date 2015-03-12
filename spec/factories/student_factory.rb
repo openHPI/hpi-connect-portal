@@ -20,6 +20,8 @@
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
 #  visibility_id          :integer          default(0), not null
+#  dschool_status_id      :integer          default(0), not null
+#  group_id               :integer          default(0), not null
 #
 
 FactoryGirl.define do
