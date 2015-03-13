@@ -1,16 +1,16 @@
 <%= simple_form_for job_offer do |f| %>
-  
+
   <%= render 'shared/object_errors', object: job_offer %>
-  
+
   <div class="row">
     <div class="col-sm-12 bottom-10">
        <span class="pull-right">
          <%= f.submit t("links.save"), :class => "btn btn-warning pull-right title-button" %>
-         <a id="job_offer_preview_button" class="btn btn-default pull-right title-button"> <%= t("links.preview") %> </a> 
+         <a id="job_offer_preview_button" class="btn btn-default pull-right title-button"> <%= t("links.preview") %> </a>
        </span>
-    </div>  
+    </div>
   </div>
-  
+
   <div class="row">
     <div class="col-sm-12">
       <div class="panel panel-default">
@@ -67,7 +67,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <%= label_field f, :description, t("activerecord.attributes.job_offer.description") %>
-                <%= f.input :description, placeholder: t("job_offers.enter_description"), input_html: { class: 'tinymce' } %>
+                <%= f.input :description, placeholder: t("job_offers.enter_description"), input_html: { class: 'form-control' } %>
               </div>
             </div>
           </li>
@@ -88,9 +88,9 @@
                 <div class="col-sm-3">
                   <%= label_field f, :state, t("activerecord.attributes.job_offer.region") %>
                 </div>
-                <div class="col-sm-8 pull-right">                   
-                     <%= f.select :state_id, JobOffer::STATES.each_with_index.collect {|state, index| 
-                      [t("activerecord.attributes.job_offer.state." + state), index]}, {}, 
+                <div class="col-sm-8 pull-right">
+                     <%= f.select :state_id, JobOffer::STATES.each_with_index.collect {|state, index|
+                      [t("activerecord.attributes.job_offer.state." + state), index]}, {},
                       {id: 'state_id', class: 'select optional form-control'} %>
                 </div>
               </div>
@@ -100,17 +100,17 @@
                 <div class="col-sm-3">
                   <%= label_field f, :category, t("activerecord.attributes.job_offer.category") %>
                 </div>
-                <div class="col-sm-8 pull-right"> 
+                <div class="col-sm-8 pull-right">
                 <% if params[:book_single_job_offer] %>
                   <%= hidden_field_tag :book_single_job_offer, params[:book_single_job_offer] %>
-                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, selected: true]], 
-                  disabled: true, 
+                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, selected: true]],
+                  disabled: true,
                   class: 'select optional form-control'%>
-                <% else %>                  
-                  <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index| 
+                <% else %>
+                  <%= f.select :category_id, JobOffer::CATEGORIES.each_with_index.collect { |category, index|
                       can_book = current_user.admin? || current_user.manifestation.employer.can_create_job_offer?(category)
-                      [t("job_offers.category." + category), 
-                      index, 
+                      [t("job_offers.category." + category),
+                      index,
                       {'can_book' => can_book}]
                      }, {}, {id: 'category_id', class: 'select optional form-control', } %>
                 <% end %>

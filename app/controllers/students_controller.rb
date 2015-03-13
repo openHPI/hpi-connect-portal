@@ -5,7 +5,7 @@ class StudentsController < ApplicationController
 
   authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
-  
+
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
@@ -35,7 +35,7 @@ class StudentsController < ApplicationController
 
   def show
     authorize! :show, @student
-    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student) 
+    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 
