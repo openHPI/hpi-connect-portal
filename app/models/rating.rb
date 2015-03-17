@@ -22,6 +22,6 @@ class Rating < ActiveRecord::Base
   
   validates :student, :employer, :headline, :description, :score_overall, presence: true
   validates :score_overall, inclusion: { in: 1..5 }
-  validates :score_atmosphere, :score_salary, :score_work_life_balance, :score_work_contents, inclusion: { in: 1..5 }, :allow_blank => true #:allow_nil => true
+  validates :score_atmosphere, :score_salary, :score_work_life_balance, :score_work_contents, inclusion: { in: 1..5 }, :allow_blank => true, :allow_nil => true
   
 end

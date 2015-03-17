@@ -54,25 +54,25 @@ $(document).ready( function() {
                 
     var tid = '#'+ $(this).attr('data-target');
     
-            
     $(this).raty({
         score: function() {
-          var input_value = $(tid).val();
           
-          if (input_value)
+          var input_value = $(tid).val();
+           
+          if (!( isNaN(input_value) || (! input_value)))
           {
             return input_value;
           }
           else
           {
-            $(tid).removeAttr("style");
+             $(tid).removeAttr('value')
           }
         },
         target: tid,
         cancel: true,
         targetKeep: true,
         targetScore: tid,
-        targetType  : 'score'
+        targetType  : 'number'
     });
   });
   
