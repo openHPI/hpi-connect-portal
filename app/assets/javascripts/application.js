@@ -42,7 +42,9 @@ $(document).ready( function() {
   
   $('div.employer_rating_stars').raty({
     score: function() {
-      return $(this).attr('data-score');
+      if ($(this).attr('data-score')){
+        return $(this).attr('data-score');
+      }
     },
     readOnly: true
   });
@@ -51,15 +53,26 @@ $(document).ready( function() {
   $('div.rating_form_field').each(function(){
                 
     var tid = '#'+ $(this).attr('data-target');
-          
+    
+            
     $(this).raty({
         score: function() {
-          return $(this).attr('data-score');
+          var input_value = $(tid).val();
+          
+          if (input_value)
+          {
+            return input_value;
+          }
+          else
+          {
+            $(tid).removeAttr("style");
+          }
         },
         target: tid,
         cancel: true,
         targetKeep: true,
-        targetType: 'number'
+        targetScore: tid,
+        targetType  : 'score'
     });
   });
   

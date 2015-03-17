@@ -6,7 +6,11 @@ de:
         other: "Bewertungen"
     attributes:
       rating:
-        score: "Bewertung"
+        score_overall: "Gesamtbewertung"
+        score_atmosphere: "Arbeitsatmosphäre"
+        score_salary: "Vergütung"
+        score_work_life_balance: "Verhältnis Beruf-/Privatleben"
+        score_work_contents: "Arbeitsinhalte"
         headline: "Titel"
         description: "Beschreibung"
         job_offer: "Jobangebot"

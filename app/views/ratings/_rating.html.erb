@@ -4,8 +4,34 @@
       
       <div class="row">
         <div class="col-sm-2">
-          <div class="employer_rating_stars" data-score="<%= rating.score_overall %>"></div>
-        </div>  
+          <div class="row">
+              <%= t("activerecord.attributes.rating.score_overall")%> </br>
+              <div class="employer_rating_stars" data-score="<%= rating.score_overall %>"></div>
+          </div>
+          
+          
+          <div class="row">
+              <%= t("activerecord.attributes.rating.score_atmosphere")%> </br>
+              <div class="employer_rating_stars" data-score="<%= rating.score_atmosphere %>"></div>
+          </div>
+          
+          
+          <div class="row">
+              <%= t("activerecord.attributes.rating.score_salary")%> </br>
+              <div class="employer_rating_stars" data-score="<%= rating.score_salary %>"></div>
+          </div>
+          
+          <div class="row">
+              <%= t("activerecord.attributes.rating.score_work_life_balance")%> </br>
+          <div class="employer_rating_stars" data-score="<%= rating.score_work_life_balance %>"></div>
+          </div>
+          
+          <div class="row">
+              <%= t("activerecord.attributes.rating.score_work_contents")%> </br>
+          <div class="employer_rating_stars" data-score="<%= rating.score_work_contents %>"></div>
+          </div>
+        </div>
+        
         <div class="col-sm-10">
           <h2><%= rating.headline %></h2>
         </div>
