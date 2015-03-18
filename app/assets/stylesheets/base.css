@@ -157,18 +157,6 @@ button:before{
  display: inline !important;
 }
 
-
-/* provisorily CSS adaptions TODO: swap out of base.css file */
-.employer_rating_stars{
-  cursor: pointer !important;
-  display:inline;
-}
-
-span.rating_score{
-  font-weight: bold;
-  color: rgb(239,152,0);
-}
-
 /* Adapt bootstrap carousel (showing partner employers) */
 .inner-item {
   text-align: center;

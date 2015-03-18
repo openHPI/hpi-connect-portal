@@ -16,3 +16,18 @@
     color: white !important;
   }
 }
+
+.employer_rating_stars{
+  display:inline;
+}
+
+a{
+  .employer_rating_stars{
+    cursor: pointer !important;
+  }
+}
+
+span.rating_score{
+  font-weight: bold;
+  color: rgb(239,152,0);
+}
