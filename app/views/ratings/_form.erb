@@ -10,7 +10,7 @@
               <%= label_tag t("activerecord.attributes.rating.score_overall") %>
             </div>
             <div class="col-sm-9">
-              <div class="rating_form_field" data-score="<%= @rating.score_overall %>" data-target="score_overall_input" ></div>   
+              <div class="rating_form_field" data-target="score_overall_input" ></div>
               <%= f.input :score_overall, :as => :hidden, input_html: { id: 'score_overall_input' } %>
             </div>
           </div>
@@ -27,7 +27,7 @@
               <%= label_tag t("activerecord.attributes.rating.score_atmosphere") %>
             </div>
             <div class="col-sm-9">
-              <div class="rating_form_field" data-target="score_atmosphere_input" ></div>   
+              <div class="rating_form_field" data-target="score_atmosphere_input" ></div>
               <%= f.input :score_atmosphere,  :as => :hidden, input_html: { id: 'score_atmosphere_input' } %>
             </div>
           </div>
@@ -39,7 +39,7 @@
               <%= label_tag t("activerecord.attributes.rating.score_salary") %> 
             </div>
             <div class="col-sm-9">
-              <div class="rating_form_field" data-score="<%= @rating.score_salary %>" data-target="score_salary_input" ></div>   
+              <div class="rating_form_field" data-target="score_salary_input" ></div>
               <%= f.input :score_salary,   :as => :hidden, input_html: { id: 'score_salary_input' } %>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <%= label_tag t("activerecord.attributes.rating.score_work_life_balance") %>
             </div>
             <div class="col-sm-9">
-              <div class="rating_form_field" data-score="<%= @rating.score_work_life_balance %>" data-target="score_work_life_balance_input" ></div>   
+              <div class="rating_form_field" data-target="score_work_life_balance_input" ></div>
               <%= f.input :score_work_life_balance,  :as => :hidden, input_html: { id: 'score_work_life_balance_input' } %>
             </div>
           </div>
@@ -63,7 +63,7 @@
                <%= label_tag t("activerecord.attributes.rating.score_work_contents") %> 
             </div>
             <div class="col-sm-9">
-              <div class="rating_form_field" data-score="<%= @rating.score_work_contents %>" data-target="score_work_contents_input" ></div>   
+              <div class="rating_form_field" data-target="score_work_contents_input" ></div>
               <%= f.input :score_work_contents,   :as => :hidden,input_html: { id: 'score_work_contents_input' } %>
             </div>
           </div>
