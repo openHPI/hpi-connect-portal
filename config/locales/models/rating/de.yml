@@ -7,7 +7,7 @@ de:
     attributes:
       rating:
         score_overall: "Gesamtbewertung"
-        score_atmosphere: "Arbeitsatmosphäre"
+        score_atmosphere: "Arbeitsklima"
         score_salary: "Vergütung"
         score_work_life_balance: "Verhältnis Beruf-/Privatleben"
         score_work_contents: "Arbeitsinhalte"

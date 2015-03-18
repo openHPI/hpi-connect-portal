@@ -1,8 +1,12 @@
 de:
   ratings:
-      rate_now: "%{employer} bewerten"
-      messages:
-          successfully_created: "Bewertung erfolgreich erstellt."
-          successfully_updated: "Bewertung erfolgreich aktualisiert."
+    user: "Nutzer"
+    rating_score: "Bewertungsnote"
+    subcategories: "Unterkategorien"
+    basic_information: "Grundlegende Informationen"
+    rate_now: "%{employer} bewerten"
+    messages:
+      successfully_created: "Bewertung erfolgreich erstellt."
+      successfully_updated: "Bewertung erfolgreich aktualisiert."
       
         
