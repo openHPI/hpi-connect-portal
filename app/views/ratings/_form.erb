@@ -1,55 +1,128 @@
 <%= simple_form_for [@employer, @rating] do |f| %>
   
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.score_overall") %> 
-    <div class="rating_form_field" data-score="<%= @rating.score_overall %>" data-target="score_overall_input" ></div>   
-    <%= f.input :score_overall, :as => :hidden, input_html: { id: 'score_overall_input' } %>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Rating Score</h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_tag t("activerecord.attributes.rating.score_overall") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="rating_form_field" data-score="<%= @rating.score_overall %>" data-target="score_overall_input" ></div>   
+              <%= f.input :score_overall, :as => :hidden, input_html: { id: 'score_overall_input' } %>
+            </div>
+          </div>
+        </li>
+      </ul>
   </div>
   
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.score_atmosphere") %> 
-    <div class="rating_form_field" data-target="score_atmosphere_input" ></div>   
-    <%= f.input :score_atmosphere,  :as => :hidden, input_html: { id: 'score_atmosphere_input' } %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h4>Subcategories</h4></div>
+      <ul class="list-group">  
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_tag t("activerecord.attributes.rating.score_atmosphere") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="rating_form_field" data-target="score_atmosphere_input" ></div>   
+              <%= f.input :score_atmosphere,  :as => :hidden, input_html: { id: 'score_atmosphere_input' } %>
+            </div>
+          </div>
+        </li>
+        
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_tag t("activerecord.attributes.rating.score_salary") %> 
+            </div>
+            <div class="col-sm-9">
+              <div class="rating_form_field" data-score="<%= @rating.score_salary %>" data-target="score_salary_input" ></div>   
+              <%= f.input :score_salary,   :as => :hidden, input_html: { id: 'score_salary_input' } %>
+            </div>
+          </div>
+        </li>
+        
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_tag t("activerecord.attributes.rating.score_work_life_balance") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="rating_form_field" data-score="<%= @rating.score_work_life_balance %>" data-target="score_work_life_balance_input" ></div>   
+              <%= f.input :score_work_life_balance,  :as => :hidden, input_html: { id: 'score_work_life_balance_input' } %>
+            </div>
+          </div>
+        </li>
+        
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+               <%= label_tag t("activerecord.attributes.rating.score_work_contents") %> 
+            </div>
+            <div class="col-sm-9">
+              <div class="rating_form_field" data-score="<%= @rating.score_work_contents %>" data-target="score_work_contents_input" ></div>   
+              <%= f.input :score_work_contents,   :as => :hidden,input_html: { id: 'score_work_contents_input' } %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>  
+    
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><%= t("activerecord.attributes.job_offer.general_information") %></h4>
+        </div>
+        <ul class="list-group">
+          
+          <li class="list-group-item">
+            <div class="row">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_tag t("activerecord.attributes.rating.headline") %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.input :headline %>
+                </div>
+              </div>
+            </div>
+          </li>
+                  
+          <li class="list-group-item">
+            <div class="row">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_tag t("activerecord.attributes.rating.job_offer") %> 
+                </div>
+                <div class="col-sm-9">
+                   <%= f.association :job_offer, collection: @selectable_job_offers %>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12">
+                <%= label_tag t("activerecord.attributes.rating.description") %>
+                <%= f.input :description , input_html: { id: 'rating_score_input' } %>
+              </div>
+            </div>
+          </li>    
+        </ul>
+      </div>
+    </div>
   </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.score_salary") %> 
-    <div class="rating_form_field" data-score="<%= @rating.score_salary %>" data-target="score_salary_input" ></div>   
-    <%= f.input :score_salary,   :as => :hidden, input_html: { id: 'score_salary_input' } %>
-  </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.score_work_life_balance") %> 
-    <div class="rating_form_field" data-score="<%= @rating.score_work_life_balance %>" data-target="score_work_life_balance_input" ></div>   
-    <%= f.input :score_work_life_balance,  :as => :hidden, input_html: { id: 'score_work_life_balance_input' } %>
-  </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.score_work_contents") %> 
-    <div class="rating_form_field" data-score="<%= @rating.score_work_contents %>" data-target="score_work_contents_input" ></div>   
-    <%= f.input :score_work_contents,   :as => :hidden,input_html: { id: 'score_work_contents_input' } %>
-  </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.headline") %> 
-    <%= f.input :headline %>
-  </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.job_offer") %> 
-    <%= f.association :job_offer, collection: @selectable_job_offers %>
-  </div>
-  
-  <div class="form-group">
-    <%= label_tag t("activerecord.attributes.rating.description") %> 
-    <%= f.input :description , input_html: { id: 'rating_score_input' } %>
-  </div>
-  
-  
+      
   <div class="text-right">
     <%= link_to t("links.cancel"), employer_ratings_path, class: "btn btn-danger" %>
     <%= f.submit t("links.save"), class: "btn btn-primary" %>
   </div>
+      
   
  <% end %>
 
