@@ -48,7 +48,7 @@ describe Rating do
       end
     end
     
-    context "athmosphere score value" do 
+    context "atmosphere score value" do 
       
       it "is invalid with negative score values" do
         @rating.score_atmosphere = -10
