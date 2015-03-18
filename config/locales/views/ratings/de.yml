@@ -1,5 +1,6 @@
 de:
   ratings:
+    click_here: "Hier bewerten/Bewertungen einsehen!"
     user: "Nutzer"
     rating_score: "Bewertungsnote"
     subcategories: "Unterkategorien"
