@@ -165,6 +165,12 @@ student_frank = Student.create!(
     employment_status_id: 2
 )
 
+NewsletterOrder.delete_all
+NewsletterOrder.create!([{
+  student: User.find_by_firstname("Pascal").manifestation,
+  search_params: {},
+}])
+
 # Staff
 Staff.create!([{
   user: User.new( 
@@ -201,9 +207,9 @@ career = JobOffer.create!(
   category_id: 1,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "active").first,
+  status: JobStatus.closed,
   start_date: Date.current+2, 
-  release_date: Date.current-2,
+  release_date: Date.current-14,
   time_effort: 9,
   compensation: 13.50,
   languages: Language.where(:name => 'german'),
@@ -387,6 +393,42 @@ hpi_rating_hana = Rating.create!(
   description: "HANA rules !!!"
 )
 
+# job for Design Thinking students 
+
+dt_job = JobOffer.create!(
+  title: "Design Thinker",
+  description: 'Unlimited creativity ...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  student_group_id: Student.group_id('dschool')
+)
+
+# job for HPI students that completed the Design Thinking track
+
+hpi_dt_job = JobOffer.create!(
+  title: "Creative IT student",
+  description: '...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+  student_group_id: Student.group_id('both')
+)
 
 # FAQs
 

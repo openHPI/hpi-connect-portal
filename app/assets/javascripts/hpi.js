@@ -62,10 +62,10 @@ function resizepage() {
 jQuery(function($) {
     setPbEvents();
     resizepage();
-    $('.carousel').carousel({
+    /* $('.carousel').carousel({
         pause: true,
         interval: false
-    });
+    });*/
     $('.collapse').collapse({
         toggle: false, parent: false
     });

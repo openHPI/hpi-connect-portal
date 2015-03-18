@@ -38,7 +38,7 @@ describe StudentsMailer do
 
     before(:each) do
       for i in 1..3 do
-        FactoryGirl.create(:job_offer)
+        FactoryGirl.create(:job_offer, description: "<p> Description </p>")
       end
       @newsletter_order = FactoryGirl.create(:newsletter_order, student: @student)
       @email = StudentsMailer.newsletter(@student, JobOffer.all, @newsletter_order).deliver
@@ -64,6 +64,11 @@ describe StudentsMailer do
 
     it "should include link to unsubcribe" do
       @email.should have_body_text(url_for(controller: "newsletter_orders", action: "destroy", id: @newsletter_order.id, only_path: false))
+    end
+
+    it "should not include HTML Tags" do
+      @email.should_not have_body_text("<p> Description </p>")
+      @email.should have_body_text("Description")
     end
   end
 end

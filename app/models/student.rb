@@ -36,6 +36,7 @@ class Student < ActiveRecord::Base
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
   DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
+  GROUPS = ['hpi', 'dschool', 'both']
   NEWSLETTER_DELIVERIES_CYCLE = 1.week
 
   attr_accessor :username
@@ -86,6 +87,10 @@ class Student < ActiveRecord::Base
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
           ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
+          
+  def self.group_id(group_name)
+    GROUPS.index(group_name)
+  end        
 
   def application(job_offer)
     applications.where(job_offer: job_offer).first
@@ -113,6 +118,10 @@ class Student < ActiveRecord::Base
 
   def dschool_status
     DSCHOOL_STATUSES[dschool_status_id]
+  end
+
+  def group
+    GROUPS[group_id]
   end
 
   def update_from_linkedin(linkedin_client)
@@ -245,6 +254,9 @@ class Student < ActiveRecord::Base
       end
       if key == :programming_language_ids
         job_offers = job_offers.filter_programming_languages(value)
+      end
+      if key == :student_group
+        job_offers = job_offers.filter_student_group(value)
       end
     end
     return job_offers

@@ -150,21 +150,39 @@ a:hover, a:focus, .btn-default:hover  {
     margin-bottom: 10px;
 }
 
-/* Override Bootstrap CSS for buttons in a tinymce editor */
-.mce-container button:before{
+/* Override CSS for buttons */
+button:before{
  content: '' !important;
  margin-right: 0px !important;
  display: inline !important;
 }
+
 
 /* provisorily CSS adaptions TODO: swap out of base.css file */
 .employer_rating_stars{
   cursor: pointer !important;
   display:inline;
 }
-.popover{background:white !important;}
 
 span.rating_score{
   font-weight: bold;
   color: rgb(239,152,0);
+}
+
+/* Adapt bootstrap carousel (showing partner employers) */
+.inner-item {
+  text-align: center;
+  margin-left: 30px;
+}
+
+.inner-item img {
+  float: none !important;
+}
+
+.carousel-control{
+  padding-top:10%;
+}
+
+.bottom-10 {
+    margin-bottom: 10px;
 }

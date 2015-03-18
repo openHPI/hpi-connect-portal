@@ -40,7 +40,7 @@ describe "the job offer flow" do
 
     JobOffer.delete_all
     expect {
-      click_button I18n.t("links.save")
+      click_button "submit"
     }.to change(JobOffer, :count).by(1)
 
     job_offer = JobOffer.last
@@ -208,7 +208,7 @@ describe "the job offer flow" do
     should have_content mark_if_required(job_offer, :time_effort)
     should have_content mark_if_required(job_offer, :compensation)
 
-    click_button I18n.t("links.save")
+    click_button "submit"
 
     assert_equal(JobOffer.all.count, 2)
     job_offer = JobOffer.last

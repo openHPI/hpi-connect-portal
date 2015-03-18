@@ -58,4 +58,8 @@ class Alumni < ActiveRecord::Base
     user.update_column :activated, true
     self.destroy
   end
+
+  def send_reminder
+    AlumniMailer.reminder_email(self).deliver
+  end
 end

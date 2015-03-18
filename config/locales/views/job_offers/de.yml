@@ -57,6 +57,9 @@ de:
     default_compensation: "Haustarif"
     default_startdate: "Ab sofort"
     recommended_jobs: "Empfohlene Stellen"
+    dschool_jobs: "Design Thinking Stellen"
+    hpi_jobs: "IT Stellen"
+    all_jobs: "Alle Stellen"
     messages:
         successfully_created: "Das Jobangebot wurde erfolgreich erstellt."
         successfully_updated: "Das Jobangebot wurde erfolgreich aktualisiert."
@@ -74,4 +77,6 @@ de:
         sideline: "Nebenjob"
         graduate_job: "Absolventenstelle"
         working_student: "Werkstudent"
-
+        teammate: "Mitstreiter / Teammate"
+    jobs_for: "Jobs für"
+    i_search: "Ich suche"

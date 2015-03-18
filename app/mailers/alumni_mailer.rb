@@ -5,4 +5,9 @@ class AlumniMailer < ActionMailer::Base
     @alumni = alumni
     mail to: alumni.email, subject: (t "alumni_mailer.creation_email.subject")
   end
+
+  def reminder_email(alumni)
+    @alumni = alumni
+    mail to: alumni.email, subject: (t "alumni_mailer.reminder.subject")
+  end
 end
