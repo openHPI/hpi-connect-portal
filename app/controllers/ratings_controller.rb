@@ -51,7 +51,7 @@ class RatingsController < ApplicationController
     end
     
     def set_ratings_for_index
-      @ratings = Rating.where(employer_id: params[:employer_id])
+      @ratings = Rating.where(employer_id: params[:employer_id]).paginate(page: params[:page])
     end
     
     def set_employer
