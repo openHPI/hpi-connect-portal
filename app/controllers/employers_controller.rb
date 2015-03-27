@@ -53,7 +53,7 @@ class EmployersController < ApplicationController
   def update
     old_requested_package = @employer.requested_package_id
     if @employer.update employer_params
-      if @employer.requested_package_id > old_requested_package
+      if @employer.requested_package_id != old_requested_package
         EmployersMailer.book_package_email(@employer).deliver
         EmployersMailer.requested_package_confirmation_email(@employer).deliver
       end
