@@ -165,6 +165,12 @@ class JobOffersController < ApplicationController
     @job_offer.fire student
     respond_and_redirect_to @job_offer, student.full_name + " was successfully removed from this job offer."
   end
+  
+  def export
+    respond_to do |format|
+        format.csv { send_data JobOffer.export_csv, filename: 'job_list.csv' }
+    end    
+  end
 
   private
     def set_job_offer

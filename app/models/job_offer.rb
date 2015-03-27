@@ -90,7 +90,11 @@ class JobOffer < ActiveRecord::Base
       end
     end
   end
-
+  
+  def self.export_csv
+    "XXX hello hallo XXX"
+  end
+  
   def default_values
     self.status ||= JobStatus.pending
   end

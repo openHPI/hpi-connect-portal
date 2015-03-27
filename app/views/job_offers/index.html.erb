@@ -11,6 +11,10 @@
       <%= link_to t("job_offers.hpi_jobs"), job_offers_path(student_group: Student.group_id("hpi")), class: "btn btn-default pull-right title-button"%>
       <%= link_to t("job_offers.all_jobs"), job_offers_path, class: "btn btn-default pull-right title-button"%>
     <% end %>
+    
+    <% if can?(:export, JobOffer) %>
+      <%= link_to "Export", export_job_offers_path(format: "csv"), class: "btn btn-danger pull-right title-button" %>
+    <% end %> 
   </span>
 </div>
 
