@@ -9,7 +9,7 @@
         <% if can? :edit, @employer %>
           <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
         <% end %>
-        <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
+        <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id != @employer.booked_package_id)) %>
           <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
         <% end %>
         <% if can?(:deactivate, @employer) && @employer.activated %>

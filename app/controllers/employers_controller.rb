@@ -64,9 +64,10 @@ class EmployersController < ApplicationController
   end
 
   def activate
+    old_booked_package_id = @employer.booked_package_id
     @employer.update_column :activated, true
-    EmployersMailer.booked_package_confirmation_email(@employer).deliver if @employer.booked_package_id < @employer.requested_package_id
     @employer.update_column :booked_package_id, @employer.requested_package_id
+    EmployersMailer.booked_package_confirmation_email(@employer).deliver if old_booked_package_id != @employer.booked_package_id
     respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_activated')
   end
 
