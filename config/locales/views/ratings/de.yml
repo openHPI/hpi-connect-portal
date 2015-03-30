@@ -1,0 +1,13 @@
+de:
+  ratings:
+    click_here: "Hier bewerten/Bewertungen einsehen!"
+    user: "Nutzer"
+    rating_score: "Bewertungsnote"
+    subcategories: "Unterkategorien"
+    basic_information: "Grundlegende Informationen"
+    rate_now: "%{employer} bewerten"
+    messages:
+      successfully_created: "Bewertung erfolgreich erstellt."
+      successfully_updated: "Bewertung erfolgreich aktualisiert."
+      
+        

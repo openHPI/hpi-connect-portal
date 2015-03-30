@@ -1,0 +1,11 @@
+<div>
+  <span class="rating_score"><%= employer.average_rating %></span> 
+      
+  <%= link_to employer_ratings_path(employer) do %>
+    <div class="employer_rating_stars" data-score="<%= employer.average_rating %>"></div>
+  <% end %>
+  <br/>
+  <span>
+    (<%= employer.rating_amount %>&nbsp;<%= Rating.model_name.human(count: employer.rating_amount) %>)
+  </span>
+</div>

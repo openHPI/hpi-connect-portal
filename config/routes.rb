@@ -36,6 +36,7 @@ HpiHiwiPortal::Application.routes.draw do
           get "activate"
           get "deactivate"
         end
+        resources :ratings        
       end
 
       resources :applications, only: [:create, :destroy] do

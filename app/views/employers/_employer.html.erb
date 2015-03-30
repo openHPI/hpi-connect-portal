@@ -1,6 +1,6 @@
 <li class="list-group-item">
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-sm-5">
       <% if can?(:activate, employer) || employer.paying? %>
         <h4><%= link_to employer.name, employer %></h4> 
       <% else %>
@@ -8,10 +8,18 @@
       <% end %>
       <% unless employer.activated %>
         <span class="label label-danger"><%= t("employers.inactive")%></span>
-      <% end %>
+      <% end %>  
     </div>
-    <div class="col-md-3 pull-right">
+    
+    <% if can? :read, Rating %>
+      <div class="col-sm-4"> 
+        <%= render "ratings/employer_rating_stars", employer: employer %>
+      </div> 
+    <% end %>
+    
+    <div class="col-sm-3 pull-right">
       <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
     </div>
+    
   </div>
 </li>

@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    models:
+      rating:
+        one: "Rating"
+        other: "Ratings"
+    attributes:
+      rating:
+        score_overall: "Overall rating score"
+        score_atmosphere: "Working atmosphere"
+        score_salary: "Salary"
+        score_work_life_balance: "Work-life balance"
+        score_work_contents: "Work contents"
+        headline: "Title"
+        description: "Description"
+        job_offer: "Job Offer"

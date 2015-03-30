@@ -56,4 +56,22 @@ describe Employer do
       @employer.should be_invalid
     end
   end
+  
+  describe "#average_rating" do 
+    context "employer rated" do
+      it "returns the arithmetic mean of all rating scores" do
+        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: @employer)
+        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: @employer)
+          
+        expect(@employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
+      end
+    end
+    
+    context "employer not yet rated" do 
+      it "returns nil" do
+        expect(@employer.average_rating).to be_nil
+      end
+    end
+  end
+  
 end
