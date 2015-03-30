@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312151214) do
+ActiveRecord::Schema.define(version: 20150302144427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,18 +39,6 @@ ActiveRecord::Schema.define(version: 20150312151214) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "certificates", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "certificate_file_file_name"
-    t.string   "certificate_file_content_type"
-    t.integer  "certificate_file_file_size"
-    t.datetime "certificate_file_updated_at"
-    t.integer  "student_id"
-  end
-
-  add_index "certificates", ["student_id"], name: "index_certificates_on_student_id", using: :btree
 
   create_table "configurables", force: true do |t|
     t.string   "name"
@@ -115,7 +103,6 @@ ActiveRecord::Schema.define(version: 20150312151214) do
     t.integer  "requested_package_id",  default: 0,     null: false
     t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
-    t.string   "token"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
