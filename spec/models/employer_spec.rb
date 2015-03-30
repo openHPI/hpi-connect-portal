@@ -55,5 +55,9 @@ describe Employer do
       @employer.year_of_foundation = Time.now.year + 1
       @employer.should be_invalid
     end
+
+    it "creates token" do
+      @employer.token.should_not be_nil
+    end
   end
 end

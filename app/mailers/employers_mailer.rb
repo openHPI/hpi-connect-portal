@@ -11,6 +11,11 @@ class EmployersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: t("employers_mailer.book_package.subject")
   end
 
+  def invite_colleague(employer, colleague_email)
+    @employer = employer
+    mail to: colleague_email, subject: t("employers_mailer.invite_colleague.subject")
+  end
+
   def requested_package_confirmation_email(employer)
     @employer = employer
     mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.confirm_request.subject")

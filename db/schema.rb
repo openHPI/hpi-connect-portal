@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213094403) do
+ActiveRecord::Schema.define(version: 20150312151214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150213094403) do
     t.integer  "requested_package_id",  default: 0,     null: false
     t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
+    t.string   "token"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree

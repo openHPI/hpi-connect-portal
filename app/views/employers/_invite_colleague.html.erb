@@ -1,0 +1,33 @@
+<div class="modal fade" id="invite-colleagues-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"> Mitarbeiter einladen </h4>
+            </div>
+            <%= simple_form_for :invite_colleague, url: invite_colleague_employer_path do |f| %>
+              <div class="modal-body clearfix" >
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= label_tag :colleague_email_tag, "Email" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.input :colleague_email, id: "colleague-email" %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= label_tag :invitation_text_tag, "Nachricht" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.text_area :invitation_text, id: "invitation-text", style: "width: 100%;", rows: 10, value: t("employers.invitation_text")%>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <%= f.submit "Einladung abschicken", class: "btn btn-large btn-primary pull-right" %>
+              </div>
+            <% end %>
+        </div>
+    </div>
+</div>

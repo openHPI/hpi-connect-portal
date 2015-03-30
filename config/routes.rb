@@ -35,6 +35,7 @@ HpiHiwiPortal::Application.routes.draw do
         member do
           get "activate"
           get "deactivate"
+          post "invite_colleague"
         end
       end
 

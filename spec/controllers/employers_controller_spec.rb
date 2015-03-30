@@ -225,4 +225,16 @@ describe EmployersController do
         }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1) and change(Application, :count).by(-1)
     end
   end
+
+  describe "POST invite colleague" do
+
+    it "should redirect to employer show" do
+      ActionMailer::Base.deliveries = []
+      employer = FactoryGirl.create(:employer, activated: true)
+      login employer.staff_members.first.user
+      post :invite_colleague, ({id: employer.id, invite_colleague: {colleague_email: "test@test.de", invitation_text: "Test"}})
+      response.should redirect_to(employer_path(employer))
+      ActionMailer::Base.deliveries.count.should == 1
+    end
+  end
 end

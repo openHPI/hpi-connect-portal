@@ -35,6 +35,7 @@ en:
             unsuccessfully_activated: "Error during activation. Please try again later."
             successfully_deactivated: "Profile successfully deactivated."
             unsuccessfully_deactivated: "Error during deactivation. Please try again later."
+            invalid_colleague_email: "The given email address was not correct. Email could not be sent."
         home:
             edit_account_settings_html: "Edit my %{account_settings}"
             account_settings: "account settings"

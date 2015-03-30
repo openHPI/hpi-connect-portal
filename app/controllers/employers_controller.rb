@@ -3,7 +3,7 @@ class EmployersController < ApplicationController
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
   authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy]
-  before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy]
+  before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
@@ -61,6 +61,13 @@ class EmployersController < ApplicationController
     else
       render_errors_and_action @employer, 'edit'
     end
+  end
+
+  def invite_colleague
+    if params[:invite_colleague][:colleague_email].empty?
+      redirect_to(employer_path(@employer), notice: I18n.t('employers.messages.invalid_colleague_email')) and return
+    end
+
   end
 
   def activate

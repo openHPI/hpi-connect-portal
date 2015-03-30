@@ -51,4 +51,24 @@ describe EmployersMailer do
     end
 
   end
+
+  describe "invite_colleague" do
+
+    before(:each) do
+      @colleague_email = "tester@test.de"
+      @email = EmployersMailer.invite_colleague(@employer, @colleague_email)
+    end
+
+    it "should send mail to colleague email" do
+      @email.to.should == @colleague_email
+    end
+
+    it "should contain the subject" do
+      @email.subject.should have_content(I18n.t("employers_mailer.invite_colleague.subject"))
+    end
+
+    it "should contain employer token" do
+      @email.should have_body_text(@employer.token)
+    end
+  end
 end
