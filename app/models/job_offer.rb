@@ -92,7 +92,24 @@ class JobOffer < ActiveRecord::Base
   end
   
   def self.export_csv
-    "XXX hello hallo XXX"
+    
+    
+    csv_string = ""
+    
+    
+    active_jobs = self.active
+    attribute_list = [:title, ]
+    
+    header = "title;employer;type;date\n"
+    
+    csv_string << header
+    
+    active_jobs.each do |job|
+      row = "\"#{job.title}\";\"#{job.employer.name}\";\"#{job.category}\";\"#{job.release_date}\"\n"
+      csv_string << row
+    end
+    
+    return csv_string  
   end
   
   def default_values
