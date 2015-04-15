@@ -168,7 +168,7 @@ class JobOffersController < ApplicationController
   
   def export
     respond_to do |format|
-        format.csv { send_data JobOffer.export_csv, filename: 'job_list.csv'  }
+        format.csv { send_data JobOffer.export_active_jobs, filename: 'job_list.csv'  }
     end
   end
 

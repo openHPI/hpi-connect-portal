@@ -13,7 +13,7 @@
     <% end %>
     
     <% if can?(:export, JobOffer) %>
-      <%= link_to "Export", export_job_offers_path(format: "csv"), class: "btn btn-danger pull-right title-button" %>
+      <%= link_to link_to t("job_offers.export"), export_job_offers_path(format: "csv"), class: "btn btn-danger pull-right title-button" %>
     <% end %> 
   </span>
 </div>

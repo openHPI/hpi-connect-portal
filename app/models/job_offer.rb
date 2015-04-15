@@ -91,16 +91,11 @@ class JobOffer < ActiveRecord::Base
     end
   end
   
-  def self.export_csv
-    
+  def self.export_active_jobs
+    active_jobs = self.active
     
     csv_string = ""
-    
-    
-    active_jobs = self.active
-    attribute_list = [:title, ]
-    
-    header = "title;employer;type;date\n"
+    header = "\"#{human_attribute_name(:title)}\";\"#{human_attribute_name(:employer)}\";\"#{human_attribute_name(:category)}\";\"#{human_attribute_name(:release_date)}\"\n"
     
     csv_string << header
     
