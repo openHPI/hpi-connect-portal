@@ -1,0 +1,12 @@
+en:
+  ratings:
+    click_here: "Click here to rate/view ratings!"
+    user: "User"
+    rating_score: "Rating score"
+    subcategories: "Subcategories"
+    basic_information: "Basic information"
+    rate_now: "Rate %{employer}"
+    messages:
+      successfully_created: "Rating successfully created."
+      successfully_updated: "Rating successfully updated."
+        

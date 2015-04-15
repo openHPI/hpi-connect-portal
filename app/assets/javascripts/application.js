@@ -15,18 +15,19 @@
 //= require jquery.ui.datepicker
 //= require jquery.turbolinks
 //= require jquery-star-rating
+//= require jquery.raty.min
 //= require tinymce-jquery
-//= 
 //= require bootstrap/bootstrap
 //= require_tree .
 
 
 $(document).ready( function() {
-    $('.dropdown-toggle').dropdown();
+  $('.dropdown-toggle').dropdown();
 	
-	var language = window.locale === 'de' ? 'de' : 'en';
+  
+  var language = window.locale === 'de' ? 'de' : 'en';
 	
-    tinymce.baseURL = '/connect/jobportal/assets/tinymce';
+  tinymce.baseURL = '/connect/jobportal/assets/tinymce';
     
 	$('textarea.tinymce').tinymce({
 			language : language,
@@ -40,6 +41,42 @@ $(document).ready( function() {
 		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
 	});
   
+  $('div.employer_rating_stars').raty({
+    score: function() {
+      if ($(this).attr('data-score')){
+        return $(this).attr('data-score');
+      }
+    },
+    readOnly: true
+  });
+  
+  
+  $('div.rating_form_field').each(function(){
+                
+    var tid = '#'+ $(this).attr('data-target');
+    
+    $(this).raty({
+        score: function() {
+          
+          var input_value = $(tid).val();
+           
+          if (!( isNaN(input_value) || (! input_value)))
+          {
+            return input_value;
+          }
+          else
+          {
+             $(tid).removeAttr('value')
+          }
+        },
+        target: tid,
+        cancel: true,
+        targetKeep: true,
+        targetScore: tid,
+        targetType  : 'number'
+    });
+  });  
+    
   $('#employers_carousel .item').first().addClass("active");
   
   $('#employers_carousel').carousel({

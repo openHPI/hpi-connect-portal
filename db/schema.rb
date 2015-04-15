@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213094403) do
+ActiveRecord::Schema.define(version: 20150302144427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,6 +205,23 @@ ActiveRecord::Schema.define(version: 20150213094403) do
     t.integer "programming_language_id"
     t.integer "skill"
   end
+
+  create_table "ratings", force: true do |t|
+    t.integer "student_id"
+    t.integer "employer_id"
+    t.integer "job_offer_id"
+    t.string  "headline"
+    t.text    "description"
+    t.integer "score_overall"
+    t.integer "score_atmosphere"
+    t.integer "score_salary"
+    t.integer "score_work_life_balance"
+    t.integer "score_work_contents"
+  end
+
+  add_index "ratings", ["employer_id"], name: "index_ratings_on_employer_id", using: :btree
+  add_index "ratings", ["job_offer_id"], name: "index_ratings_on_job_offer_id", using: :btree
+  add_index "ratings", ["student_id"], name: "index_ratings_on_student_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
