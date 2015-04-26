@@ -122,6 +122,7 @@ gem 'chronic', '~> 0.10.2'
 group :test do
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
 # flags

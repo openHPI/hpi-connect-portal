@@ -74,7 +74,11 @@ HpiHiwiPortal::Application.routes.draw do
       resources :studentsearch
       resources :faqs
 
-      resources :staff, except: [:edit, :update]
+      resources :staff, except: [:edit, :update, :new] do
+        collection do
+          get 'new/:token', to: 'staff#new', as: 'new'
+        end
+      end
 
       resources :students do
         member do

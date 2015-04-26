@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(version: 20150312151214) do
     t.datetime "updated_at"
   end
 
+  create_table "certificates", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "certificate_file_file_name"
+    t.string   "certificate_file_content_type"
+    t.integer  "certificate_file_file_size"
+    t.datetime "certificate_file_updated_at"
+    t.integer  "student_id"
+  end
+
+  add_index "certificates", ["student_id"], name: "index_certificates_on_student_id", using: :btree
+
   create_table "configurables", force: true do |t|
     t.string   "name"
     t.string   "value"
@@ -206,6 +218,23 @@ ActiveRecord::Schema.define(version: 20150312151214) do
     t.integer "programming_language_id"
     t.integer "skill"
   end
+
+  create_table "ratings", force: true do |t|
+    t.integer "student_id"
+    t.integer "employer_id"
+    t.integer "job_offer_id"
+    t.string  "headline"
+    t.text    "description"
+    t.integer "score_overall"
+    t.integer "score_atmosphere"
+    t.integer "score_salary"
+    t.integer "score_work_life_balance"
+    t.integer "score_work_contents"
+  end
+
+  add_index "ratings", ["employer_id"], name: "index_ratings_on_employer_id", using: :btree
+  add_index "ratings", ["job_offer_id"], name: "index_ratings_on_job_offer_id", using: :btree
+  add_index "ratings", ["student_id"], name: "index_ratings_on_student_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"

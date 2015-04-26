@@ -2,6 +2,8 @@
 
   <%= render 'shared/object_errors', object: staff %>
 
+  <%= f.hidden_field :token, value: params[:token] %>
+
   <%= render 'form_fields', form: f, user: staff.user %>
 
   <div class="pull-right"><%= f.button :submit, t("links.save"), class: 'btn btn-warning' %></div>
