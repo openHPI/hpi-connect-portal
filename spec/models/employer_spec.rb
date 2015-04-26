@@ -60,4 +60,17 @@ describe Employer do
       @employer.token.should_not be_nil
     end
   end
+
+  describe "invite colleague" do
+
+    before :each do
+      ActionMailer::Base.deliveries =[]
+      @employer.invite_colleague("test@mail.com")
+    end
+
+    it "sends mail" do
+      ActionMailer::Base.deliveries == 1
+    end
+
+  end
 end

@@ -7,7 +7,7 @@
     <div class="col-sm-6 text-left">
       <p>
         <% if can? :edit, @employer %>
-          <%= link_to "Mitarbeiter einladen", "", data: {toggle: "modal", target: "#invite-colleagues-modal" }, class: "btn btn-default pull-right" %>
+          <%= link_to "Mitarbeiter einladen", "", id:"open-popup", data: {toggle: "modal", target: "#invite-colleagues-modal" }, class: "btn btn-default pull-right" %>
         <% end %>
         <% if can? :edit, @employer %>
           <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>

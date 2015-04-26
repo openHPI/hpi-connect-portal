@@ -36,6 +36,7 @@ en:
             successfully_deactivated: "Profile successfully deactivated."
             unsuccessfully_deactivated: "Error during deactivation. Please try again later."
             invalid_colleague_email: "The given email address was not correct. Email could not be sent."
+            colleague_successfully_invited: "Your colleague has been informed to join your company."
         home:
             edit_account_settings_html: "Edit my %{account_settings}"
             account_settings: "account settings"

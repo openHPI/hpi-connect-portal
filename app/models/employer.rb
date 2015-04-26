@@ -95,4 +95,8 @@ class Employer < ActiveRecord::Base
   def remove_one_single_booked_job
     self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
+
+  def invite_colleague(colleague_mail)
+    EmployersMailer.invite_colleague_email(self, colleague_mail).deliver
+  end
 end

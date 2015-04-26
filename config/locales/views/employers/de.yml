@@ -36,6 +36,7 @@ de:
             successfully_deactivated: "Das Profil wurde erfolgreich deaktiviert."
             unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."
             invalid_colleague_email: "Die angegebene Email Adresse war fehlerhaft. Es konnte keine Email gesendet werden."
+            colleague_successfully_invited: "Ihr Kollege wurde per Email eingeladen Ihrem Unternehmen beizutreten."
         home:
             edit_account_settings_html: "Mein %{account_settings} bearbeiten"
             account_settings: "Kontaktprofil"

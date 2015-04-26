@@ -64,10 +64,12 @@ class EmployersController < ApplicationController
   end
 
   def invite_colleague
-    if params[:invite_colleague][:colleague_email].empty?
+    colleage_mail = params[:invite_colleague_email][:colleague_email]
+    if colleage_mail.empty?
       redirect_to(employer_path(@employer), notice: I18n.t('employers.messages.invalid_colleague_email')) and return
     end
-
+    @employer.invite_colleague(colleage_mail)
+    respond_and_redirect_to(employer_path(@employer), I18n.t('employers.messages.colleague_successfully_invited'))
   end
 
   def activate

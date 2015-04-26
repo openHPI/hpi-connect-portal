@@ -232,9 +232,11 @@ describe EmployersController do
       ActionMailer::Base.deliveries = []
       employer = FactoryGirl.create(:employer, activated: true)
       login employer.staff_members.first.user
-      post :invite_colleague, ({id: employer.id, invite_colleague: {colleague_email: "test@test.de", invitation_text: "Test"}})
+      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", invitation_text: "Test"}})
       response.should redirect_to(employer_path(employer))
       ActionMailer::Base.deliveries.count.should == 1
     end
   end
+
 end
+

@@ -56,11 +56,11 @@ describe EmployersMailer do
 
     before(:each) do
       @colleague_email = "tester@test.de"
-      @email = EmployersMailer.invite_colleague(@employer, @colleague_email)
+      @email = EmployersMailer.invite_colleague_email(@employer, @colleague_email)
     end
 
     it "should send mail to colleague email" do
-      @email.to.should == @colleague_email
+      @email.to.should include(@colleague_email)
     end
 
     it "should contain the subject" do
