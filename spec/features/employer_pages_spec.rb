@@ -222,5 +222,41 @@ describe "the employer page" do
       Capybara.use_default_driver
     end
 
+    it "admin can simply add new members" do
+      Employer.delete_all
+      employer = FactoryGirl.create(:employer)
+      login FactoryGirl.create(:user, :admin)
+      visit employers_path
+      first(".add-staff").click
+      fill_in 'staff_user_attributes_firstname', with: 'Max'
+      fill_in 'staff_user_attributes_lastname', with: 'Mustermann'
+      fill_in 'staff_user_attributes_email', with: 'staff@test.com'
+      fill_in 'staff_user_attributes_password', with: 'password'
+      fill_in 'staff_user_attributes_password_confirmation', with: 'password'
+      find('input[type="submit"]').click
+      employer.staff_members.count.should == 2
+    end
+
+    describe "is not possible to get page for non-admin" do
+
+      after :each do
+        visit employers_path
+        page.should have_no_selector(".add-staff")
+      end
+
+      it "for guest user" do
+        logout
+      end
+
+      it "for student" do
+        login FactoryGirl.create(:student).user
+      end
+
+      it "for staff" do
+        login FactoryGirl.create(:employer).staff_members.first.user
+      end
+
+    end
+
   end
  end
