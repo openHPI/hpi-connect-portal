@@ -10,11 +10,6 @@
         <span class="label label-danger"><%= t("employers.inactive")%></span>
       <% end %>
     </div>
-    <% if current_user.present? && current_user.admin? %>
-      <div class="col-md-1 pull-right">
-        <%= link_to('<span class="glyphicon glyphicon-plus" title="Mitarbeiter hinzufügen"></span>'.html_safe, new_staff_index_path(employer.token), class: "add-staff") %>
-      </div>
-    <% end %>
     <div class="col-md-3 pull-right">
       <%= image_tag employer.avatar.url, size: "100", class: "img-thumbnail"  %>
     </div>
