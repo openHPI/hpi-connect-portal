@@ -11,7 +11,9 @@ class EmployersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: t("employers_mailer.book_package.subject")
   end
 
-  def invite_colleague_email(employer, colleague_email)
+  def invite_colleague_email(employer, colleague_email, first_name, last_name)
+    @first_name = first_name
+    @last_name = last_name
     @employer = employer
     mail to: colleague_email, subject: t("employers_mailer.invite_colleague.subject")
   end
