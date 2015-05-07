@@ -53,7 +53,7 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update], Employer, id: employer_id
+    can [:edit, :update, :invite_colleague], Employer, id: employer_id
 
     if staff.employer.activated
       can :read, Application

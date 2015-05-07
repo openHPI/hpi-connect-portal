@@ -65,7 +65,9 @@ describe Employer do
 
     before :each do
       ActionMailer::Base.deliveries =[]
-      @employer.invite_colleague("test@mail.com")
+      receiver_name = "Test Name"
+      sender = FactoryGirl.create(:user)
+      @employer.invite_colleague("test@mail.com", receiver_name, sender)
     end
 
     it "sends mail" do

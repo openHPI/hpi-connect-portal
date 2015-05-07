@@ -2,7 +2,7 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
-  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy]
+  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
   before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
 
   def index
@@ -67,10 +67,11 @@ class EmployersController < ApplicationController
     colleage_mail = params[:invite_colleague_email][:colleague_email]
     first_name = params[:invite_colleague_email][:first_name]
     last_name = params[:invite_colleague_email][:last_name]
+    receiver_name = first_name + " " + last_name
     if colleage_mail.empty?
       redirect_to(employer_path(@employer), notice: I18n.t('employers.messages.invalid_colleague_email')) and return
     end
-    @employer.invite_colleague(colleage_mail,first_name, last_name)
+    @employer.invite_colleague(colleage_mail, receiver_name, current_user)
     respond_and_redirect_to(employer_path(@employer), I18n.t('employers.messages.colleague_successfully_invited'))
   end
 

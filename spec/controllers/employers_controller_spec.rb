@@ -227,14 +227,29 @@ describe EmployersController do
   end
 
   describe "POST invite colleague" do
+    let(:employer) { employer = FactoryGirl.create(:employer, activated: true) }
+
+    before :each do
+      ActionMailer::Base.deliveries = []
+      login employer.staff_members.first.user
+    end
 
     it "should redirect to employer show" do
-      ActionMailer::Base.deliveries = []
-      employer = FactoryGirl.create(:employer, activated: true)
-      login employer.staff_members.first.user
       post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
       response.should redirect_to(employer_path(employer))
       ActionMailer::Base.deliveries.count.should == 1
+    end
+
+    it "should not deliver Email for students" do
+      login FactoryGirl.create(:student).user
+      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
+      ActionMailer::Base.deliveries.count.should == 0
+    end
+
+    it "should not deliver for guest users" do
+      logout
+      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
+      ActionMailer::Base.deliveries.count.should == 0
     end
 
   end

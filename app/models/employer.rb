@@ -96,7 +96,7 @@ class Employer < ActiveRecord::Base
     self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
 
-  def invite_colleague(colleague_mail, first_name, last_name)
-    EmployersMailer.invite_colleague_email(self, colleague_mail, first_name, last_name).deliver
+  def invite_colleague(colleague_mail, name, sender)
+    EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver
   end
 end

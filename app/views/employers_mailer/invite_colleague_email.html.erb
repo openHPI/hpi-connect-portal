@@ -1,11 +1,11 @@
-Guten Tag, <br/>
+Sehr geehrte/r <%= @receiver_name %>, <br/>
 <br/>
-einer ihrer Kollegen bei <%= @employer.name %> hat sie eingeladen, sich ebenfalls beim HPI Jobportal anzumelden. Klicken Sie
-<%= link_to("hier", url_for(controller: "staff", action: "new", token: @employer.token, only_path: false))%> um sich ebenfalls
-<%= @employer.name %> im HPI Jobportal anzuschließen.
-
-Mit freundlichen Grüßen <br/>
-HPI Connect <br/>
+<%= @sender_name %> lädt Sie ein, einen eigenen Zugang zum Account von <%= @employer.name %> im HPI Connect Jobportal anzulegen.
+Über diesen <%= link_to("Link", url_for(controller: "staff", action: "new", token: @employer.token, only_path: false))%> gelangen Sie zur Anmeldung.<br/>
+Sie können nun selbstständig Stellenangebote publizieren oder Ihr Unternehmensprofil erstellen/bearbeiten. <br/>
+(Bitte beachten Sie, dass einige Services kostenpflichtig sind. Mehr Informationen erhalten Sie vom Team HPI Connect connect@hpi.de.)
+<br/>
+Ihr Team HPI Connect<br/>
 <br/>
 Claudia Koch - Fon (49) 0331 5509 291<br/>
 Nadja Antoine  - Fon (49) 0331 5509 107<br/>
