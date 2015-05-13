@@ -111,10 +111,21 @@
 
     <div class="col-sm-4">
       <center>
-          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  
-          %>
+          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  %>    
       </center>
-      <br>
+      
+      <div class="row">
+        <div class="col-sm-12 stars-dark-background">
+          <center>
+            <% if can? :read, Rating %>
+               <%= render "ratings/employer_rating_stars", employer: @job_offer.employer %>
+               <%= link_to t("ratings.click_here"), employer_ratings_path(@job_offer.employer), {:class => "link_to_ratings"} %>
+            <% end %>
+          </center>
+        </div> 
+      </div>
+      </br>
+      
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
         <ul class="list-group">

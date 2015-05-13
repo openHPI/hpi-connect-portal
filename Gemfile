@@ -86,6 +86,9 @@ gem 'whenever'
 # add some more UI controls
 gem 'jquery-ui-rails'
 
+# jquery plugin for rating stars
+gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
+
 # load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
