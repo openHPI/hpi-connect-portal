@@ -51,6 +51,7 @@ class Employer < ActiveRecord::Base
 
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
+  scope :order_by_name, -> { order('LOWER(name)') }
 
   def generate_unique_token
     code = SecureRandom.urlsafe_base64

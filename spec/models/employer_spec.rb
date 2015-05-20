@@ -92,5 +92,22 @@ describe Employer do
       end
     end
   end
+
+  describe "order by name" do
+    it "orders by name case insensitive" do
+      Employer.delete_all
+      FactoryGirl.create(:employer, name: "Ca")
+      FactoryGirl.create(:employer, name: "avis")
+      FactoryGirl.create(:employer, name: "eBay")
+      FactoryGirl.create(:employer, name: "Zuckerberg")
+      FactoryGirl.create(:employer, name: "AtTheTop")
+      ordered_employers = Employer.order_by_name
+      ordered_employers[0].name.should == "AtTheTop"
+      ordered_employers[1].name.should == "avis"
+      ordered_employers[2].name.should == "Ca"
+      ordered_employers[3].name.should == "eBay"
+      ordered_employers[4].name.should == "Zuckerberg"
+    end
+  end
   
 end
