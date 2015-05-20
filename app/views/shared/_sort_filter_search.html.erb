@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, :class => "small" %>
-                  <%= select_tag "employer", options_for_select(Employer.all.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control" %>
+                  <%= select_tag "employer", options_for_select(Employer.order_by_name.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control" %>
                 </div>
                 <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.region") , nil, :class => "small" %>                          
