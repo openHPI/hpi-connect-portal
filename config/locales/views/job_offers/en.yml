@@ -60,6 +60,7 @@ en:
     dschool_jobs: "Design Thinking jobs"
     hpi_jobs: "IT jobs"
     all_jobs: "All jobs"
+    export: "Export job offers"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."

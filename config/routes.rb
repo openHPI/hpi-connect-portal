@@ -16,6 +16,7 @@ HpiHiwiPortal::Application.routes.draw do
         collection do
           get "archive"
           get "matching"
+          get "export"
         end
         member do
           get "close"

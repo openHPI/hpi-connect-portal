@@ -91,7 +91,23 @@ class JobOffer < ActiveRecord::Base
       end
     end
   end
-
+  
+  def self.export_active_jobs
+    active_jobs = self.active
+    
+    csv_string = ""
+    header = "\"#{human_attribute_name(:title)}\";\"#{human_attribute_name(:employer)}\";\"#{human_attribute_name(:category)}\";\"#{human_attribute_name(:release_date)}\"\n"
+    
+    csv_string << header
+    
+    active_jobs.each do |job|
+      row = "\"#{job.title}\";\"#{job.employer.name}\";\"#{job.category}\";\"#{job.release_date}\"\n"
+      csv_string << row
+    end
+    
+    return csv_string  
+  end
+  
   def default_values
     self.status ||= JobStatus.pending
   end
