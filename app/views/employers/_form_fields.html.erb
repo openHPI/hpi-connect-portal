@@ -80,6 +80,13 @@
       </div>
       <div class="clearfix"></div>
     </li>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-12">
+          <%= t("employers.prices") %>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
       <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
