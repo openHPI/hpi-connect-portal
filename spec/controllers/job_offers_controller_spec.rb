@@ -212,12 +212,10 @@ describe JobOffersController do
       login @staff.user
     end
 
-    it "should immediately prolong the job once" do
+    it "should not immediately prolong the job once" do
       get :request_prolong, {id: @job_offer.id}
       response.should redirect_to(@job_offer)
-      assigns(:job_offer).prolonged_at.should eq(Date.current)
-      assigns(:job_offer).prolong_requested.should eq(false)
-      get :request_prolong, {id: @job_offer.id}
+      assigns(:job_offer).prolonged_at.should eq(nil)
       assigns(:job_offer).prolong_requested.should eq(true)
     end
 

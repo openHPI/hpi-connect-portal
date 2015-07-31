@@ -160,10 +160,6 @@ class JobOffer < ActiveRecord::Base
     JobOffersMailer.job_prolonged_email(self).deliver
   end
 
-  def immediately_prolongable
-    category_id < 2 && !prolonged
-  end
-
   def expiration_date
     (prolonged_at || created_at).to_date + 4.weeks
   end
