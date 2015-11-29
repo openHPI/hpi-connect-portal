@@ -32,13 +32,13 @@ HpiHiwiPortal::Application.routes.draw do
       resources :employers do
         collection do
           get "home"
-        end 
+        end
         member do
           get "activate"
           get "deactivate"
           post "invite_colleague"
         end
-        resources :ratings        
+        resources :ratings
       end
 
       resources :applications, only: [:create, :destroy] do
@@ -54,6 +54,7 @@ HpiHiwiPortal::Application.routes.draw do
           get 'remind_all'
           post 'import' => 'alumni#create_from_csv'
           post 'mail_csv' => 'alumni#send_mail_from_csv'
+          get 'export' => 'alumni#export'
         end
       end
       get 'alumni/:token/email' => 'alumni#register', as: 'alumni_email'
@@ -68,7 +69,7 @@ HpiHiwiPortal::Application.routes.draw do
 
       resources :home, only: [:index, :imprint]
       get 'home/imprint'
-      
+
       resources :sessions, only: [:create]
       get 'signin' => 'home#index', as: 'signin'
       delete 'signout' => 'sessions#destroy', as: 'signout'

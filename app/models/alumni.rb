@@ -13,7 +13,7 @@
 #
 
 class Alumni < ActiveRecord::Base
-  
+
   validates :email, presence: true
   validates :alumni_email, presence: true, uniqueness: { case_sensitive: false }
   validates :token, presence: true, uniqueness: { case_sensitive: true }
@@ -38,6 +38,20 @@ class Alumni < ActiveRecord::Base
       end
     end
     return alumni
+  end
+
+  def name
+    "#{firstname} #{lastname}"
+  end
+
+  def self.to_csv
+    attributes = %w{id name email alumni_email}
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
   end
 
   def self.email_invalid? email
