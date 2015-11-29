@@ -50,7 +50,7 @@ describe "the employer page" do
 
   describe "can be activated" do
 
-    before :each do 
+    before :each do
       @employer = FactoryGirl.create(:employer, activated: false)
     end
 
@@ -97,7 +97,7 @@ describe "the employer page" do
     it "should always create an inactive employer" do
       visit new_employer_path
 
-      fill_in 'employer_name', with: 'Test Employer' 
+      fill_in 'employer_name', with: 'Test Employer'
       fill_in 'employer_description', with: 'Desctiption for an Employer.'
       fill_in 'employer_year_of_foundation', with: 1992
       fill_in 'employer_place_of_business', with: 'Potsdam'
@@ -116,7 +116,7 @@ describe "the employer page" do
 
       employer = Employer.last
       expect(employer.name).to eq('Test Employer')
-      expect(employer.activated).to eq(false)      
+      expect(employer.activated).to eq(false)
     end
   end
 
@@ -141,7 +141,7 @@ describe "the employer page" do
 
     it "but only show the complete profile for paying employers" do
       should_not have_content(employer.description)
-      should_not have_content(employer.website)   
+      should_not have_content(employer.website)
       employer.update_column :booked_package_id, 1
       visit employer_path(employer)
       should have_content(employer.description)
@@ -206,7 +206,7 @@ describe "the employer page" do
   end
 
   describe "Staff invitations" do
-    
+
     xit "should invite others" do
       # needs Javascript -.-
       Capybara.current_driver = :selenium

@@ -31,7 +31,7 @@ class Employer < ActiveRecord::Base
   has_one :contact, as: :counterpart, dependent: :destroy
 
   has_many :ratings, dependent: :destroy
-  
+
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
   has_many :job_offers, dependent: :destroy
   has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
@@ -45,8 +45,8 @@ class Employer < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
 
   validates :name, presence: true, uniqueness: true
-  validates :year_of_foundation, numericality: { only_integer: true, 
-    greater_than: 1800, 
+  validates :year_of_foundation, numericality: { only_integer: true,
+    greater_than: 1800,
     less_than_or_equal_to: Time.now.year}, allow_nil: true
 
   scope :active, -> { where(activated: true) }
@@ -98,7 +98,7 @@ class Employer < ActiveRecord::Base
   def remove_one_single_booked_job
     self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
-  
+
   def average_rating
     if rating_amount > 0
       (Rating.where(employer: self).map{|x| x.score_overall}.reduce(:+) / rating_amount.to_f).round(1)
@@ -112,5 +112,5 @@ class Employer < ActiveRecord::Base
   def invite_colleague(colleague_mail, name, sender)
     EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver
   end
-  
+
 end

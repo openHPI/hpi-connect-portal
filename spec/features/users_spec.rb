@@ -6,7 +6,7 @@ describe "the user editing page" do
     @user = FactoryGirl.create :user
     login @user
   end
-  
+
   it "should be possible to change attributes of myself " do
     visit edit_user_path(@user)
     fill_in 'user_email', with: 'test@gmail.com'

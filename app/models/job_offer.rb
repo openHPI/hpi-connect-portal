@@ -27,7 +27,7 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  
+
   has_attached_file :offer_as_pdf
 
   before_save :default_values
@@ -91,23 +91,23 @@ class JobOffer < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.export_active_jobs
     active_jobs = self.active
-    
+
     csv_string = ""
     header = "\"#{human_attribute_name(:title)}\";\"#{human_attribute_name(:employer)}\";\"#{human_attribute_name(:category)}\";\"#{human_attribute_name(:release_date)}\"\n"
-    
+
     csv_string << header
-    
+
     active_jobs.each do |job|
       row = "\"#{job.title}\";\"#{job.employer.name}\";\"#{job.category}\";\"#{job.release_date}\"\n"
       csv_string << row
     end
-    
-    return csv_string  
+
+    return csv_string
   end
-  
+
   def default_values
     self.status ||= JobStatus.pending
   end

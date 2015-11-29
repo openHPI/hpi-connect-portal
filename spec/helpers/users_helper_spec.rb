@@ -16,5 +16,5 @@ describe UsersHelper do
 
     helper.stub(:current_user) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)).user }
     assert !helper.user_is_staff_of_employer?(job_offer)
-  end  
+  end
 end

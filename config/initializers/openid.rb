@@ -1,6 +1,6 @@
 module Rack
   class OpenID
-    
+
     def call(env)
       req = Rack::Request.new(env)
 

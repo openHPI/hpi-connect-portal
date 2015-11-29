@@ -30,17 +30,17 @@ class Ability
     can :create, NewsletterOrder
     can :destroy, NewsletterOrder, student: user.manifestation
     cannot :show, JobOffer, status: JobStatus.closed
-    
+
     can [:create, :read], Rating
     can [:update, :destroy], Rating do |rating|
       user.manifestation.id == rating.student.id
     end
-    
+
     if user.activated
       can :create, Application
       can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
-      end      
+      end
       can :matching, JobOffer
     end
   end

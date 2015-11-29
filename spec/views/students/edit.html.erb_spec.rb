@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "students/edit" do
   before(:each) do
     @student = assign(:student, stub_model(Student,
-      user: stub_model(User,  
+      user: stub_model(User,
         firstname: "First Name",
         lastname: "Last Name",
         email: "test@test.de"

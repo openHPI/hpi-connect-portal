@@ -52,7 +52,7 @@ describe User do
     it 'with duplicate email' do
       @user.email = FactoryGirl.create(:user).email
       @user.should be_invalid
-    end    
+    end
 
     it 'as Alumnus with hpi email' do
       @user.alumni_email = @user.firstname + ' ' + @user.lastname

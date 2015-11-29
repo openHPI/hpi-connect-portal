@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StudentsController do
 
-  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } } 
+  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } }
 
   before(:each) do
     login FactoryGirl.create(:student).user
@@ -301,7 +301,7 @@ describe StudentsController do
       get :request_linkedin_import, {id: @student.id}
       response.should redirect_to assigns(:request_token).authorize_url
     end
-  
+
     it "redirects to linkedin as student on own profile" do
       login @student.user
       get :request_linkedin_import, {id: @student.id}

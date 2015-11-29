@@ -62,12 +62,12 @@ describe Student do
 
     it "updates minimum possible CV job" do
       allow(linkedin_client).to receive(:profile).and_return(
-        {"positions" => 
-          {"all" => 
-            [{"summary" => "", 
-            "is_current" => "true", 
-            "company" => {"name" => "HPI"}, 
-            "title" => "junior researcher", 
+        {"positions" =>
+          {"all" =>
+            [{"summary" => "",
+            "is_current" => "true",
+            "company" => {"name" => "HPI"},
+            "title" => "junior researcher",
             "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
             "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
             }]

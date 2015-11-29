@@ -54,7 +54,6 @@ class AlumniController < ApplicationController
 
   def export
     require 'csv'
-    @alumni = Alumni.all
     send_data Alumni.to_csv, filename: "alumni-#{Date.today}.csv"
   end
 

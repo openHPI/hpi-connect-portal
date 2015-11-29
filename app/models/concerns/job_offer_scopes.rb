@@ -5,7 +5,7 @@ module JobOfferScopes
       scope :active, -> { where(status_id: JobStatus.active.id) }
       scope :closed, -> { where(status_id: JobStatus.closed.id) }
       scope :graduate_jobs, -> { where(category_id: 2) }
-      
+
       scope :hpi_group, -> { where(student_group_id: Student.group_id('hpi')) }
       scope :dschool_group, -> { where(student_group_id: Student.group_id('dschool')) }
       scope :both_group, -> { where(student_group_id: Student.group_id('both')) }
