@@ -31,7 +31,7 @@ HpiHiwiPortal::Application.routes.draw do
       resources :employers do
         collection do
           get "home"
-        end 
+        end
         member do
           get "activate"
           get "deactivate"
@@ -64,7 +64,7 @@ HpiHiwiPortal::Application.routes.draw do
 
       resources :home, only: [:index, :imprint]
       get 'home/imprint'
-      
+
       resources :sessions, only: [:create]
       get 'signin' => 'home#index', as: 'signin'
       delete 'signout' => 'sessions#destroy', as: 'signout'
@@ -78,8 +78,6 @@ HpiHiwiPortal::Application.routes.draw do
         member do
           patch 'activate'
           get 'activate'
-          get 'request_linkedin_import'
-          get 'insert_imported_data'
         end
       end
 
