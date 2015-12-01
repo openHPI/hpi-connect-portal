@@ -28,7 +28,7 @@ class Student < ActiveRecord::Base
   LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
   LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',
       :authorize_path => '/uas/oauth/authenticate',
-      :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile+r_fullprofile',
+      :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
   VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']    

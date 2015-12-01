@@ -1,7 +1,7 @@
 <div class="wrapper-8 teaser">
   <div class="col-md-8">
     <h1>Home</h1>
-    <h2>Home</h2>    
+    <h2>Home</h2>
     <div class="panel-group" id="accordion">
       <div id="ws1314" class="panel-collapse collapse in">
         <div class="panel-body">
@@ -10,16 +10,21 @@
           <br><p><h1><%=t("employers.home.service.free.title")%></h1></p>
           <ul>
             <div class="panel-body">
-              <li>○ <%=t("employers.home.service.free.description")%></li>
+              <li>
+                ○ <%= t("employers.home.service.free.traineeship", set_online: (link_to t("employers.home.booking.basis.set_online"),
+              new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("traineeship")))).html_safe%>
+              </li>
+              <li>
+                ○ <%= t("employers.home.service.free.working_student", set_online: (link_to t("employers.home.booking.basis.set_online"), new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("working_student")))).html_safe%>
+              </li>
             </div>
           </ul>
-          <br>              
+          <br>
           <p><h1><%=t("employers.home.service.chargeable.title")%></h1>
-          <i> <%= t("employers.home.service.chargeable.help_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></i></p><br>
+          <i> <%= t("employers.home.service.chargeable.help_html", email: (mail_to "connect@hpi.de")) %></i></p><br>
           <div class="panel-body">
             <ul>
-              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => true))).html_safe%></li>
-              <li>○ <%=t("employers.home.service.chargeable.open_positions")%></li>
+              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("graduate_job")))).html_safe%></li>
               <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <div class="panel-body"></div>
               <li>○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
@@ -39,22 +44,22 @@
               </ul>
             </ul>
           </div>
-              <p><%= t("employers.home.advise") %><br> <%= t("employers.home.contact_html",email: ( mail_to "connect@hpi.uni-potsdam.de") ) %></p>
+              <p><%= t("employers.home.advise") %><br> <%= t("employers.home.contact_html",email: ( mail_to "connect@hpi.de") ) %></p>
           </div>
         </div>
-      </div> <!-- end of panel -->   
+      </div> <!-- end of panel -->
   </div>
 </div>
 
     <div class="col-md-4">
       <h1> <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), :class => "links" %> </h1>
-      <h1><%= link_to "Information", asset_path("HPI Connect Karriereportal.pdf"), :class => "links" %></h1>
+      <h1><%= link_to "Informationsbroschüre", asset_path("HPI Connect Karriereportal.pdf"), :class => "links" %></h1>
       <h1>Kontakt</h1>
       <p>Hasso-Plattner-Institut für<br>Softwaresystemtechnik GmbH
       <br>Prof.-Dr.-Helmert-Str. 2-3
       <br>D-14482 Potsdam</p>
       <br>
-      <p>E-Mail: <%= mail_to "connect@hpi.uni-potsdam.de" %></p>
+      <p>E-Mail: <%= mail_to "connect@hpi.de" %></p>
       <br><p>Nadja Antoine - <br>Fon(49) 0331 5509 107</p>
       <br><p>Claudia Koch - <br>Fon(49) 0331 5509 291</p>
       <br><p><%= link_to "www.hpi.uni-potsdam.de/connect"%></p>
