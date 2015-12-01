@@ -40,12 +40,8 @@ class Alumni < ActiveRecord::Base
     return alumni
   end
 
-  def name
-    "#{firstname} #{lastname}"
-  end
-
   def self.to_csv
-    attributes = %w{id name email alumni_email}
+    attributes = %w{lastname firstname alumni_email email}
     CSV.generate(headers: true) do |csv|
       csv << attributes
       all.each do |user|
