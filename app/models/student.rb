@@ -24,14 +24,7 @@
 
 class Student < ActiveRecord::Base
 
-  LINKEDIN_KEY = "77sfagfnu662bn"
-  LINKEDIN_SECRET = "7HEaILeWfmauzlKp"
-  LINKEDIN_CONFIGURATION = { :site => 'https://api.linkedin.com',
-      :authorize_path => '/uas/oauth/authenticate',
-      :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile',
-      :access_token_path => '/uas/oauth/accessToken' }
-
-  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']    
+  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
@@ -123,48 +116,6 @@ class Student < ActiveRecord::Base
 
   def group
     GROUPS[group_id]
-  end
-
-  def update_from_linkedin(linkedin_client)
-    userdata = linkedin_client.profile(fields: ["public_profile_url", "first-name", "last-name", "positions"])
-    update_attributes!(
-      {
-        linkedin: userdata["public_profile_url"],
-        user_attributes: {
-          firstname: userdata["first-name"], 
-          lastname: userdata["last-name"],
-        }.reject{|key, value| value.blank? || value.nil?}
-      }.reject{|key, value| value.blank? || value.nil?})
-    update_cv_jobs userdata["positions"]["all"] unless userdata["positions"].nil?
-  end
-
-  def update_cv_jobs(jobs)
-    jobs.each do |job|
-      description = !job["summary"].nil? ? job["summary"] : " "
-      start_date = !job["start_date"].nil? ? (!job["start_date"]["month"].nil? ? Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i) : Date.new(job["start_date"]["year"].to_i)) : nil
-      end_date = !job["end_date"].nil? ? (!job["end_date"]["month"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : Date.new(job["end_date"]["year"].to_i)) : nil
-      current = (job["is_current"].to_s == 'true')
-      update_attributes!(
-        cv_jobs: self.cv_jobs.push(
-          CvJob.new(
-            student: self,
-            employer: job["company"]["name"],
-            position: job["title"],
-            description: description,
-            start_date: start_date,
-            end_date: end_date,
-            current: current)
-        )
-      )
-    end
-  end
-
-  def self.linkedin_request_token_for_callback(url) 
-    self.create_linkedin_client.request_token(oauth_callback: url)
-  end
-
-  def self.create_linkedin_client
-    LinkedIn::Client.new(LINKEDIN_KEY, LINKEDIN_SECRET, LINKEDIN_CONFIGURATION)
   end
 
   def self.apply_saved_scopes(job_offers, saved_scopes)

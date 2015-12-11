@@ -137,9 +137,6 @@ gem 'configurable_engine'
 # asset handling for heroku
 gem 'rails_serve_static_assets'
 
-# linked in
-gem 'linkedin'
-
 # xing
 gem 'xing_api', '~> 0.1'
 

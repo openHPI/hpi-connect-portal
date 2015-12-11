@@ -22,7 +22,7 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
+    can [:edit, :update, :activate, :insert_imported_data, :destroy], Student, id: user.manifestation.id
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
@@ -40,7 +40,7 @@ class Ability
       can :create, Application
       can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
-      end      
+      end
       can :matching, JobOffer
     end
   end
