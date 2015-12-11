@@ -22,7 +22,7 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :activate, :request_linkedin_import, :insert_imported_data, :destroy], Student, id: user.manifestation.id
+    can [:edit, :update, :activate, :insert_imported_data, :destroy], Student, id: user.manifestation.id
     can [:show], Student do |student|
       (student.id == user.manifestation.id) || (student.visibility_id == 2)
     end
@@ -30,7 +30,12 @@ class Ability
     can :create, NewsletterOrder
     can :destroy, NewsletterOrder, student: user.manifestation
     cannot :show, JobOffer, status: JobStatus.closed
-
+    
+    can [:create, :read], Rating
+    can [:update, :destroy], Rating do |rating|
+      user.manifestation.id == rating.student.id
+    end
+    
     if user.activated
       can :create, Application
       can :read, Student do |student|
@@ -53,7 +58,7 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update], Employer, id: employer_id
+    can [:edit, :update, :invite_colleague], Employer, id: employer_id
 
     if staff.employer.activated
       can :read, Application

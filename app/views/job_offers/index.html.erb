@@ -7,7 +7,14 @@
     <% if current_user && current_user.student? %>
       <%= link_to t("job_offers.recommended_jobs"), matching_job_offers_path(language_ids: current_user.manifestation.languages.map(&:id),
         programming_language_ids: current_user.manifestation.programming_languages.map(&:id)), class: "btn btn-default pull-right title-button"%>
+      <%= link_to t("job_offers.dschool_jobs"), job_offers_path(student_group: Student.group_id("dschool")), class: "btn btn-default pull-right title-button"%>
+      <%= link_to t("job_offers.hpi_jobs"), job_offers_path(student_group: Student.group_id("hpi")), class: "btn btn-default pull-right title-button"%>
+      <%= link_to t("job_offers.all_jobs"), job_offers_path, class: "btn btn-default pull-right title-button"%>
     <% end %>
+    
+    <% if can?(:export, JobOffer) %>
+      <%= link_to link_to t("job_offers.export"), export_job_offers_path(format: "csv"), class: "btn btn-danger pull-right title-button" %>
+    <% end %> 
   </span>
 </div>
 
@@ -16,8 +23,12 @@
     <%= render 'shared/jobs_listing_detailed', job_offer_list: @job_offers_list[:items], create_link_to_details: true %>
   </div><!--/.span -->
 </div>
-<div class="wrapper-5 teaser sidebar">
+<div class="wrapper-4 teaser sidebar">
   <div class="col-md-4">
     <%= render 'shared/sort_filter_search', find_path: job_offers_path %>
+  </div>
+  
+  <div class="col-md-4">
+    <%= render "shared/contact" %>
   </div>
 </div>

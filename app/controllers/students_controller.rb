@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :request_linkedin_import, :insert_imported_data]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :request_linkedin_import, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
 
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -96,45 +96,13 @@ class StudentsController < ApplicationController
     end
   end
 
-  def request_linkedin_import
-    authorize! :request_linkedin_import, @student
-    @request_token = Student.linkedin_request_token_for_callback(insert_imported_data_student_url(@student))
-    session[:rtoken] = @request_token.token
-    session[:rsecret] = @request_token.secret
-    redirect_to @request_token.authorize_url
-  end
-
-  def insert_imported_data
-    authorize! :request_linkedin_import, @student
-    linkedin_client = Student.create_linkedin_client
-    authorize_client linkedin_client
-    @student.update_from_linkedin(linkedin_client)
-    respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
-  end
-
   private
-    def authorize_client(linkedin_client)
-      if session[:atoken].nil?
-        pin = params[:oauth_verifier]
-        begin
-          atoken, asecret = linkedin_client.authorize_from_request(session[:rtoken], session[:rsecret], pin)
-        rescue
-          problem = params[:oauth_problem]
-          respond_and_redirect_to edit_student_path(@student), (!problem.nil? && problem == "user_refused" ? t("students.aborted") : t("applications.error"))
-        end
-        session[:atoken] = atoken
-        session[:asecret] = asecret
-      else
-        linkedin_client.authorize_from_access(session[:atoken], session[:asecret])
-      end
-    end
-
     def set_student
       @student = Student.find params[:id]
     end
 
     def student_params
-      params.require(:student).permit(:semester, :dschool_status_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :dschool_status_id, :group_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
     def rescue_from_exception(exception)

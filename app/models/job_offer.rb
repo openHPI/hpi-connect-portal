@@ -31,7 +31,7 @@
 class JobOffer < ActiveRecord::Base
   include JobOfferScopes
 
-  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student']
+  CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
 
   has_attached_file :offer_as_pdf
@@ -43,6 +43,7 @@ class JobOffer < ActiveRecord::Base
   has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
   has_many :assigned_students, through: :assignments, source: :student
+  has_many :ratings, dependent: :nullify
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
   belongs_to :employer
@@ -96,7 +97,23 @@ class JobOffer < ActiveRecord::Base
       end
     end
   end
-
+  
+  def self.export_active_jobs
+    active_jobs = self.active
+    
+    csv_string = ""
+    header = "\"#{human_attribute_name(:title)}\";\"#{human_attribute_name(:employer)}\";\"#{human_attribute_name(:category)}\";\"#{human_attribute_name(:release_date)}\"\n"
+    
+    csv_string << header
+    
+    active_jobs.each do |job|
+      row = "\"#{job.title}\";\"#{job.employer.name}\";\"#{job.category}\";\"#{job.release_date}\"\n"
+      csv_string << row
+    end
+    
+    return csv_string  
+  end
+  
   def default_values
     self.status ||= JobStatus.pending
   end
@@ -149,10 +166,6 @@ class JobOffer < ActiveRecord::Base
     JobOffersMailer.job_prolonged_email(self).deliver
   end
 
-  def immediately_prolongable
-    category_id < 2 && !prolonged
-  end
-
   def expiration_date
     (prolonged_at || created_at).to_date + 4.weeks
   end
@@ -182,6 +195,10 @@ class JobOffer < ActiveRecord::Base
 
   def state
     STATES[state_id]
+  end
+
+  def student_group
+    Student::GROUPS[student_group_id]
   end
 
   def minimum_degree

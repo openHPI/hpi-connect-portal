@@ -45,4 +45,15 @@ describe Alumni do
       @alumni.should be_invalid
     end
   end
+
+  describe "send_reminder" do
+
+    it "sends mail" do
+      ActionMailer::Base.deliveries = []
+      alumni = FactoryGirl.create :alumni
+      alumni.send_reminder
+      ActionMailer::Base.deliveries.count.should == 1
+    end
+
+  end
 end

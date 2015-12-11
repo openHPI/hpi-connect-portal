@@ -57,6 +57,10 @@ en:
     default_compensation: "Standard compensation"
     default_startdate: "From now on"
     recommended_jobs: "Recommended jobs"
+    dschool_jobs: "Design Thinking jobs"
+    hpi_jobs: "IT jobs"
+    all_jobs: "All jobs"
+    export: "Export job offers"
     messages:
         successfully_created: "Job offer was successfully created."
         successfully_updated: "Job offer was successfully updated."
@@ -74,3 +78,6 @@ en:
         sideline: "Side Job"
         graduate_job: "Job for graduates"
         working_student: "Working student"
+        teammate: "Teammate"
+    jobs_for: "Jobs for"
+    i_search: "I search"

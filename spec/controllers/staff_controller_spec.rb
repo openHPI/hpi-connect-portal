@@ -6,7 +6,6 @@ describe StaffController do
     login FactoryGirl.create(:student).user
   end
 
-  let(:valid_attributes) { { "firstname" => "Jane", "lastname" => "Doe", "employer" => FactoryGirl.create(:employer), "email" => "test@example"} }
   let(:admin_role) { FactoryGirl.create(:role, :admin) }
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
@@ -33,43 +32,6 @@ describe StaffController do
     end
   end
 
-  # describe "POST create" do
-  #   describe "with valid params" do
-  #     it "creates a new Staff" do
-  #       expect {
-  #         post :create, {:staff => valid_attributes}, valid_session
-  #       }.to change(Staff, :count).by(1)
-  #     end
-
-  #     it "assigns a newly created staff as @staff" do
-  #       post :create, {:staff => valid_attributes}, valid_session
-  #       assigns(:staff).should be_a(Staff)
-  #       assigns(:staff).should be_persisted
-  #     end
-
-  #     it "redirects to the created staff" do
-  #       post :create, {:staff => valid_attributes}, valid_session
-  #       response.should redirect_to(Staff.last)
-  #     end
-  #   end
-
-  #   describe "with invalid params" do
-  #     it "assigns a newly created but unsaved staff as @staff" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Staff.any_instance.stub(:save).and_return(false)
-  #       post :create, {:staff => {  }}, valid_session
-  #       assigns(:staff).should be_a_new(Staff)
-  #     end
-
-  #     it "re-renders the 'new' template" do
-  #       # Trigger the behavior that occurs when invalid params are submitted
-  #       Staff.any_instance.stub(:save).and_return(false)
-  #       post :create, {:staff => {  }}, valid_session
-  #       response.should render_template("new")
-  #     end
-  #   end
-  # end
-
   describe "DELETE destroy" do
     before(:each) do
       admin = FactoryGirl.create(:user, :admin)
@@ -94,6 +56,48 @@ describe StaffController do
       staff = FactoryGirl.create(:staff)
       delete :destroy, {id: staff.to_param}, valid_session
       response.should redirect_to(staff_index_path)
+    end
+  end
+
+  describe "GET new" do
+    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+
+    before :each do
+      logout
+    end
+
+    it "should render template without account" do
+      get :new, ({token: employer.token})
+      response.should render_template("new")
+    end
+
+    it "should redirect to root if wrong token" do
+      get :new, ({token: "wrong-token"})
+      response.should redirect_to root_path
+    end
+  end
+
+  describe "POST create" do
+    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+    let(:valid_attributes) { {token: employer.token, user_attributes:  {firstname: "Max", lastname: "Mustermann", email: "test@testmail.de",
+                                                          password: "test", password_confirmation: "test"} } }
+
+    before :each do
+      logout
+    end
+
+    it "creates staff" do
+      employer.reload
+      expect {
+        post :create, {staff: valid_attributes}, valid_session
+      }.to change(Staff, :count).by(1)
+      response.should redirect_to(root_path)
+    end
+
+    it "creates staff in right employer" do
+      post :create, {staff: valid_attributes}, valid_session
+      Staff.last.firstname.should == "Max"
+      Staff.last.employer.should == employer
     end
   end
 end

@@ -114,5 +114,14 @@ describe UsersController do
       ActionMailer::Base.deliveries[password_mail_index].to.count.should eq(1)
       ActionMailer::Base.deliveries[password_mail_index].to[0].should eq(User.find(@user).email)
     end
+
+    it "ignores cases" do
+      ActionMailer::Base.deliveries = []
+      @user.update(email: "User1.Lastname@example.com")
+      params = {forgot_password: {email: "user1.lastname@example.com"} }
+      post :forgot_password, params
+      response.should redirect_to(root_path)
+      ActionMailer::Base.deliveries.count.should eq(1)
+    end
   end
 end

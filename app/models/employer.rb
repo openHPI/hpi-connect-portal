@@ -31,9 +31,13 @@ class Employer < ActiveRecord::Base
 
   has_one :contact, as: :counterpart, dependent: :destroy
 
+  has_many :ratings, dependent: :destroy
+  
   has_many :staff_members, class_name: 'Staff', dependent: :destroy
   has_many :job_offers, dependent: :destroy
   has_many :interested_students, class_name: 'Student', through: :employers_newsletter_information
+
+  before_validation :generate_unique_token
 
   accepts_nested_attributes_for :staff_members
   accepts_nested_attributes_for :contact
@@ -48,6 +52,13 @@ class Employer < ActiveRecord::Base
 
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
+  scope :order_by_name, -> { order('LOWER(name)') }
+
+  def generate_unique_token
+    code = SecureRandom.urlsafe_base64
+    code = SecureRandom.urlsafe_base64 while Employer.exists? token: code
+    self.token = code
+  end
 
   def check_deputys_employer
     errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
@@ -88,4 +99,19 @@ class Employer < ActiveRecord::Base
   def remove_one_single_booked_job
     self.update_column :single_jobs_requested, self.single_jobs_requested-1
   end
+  
+  def average_rating
+    if rating_amount > 0
+      (Rating.where(employer: self).map{|x| x.score_overall}.reduce(:+) / rating_amount.to_f).round(1)
+    end
+  end
+
+  def rating_amount
+    Rating.where(employer: self).count
+  end
+
+  def invite_colleague(colleague_mail, name, sender)
+    EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver
+  end
+  
 end

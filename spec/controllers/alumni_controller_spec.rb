@@ -64,4 +64,24 @@ describe AlumniController do
       response.should redirect_to(root_path)
     end
   end
+
+  describe "GET remind_all" do
+
+    it "redirects to alumni_path" do
+      ActionMailer::Base.deliveries = []
+      login FactoryGirl.create :user, :admin
+      FactoryGirl.create :alumni
+      FactoryGirl.create :alumni
+      get :remind_all
+      response.should redirect_to(alumni_index_path)
+      ActionMailer::Base.deliveries.count.should == 2
+    end
+
+    it "redirects to root if not admin" do
+      login FactoryGirl.create :user
+      get :remind_all
+      response.should redirect_to(root_path)
+    end
+
+  end
 end

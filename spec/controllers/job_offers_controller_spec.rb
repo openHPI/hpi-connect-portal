@@ -142,6 +142,41 @@ describe JobOffersController do
       get :index, ({:employer => @employer_one.id}), valid_session
       assigns(:job_offers_list)[:items].to_a.should =~ (job_offers).to_a
     end
+    
+    context "student selects student group" do
+    
+      subject(:hpi_group_id)     { Student.group_id("hpi") }
+      subject(:dschool_group_id) { Student.group_id("dschool") }
+      subject(:both_group_id)    { Student.group_id("both") }
+      
+      
+      let!(:job_offers_hpi)     { [@job_offer] }
+      let!(:job_offers_dschool) { FactoryGirl.create_list(:job_offer, 2, employer: @employer_two, status: @active, student_group_id:  dschool_group_id)}
+      let!(:job_offers_both)    { FactoryGirl.create_list(:job_offer, 2, employer: @employer_three, status: @active, student_group_id: both_group_id)}
+      
+      
+      context "student selects 'HPI' group" do 
+        it "assings all job offers tagged with 'HPI' and 'Both' group to @job_offers_list[:items]" do
+          get :index, ({:student_group => hpi_group_id}), valid_session
+          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_both).to_a  
+        end
+      end
+      
+      context "student selects 'D-School' group" do
+        it "assings all job offers tagged with with 'D-School' and 'Both' group to @job_offers_list[:items]" do
+          get :index, ({:student_group => dschool_group_id }), valid_session
+          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_dschool | job_offers_both).to_a
+        end
+      end
+      
+      context "student selects blank" do
+        it "assings all job offers tagged with 'HPI', 'D-School' and 'Both' group to @job_offers_list[:items]" do 
+          get :index, ({:student_group => "" }), valid_session
+          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_dschool | job_offers_both).to_a
+        end
+      end
+    end
+    
   end
 
   describe "GET matching" do
@@ -177,12 +212,10 @@ describe JobOffersController do
       login @staff.user
     end
 
-    it "should immediately prolong the job once" do
+    it "should not immediately prolong the job once" do
       get :request_prolong, {id: @job_offer.id}
       response.should redirect_to(@job_offer)
-      assigns(:job_offer).prolonged_at.should eq(Date.current)
-      assigns(:job_offer).prolong_requested.should eq(false)
-      get :request_prolong, {id: @job_offer.id}
+      assigns(:job_offer).prolonged_at.should eq(nil)
       assigns(:job_offer).prolong_requested.should eq(true)
     end
 

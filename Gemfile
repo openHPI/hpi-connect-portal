@@ -86,6 +86,9 @@ gem 'whenever'
 # add some more UI controls
 gem 'jquery-ui-rails'
 
+# jquery plugin for rating stars
+gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
+
 # load jQuery fast without refresh
 gem 'jquery-turbolinks'
 
@@ -122,6 +125,7 @@ gem 'chronic', '~> 0.10.2'
 group :test do
   gem 'email_spec'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
 end
 
 # flags
@@ -132,9 +136,6 @@ gem 'configurable_engine'
 
 # asset handling for heroku
 gem 'rails_serve_static_assets'
-
-# linked in
-gem 'linkedin'
 
 # xing
 gem 'xing_api', '~> 0.1'

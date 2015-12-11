@@ -1,7 +1,7 @@
 class StaffController < ApplicationController
   include UsersHelper
 
-  authorize_resource
+  skip_before_filter :signed_in_user, only: [:new, :create]
 
   before_action :set_staff, only: [:show, :edit, :update, :destroy]
 
@@ -14,15 +14,20 @@ class StaffController < ApplicationController
   end
 
   def new
+    @employer = Employer.find_by_token(params[:token])
+    if @employer.nil?
+      redirect_to(root_path, notice: I18n.t("staff.messages.wrong_token"))
+    end
     @staff = Staff.new
     @staff.build_user
   end
 
   def create
     @staff = Staff.new staff_params
+    @staff.employer = Employer.find_by_token(employer_params[:token])
     if @staff.save
       sign_in @staff.user
-      flash[:success] = "Welcome to HPI Career!"
+      flash[:success] = "Welcome to HPI Connect!"
       redirect_to root_path
     else
       render 'new'
@@ -42,7 +47,11 @@ class StaffController < ApplicationController
     end
 
     def staff_params
-      params.require(:staff).permit(:employer, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+      params.require(:staff).permit(user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+    end
+
+    def employer_params
+      params.require(:staff).permit(:token)
     end
 
     def rescue_from_exception(exception)

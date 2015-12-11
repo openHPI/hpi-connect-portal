@@ -321,6 +321,7 @@ describe "student newsletters" do
     student = FactoryGirl.create(:student)
     login student.user
     visit job_offers_path
+    select "HPI Student", from: "student_group"
     select "Test Company", from: "employer"
     select "Bavaria", from: "state"
     select "Job for graduates", from: "category"
@@ -332,6 +333,6 @@ describe "student newsletters" do
     page.find("#create_newsletter_button").click
     page.find("#newsletter_creation_submit").click
     student.newsletter_orders.count.should == 1
-    student.newsletter_orders.first.search_params.count.should == 8
+    student.newsletter_orders.first.search_params.count.should == 9
   end
 end

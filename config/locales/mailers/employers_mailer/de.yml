@@ -10,3 +10,5 @@ de:
       subject: 'Bestätigung für Ihre Paketbuchung'
     confirm_booking:
       subject: 'Ihr Paket wurde freigeschaltet'
+    invite_colleague:
+      subject: "Einladung HPI Connect Jobportal"

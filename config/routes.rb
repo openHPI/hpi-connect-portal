@@ -16,6 +16,7 @@ HpiHiwiPortal::Application.routes.draw do
         collection do
           get "archive"
           get "matching"
+          get "export"
         end
         member do
           get "close"
@@ -35,7 +36,9 @@ HpiHiwiPortal::Application.routes.draw do
         member do
           get "activate"
           get "deactivate"
+          post "invite_colleague"
         end
+        resources :ratings        
       end
 
       resources :applications, only: [:create, :destroy] do
@@ -48,6 +51,7 @@ HpiHiwiPortal::Application.routes.draw do
       resources :alumni, only: [:new, :create, :index, :show] do
         collection do
           get 'remind_via_mail'
+          get 'remind_all'
           post 'import' => 'alumni#create_from_csv'
           post 'mail_csv' => 'alumni#send_mail_from_csv'
         end
@@ -72,14 +76,16 @@ HpiHiwiPortal::Application.routes.draw do
       resources :studentsearch
       resources :faqs
 
-      resources :staff, except: [:edit, :update]
+      resources :staff, except: [:edit, :update, :new] do
+        collection do
+          get 'new/:token', to: 'staff#new', as: 'new'
+        end
+      end
 
       resources :students do
         member do
           patch 'activate'
           get 'activate'
-          get 'request_linkedin_import'
-          get 'insert_imported_data'
         end
       end
 

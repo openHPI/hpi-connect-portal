@@ -24,7 +24,7 @@ en:
     inactive: "Deactivated"
     messages:
         account_successfully_updated: "Account successfully updated."
-        successfully_created: "Welcome to HPI Career! You can now complete your profile here."
+        successfully_created: "Welcome to HPI Connect! You can now complete your profile here."
         successfully_updated: "Profile successfully updated."
         successfully_deleted: "Profile successfully deleted."
         successfully_activated: "Profile successfully activated."

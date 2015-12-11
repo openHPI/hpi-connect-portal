@@ -58,5 +58,23 @@ describe "the staff page" do
       current_path.should == root_path
     end
 
+   end
+
+  describe "New staff after invitation" do
+    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+
+    it "should register colleague to the employer" do
+
+      visit new_staff_index_path(token: employer.token)
+      fill_in 'staff_user_attributes_firstname', with: 'Max'
+      fill_in 'staff_user_attributes_lastname', with: 'Mustermann'
+      fill_in 'staff_user_attributes_email', with: 'staff@test.com'
+      fill_in 'staff_user_attributes_password', with: 'password'
+      fill_in 'staff_user_attributes_password_confirmation', with: 'password'
+      find('input[type="submit"]').click
+      employer.staff_members.count.should == 2
+      page.should have_content( I18n.t('employers.messages.successfully_created'),
+                                "General information", "Max Mustermann")
+    end
   end
 end

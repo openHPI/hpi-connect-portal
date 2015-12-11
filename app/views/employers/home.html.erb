@@ -53,15 +53,9 @@
 
     <div class="col-md-4">
       <h1> <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), :class => "links" %> </h1>
+
       <h1><%= link_to "Informationsbroschüre", asset_path("HPI Connect Karriereportal.pdf"), :class => "links" %></h1>
-      <h1>Kontakt</h1>
-      <p>Hasso-Plattner-Institut für<br>Softwaresystemtechnik GmbH
-      <br>Prof.-Dr.-Helmert-Str. 2-3
-      <br>D-14482 Potsdam</p>
-      <br>
-      <p>E-Mail: <%= mail_to "connect@hpi.de" %></p>
-      <br><p>Nadja Antoine - <br>Fon(49) 0331 5509 107</p>
-      <br><p>Claudia Koch - <br>Fon(49) 0331 5509 291</p>
-      <br><p><%= link_to "www.hpi.uni-potsdam.de/connect"%></p>
+       <%= render "shared/contact" %>
+       <br>
     </div>
 </div>
