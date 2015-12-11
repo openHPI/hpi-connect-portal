@@ -10,7 +10,7 @@ class AlumniController < ApplicationController
 
   def index
     authorize! :index, Alumni
-    @alumnis = apply_scopes(Alumni.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)  
+    @alumnis = apply_scopes(Alumni.all).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
   def show
@@ -24,7 +24,7 @@ class AlumniController < ApplicationController
   def create
     alumni = Alumni.create_from_row alumni_params
     if alumni == :created
-      respond_and_redirect_to new_alumni_path, 'Alumni erfolgreich erstellt!' 
+      respond_and_redirect_to new_alumni_path, 'Alumni erfolgreich erstellt!'
     else
       @alumni = alumni
       render 'new'

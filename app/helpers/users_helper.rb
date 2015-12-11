@@ -29,5 +29,5 @@ module UsersHelper
     update_and_remove_for_language(params[:programming_language_skills], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:language_skills], params[:id], LanguagesUser, "language_id")
   end
-  
+
 end

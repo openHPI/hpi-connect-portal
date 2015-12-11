@@ -65,7 +65,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights it should redirect to employers path" do
-      
+
       before(:each) do
         @employer = FactoryGirl.create(:employer)
       end
@@ -124,7 +124,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-      
+
       before(:each) do
         login FactoryGirl.create(:student).user
       end
@@ -143,8 +143,8 @@ describe EmployersController do
       before(:each) do
         @employer = FactoryGirl.create(:employer)
       end
-      
-      it "updates the requested employer" do  
+
+      it "updates the requested employer" do
         Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction" } )
         put :update, { id: @employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction" } }
       end
@@ -198,7 +198,7 @@ describe EmployersController do
     end
 
     describe "with missing permission" do
-      
+
       before(:each) do
         login FactoryGirl.create(:student).user
       end

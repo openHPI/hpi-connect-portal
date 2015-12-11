@@ -46,7 +46,7 @@ describe "the home page" do
     find_link(I18n.t("users.forgot_password")).click
     fill_in 'forgot_password_email', :with => '"new_password_email@test.de'
     click_on I18n.t("users.request_password")
-    current_path.should eq(root_path)      
+    current_path.should eq(root_path)
     User.find(user).password.should_not eq(old_password)
-  end   
+  end
 end

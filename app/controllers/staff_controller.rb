@@ -27,7 +27,7 @@ class StaffController < ApplicationController
     @staff.employer = Employer.find_by_token(employer_params[:token])
     if @staff.save
       sign_in @staff.user
-      flash[:success] = "Welcome to HPI Career!"
+      flash[:success] = "Welcome to HPI Connect!"
       redirect_to root_path
     else
       render 'new'

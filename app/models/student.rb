@@ -17,9 +17,11 @@
 #  updated_at             :datetime
 #  employment_status_id   :integer          default(0), not null
 #  frequency              :integer          default(1), not null
-#  visibility_id          :integer          default(0), not null
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
+#  visibility_id          :integer          default(0), not null
+#  dschool_status_id      :integer          default(0), not null
+#  group_id               :integer          default(0), not null
 #
 
 class Student < ActiveRecord::Base
@@ -63,7 +65,7 @@ class Student < ActiveRecord::Base
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
   scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
-  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')} 
+  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')}
   scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }

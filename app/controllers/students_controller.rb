@@ -3,8 +3,8 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index, :insert_imported_data]
-  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate, :insert_imported_data]
+  authorize_resource except: [:destroy, :edit, :index]
+  before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
 
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids

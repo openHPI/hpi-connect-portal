@@ -20,6 +20,7 @@
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
 #  single_jobs_requested :integer          default(0), not null
+#  token                 :string(255)
 #
 
 class Employer < ActiveRecord::Base
@@ -45,8 +46,8 @@ class Employer < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: ['image/jpeg', 'image/png']
 
   validates :name, presence: true, uniqueness: true
-  validates :year_of_foundation, numericality: { only_integer: true, 
-    greater_than: 1800, 
+  validates :year_of_foundation, numericality: { only_integer: true,
+    greater_than: 1800,
     less_than_or_equal_to: Time.now.year}, allow_nil: true
 
   scope :active, -> { where(activated: true) }

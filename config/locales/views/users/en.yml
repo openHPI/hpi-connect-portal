@@ -24,7 +24,7 @@ en:
     inactive: "Deactivated"
     messages:
         account_successfully_updated: "Account successfully updated."
-        successfully_created: "Welcome to HPI Career! You can now complete your profile here."
+        successfully_created: "Welcome to HPI Connect! You can now complete your profile here."
         successfully_updated: "Profile successfully updated."
         successfully_deleted: "Profile successfully deleted."
         successfully_activated: "Profile successfully activated."
@@ -32,7 +32,7 @@ en:
         password_changed: "Password successfully changed."
         password_wrong: "The old password seems to be invalid."
         passwords_not_matching: "The new passwords do not match."
-        your_new_password: 'Your new password'      
+        your_new_password: 'Your new password'
         send_new_password: 'Receive new password'
         password_resetted: 'Your password was successfully resetted. Please have a look at Your E-mail inbox.'
         password_send_instructions: 'You will receive an email with your new password. Please use that to login the next time. Afterwards you can change your password.'

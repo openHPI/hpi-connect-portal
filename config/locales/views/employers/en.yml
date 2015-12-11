@@ -20,7 +20,7 @@ en:
         contact: "Contact"
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
-            profile: "Employer Profile" 
+            profile: "Employer Profile"
             full_time: "full-time jobs per year"
             student_profile: "View Student Profiles"
             insufficent: "Your package does not suffice / Number of graduate jobs exceeded"
@@ -28,7 +28,7 @@ en:
             book_single_offer: "Book single job offer"
             upgrade: "Upgrade package"
         messages:
-            successfully_created: "Welcome to HPI Career!"
+            successfully_created: "Welcome to HPI Connect!"
             successfully_updated: "Profile successfully updated."
             successfully_deleted: "Profile successfully deleted."
             unsuccessfully_deleted: "Couldn't delete profile."
@@ -45,18 +45,20 @@ en:
             service:
                 free:
                     title: "Free Services"
-                    description: "Announce an  internship or student job online (4 weeks)"
+                    traineeship: "%{set_online} an internship (4 weeks)"
+                    working_student: "%{set_online} a student job (4 weeks)"
                 chargeable:
                     title: "Chargeable Services"
                     help_html: "(You can request an overview of current prices at %{email})" #connect@hpi.uni-potsdam.de.)"
                     open_positions: "Announce your open positions (4 weeks)"
                     present_profile_html: "Present Your %{company_profile} (1 year)"
                     company_profile: "Company Profile"
-                    single_graduate_job: "%{book} single graduate job"
+                    single_graduate_job: "%{book} single graduate job (4 weeks)"
             booking:
                 basis:
                     title_html: "%{book} a Basis Packet"
                     book: "Book"
+                    set_online: "Announce"
                     advertisements: "4 job advertisements per year"
                     company_profile: "1 company profile for 1 year"
                 partner:

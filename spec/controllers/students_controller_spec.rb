@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StudentsController do
 
-  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } } 
+  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } }
 
   before(:each) do
     login FactoryGirl.create(:student).user
