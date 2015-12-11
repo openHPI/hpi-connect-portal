@@ -38,7 +38,7 @@ HpiHiwiPortal::Application.routes.draw do
           get "deactivate"
           post "invite_colleague"
         end
-        resources :ratings        
+        resources :ratings
       end
 
       resources :applications, only: [:create, :destroy] do
