@@ -1,0 +1,50 @@
+<div class="modal fade" id="invite-colleagues-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"> Mitarbeiter einladen </h4>
+            </div>
+            <%= simple_form_for :invite_colleague_email, url: invite_colleague_employer_path do |f| %>
+              <div class="modal-body clearfix" >
+                <div class="row invite-colleague">
+                  <div class="col-sm-3">
+                    <%= label_tag :first_name, t("activerecord.attributes.user.first_name") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.input :first_name, id: "firstname" %>
+                  </div>
+                </div>
+                <div class="row invite-colleague">
+                  <div class="col-sm-3">
+                    <%= label_tag :last_name, t("activerecord.attributes.user.last_name") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.input :last_name, id: "lastname" %>
+                  </div>
+                </div>
+                <div class="row invite-colleague">
+                  <div class="col-sm-3">
+                    <%= label_tag :colleague_email_tag, "Email" %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.input :colleague_email, id: "colleague-email" %>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="row invite-colleague">
+                  <div class="col-sm-12">
+                    <div class="description-text">Ihr(e) Kollege/Kollegin erhält nun eine Einladungsmail mit einem Link zum Portal, mit dem ein eigener Zugang zu Ihrem Unternehmens-Account angelegt werden kann. Sie erhalten eine Kopie der Einladung.</div>
+                  </div>
+                </div>
+                <div class="row invite-colleague">
+                  <div class="col-sm-12">
+                    <%= f.submit "Einladung abschicken", class: "btn btn-large btn-primary pull-left" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+        </div>
+    </div>
+</div>

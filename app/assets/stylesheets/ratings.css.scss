@@ -1,0 +1,33 @@
+// Place all the styles related to the Ratings controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.stars-dark-background{
+  color:black;
+}
+
+.link_to_ratings{
+  font-style: italic;
+  color:black !important;
+}
+
+.rating-list{
+  .btn-primary{
+    color: white !important;
+  }
+}
+
+.employer_rating_stars{
+  display:inline;
+}
+
+a{
+  .employer_rating_stars{
+    cursor: pointer !important;
+  }
+}
+
+span.rating_score{
+  font-weight: bold;
+  color: rgb(239,152,0);
+}

@@ -30,7 +30,12 @@ class Ability
     can :create, NewsletterOrder
     can :destroy, NewsletterOrder, student: user.manifestation
     cannot :show, JobOffer, status: JobStatus.closed
-
+    
+    can [:create, :read], Rating
+    can [:update, :destroy], Rating do |rating|
+      user.manifestation.id == rating.student.id
+    end
+    
     if user.activated
       can :create, Application
       can :read, Student do |student|
@@ -53,7 +58,7 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update], Employer, id: employer_id
+    can [:edit, :update, :invite_colleague], Employer, id: employer_id
 
     if staff.employer.activated
       can :read, Application

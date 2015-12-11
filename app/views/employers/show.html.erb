@@ -7,9 +7,12 @@
     <div class="col-sm-6 text-left">
       <p>
         <% if can? :edit, @employer %>
+          <%= link_to "Mitarbeiter einladen", "", id:"open-popup", data: {toggle: "modal", target: "#invite-colleagues-modal" }, class: "btn btn-default pull-right" %>
+        <% end %>
+        <% if can? :edit, @employer %>
           <%= link_to t('links.edit'), edit_employer_path(@employer), :type => "button", :class => "btn btn-default pull-right" %>
         <% end %>
-        <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id > @employer.booked_package_id)) %>
+        <% if can?(:activate, @employer) && (!@employer.activated || (@employer.requested_package_id != @employer.booked_package_id)) %>
           <%= link_to t("links.activate"), activate_employer_path(@employer.id), class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Arbeitgeber für das Paket "' + t('activerecord.attributes.employer.packages.' + @employer.requested_package) + '" freischalten möchten?' } %>
         <% end %>
         <% if can?(:deactivate, @employer) && @employer.activated %>
@@ -75,7 +78,19 @@
           <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  
           %>
         </center>
-        <br>
+        
+        <div class="row">
+          <div class="col-sm-12 stars-dark-background">
+            <center>
+              <% if can? :read, Rating %>
+                 <%= render "ratings/employer_rating_stars", employer: @employer %>
+                 <%= link_to t("ratings.click_here"), employer_ratings_path(@employer), {:class => "link_to_ratings"} %>
+              <% end %>
+            </center>
+          </div> 
+        </div>
+        
+        </br>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>
           <ul class="list-group">
@@ -177,3 +192,8 @@
     </div>
   </div>
 </div>
+
+
+<% content_for :modals do %>
+  <%= render 'invite_colleague' %>
+<% end %>

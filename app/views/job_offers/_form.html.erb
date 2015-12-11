@@ -1,5 +1,16 @@
 <%= simple_form_for job_offer do |f| %>
+  
   <%= render 'shared/object_errors', object: job_offer %>
+  
+  <div class="row">
+    <div class="col-sm-12 bottom-10">
+       <span class="pull-right">
+         <%= f.submit t("links.save"), :class => "btn btn-warning pull-right title-button" %>
+         <a id="job_offer_preview_button" class="btn btn-default pull-right title-button"> <%= t("links.preview") %> </a> 
+       </span>
+    </div>  
+  </div>
+  
   <div class="row">
     <div class="col-sm-12">
       <div class="panel panel-default">
@@ -7,6 +18,22 @@
           <h4><%= t("activerecord.attributes.job_offer.general_information") %></h4>
         </div>
         <ul class="list-group">
+
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= label_field f, :student_group_id, t("job_offers.i_search") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.select :student_group_id, Student::GROUPS.each_with_index.collect { |group, index| [t("activerecord.attributes.student.groups." + group), index] }, {}, {id: 'student_group_id', class:'select optional form-control'} %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
           <li class="list-group-item">
             <div class="row">
             <% if current_user.admin? %>
@@ -14,25 +41,26 @@
             <% else %>
               <div class="col-sm-12">
             <% end %>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <%= label_field f, :title, t("activerecord.attributes.job_offer.title") %>
-                    </div>
-                    <div class="col-sm-9">
-                      <%= f.input :title %>
-                    </div>
-                  </div>
-              </div>
-              <% if current_user.admin? %>
-              <div class="col-sm-6">
                 <div class="row">
-                  <div class="col-sm-12" style="text-align:right;">
-                    <%= f.collection_select :employer_id, Employer.all, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
+                  <div class="col-sm-3">
+                    <%= label_field f, :title, t("activerecord.attributes.job_offer.title") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.input :title %>
                   </div>
                 </div>
               </div>
 
+              <% if current_user.admin? %>
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-12" style="text-align:right;">
+                    <%= f.collection_select :employer_id, Employer.order_by_name, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
+                  </div>
+                </div>
+              </div>
               <% end %>
+
             </div>
           </li>
           <li class="list-group-item">

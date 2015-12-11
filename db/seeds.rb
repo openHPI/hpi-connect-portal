@@ -125,44 +125,50 @@ User.create!([{
 }])
 
 # Students
-Student.create!([{
-  user: User.new(
-    email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-    lastname: "Reinhardt", 
-    firstname: "Pascal",
-    password: 'password',
-    password_confirmation: 'password',
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
-  ),
-  semester: 5,
-  academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
-  graduation_id: Student::GRADUATIONS.index("abitur"),
-}])
+student_pascal = Student.create!(
+            user: User.new(
+              email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
+              lastname: "Reinhardt", 
+              firstname: "Pascal",
+              password: 'password',
+              password_confirmation: 'password',
+              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
+              ),
+            semester: 5,
+            academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
+            graduation_id: Student::GRADUATIONS.index("abitur"),
+)
 
-Student.create!([{
-  user: User.new(
-    email: 'frank.blechschmidt@example.com', 
-    firstname: 'Frank', 
-    lastname: 'Blechschmidt',
-    password: 'password',
-    password_confirmation: 'password',
-    photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
-  ),
-  semester: 5,
-  academic_program_id: 0,
-  graduation_id: 2,
-  birthday: '1990-12-30',
-  additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
-  homepage: 'https://twitter.com/FraBle90',
-  github: 'https://github.com/FraBle',
-  facebook: 'https://www.facebook.com/FraBle90',
-  xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
-  linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
-  languages: Language.where(:name => ['english']),
-  languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
-  programming_languages: ProgrammingLanguage.where(:name => ['Java']),
-  programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
-  employment_status_id: 2
+student_frank = Student.create!(
+    user: User.new(
+      email: 'frank.blechschmidt@example.com', 
+      firstname: 'Frank', 
+      lastname: 'Blechschmidt',
+      password: 'password',
+      password_confirmation: 'password',
+      photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
+    ),
+    semester: 5,
+    academic_program_id: 0,
+    graduation_id: 2,
+    birthday: '1990-12-30',
+    additional_information: 'Bachelorprojekt: Modern Computer-aided Software Engineering',
+    homepage: 'https://twitter.com/FraBle90',
+    github: 'https://github.com/FraBle',
+    facebook: 'https://www.facebook.com/FraBle90',
+    xing: 'https://www.xing.com/profiles/Frank_Blechschmidt4',
+    linkedin:'http://www.linkedin.com/pub/frank-blechschmidt/34/bab/ab4',
+    languages: Language.where(:name => ['english']),
+    languages_users: LanguagesUser.create!([{language_id: Language.where(:name => ['english']).first.id, skill: '4'}]),
+    programming_languages: ProgrammingLanguage.where(:name => ['Java']),
+    programming_languages_users: ProgrammingLanguagesUser.create!([{programming_language_id: ProgrammingLanguage.where(:name => ['Java']).first.id, skill: '4'}]),
+    employment_status_id: 2
+)
+
+NewsletterOrder.delete_all
+NewsletterOrder.create!([{
+  student: User.find_by_firstname("Pascal").manifestation,
+  search_params: {},
 }])
 
 # Staff
@@ -201,9 +207,9 @@ career = JobOffer.create!(
   category_id: 1,
   graduation_id: 3,
   employer: hpi,
-  status: JobStatus.where(:name => "active").first,
+  status: JobStatus.closed,
   start_date: Date.current+2, 
-  release_date: Date.current-2,
+  release_date: Date.current-14,
   time_effort: 9,
   compensation: 13.50,
   languages: Language.where(:name => 'german'),
@@ -348,7 +354,7 @@ hana = JobOffer.create!(
   state_id: 1,
   category_id: 1,
   graduation_id: 3,
-  employer: hpi,
+  employer: sap,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+100, 
   release_date: Date.current-9,
@@ -367,6 +373,62 @@ Contact.create!(
   phone: "01000000"
 )
 
+# Employer Ratings
+
+hpi_rating_genome = Rating.create!(
+  student: student_pascal,
+  employer: hpi,
+  job_offer: genome,
+  score_overall: 5,
+  headline: "Deep insights in personalised medicine",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet molestie libero, vitae egestas sem pellentesque commodo. Sed eget dui leo. Nunc dui orci, auctor vel elit at, convallis laoreet mauris. Praesent scelerisque nibh sem, nec rutrum tortor fringilla sit amet. Nulla quis nisl at lectus dapibus convallis. Aenean iaculis purus in risus commodo, eu consequat neque dignissim. Ut pharetra sem ac varius molestie. Morbi congue vehicula est, eu pretium elit euismod id. Vestibulum sagittis velit vitae nulla fermentum dignissim. Maecenas dictum nunc non quam pretium egestas. Duis pulvinar augue in urna sollicitudin interdum."
+)
+
+hpi_rating_hana = Rating.create!(
+  student: student_frank,
+  employer: hpi,
+  job_offer: genome,
+  score_overall: 4,
+  headline: "Now a HANA expert",
+  description: "HANA rules !!!"
+)
+
+# job for Design Thinking students 
+
+dt_job = JobOffer.create!(
+  title: "Design Thinker",
+  description: 'Unlimited creativity ...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  student_group_id: Student.group_id('dschool')
+)
+
+# job for HPI students that completed the Design Thinking track
+
+hpi_dt_job = JobOffer.create!(
+  title: "Creative IT student",
+  description: '...',
+  state_id: 1,
+  category_id: 1,
+  graduation_id: 3,
+  employer: hpi,
+  status: JobStatus.where(:name => "active").first,
+  start_date: Date.current+100, 
+  release_date: Date.current-9,
+  time_effort: 38,
+  compensation: 20.00,
+  languages: Language.where(:name => 'english'),
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
+  student_group_id: Student.group_id('both')
+)
 
 # FAQs
 

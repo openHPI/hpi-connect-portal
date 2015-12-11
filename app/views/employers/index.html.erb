@@ -6,8 +6,8 @@
   </span>
 </div>
 
-<div class="wrapper-12 teaser">
-  <div class="col-md-12 list-container">
+<div class="wrapper-8 teaser">
+  <div class="col-md-8 list-container">
     <ul class="list-group list">
       <div class="row">
         <div class="col-sm-12">
@@ -16,8 +16,37 @@
       </div>
     </ul>
   </div>
-
   <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
 </div>
 
+<div class="wrapper-4 teaser sidebar"> 
+  
+    <div class="col-md-4">
+    <h1><%= t('employers.partner_employers') %></h1>
+         
+    <div id="employers_carousel" class="slide carousel">
+    	 <div class="carousel-inner">      
+          <% @premium_employers.each_slice(2).to_a().each do |slice| %>    
+            <div class="item">
+              <div class='inner-item'>
+                <% slice.each do |premium_employer| %>
+                  <%= link_to premium_employer do %>
+                    <%= image_tag premium_employer.avatar.url, { height: 100 , class: "img" } %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            <% end %>
+    	</div>
+      
+    	<!-- Controls -->
+    	<a class="left carousel-control" href="#employers_carousel" role="button" data-slide="prev"><</a>
+      <a class="right carousel-control" href="#employers_carousel" role="button" data-slide="next">></a>      
+    </div>        
+</div>
 
+<div class="col-md-4">
+  <%= render "shared/contact" %>
+</div>
+  
+</div>

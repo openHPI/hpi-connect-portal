@@ -16,6 +16,7 @@ class JobOffersController < ApplicationController
   has_scope :filter_category, only: [:index, :archive], as: :category
   has_scope :filter_graduation, only: [:index, :archive], as: :graduation
   has_scope :filter_state, only: [:index, :archive], as: :state
+  has_scope :filter_student_group, only: [:index, :archive], as: :student_group
   has_scope :filter_start_date, only: [:index, :archive], as: :start_date
   has_scope :filter_end_date, only: [:index, :archive], as: :end_date
   has_scope :filter_time_effort, only: [:index, :archive], as: :time_effort
@@ -32,7 +33,11 @@ class JobOffersController < ApplicationController
       authorize! :create, NewsletterOrder
       # to fill current_scopes
       apply_scopes(JobOffer.active)
-      redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
+      if Rails.env.production?
+        redirect_to URI.decode(new_newsletter_order_path({newsletter_params: current_scopes}))
+      else
+        redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
+      end
     end
     job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
@@ -89,14 +94,9 @@ class JobOffersController < ApplicationController
   end
 
   def request_prolong
-    if @job_offer.immediately_prolongable
-      @job_offer.prolong
-      message = I18n.t('job_offers.messages.successfully_prolonged')
-    else
-      @job_offer.update_column :prolong_requested, true
-      message = I18n.t('job_offers.messages.successfully_prolong_requested')
-      JobOffersMailer.prolong_requested_email(@job_offer).deliver
-    end
+    @job_offer.update_column :prolong_requested, true
+    message = I18n.t('job_offers.messages.successfully_prolong_requested')
+    JobOffersMailer.prolong_requested_email(@job_offer).deliver
     respond_and_redirect_to @job_offer, message
   end
 
@@ -160,6 +160,12 @@ class JobOffersController < ApplicationController
     @job_offer.fire student
     respond_and_redirect_to @job_offer, student.full_name + " was successfully removed from this job offer."
   end
+  
+  def export
+    respond_to do |format|
+        format.csv { send_data JobOffer.export_active_jobs, filename: 'job_list.csv'  }
+    end
+  end
 
   private
     def set_job_offer
@@ -181,7 +187,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(:description, :title, :offer_as_pdf, :employer_id, :state_id, :category_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []}, contact_attributes: [:name, :street, :zip_city, :email, :phone])
+      parameters = params.require(:job_offer).permit(:description, :title, :offer_as_pdf, :employer_id, :state_id, :category_id, :student_group_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []}, contact_attributes: [:name, :street, :zip_city, :email, :phone])
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0

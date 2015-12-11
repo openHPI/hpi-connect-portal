@@ -33,6 +33,7 @@ FactoryGirl.define do
     time_effort       9
     state_id          0
     association       :status, factory: :job_status
+    student_group_id  {Student::GROUPS.index("hpi")}
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryGirl.create(:employer)

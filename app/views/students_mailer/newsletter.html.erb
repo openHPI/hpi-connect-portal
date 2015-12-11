@@ -5,7 +5,7 @@ das Connect Portal hat <%= @job_offers.count %> neue Stellenangebote, die Ihren 
     <% @job_offers.each do |job_offer| %>
       <li>
         <h3><%= link_to(job_offer.title, url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false)) %> | <%= job_offer.employer.name %></h3>
-        <%= truncate(job_offer.description, length:200, seperator: " ") %>
+        <%= truncate( strip_tags(job_offer.description), length:200, seperator: " ") %>
       </li>
     <% end %>
 </ul>
@@ -18,7 +18,7 @@ Freundliche Grüße<br>
 <br>
 HPI Connect<br>
 Claudia Koch - Fon (49) 0331 5509 291<br>
-Nadja Antoine  - Fon (49) 0331 5509 107<br>
+Sandra Willoh  - Fon (49) 0331 5509 107<br>
 <br>
 connect@hpi.uni-potsdam.de<br>
 Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam<br>

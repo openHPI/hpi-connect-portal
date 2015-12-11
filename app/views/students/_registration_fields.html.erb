@@ -5,6 +5,18 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
+              <%= label_field form, :group, t("activerecord.attributes.student.group") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional student_group">
+                <%= form.select :group_id, Student::GROUPS.each_with_index.collect { |group, index| [t("activerecord.attributes.student.groups." + group), index] }, {}, {id: 'group_id', class:'select optional form-control'} %>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
               <%= label_field user_form, :firstname, t("activerecord.attributes.user.first_name") %>
             </div>
             <div class="col-sm-9">

@@ -1,0 +1,4 @@
+en:
+  staff:
+    messages:
+      wrong_token: "Wrong Link: Please check once more for correctness"

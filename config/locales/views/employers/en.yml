@@ -2,6 +2,7 @@ en:
     employers:
         employer: "Employer"
         employers: "Employers"
+        partner_employers: "Partners"
         employer_overview: "Listing of employers"
         editing_employer: "Edit Employer"
         new_employer: "New Employer"
@@ -14,6 +15,7 @@ en:
         closed_job_offers: "Former Job offers"
         inactive: "Deactivated"
         packages: "Packages"
+        prices: "Please send an e-mail to connect@hpi.de to receive information about prices of our services and packages"
         with_costs: "with costs"
         contact: "Contact"
         package_descriptions:
@@ -34,6 +36,8 @@ en:
             unsuccessfully_activated: "Error during activation. Please try again later."
             successfully_deactivated: "Profile successfully deactivated."
             unsuccessfully_deactivated: "Error during deactivation. Please try again later."
+            invalid_colleague_email: "The given email address was not correct. Email could not be sent."
+            colleague_successfully_invited: "Your colleague has been informed to join your company."
         home:
             edit_account_settings_html: "Edit my %{account_settings}"
             account_settings: "account settings"

@@ -10,3 +10,5 @@ en:
       subject: 'Confirmation for your booking'
     confirm_booking:
       subject: 'Your packet was activated'
+    invite_colleague:
+          subject: "Invitation to join HPI Connect Jobportal"

@@ -1,0 +1,46 @@
+Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,
+
+mit Ihrem Status als Alumna/us des HPI steht Ihnen ein Nutzeraccount im Karriere- und Alumniportal <%= link_to 'HPI Connect', root_url %> zur Verfügung. 
+
+Sie haben sich bisher noch nicht registriert oder Ihren Alumnus-Status noch nicht zu Ihrem Account hinzugefügt. 
+
+Neben speziellen Angeboten für Alumni können Sie über die Plattform Jobs finden und einfach mit Ihren ehemaligen Kommilitonen und dem HPI in Kontakt bleiben. 
+
+Mit Aktivierung Ihres Accounts erhalten Sie Ihre lebenslange E-Mail-Adresse vom HPI <%= @alumni.alumni_email %>@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.
+
+Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet.
+
+Hinweis:
+Falls Sie bereits auf HPI Connect registriert sind, geben Sie für Ihr Login als Alumna/Alumnus bitte eine private E-Mail-Adresse (nicht Ihre HPI-E-Mail-Adresse) ein. Die Daten Ihres bisherigen Nutzerprofils bleiben im Alumni-Profil erhalten.
+
+Wenn Sie bisher noch nicht auf HPI Connect registriert waren, geben Sie bei Anmeldung bitte ebenfalls eine private E-Mail-Adresse ein.
+
+Ihre Daten im Profil:
+Nach Aktivierung Ihres Accounts können Sie zum jeweiligen Zeitpunkt wählen, für wen Ihre Daten sichtbar sein sollen: Sie können diese Ihren Kommilitonen oder auch interessierten Unternehmen veröffentlichen. Sie können diese auch gänzlich auf nicht sichtbar schalten.
+
+Hier geht‘s zur Registrierung:
+
+<%= link_to 'HPI-Alumni-Mail-Adresse freischalten!', alumni_email_url(token: @alumni.token) %>
+
+Viele Grüße und bis bald,
+
+Ihr Alumni-Office bei HPI Connect
+
+Sandra Willoh
+Management Alumni &amp; Programs
+Team HPI Connect
+
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH
+Prof.-Dr.-Helmert-Str. 2­–3
+D-14482 Potsdam
+Fon +49 331 5509-107
+Fax +49 331 5509-322
+sandra.willoh@hpi.de
+
+www.hpi.de
+
+Amtsgericht Potsdam, HRB 12184
+Geschäftsführung: Prof. Dr. Christoph Meinel
+
+
+Design IT. Create Knowledge.

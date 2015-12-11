@@ -2,6 +2,7 @@ de:
     employers:
         employer: "Arbeitgeber"
         employers: "Arbeitgeber"
+        partner_employers: "Partnerunternehmen"
         employer_overview: "Arbeitgeberübersicht"
         editing_employer: "Arbeitgeber bearbeiten"
         new_employer: "Neuer Arbeitgeber"
@@ -14,6 +15,7 @@ de:
         closed_job_offers: "Ehemalige Stellenangebote"
         inactive: "Deaktiviert"
         packages: "Pakete"
+        prices: "Die Preise für alle Leistungen und Pakete können Sie bei connect@hpi.de erfragen."
         with_costs: "kostenpflichtig"
         contact: "Ansprechpartner"
         package_descriptions:
@@ -34,6 +36,8 @@ de:
             unsuccessfully_activated: "Fehler während der Aktivierung. Bitte versuchen Sie es später erneut."
             successfully_deactivated: "Das Profil wurde erfolgreich deaktiviert."
             unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."
+            invalid_colleague_email: "Die angegebene Email Adresse war fehlerhaft. Es konnte keine Email gesendet werden."
+            colleague_successfully_invited: "Ihr Kollege wurde per Email eingeladen Ihrem Unternehmen beizutreten."
         home:
             edit_account_settings_html: "Mein %{account_settings} bearbeiten"
             account_settings: "Kontaktprofil"
@@ -63,3 +67,9 @@ de:
                     exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
             advise: "Gerne beraten wir Sie zu unseren Angeboten."
             contact_html: "Kontaktieren Sie uns jederzeit über %{email}"
+        invitation_text: >
+                          Hallo,
+
+                          ich möchte Sie hiermit einladen meinem Unternehmen bei HPI Connect beizutreten.
+
+                          Viele Grüße

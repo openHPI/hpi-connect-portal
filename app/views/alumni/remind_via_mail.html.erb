@@ -8,11 +8,21 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.alumni.email_file") %>
+              Alumni aus EmailFile erinnern
             </div>
             <div class="col-sm-9">
               <div class="input select optional email_file">
                 <%= file_field_tag 'email_file' %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+                Alle Alumni erinnern
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional email_file">
+                <%= link_to "Alle Alumni jetzt erinnern", remind_all_alumni_index_path, class: "btn", id:"remind-all-button" %>
               </div>
             </div>
           </div>

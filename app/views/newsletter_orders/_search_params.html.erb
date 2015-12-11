@@ -9,6 +9,18 @@
         </div>
       </li>
   <% end %>
+  <% unless @newsletter_params["student_group"].nil? %>
+    <li>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= t("job_offers.jobs_for") %>
+        </div>
+        <div class="col-sm-6">
+          <%= t("activerecord.attributes.student.groups." + Student::GROUPS[@newsletter_params["student_group"].to_i]) %>
+        </div>
+      </div>
+    </li>
+  <% end %>
   <% unless @newsletter_params["state"].nil? %>
       <li>
         <div class="row">
