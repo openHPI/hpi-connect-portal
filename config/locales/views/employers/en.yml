@@ -49,7 +49,7 @@ en:
                     open_positions: "Announce your open positions (4 weeks)"
                     present_profile_html: "Present Your %{company_profile} (1 year)"
                     company_profile: "Company Profile"
-                    single_graduate_job: "%{book} single graduate job"
+                    single_graduate_job: "%{book} single graduate job (4 weeks)"
             booking:
                 basis:
                     title_html: "%{book} a Basis Packet"
