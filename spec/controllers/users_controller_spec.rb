@@ -9,7 +9,7 @@ describe UsersController do
    @user = FactoryGirl.create(:user)
    login @user
   end
-  
+
    describe "GET edit" do
     it "assigns the requested user as @user" do
       get :edit, {id: @user.to_param}, valid_session
@@ -92,7 +92,7 @@ describe UsersController do
     before :each do
       @user = FactoryGirl.create :user
       @user.update_attributes(email: "user1@example.com")
-    end    
+    end
 
     it "posts forgot_password" do
       ActionMailer::Base.deliveries = []
@@ -106,7 +106,7 @@ describe UsersController do
       # sends an email with the new password to the user
       # because travis is so slow we have to assume that there are more than 1 email
       password_mail_index = nil
-      ActionMailer::Base.deliveries.each_with_index { |mail, index| 
+      ActionMailer::Base.deliveries.each_with_index { |mail, index|
           password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
         }
       password_mail_index.should_not eq(nil)

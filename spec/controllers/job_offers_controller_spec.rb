@@ -492,10 +492,10 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)   
+        assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         #assert_equal(flash[:success], I18n.t('employers.messages.successfully_created.'))
         #response.should render_template("new")
-             
+
       end
     end
   end

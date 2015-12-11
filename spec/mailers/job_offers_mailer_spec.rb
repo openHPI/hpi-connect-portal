@@ -3,7 +3,7 @@ require "spec_helper"
 describe JobOffersMailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
-  
+
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true

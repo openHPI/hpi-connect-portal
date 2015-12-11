@@ -74,7 +74,7 @@ describe Student do
       student.reload.employment_status.should eq("employedseeking")
     end
 
-    it "does not update if value is nil" do 
+    it "does not update if value is nil" do
       student = FactoryGirl.create(:student, birthday: Date.new(1991,2,24), linkedin: "testlink")
       allow(linkedin_client).to receive(:profile).and_return({})
       student.update_from_linkedin(linkedin_client)
@@ -97,8 +97,8 @@ describe Student do
     it "updates programming languages" do
       FactoryGirl.create(:programming_language, name: "C++")
       FactoryGirl.create(:programming_language, name: "C")
-      allow(linkedin_client).to receive(:profile).and_return({"skills" => {"all" => [{"id"=> 3, "skill" => {"name" => "C++"}}, 
-                                                                                     {"id"=> 4, "skill" => {"name" => "C"}}, 
+      allow(linkedin_client).to receive(:profile).and_return({"skills" => {"all" => [{"id"=> 3, "skill" => {"name" => "C++"}},
+                                                                                     {"id"=> 4, "skill" => {"name" => "C"}},
                                                                                       {"id"=> 30, "skill" => {"name" => "Rotkohl"}}
                                                                                       ]}})
       student.update_from_linkedin(linkedin_client)
@@ -110,12 +110,12 @@ describe Student do
 
     it "updates minimum possible CV job" do
       allow(linkedin_client).to receive(:profile).and_return(
-        {"positions" => 
-          {"all" => 
-            [{"summary" => "", 
-            "is_current" => "true", 
-            "company" => {"name" => "HPI"}, 
-            "title" => "junior researcher", 
+        {"positions" =>
+          {"all" =>
+            [{"summary" => "",
+            "is_current" => "true",
+            "company" => {"name" => "HPI"},
+            "title" => "junior researcher",
             "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
             "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
             }]

@@ -83,7 +83,7 @@ describe "the job offer flow" do
     assert job_offer.active?
 
     # staff members get notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == employer.staff_members.length    
+    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
     emails = ActionMailer::Base.deliveries
     # each staff member gets notified
     employer.staff_members.each { |each_staff|
@@ -109,7 +109,7 @@ describe "the job offer flow" do
     emails = ActionMailer::Base.deliveries
     employer.staff_members.each { |each_staff|
     assert_equal(emails.map { |mail| mail.to}.find(each_staff.email)!=nil, true)
-    }   
+    }
      # each email has the desired content
     emails.each { |email|
         email.should have_content message
@@ -156,7 +156,7 @@ describe "the job offer flow" do
         attachment.should be_a_kind_of(Mail::Part)
         attachment.content_type.should be_start_with('application/pdf;')
         attachment.filename.should == 'test_cv.pdf'
-    }    
+    }
     ActionMailer::Base.deliveries = []
 
     assert Application.where(job_offer: job_offer).load.count == 2
@@ -192,7 +192,7 @@ describe "the job offer flow" do
 
     # responsible user tries to delete the job offer
     should_not have_link I18n.t("links.destroy")
-   
+
     job_offer.update(status: JobStatus.closed)
     job_offer = job_offer.reload
     assert job_offer.closed?

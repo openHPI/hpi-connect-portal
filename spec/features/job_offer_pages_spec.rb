@@ -45,7 +45,7 @@ describe "Job Offer pages" do
             it { should_not have_button('Apply') }
             it { should_not have_selector('h4', text: 'Applications') }
             it { should have_button(I18n.t("applications.delete")) }
-            
+
             it "should show a already applied panel when no success flash is there" do
               should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
             end
@@ -348,7 +348,7 @@ describe "Job Offer pages" do
       page.should have_content @job_offer_with_abitur.title
     end
 
-    it "does not display job_offer with higher graduation" do 
+    it "does not display job_offer with higher graduation" do
       find('#graduation').find(:xpath, 'option[2]').select_option
       find('#find_jobs_button').click
       page.should have_content @job_offer_with_abitur.title

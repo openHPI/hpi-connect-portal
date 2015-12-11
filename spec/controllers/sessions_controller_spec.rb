@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe SessionsController do
 
-  before :each do 
+  before :each do
     @user = FactoryGirl.create :user, password: 'password', password_confirmation: 'password'
   end
-  
+
   describe "POST create" do
     it "logs in user with correct email and password" do
       post 'create', {session: {email: @user.email, password: 'password'}}

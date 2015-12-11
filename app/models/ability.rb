@@ -35,7 +35,7 @@ class Ability
       can :create, Application
       can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
-      end      
+      end
       can :matching, JobOffer
     end
   end

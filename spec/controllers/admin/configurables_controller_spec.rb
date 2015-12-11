@@ -4,7 +4,7 @@ describe Admin::ConfigurablesController do
   let(:admin) { FactoryGirl.create(:user, :admin) }
   render_views
 
-  describe "validation" do 
+  describe "validation" do
 
     before(:each) do
       login admin

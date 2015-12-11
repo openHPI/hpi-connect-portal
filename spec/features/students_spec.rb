@@ -42,7 +42,7 @@ describe "the students page" do
   describe "as a student" do
 
     it "is available for students" do
-      login FactoryGirl.create(:student).user 
+      login FactoryGirl.create(:student).user
       visit students_path
       current_path.should == students_path
     end
@@ -194,11 +194,11 @@ describe "the students profile page" do
       page.should have_css('input#open-id-field')
     end
 
-    it "should not show Dschool Status if I don't have one" do 
+    it "should not show Dschool Status if I don't have one" do
       page.should_not have_content("D-School Status")
     end
 
-    it "should show Dschool Status if there is one" do 
+    it "should show Dschool Status if there is one" do
       @student1.update(dschool_status_id: 1)
       visit student_path(@student1)
       page.should have_content("D-School Status")

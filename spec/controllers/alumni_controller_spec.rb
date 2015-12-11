@@ -17,7 +17,7 @@ describe AlumniController do
     end
   end
 
-  describe "GET index" do 
+  describe "GET index" do
 
     it "should be available for admins" do
       login FactoryGirl.create :user, :admin

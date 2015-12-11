@@ -29,10 +29,10 @@ describe Contact do
       @contact.zip_city = nil
       @contact.email = nil
       @contact.phone = "0"
-      assert_equal(false, @contact.is_empty?)      
+      assert_equal(false, @contact.is_empty?)
       @contact.phone = nil
       assert_equal(true, @contact.is_empty?)
-    end  
+    end
 
     it 'validates merged' do
       @contact.name = "Rainer Zufall"
@@ -41,6 +41,6 @@ describe Contact do
       @contact.email = nil
       @contact.phone = "0815"
       assert_equal("Rainer Zufall\nPotsdam\n0815", @contact.merged)
-    end   
+    end
   end
 end

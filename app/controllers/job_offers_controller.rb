@@ -4,7 +4,7 @@ class JobOffersController < ApplicationController
   skip_before_filter :signed_in_user, only: [:index]
 
   load_and_authorize_resource except: [:index, :edit]
-  skip_load_resource only: [:create] 
+  skip_load_resource only: [:create]
 
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]

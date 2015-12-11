@@ -35,7 +35,7 @@ describe "the staff page" do
       #should have_button('Demote')
     end
   end
-  
+
 
   describe "as a member of staff" do
 

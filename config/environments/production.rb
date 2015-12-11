@@ -80,7 +80,7 @@ HpiHiwiPortal::Application.configure do
 
   # Enable strict date parsing using the timeliness gem
   config.use_plugin_parser = true
-  
+
   config.action_mailer.default_url_options = { host: 'https://www.hpi.uni-potsdam.de' }
 
   config.action_mailer.delivery_method = :sendmail

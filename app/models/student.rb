@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
       :request_token_path =>'/uas/oauth/requestToken?scope=r_basicprofile',
       :access_token_path => '/uas/oauth/accessToken' }
 
-  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']    
+  VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
@@ -68,7 +68,7 @@ class Student < ActiveRecord::Base
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
   scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
-  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')} 
+  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')}
   scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
@@ -116,16 +116,16 @@ class Student < ActiveRecord::Base
   end
 
   def update_from_linkedin(linkedin_client)
-    userdata = linkedin_client.profile(fields: ["public_profile_url", "languages", 
+    userdata = linkedin_client.profile(fields: ["public_profile_url", "languages",
     "date-of-birth", "first-name", "last-name", "email-address", "skills", "three-current-positions", "positions", "honors-awards", "volunteer", "educations"])
     if !userdata["three-current-positions"].nil? && employment_status == "jobseeking"
       update!(employment_status_id: EMPLOYMENT_STATUSES.index("employedseeking"))
     end
     update_attributes!(
-      { birthday: userdata["date-of-birth"], 
+      { birthday: userdata["date-of-birth"],
         linkedin: userdata["public_profile_url"],
         user_attributes: {
-          firstname: userdata["first-name"], 
+          firstname: userdata["first-name"],
           lastname: userdata["last-name"],
           email: userdata["email-address"]
         }.reject{|key, value| value.blank? || value.nil?}
@@ -138,31 +138,31 @@ class Student < ActiveRecord::Base
 
   def update_programming_language(skills)
     programming_language_names = (skills.reject{|skill_wrapper| ProgrammingLanguage.where(name: skill_wrapper["skill"]["name"]).empty? }).map{|programming_language_wrap| programming_language_wrap["skill"]["name"]}
-    programming_language_names.each do |programming_language_name| 
+    programming_language_names.each do |programming_language_name|
       unless ProgrammingLanguagesUser.does_skill_exist_for_programming_language_and_student(ProgrammingLanguage.find_by_name(programming_language_name), self)
-        ProgrammingLanguagesUser.create(student_id: self.id, programming_language_id: ProgrammingLanguage.find_by_name(programming_language_name).id, skill:3) 
+        ProgrammingLanguagesUser.create(student_id: self.id, programming_language_id: ProgrammingLanguage.find_by_name(programming_language_name).id, skill:3)
       end
     end
   end
 
-  def update_cv_jobs(jobs)   
+  def update_cv_jobs(jobs)
     jobs.each do |job|
-      description = !job["summary"].nil? ? job["summary"] : " " 
+      description = !job["summary"].nil? ? job["summary"] : " "
       start_date = !job["start_date"].nil? ? (!job["start_date"]["month"].nil? ? Date.new(job["start_date"]["year"].to_i, job["start_date"]["month"].to_i) : Date.new(job["start_date"]["year"].to_i)) : nil
       end_date = !job["end_date"].nil? ? (!job["end_date"]["month"].nil? ? Date.new(job["end_date"]["year"].to_i, job["end_date"]["month"].to_i) : Date.new(job["end_date"]["year"].to_i)) : nil
       current = (job["is_current"].to_s == 'true')
       update_attributes!(
         cv_jobs: self.cv_jobs.push(
           CvJob.new(
-            student: self, 
-            employer: job["company"]["name"], 
-            position: job["title"], 
-            description: description, 
-            start_date: start_date, 
+            student: self,
+            employer: job["company"]["name"],
+            position: job["title"],
+            description: description,
+            start_date: start_date,
             end_date: end_date,
             current: current)
         )
-      ) 
+      )
     end
   end
 
@@ -194,19 +194,19 @@ class Student < ActiveRecord::Base
       update_attributes!(
         cv_educations: self.cv_educations.push(
           CvEducation.new(
-            student: self, 
-            degree: degree,            
-            field: field, 
+            student: self,
+            degree: degree,
+            field: field,
             institution: education["school-name"],
             start_date: start_date,
             end_date: end_date,
             current: current))
         )
-      
+
     end
   end
 
-  def self.linkedin_request_token_for_callback(url) 
+  def self.linkedin_request_token_for_callback(url)
     self.create_linkedin_client.request_token(oauth_callback: url)
   end
 

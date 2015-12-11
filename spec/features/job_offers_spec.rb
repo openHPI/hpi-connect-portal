@@ -47,7 +47,7 @@ describe "the job-offers page" do
 end
 
 describe "a job offer entry" do
-  
+
   before(:all) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :active)
@@ -119,7 +119,7 @@ describe "job_offers_history" do
     first("ul.list-group li").should have_content "Closed Job Touch Floor"
   end
 
-  describe "Show Archive Job Offers" do 
+  describe "Show Archive Job Offers" do
     before :each do
       staff1 = FactoryGirl.create(:staff)
       staff2 = FactoryGirl.create(:staff)
@@ -129,19 +129,19 @@ describe "job_offers_history" do
       visit archive_job_offers_path
     end
 
-    it "should be possible to show own archive jobs" do 
-      page.should have_link @closed_job_offer_for_staff_1.title  
+    it "should be possible to show own archive jobs" do
+      page.should have_link @closed_job_offer_for_staff_1.title
     end
 
-    it "should not be possible to show other archive jobs" do 
-      page.should_not have_link @closed_job_offer_for_staff_2.title 
+    it "should not be possible to show other archive jobs" do
+      page.should_not have_link @closed_job_offer_for_staff_2.title
     end
 
-    it "should be possible to see all jobs for the admin" do 
+    it "should be possible to see all jobs for the admin" do
       login FactoryGirl.create(:user, :admin)
       visit archive_job_offers_path
-      page.should have_link @closed_job_offer_for_staff_1.title  
-      page.should have_link @closed_job_offer_for_staff_2.title 
+      page.should have_link @closed_job_offer_for_staff_1.title
+      page.should have_link @closed_job_offer_for_staff_2.title
     end
   end
 end
