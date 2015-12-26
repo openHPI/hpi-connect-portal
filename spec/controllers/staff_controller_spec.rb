@@ -42,7 +42,7 @@ describe StaffController do
       before(:each) do
         @staff = FactoryGirl.create(:staff)
       end
-      
+
       it "should delete the staff object" do
         expect { delete :destroy, {id: @staff.to_param}, valid_session }.to change(Staff, :count).by(-1)
       end

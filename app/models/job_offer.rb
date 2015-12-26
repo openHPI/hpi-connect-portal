@@ -2,24 +2,30 @@
 #
 # Table name: job_offers
 #
-#  id                  :integer          not null, primary key
-#  description         :text
-#  title               :string(255)
-#  created_at          :datetime
-#  updated_at          :datetime
-#  start_date          :date
-#  end_date            :date
-#  time_effort         :float
-#  compensation        :float
-#  employer_id         :integer
-#  status_id           :integer
-#  flexible_start_date :boolean          default(FALSE)
-#  category_id         :integer          default(0), not null
-#  state_id            :integer          default(3), not null
-#  graduation_id       :integer          default(2), not null
-#  prolong_requested   :boolean          default(FALSE)
-#  prolonged           :boolean          default(FALSE)
-#  prolonged_at        :datetime
+#  id                        :integer          not null, primary key
+#  description               :text
+#  title                     :string(255)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  start_date                :date
+#  end_date                  :date
+#  time_effort               :float
+#  compensation              :float
+#  employer_id               :integer
+#  status_id                 :integer
+#  flexible_start_date       :boolean          default(FALSE)
+#  category_id               :integer          default(0), not null
+#  state_id                  :integer          default(3), not null
+#  graduation_id             :integer          default(2), not null
+#  prolong_requested         :boolean          default(FALSE)
+#  prolonged                 :boolean          default(FALSE)
+#  prolonged_at              :datetime
+#  release_date              :date
+#  offer_as_pdf_file_name    :string(255)
+#  offer_as_pdf_content_type :string(255)
+#  offer_as_pdf_file_size    :integer
+#  offer_as_pdf_updated_at   :datetime
+#  student_group_id          :integer          default(0), not null
 #
 
 class JobOffer < ActiveRecord::Base
@@ -27,7 +33,7 @@ class JobOffer < ActiveRecord::Base
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']
   STATES = ['ABROAD', 'BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
-  
+
   has_attached_file :offer_as_pdf
 
   before_save :default_values
@@ -91,23 +97,23 @@ class JobOffer < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.export_active_jobs
     active_jobs = self.active
-    
+
     csv_string = ""
     header = "\"#{human_attribute_name(:title)}\";\"#{human_attribute_name(:employer)}\";\"#{human_attribute_name(:category)}\";\"#{human_attribute_name(:release_date)}\"\n"
-    
+
     csv_string << header
-    
+
     active_jobs.each do |job|
       row = "\"#{job.title}\";\"#{job.employer.name}\";\"#{job.category}\";\"#{job.release_date}\"\n"
       csv_string << row
     end
-    
-    return csv_string  
+
+    return csv_string
   end
-  
+
   def default_values
     self.status ||= JobStatus.pending
   end

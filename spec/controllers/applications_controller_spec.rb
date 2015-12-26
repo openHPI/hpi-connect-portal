@@ -23,12 +23,12 @@ describe ApplicationsController do
       end
 
       it "deletes application" do
-        
+
         expect{
           get :decline, {id: @application.id}
         }.to change(Application, :count).by(-1)
       end
-      
+
       it "redirects to job offer view if saving fails" do
         Application.any_instance.stub(:delete).and_return(false)
 

@@ -16,11 +16,11 @@ ActiveEnum.setup do |config|
 end
 
 # ActiveEnum.define do
-# 
+#
 #   enum(:enum_name) do
 #     value 1 => 'Name'
 #   end
-# 
+#
 # end
 
 ActiveEnum.define do

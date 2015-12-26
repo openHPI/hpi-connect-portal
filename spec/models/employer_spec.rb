@@ -20,6 +20,7 @@
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
 #  single_jobs_requested :integer          default(0), not null
+#  token                 :string(255)
 #
 
 require 'spec_helper'
@@ -75,18 +76,18 @@ describe Employer do
     end
 
   end
-  
-  describe "#average_rating" do 
+
+  describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do
         r1 = FactoryGirl.create(:rating, score_overall: 3, employer: @employer)
         r2 = FactoryGirl.create(:rating, score_overall: 4, employer: @employer)
-          
+
         expect(@employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
       end
     end
-    
-    context "employer not yet rated" do 
+
+    context "employer not yet rated" do
       it "returns nil" do
         expect(@employer.average_rating).to be_nil
       end
@@ -109,5 +110,5 @@ describe Employer do
       ordered_employers[4].name.should == "Zuckerberg"
     end
   end
-  
+
 end

@@ -17,12 +17,12 @@
 require 'spec_helper'
 
 describe CvJob do
-  
+
   describe "validations" do
     before(:each) do
       @student = FactoryGirl.create(:student)
     end
-    
+
     it "should not be valid with empty attributes" do
       assert !CvJob.new.valid?
     end

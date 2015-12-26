@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe StudentsController do
 
-  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } } 
+  let(:valid_attributes) { { "semester" => "3", "graduation_id" => Student::GRADUATIONS.index("bachelor"), "academic_program_id" => Student::ACADEMIC_PROGRAMS.index("master") } }
 
   before(:each) do
     login FactoryGirl.create(:student).user
@@ -289,44 +289,4 @@ describe StudentsController do
       @student.languages.first.should eq(@language_1)
     end
   end
-
-  describe "GET request_linkedin_import" do
-
-    before(:each) do
-      @student = FactoryGirl.create(:student)
-    end
-
-    it "redirects to linkedin as admin" do
-      login FactoryGirl.create(:user, :admin)
-      get :request_linkedin_import, {id: @student.id}
-      response.should redirect_to assigns(:request_token).authorize_url
-    end
-  
-    it "redirects to linkedin as student on own profile" do
-      login @student.user
-      get :request_linkedin_import, {id: @student.id}
-      response.should redirect_to assigns(:request_token).authorize_url
-    end
-
-    it "cannot import linkedin data from other students" do
-      login FactoryGirl.create(:student).user
-      get :request_linkedin_import, {id: @student.id}
-      response.should redirect_to root_path
-    end
-  end
-
-  describe "GET insert_imported_data" do
-
-    it "redirects to edit page when atoken is nil" do
-      student = FactoryGirl.create(:student)
-      login student.user
-      linkedin_client = Student.create_linkedin_client
-      allow(linkedin_client).to receive(:authorize_from_request).and_return([1,2])
-      allow(linkedin_client).to receive(:profile).and_return({})
-      Student.stub(:create_linkedin_client).and_return(linkedin_client)
-      get :insert_imported_data, {id: student.id}
-      response.should redirect_to edit_student_path(student)
-    end
-  end
-
 end

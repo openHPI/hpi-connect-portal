@@ -10,7 +10,7 @@ describe EmployersController do
       "staff_members_attributes"=>valid_staff_attributes } }
   let(:valid_staff_attributes) { {"0"=>{"user_attributes"=>{"firstname"=>"Bla", "lastname"=>"Keks", "email"=>"bla@keks.de", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}} }
   let(:false_attributes) { { name: '' } }
-  
+
   subject(:premium_package_id) { Employer::PACKAGES.index('premium') }
   subject(:free_package_id) { Employer::PACKAGES.index('free') }
 
@@ -65,7 +65,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights it should redirect to employers path" do
-      
+
       before(:each) do
         @employer = FactoryGirl.create(:employer)
       end
@@ -124,7 +124,7 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-      
+
       before(:each) do
         login FactoryGirl.create(:student).user
       end
@@ -138,13 +138,13 @@ describe EmployersController do
   end
 
   describe "PUT update" do
-    
+
     describe "with valid params" do
       before(:each) do
         @employer = FactoryGirl.create(:employer)
       end
-      
-      it "updates the requested employer" do  
+
+      it "updates the requested employer" do
         Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction" } )
         put :update, { id: @employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction" } }
       end
@@ -167,38 +167,38 @@ describe EmployersController do
           ActionMailer::Base.deliveries.count.should == old_count + 2
         end
       end
-      
-      context "downgrade package" do 
+
+      context "downgrade package" do
         before(:each) do
           @employer.booked_package_id = premium_package_id
           @employer.requested_package_id = premium_package_id
           @employer.save
-          @employer.reload  
+          @employer.reload
         end
-         
-        it "sends two emails to staff and admin if a new package was booked" do            
+
+        it "sends two emails to staff and admin if a new package was booked" do
           old_count = ActionMailer::Base.deliveries.count
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
           ActionMailer::Base.deliveries.count.should == old_count + 2
         end
-        
-        it "updates requested_package_id" do            
+
+        it "updates requested_package_id" do
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
           @employer.reload
           @employer.requested_package_id.should == free_package_id
         end
-        
-        it "does not update booked_package_id" do            
+
+        it "does not update booked_package_id" do
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
           @employer.reload
           @employer.booked_package_id.should == premium_package_id
-        end 
+        end
       end
-           
+
     end
 
     describe "with missing permission" do
-      
+
       before(:each) do
         login FactoryGirl.create(:student).user
       end
@@ -229,54 +229,54 @@ describe EmployersController do
         @employer.reload
         assert @employer.activated
       end
-      
+
       context "upgrade package" do
         before(:each) do
           @employer.booked_package_id = free_package_id
           @employer.requested_package_id = premium_package_id
           @employer.save
-          @employer.reload  
+          @employer.reload
         end
-        
+
         it "updates booked_package_id" do
           get :activate, ({ id: @employer.id })
-          @employer.reload  
+          @employer.reload
           @employer.booked_package_id.should == premium_package_id
         end
-        
+
         it "sends one email to staff to confirm new booked package" do
           old_count = ActionMailer::Base.deliveries.count
           get :activate, ({ id: @employer.id })
           ActionMailer::Base.deliveries.count.should == old_count + 1
-          
+
           last_delivery = ActionMailer::Base.deliveries.last
           last_delivery.body.raw_source.should include I18n.t("activerecord.attributes.employer.packages.premium")
         end
       end
-      
-      context "downgrade package" do 
+
+      context "downgrade package" do
         before(:each) do
           @employer.booked_package_id = premium_package_id
           @employer.requested_package_id = free_package_id
           @employer.save
-          @employer.reload  
+          @employer.reload
         end
-        
+
         it "updates booked_package_id" do
           get :activate, ({ id: @employer.id })
-          @employer.reload  
+          @employer.reload
           @employer.booked_package_id.should == free_package_id
         end
-        
+
         it "sends one email to staff to confirm new booked package" do
           old_count = ActionMailer::Base.deliveries.count
           get :activate, ({ id: @employer.id })
           ActionMailer::Base.deliveries.count.should == old_count + 1
-          
+
           last_delivery = ActionMailer::Base.deliveries.last
           last_delivery.body.raw_source.should include I18n.t("activerecord.attributes.employer.packages.free")
         end
-      end  
+      end
     end
 
     it "should not be accessible for staff members" do

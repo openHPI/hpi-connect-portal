@@ -20,6 +20,8 @@
 #  academic_program_id    :integer          default(0), not null
 #  graduation_id          :integer          default(0), not null
 #  visibility_id          :integer          default(0), not null
+#  dschool_status_id      :integer          default(0), not null
+#  group_id               :integer          default(0), not null
 #
 
 require 'spec_helper'
@@ -42,48 +44,6 @@ describe Student do
     it { should be_applied(@job_offer) }
     its(:applications) { should include(@application) }
     its(:job_offers) { should include(@job_offer) }
-  end
-
-  describe 'update_from_linkedin' do
-    let(:linkedin_client) {Student.create_linkedin_client}
-    let(:student) {FactoryGirl.create(:student)}
-
-    it "updates linkedin_url" do
-      allow(linkedin_client).to receive(:profile).and_return({"public_profile_url" => "http://test.de"})
-      student.update_from_linkedin(linkedin_client)
-      student.reload.linkedin.should eq("http://test.de")
-    end
-
-    it "updates name" do
-      allow(linkedin_client).to receive(:profile).and_return({"first-name" => "Bla", "last-name" => "Keks"})
-      student.update_from_linkedin(linkedin_client)
-      student.reload.full_name.should eq("Bla Keks")
-    end
-
-    it "updates minimum possible CV job" do
-      allow(linkedin_client).to receive(:profile).and_return(
-        {"positions" => 
-          {"all" => 
-            [{"summary" => "", 
-            "is_current" => "true", 
-            "company" => {"name" => "HPI"}, 
-            "title" => "junior researcher", 
-            "start_date" => {"year" => Date.today.year.to_s, "month" => Date.today.month.to_s},
-            "end_date" => {"year" => (Date.today.year+ 1).to_s, "month" => Date.today.month.to_s}
-            }]
-          }
-        })
-      student.update_from_linkedin(linkedin_client)
-      student.reload.cv_jobs[0].student.should eq(student)
-      student.reload.cv_jobs[0].employer.should eq("HPI")
-      student.reload.cv_jobs[0].position.should eq("junior researcher")
-      student.reload.cv_jobs[0].description.should eq("")
-      student.reload.cv_jobs[0].start_date.should eq(Date.new(DateTime.now.year, DateTime.now.month))
-      student.reload.cv_jobs[0].end_date.should eq(Date.new(Date.today.year+ 1, Date.today.month))
-      student.reload.cv_jobs[0].current.should eq(true)
-      student.reload.cv_jobs.length.should eq(1)
-    end
-
   end
 
   describe "Deliver Newsletter" do

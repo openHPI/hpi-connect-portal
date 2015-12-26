@@ -19,7 +19,7 @@ describe Alumni do
     before(:each) do
       @alumni = FactoryGirl.create :alumni
     end
-    
+
     it "should not be valid with empty attributes" do
       assert !Alumni.new.valid?
     end

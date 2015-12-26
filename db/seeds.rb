@@ -12,14 +12,14 @@ JobStatus.create!(name: 'closed')
 
 Language.delete_all
 Language.create!([
-	{ name: 'english'},  
+	{ name: 'english'},
 	{ name: 'german'},
 	{ name: 'french'},     # common languages in school
-	{ name: 'spanish'},    
-	{ name: 'italian'},    
-	{ name: 'portuguese'}, 
-	{ name: 'polish'},     
-	{ name: 'russian'},    
+	{ name: 'spanish'},
+	{ name: 'italian'},
+	{ name: 'portuguese'},
+	{ name: 'polish'},
+	{ name: 'russian'},
 	{ name: 'swedish'},    # languages of students who studied abroad
 	{ name: 'finnish'},
 	{ name: 'chinese'}
@@ -73,8 +73,8 @@ hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
-    email: "axel.kroschk@student.hpi.uni-potsdam.de", 
-    lastname: "Kroschk", 
+    email: "axel.kroschk@student.hpi.uni-potsdam.de",
+    lastname: "Kroschk",
     firstname: "Axel",
   ),
   employer: hpi
@@ -95,7 +95,7 @@ sap = Employer.create!(
 )
 Contact.create!(
   counterpart: sap,
-  name: "SAP Contact", 
+  name: "SAP Contact",
   street: "",
   zip_city: "Waldorf",
   email: "",
@@ -105,8 +105,8 @@ sap_staff = Staff.create!(
   user: User.new(
     password: 'password',
     password_confirmation: 'password',
-    email: "claudia.koch@hpi.uni-potsdam.de", 
-    lastname: "Koch", 
+    email: "claudia.koch@hpi.uni-potsdam.de",
+    lastname: "Koch",
     firstname: "Claudia"
   ),
   employer: sap
@@ -115,8 +115,8 @@ sap_staff = Staff.create!(
 # Admin Users
 
 User.create!([{
-  email: "alexander.ernst@student.hpi.uni-potsdam.de", 
-  lastname: "Ernst", 
+  email: "alexander.ernst@student.hpi.uni-potsdam.de",
+  lastname: "Ernst",
   firstname: "Alexander",
   password: "admin",
   password_confirmation: "admin",
@@ -127,12 +127,12 @@ User.create!([{
 # Students
 student_pascal = Student.create!(
             user: User.new(
-              email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-              lastname: "Reinhardt", 
+              email: "pascal.reinhardt@student.hpi.uni-potsdam.de",
+              lastname: "Reinhardt",
               firstname: "Pascal",
               password: 'password',
               password_confirmation: 'password',
-              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
+              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
               ),
             semester: 5,
             academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
@@ -141,8 +141,8 @@ student_pascal = Student.create!(
 
 student_frank = Student.create!(
     user: User.new(
-      email: 'frank.blechschmidt@example.com', 
-      firstname: 'Frank', 
+      email: 'frank.blechschmidt@example.com',
+      firstname: 'Frank',
       lastname: 'Blechschmidt',
       password: 'password',
       password_confirmation: 'password',
@@ -173,9 +173,9 @@ NewsletterOrder.create!([{
 
 # Staff
 Staff.create!([{
-  user: User.new( 
-    email: "johanna.appel@student.hpi.uni-potsdam.de", 
-    lastname: "Appel", 
+  user: User.new(
+    email: "johanna.appel@student.hpi.uni-potsdam.de",
+    lastname: "Appel",
     firstname: "Johanna",
     password: 'password',
     password_confirmation: 'password',
@@ -185,9 +185,9 @@ Staff.create!([{
 }])
 
 Staff.create!([{
-  user: User.new( 
-    email: "carsten.meyer@hpi.uni-potsdam.de", 
-    lastname: "Meyer", 
+  user: User.new(
+    email: "carsten.meyer@hpi.uni-potsdam.de",
+    lastname: "Meyer",
     firstname: "Carsten",
     password: 'password',
     password_confirmation: 'password',
@@ -208,7 +208,7 @@ career = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.closed,
-  start_date: Date.current+2, 
+  start_date: Date.current+2,
   release_date: Date.current-14,
   time_effort: 9,
   compensation: 13.50,
@@ -224,7 +224,7 @@ genome = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+15, 
+  start_date: Date.current+15,
   release_date: Date.current-4,
   time_effort: 38,
   compensation: 12.0,
@@ -234,7 +234,7 @@ genome = JobOffer.create!(
 
 Contact.create!(
   counterpart: genome,
-  name: "Genome Contact", 
+  name: "Genome Contact",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "genome@hpi.de",
@@ -249,7 +249,7 @@ hyrise = JobOffer.create!(
   graduation_id: 4,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+15, 
+  start_date: Date.current+15,
   release_date: Date.current-6,
   time_effort: 38,
   compensation: 12.0,
@@ -260,7 +260,7 @@ hyrise = JobOffer.create!(
 
 Contact.create!(
   counterpart: hyrise,
-  name: "Hyrise Contact", 
+  name: "Hyrise Contact",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "Hyrise@hpi.de",
@@ -277,7 +277,7 @@ tutor = JobOffer.create!(
   graduation_id: 1,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+3, 
+  start_date: Date.current+3,
   release_date: Date.current-8,
   time_effort: 5,
   compensation: 12.00,
@@ -287,7 +287,7 @@ tutor = JobOffer.create!(
 
 Contact.create!(
   counterpart: tutor,
-  name: "Tutor for OS", 
+  name: "Tutor for OS",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "tutor@hpi.de",
@@ -312,7 +312,7 @@ supporter = JobOffer.create!(
 
 Contact.create!(
   counterpart: supporter,
-  name: "Supporter", 
+  name: "Supporter",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "supporter@hpi.de",
@@ -327,7 +327,7 @@ openhpi = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   end_date: Date.current+300,
   release_date: Date.current-9,
   time_effort: 8,
@@ -339,7 +339,7 @@ openhpi = JobOffer.create!(
 
 Contact.create!(
   counterpart: openhpi,
-  name: "openHPI Contact", 
+  name: "openHPI Contact",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "contact@open.hpi.de",
@@ -356,7 +356,7 @@ hana = JobOffer.create!(
   graduation_id: 3,
   employer: sap,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,
@@ -366,7 +366,7 @@ hana = JobOffer.create!(
 
 Contact.create!(
   counterpart: hana,
-  name: "HANA contact", 
+  name: "HANA contact",
   street: "Prof. Dr. Helmert Straße 2-3",
   zip_city: "14482 Potsdam",
   email: "hana@hpi.de",
@@ -393,7 +393,7 @@ hpi_rating_hana = Rating.create!(
   description: "HANA rules !!!"
 )
 
-# job for Design Thinking students 
+# job for Design Thinking students
 
 dt_job = JobOffer.create!(
   title: "Design Thinker",
@@ -403,7 +403,7 @@ dt_job = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,
@@ -421,7 +421,7 @@ hpi_dt_job = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,
@@ -434,17 +434,17 @@ hpi_dt_job = JobOffer.create!(
 
 Faq.delete_all
 Faq.create!([{
-  question: "How do I make edits to my profile?", 
+  question: "How do I make edits to my profile?",
   answer: 'Log in to your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button.',
   locale: "en"
 }])
 Faq.create!([{
-  question: "How do I log off of HPI-HiWi-Portal?", 
+  question: "How do I log off of HPI-HiWi-Portal?",
   answer: 'To logout of your account hover over the Sign Out option in the upper right hand corner of the page.',
   locale: "en"
 }])
 Faq.create!([{
-  question: "How can I add a profile photo?", 
+  question: "How can I add a profile photo?",
   answer: 'Log into your account. Then hover over "My profile" at the top right of the page. Choose the Edit-Button. Search for Foto. Click Browse and select the photo you would like to use for your profile. Click Update Student.',
   locale: "en"
 }])
@@ -454,22 +454,22 @@ Faq.create!([{
   locale: "en"
 }])
 Faq.create!([{
-  question: "Wie kann ich mein Profile bearbeiten?", 
+  question: "Wie kann ich mein Profile bearbeiten?",
   answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button.',
   locale: "de"
 }])
 Faq.create!([{
-  question: "Wie kann ich mich am HPI-HiWi-Portal ausloggen?", 
+  question: "Wie kann ich mich am HPI-HiWi-Portal ausloggen?",
   answer: 'Bitte klicken Sie den "Ausloggen"-Button in der rechten oberen Bildschirmecke.',
   locale: "de"
 }])
 Faq.create!([{
-  question: "Wie kann ich mein Profil-Foto bearbeiten?", 
+  question: "Wie kann ich mein Profil-Foto bearbeiten?",
   answer: 'Melden Sie sich mit Ihrem Account an. Klicken Sie dann auf "Mein Profil" in der rechten oberen Ecke und wählen den "Bearbeiten"-Button Search for Foto. Wählen Sie nun das gewünschte Foto aus, und klicken abschließend auf "Aktualisieren".',
   locale: "de"
 }])
 Faq.create!([{
-  question: "Hat das HPI-HiWi-Portal eine Android-App?", 
+  question: "Hat das HPI-HiWi-Portal eine Android-App?",
   answer: 'Ja, die HPI-HiWi-Portal Android-App ermöglicht es Ihnen, über alle für Sie passenden Stellenangebote am HPI auf dem Laufenden zu bleiben.',
   locale: "de"
 }])

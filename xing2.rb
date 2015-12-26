@@ -16,7 +16,7 @@ def get_language_name(n)
     when "fr"
       return "french"
    when "zh"
-      return "chinese"  
+      return "chinese"
     when "pt"
       return "portuguese"
     when "it"
@@ -122,7 +122,7 @@ userdata = {
 }
 
 
- 
+
 if(REQUEST)
   puts "Please open the following URL in your browser:"
   puts " https://dev.xing.com/applications"
@@ -160,15 +160,15 @@ if(REQUEST)
 end
 
  usefull = {
-    "birthday" => nil, 
-    "employment" => nil, 
+    "birthday" => nil,
+    "employment" => nil,
     "user_status" => nil,
-    "languages" => [], 
-    "interests" => nil, 
+    "languages" => [],
+    "interests" => nil,
     "web_profiles"=> nil,
       "homepage" => nil,
       "github" => nil,
-      "facebook" => nil,        
+      "facebook" => nil,
     "xing" => nil,
     "praktika" => "",
     "jobs" => nil,
@@ -181,12 +181,12 @@ end
 #Converting - Höchstwahrscheinlich aktualisieren!
 usefull["birthday"] = "#{userdata[:birth_date][:year]}-#{userdata[:birth_date][:month]}-#{userdata[:birth_date][:day]}"
 usefull["employment"] = userdata[:employment_status]
-#usefull["user_status"] = (userdata[:employment]=="STUDENT") ? UserStatus.where(:name => 'jobseeking').first : (userdata[:employment_status]=="RETIRED" ? UserStatus.where(:name => 'no interest').first : UserStatus.where(:name => 'employed').first)  
+#usefull["user_status"] = (userdata[:employment]=="STUDENT") ? UserStatus.where(:name => 'jobseeking').first : (userdata[:employment_status]=="RETIRED" ? UserStatus.where(:name => 'no interest').first : UserStatus.where(:name => 'employed').first)
 
 #userdata[:languages].each do |x| usefull["languages"] << [get_language_name(x["language"]["name"].downcase), get_skill_id(x["id"])] end
 
-puts 
-userdata[:languages].each do|a, b| usefull["languages"] << [get_language_name(a.to_s), get_skill(b)] end 
+puts
+userdata[:languages].each do|a, b| usefull["languages"] << [get_language_name(a.to_s), get_skill(b)] end
 
 
 usefull["homepage"] = userdata[:web_profiles][:homepage] ? userdata[:web_profiles][:homepage][0] : nil
@@ -195,24 +195,24 @@ usefull["facebook"] = userdata[:web_profiles][:facebook] ? userdata[:web_profile
 usefull["xing"]=userdata[:permalink]
 
 #primary job
-usefull["jobs"]= "By #{userdata[:professional_experience][:primary_company][:name]} as #{userdata[:professional_experience][:primary_company][:title]}".gsub(/\t/,' ') 
+usefull["jobs"]= "By #{userdata[:professional_experience][:primary_company][:name]} as #{userdata[:professional_experience][:primary_company][:title]}".gsub(/\t/,' ')
 usefull["jobs"] += (userdata[:professional_experience][:primary_company][:description] ? " (#{userdata[:professional_experience][:primary_company][:description]})": "").gsub(/\t/,' ')
 #other jobs
-userdata[:professional_experience][:non_primary_companies].each do |a| 
+userdata[:professional_experience][:non_primary_companies].each do |a|
   if(a[:career_level] != "STUDENT_INTERN")
   usefull["jobs"] += ", by #{a[:name]} as #{a[:title]}"
   usefull["jobs"] += (a[:description] ? " (#{a[:description]})": "")
-  usefull["jobs"] += (a[:begin_date]&&a[:end_date] ? " from #{a[:begin_date]} until #{a[:end_date]}\n": "\n")    
+  usefull["jobs"] += (a[:begin_date]&&a[:end_date] ? " from #{a[:begin_date]} until #{a[:end_date]}\n": "\n")
   else
   usefull["praktika"] += "#{a[:name]}: as #{a[:title]}"
-  usefull["praktika"] += (a[:description] ? " (#{a[:description]})": "")  
+  usefull["praktika"] += (a[:description] ? " (#{a[:description]})": "")
   usefull["praktika"] += (a[:begin_date]&&a[:end_date] ? " from #{a[:begin_date]} until #{a[:end_date]}\n": "\n")
 end
 end
 usefull["interests"] = userdata[:interests]
 usefull["haves"] = userdata[:haves]
 usefull["wants"] = userdata[:wants]
-userdata[:professional_experience][:awards].each do |a| usefull["what_makes_me_special"] += "#{a[:name]}" + (a[:date_awarded] ? " (#{a[:date_awarded]})" : "") end 
+userdata[:professional_experience][:awards].each do |a| usefull["what_makes_me_special"] += "#{a[:name]}" + (a[:date_awarded] ? " (#{a[:date_awarded]})" : "") end
 
 
 puts usefull

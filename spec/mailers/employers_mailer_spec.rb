@@ -3,7 +3,7 @@ require "spec_helper"
 describe EmployersMailer do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
-  
+
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
@@ -37,7 +37,7 @@ describe EmployersMailer do
   end
 
   describe "registration confirmation" do
-    
+
     before(:each) do
       @email = EmployersMailer.registration_confirmation(@employer)
     end

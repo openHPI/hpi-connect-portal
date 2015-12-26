@@ -20,6 +20,7 @@
 #  requested_package_id  :integer          default(0), not null
 #  booked_package_id     :integer          default(0), not null
 #  single_jobs_requested :integer          default(0), not null
+#  token                 :string(255)
 #
 
 FactoryGirl.define do

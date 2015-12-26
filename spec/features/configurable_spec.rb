@@ -22,6 +22,6 @@ describe Admin::ConfigurablesController do
     login(admin)
     visit admin_configurable_path
     current_path.should eq admin_configurable_path
-    find('input[value="Save"]') 
+    find('input[value="Save"]')
   end
 end
