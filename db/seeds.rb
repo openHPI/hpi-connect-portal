@@ -127,12 +127,12 @@ User.create!([{
 # Students
 student_pascal = Student.create!(
             user: User.new(
-              email: "pascal.reinhardt@student.hpi.uni-potsdam.de", 
-              lastname: "Reinhardt", 
+              email: "pascal.reinhardt@student.hpi.uni-potsdam.de",
+              lastname: "Reinhardt",
               firstname: "Pascal",
               password: 'password',
               password_confirmation: 'password',
-              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))  
+              photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-3.jpg'))
               ),
             semester: 5,
             academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
@@ -141,8 +141,8 @@ student_pascal = Student.create!(
 
 student_frank = Student.create!(
     user: User.new(
-      email: 'frank.blechschmidt@example.com', 
-      firstname: 'Frank', 
+      email: 'frank.blechschmidt@example.com',
+      firstname: 'Frank',
       lastname: 'Blechschmidt',
       password: 'password',
       password_confirmation: 'password',
@@ -207,15 +207,9 @@ career = JobOffer.create!(
   category_id: 1,
   graduation_id: 3,
   employer: hpi,
-<<<<<<< HEAD
-  status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+2,
-  release_date: Date.current-2,
-=======
   status: JobStatus.closed,
-  start_date: Date.current+2, 
+  start_date: Date.current+2,
   release_date: Date.current-14,
->>>>>>> develop
   time_effort: 9,
   compensation: 13.50,
   languages: Language.where(:name => 'german'),
@@ -399,7 +393,7 @@ hpi_rating_hana = Rating.create!(
   description: "HANA rules !!!"
 )
 
-# job for Design Thinking students 
+# job for Design Thinking students
 
 dt_job = JobOffer.create!(
   title: "Design Thinker",
@@ -409,7 +403,7 @@ dt_job = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,
@@ -427,7 +421,7 @@ hpi_dt_job = JobOffer.create!(
   graduation_id: 3,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
-  start_date: Date.current+100, 
+  start_date: Date.current+100,
   release_date: Date.current-9,
   time_effort: 38,
   compensation: 20.00,

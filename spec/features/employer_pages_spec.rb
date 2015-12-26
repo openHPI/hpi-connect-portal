@@ -206,7 +206,7 @@ describe "the employer page" do
   end
 
   describe "Staff invitations" do
-    
+
     xit "should invite others" do
       # needs Javascript -.-
       Capybara.current_driver = :selenium

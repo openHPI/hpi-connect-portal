@@ -19,11 +19,11 @@ class Rating < ActiveRecord::Base
   belongs_to :student
   belongs_to :employer
   belongs_to :job_offer
-  
+
   validates :student, :employer, :headline, :description, :score_overall, presence: true
   validates :score_overall, inclusion: { in: 1..5 }
   validates :score_atmosphere, :score_salary, :score_work_life_balance, :score_work_contents, inclusion: { in: 1..5 }, :allow_blank => true, :allow_nil => true
-  
+
   self.per_page = 15
-  
+
 end
