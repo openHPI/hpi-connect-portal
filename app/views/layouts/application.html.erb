@@ -33,7 +33,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster - placed here only for testing th compenentes easier-->
 </head>
-   
+
   <!-- Piwik -->
   <script type="text/javascript">
     var _paq = _paq || [];
@@ -49,7 +49,7 @@
   </script>
   <noscript><p><img src="//www13.hpi.uni-potsdam.de/typo3conf/piwik/piwik/piwik.php?idsite=21" style="border:0;" alt="" /></p></noscript>
   <!-- End Piwik Code -->
-  
+
   <body class="subpage accent3">
     <div class="headbg">
       <div class="headtop">
@@ -76,6 +76,7 @@
                     <% if current_user.admin? %>
                       <li><%= link_to t('layouts.configuration'), admin_configurable_path %></li>
                       <li><%= link_to t('layouts.import'), new_alumni_path %></li>
+                      <li><%= link_to t('layouts.export'), export_alumni_students_path %></li>
                       <li><%= link_to t('layouts.index_alumni'), alumni_index_path %></li>
                       <li><%= link_to t('layouts.mail_alumni'), remind_via_mail_alumni_index_path %></li>
                     <% end %>
@@ -98,7 +99,7 @@
               </div>
             </h1>
           </div>
-           
+
         </div>
         <div class="bigheader">
           <div class="logo-container">
@@ -122,7 +123,7 @@
       <%= render 'shared/flash_messages' %>
       <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
-      
+
     <footer>
       <div class="container">
         <div>
@@ -138,7 +139,7 @@
         </div>
       </div>
     </footer>
-  
+
     <!-- Modals -->
     <%= yield :modals %>
   </body>

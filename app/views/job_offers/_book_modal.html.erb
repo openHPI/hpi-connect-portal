@@ -5,18 +5,18 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel"><%= t "employers.package_descriptions.insufficent" %></h4>
       </div>
-      
+
         <div class="modal-body clearfix">
           <%= label_tag :upgrade_or_book, t("employers.package_descriptions.upgrade_or_book") %>
          <br><br>
 
         <span class="btn btn-default pull-right", data-dismiss="modal"><%= t("links.cancel") %></span>
         <%= link_to t('employers.package_descriptions.upgrade'), edit_employer_path(@current_user.manifestation.employer), :class => "btn btn-default pull-right" %>
-        <%= link_to t('employers.package_descriptions.book_single_offer'), new_job_offer_path(book_single_job_offer: true), :class => "btn btn-default pull-right", :id => "book_single" %>    
-          
-            <br/>           
+        <%= link_to t('employers.package_descriptions.book_single_offer'), new_job_offer_path(book_single_job_offer: true), :class => "btn btn-default pull-right", :id => "book_single" %>
+
+            <br/>
         </div>
-        <div class="modal-footer"> 
+        <div class="modal-footer">
         </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

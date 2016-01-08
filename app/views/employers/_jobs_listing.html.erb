@@ -5,7 +5,7 @@
         <div class="col-md-7">
           <% if can?(:show, job_offer) %>
             <h4><%= link_to job_offer.title, job_offer%></h4>
-          <% else %> 
+          <% else %>
             <h4><%= job_offer.title %></h4>
           <% end %>
           <% if signed_in_student? && current_user.manifestation.applied?(job_offer) %>
@@ -16,7 +16,7 @@
         <div class="col-sm-5">
           <% if job_offer.release_date == nil  %>
             <p class="startDate"><%= t("job_offers.starts") %> <%= l(job_offer.start_date) %></p>
-          <% else %> 
+          <% else %>
             <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.release_date) %></p>
           <% end %>
         </div>

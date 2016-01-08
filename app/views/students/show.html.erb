@@ -39,7 +39,7 @@
           <h4>
             <% if @student.employment_status.nil? %>
               <%= @student.firstname %> <%= @student.lastname %>
-            <% else %> 
+            <% else %>
               <%= @student.firstname %> <%= @student.lastname %> - <%= t("activerecord.attributes.user_status." +  @student.employment_status) %>
             <% end %>
           </h4>
