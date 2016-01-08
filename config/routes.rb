@@ -54,7 +54,6 @@ HpiHiwiPortal::Application.routes.draw do
           get 'remind_all'
           post 'import' => 'alumni#create_from_csv'
           post 'mail_csv' => 'alumni#send_mail_from_csv'
-          get 'export' => 'alumni#export'
         end
       end
       get 'alumni/:token/email' => 'alumni#register', as: 'alumni_email'
@@ -89,6 +88,9 @@ HpiHiwiPortal::Application.routes.draw do
           get 'activate'
           get 'request_linkedin_import'
           get 'insert_imported_data'
+        end
+        collection do
+          get 'export_alumni', action: 'export_alumni'
         end
       end
 

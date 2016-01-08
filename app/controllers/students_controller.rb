@@ -112,6 +112,11 @@ class StudentsController < ApplicationController
     respond_and_redirect_to edit_student_path(@student), t("students.successful_import")
   end
 
+  def export_alumni
+    require 'csv'
+    send_data Student.export_alumni, filename: "alumni-#{Date.today}.csv"
+  end
+
   private
     def authorize_client(linkedin_client)
       if session[:atoken].nil?

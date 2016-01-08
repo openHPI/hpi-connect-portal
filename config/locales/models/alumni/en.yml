@@ -9,3 +9,4 @@ en:
         alumni_file: 'Alumni File'
         import_list: 'Importieren Alumni List'
         import_single: 'Import Single Alumnus'
+        following_alumni_are_not_registered_yet: 'The following alumni are not registered, yet'

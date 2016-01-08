@@ -40,16 +40,6 @@ class Alumni < ActiveRecord::Base
     return alumni
   end
 
-  def self.to_csv
-    attributes = %w{lastname firstname alumni_email email}
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
-      all.each do |user|
-        csv << attributes.map{ |attr| user.send(attr) }
-      end
-    end
-  end
-
   def self.email_invalid? email
     email.include?("@hpi-alumni") || email.include?("@student.hpi") || email.include?("@hpi.")
   end

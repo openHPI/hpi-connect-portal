@@ -52,11 +52,6 @@ class AlumniController < ApplicationController
   def remind_via_mail
   end
 
-  def export
-    require 'csv'
-    send_data Alumni.to_csv, filename: "alumni-#{Date.today}.csv"
-  end
-
   def remind_all
     Alumni.all.each do |alumni|
       alumni.send_reminder
