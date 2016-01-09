@@ -26,6 +26,7 @@
     <% end %>
   </div>
 </div>
+
 <div class="wrapper-5 teaser sidebar">
   <div class="col-md-4">
     <div class="sidebar-nav">
@@ -40,7 +41,7 @@
             <%= text_field_tag(:email, params[:email], :placeholder => 'email', :class => "form-control") %>
             <h5><%= label_tag "Alumni Email" %></h5>
             <%= text_field_tag(:alumni_email, params[:alumni_email], :placeholder => 'alumni_email', :class => "form-control") %>
-          </div>  
+          </div>
           <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
         </ul>
       <% end %>

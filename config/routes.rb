@@ -87,6 +87,9 @@ HpiHiwiPortal::Application.routes.draw do
           patch 'activate'
           get 'activate'
         end
+        collection do
+          get 'export_alumni', action: 'export_alumni'
+        end
       end
 
       resources :newsletter_orders, only: [:destroy, :create, :new, :show]

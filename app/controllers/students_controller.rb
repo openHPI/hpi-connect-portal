@@ -96,6 +96,11 @@ class StudentsController < ApplicationController
     end
   end
 
+  def export_alumni
+    require 'csv'
+    send_data Student.export_alumni, filename: "alumni-#{Date.today}.csv"
+  end
+
   private
     def set_student
       @student = Student.find params[:id]

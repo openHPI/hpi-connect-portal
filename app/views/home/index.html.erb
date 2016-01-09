@@ -4,7 +4,7 @@
       <h1>Job Portal</h1>
       <h2>Welcome to the HPI Connect Jobportal!</h2>
 
-      <p> 
+      <p>
         <b>Students and alumni of the HPI can</b><br />
         <br />
         - view the current <%= link_to 'job offers', job_offers_path %><br />
@@ -25,7 +25,7 @@
       <h1>Jobportal</h1>
       <h2>Willkommen im HPI Connect Jobportal!</h2>
 
-      <p> 
+      <p>
         <b>Die Studierenden und Alumni des HPI haben hier die Möglichkeit</b><br />
         <br />
         - die aktuellen <%= link_to 'Jobangebote', job_offers_path %> einzusehen <br />
@@ -81,14 +81,14 @@
         <% @employers.each do |employer| %>
           <% if can?(:activate, employer) || employer.paying? %>
             <li> <%= link_to employer.name, employer %> </li>
-          <% else %> 
+          <% else %>
             <li> <%= employer.name %> </li>
           <% end %>
         <% end %>
       </ul>
     </div>
   <% end %>
-  
+
   <div class="col-md-4">
     <%= render "shared/contact" %>
   </div>

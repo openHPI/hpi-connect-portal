@@ -50,21 +50,21 @@
       <div class="package-div">
         <%= form.radio_button :requested_package_id, 0, class: 'package-select' %>
         <b><%= t("activerecord.attributes.employer.packages.free") %></b><br />
-        <ul> 
+        <ul>
           <li><%= t("employers.package_descriptions.student_jobs") %></li>
         </ul>
       </div>
       <div class="package-div">
         <%= form.radio_button :requested_package_id, 1, class: 'package-select' %>
         <b><%= t("activerecord.attributes.employer.packages.profile") %></b><br />
-        <ul> 
+        <ul>
           <li><%= t("employers.package_descriptions.profile") %></li>
         </ul>
       </div>
       <div class="package-div">
         <%= form.radio_button :requested_package_id, 2, class: 'package-select' %>
         <b><%= t("activerecord.attributes.employer.packages.partner") %></b><br />
-        <ul> 
+        <ul>
           <li><%= t("employers.package_descriptions.profile") %></li>
           <li> 4 <%= t("employers.package_descriptions.full_time") %></li>
         </ul>
@@ -92,7 +92,7 @@
       <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
         <div class="panel panel-default">
           <div class="panel-heading">
-              <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %> 
+              <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %>
               <%= @employer.single_jobs_requested %>
           </div>
         </div>
@@ -168,7 +168,7 @@
             <%= c.input :name %>
           </div>
         </div>
-      </li>      
+      </li>
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">

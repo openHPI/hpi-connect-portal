@@ -204,7 +204,7 @@
             <div class="col-sm-3">
               <%= label_field form, :academic_program, t("activerecord.attributes.user.academic_program") %>
             </div>
-            <div class="col-sm-9">              
+            <div class="col-sm-9">
               <%= form.select :academic_program_id, Student::ACADEMIC_PROGRAMS.each_with_index.collect { |program, index| [t("activerecord.attributes.user.academic_rank_options." + program), index] }, {}, {id: 'academic_program_id', class: 'select optional form-control'} %>
             </div>
           </div>
@@ -256,7 +256,6 @@
       </div>
 
       <a class="btn btn-default cv-add" data-id=".cv-work" href="#"><%= t("students.add_work_experience") %></a>
-      
       <div class="cv-group cv-education">
         <h5><%= t("students.education") %></h5>
         <%= form.simple_fields_for :cv_educations, student.cv_educations do |education_builder| %>

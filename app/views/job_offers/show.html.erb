@@ -35,7 +35,7 @@
 
         <% if can?(:update, @job_offer) && !@job_offer.closed? %>
           <%= link_to t("job_offers.show_matching_students"),
-          students_path(:graduation_id => @job_offer.graduation_id, 
+          students_path(:graduation_id => @job_offer.graduation_id,
           :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
           <% if can?(:edit, @job_offer) %>
             <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
@@ -111,9 +111,9 @@
 
     <div class="col-sm-4">
       <center>
-          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  %>    
+          <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  %>
       </center>
-      
+
       <div class="row">
         <div class="col-sm-12 stars-dark-background">
           <center>
@@ -122,15 +122,15 @@
                <%= link_to t("ratings.click_here"), employer_ratings_path(@job_offer.employer), {:class => "link_to_ratings"} %>
             <% end %>
           </center>
-        </div> 
+        </div>
       </div>
       </br>
-      
+
       <div class="panel panel-default">
         <div class="panel-heading"><h4><%= t("activerecord.attributes.job_offer.additional_information") %></h4></div>
         <ul class="list-group">
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.region"), content: (t("activerecord.attributes.job_offer.state." + @job_offer.state)) %>
-          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>  
+          <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.category"), content: (t("job_offers.category." + @job_offer.category)) %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.user.minimum_degree"), content: (t("activerecord.attributes.user.degrees." + @job_offer.minimum_degree)) %>
           <% if @job_offer.release_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.start_date"), content: l(@job_offer.start_date) %>
@@ -140,18 +140,18 @@
           <% unless @job_offer.end_date.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.end_date"), content: l(@job_offer.end_date) %>
           <% end %>
-          <% unless @job_offer.time_effort.blank? %>          
+          <% unless @job_offer.time_effort.blank? %>
             <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.time_effort"), content: (@job_offer.time_effort.to_s  + " " + t("job_offers.time_effort_description")) %>
           <% end %>
           <% unless @job_offer.compensation.nil? %>
           <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.compensation"), content: @job_offer.human_readable_compensation %>
           <% end %>
           <% unless @job_offer.employer.staff_members.blank? %>
-            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"), 
+            <%= render 'job_offers/list_group_item', title: t("activerecord.attributes.job_offer.contact"),
             content: (@job_offer.employer.staff_members.map {|staff| (link_to staff.full_name, staff)}.join('<br>').html_safe) %>
           <% end %>
           <% unless @job_offer.offer_as_pdf.blank? %>
-            <%= render 'job_offers/list_group_item', title: t("job_offers.upload_job_offer_pdf"), 
+            <%= render 'job_offers/list_group_item', title: t("job_offers.upload_job_offer_pdf"),
             content: (link_to @job_offer.offer_as_pdf_file_name, @job_offer.offer_as_pdf.url(:original, false)) %>
           <% end %>
         </ul>

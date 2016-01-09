@@ -1,6 +1,6 @@
 <div class="wrapper-12 panel-wrapper">
   <h1> <%= t("alumni.register_address") %> </h1>
-  
+
   <%= simple_form_for :session, url: alumni_link_path(token: @alumni.token) do |f| %>
     <div class="panel panel-default">
       <div class="panel-heading"><h4><%= t("alumni.already_have_account") %></h4></div>

@@ -75,10 +75,10 @@
   <% if @employer.paying? %>
       <div class="col-sm-4">
         <center>
-          <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )  
+          <%= image_tag(@employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @employer.name )
           %>
         </center>
-        
+
         <div class="row">
           <div class="col-sm-12 stars-dark-background">
             <center>
@@ -87,9 +87,9 @@
                  <%= link_to t("ratings.click_here"), employer_ratings_path(@employer), {:class => "link_to_ratings"} %>
               <% end %>
             </center>
-          </div> 
+          </div>
         </div>
-        
+
         </br>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("employers.general_information") %></h4></div>

@@ -170,4 +170,21 @@ class Student < ActiveRecord::Base
       end
     end
   end
+
+  def self.export_alumni
+    CSV.generate(headers: true) do |csv|
+      attributes = %w{lastname firstname alumni_email email graduation}
+      csv << attributes
+      attributes.pop()
+      find_each do |student|
+        if student.user.alumni?
+          csv << attributes.map{ |attr| student.send(attr)}.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+        end
+      end
+      csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
+      Alumni.find_each do |alumni|
+        csv << attributes.map{ |attr| alumni.send(attr) }
+      end
+    end
+  end
 end

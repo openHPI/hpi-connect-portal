@@ -1,16 +1,16 @@
 <%= simple_form_for job_offer do |f| %>
-  
+
   <%= render 'shared/object_errors', object: job_offer %>
-  
+
   <div class="row">
     <div class="col-sm-12 bottom-10">
        <span class="pull-right">
          <%= f.submit t("links.save"), :class => "btn btn-warning pull-right title-button" %>
-         <a id="job_offer_preview_button" class="btn btn-default pull-right title-button"> <%= t("links.preview") %> </a> 
+         <a id="job_offer_preview_button" class="btn btn-default pull-right title-button"> <%= t("links.preview") %> </a>
        </span>
-    </div>  
+    </div>
   </div>
-  
+
   <div class="row">
     <div class="col-sm-12">
       <div class="panel panel-default">

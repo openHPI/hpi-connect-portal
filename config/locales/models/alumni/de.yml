@@ -11,3 +11,4 @@ de:
         email_file: 'Emaildatei'
         send_mail_list: 'Registrationsemail an Alumni senden'
         import_single: 'Einzelnen Alumnus importieren'
+        following_alumni_are_not_registered_yet: 'Die folgenden Alumni haben sich noch nicht registriert.'
