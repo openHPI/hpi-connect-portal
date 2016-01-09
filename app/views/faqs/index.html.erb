@@ -1,7 +1,7 @@
 <div class="wrapper-12 panel-wrapper">
   <% if can?(:create, Faq) %>
       <span class="pull-right">
-        <%= link_to t("faqs.new_faq"), new_faq_path, :class => "btn btn-default", :style => "margin-bottom: 20px"%>
+        <%= link_to t("faqs.new_faq"), new_faq_path, class: "btn btn-default", style: "margin-bottom: 20px"%>
       </span>
     <% end %>
   <h1><%= t("faqs.headline") %></h1>
@@ -27,10 +27,10 @@
                 <% if can?(:update, faq) ||  can?(:destroy, faq) %>
                   <div class="pull-right">
                     <% if can?(:update, faq) %>
-                      <%= link_to t("links.edit"), edit_faq_path(faq), :class => "btn btn-default" %>
+                      <%= link_to t("links.edit"), edit_faq_path(faq), class: "btn btn-default" %>
                     <% end %>
                     <% if can?(:delete, faq) %>
-                      <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, :class => "btn btn-danger"%>
+                      <%= link_to t("links.destroy"), faq, method: :delete, data: { confirm: t("links.confirm")}, class: "btn btn-danger"%>
                     <% end %>
                   </div>
                 <% end %>

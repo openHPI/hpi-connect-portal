@@ -1,17 +1,17 @@
 <div class="sidebar-nav">
-        <%= form_tag find_path, :method => :get, :id => 'Form' do %>
+        <%= form_tag find_path, method: :get, id: 'Form' do %>
           <ul class="nav nav-list">
 
             <div class="form-group" id="sort">
               <h5><%= label_tag(:q, t("job_offers.sortLabel")) %></h5>
-              <%= label_tag :sort,t("job_offers.sortDate"), :class => "radio-inline small" %>
-              <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), :id => "sort_by_date_RB"  %>
-              <%= label_tag :sort, t("job_offers.sortEmployer"), :class => "radio-inline small" %>
+              <%= label_tag :sort,t("job_offers.sortDate"), class: "radio-inline small" %>
+              <%= radio_button_tag :sort, 'date' , "date" == params.fetch(:sort, "date"), id: "sort_by_date_RB"  %>
+              <%= label_tag :sort, t("job_offers.sortEmployer"), class: "radio-inline small" %>
               <%= radio_button_tag :sort, 'employer' , params[:sort] == "employer" %>
             </div>
             <div class="form-group" id="search">
               <h5><%= label_tag t("job_offers.searchLabel") %></h5>
-              <%= text_field_tag(:search, params[:search], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
+              <%= text_field_tag(:search, params[:search], placeholder: t('job_offers.search_term'), class: "form-control") %>
             </div>
 
             <div id="filtering">
@@ -24,42 +24,42 @@
                   <% group_id = 0 %>
                 <% end %>
                 <div class="form-group">
-                  <%= label_tag t("job_offers.jobs_for") , nil, :class => "small" %>
+                  <%= label_tag t("job_offers.jobs_for") , nil, class: "small" %>
                   <%= select_tag "student_group",
                     options_for_select(
-                    Student::GROUPS.reject{|group| group == 'both'}.each_with_index.collect{|group, index| [t("activerecord.attributes.student.groups." + group), index]}, params.fetch(:student_group, nil)), include_blank: true, :class => "form-control" %>
+                    Student::GROUPS.reject{|group| group == 'both'}.each_with_index.collect{|group, index| [t("activerecord.attributes.student.groups." + group), index]}, params.fetch(:student_group, nil)), include_blank: true, class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, :class => "small" %>
-                  <%= select_tag "employer", options_for_select(Employer.order_by_name.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, :class => "form-control" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, class: "small" %>
+                  <%= select_tag "employer", options_for_select(Employer.order_by_name.collect {|p| [p.name, p.id]}, params.fetch(:employer,0)), include_blank: true, class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.region") , nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.region") , nil, class: "small" %>
                   <%= select_tag "state",
                   options_for_select(
-                    JobOffer::STATES.each_with_index.collect {|state, index| [t("activerecord.attributes.job_offer.state." + state), index]}, params.fetch(:state, nil)), include_blank: true, :class => "form-control" %>
+                    JobOffer::STATES.each_with_index.collect {|state, index| [t("activerecord.attributes.job_offer.state." + state), index]}, params.fetch(:state, nil)), include_blank: true, class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.category") , nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.category") , nil, class: "small" %>
                   <%= select_tag "category",
                   options_for_select(
-                    JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, nil)), include_blank: true, :class => "form-control" %>
+                    JobOffer::CATEGORIES.each_with_index.collect {|category, index| [t("job_offers.category." + category), index]}, params.fetch(:category, nil)), include_blank: true, class: "form-control" %>
                 </div>
                 <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.user.degree") , nil, :class => "small" %>
+                  <%= label_tag t("activerecord.attributes.user.degree") , nil, class: "small" %>
                   <%= select_tag "graduation",
                   options_for_select(
-                    Student::GRADUATIONS.each_with_index.collect {|degree, index| [t("activerecord.attributes.user.degrees." + degree), index]}, params.fetch(:graduation, nil)), include_blank: true, :class => "form-control" %>
+                    Student::GRADUATIONS.each_with_index.collect {|degree, index| [t("activerecord.attributes.user.degrees." + degree), index]}, params.fetch(:graduation, nil)), include_blank: true, class: "form-control" %>
                      </div>
                 <% end %>
 
               <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, :class => "small" %>
-                  <%= text_field_tag  :start_date, params.fetch(:start_date, ''), :placeholder => t('job_offers.start_date'),  :class => 'datepicker form-control'%>
+                  <%= label_tag t("activerecord.attributes.job_offer.start_date"), nil, class: "small" %>
+                  <%= text_field_tag  :start_date, params.fetch(:start_date, ''), placeholder: t('job_offers.start_date'),  class: 'datepicker form-control'%>
               </div>
               <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.end_date"), nil, :class => "small" %>
-                  <%= text_field_tag :end_date, params.fetch(:end_date, ''), :placeholder => t('job_offers.end_date'), :class => 'datepicker form-control'%>
+                  <%= label_tag t("activerecord.attributes.job_offer.end_date"), nil, class: "small" %>
+                  <%= text_field_tag :end_date, params.fetch(:end_date, ''), placeholder: t('job_offers.end_date'), class: 'datepicker form-control'%>
               </div>
               <div class="panel-group" id="languages_accordion">
                 <div class="form-group">
@@ -74,7 +74,7 @@
                           <% ProgrammingLanguage.all.each_with_index do |programming_language| %>
                             <div class="col-md-6 languageDIV">
                               <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids, "").include?(programming_language.id.to_s), id: dom_id(programming_language)%>
-                              <%= label_tag dom_id(programming_language), programming_language.name , :class => "small"%>
+                              <%= label_tag dom_id(programming_language), programming_language.name , class: "small"%>
                             </div>
                           <% end %>
                         </div>
@@ -94,7 +94,7 @@
                           <% Language.all.each do |language| %>
                             <div class="col-md-6 languageDIV">
                               <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids, "").include?(language.id.to_s), id: dom_id(language) %>
-                              <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
+                              <%= label_tag dom_id(language), t("languages." +  language.name), class: "small" %>
                             </div>
                           <% end %>
                         </div>
@@ -104,16 +104,16 @@
                 </div>
               </div>
               <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.time_effort"), nil, :class => "small" %>
-                  <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), :placeholder => t('job_offers.time_effort'), :class => "form-control" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.time_effort"), nil, class: "small" %>
+                  <%= text_field_tag :time_effort, params.fetch(:time_effort, ''), placeholder: t('job_offers.time_effort'), class: "form-control" %>
                 </div>
               <div class="form-group">
-                  <%= label_tag t("activerecord.attributes.job_offer.compensation"), nil, :class => "small" %>
-                  <%= text_field_tag :compensation, params.fetch(:compensation, ''),:placeholder => t('job_offers.compensation'), :class => "form-control" %>
+                  <%= label_tag t("activerecord.attributes.job_offer.compensation"), nil, class: "small" %>
+                  <%= text_field_tag :compensation, params.fetch(:compensation, ''),placeholder: t('job_offers.compensation'), class: "form-control" %>
                 </div>
               <div class="form-group">
-                <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right", :id => "find_jobs_button" %>
-                <%= submit_tag t("job_offers.create_as_newsletter"), :class => "btn btn-default pull-right", :id => "create_newsletter_button" %>
+                <%= submit_tag t("job_offers.find_jobs_button"), class: "btn btn-default pull-right", id: "find_jobs_button" %>
+                <%= submit_tag t("job_offers.create_as_newsletter"), class: "btn btn-default pull-right", id: "create_newsletter_button" %>
               </div>
             </div>
          </ul>

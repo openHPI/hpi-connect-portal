@@ -1,33 +1,33 @@
 <div class="sidebar-nav">
-  <%= form_tag '', :method => :get do %>
+  <%= form_tag '', method: :get do %>
     <ul class="nav nav-list">
       <div class="form-group">
         <h5><%= label_tag t("job_offers.searchLabel") %></h5>
-        <%= text_field_tag(:q, params[:q], :placeholder => t('job_offers.search_term'), :class => "form-control") %>
+        <%= text_field_tag(:q, params[:q], placeholder: t('job_offers.search_term'), class: "form-control") %>
       </div>
       <h5><%= label_tag t("job_offers.filterLabel") %></h5>
       <div class="form-group">
-        <%= text_field_tag(:semester, params[:semester], :placeholder => t('students.semester'), :class => "form-control") %>
+        <%= text_field_tag(:semester, params[:semester], placeholder: t('students.semester'), class: "form-control") %>
       </div>
       <div class="form-group">
-         <%= label_tag t("activerecord.attributes.user.academic_program") , nil, :class => "small" %>
+         <%= label_tag t("activerecord.attributes.user.academic_program") , nil, class: "small" %>
         <%= select_tag "academic_program_id", options_for_select(
         Student::ACADEMIC_PROGRAMS.each_with_index.collect {|program, index|
          [t("activerecord.attributes.user.academic_rank_options." + program), index]},
-         params.fetch(:academic_program_id, nil)), include_blank: true, :class => "form-control" %>
+         params.fetch(:academic_program_id, nil)), include_blank: true, class: "form-control" %>
       </div>
       <div class="form-group">
-         <%= label_tag t("activerecord.attributes.user.degree") , nil, :class => "small" %>
+         <%= label_tag t("activerecord.attributes.user.degree") , nil, class: "small" %>
         <%= select_tag "graduation_id", options_for_select(
         Student::GRADUATIONS.each_with_index.collect {|degree, index|
          [t("activerecord.attributes.user.degrees." + degree), index]},
-         params.fetch(:graduation_id, nil)), include_blank: true, :class => "form-control" %>
+         params.fetch(:graduation_id, nil)), include_blank: true, class: "form-control" %>
       </div>
       <div class="panel-group" id="languages_accordion">
         <div class="form-group">
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-target="#programming_language_panel" data-parent="#languages_accordion">
-             <%= label_tag t("activerecord.attributes.job_offer.programming_languages"), nil, :class => "small panel-title" %>
+             <%= label_tag t("activerecord.attributes.job_offer.programming_languages"), nil, class: "small panel-title" %>
             </div>
             <div id="programming_language_panel" class="panel-collapse collapse">
               <div class="panel-body row">
@@ -36,7 +36,7 @@
                   <% ProgrammingLanguage.all.each_with_index do |programming_language| %>
                     <div class="col-md-6 languageDIV">
                       <%= check_box_tag "programming_language_ids[]", programming_language.id, params.fetch(:programming_language_ids, "").include?(programming_language.id.to_s), id: dom_id(programming_language)%>
-                      <%= label_tag dom_id(programming_language), programming_language.name , :class => "small"%>
+                      <%= label_tag dom_id(programming_language), programming_language.name , class: "small"%>
                     </div>
                   <% end %>
                 </div>
@@ -47,7 +47,7 @@
         <div class="form-group">
           <div class="panel panel-default">
             <div class="panel-heading" data-toggle="collapse" data-target="#language_panel" data-parent="#languages_accordion">
-              <%= label_tag t("activerecord.attributes.job_offer.languages"), nil, :class => "small panel-title" %>
+              <%= label_tag t("activerecord.attributes.job_offer.languages"), nil, class: "small panel-title" %>
             </div>
             <div id="language_panel" class="panel-collapse collapse">
               <div class="panel-body row">
@@ -56,7 +56,7 @@
                   <% Language.all.each do |language| %>
                     <div class="col-md-6 languageDIV">
                       <%= check_box_tag "language_ids[]", language.id, params.fetch(:language_ids, "").include?(language.id.to_s), id: dom_id(language) %>
-                      <%= label_tag dom_id(language), t("languages." +  language.name), :class => "small" %>
+                      <%= label_tag dom_id(language), t("languages." +  language.name), class: "small" %>
                     </div>
                   <% end %>
                 </div>
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
+      <%= submit_tag t("job_offers.find_jobs_button"), class: "btn btn-default pull-right" %>
     </ul>
   <% end %>
 </div>

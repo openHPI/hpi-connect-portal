@@ -12,10 +12,10 @@
             <div class="panel-body">
               <li>
                 ○ <%= t("employers.home.service.free.traineeship", set_online: (link_to t("employers.home.booking.basis.set_online"),
-              new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("traineeship")))).html_safe%>
+              new_job_offer_path(book_single_job_offer: JobOffer::CATEGORIES.index("traineeship")))).html_safe%>
               </li>
               <li>
-                ○ <%= t("employers.home.service.free.working_student", set_online: (link_to t("employers.home.booking.basis.set_online"), new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("working_student")))).html_safe%>
+                ○ <%= t("employers.home.service.free.working_student", set_online: (link_to t("employers.home.booking.basis.set_online"), new_job_offer_path(book_single_job_offer: JobOffer::CATEGORIES.index("working_student")))).html_safe%>
               </li>
             </div>
           </ul>
@@ -24,7 +24,7 @@
           <i> <%= t("employers.home.service.chargeable.help_html", email: (mail_to "connect@hpi.de")) %></i></p><br>
           <div class="panel-body">
             <ul>
-              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(:book_single_job_offer => JobOffer::CATEGORIES.index("graduate_job")))).html_safe%></li>
+              <li>○ <%= t("employers.home.service.chargeable.single_graduate_job", book: (link_to t("employers.home.booking.basis.book"), new_job_offer_path(book_single_job_offer: JobOffer::CATEGORIES.index("graduate_job")))).html_safe%></li>
               <li>○  <%= t("employers.home.service.chargeable.present_profile_html", company_profile: (link_to t("employers.home.service.chargeable.company_profile"), edit_employer_path(current_user.manifestation.employer)))%></li>
               <div class="panel-body"></div>
               <li>○ <%= t("employers.home.booking.basis.title_html", book: (link_to t("employers.home.booking.basis.book"), edit_employer_path(current_user.manifestation.employer)))%></li>
@@ -52,9 +52,9 @@
 </div>
 
     <div class="col-md-4">
-      <h1> <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), :class => "links" %> </h1>
+      <h1> <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), class: "links" %> </h1>
 
-      <h1><%= link_to "Informationsbroschüre", asset_path("HPI Connect Karriereportal.pdf"), :class => "links" %></h1>
+      <h1><%= link_to "Informationsbroschüre", asset_path("HPI Connect Karriereportal.pdf"), class: "links" %></h1>
        <%= render "shared/contact" %>
        <br>
     </div>

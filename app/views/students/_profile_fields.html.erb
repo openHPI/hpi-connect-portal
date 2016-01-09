@@ -30,7 +30,7 @@
                 <%= label_field form, :birthday, t("activerecord.attributes.user.birthday") %>
               </div>
               <div class="col-sm-9">
-                <%= form.date_select :birthday, {start_year: 1940}, { :class => 'birthdate_select form-control col-sm-4'} %>
+                <%= form.date_select :birthday, {start_year: 1940}, { class: 'birthdate_select form-control col-sm-4'} %>
               </div>
             </div>
           </li>
@@ -69,9 +69,9 @@
                     <% end %>
                     <% (1..5).each do |i| %>
                       <% if language_skill && i == language_skill.skill %>
-                        <%= radio_button :programming_language_skills, programming_language.id, i, :checked => "checked", :class => "star" %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, checked: "checked", class: "star" %>
                       <% else %>
-                        <%= radio_button :programming_language_skills, programming_language.id, i, :class => "star" %>
+                        <%= radio_button :programming_language_skills, programming_language.id, i, class: "star" %>
                       <% end %>
                     <% end %>
                   </div>
@@ -105,9 +105,9 @@
                     <% end %>
                     <% (1..5).each do |i| %>
                       <% if language_skill && i == language_skill.skill %>
-                        <%= radio_button :language_skills, language.id, i, :checked => "checked", :class => "star" %>
+                        <%= radio_button :language_skills, language.id, i, checked: "checked", class: "star" %>
                       <% else %>
-                        <%= radio_button :language_skills, language.id, i, :class => "star" %>
+                        <%= radio_button :language_skills, language.id, i, class: "star" %>
                       <% end %>
                     <% end %>
                   </div>
