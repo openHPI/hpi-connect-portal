@@ -20,7 +20,7 @@ de:
         contact: "Ansprechpartner"
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
-            profile: "Unternehmensprofil" 
+            profile: "Unternehmensprofil"
             full_time: "Angebote für Vollzeitjobs pro Jahr"
             student_profiles: "Einsicht in Studentenprofile"
             insufficent: "Paket reicht nicht aus / erlaubte Anzahl überschritten"
@@ -28,7 +28,7 @@ de:
             book_single_offer: "Stellenangebot buchen"
             upgrade: "Paket upgraden"
         messages:
-            successfully_created: "Willkommen bei HPI Career!"
+            successfully_created: "Willkommen bei HPI Connect!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."
             successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
             unsuccessfully_deleted: "Das Profil konnte nicht gelöscht werden."
@@ -45,18 +45,19 @@ de:
             service:
                 free:
                     title: "Kostenlose Angebote"
-                    description: "Praktikum oder Studentenjob online stellen (4 Wochen)"
+                    traineeship: "Einen Praktikumsplatz %{set_online} (4 Wochen)"
+                    working_student: "Einen Studentenjob %{set_online} (4 Wochen)"
                 chargeable:
                     title: "Kostenpflichtige Angebote"
                     help_html: "(aktuelle Preise können Sie bei %{email} erfragen)"
-                    open_positions: "Stellenangebot online stellen (4 Wochen)"
                     present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
                     company_profile: "Firmenprofil"
-                    single_graduate_job: "Einzelne Absolventenstelle %{book}"
+                    single_graduate_job: "Einzelne Absolventenstelle %{book} (4 Wochen)"
             booking:
                 basis:
                     title_html: "Basispaket %{book}"
                     book: "buchen"
+                    set_online: "online stellen"
                     advertisements: "4 Stellenangebote pro Jahr"
                     company_profile: "1 Firmenprofil für 1 Jahr"
                 partner:

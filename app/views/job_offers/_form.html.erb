@@ -103,7 +103,10 @@
                 <div class="col-sm-8 pull-right">
                 <% if params[:book_single_job_offer] %>
                   <%= hidden_field_tag :book_single_job_offer, params[:book_single_job_offer] %>
-                  <%= f.select :category_id, [[t("job_offers.category.graduate_job"), 2, selected: true]],
+                  <%= f.select :category_id,
+                  [[t("job_offers.category.#{JobOffer::CATEGORIES[params[:book_single_job_offer].to_i]}"),
+                  params[:book_single_job_offer],
+                  selected: true]],
                   disabled: true,
                   class: 'select optional form-control'%>
                 <% else %>

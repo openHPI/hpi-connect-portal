@@ -2,7 +2,6 @@
 
   <%= simple_form_for @student do |f| %>
       <span class="pull-right" id="top-links">
-        <%= link_to 'Import from LinkedIn', request_linkedin_import_student_path(@student), class: 'btn btn-default title-button' %>
         <%= f.submit t("links.save"), class: "btn btn-primary title-button" %>
       </span>
 

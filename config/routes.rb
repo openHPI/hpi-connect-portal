@@ -86,8 +86,6 @@ HpiHiwiPortal::Application.routes.draw do
         member do
           patch 'activate'
           get 'activate'
-          get 'request_linkedin_import'
-          get 'insert_imported_data'
         end
         collection do
           get 'export_alumni', action: 'export_alumni'
