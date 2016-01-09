@@ -3,7 +3,7 @@ class AddAvatarToChairs < ActiveRecord::Migration
 		add_attachment :chairs, :avatar
   end
 
-	def down
+	def down 
 		remove_attachment :chairs, :avatar
 	end
 end

@@ -177,6 +177,39 @@ describe StudentsController do
     end
   end
 
+  describe "GET export_alumni" do
+
+    it "should send a CSV file with all alumni to the admin" do
+      require 'csv'
+      registered = FactoryGirl.create(:student)
+      registered.user.update_attributes(alumni_email: 'registered.alumni')
+      pending = FactoryGirl.create(:alumni)
+
+      login FactoryGirl.create(:user, :admin)
+      get :export_alumni
+      csv = CSV.parse(response.body)
+      csv_array = csv.to_a
+      expect(csv[0]).to eq(%w{lastname firstname alumni_email email graduation})
+      expect(csv[1]).to eq([registered.lastname, registered.firstname, registered.alumni_email, registered.email, "General Qualification for University Entrance"])
+      expect(csv[2]).to eq(["The following alumni are not registered, yet", "", "", ""])
+      expect(csv[3]).to eq([pending.lastname, pending.firstname, pending.alumni_email, pending.email])
+    end
+
+    it "should not send a CSV to a student" do
+      login FactoryGirl.create(:student).user
+      get :export_alumni
+      response.should redirect_to(root_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
+    end
+
+    it "should not send a CSV to a staff member" do
+      login FactoryGirl.create(:staff).user
+      get :export_alumni
+      response.should redirect_to(root_path)
+      flash[:notice].should eql("You are not authorized to access this page.")
+    end
+  end
+
   describe "GET activate" do
     describe "as an admin" do
 
