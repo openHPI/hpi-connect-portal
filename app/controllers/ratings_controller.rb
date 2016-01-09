@@ -5,7 +5,7 @@ class RatingsController < ApplicationController
   before_action :set_job_offers_selection, only: [:new, :create, :edit, :update]
 
   load_and_authorize_resource
-  skip_load_resource :only => [:create]
+  skip_load_resource only: [:create]
 
   def index
   end

@@ -104,9 +104,9 @@ describe StudentsController do
 
     it "saves uploaded images" do
       test_file = ActionDispatch::Http::UploadedFile.new({
-        :filename => 'test_picture.jpg',
-        :type => 'image/jpeg',
-        :tempfile => fixture_file_upload('/images/test_picture.jpg')
+        filename: 'test_picture.jpg',
+        type: 'image/jpeg',
+        tempfile: fixture_file_upload('/images/test_picture.jpg')
       })
 
       patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
@@ -269,7 +269,7 @@ describe StudentsController do
     it "updates the requested student with an existing programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       @student.programming_languages_users.size.should eq(1)
-      ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
+      ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ skill: "2" })
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
     end
 
@@ -301,7 +301,7 @@ describe StudentsController do
     it "updates the requested student with an existing language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       @student.languages_users.size.should eq(1)
-      LanguagesUser.any_instance.should_receive(:update_attributes).with({ :skill => "2" })
+      LanguagesUser.any_instance.should_receive(:update_attributes).with({ skill: "2" })
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
     end
 

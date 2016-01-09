@@ -12,11 +12,11 @@ describe StudentsController do
     end
 
     it "routes to #show" do
-      get("/students/1").should route_to("students#show", :id => "1")
+      get("/students/1").should route_to("students#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/students/1/edit").should route_to("students#edit", :id => "1")
+      get("/students/1/edit").should route_to("students#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe StudentsController do
     end
 
     it "routes to #update" do
-      put("/students/1").should route_to("students#update", :id => "1")
+      put("/students/1").should route_to("students#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/students/1").should route_to("students#destroy", :id => "1")
+      delete("/students/1").should route_to("students#destroy", id: "1")
     end
 
   end

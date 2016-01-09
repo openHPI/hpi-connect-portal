@@ -232,10 +232,10 @@ describe JobOffer do
   end
 
   it "returns job offers filtered by status" do
-    @status = FactoryGirl.create(:job_status, :name => "closed")
+    @status = FactoryGirl.create(:job_status, name: "closed")
     job_offer_with_status = FactoryGirl.create(:job_offer, status: @status)
     FactoryGirl.create(:job_offer, employer: @epic)
-    filtered_job_offers = JobOffer.where(:status => @status)
+    filtered_job_offers = JobOffer.where(status: @status)
     assert filtered_job_offers.include? job_offer_with_status
     assert_equal(filtered_job_offers.length, 1)
   end

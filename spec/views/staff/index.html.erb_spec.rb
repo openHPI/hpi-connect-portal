@@ -24,6 +24,6 @@ describe "staff/index" do
   it "renders a list of students" do
     view.stub(:will_paginate)
     render
-    assert_select "a", :text => "First Name Last Name", :count => 2
+    assert_select "a", text: "First Name Last Name", count: 2
   end
 end

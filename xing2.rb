@@ -177,11 +177,11 @@ end
     "wants" => nil,
     "what_makes_me_special" => ""
   }
-# puts UserStatus.where(:name => 'no interest').first.id
+# puts UserStatus.where(name: 'no interest').first.id
 #Converting - Höchstwahrscheinlich aktualisieren!
 usefull["birthday"] = "#{userdata[:birth_date][:year]}-#{userdata[:birth_date][:month]}-#{userdata[:birth_date][:day]}"
 usefull["employment"] = userdata[:employment_status]
-#usefull["user_status"] = (userdata[:employment]=="STUDENT") ? UserStatus.where(:name => 'jobseeking').first : (userdata[:employment_status]=="RETIRED" ? UserStatus.where(:name => 'no interest').first : UserStatus.where(:name => 'employed').first)
+#usefull["user_status"] = (userdata[:employment]=="STUDENT") ? UserStatus.where(name: 'jobseeking').first : (userdata[:employment_status]=="RETIRED" ? UserStatus.where(name: 'no interest').first : UserStatus.where(name: 'employed').first)
 
 #userdata[:languages].each do |x| usefull["languages"] << [get_language_name(x["language"]["name"].downcase), get_skill_id(x["id"])] end
 

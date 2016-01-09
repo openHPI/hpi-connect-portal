@@ -200,7 +200,7 @@ describe "Job Offer pages" do
       let(:student) { FactoryGirl.create(:student) }
 
       before do
-        staff.update(:employer => employer)
+        staff.update(employer: employer)
       end
 
       describe "as a student" do

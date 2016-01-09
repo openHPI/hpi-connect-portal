@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "employers/new" do
   before(:each) do
     @employer = assign(:employer, stub_model(Employer,
-      :name => "HCI", :description => "Human Computer Interaction"
+      name: "HCI", description: "Human Computer Interaction"
     ).as_new_record)
   end
 
