@@ -14,36 +14,36 @@
     <div class="col-sm-12 text-left">
       <p>
         <% if @job_offer.pending? && can?(:accept, @job_offer) %>
-          <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), :class => "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
-          <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), :class => "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
+          <%= link_to t("job_offers.accept"), accept_job_offer_path(@job_offer), class: "btn btn-success", data: {confirm: t("job_offers.accept_confirm")} %>
+          <%= link_to t("job_offers.decline"), decline_job_offer_path(@job_offer), class: "btn btn-danger", data: {confirm: t("job_offers.decline_confirm")} %>
         <% end %>
 
         <% if @job_offer.closed? && can?(:reopen, @job_offer) && %>
-          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), :class => "btn btn-default " %>
+          <%= link_to t("job_offers.reopen_job"), reopen_job_offer_path(@job_offer), class: "btn btn-default " %>
         <% end %>
 
         <% if can?(:prolong, @job_offer) %>
-          <%= link_to t("job_offers.prolong"), prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+          <%= link_to t("job_offers.prolong"), prolong_job_offer_path(@job_offer), class: "btn btn-default" %>
         <% elsif can?(:request_prolong, @job_offer) %>
           <% if @job_offer.prolong_requested %>
             <a class="btn btn-default" disabled="disabled"><%= t("job_offers.prolong_requested") %></a>
           <% else %>
             <%= t("activerecord.attributes.job_offer.expiration_date") %>: <%= @job_offer.expiration_date %>
-            <%= link_to t("job_offers.prolong"), request_prolong_job_offer_path(@job_offer), :class => "btn btn-default" %>
+            <%= link_to t("job_offers.prolong"), request_prolong_job_offer_path(@job_offer), class: "btn btn-default" %>
           <% end %>
         <% end %>
 
         <% if can?(:update, @job_offer) && !@job_offer.closed? %>
           <%= link_to t("job_offers.show_matching_students"),
-          students_path(:graduation_id => @job_offer.graduation_id,
-          :language_ids => @job_offer.languages.ids, :programming_language_ids => @job_offer.programming_languages.ids), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
+          students_path(graduation_id: @job_offer.graduation_id,
+          language_ids: @job_offer.languages.ids, programming_language_ids: @job_offer.programming_languages.ids), class: "btn btn-default", disabled: !@job_offer.editable? %>
           <% if can?(:edit, @job_offer) %>
-            <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), :class => "btn btn-default", :disabled => !@job_offer.editable? %>
-            <%= link_to t("links.destroy"), job_offer_path(@job_offer), :data => { :confirm => t("links.confirm") }, :method => :delete, :class => "btn btn-danger", :disabled => !@job_offer.editable? %>
+            <%= link_to t("links.edit"), edit_job_offer_path(@job_offer), class: "btn btn-default", disabled: !@job_offer.editable? %>
+            <%= link_to t("links.destroy"), job_offer_path(@job_offer), data: { confirm: t("links.confirm") }, method: :delete, class: "btn btn-danger", disabled: !@job_offer.editable? %>
           <% end %>
         <% end %>
         <% if can?(:close, @job_offer) && @job_offer.active? %>
-          <%= link_to t("job_offers.job_completed"), close_job_offer_path(@job_offer), :class => "btn btn-default" %>
+          <%= link_to t("job_offers.job_completed"), close_job_offer_path(@job_offer), class: "btn btn-default" %>
         <% end %>
       </p>
     </div>
@@ -119,7 +119,7 @@
           <center>
             <% if can? :read, Rating %>
                <%= render "ratings/employer_rating_stars", employer: @job_offer.employer %>
-               <%= link_to t("ratings.click_here"), employer_ratings_path(@job_offer.employer), {:class => "link_to_ratings"} %>
+               <%= link_to t("ratings.click_here"), employer_ratings_path(@job_offer.employer), {class: "link_to_ratings"} %>
             <% end %>
           </center>
         </div>

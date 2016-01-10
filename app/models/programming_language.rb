@@ -10,7 +10,7 @@
 
 class ProgrammingLanguage < ActiveRecord::Base
   has_many :programming_languages_users
-  has_many :students, :through => :programming_languages_users
+  has_many :students, through: :programming_languages_users
 
   has_and_belongs_to_many :job_offer
   validates_uniqueness_of :name

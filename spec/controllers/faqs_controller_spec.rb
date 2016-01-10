@@ -28,7 +28,7 @@ describe FaqsController do
   describe "GET edit" do
     it "assigns the requested faq as @faq" do
       faq = FactoryGirl.create(:faq)
-      get :edit, {:id => faq.to_param}, valid_session
+      get :edit, {id: faq.to_param}, valid_session
       assigns(:faq).should eq(faq)
     end
   end
@@ -37,18 +37,18 @@ describe FaqsController do
     describe "with valid params" do
       it "creates a new Faq" do
         expect {
-          post :create, {:faq => valid_attributes}, valid_session
+          post :create, {faq: valid_attributes}, valid_session
         }.to change(Faq, :count).by(1)
       end
 
       it "assigns a newly created faq as @faq" do
-        post :create, {:faq => valid_attributes}, valid_session
+        post :create, {faq: valid_attributes}, valid_session
         assigns(:faq).should be_a(Faq)
         assigns(:faq).should be_persisted
       end
 
       it "redirects to faqs index" do
-        post :create, {:faq => valid_attributes}, valid_session
+        post :create, {faq: valid_attributes}, valid_session
         response.should redirect_to(faqs_path)
       end
     end
@@ -57,14 +57,14 @@ describe FaqsController do
       it "assigns a newly created but unsaved faq as @faq" do
         # Trigger the behavior that occurs when invalid params are submitted
         Faq.any_instance.stub(:save).and_return(false)
-        post :create, {:faq => { "question" => "invalid value" }}, valid_session
+        post :create, {faq: { "question" => "invalid value" }}, valid_session
         assigns(:faq).should be_a_new(Faq)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Faq.any_instance.stub(:save).and_return(false)
-        post :create, {:faq => { "question" => "invalid value" }}, valid_session
+        post :create, {faq: { "question" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -79,18 +79,18 @@ describe FaqsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Faq.any_instance.should_receive(:update).with({ "question" => "Is this a test?", "answer" => "Yes"})
-        put :update, {:id => faq.to_param, :faq => { "question" => "Is this a test?", "answer" => "Yes"}}, valid_session
+        put :update, {id: faq.to_param, faq: { "question" => "Is this a test?", "answer" => "Yes"}}, valid_session
       end
 
       it "assigns the requested faq as @faq" do
         faq = FactoryGirl.create(:faq)
-        put :update, {:id => faq.to_param, :faq => valid_attributes}, valid_session
+        put :update, {id: faq.to_param, faq: valid_attributes}, valid_session
         assigns(:faq).should eq(faq)
       end
 
       it "redirects to the faqs index" do
         faq = FactoryGirl.create(:faq)
-        put :update, {:id => faq.to_param, :faq => valid_attributes}, valid_session
+        put :update, {id: faq.to_param, faq: valid_attributes}, valid_session
         response.should redirect_to(faqs_path)
       end
 
@@ -99,7 +99,7 @@ describe FaqsController do
           faq = FactoryGirl.create(:faq)
           # Trigger the behavior that occurs when invalid params are submitted
           Faq.any_instance.stub(:save).and_return(false)
-          put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
+          put :update, {id: faq.to_param, faq: { "question" => "invalid value" }}, valid_session
           assigns(:faq).should eq(faq)
         end
 
@@ -107,7 +107,7 @@ describe FaqsController do
           faq = FactoryGirl.create(:faq)
           # Trigger the behavior that occurs when invalid params are submitted
           Faq.any_instance.stub(:save).and_return(false)
-          put :update, {:id => faq.to_param, :faq => { "question" => "invalid value" }}, valid_session
+          put :update, {id: faq.to_param, faq: { "question" => "invalid value" }}, valid_session
           response.should render_template("edit")
         end
       end
@@ -118,13 +118,13 @@ describe FaqsController do
     it "destroys the requested faq" do
       faq = FactoryGirl.create(:faq)
       expect {
-        delete :destroy, {:id => faq.to_param}, valid_session
+        delete :destroy, {id: faq.to_param}, valid_session
       }.to change(Faq, :count).by(-1)
     end
 
     it "redirects to the faqs list" do
       faq = FactoryGirl.create(:faq)
-      delete :destroy, {:id => faq.to_param}, valid_session
+      delete :destroy, {id: faq.to_param}, valid_session
       response.should redirect_to(faqs_url)
     end
   end

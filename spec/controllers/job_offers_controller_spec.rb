@@ -58,7 +58,7 @@ describe JobOffersController do
     end
 
     it "renders the jobs found archive" do
-      get :archive, ({:search => "Ruby"}), valid_session
+      get :archive, ({search: "Ruby"}), valid_session
       response.should render_template("archive")
     end
   end
@@ -139,7 +139,7 @@ describe JobOffersController do
       FactoryGirl.create(:job_offer, employer: @employer_one, status: @active)
 
       job_offers = JobOffer.filter_employer(@employer_one.id)
-      get :index, ({:employer => @employer_one.id}), valid_session
+      get :index, ({employer: @employer_one.id}), valid_session
       assigns(:job_offers_list)[:items].to_a.should =~ (job_offers).to_a
     end
 
@@ -157,21 +157,21 @@ describe JobOffersController do
 
       context "student selects 'HPI' group" do
         it "assings all job offers tagged with 'HPI' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({:student_group => hpi_group_id}), valid_session
+          get :index, ({student_group: hpi_group_id}), valid_session
           assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_both).to_a
         end
       end
 
       context "student selects 'D-School' group" do
         it "assings all job offers tagged with with 'D-School' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({:student_group => dschool_group_id }), valid_session
+          get :index, ({student_group: dschool_group_id }), valid_session
           assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_dschool | job_offers_both).to_a
         end
       end
 
       context "student selects blank" do
         it "assings all job offers tagged with 'HPI', 'D-School' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({:student_group => "" }), valid_session
+          get :index, ({student_group: "" }), valid_session
           assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_dschool | job_offers_both).to_a
         end
       end

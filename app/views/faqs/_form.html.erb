@@ -14,7 +14,7 @@
     </div>
     <%= f.input :answer, input_html: { class: "tinymce" } %>
   </div>
-      <%= f.hidden_field :locale, :value => locale.to_s %>
+      <%= f.hidden_field :locale, value: locale.to_s %>
   <div class="actions">
     <%= f.submit t("links.save"), class: "btn btn-warning pull-right" %>
   </div>

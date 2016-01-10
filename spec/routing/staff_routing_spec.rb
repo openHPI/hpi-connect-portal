@@ -12,7 +12,7 @@ describe StaffController do
     # end
 
     it "routes to #show" do
-      get("/staff/1").should route_to("staff#show", :id => "1")
+      get("/staff/1").should route_to("staff#show", id: "1")
     end
 
     # it "routes to #create" do
@@ -20,7 +20,7 @@ describe StaffController do
     # end
 
     it "routes to #destroy" do
-      delete("/staff/1").should route_to("staff#destroy", :id => "1")
+      delete("/staff/1").should route_to("staff#destroy", id: "1")
     end
   end
 end

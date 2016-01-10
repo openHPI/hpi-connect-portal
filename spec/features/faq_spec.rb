@@ -52,8 +52,8 @@ describe "FAQ page" do
     expect(page).to have_content "How do I make edits to my profile?"
     #find('How do I make edits to my profile').click
     page.find_link("New FAQ").click
-    fill_in 'faq_question', :with => 'How to add a new issue to FAQ.'
-    fill_in 'faq_answer', :with => 'This is the new explanation.'
+    fill_in 'faq_question', with: 'How to add a new issue to FAQ.'
+    fill_in 'faq_answer', with: 'This is the new explanation.'
     find('input[type="submit"]').click
     expect(page).to have_content "How to add a new issue to FAQ."
   end
@@ -68,8 +68,8 @@ describe "FAQ page" do
     expect(page).to have_content "How do I make edits to my profile?"
     #find('How do I make edits to my profile').click
     page.find_link("Edit").click
-    fill_in 'faq_question', :with => 'How to add a new issue to FAQ.'
-    fill_in 'faq_answer', :with => 'This is the new explanation.'
+    fill_in 'faq_question', with: 'How to add a new issue to FAQ.'
+    fill_in 'faq_answer', with: 'This is the new explanation.'
     find('input[type="submit"]').click
     expect(page).to have_content "How to add a new issue to FAQ."
   end

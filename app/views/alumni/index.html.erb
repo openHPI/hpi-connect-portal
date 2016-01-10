@@ -30,19 +30,19 @@
 <div class="wrapper-5 teaser sidebar">
   <div class="col-md-4">
     <div class="sidebar-nav">
-      <%= form_tag '', :method => :get do %>
+      <%= form_tag '', method: :get do %>
         <ul class="nav nav-list">
           <div class="form-group">
             <h5><%= label_tag "Vorname" %></h5>
-            <%= text_field_tag(:firstname, params[:firstname], :placeholder => 'firstname', :class => "form-control") %>
+            <%= text_field_tag(:firstname, params[:firstname], placeholder: 'firstname', class: "form-control") %>
             <h5><%= label_tag "Nachname" %></h5>
-            <%= text_field_tag(:lastname, params[:lastname], :placeholder => 'lastname', :class => "form-control") %>
+            <%= text_field_tag(:lastname, params[:lastname], placeholder: 'lastname', class: "form-control") %>
             <h5><%= label_tag "Email" %></h5>
-            <%= text_field_tag(:email, params[:email], :placeholder => 'email', :class => "form-control") %>
+            <%= text_field_tag(:email, params[:email], placeholder: 'email', class: "form-control") %>
             <h5><%= label_tag "Alumni Email" %></h5>
-            <%= text_field_tag(:alumni_email, params[:alumni_email], :placeholder => 'alumni_email', :class => "form-control") %>
+            <%= text_field_tag(:alumni_email, params[:alumni_email], placeholder: 'alumni_email', class: "form-control") %>
           </div>
-          <%= submit_tag t("job_offers.find_jobs_button"), :class => "btn btn-default pull-right" %>
+          <%= submit_tag t("job_offers.find_jobs_button"), class: "btn btn-default pull-right" %>
         </ul>
       <% end %>
     </div>

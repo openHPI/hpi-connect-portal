@@ -10,10 +10,10 @@ module ApplicationHelper
 
   def sanitized_html(text)
     Sanitize.fragment(text.html_safe,
-      :elements => ['ul', 'li', 'b', 'strong', 'em', 'u', 'i', 'table', 'tbody', 'tr', 'td', 'caption', 'ol', 'blockquote', 'div', 'span',
+      elements: ['ul', 'li', 'b', 'strong', 'em', 'u', 'i', 'table', 'tbody', 'tr', 'td', 'caption', 'ol', 'blockquote', 'div', 'span',
         'br', 'a','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-      :attributes => {'a' => ['target', 'href'], 'span' => ['class'], 'table'=>['border', 'cellspacing', 'cellpadding'], :all => ['style']},
-      :protocols => {'a' => {'href' => ['http', 'https', 'mailto']}},
-      :css => { :properties => ['text-align','text-decoration', 'padding-left', 'color', 'background-color', 'width', 'height', 'border-color', 'list-style-type']}).html_safe
+      attributes: {'a' => ['target', 'href'], 'span' => ['class'], 'table'=>['border', 'cellspacing', 'cellpadding'], all: ['style']},
+      protocols: {'a' => {'href' => ['http', 'https', 'mailto']}},
+      css: { properties: ['text-align','text-decoration', 'padding-left', 'color', 'background-color', 'width', 'height', 'border-color', 'list-style-type']}).html_safe
   end
 end

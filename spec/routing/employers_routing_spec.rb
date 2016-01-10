@@ -12,11 +12,11 @@ describe EmployersController do
     end
 
     it "routes to #show" do
-      get("/employers/1").should route_to("employers#show", :id => "1")
+      get("/employers/1").should route_to("employers#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/employers/1/edit").should route_to("employers#edit", :id => "1")
+      get("/employers/1/edit").should route_to("employers#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe EmployersController do
     end
 
     it "routes to #update" do
-      put("/employers/1").should route_to("employers#update", :id => "1")
+      put("/employers/1").should route_to("employers#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/employers/1").should route_to("employers#destroy", :id => "1")
+      delete("/employers/1").should route_to("employers#destroy", id: "1")
     end
 
   end

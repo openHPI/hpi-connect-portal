@@ -3,7 +3,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-md-9" style="width: 100%;">
-          <%= link_to student.full_name, student_path(student), :class => "h4" %>
+          <%= link_to student.full_name, student_path(student), class: "h4" %>
 
           <% if defined?(show_fire_button) && show_fire_button %>
             <%= simple_form_for [:fire, @job_offer], method: :post, class: "form-inline" do |f| %>

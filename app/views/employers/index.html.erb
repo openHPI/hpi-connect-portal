@@ -1,7 +1,7 @@
 <div class="wrapper-12 panel-wrapper">
   <span class="pull-left" id="top-links">
      <% if can?(:create, Employer) %>
-      <%= link_to t('employers.new_employer'), new_employer_path, :class => "btn btn-default pull-right title-button" %>
+      <%= link_to t('employers.new_employer'), new_employer_path, class: "btn btn-default pull-right title-button" %>
     <% end %>
   </span>
 </div>

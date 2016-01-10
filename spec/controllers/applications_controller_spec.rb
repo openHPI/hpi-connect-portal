@@ -4,7 +4,7 @@ describe ApplicationsController do
 
   let(:employer) { FactoryGirl.create(:employer) }
 	let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :name => "active")} }
+                        "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, name: "active")} }
   before(:each) do
     @student = FactoryGirl.create(:student)
     @student.user.email = 'test@example.com'
@@ -122,9 +122,9 @@ describe ApplicationsController do
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({
-        :filename => 'test_cv.pdf',
-        :type => 'application/pdf',
-        :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
+        filename: 'test_cv.pdf',
+        type: 'application/pdf',
+        tempfile: fixture_file_upload('/pdf/test_cv.pdf')
       })
 
       login FactoryGirl.create(:student).user
@@ -152,9 +152,9 @@ describe ApplicationsController do
       @job_offer.save
 
       test_file = ActionDispatch::Http::UploadedFile.new({
-        :filename => 'test_cv.pdf',
-        :type => 'application/png',
-        :tempfile => fixture_file_upload('/pdf/test_cv.pdf')
+        filename: 'test_cv.pdf',
+        type: 'application/png',
+        tempfile: fixture_file_upload('/pdf/test_cv.pdf')
       })
 
       login FactoryGirl.create(:student).user

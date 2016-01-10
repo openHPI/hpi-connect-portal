@@ -12,11 +12,11 @@ describe JobOffersController do
     end
 
     it "routes to #show" do
-      get("/job_offers/1").should route_to("job_offers#show", :id => "1")
+      get("/job_offers/1").should route_to("job_offers#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/job_offers/1/edit").should route_to("job_offers#edit", :id => "1")
+      get("/job_offers/1/edit").should route_to("job_offers#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe JobOffersController do
     end
 
     it "routes to #update" do
-      put("/job_offers/1").should route_to("job_offers#update", :id => "1")
+      put("/job_offers/1").should route_to("job_offers#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/job_offers/1").should route_to("job_offers#destroy", :id => "1")
+      delete("/job_offers/1").should route_to("job_offers#destroy", id: "1")
     end
 
   end

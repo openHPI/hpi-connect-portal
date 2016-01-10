@@ -85,12 +85,12 @@ HpiHiwiPortal::Application.configure do
 
   config.action_mailer.delivery_method = :sendmail
   # config.action_mailer.smtp_settings = {
-  #   :address => "smtp.gmail.com",
-  #   :port => 587,
-  #   :user_name => 'hpi.hiwi.portal@gmail.com',
-  #   :password => 'GhZtKxHzt2sWjvaYwCV4',
-  #   :authentication => 'plain',
-  #   :enable_starttls_auto => true }
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   user_name: 'hpi.hiwi.portal@gmail.com',
+  #   password: 'GhZtKxHzt2sWjvaYwCV4',
+  #   authentication: 'plain',
+  #   enable_starttls_auto: true }
 
   # Mount this application to a unique subdirectory
   config.relative_url_root = '/connect/jobportal'
