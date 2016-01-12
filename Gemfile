@@ -34,6 +34,9 @@ gem 'annotate', '>=2.6.1'
 # Secure Password Hashes
 gem 'bcrypt-ruby', '~> 3.1.5'
 
+# Ruby linting
+gem 'rubocop'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', '~> 0.4.0', require: false
@@ -44,8 +47,10 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
-  gem 'factory_girl_rails', :require => false
-  gem 'codeclimate-test-reporter', '~> 0.3.0', :require => nil
+  gem 'factory_girl_rails', require: false
+  gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
+  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
+  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 end
 
 gem 'simplecov', group: :test, require: nil
@@ -146,4 +151,3 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rails', '~> 1.1.0'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
-
