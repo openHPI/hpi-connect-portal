@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
+//= require jquery-ui/datepicker
 //= require jquery.turbolinks
 //= require jquery-star-rating
 //= require jquery.raty.min
