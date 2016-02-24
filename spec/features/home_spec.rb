@@ -5,9 +5,11 @@ describe "the home page" do
   it "renders the latest 5 job offers" do
     6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active )}
     visit root_path
-    page.should have_content(
-      "Testjob2", "Testjob3", "Testjob4", "Testjob5", "Testjob6"
-    )
+    page.should have_content("Testjob2")
+    page.should have_content("Testjob3")
+    page.should have_content("Testjob4")
+    page.should have_content("Testjob5")
+    page.should have_content("Testjob6")
     page.should_not have_content "Testjob1"
   end
 
@@ -33,9 +35,11 @@ describe "the home page" do
   it "renders the latest 6 employers" do
     6.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
     visit root_path
-    page.should have_content(
-      "TestEmployer2", "TestEmployer3", "TestEmployer4", "TestEmployer5", "TestEmployer6"
-    )
+    page.should have_content("TestEmployer2")
+    page.should have_content("TestEmployer3")
+    page.should have_content("TestEmployer4")
+    page.should have_content("TestEmployer5")
+    page.should have_content("TestEmployer6")
     page.should_not have_content "TestEmployer1"
   end
 

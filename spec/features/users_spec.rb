@@ -14,11 +14,10 @@ describe "the user editing page" do
 
     current_path.should == edit_user_path(@user)
 
-    page.should have_content(
-      I18n.t('users.messages.account_successfully_updated'),
-      "Account Settings",
-      "test@gmail.com"
-    )
+    page.should have_content(I18n.t('users.messages.account_successfully_updated'))
+    page.should have_content("Account Settings")
+    page.should have_selector("input[type=email][value='test@gmail.com']")
+
   end
 
   it "should be possible to change my password" do

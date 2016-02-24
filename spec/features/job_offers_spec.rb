@@ -17,11 +17,9 @@ describe "the job-offers page" do
 
   it "should include all jobs currently available" do
     visit job_offers_path
-    page.should have_content(
-      @job_offer_1.title,
-      @job_offer_2.title,
-      @job_offer_3.title
-    )
+    page.should have_content(@job_offer_1.title)
+    page.should have_content(@job_offer_2.title)
+    page.should have_content(@job_offer_3.title)
   end
 
   it "should sort the jobs by creation date" do
@@ -88,7 +86,8 @@ describe "a job offer entry" do
   end
 
   it "should have a title and the professorship" do
-    page.should have_content(@job_offer.title, @employer.name)
+    page.should have_content(@job_offer.title)
+    page.should have_content(@employer.name)
   end
 
   it "should link to its detailed page" do

@@ -56,10 +56,8 @@ describe "the students page" do
     end
 
     it "should view only names and status of a student on the overview" do
-      page.should have_content(
-        @student1.firstname,
-        @student1.lastname
-      )
+      page.should have_content(@student1.firstname)
+      page.should have_content(@student1.lastname)
     end
 
     it "should contain a link for showing a profile and it should lead to profile page " do
@@ -86,20 +84,15 @@ describe "the students editing page" do
 
   it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
-    page.should have_content(
-      "HPI-Status",
-      "General Information",
-      "Photo",
-      "Links",
-      "Programming language skills",
-      "Additional information",
-      "Language skills",
-      "Python",
-      "English",
-      "Picture",
-      "Semester",
-      "Resume"
-    )
+    page.should have_content("HPI-Status")
+    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
+    page.should have_content("Photo")
+    page.should have_content("Links")
+    page.should have_content("Programming language skills")
+    page.should have_content("Additional information")
+    page.should have_content("Language skills")
+    page.should have_content("Semester")
+    page.should have_content("Resume")
   end
 
   it "should be possible to change attributes of myself " do
@@ -109,11 +102,9 @@ describe "the students editing page" do
 
     current_path.should == student_path(@student1)
 
-    page.should have_content(
-      I18n.t('users.messages.successfully_updated'),
-      "General information",
-      "www.faceboook.com/alex"
-    )
+    page.should have_content(I18n.t('users.messages.successfully_updated'))
+    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
+    page.should have_content("www.faceboook.com/alex")
    end
 
   it "can be edited by an admin" do
@@ -129,11 +120,9 @@ describe "the students editing page" do
 
     current_path.should == student_path(@student1)
 
-    page.should have_content(
-      I18n.t('users.messages.successfully_updated'),
-      "General information",
-      "www.face.com/alex"
-    )
+    page.should have_content(I18n.t('users.messages.successfully_updated'))
+    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
+    page.should have_content("www.face.com/alex")
   end
 end
 
@@ -162,10 +151,8 @@ describe "the students profile page" do
     end
 
     it "should contain all the details of student1" do
-      page.should have_content(
-        @student1.firstname,
-        @student1.lastname
-      )
+      page.should have_content(@student1.firstname)
+      page.should have_content(@student1.lastname)
     end
 
     it "should contain all jobs I am assigned to" do
@@ -211,10 +198,8 @@ describe "the students profile page" do
     end
 
     it "should not contain all the details of student3" do
-        page.should_not have_content(
-          @student3.firstname,
-          @student3.lastname
-        )
+      page.should_not have_content(@student3.firstname)
+      page.should_not have_content(@student3.lastname)
     end
 
   end
@@ -225,10 +210,8 @@ describe "the students profile page" do
 
 
     it "should contain all the details of student2" do
-      page.should have_content(
-        @student2.firstname,
-        @student2.lastname
-      )
+      page.should have_content(@student2.firstname)
+      page.should have_content(@student2.lastname)
     end
 
     it "should not contain the job the other student is assigned to" do

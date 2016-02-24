@@ -151,10 +151,8 @@ describe "Job Offer pages" do
 
 
         it "shows the assigned students" do
-          page.should have_content(
-                student.firstname,
-                student.lastname
-              )
+          page.should have_content(student.firstname)
+          page.should have_content(student.lastname)
         end
 
         it { should have_button I18n.t('job_offers.fire') }

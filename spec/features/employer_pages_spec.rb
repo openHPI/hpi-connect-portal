@@ -108,11 +108,9 @@ describe "the employer page" do
       fill_in 'employer_staff_members_attributes_0_user_attributes_password_confirmation', with: 'password'
       find('input[type="submit"]').click
 
-      page.should have_content(
-        I18n.t('employers.messages.successfully_created'),
-        "General information",
-        "Max Mustermann"
-      )
+      page.should have_content(I18n.t('employers.messages.successfully_created'))
+      page.should have_content("Welcome to HPI Connect!")
+      page.should have_content("Max Mustermann")
 
       employer = Employer.last
       expect(employer.name).to eq('Test Employer')

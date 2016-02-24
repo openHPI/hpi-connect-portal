@@ -18,10 +18,8 @@ describe "the staff page" do
 
   describe "as an admin" do
     it "should view only names of a staff member on the overview" do
-      page.should have_content(
-        @staff1.firstname,
-        @staff1.lastname,
-      )
+      page.should have_content(@staff1.firstname)
+      page.should have_content(@staff1.lastname)
     end
 
     it "should contain a link for showing a profile and it should lead to profile page " do
@@ -73,8 +71,9 @@ describe "the staff page" do
       fill_in 'staff_user_attributes_password_confirmation', with: 'password'
       find('input[type="submit"]').click
       employer.staff_members.count.should == 2
-      page.should have_content( I18n.t('employers.messages.successfully_created'),
-                                "General information", "Max Mustermann")
+      page.should have_content(I18n.t('employers.messages.successfully_created'))
+      page.should have_content("Welcome to HPI Connect!")
+      page.should have_content("Max Mustermann")
     end
   end
 end
