@@ -173,25 +173,35 @@ class Student < ActiveRecord::Base
 
   def self.export_alumni
     CSV.generate(headers: true) do |csv|
-      attributes = %w{lastname firstname alumni_email email}
-      headers = ["registered?"] + attributes + %w{graduation current_enterprise(s) current_position(s)}
+      shared_attributes = %w{lastname firstname alumni_email email}
+      headers = ["registered?"] + shared_attributes + %w{graduation current_enterprise(s) current_position(s)}
       csv << headers
-      find_each do |student|
-        if student.user.alumni?
-          current_enterprises_and_positions = student.get_current_enterprises_and_positions
-          alumni_attributes = ["yes"]
-          alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
-          alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
-          alumni_attributes.push(current_enterprises_and_positions[0])
-          alumni_attributes.push(current_enterprises_and_positions[1])
-          csv << alumni_attributes
-        end
-      end
+      csv = self.add_registered_alumni_to_csv(csv, shared_attributes)
       csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
-      Alumni.find_each do |alumni|
-        csv << ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
+      csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
+    end
+  end
+
+  def self.add_registered_alumni_to_csv(csv, attributes)
+    find_each do |student|
+      if student.user.alumni?
+        current_enterprises_and_positions = student.get_current_enterprises_and_positions
+        alumni_attributes = ["yes"]
+        alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
+        alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+        alumni_attributes.push(current_enterprises_and_positions[0])
+        alumni_attributes.push(current_enterprises_and_positions[1])
+        csv << alumni_attributes
       end
     end
+    return csv
+  end
+
+  def self.add_unregistered_alumni_to_csv(csv, attributes)
+    Alumni.find_each do |alumni|
+      csv << ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
+    end
+    return csv
   end
 
   def get_current_enterprises_and_positions
