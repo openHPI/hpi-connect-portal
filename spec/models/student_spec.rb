@@ -100,4 +100,19 @@ describe Student do
       ActionMailer::Base.deliveries.count.should == 0
     end
   end
+
+  describe "get_current_enterprises_and_positions" do
+    it "should return the current enterprises and positions" do
+      alumni = FactoryGirl.create(:student)
+      current_cv_job1 = FactoryGirl.create(:cv_job, current: true)
+      current_cv_job2 = FactoryGirl.create(:cv_job, current: true, employer: "HPI", position: "Hiwi")
+      alumni.cv_jobs = [current_cv_job1, current_cv_job2]
+      expect(alumni.get_current_enterprises_and_positions).to eq(["SAP AG, HPI", "Ruby on Rails developer, Hiwi"])
+    end
+
+    it "should return two empty strings if there are no current positions" do 
+      alumni = FactoryGirl.create(:student)
+      expect(alumni.get_current_enterprises_and_positions).to eq(["", ""])
+    end
+  end
 end

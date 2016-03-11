@@ -173,18 +173,31 @@ class Student < ActiveRecord::Base
 
   def self.export_alumni
     CSV.generate(headers: true) do |csv|
-      attributes = %w{lastname firstname alumni_email email graduation}
-      csv << attributes
-      attributes.pop()
+      attributes = %w{lastname firstname alumni_email email}
+      headers = ["registered?"] + attributes + %w{graduation current_enterprise(s) current_position(s)}
+      csv << headers
       find_each do |student|
         if student.user.alumni?
-          csv << attributes.map{ |attr| student.send(attr)}.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+          current_enterprises_and_positions = student.get_current_enterprises_and_positions
+          alumni_attributes = ["yes"]
+          alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
+          alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+          alumni_attributes.push(current_enterprises_and_positions[0])
+          alumni_attributes.push(current_enterprises_and_positions[1])
+          csv << alumni_attributes
         end
       end
       csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
       Alumni.find_each do |alumni|
-        csv << attributes.map{ |attr| alumni.send(attr) }
+        csv << ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
       end
     end
+  end
+
+  def get_current_enterprises_and_positions
+    current_jobs = cv_jobs.select {|job| job.current}
+    current_enterprises = current_jobs.map {|job| job.employer}.join(', ')
+    current_positions = current_jobs.map { |job| job.position}.join(', ')
+    return [current_enterprises, current_positions]
   end
 end
