@@ -7,10 +7,13 @@
       </div>
       <h5><%= label_tag t("job_offers.filterLabel") %></h5>
       <div class="form-group">
+        <%= text_field_tag(:employer, params[:employer], placeholder: t('students.filter_employer_placeholder'), class: "form-control") %>
+      </div>
+      <div class="form-group">
         <%= text_field_tag(:semester, params[:semester], placeholder: t('students.semester'), class: "form-control") %>
       </div>
       <div class="form-group">
-         <%= label_tag t("activerecord.attributes.user.academic_program") , nil, class: "small" %>
+        <%= label_tag t("activerecord.attributes.user.academic_program") , nil, class: "small" %>
         <%= select_tag "academic_program_id", options_for_select(
         Student::ACADEMIC_PROGRAMS.each_with_index.collect {|program, index|
          [t("activerecord.attributes.user.academic_rank_options." + program), index]},

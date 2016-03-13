@@ -8,6 +8,7 @@ de:
         carrier: "Karriere"
         name: "Name"
         semester: "Semester"
+        filter_employer_placeholder: "Arbeitgeber (durch Komma getrennt)"
         no_results: "Zu Ihrer Suchanfrage wurde kein passender Student gefunden"
         new_role_label: "Neue Rolle: "
         new_employer_label: "Neuer Arbeitgeber : "

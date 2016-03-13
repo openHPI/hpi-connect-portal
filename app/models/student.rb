@@ -83,6 +83,7 @@ class Student < ActiveRecord::Base
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
           ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
+  scope :filter_employer, -> employer { joins(:cv_jobs).where("lower(employer) IN (?)", employer.split(',').map(&:downcase))}
 
   def self.group_id(group_name)
     GROUPS.index(group_name)
@@ -122,37 +123,28 @@ class Student < ActiveRecord::Base
 
   def self.apply_saved_scopes(job_offers, saved_scopes)
     saved_scopes.each do |key, value|
-      if key == :state
+      case key
+      when :state
         job_offers = job_offers.filter_state(value)
-      end
-      if key == :employer
+      when :employer
         job_offers = job_offers.filter_employer(value)
-      end
-      if key == :category
+      when :category
         job_offers = job_offers.filter_category(value)
-      end
-      if key == :graduations
+      when :graduations
         job_offers = job_offers.filter_graduations(value)
-      end
-      if key == :start_date
+      when :start_date
         job_offers = job_offers.filter_start_date(value)
-      end
-      if key == :end_date
+      when :end_date
         job_offers = job_offers.filter_end_date(value)
-      end
-      if key == :time_effort
+      when :time_effort
         job_offers = job_offers.filter_time_effort(value)
-      end
-      if key == :compensation
+      when :compensation
         job_offers = job_offers.filter_compensation(value)
-      end
-      if key == :language_ids
+      when :language_ids
         job_offers = job_offers.filter_languages(value)
-      end
-      if key == :programming_language_ids
+      when :programming_language_ids
         job_offers = job_offers.filter_programming_languages(value)
-      end
-      if key == :student_group
+      else
         job_offers = job_offers.filter_student_group(value)
       end
     end

@@ -319,3 +319,34 @@ describe "student newsletters" do
     student.newsletter_orders.first.search_params.count.should == 9
   end
 end
+
+describe "student filtering by employer" do
+  before(:each) do
+    job1 = FactoryGirl.create(:cv_job, employer: "SAP")
+    @student1 = FactoryGirl.create(:student, cv_jobs: [job1])
+    job2 = FactoryGirl.create(:cv_job, employer: "SAP AG")
+    @student2 = FactoryGirl.create(:student, cv_jobs: [job2])
+    job3 = FactoryGirl.create(:cv_job, employer: "HPI")
+    @student3 = FactoryGirl.create(:student, cv_jobs: [job3])
+  end
+
+  it "works for one specified employer" do
+    login FactoryGirl.create(:user, :admin)
+    visit students_path
+    fill_in "employer", with: "SAP"
+    click_on "Go!"
+    expect(page).to have_content @student1.full_name
+    expect(page).to_not have_content @student2.full_name
+    expect(page).to_not have_content @student3.full_name
+  end
+
+  it "works for more specified employers" do
+    login FactoryGirl.create(:user, :admin)
+    visit students_path
+    fill_in "employer", with: "SAP,SAP AG"
+    click_on "Go!"
+    expect(page).to have_content @student1.full_name
+    expect(page).to have_content @student2.full_name
+    expect(page).to_not have_content @student3.full_name
+  end
+end
