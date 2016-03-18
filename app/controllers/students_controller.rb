@@ -10,6 +10,7 @@ class StudentsController < ApplicationController
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
   has_scope :filter_languages, type: :array, only: [:index], as: :language_ids
   has_scope :filter_semester, only: [:index],  as: :semester
+  has_scope :filter_employer, only: [:index],  as: :employer
   has_scope :filter_academic_program, only: [:index],  as: :academic_program_id
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
 

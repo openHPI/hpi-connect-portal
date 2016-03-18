@@ -9,6 +9,7 @@ en:
         visibility: "Visibility"
         name: "Name"
         semester: "Semester"
+        filter_employer_placeholder: "Employer (seperated by comma)"
         no_results: "No student matches your search"
         new_role_label: "New Role: "
         new_employer_label: "New Employer: "
