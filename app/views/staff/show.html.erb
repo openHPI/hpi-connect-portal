@@ -1,6 +1,15 @@
 <div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6 text-left">
+      <% if can?(:destroy, @staff.user) %>
+        <%= link_to t("links.destroy"), staff_path(@staff), method: :delete, class: "btn btn-default pull-right", data: { confirm: 'Sind Sie sicher, dass Sie diesen Mitarbeiter löschen möchten?' } %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4>

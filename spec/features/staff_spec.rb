@@ -32,11 +32,18 @@ describe "the staff page" do
     it "should have a button to demote a member of the staff " do
       #should have_button('Demote')
     end
+
+    it "should be possible to delete staff members" do
+      count_staffs = Staff.all.size
+      visit staff_path(@staff1)
+      expect(page).to have_content "Delete"
+      click_on "Delete"
+      expect(Staff.all.size).to eq(count_staffs-1)
+    end
   end
 
 
   describe "as a member of staff" do
-
     it "should not be visible " do
       FactoryGirl.create(:job_status, name: 'active')
       login @staff1.user
@@ -44,10 +51,16 @@ describe "the staff page" do
       current_path.should_not == staff_index_path
       current_path.should == root_path
     end
+
+    it "should not remove other staff members" do
+      staff2 = FactoryGirl.create(:staff)
+      login staff2
+      visit staff_path(@staff1)
+      expect(page).to_not have_content "Delete"
+    end
   end
 
    describe "as a student" do
-
     it "should not be visible " do
       FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
@@ -56,7 +69,12 @@ describe "the staff page" do
       current_path.should == root_path
     end
 
-   end
+    it "should not remove staff members" do
+      login @student1.user
+      visit staff_path(@staff1)
+      expect(page).to_not have_content "Delete"
+    end
+  end
 
   describe "New staff after invitation" do
     let(:employer) { FactoryGirl.create(:employer, activated: true) }
