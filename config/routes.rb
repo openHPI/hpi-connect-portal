@@ -41,13 +41,6 @@ HpiHiwiPortal::Application.routes.draw do
         resources :ratings
       end
 
-      resources :applications, only: [:create, :destroy] do
-        member do
-          get "accept"
-          get "decline"
-        end
-      end
-
       resources :alumni, only: [:new, :create, :index, :show] do
         collection do
           get 'remind_via_mail'

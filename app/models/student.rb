@@ -38,8 +38,6 @@ class Student < ActiveRecord::Base
 
   has_one :user, as: :manifestation, dependent: :destroy
 
-  has_many :applications, dependent: :destroy
-  has_many :job_offers, through: :applications
   has_many :programming_languages_users, dependent: :destroy
   has_many :programming_languages, through: :programming_languages_users
   has_many :languages_users, dependent: :destroy
@@ -87,14 +85,6 @@ class Student < ActiveRecord::Base
 
   def self.group_id(group_name)
     GROUPS.index(group_name)
-  end
-
-  def application(job_offer)
-    applications.where(job_offer: job_offer).first
-  end
-
-  def applied?(job_offer)
-    !!application(job_offer)
   end
 
   def employment_status

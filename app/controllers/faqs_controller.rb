@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: faqs
+#
+#  id         :integer          not null, primary key
+#  question   :string(255)
+#  answer     :text
+#  created_at :datetime
+#  updated_at :datetime
+#  locale     :string(255)
+#
+
 class FaqsController < ApplicationController
   skip_before_filter :signed_in_user
   skip_before_filter :verify_authenticity_token

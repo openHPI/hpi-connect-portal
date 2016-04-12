@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: newsletter_orders
+#
+#  id            :integer          not null, primary key
+#  student_id    :integer
+#  search_params :text
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 class NewsletterOrdersController < ApplicationController
   load_and_authorize_resource
 

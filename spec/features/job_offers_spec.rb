@@ -37,19 +37,6 @@ describe "the job-offers page" do
     visit job_offers_path
     page.should have_content(job_offer.prolonged_at.to_date)
   end
-
-  describe "student has already applied" do
-    before(:each) do
-      @student = FactoryGirl.create(:student)
-      FactoryGirl.create(:application, student: @student, job_offer: @job_offer_1)
-      login @student.user
-    end
-
-    it {
-      visit job_offers_path
-      page.should have_selector('span.label-success', count: 1, text: I18n.t('job_offers.already_applied_badge'))
-    }
-  end
 end
 
 describe "a job offer entry" do

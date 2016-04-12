@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: employers
+#
+#  id                    :integer          not null, primary key
+#  name                  :string(255)
+#  description           :text
+#  created_at            :datetime
+#  updated_at            :datetime
+#  avatar_file_name      :string(255)
+#  avatar_content_type   :string(255)
+#  avatar_file_size      :integer
+#  avatar_updated_at     :datetime
+#  activated             :boolean          default(FALSE), not null
+#  place_of_business     :string(255)
+#  website               :string(255)
+#  line_of_business      :string(255)
+#  year_of_foundation    :integer
+#  number_of_employees   :string(255)
+#  requested_package_id  :integer          default(0), not null
+#  booked_package_id     :integer          default(0), not null
+#  single_jobs_requested :integer          default(0), not null
+#  token                 :string(255)
+#
+
 require 'spec_helper'
 
 describe EmployersController do
@@ -295,16 +320,15 @@ describe EmployersController do
       flash[:notice].should eql("You are not authorized to access this page.")
     end
 
-    it "should delete staff and applications of an deleted employer" do
+    it "should delete staff of an deleted employer" do
       employer = FactoryGirl.create(:employer, activated: true)
       staff = FactoryGirl.create(:staff, employer: employer)
       staff2 = FactoryGirl.create(:staff, employer: employer)
       job_offer = FactoryGirl.create(:job_offer, employer: employer)
       student = FactoryGirl.create(:student)
-      application = FactoryGirl.create(:application, student: student, job_offer: job_offer)
       expect {
         delete :destroy, {id: employer.id}
-        }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1) and change(Application, :count).by(-1)
+        }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1)
     end
   end
 

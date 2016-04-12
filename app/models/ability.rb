@@ -37,7 +37,6 @@ class Ability
     end
 
     if user.activated
-      can :create, Application
       can :read, Student do |student|
         student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
       end
@@ -61,7 +60,6 @@ class Ability
     can [:edit, :update, :invite_colleague], Employer, id: employer_id
 
     if staff.employer.activated
-      can :read, Application
       can :manage, Faq
       can :show, Student do |student|
         student.visibility_id > 0 && staff.employer.premium? && student.activated
@@ -81,8 +79,6 @@ class Ability
       cannot :destroy, JobOffer do |job|
         job.active?
       end
-
-      can [:accept, :decline], Application, job_offer: { employer: staff.employer }
 
       can :destroy, Staff, manifestation: { employer: { id: employer_id }}
 

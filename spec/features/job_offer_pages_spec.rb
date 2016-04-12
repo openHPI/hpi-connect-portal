@@ -31,25 +31,7 @@ describe "Job Offer pages" do
             visit job_offer_path(job_offer)
           end
 
-          it { should have_button('Apply') }
           it { should_not have_link('Edit')}
-          it { should_not have_selector('h4', text: 'Applications') }
-
-          describe "and having applied already" do
-            before do
-              FactoryGirl.create(:application, student: student, job_offer: job_offer)
-              login student.user
-              visit job_offer_path(job_offer)
-            end
-
-            it { should_not have_button('Apply') }
-            it { should_not have_selector('h4', text: 'Applications') }
-            it { should have_button(I18n.t("applications.delete")) }
-
-            it "should show a already applied panel when no success flash is there" do
-              should have_selector('div.panel', text: I18n.t('job_offers.already_applied'))
-            end
-          end
 
           describe "not being activated" do
             before do
@@ -58,65 +40,6 @@ describe "Job Offer pages" do
               login student.user
               visit job_offer_path(job_offer)
             end
-
-            it { should_not have_button('Apply') }
-          end
-        end
-
-        describe "as a staff of the job offers employer" do
-          let(:staff) { FactoryGirl.create(:staff, employer: job_offer.employer) }
-
-          before do
-            @application = FactoryGirl.create(:application, job_offer: job_offer)
-            login staff.user
-            visit job_offer_path(job_offer)
-          end
-
-          it { should_not have_button('Apply') }
-          it { should have_selector('h4', text: 'Applications') }
-
-          it { should have_selector('td[href="' + student_path(@application.student) + '"]') }
-
-          it { should have_link('Accept') }
-          it { should have_link('Decline') }
-
-          describe "as a responsible user of the job" do
-
-            before do
-              login staff.user
-              visit job_offer_path(job_offer)
-            end
-
-            it { should have_link('Accept') }
-            it { should have_link('Decline') }
-            it { should have_link('Edit')}
-          end
-        end
-
-        describe "as admin" do
-          let(:admin) { FactoryGirl.create(:user, :admin) }
-          before do
-            @application = FactoryGirl.create(:application, job_offer: job_offer)
-            login admin
-            visit job_offer_path(job_offer)
-          end
-
-          it { should have_link('Edit')}
-
-          it { should have_link('Accept') }
-          it { should have_link('Decline') }
-
-          it { should have_selector('h4', text: 'Applications') }
-          it { should have_selector('td[href="' + student_path(@application.student) + '"]') }
-
-          describe "when the job is open" do
-            before do
-              job_offer.update(end_date: Date.current + 20, status: FactoryGirl.create(:job_status, name: "active"))
-              login admin
-              visit job_offer_path(job_offer)
-            end
-
-           # it { should_not have_button(I18n.t("job_offers.prolong")) }
           end
         end
       end
@@ -141,27 +64,16 @@ describe "Job Offer pages" do
         let(:staff) { FactoryGirl.create(:staff, employer: job_offer.employer) }
 
         before do
-          job_offer.assigned_students = [student]
           login staff.user
           visit job_offer_path(job_offer)
         end
 
         it { should have_link I18n.t('job_offers.job_completed') }
         it { should_not have_link 'Reopen job offer'}
-
-
-        it "shows the assigned students" do
-          page.should have_content(student.firstname)
-          page.should have_content(student.lastname)
-        end
-
-        it { should have_button I18n.t('job_offers.fire') }
       end
 
       describe "as the responsible user" do
-
         before do
-          job_offer.assigned_students = [student]
           login job_offer.employer.staff_members[0].user
           visit edit_job_offer_path(job_offer)
         end
@@ -169,23 +81,18 @@ describe "Job Offer pages" do
         it "shouldn't display a delete button" do
           should_not have_link I18n.t("links.destroy")
         end
-
-        it { should_not have_button I18n.t('job_offers.fire') }
       end
 
       describe "as a admin" do
         let(:admin) { FactoryGirl.create(:user, :admin) }
 
         before do
-          job_offer.assigned_students = [student]
           login admin
           visit job_offer_path(job_offer)
         end
 
         it { should have_link I18n.t('job_offers.job_completed') }
         it { should_not have_link 'Reopen job offer'}
-
-        it { should have_button I18n.t('job_offers.fire') }
       end
     end
 

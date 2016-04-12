@@ -39,10 +39,7 @@ class JobOffer < ActiveRecord::Base
   before_save :default_values
 
   has_one :contact, as: :counterpart, dependent: :destroy
-  has_many :applications, dependent: :destroy
-  has_many :students, through: :applications
   has_many :assignments, dependent: :destroy
-  has_many :assigned_students, through: :assignments, source: :student
   has_many :ratings, dependent: :nullify
   has_and_belongs_to_many :programming_languages
   has_and_belongs_to_many :languages
@@ -145,19 +142,6 @@ class JobOffer < ActiveRecord::Base
     (self.compensation == 10.0) ? I18n.t('job_offers.default_compensation') : self.compensation.to_s + " " + I18n.t("job_offers.compensation_description")
   end
 
-  def check_remaining_applications
-    if vacant_posts == 0
-      if update({ status: JobStatus.active })
-        applications.each do | application |
-          application.decline
-        end
-      else
-        return false
-      end
-    end
-    return true
-  end
-
   def prolong
     update_column :prolonged_at, Date.current
     update_column :prolonged, true
@@ -168,25 +152,6 @@ class JobOffer < ActiveRecord::Base
 
   def expiration_date
     (prolonged_at || created_at).to_date + 4.weeks
-  end
-
-  def fire(student)
-    assigned_students.delete student
-    save!
-    update!({status: JobStatus.active})
-  end
-
-  def accept_application(application)
-    new_assigned_students = assigned_students << application.student
-    if update({ assigned_students: new_assigned_students })
-      application.delete
-      update!({ start_date: Date.current }) if flexible_start_date
-      ApplicationsMailer.application_accepted_student_email(application).deliver
-      JobOffersMailer.job_student_accepted_email(self).deliver
-      return true
-    else
-      return false
-    end
   end
 
   def category

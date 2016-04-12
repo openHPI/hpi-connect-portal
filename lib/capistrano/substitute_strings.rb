@@ -2,7 +2,7 @@
 # are defined in subsequent stage files. This
 # let's us use the {{var}} to represent fetch(:var)
 # in strings which are only evaluated at runtime.
-
+# :nocov:
 def sub_strings(input_string)
   output_string = input_string
   input_string.scan(/{{(\w*)}}/).each do |var|
@@ -10,3 +10,4 @@ def sub_strings(input_string)
   end
   output_string
 end
+# :nocov:

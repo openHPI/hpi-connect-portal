@@ -9,8 +9,8 @@ describe JobOffersMailer do
     ActionMailer::Base.perform_deliveries = true
     @staff = FactoryGirl.create(:staff)
     @staff2 = FactoryGirl.create(:staff)
-    @job_offer = FactoryGirl.create(:job_offer, assigned_students: [FactoryGirl.create(:student)])
-    @job_offer2 = FactoryGirl.create(:job_offer, assigned_students: [FactoryGirl.create(:student)])
+    @job_offer = FactoryGirl.create(:job_offer)
+    @job_offer2 = FactoryGirl.create(:job_offer)
     @staff2.update(employer: @job_offer2.employer)
     @job_offers = [@job_offer, @job_offer2]
     @job_offer.reload
@@ -115,53 +115,6 @@ describe JobOffersMailer do
 
     it "should be send from 'noreply-connect@hpi.de'" do
       @email.from.should eq(['noreply-connect@hpi.de'])
-    end
-  end
-
-  describe "responsible user accepted student" do
-    before(:each) do
-      @email = JobOffersMailer.job_student_accepted_email(@job_offer).deliver
-    end
-
-    it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
-    end
-
-    it "should have be send to the default staff address" do
-      @email.to.should eq([Configurable.mailToAdministration])
-    end
-
-    it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
-    end
-
-    it "should have job information in its body" do
-      @email.body.should have_content(@job_offer.title)
-    end
-
-    it "should have Employers Name in its body" do
-      @email.body.should have_content(@job_offer.employer.name)
-    end
-  end
-  describe "students are informed about new job offer" do
-    before(:each) do
-      @email = JobOffersMailer.new_job_offer_info_email(@job_offer, @job_offer.assigned_students.last).deliver
-    end
-
-    it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
-    end
-
-    it "should have be send to user adress" do
-      @email.to.should eq([@job_offer.assigned_students.last.email])
-    end
-
-      it "should be send from 'noreply-connect@hpi.de'" do
-        @email.from.should eq(['noreply-connect@hpi.de'])
-      end
-
-    it "should have job information in its body" do
-      @email.body.should have_content(@job_offer.title)
     end
   end
 

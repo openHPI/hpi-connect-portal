@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: job_offers
+#
+#  id                        :integer          not null, primary key
+#  description               :text
+#  title                     :string(255)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  start_date                :date
+#  end_date                  :date
+#  time_effort               :float
+#  compensation              :float
+#  employer_id               :integer
+#  status_id                 :integer
+#  flexible_start_date       :boolean          default(FALSE)
+#  category_id               :integer          default(0), not null
+#  state_id                  :integer          default(3), not null
+#  graduation_id             :integer          default(2), not null
+#  prolong_requested         :boolean          default(FALSE)
+#  prolonged                 :boolean          default(FALSE)
+#  prolonged_at              :datetime
+#  release_date              :date
+#  offer_as_pdf_file_name    :string(255)
+#  offer_as_pdf_content_type :string(255)
+#  offer_as_pdf_file_size    :integer
+#  offer_as_pdf_updated_at   :datetime
+#  student_group_id          :integer          default(0), not null
+#
+
 class JobOffersController < ApplicationController
   include UsersHelper
 
@@ -47,9 +77,6 @@ class JobOffersController < ApplicationController
     if @job_offer.pending? && signed_in? && !user_is_staff_of_employer?(@job_offer) && !current_user.admin?
       redirect_to job_offers_path
     end
-
-    @application = current_user.manifestation.application @job_offer if current_user.student?
-    @assigned_students = @job_offer.assigned_students.paginate page: params[:page]
   end
 
   def new
@@ -147,7 +174,7 @@ class JobOffersController < ApplicationController
   def reopen
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.closed
-      @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id, :assigned_students)
+      @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id)
       @job_offer.build_contact
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else

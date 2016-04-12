@@ -38,20 +38,6 @@ describe JobOffer do
       @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
   end
 
-  describe 'applying' do
-
-    before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer)
-      @student = FactoryGirl.create(:student)
-      @application = Application.create(student: @student, job_offer: @job_offer)
-    end
-
-    subject { @job_offer }
-
-    its(:applications) { should include(@application) }
-    its(:students) { should include(@student) }
-  end
-
   it "does not create a joboffer if attributes are not set" do
     assert !JobOffer.create.valid?
   end

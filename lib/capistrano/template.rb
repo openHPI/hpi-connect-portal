@@ -10,6 +10,7 @@
 # ones to be over-ridden
 # if the target file name is the same as the source then
 # the second parameter can be left out
+# :nocov:
 def smart_template(from, to=nil)
   to ||= from
   full_to_path = "#{shared_path}/config/#{to}"
@@ -21,7 +22,8 @@ def smart_template(from, to=nil)
     error "error #{from} not found"
   end
 end
-
+# :nocov:
+# :nocov:
 def template_file(name)
   if File.exist?((file = "config/deploy/#{fetch(:full_app_name)}/#{name}.erb"))
     return file
@@ -30,3 +32,4 @@ def template_file(name)
   end
   return nil
 end
+# :nocov:

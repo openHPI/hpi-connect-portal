@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: ratings
+#
+#  id                      :integer          not null, primary key
+#  student_id              :integer
+#  employer_id             :integer
+#  job_offer_id            :integer
+#  headline                :string(255)
+#  description             :text
+#  score_overall           :integer
+#  score_atmosphere        :integer
+#  score_salary            :integer
+#  score_work_life_balance :integer
+#  score_work_contents     :integer
+#
+
 require 'spec_helper'
 
 describe RatingsController do

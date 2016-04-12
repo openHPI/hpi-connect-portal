@@ -254,8 +254,7 @@ hyrise = JobOffer.create!(
   time_effort: 38,
   compensation: 12.0,
   languages: Language.where(:name => 'german'),
-  programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++']),
-  assigned_students: [User.where(firstname: "Pascal").first.manifestation]
+  programming_languages: ProgrammingLanguage.where(:name => ['C', 'C++'])
 )
 
 Contact.create!(
@@ -333,8 +332,7 @@ openhpi = JobOffer.create!(
   time_effort: 8,
   compensation: 10.00,
   languages: Language.where(:name => 'german'),
-  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python']),
-  assigned_students: [User.where(firstname: "Frank").first.manifestation]
+  programming_languages: ProgrammingLanguage.where(:name => ['Java', 'Python'])
 )
 
 Contact.create!(

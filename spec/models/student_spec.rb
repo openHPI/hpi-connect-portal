@@ -35,17 +35,6 @@ describe Student do
 
   subject { @student }
 
-  describe 'applying' do
-    before do
-      @job_offer = FactoryGirl.create(:job_offer)
-      @application = Application.create(student: @student, job_offer: @job_offer)
-    end
-
-    it { should be_applied(@job_offer) }
-    its(:applications) { should include(@application) }
-    its(:job_offers) { should include(@job_offer) }
-  end
-
   describe "Deliver Newsletter" do
     before(:each) do
       ActionMailer::Base.deliveries.clear

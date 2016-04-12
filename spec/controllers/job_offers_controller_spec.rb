@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: job_offers
+#
+#  id                        :integer          not null, primary key
+#  description               :text
+#  title                     :string(255)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  start_date                :date
+#  end_date                  :date
+#  time_effort               :float
+#  compensation              :float
+#  employer_id               :integer
+#  status_id                 :integer
+#  flexible_start_date       :boolean          default(FALSE)
+#  category_id               :integer          default(0), not null
+#  state_id                  :integer          default(3), not null
+#  graduation_id             :integer          default(2), not null
+#  prolong_requested         :boolean          default(FALSE)
+#  prolonged                 :boolean          default(FALSE)
+#  prolonged_at              :datetime
+#  release_date              :date
+#  offer_as_pdf_file_name    :string(255)
+#  offer_as_pdf_content_type :string(255)
+#  offer_as_pdf_file_size    :integer
+#  offer_as_pdf_updated_at   :datetime
+#  student_group_id          :integer          default(0), not null
+#
+
 require 'spec_helper'
 
 describe JobOffersController do
@@ -6,16 +36,15 @@ describe JobOffersController do
     login FactoryGirl.create(:student).user
   end
   let(:admin) { FactoryGirl.create(:user, :admin) }
-  let(:assigned_student) { FactoryGirl.create(:student) }
   let(:employer) { FactoryGirl.create(:employer) }
   let(:staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:closed) {FactoryGirl.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed, "assigned_students" => [assigned_student]}}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active), "assigned_students" => [assigned_student]}}
+   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
 
   let(:valid_session) { {} }
 
@@ -87,15 +116,6 @@ describe JobOffersController do
     it "assigns the requested job_offer as @job_offer" do
       get :show, {id: @job_offer.to_param}, valid_session
       assigns(:job_offer).should eq(@job_offer)
-    end
-
-    it "assigns a possible applications as @application" do
-      student = FactoryGirl.create(:student)
-      login student.user
-
-      application = FactoryGirl.create(:application, student: student, job_offer: @job_offer)
-      get :show, {id: @job_offer.to_param}, valid_session
-      assigns(:application).should eq(application)
     end
 
     it "redirects students when job is in archive" do
@@ -240,7 +260,7 @@ describe JobOffersController do
 
   describe "GET close" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active), assigned_students: [FactoryGirl.create(:student)])
+      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active))
     end
 
     it "marks jobs as completed if the user is staff of the employer" do
@@ -326,7 +346,6 @@ describe JobOffersController do
         reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
         reopend_job_offer.start_date.should be_nil
         reopend_job_offer.end_date.should be_nil
-        reopend_job_offer.assigned_students.should be_empty
       end
 
       it "is pending and old job offer changes to closed" do
@@ -612,44 +631,6 @@ describe JobOffersController do
         delete :destroy, {id: @job_offer.to_param}, valid_session
       }.to change(JobOffer, :count).by(0)
       response.should redirect_to(@job_offer)
-    end
-  end
-
-
-  describe "POST fire" do
-    before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer)
-      @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
-      login @job_offer.employer.staff_members[0].user
-    end
-
-    it "fires the student" do
-
-      old_offer = @job_offer
-      post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
-      assert_equal(0, @job_offer.reload.assigned_students.count)
-      assert_equal(@job_offer.reload.status, JobStatus.active)
-    end
-
-    describe "without the required permissions" do
-      before(:each) do
-        @job_offer = FactoryGirl.create(:job_offer)
-        @job_offer.update!({assigned_students: [FactoryGirl.create(:student)]})
-      end
-
-      it "doesn't allow students to fire other students" do
-        login FactoryGirl.create(:student).user
-        expect{
-          post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
-        }.to change(@job_offer.reload.assigned_students, :count).by(0)
-      end
-
-      it "doesn't allow normal staff to fire students" do
-        login FactoryGirl.create(:staff).user
-        expect{
-          post :fire, {id: @job_offer.to_param, job_offer: { student_id: @job_offer.assigned_students[0].id} }, valid_session
-        }.to change(@job_offer.reload.assigned_students, :count).by(0)
-      end
     end
   end
 end

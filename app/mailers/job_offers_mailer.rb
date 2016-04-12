@@ -40,11 +40,6 @@ class JobOffersMailer < ActionMailer::Base
     mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.job_offer_closed.subject", job_title: @job_offer.title)
   end
 
-  def job_student_accepted_email(job_offer)
-    @job_offer = job_offer
-    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.student_accepted.subject", job_title: @job_offer.title)
-  end
-
   def job_prolonged_email(job_offer)
     @job_offer = job_offer
     job_offer.employer.staff_members.each do |staff|

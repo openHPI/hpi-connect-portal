@@ -1,3 +1,29 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id                     :integer          not null, primary key
+#  semester               :integer
+#  academic_program       :string(255)
+#  education              :text
+#  additional_information :text
+#  birthday               :date
+#  homepage               :string(255)
+#  github                 :string(255)
+#  facebook               :string(255)
+#  xing                   :string(255)
+#  linkedin               :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  employment_status_id   :integer          default(0), not null
+#  frequency              :integer          default(1), not null
+#  academic_program_id    :integer          default(0), not null
+#  graduation_id          :integer          default(0), not null
+#  visibility_id          :integer          default(0), not null
+#  dschool_status_id      :integer          default(0), not null
+#  group_id               :integer          default(0), not null
+#
+
 require 'spec_helper'
 
 describe StudentsController do
@@ -141,18 +167,6 @@ describe StudentsController do
         delete :destroy, {id: student2.to_param}, valid_session
       }.to change(Student, :count).by(0)
       response.should redirect_to student_path(student2)
-    end
-
-    it "destroys related applications" do
-      employer = FactoryGirl.create(:employer, activated: true)
-      job_offer = FactoryGirl.create(:job_offer, employer: employer)
-      student = FactoryGirl.create(:student)
-      application = FactoryGirl.create(:application, student: student, job_offer: job_offer)
-
-      login FactoryGirl.create(:user, :admin)
-      expect {
-        delete :destroy, {id: student.to_param}, valid_session
-        }.to change(Student, :count).by (-1) and change(Application, :count).by (-1)
     end
   end
 

@@ -4,11 +4,6 @@
           <% if @job_offer.pending? %>
             <span> - <%= t("job_status.pending") %></span>
           <% end %>
-        <div class="pull-right">
-          <% if can?(:create, Application.new) && current_user.student? && !current_user.manifestation.applied?(@job_offer) && @job_offer.active? %>
-            <%= submit_tag t("job_offers.apply"), class: 'btn btn-default apply-button', data: {toggle: "modal", target: "#applicationEmailModal" } %>
-          <% end %>
-        </div>
         <p style="color:#FFFFFF;"><%= @job_offer.employer.name %></p>
     </div>
     <div class="col-sm-12 text-left">
@@ -51,30 +46,6 @@
 </div>
 
 <div class="wrapper-12 panel-wrapper">
-  <% if current_user.student? && current_user.manifestation.applied?(@job_offer) and !flash[:success] %>
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-default panel-body">
-          <div class="row">
-            <div class="col-sm-10">
-              <%= t("job_offers.already_applied") %>
-            </div>
-            <div class="col-sm-2">
-              <% unless @application.blank? %>
-                <%= simple_form_for @application, method: :delete do |f| %>
-                    <div><%= f.input :id, as: :hidden %></div>
-                    <%= f.submit t("applications.delete"), class: 'btn btn-danger apply-button pull-right', data: { confirm: t("applications.delete_confirmation") } %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-<div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-8">
       <div class="panel panel-default">
@@ -90,25 +61,7 @@
         </ul>
       </div>
 
-      <% if @job_offer.applications.any? && !@job_offer.closed? && can?(:read, @job_offer.applications.first) %>
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.applications_headline")%></h4></div>
-          <table class="table table-hover panel-table">
-            <thead>
-              <tr>
-                <th><%= t("job_offers.applicant_first_name") %></th>
-                <th><%= t("job_offers.applicant_last_name") %></th>
-                <th><%= t("job_offers.applicant_email") %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <%= render @job_offer.applications %>
-            </tbody>
-          </table>
-        </div>
-      <% end %>
     </div>
-
     <div class="col-sm-4">
       <center>
           <%= image_tag(@job_offer.employer.avatar.url, size: "200", class: "img-thumbnail", alt: "Picture: " + @job_offer.employer.name )  %>
@@ -164,12 +117,6 @@
         <%= render 'job_offers/language_list', title: t("job_offers.required_languages"), languages: @job_offer.languages %>
       <% end %>
 
-      <% if (user_is_staff_of_employer?(@job_offer) or current_user.admin?) && !@assigned_students.blank? %>
-        <div class="panel panel-default">
-          <div class="panel-heading"><h4><%= t("job_offers.students") %></h4></div>
-            <%= render 'assigned_students', students: @assigned_students, show_fire_button: can?(:fire, @job_offer) %>
-        </div>
-      <% end %>
       <% if @job_offer.contact && !@job_offer.contact.is_empty? %>
         <div class="panel panel-default">
           <div class="panel-heading"><h4><%= t("activerecord.attributes.employer.contact") %></h4></div>
@@ -186,7 +133,3 @@
     </div>
   </div>
 </div>
-
-<% content_for :modals do %>
-  <%= render 'application_modal', job_offer: @job_offer %>
-<% end %>
