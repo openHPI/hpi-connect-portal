@@ -2,3 +2,4 @@ en:
   staff:
     messages:
       wrong_token: "Wrong Link: Please check once more for correctness"
+      staff_already_exists: "An error occurred while trying to create the staff member. Are you sure the member doesn't already exist?"

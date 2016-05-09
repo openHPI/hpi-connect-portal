@@ -2,3 +2,4 @@ de:
   staff:
     messages:
       wrong_token: "Fehlerhafter Link: Bitte prüfen Sie noch einmal"
+      staff_already_exists: "Beim Erstellen des Mitarbeiters ist ein Fehler aufgetreten. Sind Sie sicher, dass dieser noch nicht existiert?"

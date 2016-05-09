@@ -80,7 +80,6 @@ describe "the staff page" do
     let(:employer) { FactoryGirl.create(:employer, activated: true) }
 
     it "should register colleague to the employer" do
-
       visit new_staff_index_path(token: employer.token)
       fill_in 'staff_user_attributes_firstname', with: 'Max'
       fill_in 'staff_user_attributes_lastname', with: 'Mustermann'
@@ -92,6 +91,20 @@ describe "the staff page" do
       page.should have_content(I18n.t('employers.messages.successfully_created'))
       page.should have_content("Welcome to HPI Connect!")
       page.should have_content("Max Mustermann")
+    end
+
+    it "should show an error message when trying to create a staff member that already exists" do
+      2.times do
+        visit new_staff_index_path(token: employer.token)
+        fill_in 'staff_user_attributes_firstname', with: 'Max'
+        fill_in 'staff_user_attributes_lastname', with: 'Mustermann'
+        fill_in 'staff_user_attributes_email', with: 'staff@test.com'
+        fill_in 'staff_user_attributes_password', with: 'password'
+        fill_in 'staff_user_attributes_password_confirmation', with: 'password'
+        find('input[type="submit"]').click
+        employer.staff_members.count.should == 2
+      end
+      page.should have_content "An error occurred while trying to create the staff member. Are you sure the member doesn't already exist?"
     end
   end
 end

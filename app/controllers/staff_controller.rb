@@ -30,7 +30,8 @@ class StaffController < ApplicationController
       flash[:success] = "Welcome to HPI Connect!"
       redirect_to root_path
     else
-      render 'new'
+      flash[:error] = I18n.t("staff.messages.staff_already_exists")
+      redirect_to :back
     end
   end
 
