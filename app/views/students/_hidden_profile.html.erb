@@ -1,0 +1,177 @@
+<div class="wrapper-12 panel-wrapper">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            Hidden Information
+          </h4>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.title") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_title %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.birth_name") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_birth_name %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.graduation_id") %>
+              </div>
+              <div class="col-sm-8">
+                <% unless @student.hidden_graduation_id.nil? %>
+                  <%= t("activerecord.attributes.user.degrees." + Student::GRADUATIONS[@student.hidden_graduation_id]) %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.graduation_year") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_graduation_year %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.private_email") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_private_email %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.alumni_email") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_alumni_email %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.additional_email") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_additional_email %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.last_employer") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_last_employer %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.current_position") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_current_position %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.street") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_street %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.location") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_location %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.postcode") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_postcode %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.country") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_country %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.phone_number") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_phone_number %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.comment") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_comment %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= t("activerecord.attributes.user.hidden.agreed_alumni_work") %>
+              </div>
+              <div class="col-sm-8">
+                <%= @student.hidden_agreed_alumni_work %>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

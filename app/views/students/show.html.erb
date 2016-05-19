@@ -122,7 +122,9 @@
           <% end %>
         </div>
       <% end %>
-
-      <%= render 'profile', student: @student%>
+      <%= render 'profile', student: @student %>
+      <% if current_user.admin? %>
+        <%= render 'hidden_profile', student: @student %>
+      <% end %>
   </div>
 </div>

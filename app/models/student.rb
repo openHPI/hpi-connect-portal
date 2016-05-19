@@ -2,26 +2,42 @@
 #
 # Table name: students
 #
-#  id                     :integer          not null, primary key
-#  semester               :integer
-#  academic_program       :string(255)
-#  education              :text
-#  additional_information :text
-#  birthday               :date
-#  homepage               :string(255)
-#  github                 :string(255)
-#  facebook               :string(255)
-#  xing                   :string(255)
-#  linkedin               :string(255)
-#  created_at             :datetime
-#  updated_at             :datetime
-#  employment_status_id   :integer          default(0), not null
-#  frequency              :integer          default(1), not null
-#  academic_program_id    :integer          default(0), not null
-#  graduation_id          :integer          default(0), not null
-#  visibility_id          :integer          default(0), not null
-#  dschool_status_id      :integer          default(0), not null
-#  group_id               :integer          default(0), not null
+#  id                        :integer          not null, primary key
+#  semester                  :integer
+#  academic_program          :string(255)
+#  education                 :text
+#  additional_information    :text
+#  birthday                  :date
+#  homepage                  :string(255)
+#  github                    :string(255)
+#  facebook                  :string(255)
+#  xing                      :string(255)
+#  linkedin                  :string(255)
+#  created_at                :datetime
+#  updated_at                :datetime
+#  employment_status_id      :integer          default(0), not null
+#  frequency                 :integer          default(1), not null
+#  academic_program_id       :integer          default(0), not null
+#  graduation_id             :integer          default(0), not null
+#  visibility_id             :integer          default(0), not null
+#  dschool_status_id         :integer          default(0), not null
+#  group_id                  :integer          default(0), not null
+#  hidden_title              :string(255)
+#  hidden_birth_name         :string(255)
+#  hidden_graduation_id      :integer
+#  hidden_graduation_year    :integer
+#  hidden_private_email      :string(255)
+#  hidden_alumni_email       :string(255)
+#  hidden_additional_email   :string(255)
+#  hidden_last_employer      :string(255)
+#  hidden_current_position   :string(255)
+#  hidden_street             :string(255)
+#  hidden_location           :string(255)
+#  hidden_postcode           :string(255)
+#  hidden_country            :string(255)
+#  hidden_phone_number       :string(255)
+#  hidden_comment            :string(255)
+#  hidden_agreed_alumni_work :boolean
 #
 
 class Student < ActiveRecord::Base

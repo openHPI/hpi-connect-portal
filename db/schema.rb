@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412211730) do
+ActiveRecord::Schema.define(version: 20160519201704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -243,13 +243,29 @@ ActiveRecord::Schema.define(version: 20160412211730) do
     t.string   "linkedin"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "employment_status_id",   default: 0, null: false
-    t.integer  "frequency",              default: 1, null: false
-    t.integer  "academic_program_id",    default: 0, null: false
-    t.integer  "graduation_id",          default: 0, null: false
-    t.integer  "visibility_id",          default: 0, null: false
-    t.integer  "dschool_status_id",      default: 0, null: false
-    t.integer  "group_id",               default: 0, null: false
+    t.integer  "employment_status_id",      default: 0, null: false
+    t.integer  "frequency",                 default: 1, null: false
+    t.integer  "academic_program_id",       default: 0, null: false
+    t.integer  "graduation_id",             default: 0, null: false
+    t.integer  "visibility_id",             default: 0, null: false
+    t.integer  "dschool_status_id",         default: 0, null: false
+    t.integer  "group_id",                  default: 0, null: false
+    t.string   "hidden_title"
+    t.string   "hidden_birth_name"
+    t.integer  "hidden_graduation_id"
+    t.integer  "hidden_graduation_year"
+    t.string   "hidden_private_email"
+    t.string   "hidden_alumni_email"
+    t.string   "hidden_additional_email"
+    t.string   "hidden_last_employer"
+    t.string   "hidden_current_position"
+    t.string   "hidden_street"
+    t.string   "hidden_location"
+    t.string   "hidden_postcode"
+    t.string   "hidden_country"
+    t.string   "hidden_phone_number"
+    t.string   "hidden_comment"
+    t.boolean  "hidden_agreed_alumni_work"
   end
 
   create_table "users", force: true do |t|

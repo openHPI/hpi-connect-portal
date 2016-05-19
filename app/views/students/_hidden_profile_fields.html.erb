@@ -1,0 +1,176 @@
+<div class="row">
+  <!--   Left -->
+    <div class="col-sm-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>
+          Hidden Information
+        </h4>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.title") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_title %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.birth_name") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_birth_name %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.graduation_id") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.select :hidden_graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
+            [t("activerecord.attributes.user.degrees." + grade), index]
+            }, {}, {id: 'hidden_graduation_id', class: 'select optional form-control'} %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.graduation_year") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_graduation_year, as: :integer, default: 0 %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.private_email") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_private_email %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.alumni_email") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_alumni_email %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.additional_email") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_additional_email %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.last_employer") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_last_employer %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.current_position") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_current_position %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.street") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_street %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.location") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_location %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.postcode") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_postcode %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.country") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_country %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.phone_number") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_phone_number %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.comment") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.input :hidden_comment %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-4">
+              <%= t("activerecord.attributes.user.hidden.agreed_alumni_work") %>
+            </div>
+            <div class="col-sm-8">
+              <%= form.check_box :hidden_agreed_alumni_work %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

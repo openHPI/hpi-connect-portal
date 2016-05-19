@@ -22,6 +22,7 @@ describe "students/edit" do
   end
 
   it "renders the edit student form" do
+    view.stub(:current_user) { FactoryGirl.create(:user, :admin) }
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

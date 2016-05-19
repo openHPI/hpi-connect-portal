@@ -95,6 +95,30 @@ describe "the students editing page" do
     page.should have_content("Resume")
   end
 
+  it "should not show hidden information to a student" do
+    visit edit_student_path(@student1)
+    page.should_not have_content("Hidden Information")
+  end
+
+  it "should show hidden information to an admin" do
+    admin = FactoryGirl.create(:user, :admin)
+    login admin
+    visit edit_student_path(@student1)
+    page.should have_content("Hidden Information")
+  end
+
+  it "should edit hidden attributes for an admin" do
+    admin = FactoryGirl.create(:user, :admin)
+    login admin
+    visit student_path(@student1)
+    page.should_not have_content 'Ph. D.'
+    visit edit_student_path(@student1)
+    fill_in 'student_hidden_title', with: 'Ph. D.'
+    first('input[type="submit"]').click
+    current_path.should == student_path(@student1)
+    page.should have_content 'Ph. D.'
+  end
+
   it "should be possible to change attributes of myself " do
     visit edit_student_path(@student1)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
@@ -190,6 +214,18 @@ describe "the students profile page" do
       visit student_path(@student1)
       page.should have_content("D-School Status")
     end
+
+    it "should not show hidden information to a student" do
+      visit student_path(@student1)
+      page.should_not have_content("Hidden Information")
+    end
+
+  it "should show hidden information to an admin" do
+    admin = FactoryGirl.create(:user, :admin)
+    login admin
+    visit student_path(@student1)
+    page.should have_content("Hidden Information")
+  end
   end
 
   describe "of another students" do
