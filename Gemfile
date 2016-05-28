@@ -51,6 +51,8 @@ group :development, :test do
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
   gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 gem 'simplecov', group: :test, require: nil
@@ -151,3 +153,6 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rails', '~> 1.1.0'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
+
+# Store session information in database
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
