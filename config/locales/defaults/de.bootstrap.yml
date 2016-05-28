@@ -20,6 +20,7 @@ de:
     activate: "Aktivieren"
     deactivate: "Deaktivieren"
     import: "Importieren"
+    merge: "Zusammenführen"
   titles:
     edit: "%{model} bearbeiten"
     save: "%{model} speichern"

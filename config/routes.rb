@@ -46,6 +46,7 @@ HpiHiwiPortal::Application.routes.draw do
           get 'remind_via_mail'
           get 'remind_all'
           post 'import' => 'alumni#create_from_csv'
+          post 'merge' => 'alumni#merge_from_csv'
           post 'mail_csv' => 'alumni#send_mail_from_csv'
         end
       end

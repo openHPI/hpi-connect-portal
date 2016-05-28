@@ -49,6 +49,26 @@ class AlumniController < ApplicationController
     respond_and_redirect_to new_alumni_path, notice
   end
 
+  def merge_from_csv
+    require 'csv'
+    if params[:alumni_merge_file].present?
+      number, errors = 1, []
+      CSV.foreach(params[:alumni_merge_file].path, headers: true, header_converters: :symbol) do |row|
+        unless row.fields.all? &:nil?
+          number += 1
+          alumni = Alumni.merge_from_row row
+          errors << number.to_s + ": " + alumni.errors.full_messages.first unless alumni.errors.full_messages.first.nil?
+        end
+      end
+      if errors.any?
+        notice = { error: 'The following ' + errors.size.to_s + '/' + number.to_s + ' lines contain errors: ' + errors.join(", ")}
+      else
+        notice = 'Alumni erfolgreich zusammengeführt'
+      end
+    end
+    respond_and_redirect_to new_alumni_path, notice
+  end
+
   def remind_via_mail
   end
 

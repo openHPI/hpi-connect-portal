@@ -220,12 +220,12 @@ describe "the students profile page" do
       page.should_not have_content("Hidden Information")
     end
 
-  it "should show hidden information to an admin" do
-    admin = FactoryGirl.create(:user, :admin)
-    login admin
-    visit student_path(@student1)
-    page.should have_content("Hidden Information")
-  end
+    it "should show hidden information to an admin" do
+      admin = FactoryGirl.create(:user, :admin)
+      login admin
+      visit student_path(@student1)
+      page.should have_content("Hidden Information")
+    end
   end
 
   describe "of another students" do

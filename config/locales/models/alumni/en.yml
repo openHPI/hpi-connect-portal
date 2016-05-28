@@ -7,6 +7,7 @@ en:
         email: 'Redirect Email'
         alumni_email: 'Alumni Email'
         alumni_file: 'Alumni File'
-        import_list: 'Importieren Alumni List'
+        import_list: 'Import Alumni List'
+        merge_list: 'Merge Alumni List'
         import_single: 'Import Single Alumnus'
         following_alumni_are_not_registered_yet: 'The following alumni are not registered, yet'

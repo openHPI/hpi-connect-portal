@@ -13,6 +13,7 @@
 #
 
 class Alumni < ActiveRecord::Base
+  include AlumniMergeHelper
 
   validates :email, presence: true
   validates :alumni_email, presence: true, uniqueness: { case_sensitive: false }
@@ -38,6 +39,10 @@ class Alumni < ActiveRecord::Base
       end
     end
     return alumni
+  end
+
+  def self.merge_from_row(row)
+    AlumniMergeHelper.merge_from_row(row)
   end
 
   def self.email_invalid? email

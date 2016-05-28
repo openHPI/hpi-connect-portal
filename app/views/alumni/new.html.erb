@@ -23,6 +23,28 @@
     <br /><br />
   <% end %>
 
+  <%= form_tag merge_alumni_index_path, method: :post, multipart: true do %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.merge_list") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= t("activerecord.attributes.alumni.alumni_file") %>
+            </div>
+            <div class="col-sm-9">
+              <div class="input select optional alumni_file">
+                <%= file_field_tag 'alumni_merge_file' %>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.merge") %>" />
+    <br /><br />
+  <% end %>
+
   <%= simple_form_for @alumni, url: alumni_index_path do |f| %>
     <%= render 'shared/object_errors', object: @alumni %>
     <div class="panel panel-default">
