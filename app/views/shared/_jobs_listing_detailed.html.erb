@@ -18,7 +18,7 @@
           <div class="col-md-3" style="float:right">
             <% if job_offer.prolonged? %>
               <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.prolonged_at.to_date) %></p>
-            <% else %>
+            <% elsif job_offer.release_date %>
               <p class="startDate"><%= t("job_offers.released") %> <%= l(job_offer.release_date) %></p>
             <% end %>
           </div>
