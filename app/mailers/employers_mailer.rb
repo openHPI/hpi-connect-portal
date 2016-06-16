@@ -15,7 +15,7 @@ class EmployersMailer < ActionMailer::Base
     @receiver_name = receiver_name
     @sender_name = sender.admin? ? "HPI Connect" : sender.full_name
     @employer = employer
-    mail to: colleague_email, bcc: [sender.email, Configurable[:mailToAdministration], "test@bla.fr"], subject: t("employers_mailer.invite_colleague.subject")
+    mail to: colleague_email, bcc: [sender.email, Configurable[:mailToAdministration]], subject: t("employers_mailer.invite_colleague.subject")
   end
 
   def requested_package_confirmation_email(employer)

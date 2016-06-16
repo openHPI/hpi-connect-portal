@@ -42,6 +42,7 @@ class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
+  has_scope :pending, only: [:index, :archive], type: :boolean, as: :pending
   has_scope :filter_employer, only: [:index, :archive], as: :employer
   has_scope :filter_category, only: [:index, :archive], as: :category
   has_scope :filter_graduation, only: [:index, :archive], as: :graduation
@@ -69,7 +70,8 @@ class JobOffersController < ApplicationController
         redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
       end
     end
-    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
+
+    job_offers = JobOffer.sort(apply_scopes(params.keys().include?("pending") ? JobOffer.all : JobOffer.active), params[:sort]).paginate(page: params[:page])
     @job_offers_list = { items: job_offers, name: "job_offers.headline" }
   end
 

@@ -8,11 +8,13 @@ describe "the job-offers page" do
     login @student1.user
     @epic = FactoryGirl.create(:employer, name:"EPIC", booked_package_id: 2)
     @active = JobStatus.active
+    @pending = JobStatus.pending
     @test_employer = FactoryGirl.create(:employer)
     @staff = FactoryGirl.create(:staff)
     @job_offer_1 = FactoryGirl.create(:job_offer, title: "TestJob1", employer: @test_employer, status: @active)
     @job_offer_2 = FactoryGirl.create(:job_offer, title: "TestJob2", employer: @epic, status: @active)
     @job_offer_3 = FactoryGirl.create(:job_offer, title: "TestJob3", state_id: 3, category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, status: @active)
+    @job_offer_4 = FactoryGirl.create(:job_offer, title: "Pending Job", category_id: JobOffer::CATEGORIES.index("graduate_job"), employer: @epic, status: @pending)
   end
 
   it "should include all jobs currently available" do
@@ -20,6 +22,7 @@ describe "the job-offers page" do
     page.should have_content(@job_offer_1.title)
     page.should have_content(@job_offer_2.title)
     page.should have_content(@job_offer_3.title)
+    page.should_not have_content(@job_offer_4.title)
   end
 
   it "should sort the jobs by creation date" do
@@ -36,6 +39,23 @@ describe "the job-offers page" do
                        release_date: Date.current-1)
     visit job_offers_path
     page.should have_content(job_offer.prolonged_at.to_date)
+  end
+
+
+  it "should not show check box to search for pending to students" do
+    visit job_offers_path
+    page.should_not have_content("Pending jobs")
+  end
+
+  it "should be possible for admins to search for pending jobs" do
+    login FactoryGirl.create(:user, :admin)
+    visit job_offers_path
+    find(:css, "#pending").set(true)
+    click_on "Go!"
+    expect(page).to_not have_content(@job_offer_1.title)
+    expect(page).to_not have_content(@job_offer_2.title)
+    expect(page).to_not have_content(@job_offer_3.title)
+    expect(page).to have_content(@job_offer_4.title)
   end
 end
 
