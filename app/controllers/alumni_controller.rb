@@ -53,7 +53,7 @@ class AlumniController < ApplicationController
     require 'csv'
     if params[:alumni_merge_file].present?
       number, errors = 1, []
-      CSV.foreach(params[:alumni_merge_file].path, headers: true, header_converters: :symbol) do |row|
+      CSV.foreach(params[:alumni_merge_file].path, headers: true, header_converters: :symbol, quote_char: '"') do |row|
         unless row.fields.all? &:nil?
           number += 1
           alumni = Alumni.merge_from_row row

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160528201001) do
+ActiveRecord::Schema.define(version: 20160811120521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20160528201001) do
     t.string   "hidden_country"
     t.string   "hidden_phone_number"
     t.string   "hidden_comment"
-    t.boolean  "hidden_agreed_alumni_work"
+    t.string   "hidden_agreed_alumni_work"
   end
 
   create_table "users", force: true do |t|
