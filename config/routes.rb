@@ -41,7 +41,7 @@ HpiHiwiPortal::Application.routes.draw do
         resources :ratings
       end
 
-      resources :alumni, only: [:new, :create, :index, :show] do
+      resources :alumni, only: [:new, :create, :update, :index, :show] do
         collection do
           get 'remind_via_mail'
           get 'remind_all'

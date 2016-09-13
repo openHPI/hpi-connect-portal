@@ -1,7 +1,7 @@
 class AlumniController < ApplicationController
   authorize_resource except: [:register, :link, :link_new, :show]
   skip_before_filter :signed_in_user, only: [:register, :link, :link_new, :index, :show]
-  before_action :set_alumni, only: [:show]
+  before_action :set_alumni, only: [:show, :update]
 
   has_scope :firstname, only: [:index], as: :firstname
   has_scope :lastname, only: [:index], as: :lastname
@@ -28,6 +28,14 @@ class AlumniController < ApplicationController
     else
       @alumni = alumni
       render 'new'
+    end
+  end
+
+  def update
+    if @alumni.update alumni_params
+      respond_and_redirect_to @alumni, I18n.t('alumni.updated.successfully')
+    else
+      render_errors_and_action @alumni, I18n.t('alumni.updated.unsuccessfully')
     end
   end
 
@@ -147,7 +155,7 @@ class AlumniController < ApplicationController
     end
 
     def alumni_params
-      params.require(:alumni).permit(:firstname, :lastname, :email, :alumni_email)
+      params[:alumni].permit(Alumni.column_names.map(&:to_sym))
     end
 
     def link_params

@@ -28,6 +28,13 @@
           </li>
         </ul>
       </div>
+      <%= simple_form_for @alumni do |f| %>
+        <% if current_user.admin? %>
+          <%= render 'shared/hidden_profile_fields', student: @alumni, form: f %>
+        <% end %>
+        <br />
+        <%= f.submit t("links.save"), class: "btn btn-primary pull-right" %>
+      <% end %>
     </div>
   </div>
 </div>

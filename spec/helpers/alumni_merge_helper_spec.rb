@@ -70,7 +70,7 @@ describe AlumniMergeHelper do
         @csv = CSV(csv_content, headers: true, header_converters: :symbol, quote_char: '"')
       end
 
-      it "merges the existing alumni with the given one" do
+      it "merges the existing invited alumni with the given one" do
         existing_alumni = FactoryGirl.create(:alumni)
         existing_alumni.update!(alumni_email: 'max.mueller@hpi-alumni.de')
         @csv.each do |row|
@@ -79,6 +79,35 @@ describe AlumniMergeHelper do
           expect(generated_alumni.lastname).to eq existing_alumni.lastname
           expect(generated_alumni.alumni_email).to eq existing_alumni.alumni_email
           expect(generated_alumni.email).to eq existing_alumni.email
+          expect(generated_alumni.hidden_title).to eq "Dr."
+          expect(generated_alumni.hidden_birth_name).to eq nil
+          expect(generated_alumni.hidden_graduation_id).to eq 3
+          expect(generated_alumni.hidden_graduation_year).to eq 2014 
+          expect(generated_alumni.hidden_private_email).to eq "max@müller.de"
+          expect(generated_alumni.hidden_alumni_email).to eq "max.mueller@hpi-alumni.de"
+          expect(generated_alumni.hidden_additional_email).to eq "max.mueller@gmail.com"
+          expect(generated_alumni.hidden_last_employer).to eq "SAP"
+          expect(generated_alumni.hidden_current_position).to eq "Developer"
+          expect(generated_alumni.hidden_street).to eq "Waldstraße 1"
+          expect(generated_alumni.hidden_location).to eq "Berlin"
+          expect(generated_alumni.hidden_postcode).to eq "10110"
+          expect(generated_alumni.hidden_country).to eq "Deutschland"
+          expect(generated_alumni.hidden_phone_number).to eq "815"
+          expect(generated_alumni.hidden_comment).to eq "guter Student"
+          expect(generated_alumni.hidden_agreed_alumni_work).to eq "Ja, nur über Email"
+        end
+      end
+
+
+      xit "merges the existing registered alumni with the given one" do
+        existing_student = FactoryGirl.create(:student)
+        existing_student.user.update!(alumni_email: 'max.mueller@hpi-alumni.de')
+        @csv.each do |row|
+          generated_alumni = AlumniMergeHelper.merge_from_row row
+          expect(generated_alumni.user.firstname).to eq existing_student.user.firstname
+          expect(generated_alumni.user.lastname).to eq existing_student.user.lastname
+          expect(generated_alumni.user.alumni_email).to eq existing_student.user.alumni_email
+          expect(generated_alumni.email).to eq existing_student.email
           expect(generated_alumni.hidden_title).to eq "Dr."
           expect(generated_alumni.hidden_birth_name).to eq nil
           expect(generated_alumni.hidden_graduation_id).to eq 3

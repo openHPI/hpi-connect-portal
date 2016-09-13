@@ -8,7 +8,7 @@
       <%= render 'shared/object_errors', object: @student %>
       <%= render 'profile_fields', student: @student, form: f %>
       <% if current_user.admin? %>
-        <%= render 'hidden_profile_fields', student: @student, form: f %>
+        <%= render 'shared/hidden_profile_fields', student: @student, form: f %>
       <% end %>
 
       <br />

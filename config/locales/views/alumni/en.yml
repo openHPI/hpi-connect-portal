@@ -4,4 +4,6 @@ en:
     already_have_account: 'I already have an account'
     register_account: 'I want to create a new account'
     choose_another_email: 'Please choose an email which is not from HPI. Your mails going to your alumni email adress, will be forwarded to this adress.'
-
+    updated:
+      successfully: 'Alumni was updated successfully'
+      unsuccessfully: 'An error occurred while trying to update the alumni'
