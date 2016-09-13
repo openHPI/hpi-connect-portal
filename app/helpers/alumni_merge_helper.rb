@@ -9,13 +9,31 @@ module AlumniMergeHelper
       alumni.errors.add(:base, e.message)
     end
 
-    existing_alumni = already_existing_alumni(row)
-    if existing_alumni
-      # Merge alumni data from row into existing alumni
-      existing_alumni.update!(firstname: row[:vorname]) if not existing_alumni.firstname
-      existing_alumni.update!(lastname: row[:lastname]) if not existing_alumni.lastname
-      existing_alumni.update!(email: row[:email]) if not existing_alumni.email
-      alumni = existing_alumni
+    # Retrieve the already existing user
+    existing_user = get_existing_user(row)
+
+    if existing_user
+      # Merge alumni data from row into existing user
+      existing_user.update!(firstname: row[:vorname]) if not existing_user.firstname
+      existing_user.update!(lastname: row[:lastname]) if not existing_user.lastname
+      existing_user.update!(email: row[:private_email]) if not existing_user.email
+      existing_user.update!(hidden_title: row[:akad_titel])
+      existing_user.update!(hidden_birth_name: row[:geburtsname])
+      existing_user.update!(hidden_graduation_year: row[:jahr])
+      existing_user.update!(hidden_graduation_id: get_graduation_id(row))
+      existing_user.update!(hidden_private_email: row[:private_email])
+      existing_user.update!(hidden_alumni_email: row[:alumnimail])
+      existing_user.update!(hidden_additional_email: row[:weitere_emailadresse])
+      existing_user.update!(hidden_last_employer: row[:letztes_unternehmen])
+      existing_user.update!(hidden_current_position: row[:aktuelle_position])
+      existing_user.update!(hidden_street: row[:strae])
+      existing_user.update!(hidden_location: row[:ort])
+      existing_user.update!(hidden_postcode: row[:plz])
+      existing_user.update!(hidden_country: row[:land])
+      existing_user.update!(hidden_phone_number: row[:telefon])
+      existing_user.update!(hidden_comment: row[:notiz])
+      existing_user.update!(hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt])
+      alumni = existing_user
     else
       # Create new alumni from row
       user = User.new firstname: row[:vorname], lastname: row[:nachname], email: row[:private_email], alumni_email: row[:alumnimail]
@@ -31,6 +49,44 @@ module AlumniMergeHelper
     return alumni
   end
 
+  def self.get_existing_user(row)
+    existing_user = get_existing_alumni(row)
+    if existing_user
+      return existing_user
+    end
+    existing_student = get_existing_student(row)
+    if existing_student
+      return existing_student
+    end
+    return nil
+  end
+
+  def self.get_existing_student(row)
+    private_emails = get_all_emails row
+    found_students = User.where(email: private_emails, manifestation_type: "Student")
+    if found_students.empty?
+      return nil
+    else
+      return found_students.first
+    end
+  end
+
+  def self.get_existing_alumni(row)
+    found_alumnis = Alumni.where(alumni_email: row[:alumnimail])
+
+    unless found_alumnis.empty?
+      return found_alumnis.first
+    end
+
+    private_emails = get_all_emails row
+    found_alumnis = Alumni.where(email: private_emails)
+    if found_alumnis.empty?
+      return nil
+    else
+      return found_alumnis.first
+    end
+  end
+
   def self.clean_alumni_row(row)
     row = generate_alumni_email_from_emails(row)
     row[:alumnimail] = row[:alumnimail]
@@ -41,9 +97,9 @@ module AlumniMergeHelper
 
   def self.generate_alumni_email_from_emails(row)
     if row[:alumnimail].to_s == ''
-      private_mails = get_all_emails(row)
-      private_mails.map!{|email| email.sub("@student.hpi.uni-potsdam.de", "").sub("@hpi.de", "").sub("@student.hpi.de", "").sub("@hpi-alumni.de", "")}
-      user_names = private_mails.reject{|user_name| user_name.include?("@")}
+      private_emails = get_all_emails(row)
+      private_emails.map!{|email| email.sub("@student.hpi.uni-potsdam.de", "").sub("@hpi.de", "").sub("@student.hpi.de", "").sub("@hpi-alumni.de", "")}
+      user_names = private_emails.reject{|user_name| user_name.include?("@")}
       user_names.reject!{|user_name| user_name.to_s == ''}
       user_names.uniq!
 
@@ -61,32 +117,15 @@ module AlumniMergeHelper
   def self.get_all_emails(row)
     row[:private_email] ||= ''
     row[:weitere_emailadresse] ||= ''
-    private_mails = row[:weitere_emailadresse].split(';').collect{|x| x.strip || x }
-    private_mails.push(row[:private_email])
-    return private_mails
+    private_emails = row[:weitere_emailadresse].split(';').collect{|x| x.strip || x }
+    private_emails.push(row[:private_email])
+    return private_emails
   end
 
   def self.generate_alumni_email_from_name(row)
-    firstname = (row[:vorname].include?(' ') ? row[:vorname].split(' ')[0].downcase : row[:vorname])
-    lastname = (row[:nachname].include? ' ' ? row[:nachname].split(' ')[0].downcase : row[:nachname])
+    firstname = row[:vorname].include?(' ') ? row[:vorname].split(' ')[0].downcase : row[:vorname].downcase
+    lastname = row[:nachname].include?(' ') ? row[:nachname].split(' ')[0].downcase : row[:nachname].downcase
     "GENERATED_" + firstname + "." + lastname + "@hpi-alumni.de"
-  end
-
-  def self.already_existing_alumni(row)
-    alumni_email = row[:alumnimail]
-    found_alumnis = Alumni.where(alumni_email: alumni_email)
-
-    unless found_alumnis.empty?
-      return found_alumnis.first
-    end
-
-    private_mails = get_all_emails row
-    found_alumnis = Alumni.where(email: private_mails)
-    if found_alumnis.empty?
-      return nil
-    else
-      return found_alumnis.first
-    end
   end
 
   def self.get_graduation_id(row)

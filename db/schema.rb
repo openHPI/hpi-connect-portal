@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811120521) do
+ActiveRecord::Schema.define(version: 20160912132740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,27 @@ ActiveRecord::Schema.define(version: 20160811120521) do
   create_table "alumnis", force: true do |t|
     t.string   "firstname"
     t.string   "lastname"
-    t.string   "email",        null: false
-    t.string   "alumni_email", null: false
-    t.string   "token",        null: false
+    t.string   "email",                     null: false
+    t.string   "alumni_email",              null: false
+    t.string   "token",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hidden_title"
+    t.string   "hidden_birth_name"
+    t.integer  "hidden_graduation_id"
+    t.integer  "hidden_graduation_year"
+    t.string   "hidden_private_email"
+    t.string   "hidden_alumni_email"
+    t.string   "hidden_additional_email"
+    t.string   "hidden_last_employer"
+    t.string   "hidden_current_position"
+    t.string   "hidden_street"
+    t.string   "hidden_location"
+    t.string   "hidden_postcode"
+    t.string   "hidden_country"
+    t.string   "hidden_phone_number"
+    t.string   "hidden_comment"
+    t.string   "hidden_agreed_alumni_work"
   end
 
   create_table "assignments", force: true do |t|

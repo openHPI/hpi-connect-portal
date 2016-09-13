@@ -15,6 +15,6 @@ class AddHiddenColumnsToStudent < ActiveRecord::Migration
     add_column :students, :hidden_country, :string
     add_column :students, :hidden_phone_number, :string
     add_column :students, :hidden_comment, :string
-    add_column :students, :hidden_agreed_alumni_work, :bool
+    add_column :students, :hidden_agreed_alumni_work, :string, :default => nil
   end
 end
