@@ -22,7 +22,7 @@ module AlumniMergeHelper
         alumni.errors.add(:base, "Unable to create #{row[:firstname]} #{row[:lastname]} from row")
         return
       end
-      alumni = Alumni.where(alumni_email: row[:alumnimail]).first
+      alumni = Alumni.where(alumni_email: row[:alumni_email]).first
       alumni.update_attributes! hidden_title: row[:akad_titel], hidden_birth_name: row[:geburtsname], hidden_graduation_year: row[:jahr],
                                 hidden_graduation_id: get_graduation_id(row), hidden_private_email: row[:private_email], hidden_alumni_email: row[:alumnimail],
                                 hidden_additional_email: row[:weitere_emailadresse], hidden_last_employer: row[:letztes_unternehmen],
@@ -57,10 +57,11 @@ module AlumniMergeHelper
   end
 
   def self.transform_row_for_alumnus_creation(row)
-    row[:alumni_email] = row[:alumnimail]
     row[:firstname] = row[:vorname]
     row[:lastname] = row[:nachname]
-    row[:email] = row[:private_email]
+    row[:alumni_email] = row[:alumnimail].sub("@hpi-alumni.de", "")
+    row[:alumni_email] ||= "GENERATED_#{row[:firstname].downcase}.#{row[:lastname].downcase}"
+    row[:email] ||= row[:weitere_emailadresse].split(',')[0]
     return row
   end
 
@@ -102,9 +103,9 @@ module AlumniMergeHelper
 
   def self.clean_alumni_row(row)
     row = generate_alumni_email_from_emails(row)
-    row[:alumnimail] = row[:alumnimail]
-    row[:vorname] ||= row[:alumnimail].split('@')[0].split('.')[0].capitalize
-    row[:nachname] ||= row[:alumnimail].split('@')[0].split('.')[1].capitalize
+    row[:alumnimail] = row[:alumnimail].sub("@hpi-alumni.de", "")
+    row[:vorname] ||= row[:alumnimail].split('.')[0].capitalize
+    row[:nachname] ||= row[:alumnimail].split('.')[1].capitalize
     return row
   end
 
@@ -118,11 +119,13 @@ module AlumniMergeHelper
 
       if user_names.length == 1
         #Generate HPI alumni mail from found HPI username
-        row[:alumnimail] = user_names[0] + "@hpi-alumni.de"
+        row[:alumnimail] = user_names[0]
       else
         # Generate HPI alumni mail from first and last name
         row[:alumnimail] = generate_alumni_email_from_name(row)
       end
+    else
+      row[:alumnimail] = row[:alumnimail].sub("@hpi-alumni.de", "")
     end
     return row
   end
@@ -138,7 +141,7 @@ module AlumniMergeHelper
   def self.generate_alumni_email_from_name(row)
     firstname = row[:vorname].include?(' ') ? row[:vorname].split(' ')[0].downcase : row[:vorname].downcase
     lastname = row[:nachname].include?(' ') ? row[:nachname].split(' ')[0].downcase : row[:nachname].downcase
-    "GENERATED_" + firstname + "." + lastname + "@hpi-alumni.de"
+    "GENERATED_" + firstname + "." + lastname
   end
 
   def self.get_graduation_id(row)
