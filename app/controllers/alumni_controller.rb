@@ -22,7 +22,7 @@ class AlumniController < ApplicationController
   end
 
   def create
-    alumni = Alumni.create_from_row alumni_params
+    alumni = Alumni.create_from_row_and_invite alumni_params, true
     if alumni == :created
       respond_and_redirect_to new_alumni_path, 'Alumni erfolgreich erstellt!'
     else
@@ -45,7 +45,7 @@ class AlumniController < ApplicationController
       count, errors = 0, []
       CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol) do |row|
         count += 1
-        alumni = Alumni.create_from_row row
+        alumni = Alumni.create_from_row_and_invite row, true
         errors << alumni.errors.full_messages.first + '(' + count.to_s + ')' unless alumni == :created
       end
       if errors.any?
@@ -62,10 +62,9 @@ class AlumniController < ApplicationController
     if params[:alumni_merge_file].present?
       number, errors = 1, []
       CSV.foreach(params[:alumni_merge_file].path, headers: true, header_converters: :symbol, quote_char: '"') do |row|
-        unless row.fields.all? &:nil?
+        if row[:vorname] and row[:nachname]
           number += 1
-          alumni = Alumni.merge_from_row row
-          errors << number.to_s + ": " + alumni.errors.full_messages.first unless alumni.errors.full_messages.first.nil?
+          alumni = Alumni.merge_from_row row, false
         end
       end
       if errors.any?
@@ -118,6 +117,8 @@ class AlumniController < ApplicationController
     alumni = Alumni.find_by_token! params[:token]
     user = User.find_by_email params[:session][:email]
     if user && user.authenticate(params[:session][:password])
+      student = Student.find(user.manifestation_id)
+      student.inherit_hidden_attributes alumni
       alumni.link user
       sign_in user
       if Alumni.email_invalid? params[:session][:email]
@@ -137,6 +138,7 @@ class AlumniController < ApplicationController
     end
     @user = User.new link_params
     student = Student.create! academic_program_id: Student::ACADEMIC_PROGRAMS.index('alumnus')
+    student.inherit_hidden_attributes @alumni
     @user.manifestation = student
     if @user.save
       @alumni.link @user

@@ -7,6 +7,7 @@ module AlumniMergeHelper
       clean_alumni_row(row)
     rescue Exception => e
       alumni.errors.add(:base, e.message)
+      logger.error e.message
     end
 
     # Retrieve the already existing user
@@ -17,7 +18,7 @@ module AlumniMergeHelper
     else
       # Create new alumni from row
       row = transform_row_for_alumnus_creation(row)
-      alumni = Alumni.create_from_row row
+      alumni = Alumni.create_from_row_and_invite row, false
       if alumni != :created
         alumni.errors.add(:base, "Unable to create #{row[:firstname]} #{row[:lastname]} from row")
         return
@@ -59,9 +60,9 @@ module AlumniMergeHelper
   def self.transform_row_for_alumnus_creation(row)
     row[:firstname] = row[:vorname]
     row[:lastname] = row[:nachname]
-    row[:alumni_email] = row[:alumnimail].sub("@hpi-alumni.de", "")
+    row[:alumni_email] = row[:alumnimail].sub("@hpi-alumni.de", "") if row[:alumnimail]
     row[:alumni_email] ||= "GENERATED_#{row[:firstname].downcase}.#{row[:lastname].downcase}"
-    row[:email] ||= row[:weitere_emailadresse].split(',')[0]
+    row[:email] ||= row[:weitere_emailadresse].split(';')[0] if row[:weitere_emailadresse]
     return row
   end
 

@@ -40,14 +40,16 @@ class Alumni < ActiveRecord::Base
   scope :email, -> email {where("lower(email) LIKE ?", email.downcase)}
   scope :alumni_email, -> alumni_email {where("lower(alumni_email) LIKE ?", alumni_email.downcase)}
 
-  def self.create_from_row(row)
+  def self.create_from_row_and_invite(row, send_invitation)
     row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize
     row[:lastname] ||= row[:alumni_email].split('.')[1].capitalize
     alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email], alumni_email: row[:alumni_email]
     alumni.generate_unique_token
     if alumni.save
       begin
-        AlumniMailer.creation_email(alumni).deliver
+        if send_invitation
+          AlumniMailer.creation_email(alumni).deliver
+        end
         return :created
       rescue => e
         alumni.delete

@@ -63,6 +63,25 @@ describe "the alumni flow" do
       visit alumni_email_path(token: @alumni.token)
     end
 
+    it "inherits hidden information from an alumni profile when registering a new account" do
+      @alumni.update!(hidden_title: 'Prof.')
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'password123'
+      click_button I18n.t('links.register')
+      registered_alumni = Student.find(User.where(alumni_email: @alumni.alumni_email).first.manifestation_id)
+      expect(registered_alumni.hidden_title).to eq 'Prof.'
+    end
+
+    it "inherits hidden information from an alumni profile when using an existing account" do
+      @alumni.update!(hidden_title: 'Prof.')
+      registered_alumni = FactoryGirl.create :student
+      fill_in 'session_email', with: registered_alumni.email
+      fill_in 'session_password', with: 'password123'
+      click_button I18n.t('home.index.sign_in')
+      registered_alumni.reload
+      expect(registered_alumni.hidden_title).to eq 'Prof.'
+    end
+
     it "should be possible to add an alumni address to an existing account" do
       student = FactoryGirl.create :student
       fill_in 'session_email', with: student.email

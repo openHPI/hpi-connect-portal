@@ -208,4 +208,23 @@ class Student < ActiveRecord::Base
     current_positions = current_jobs.map { |job| job.position}.join(', ')
     return [current_enterprises, current_positions]
   end
+
+  def inherit_hidden_attributes(alumnus)
+    update!(hidden_title: alumnus.hidden_title)
+    update!(hidden_birth_name: alumnus.hidden_birth_name)
+    update!(hidden_graduation_year: alumnus.hidden_graduation_year)
+    update!(hidden_graduation_id: alumnus.hidden_graduation_id)
+    update!(hidden_private_email: alumnus.hidden_private_email)
+    update!(hidden_alumni_email: alumnus.hidden_alumni_email)
+    update!(hidden_additional_email: alumnus.hidden_additional_email)
+    update!(hidden_last_employer: alumnus.hidden_last_employer)
+    update!(hidden_current_position: alumnus.hidden_current_position)
+    update!(hidden_street: alumnus.hidden_street)
+    update!(hidden_location: alumnus.hidden_location)
+    update!(hidden_postcode: alumnus.hidden_postcode)
+    update!(hidden_country: alumnus.hidden_country)
+    update!(hidden_phone_number: alumnus.hidden_phone_number)
+    update!(hidden_comment: alumnus.hidden_comment)
+    update!(hidden_agreed_alumni_work: alumnus.hidden_agreed_alumni_work)   
+  end
 end
