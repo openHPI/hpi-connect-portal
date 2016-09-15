@@ -37,7 +37,7 @@
 #  hidden_country            :string(255)
 #  hidden_phone_number       :string(255)
 #  hidden_comment            :string(255)
-#  hidden_agreed_alumni_work :boolean
+#  hidden_agreed_alumni_work :string(255)
 #
 
 class Student < ActiveRecord::Base
