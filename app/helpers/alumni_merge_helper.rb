@@ -10,80 +10,93 @@ module AlumniMergeHelper
     end
 
     # Retrieve the already existing user
-    existing_user = get_existing_user(row)
+    existing_alumnus = get_existing_alumnus(row)
 
-    if existing_user
-      # Merge alumni data from row into existing user
-      existing_user.update!(firstname: row[:vorname]) if not existing_user.firstname
-      existing_user.update!(lastname: row[:lastname]) if not existing_user.lastname
-      existing_user.update!(email: row[:private_email]) if not existing_user.email
-      existing_user.update!(hidden_title: row[:akad_titel])
-      existing_user.update!(hidden_birth_name: row[:geburtsname])
-      existing_user.update!(hidden_graduation_year: row[:jahr])
-      existing_user.update!(hidden_graduation_id: get_graduation_id(row))
-      existing_user.update!(hidden_private_email: row[:private_email])
-      existing_user.update!(hidden_alumni_email: row[:alumnimail])
-      existing_user.update!(hidden_additional_email: row[:weitere_emailadresse])
-      existing_user.update!(hidden_last_employer: row[:letztes_unternehmen])
-      existing_user.update!(hidden_current_position: row[:aktuelle_position])
-      existing_user.update!(hidden_street: row[:strae])
-      existing_user.update!(hidden_location: row[:ort])
-      existing_user.update!(hidden_postcode: row[:plz])
-      existing_user.update!(hidden_country: row[:land])
-      existing_user.update!(hidden_phone_number: row[:telefon])
-      existing_user.update!(hidden_comment: row[:notiz])
-      existing_user.update!(hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt])
-      alumni = existing_user
+    if existing_alumnus
+      alumni = merge_data_into_alumnus(existing_alumnus, row)
     else
       # Create new alumni from row
-      user = User.new firstname: row[:vorname], lastname: row[:nachname], email: row[:private_email], alumni_email: row[:alumnimail]
-      student = Student.new hidden_title: row[:akad_titel], hidden_birth_name: row[:geburtsname], hidden_graduation_year: row[:jahr],
-                            hidden_graduation_id: get_graduation_id(row), hidden_private_email: row[:private_email], hidden_alumni_email: row[:alumnimail],
-                            hidden_additional_email: row[:weitere_emailadresse], hidden_last_employer: row[:letztes_unternehmen],
-                            hidden_current_position: row[:aktuelle_position], hidden_street: row[:strae], hidden_location: row[:ort],
-                            hidden_postcode: row[:plz], hidden_country: row[:land], hidden_phone_number: row[:telefon],
-                            hidden_comment: row[:notiz], hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt]
-      user.manifestation = student
-      return student
+      row = transform_row_for_alumnus_creation(row)
+      alumni = Alumni.create_from_row row
+      if alumni != :created
+        alumni.errors.add(:base, "Unable to create #{row[:firstname]} #{row[:lastname]} from row")
+        return
+      end
+      alumni = Alumni.where(alumni_email: row[:alumnimail]).first
+      alumni.update_attributes! hidden_title: row[:akad_titel], hidden_birth_name: row[:geburtsname], hidden_graduation_year: row[:jahr],
+                                hidden_graduation_id: get_graduation_id(row), hidden_private_email: row[:private_email], hidden_alumni_email: row[:alumnimail],
+                                hidden_additional_email: row[:weitere_emailadresse], hidden_last_employer: row[:letztes_unternehmen],
+                                hidden_current_position: row[:aktuelle_position], hidden_street: row[:strae], hidden_location: row[:ort],
+                                hidden_postcode: row[:plz], hidden_country: row[:land], hidden_phone_number: row[:telefon],
+                                hidden_comment: row[:notiz], hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt]
     end
     return alumni
   end
 
-  def self.get_existing_user(row)
-    existing_user = get_existing_alumni(row)
-    if existing_user
-      return existing_user
+  def self.merge_data_into_alumnus(existing_alumnus, row)
+    existing_alumnus.update!(firstname: row[:vorname]) if not existing_alumnus.firstname
+    existing_alumnus.update!(lastname: row[:lastname]) if not existing_alumnus.lastname
+    existing_alumnus.update!(email: row[:private_email]) if not existing_alumnus.email
+    existing_alumnus.update!(hidden_title: row[:akad_titel])
+    existing_alumnus.update!(hidden_birth_name: row[:geburtsname])
+    existing_alumnus.update!(hidden_graduation_year: row[:jahr])
+    existing_alumnus.update!(hidden_graduation_id: get_graduation_id(row))
+    existing_alumnus.update!(hidden_private_email: row[:private_email])
+    existing_alumnus.update!(hidden_alumni_email: row[:alumnimail])
+    existing_alumnus.update!(hidden_additional_email: row[:weitere_emailadresse])
+    existing_alumnus.update!(hidden_last_employer: row[:letztes_unternehmen])
+    existing_alumnus.update!(hidden_current_position: row[:aktuelle_position])
+    existing_alumnus.update!(hidden_street: row[:strae])
+    existing_alumnus.update!(hidden_location: row[:ort])
+    existing_alumnus.update!(hidden_postcode: row[:plz])
+    existing_alumnus.update!(hidden_country: row[:land])
+    existing_alumnus.update!(hidden_phone_number: row[:telefon])
+    existing_alumnus.update!(hidden_comment: row[:notiz])
+    existing_alumnus.update!(hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt])
+    return existing_alumnus  
+  end
+
+  def self.transform_row_for_alumnus_creation(row)
+    row[:alumni_email] = row[:alumnimail]
+    row[:firstname] = row[:vorname]
+    row[:lastname] = row[:nachname]
+    row[:email] = row[:private_email]
+    return row
+  end
+
+  def self.get_existing_alumnus(row)
+    invited_alumnus = get_invited_alumnus(row)
+    if invited_alumnus
+      return invited_alumnus
     end
-    existing_student = get_existing_student(row)
-    if existing_student
-      return existing_student
+    registered_alumnus = get_registered_alumnus(row)
+    if registered_alumnus
+      return registered_alumnus
     end
     return nil
   end
 
-  def self.get_existing_student(row)
+  def self.get_registered_alumnus(row)
     private_emails = get_all_emails row
+    found_students = User.where(alumni_email: row[:alumnimail])
+    unless found_students.empty?
+      return Student.find(found_students.first.manifestation_id)
+    end
     found_students = User.where(email: private_emails, manifestation_type: "Student")
-    if found_students.empty?
-      return nil
-    else
-      return found_students.first
+    unless found_students.empty?
+      return Student.find(found_students.first.manifestation_id)
     end
   end
 
-  def self.get_existing_alumni(row)
-    found_alumnis = Alumni.where(alumni_email: row[:alumnimail])
-
-    unless found_alumnis.empty?
-      return found_alumnis.first
+  def self.get_invited_alumnus(row)
+    found_alumni = Alumni.where(alumni_email: row[:alumnimail])
+    unless found_alumni.empty?
+      return found_alumni.first
     end
-
     private_emails = get_all_emails row
-    found_alumnis = Alumni.where(email: private_emails)
-    if found_alumnis.empty?
-      return nil
-    else
-      return found_alumnis.first
+    found_alumni = Alumni.where(email: private_emails)
+    unless found_alumni.empty?
+      return found_alumni.first
     end
   end
 

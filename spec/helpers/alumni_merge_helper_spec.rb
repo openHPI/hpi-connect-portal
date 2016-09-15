@@ -99,14 +99,14 @@ describe AlumniMergeHelper do
       end
 
 
-      xit "merges the existing registered alumni with the given one" do
+      it "merges the existing registered alumni with the given one" do
         existing_student = FactoryGirl.create(:student)
         existing_student.user.update!(alumni_email: 'max.mueller@hpi-alumni.de')
         @csv.each do |row|
           generated_alumni = AlumniMergeHelper.merge_from_row row
-          expect(generated_alumni.user.firstname).to eq existing_student.user.firstname
-          expect(generated_alumni.user.lastname).to eq existing_student.user.lastname
-          expect(generated_alumni.user.alumni_email).to eq existing_student.user.alumni_email
+          expect(generated_alumni.firstname).to eq existing_student.user.firstname
+          expect(generated_alumni.lastname).to eq existing_student.user.lastname
+          expect(generated_alumni.alumni_email).to eq existing_student.user.alumni_email
           expect(generated_alumni.email).to eq existing_student.email
           expect(generated_alumni.hidden_title).to eq "Dr."
           expect(generated_alumni.hidden_birth_name).to eq nil
@@ -130,9 +130,9 @@ describe AlumniMergeHelper do
       it "creates a new alumni if there isn't one yet" do
         @csv.each do |row|
           generated_alumni = AlumniMergeHelper.merge_from_row row
-          #expect(generated_alumni.firstname).to eq "Max"
-          #expect(generated_alumni.lastname).to eq "Müller"
-          #expect(generated_alumni.alumnimail).to eq "max.mueller@hpi-alumni.de"
+          expect(generated_alumni.firstname).to eq "Max"
+          expect(generated_alumni.lastname).to eq "Müller"
+          expect(generated_alumni.alumni_email).to eq "max.mueller@hpi-alumni.de"
           expect(generated_alumni.hidden_title).to eq "Dr."
           expect(generated_alumni.hidden_birth_name).to eq nil
           expect(generated_alumni.hidden_graduation_id).to eq 3
