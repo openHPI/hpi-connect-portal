@@ -26,39 +26,39 @@
 require 'spec_helper'
 
 describe Employer do
-  before(:each) do
-    @employer = FactoryGirl.create(:employer)
+  let(:employer) do
+    FactoryGirl.create(:employer)
   end
 
   describe "validation of parameters" do
 
     it "with name not present" do
-      @employer.name = nil
-      @employer.should be_invalid
+      employer.name = nil
+      employer.should be_invalid
     end
 
     it "with name is not unique" do
-      employer_with_same_name = @employer.dup
+      employer_with_same_name = employer.dup
       assert employer_with_same_name.should be_invalid
     end
 
     it "with year_of_foundation less than 1800" do
-      @employer.year_of_foundation = 1745
-      @employer.should be_invalid
+      employer.year_of_foundation = 1745
+      employer.should be_invalid
     end
 
     it "with year_of_foundation greater than 1800" do
-      @employer.year_of_foundation = 1801
-      @employer.should be_valid
+      employer.year_of_foundation = 1801
+      employer.should be_valid
     end
 
     it "with future year_of_foundation" do
-      @employer.year_of_foundation = Time.now.year + 1
-      @employer.should be_invalid
+      employer.year_of_foundation = Time.now.year + 1
+      employer.should be_invalid
     end
 
     it "creates token" do
-      @employer.token.should_not be_nil
+      employer.token.should_not be_nil
     end
   end
 
@@ -68,7 +68,7 @@ describe Employer do
       ActionMailer::Base.deliveries =[]
       receiver_name = "Test Name"
       sender = FactoryGirl.create(:user)
-      @employer.invite_colleague("test@mail.com", receiver_name, sender)
+      employer.invite_colleague("test@mail.com", receiver_name, sender)
     end
 
     it "sends mail" do
@@ -80,16 +80,16 @@ describe Employer do
   describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do
-        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: @employer)
-        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: @employer)
+        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: employer)
+        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: employer)
 
-        expect(@employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
+        expect(employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
       end
     end
 
     context "employer not yet rated" do
       it "returns nil" do
-        expect(@employer.average_rating).to be_nil
+        expect(employer.average_rating).to be_nil
       end
     end
   end
