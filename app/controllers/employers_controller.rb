@@ -27,7 +27,7 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
-  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
+  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy, :invite_colleague, :export_all]
   before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
 
   def index
@@ -120,6 +120,11 @@ class EmployersController < ApplicationController
     else
       respond_and_redirect_to @employer, { error: I18n.t('employers.messages.unsuccessfully_deleted') }
     end
+  end
+
+  def export_all
+    require 'csv'
+    send_data Employer.export_all, filename: "employers-#{Date.today}.csv"
   end
 
   def home
