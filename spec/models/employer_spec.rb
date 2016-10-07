@@ -111,30 +111,28 @@ describe Employer do
     end
   end
 
+  shared_examples "an employer with limited graduate job offers per year" do |limit|
+    it "can create limited graduate job offers per year" do
+      FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
+
+      (limit-1).times do |n|
+        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+      end
+
+      employer.can_create_job_offer?('graduate_job').should == TRUE
+
+      FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+
+      employer.can_create_job_offer?('graduate_job').should == FALSE
+    end
+  end
+
   context "having booked the partner package" do
     let(:employer) do
       FactoryGirl.create(:employer, booked_package_id: 2)
     end
 
-    let(:staff_user) do
-      employer.staff_members.first.user
-    end
-
-    it "should be able to create 4 graduate jobs in a year" do
-      FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
-      
-      3.times do |n|
-        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
-      end
-      employer.can_create_job_offer?('graduate_job').should == TRUE
-    end
-
-    it "shouldn't be able to create 5 graduate jobs in a year" do
-      4.times do |n|
-        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
-      end
-      employer.can_create_job_offer?('graduate_job').should == FALSE
-    end
+    it_behaves_like "an employer with limited graduate job offers per year", 4
   end
 
   context "having booked the premium package" do
@@ -142,25 +140,7 @@ describe Employer do
       FactoryGirl.create(:employer, booked_package_id: 3)
     end
 
-    let(:staff_user) do
-      employer.staff_members.first.user
-    end
-
-    it "should be able to create 24 graduate jobs in a year" do
-      FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
-
-      23.times do |n|
-        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
-      end
-      employer.can_create_job_offer?('graduate_job').should == TRUE
-    end
-
-    it "shouldn't be able to create 25 graduate jobs in a year" do
-      24.times do |n|
-        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
-      end
-      employer.can_create_job_offer?('graduate_job').should == FALSE
-    end
+    it_behaves_like "an employer with limited graduate job offers per year", 24
   end
 
 end
