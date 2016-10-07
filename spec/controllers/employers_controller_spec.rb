@@ -360,5 +360,40 @@ describe EmployersController do
 
   end
 
+  describe "GET export_all" do
+
+    context "when logged in as admin" do
+      before(:each) do
+        login FactoryGirl.create :user, :admin
+      end
+
+      it "sends a CSV with all employers" do
+        require 'csv'
+        example_employer = FactoryGirl.create(:employer)
+        example_employer_staff_member = example_employer.staff_members.first
+
+        get :export_all
+
+        csv = CSV.parse(response.body)
+        csv_array = csv.to_a
+        expect(csv[0]).to eq(%w{employer_name staff_member_full_name staff_member_email})
+        expect(csv[1]).to eq([example_employer.name, example_employer_staff_member.full_name, example_employer_staff_member.email])
+      end
+    end
+
+    context "when not logged in as admin" do
+      before(:each) do
+        login FactoryGirl.create :user
+      end
+
+      it "doesn't send a CSV" do
+        get :export_all
+        response.should redirect_to(employers_path)
+        flash[:notice].should eql("You are not authorized to access this page.")
+      end
+    end
+
+  end
+
 end
 
