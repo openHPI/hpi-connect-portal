@@ -88,8 +88,12 @@ class Employer < ActiveRecord::Base
     job_offers.graduate_jobs.length
   end
 
+  def graduate_job_count_this_year
+    job_offers.graduate_jobs.where('extract(year from created_at) = ?', Date.today.year).length
+  end
+
   def can_create_job_offer?(category)
-    (category != 'graduate_job' || (partner? && graduate_job_count < (premium? ? 24 : 4))) ? true : false
+    (category != 'graduate_job' || (partner? && graduate_job_count_this_year < (premium? ? 24 : 4))) ? true : false
   end
 
   def add_one_single_booked_job
