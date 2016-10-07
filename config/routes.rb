@@ -32,6 +32,7 @@ HpiHiwiPortal::Application.routes.draw do
       resources :employers do
         collection do
           get "home"
+          get "export_all"
         end
         member do
           get "activate"

@@ -6,6 +6,7 @@ en:
         employer_overview: "Listing of employers"
         editing_employer: "Edit Employer"
         new_employer: "New Employer"
+        export_all: "Export all"
         staff: "Staff"
         open: Open
         running: Running
