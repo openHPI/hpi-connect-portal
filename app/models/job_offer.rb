@@ -53,7 +53,7 @@ class JobOffer < ActiveRecord::Base
   validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
 
 
-  validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
+  validates :title, :description, :employer_id, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
@@ -61,14 +61,12 @@ class JobOffer < ActiveRecord::Base
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
-    job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
-    if(!(job_offer.employer && job_offer.employer.can_create_job_offer?(job_offer.category)))
-      job_offer.employer.add_one_single_booked_job
-    end
+    job_offer.employer = current_user.manifestation.employer unless current_user.admin?
 
-    if job_offer.save && !job_offer.employer.can_create_job_offer?(job_offer.category)
+    if !job_offer.employer.can_create_job_offer?(job_offer.category) && job_offer.save
+      job_offer.employer.add_one_single_booked_job
       JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver
-    elsif job_offer.save && job_offer.employer.can_create_job_offer?(job_offer.category)
+    elsif job_offer.employer.can_create_job_offer?(job_offer.category) && job_offer.save
       JobOffersMailer.new_job_offer_email(job_offer).deliver
     elsif parameters[:flexible_start_date]
       job_offer.flexible_start_date = true

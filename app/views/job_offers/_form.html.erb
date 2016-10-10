@@ -36,33 +36,28 @@
 
           <li class="list-group-item">
             <div class="row">
-            <% if current_user.admin? %>
-              <div class="col-sm-6">
-            <% else %>
-              <div class="col-sm-12">
-            <% end %>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <%= label_field f, :title, t("activerecord.attributes.job_offer.title") %>
-                  </div>
-                  <div class="col-sm-9">
-                    <%= f.input :title %>
-                  </div>
-                </div>
+              <div class="col-sm-3">
+                <%= label_field f, :title, t("activerecord.attributes.job_offer.title") %>
               </div>
-
-              <% if current_user.admin? %>
-              <div class="col-sm-6">
-                <div class="row">
-                  <div class="col-sm-12" style="text-align:right;">
-                    <%= f.collection_select :employer_id, Employer.order_by_name, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
-                  </div>
-                </div>
+              <div class="col-sm-9">
+                <%= f.input :title %>
               </div>
-              <% end %>
-
             </div>
           </li>
+
+          <% if current_user.admin? %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-3">
+                  <%= label_field f, :employer_id, t("activerecord.attributes.job_offer.employer") %>
+                </div>
+                <div class="col-sm-9">
+                  <%= f.collection_select :employer_id, Employer.order_by_name, :id, :name, {prompt: t("job_offers.select_employer")}, {class: "form-control"} %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-12">
