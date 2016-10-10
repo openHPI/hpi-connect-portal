@@ -26,39 +26,39 @@
 require 'spec_helper'
 
 describe Employer do
-  before(:each) do
-    @employer = FactoryGirl.create(:employer)
+  let(:employer) do
+    FactoryGirl.create(:employer)
   end
 
   describe "validation of parameters" do
 
     it "with name not present" do
-      @employer.name = nil
-      @employer.should be_invalid
+      employer.name = nil
+      employer.should be_invalid
     end
 
     it "with name is not unique" do
-      employer_with_same_name = @employer.dup
+      employer_with_same_name = employer.dup
       assert employer_with_same_name.should be_invalid
     end
 
     it "with year_of_foundation less than 1800" do
-      @employer.year_of_foundation = 1745
-      @employer.should be_invalid
+      employer.year_of_foundation = 1745
+      employer.should be_invalid
     end
 
     it "with year_of_foundation greater than 1800" do
-      @employer.year_of_foundation = 1801
-      @employer.should be_valid
+      employer.year_of_foundation = 1801
+      employer.should be_valid
     end
 
     it "with future year_of_foundation" do
-      @employer.year_of_foundation = Time.now.year + 1
-      @employer.should be_invalid
+      employer.year_of_foundation = Time.now.year + 1
+      employer.should be_invalid
     end
 
     it "creates token" do
-      @employer.token.should_not be_nil
+      employer.token.should_not be_nil
     end
   end
 
@@ -68,7 +68,7 @@ describe Employer do
       ActionMailer::Base.deliveries =[]
       receiver_name = "Test Name"
       sender = FactoryGirl.create(:user)
-      @employer.invite_colleague("test@mail.com", receiver_name, sender)
+      employer.invite_colleague("test@mail.com", receiver_name, sender)
     end
 
     it "sends mail" do
@@ -80,16 +80,16 @@ describe Employer do
   describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do
-        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: @employer)
-        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: @employer)
+        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: employer)
+        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: employer)
 
-        expect(@employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
+        expect(employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
       end
     end
 
     context "employer not yet rated" do
       it "returns nil" do
-        expect(@employer.average_rating).to be_nil
+        expect(employer.average_rating).to be_nil
       end
     end
   end
@@ -109,6 +109,38 @@ describe Employer do
       ordered_employers[3].name.should == "eBay"
       ordered_employers[4].name.should == "Zuckerberg"
     end
+  end
+
+  shared_examples "an employer with limited graduate job offers per year" do |limit|
+    it "can create limited graduate job offers per year" do
+      FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
+
+      (limit-1).times do |n|
+        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+      end
+
+      employer.can_create_job_offer?('graduate_job').should == TRUE
+
+      FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+
+      employer.can_create_job_offer?('graduate_job').should == FALSE
+    end
+  end
+
+  context "having booked the partner package" do
+    let(:employer) do
+      FactoryGirl.create(:employer, booked_package_id: 2)
+    end
+
+    it_behaves_like "an employer with limited graduate job offers per year", 4
+  end
+
+  context "having booked the premium package" do
+    let(:employer) do
+      FactoryGirl.create(:employer, booked_package_id: 3)
+    end
+
+    it_behaves_like "an employer with limited graduate job offers per year", 24
   end
 
 end
