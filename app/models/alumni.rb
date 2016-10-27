@@ -43,8 +43,9 @@ class Alumni < ActiveRecord::Base
   def self.email_invalid? email
     email.include?("@hpi-alumni") || email.include?("@student.hpi") || email.include?("@hpi.")
   end
+
   def uniqueness_of_alumni_email_on_user
-    errors.add(:alumni_email, 'is already in use by another user.') if User.exists? alumni_email: alumni_email
+    errors.add(:alumni_email, I18n.t("errors.messages.taken")) if alumni_email && User.where("lower(alumni_email) LIKE ?", alumni_email.downcase).exists?
   end
 
   def generate_unique_token

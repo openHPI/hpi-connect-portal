@@ -14,10 +14,10 @@
 
 FactoryGirl.define do
   factory :alumni do
-    firstname               'Max'
-    lastname                'Mustermann'
+    sequence(:firstname)    { |n| "Firstname#{n}" }
+    sequence(:lastname)     { |n| "Lastname#{n}" }
     sequence(:email)        { |n| "user_#{n}@example.com" }
-    sequence(:alumni_email) { |n| "user_#{n}@alumni.com" }
+    sequence(:alumni_email) { |n| "Firstname#{n}.Lastname#{n}" }
     sequence(:token)        { |n| SecureRandom.urlsafe_base64 + "#{n}" }
   end
 end
