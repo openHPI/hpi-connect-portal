@@ -28,42 +28,54 @@
 require 'spec_helper'
 
 describe User do
-  before(:each) do
-    @user = FactoryGirl.create(:user)
+  let(:user) do
+    FactoryGirl.create(:user)
+  end
+
+  let(:alumnus) do
+    FactoryGirl.create(:user, :alumnus)
   end
 
   describe 'validation of attributes' do
 
-    it 'with firstname not present' do
-      @user.firstname = nil
-      @user.should be_invalid
+    it 'should not be valid with firstname not present' do
+      user.firstname = nil
+      user.should be_invalid
     end
 
-    it 'with lastname not present' do
-      @user.lastname = nil
-      @user.should be_invalid
+    it 'should not be valid with lastname not present' do
+      user.lastname = nil
+      user.should be_invalid
     end
 
-    it 'with email not present' do
-      @user.email = nil
-      @user.should be_invalid
+    it 'should not be valid with email not present' do
+      user.email = nil
+      user.should be_invalid
     end
 
-    it 'with duplicate email' do
-      @user.email = FactoryGirl.create(:user).email
-      @user.should be_invalid
+    it 'should not be valid with duplicate email' do
+      FactoryGirl.build(:user, email: user.email).should be_invalid
     end
 
-    it 'as Alumnus with hpi email' do
-      @user.alumni_email = @user.firstname + ' ' + @user.lastname
-      @user.email = "test@hpi.de"
-      @user.should be_invalid
-      @user.email = "test@student.hpi.uni-potsdam.de"
-      @user.should be_invalid
-      @user.email = "test@hpi-alumni.de"
-      @user.should be_invalid
-      @user.email = "test@bla.de"
-      @user.should be_valid
+    it 'should not be valid with duplicate HPI email' do
+      FactoryGirl.create(:user, email: 'test@student.hpi.uni-potsdam.de')
+      FactoryGirl.build(:user, email: 'test@student.hpi.de').should be_invalid
+    end
+
+    it 'should not be valid with duplicate alumni email' do
+      FactoryGirl.build(:user, alumni_email: alumnus.alumni_email).should be_invalid
+      FactoryGirl.build(:user, alumni_email: alumnus.alumni_email.downcase).should be_invalid
+    end
+
+    it 'should not be valid as alumnus with hpi email' do
+      alumnus.email = "test@hpi.de"
+      alumnus.should be_invalid
+      alumnus.email = "test@student.hpi.uni-potsdam.de"
+      alumnus.should be_invalid
+      alumnus.email = "test@hpi-alumni.de"
+      alumnus.should be_invalid
+      alumnus.email = "test@bla.de"
+      alumnus.should be_valid
     end
   end
 end
