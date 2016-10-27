@@ -12,6 +12,7 @@ en:
         password: "Password"
         password_confirmation: "Password Confirmation"
         old_password: "Old Password"
+        email: "Email address"
         semester: "Semester"
         academic_program: "Program"
         birthday: "Birthdate"
