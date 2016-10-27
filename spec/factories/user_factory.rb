@@ -27,8 +27,8 @@
 
 FactoryGirl.define do
   factory :user do
-    sequence(:firstname)    { |n| "User #{n}" }
-    sequence(:lastname)     { |n| "the #{n}th of his kind" }
+    sequence(:firstname)    { |n| "Firstname#{n}" }
+    sequence(:lastname)     { |n| "Lastname#{n}" }
     sequence(:email)        { |n| "user_#{n}@example.com" }
     password                "password123"
     password_confirmation   "password123"
@@ -36,6 +36,10 @@ FactoryGirl.define do
 
     trait :admin do
       admin true
+    end
+
+    trait :alumnus do
+      alumni_email { |n| "Firstname#{n}.Lastname#{n}" }
     end
   end
 end

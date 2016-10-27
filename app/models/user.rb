@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   validates :alumni_email, uniqueness: { case_sensitive: false }, unless: Proc.new { |u| u.alumni_email.blank? }
   validates :firstname, :lastname, presence: true
   validate :non_hpi_email_on_alumni
+  validate :non_duplicate_hpi_email
 
   has_attached_file :photo, style: { medium: "300x300>", thumb: "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"
   validates_attachment_content_type :photo, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
@@ -48,6 +49,14 @@ class User < ActiveRecord::Base
 
   def non_hpi_email_on_alumni
     errors.add(:email, 'please choose a non-HPI-Email.') if alumni? && Alumni.email_invalid?(email)
+  end
+
+  def non_duplicate_hpi_email
+    if email && email.include?("@student.hpi.de")
+      errors.add(:email, I18n.t("errors.messages.taken")) if User.where("lower(email) LIKE ?", email.gsub("@student.hpi.de","@student.hpi.uni-potsdam.de").downcase).exists?
+    elsif email && email.include?("@student.hpi.uni-potsdam.de")
+      errors.add(:email, I18n.t("errors.messages.taken")) if User.where("lower(email) LIKE ?", email.gsub("@student.hpi.uni-potsdam.de","@student.hpi.de").downcase).exists?
+    end
   end
 
   def eql?(other)
