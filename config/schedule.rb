@@ -3,6 +3,8 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
+set :output, "log/cron.log"
+
 every :day, at: '1am' do
   runner "JobOffer.check_for_expired"
 end
