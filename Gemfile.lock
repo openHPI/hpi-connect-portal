@@ -316,7 +316,7 @@ GEM
     validates_timeliness (3.0.15)
       timeliness (~> 0.3.7)
     websocket (1.2.2)
-    whenever (0.9.4)
+    whenever (0.9.7)
       chronic (>= 0.6.3)
     will_paginate (3.1.0)
     will_paginate-bootstrap (1.0.1)
