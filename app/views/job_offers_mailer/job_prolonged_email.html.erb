@@ -5,7 +5,7 @@ Guten Tag <%= @staff.full_name %>,<br/>
 die Verlängerung Ihres Jobangebots <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> im HPI Connect Jobportal wurde soeben freigeschaltet. Es bleibt nun für die Nutzer des Portals weiter sichtbar. Registrierte Studierende und Alumni können sich auch direkt bewerben.<br/>
 Hier gelangen Sie zur <%= link_to("Ansicht", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%>. <br/>
 <br/>
-Die Laufzeit beträgt weitere 4 Wochen. Sie bekommen vor Ablauf der Frist wieder eine Benachrichtigung und haben die Möglichkeit, das Jobangebot erneut zu verlängern. Sie können das Jobangebot jederzeit bearbeiten.<br/>
+Die Laufzeit beträgt weitere 8 Wochen. Sie bekommen vor Ablauf der Frist wieder eine Benachrichtigung und haben die Möglichkeit, das Jobangebot erneut zu verlängern. Sie können das Jobangebot jederzeit bearbeiten.<br/>
 <br/>
 Falls Sie ein kostenpflichtiges Angebot gebucht haben (Absolventenstelle, Firmenprofil oder erstmalig ein Paket), bekommen Sie in Kürze eine Rechnung gemäß aktueller Preisliste.<br/>
 <br/>
@@ -24,7 +24,10 @@ Dear <%= @staff.full_name %>, <br/>
 The extension of your job offer <%= link_to(@job_offer.title, url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> in the HPI Connect Jobportal has just been activated It now remains online. Registered users are able to directly apply.<br/>
 Click <%= link_to("here", url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))%> to view your job offer.<br/>
 <br/>
-The running time is again 4 weeks. You will get a notification prior to the new expiration deadline and have the opportunity to extend the job offer again. You can edit the job offer at any time.   If you have booked an offer which is subject to charge (full time job, company profile, or a package for the first time), you will shortly receive an invoice in accordance with the current price list.   For further inquiries, we are happy to help you.<br/>
+The running time is again 8 weeks. You will get a notification prior to the new expiration deadline and have the opportunity to extend the job offer again. You can edit the job offer at any time.<br />
+<br />If you have booked an offer which is subject to charge (full time job, company profile, or a package for the first time), you will shortly receive an invoice in accordance with the current price list.<br />
+<br />
+For further inquiries, we are happy to help you.<br/>
 <br/>
 Kind regards<br/>
 <br/>
@@ -42,4 +45,3 @@ Amtsgericht Potsdam, HRB 12184<br/>
 Geschäftsführung: Prof. Dr. Christoph Meinel<br/>
 <br/>
 Design IT. Create Knowledge.<br/>
-

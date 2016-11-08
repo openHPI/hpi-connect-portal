@@ -46,14 +46,14 @@ de:
             service:
                 free:
                     title: "Kostenlose Angebote"
-                    traineeship: "Einen Praktikumsplatz %{set_online} (4 Wochen)"
-                    working_student: "Einen Studentenjob %{set_online} (4 Wochen)"
+                    traineeship: "Einen Praktikumsplatz %{set_online} (8 Wochen)"
+                    working_student: "Einen Studentenjob %{set_online} (8 Wochen)"
                 chargeable:
                     title: "Kostenpflichtige Angebote"
                     help_html: "(aktuelle Preise können Sie bei %{email} erfragen)"
                     present_profile_html: "%{company_profile} veröffentlichen (1 Jahr)"
                     company_profile: "Firmenprofil"
-                    single_graduate_job: "Einzelne Absolventenstelle %{book} (4 Wochen)"
+                    single_graduate_job: "Einzelne Absolventenstelle %{book} (8 Wochen)"
             booking:
                 basis:
                     title_html: "Basispaket %{book}"
@@ -64,7 +64,7 @@ de:
                 partner:
                     title_html: "Partnerpaket %{book}"
                     book: "buchen"
-                    advertisements: "24 Stellenangebote pro Jahr"
+                    advertisements: "20 Stellenangebote pro Jahr"
                     company_profile: "1 Firmenprofil für 1 Jahr"
                     exclusiv: "Recherchezugriff auf die Profildatenbank der Studenten und Alumni"
             advise: "Gerne beraten wir Sie zu unseren Angeboten."
@@ -72,6 +72,6 @@ de:
         invitation_text: >
                           Hallo,
 
-                          ich möchte Sie hiermit einladen meinem Unternehmen bei HPI Connect beizutreten.
+                          ich möchte Sie hiermit einladen, meinem Unternehmen bei HPI Connect beizutreten.
 
                           Viele Grüße

@@ -140,7 +140,7 @@ describe Employer do
       FactoryGirl.create(:employer, booked_package_id: 3)
     end
 
-    it_behaves_like "an employer with limited graduate job offers per year", 24
+    it_behaves_like "an employer with limited graduate job offers per year", 20
   end
 
 end

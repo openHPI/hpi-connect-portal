@@ -151,7 +151,7 @@ class JobOffer < ActiveRecord::Base
   end
 
   def expiration_date
-    (prolonged_at || created_at).to_date + 4.weeks
+    (prolonged_at || created_at).to_date + 8.weeks
   end
 
   def category

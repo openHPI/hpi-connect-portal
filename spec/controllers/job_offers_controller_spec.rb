@@ -531,11 +531,11 @@ describe JobOffersController do
         #response.should render_template("new")
       end
 
-      it "should be possible to create 24 graduate job with the premium package" do
+      it "should be possible to create 20 graduate job with the premium package" do
         @employer.update_column :booked_package_id, 3
         login @staff.user
         assert_equal(0, @employer.single_jobs_requested)
-        24.times do
+        20.times do
           expect {
             post :create, {job_offer: @attributes}, valid_session
           }.to change(JobOffer, :count).by(1)

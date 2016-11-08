@@ -235,7 +235,7 @@ describe JobOffer do
     end
 
     it "sends an email 2 days before expiration" do
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
+      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
       JobOffer.check_for_expired
       ActionMailer::Base.deliveries.count.should eq(1)
       email = ActionMailer::Base.deliveries[0]
@@ -243,7 +243,7 @@ describe JobOffer do
     end
 
     it "sends an email on expiration and closes the job offer" do
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 4.weeks)
+      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks)
       JobOffer.check_for_expired
       ActionMailer::Base.deliveries.count.should eq(1)
       email = ActionMailer::Base.deliveries[0]
@@ -252,10 +252,10 @@ describe JobOffer do
     end
 
     it "does only send emails with active status" do
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks + 2.days)
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 4.weeks)
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 4.weeks)
+      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
+      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
+      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks)
+      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks)
       ActionMailer::Base.deliveries.count.should eq(0)
     end
 

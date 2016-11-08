@@ -93,7 +93,7 @@ class Employer < ActiveRecord::Base
   end
 
   def can_create_job_offer?(category)
-    (category != 'graduate_job' || (partner? && graduate_job_count_this_year < (premium? ? 24 : 4))) ? true : false
+    (category != 'graduate_job' || (partner? && graduate_job_count_this_year < (premium? ? 20 : 4))) ? true : false
   end
 
   def add_one_single_booked_job

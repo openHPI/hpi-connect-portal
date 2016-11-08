@@ -46,15 +46,15 @@ en:
             service:
                 free:
                     title: "Free Services"
-                    traineeship: "%{set_online} an internship (4 weeks)"
-                    working_student: "%{set_online} a student job (4 weeks)"
+                    traineeship: "%{set_online} an internship (8 weeks)"
+                    working_student: "%{set_online} a student job (8 weeks)"
                 chargeable:
                     title: "Chargeable Services"
                     help_html: "(You can request an overview of current prices at %{email})" #connect@hpi.uni-potsdam.de.)"
-                    open_positions: "Announce your open positions (4 weeks)"
+                    open_positions: "Announce your open positions (8 weeks)"
                     present_profile_html: "Present Your %{company_profile} (1 year)"
                     company_profile: "Company Profile"
-                    single_graduate_job: "%{book} single graduate job (4 weeks)"
+                    single_graduate_job: "%{book} single graduate job (8 weeks)"
             booking:
                 basis:
                     title_html: "%{book} a Basis Packet"
@@ -65,7 +65,7 @@ en:
                 partner:
                     title_html: "%{book} a Partner Packet"
                     book: "Book"
-                    advertisements: "24 job advertisements per year"
+                    advertisements: "20 job advertisements per year"
                     company_profile: "1 company profile for 1 year"
                     exclusiv: "Exclusive research access to the profile database of HPI students and alumni for 1 year"
             advise: "We would be happy to advise you about our services."
