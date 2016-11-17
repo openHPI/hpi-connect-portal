@@ -18,7 +18,7 @@
   <!-- get url to assets for javascript plugins -->
   window.assets_url = '<%= asset_url 'assets' %>';
   <!-- image load path for jquery raty plugin -->
-  $.fn.raty.defaults.path = '/assets/jquery.raty';
+  $.fn.raty.defaults.path = '<%= asset_path 'assets' %>/jquery.raty';
 <% end %>
 
 
