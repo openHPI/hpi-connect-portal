@@ -16,7 +16,7 @@
 	<!-- preferred language available for javascript-->
 	window.locale = '<%= locale %>';
   <!-- get url to assets for javascript plugins -->
-  window.assets_url = '<%= asset_url 'assets' %>';
+  window.assets_url = '<%= asset_url 'assets', protocol: 'https' %>';
   <!-- image load path for jquery raty plugin -->
   $.fn.raty.defaults.path = window.assets_url + 'jquery.raty';
 <% end %>
