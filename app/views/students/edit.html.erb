@@ -1,11 +1,16 @@
 <div class="wrapper-12 panel-wrapper">
 
   <%= simple_form_for @student do |f| %>
-      <span class="pull-right" id="top-links">
-        <%= f.submit t("links.save"), class: "btn btn-primary title-button" %>
-      </span>
-
       <%= render 'shared/object_errors', object: @student %>
+
+      <div class="row">
+        <div class="col-sm-12 bottom-10">
+           <span class="pull-right" id="top-links">
+             <%= f.submit t("links.save"), class: "btn btn-primary title-button" %>
+           </span>
+        </div>
+      </div>
+
       <%= render 'profile_fields', student: @student, form: f %>
 
       <br />

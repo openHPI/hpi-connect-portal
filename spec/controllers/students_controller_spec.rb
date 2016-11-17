@@ -128,6 +128,17 @@ describe StudentsController do
       response.should render_template("edit")
     end
 
+    it "handles incomplete birthdate values" do
+      params = {
+        "birthday(1i)" => "3",
+        "birthday(2i)" => "3",
+        "birthday(3i)" => ""
+      }
+
+      patch :update, { id: @student.id, student: params}
+      response.should render_template("edit")
+    end
+
     it "saves uploaded images" do
       test_file = ActionDispatch::Http::UploadedFile.new({
         filename: 'test_picture.jpg',

@@ -31,6 +31,7 @@ class StudentsController < ApplicationController
 
   authorize_resource except: [:destroy, :edit, :index]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
+  before_action :birthdate_params_valid?, only: [:update]
 
   has_scope :filter_students, only: [:index], as: :q
   has_scope :filter_programming_languages, type: :array, only: [:index], as: :programming_language_ids
@@ -151,5 +152,18 @@ class StudentsController < ApplicationController
       @student.user.update_column :activated, true
       flash[:success] = I18n.t('users.messages.successfully_activated')
       redirect_to @student
+    end
+
+    def birthdate_params_valid?
+      birthdate_day = params["student"]["birthday(1i)"]
+      birthdate_month = params["student"]["birthday(2i)"]
+      birthdate_year = params["student"]["birthday(3i)"]
+
+      birthdate_valid = (birthdate_day.blank? && birthdate_month.blank? && birthdate_year.blank?) || (!birthdate_day.blank? && !birthdate_month.blank? && !birthdate_year.blank?)
+
+      if !birthdate_valid
+        @student.errors.add(:birthday, I18n.t("errors.messages.invalid"))
+        render_errors_and_action(@student, 'edit')
+      end
     end
 end
