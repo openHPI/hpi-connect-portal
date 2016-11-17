@@ -30,7 +30,7 @@
                 <%= label_field form, :birthday, t("activerecord.attributes.user.birthday") %>
               </div>
               <div class="col-sm-9">
-                <%= form.date_select :birthday, {start_year: 1940}, { class: 'birthdate_select form-control col-sm-4'} %>
+                <%= form.date_select :birthday, {start_year: 1940, include_blank: true}, { class: 'birthdate_select form-control col-sm-4'} %>
               </div>
             </div>
           </li>
