@@ -350,3 +350,31 @@ describe "student filtering by employer" do
     expect(page).to_not have_content @student3.full_name
   end
 end
+
+describe "student filtering by programming language and language" do
+  before(:each) do
+    @programming_language_1 = FactoryGirl.create(:programming_language)
+    @programming_language_2 = FactoryGirl.create(:programming_language)
+    @language_1 = FactoryGirl.create(:language)
+    @language_2 = FactoryGirl.create(:language)
+
+    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
+    @student2 = FactoryGirl.create(:student, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
+    @student3 = FactoryGirl.create(:student, programming_languages: [@programming_language_2], languages: [@language_1])
+    @student4 = FactoryGirl.create(:student, programming_languages: [@programming_language_2], languages: [@language_2])
+    @student5 = FactoryGirl.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
+  end
+
+  it "finds all users with the requested programming language, and language" do
+    login FactoryGirl.create(:user, :admin)
+    visit students_path
+    check "programming_language_#{@programming_language_1.id}"
+    check "language_#{@language_1.id}"
+    click_on "Go!"
+    expect(page).to have_content @student1.full_name
+    expect(page).to have_content @student2.full_name
+    expect(page).to_not have_content @student3.full_name
+    expect(page).to_not have_content @student4.full_name
+    expect(page).to have_content @student5.full_name
+  end
+end
