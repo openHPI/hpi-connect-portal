@@ -53,7 +53,7 @@ class StudentsController < ApplicationController
           indexedStudents = Student.active.visible_for_all
         end
       elsif current_user.student?
-        indexedStudents = Student.active.visibile_for_students
+        indexedStudents = Student.active.visible_for_students
       else
         indexedStudents = Student.active.visible_for_all
       end

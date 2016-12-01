@@ -246,7 +246,7 @@ hyrise = JobOffer.create!(
   description: 'The HYRISE development team is looking for active and engaged help in further enhancing the chairs expiremental in-memory database HYRISE.',
   state_id: 3,
   category_id: 2,
-  graduation_id: 4,
+  graduation_id: 2,
   employer: hpi,
   status: JobStatus.where(:name => "active").first,
   start_date: Date.current+15,
