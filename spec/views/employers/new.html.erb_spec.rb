@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe "employers/new" do
   before(:each) do
-    @employer = assign(:employer, stub_model(Employer,
-      name: "HCI", description: "Human Computer Interaction"
-    ).as_new_record)
+    @employer = assign(:employer, Employer.new)
   end
 
   it "renders new employer form" do

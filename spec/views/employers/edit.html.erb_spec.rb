@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe "employers/edit" do
   before(:each) do
-    @employer = assign(:employer, stub_model(Employer,
-      name: "HCI", description: "Human Computer Interaction"
-    ))
+    @employer = assign(:employer, FactoryGirl.create(:employer))
   end
 
   it "renders the edit employer form" do

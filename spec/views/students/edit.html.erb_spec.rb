@@ -2,23 +2,7 @@ require 'spec_helper'
 
 describe "students/edit" do
   before(:each) do
-    @student = assign(:student, stub_model(Student,
-      user: stub_model(User,
-        firstname: "First Name",
-        lastname: "Last Name",
-        email: "test@test.de"
-      ),
-      semester: 1,
-      academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"),
-      birthday: '2013-11-10',
-      graduation_id: Student::GRADUATIONS.index("abitur"),
-      additional_information: "MyText",
-      homepage: "Homepage",
-      github: "Github",
-      facebook: "Facebook",
-      xing: "Xing",
-      linkedin: "Linkedin"
-    ))
+    @student = assign(:student, FactoryGirl.create(:student))
   end
 
   it "renders the edit student form" do

@@ -34,6 +34,10 @@ FactoryGirl.define do
     year_of_foundation 1991
     number_of_employees "50 - 100"
     booked_package_id 0
+    
+    trait :premium do
+      booked_package_id Employer::PACKAGES.index("premium")
+    end
 
     before(:create) do | employer |
       FactoryGirl.create(:staff, employer: employer)

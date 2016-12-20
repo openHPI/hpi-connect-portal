@@ -4,16 +4,11 @@ describe "job_offers/index" do
   before(:each) do
     @employer = FactoryGirl.create(:employer)
     assign(:employers, [@employer])
-    job_offers = [stub_model(JobOffer,
-        employer: @employer,
-        title: "Title",
-        release_date: '2013-11-10'
-      ),
-      stub_model(JobOffer,
-        employer: @employer,
-        title: "Title",
-        release_date: '2013-11-11'
-      )]
+    
+    @job_offer_1 = FactoryGirl.create(:job_offer, employer: @employer)
+    @job_offer_2 = FactoryGirl.create(:job_offer, employer: @employer)
+    job_offers = [@job_offer_1, @job_offer_2]
+    
     assign(:job_offers_list, {items: job_offers,
                         name: "job_offers.archive"})
     assign(:radio_button_sort_value, {"date" => false, "employer" => false})
@@ -28,8 +23,9 @@ describe "job_offers/index" do
 
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    assert_select "h4", text: "Title".to_s, count: 2
-    assert_select ".employer", text: @employer.name.to_s, count: 2
+    assert_select "h4", text: @job_offer_1.title, count: 1
+    assert_select "h4", text: @job_offer_2.title, count: 1
+    assert_select ".employer", text: @employer.name, count: 2
   end
 
   it "has a date radio_button that is checked when loaded" do

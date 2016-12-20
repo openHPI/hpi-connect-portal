@@ -52,6 +52,8 @@ RSpec.configure do |config|
   config.include FeatureSessionHelper, type: :feature
 
   config.include Capybara::DSL
+  
+  config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

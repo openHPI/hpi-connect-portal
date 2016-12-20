@@ -2,18 +2,7 @@ require 'spec_helper'
 
 describe "students/show" do
   before(:each) do
-    @student = assign(:student, stub_model(Student,
-      user: stub_model(User,
-        firstname: "First Name",
-        lastname: "Last Name",
-        email: "test@test.de",
-        activated: false
-      ),
-      semester: 1,
-      academic_program_id: 3,
-      birthday: '2013-11-10',
-      graduation_id: 3,
-      additional_information: "MyText",
+    @student = assign(:student, FactoryGirl.create(:student, additional_information: "MyText",
       homepage: "Homepage",
       github: "Github",
       facebook: "Facebook",
@@ -29,16 +18,15 @@ describe "students/show" do
   it "renders attributes in <p>" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/First Name/)
-    rendered.should match(/Last Name/)
-    rendered.should match(/1/)
-    rendered.should match(/Academic Program/)
-    rendered.should match(/MyText/)
-    rendered.should match(/MyText/)
-    rendered.should match(/Homepage/)
-    rendered.should match(/Github/)
-    rendered.should match(/Facebook/)
-    rendered.should match(/Xing/)
-    rendered.should match(/Linkedin/)
+    rendered.should match(@student.user.firstname)
+    rendered.should match(@student.user.lastname)
+    rendered.should match(@student.semester.to_s)
+    rendered.should match(Student::ACADEMIC_PROGRAMS[@student.academic_program_id].capitalize)
+    rendered.should match(@student.additional_information)
+    rendered.should match(@student.homepage)
+    rendered.should match(@student.github)
+    rendered.should match(@student.facebook)
+    rendered.should match(@student.xing)
+    rendered.should match(@student.linkedin)
   end
 end

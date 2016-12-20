@@ -97,7 +97,7 @@ describe RatingsController do
         up_rating.score_overall = 10000
         put :update, { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
 
-        expect(assigns(:rating).errors.empty?).to_not be_true
+        expect(assigns(:rating).errors.empty?).to_not be true
       end
     end
 
