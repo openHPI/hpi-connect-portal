@@ -12,3 +12,4 @@
 /public/assets/*
 .orig
 .idea
+/.byebug_history
