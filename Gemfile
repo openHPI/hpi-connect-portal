@@ -49,8 +49,8 @@ group :development, :test do
   gem 'letter_opener'
   gem 'factory_girl_rails', require: false
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
-  gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
-  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+  gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
+  gem 'rails3_serve_static_assets', git: 'https://github.com/heroku/rails3_serve_static_assets.git'
   gem 'byebug'
 end
 
@@ -84,7 +84,7 @@ gem 'rest-client'
 gem 'highline'
 
 # for picture Upload
-gem 'paperclip', git: 'https://github.com/thoughtbot/paperclip.git'
+gem 'paperclip'
 
 # for cron jobs
 gem 'whenever'
@@ -93,7 +93,7 @@ gem 'whenever'
 gem 'jquery-ui-rails'
 
 # jquery plugin for rating stars
-gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
+gem 'jquery-raty-rails', git: 'https://github.com/bmc/jquery-raty-rails.git'
 
 # load jQuery fast without refresh
 gem 'jquery-turbolinks'
@@ -148,7 +148,7 @@ gem 'xing_api', '~> 0.1'
 
 # deployment with nginx and unicorn
 gem 'unicorn'
-gem 'capistrano', '~> 3.1.0'
-gem 'capistrano-rails', '~> 1.1.0'
+gem 'capistrano', '~> 3.6'
+gem 'capistrano-rails', '~> 1.2'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'

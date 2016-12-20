@@ -1,39 +1,28 @@
 GIT
-  remote: git://github.com/bmc/jquery-raty-rails.git
+  remote: https://github.com/adzap/active_enum.git
+  revision: 3cb4e31e5810d14a1d012a848387b869e2dfa8ef
+  specs:
+    active_enum (1.0.0.pre)
+      activesupport (>= 3.0)
+
+GIT
+  remote: https://github.com/bmc/jquery-raty-rails.git
   revision: d36753c77c9b825e6e2746c1c70c3b11b85b86cc
   specs:
     jquery-raty-rails (0.0.2)
       rails (>= 3.2.3)
 
 GIT
-  remote: git://github.com/heroku/rails3_serve_static_assets.git
+  remote: https://github.com/heroku/rails3_serve_static_assets.git
   revision: 84910ceb4ca2851d650e66d3b22f5008acf253f8
   specs:
     rails3_serve_static_assets (0.0.1)
 
 GIT
-  remote: git://github.com/heroku/rails_log_stdout.git
+  remote: https://github.com/heroku/rails_log_stdout.git
   revision: f9a92758f2d5dca5a88bf899a83256302f16ab6c
   specs:
     rails_log_stdout (0.0.1)
-
-GIT
-  remote: https://github.com/adzap/active_enum.git
-  revision: 14fc08b0080c44f4d68611c9e63cd163d4586a12
-  specs:
-    active_enum (0.9.12)
-      activesupport (>= 3.0)
-
-GIT
-  remote: https://github.com/thoughtbot/paperclip.git
-  revision: 37589f9b0c869c8df5be1ee4d83e14fb353a7dff
-  specs:
-    paperclip (4.3.1)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      cocaine (~> 0.5.5)
-      mime-types
-      mimemagic (~> 0.3.0)
 
 GEM
   remote: https://rubygems.org/
@@ -62,16 +51,19 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     airbrake (3.1.17)
       builder
       multi_json
-    annotate (2.7.0)
+    airbrussh (1.1.1)
+      sshkit (>= 1.6.1, != 1.7.0)
+    annotate (2.7.1)
       activerecord (>= 3.2, < 6.0)
-      rake (~> 10.4)
+      rake (>= 10.4, < 12.0)
     arel (4.0.2)
-    ast (2.2.0)
-    bcrypt (3.1.10)
+    ast (2.3.0)
+    bcrypt (3.1.11)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
     bootstrap-rails-engine (3.1.1.0)
@@ -79,20 +71,23 @@ GEM
     builder (3.1.4)
     byebug (9.0.6)
     cancan (1.6.10)
-    capistrano (3.1.0)
+    capistrano (3.7.1)
+      airbrussh (>= 1.0.0)
+      capistrano-harrow
       i18n
       rake (>= 10.0.0)
-      sshkit (~> 1.3)
-    capistrano-bundler (1.1.4)
+      sshkit (>= 1.9.0)
+    capistrano-bundler (1.2.0)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-rails (1.1.6)
+    capistrano-harrow (0.5.3)
+    capistrano-rails (1.2.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capybara (2.6.2)
+    capybara (2.11.0)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -114,29 +109,29 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.12.2)
     configurable_engine (0.4.8)
       rails (> 3.1.0)
     crass (0.2.1)
-    database_cleaner (1.5.1)
+    database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.20160128)
+    domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
-    email_spec (2.0.0)
+    email_spec (2.1.0)
       htmlentities (~> 4.3.3)
       launchy (~> 2.1)
       mail (~> 2.6.3)
     erubis (2.7.0)
-    execjs (2.6.0)
-    factory_girl (4.5.0)
+    execjs (2.7.0)
+    factory_girl (4.8.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.6.0)
-      factory_girl (~> 4.5.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     famfamfam_flags_rails (0.3.0)
       railties (>= 3.1.0)
-    ffi (1.9.10)
+    ffi (1.9.14)
     font-awesome-rails (4.0.3.2)
       railties (>= 3.2, < 5.0)
     has_scope (0.6.0)
@@ -145,7 +140,7 @@ GEM
     highline (1.7.8)
     hike (1.2.3)
     htmlentities (4.3.4)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.7.0)
     jbuilder (2.0.8)
@@ -159,38 +154,47 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
-    jquery-ui-rails (5.0.5)
+    jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (1.8.3)
-    kgio (2.10.0)
+    kgio (2.11.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    libv8 (3.16.14.13)
-    mail (2.6.3)
-      mime-types (>= 1.16, < 3)
-    mime-types (2.99.1)
-    mimemagic (0.3.1)
-    mini_portile2 (2.0.0)
+    libv8 (3.16.14.17)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    mimemagic (0.3.0)
+    mini_portile2 (2.1.0)
     minitest (4.7.5)
     multi_json (1.12.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (3.0.2)
+    net-ssh (3.2.0)
     netrc (0.11.0)
     newrelic_rpm (3.7.1.188)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8.1)
+      mini_portile2 (~> 2.1.0)
     nokogumbo (1.1.12)
       nokogiri
     oauth (0.4.7)
-    open_id_authentication (1.2.0)
+    open_id_authentication (1.3.0)
       rack-openid (~> 1.3)
-    parser (2.3.0.6)
+    paperclip (4.3.7)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (= 0.3.0)
+    parser (2.3.3.1)
       ast (~> 2.2)
     pg (0.17.1)
     powerpack (0.1.1)
+    public_suffix (2.0.4)
     rack (1.5.5)
     rack-openid (1.4.2)
       rack (>= 1.1.0)
@@ -209,22 +213,21 @@ GEM
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.4)
+    rails_stdout_logging (0.0.5)
     railties (4.0.13)
       actionpack (= 4.0.13)
       activesupport (= 4.0.13)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
-    raindrops (0.15.0)
-    rake (10.5.0)
-    rdoc (4.2.2)
-      json (~> 1.4)
+    raindrops (0.17.0)
+    rake (11.3.0)
+    rdoc (4.3.0)
     ref (2.0.0)
-    rest-client (1.8.0)
+    rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -242,14 +245,14 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
-    rubocop (0.37.2)
-      parser (>= 2.3.0.4, < 3.0)
+    rubocop (0.46.0)
+      parser (>= 2.3.1.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 0.3)
+      unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-openid (2.7.0)
-    ruby-progressbar (1.7.5)
+    ruby-progressbar (1.8.1)
     rubyzip (1.2.0)
     sanitize (3.0.4)
       crass (~> 0.2.0)
@@ -261,22 +264,21 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
-    sdoc (0.4.1)
+    sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    selenium-webdriver (2.52.0)
+    selenium-webdriver (3.0.3)
       childprocess (~> 0.5)
-      multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     simple-navigation (3.14.0)
       activesupport (>= 2.3.2)
-    simple_form (3.2.1)
+    simple_form (3.3.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
-    simplecov (0.11.2)
+    simplecov (0.12.0)
       docile (~> 1.1.0)
-      json (~> 1.8)
+      json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     sprockets (2.12.4)
@@ -288,7 +290,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sshkit (1.8.1)
+    sshkit (1.11.5)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     therubyracer (0.12.2)
@@ -300,10 +302,11 @@ GEM
     timeliness (0.3.8)
     tinymce-rails (4.1.10)
       railties (>= 3.1.1)
-    tinymce-rails-langs (4.20140129)
-      tinymce-rails (~> 4.0)
-    turbolinks (2.5.3)
-      coffee-rails
+    tinymce-rails-langs (4.20160310)
+      tinymce-rails (~> 4.1, >= 4.1.10)
+    turbolinks (5.0.1)
+      turbolinks-source (~> 5)
+    turbolinks-source (5.0.0)
     tzinfo (0.3.52)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -311,20 +314,19 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    unicode-display_width (0.3.1)
-    unicorn (5.0.1)
+    unicode-display_width (1.1.2)
+    unicorn (5.2.0)
       kgio (~> 2.6)
-      rack
       raindrops (~> 0.7)
     validates_timeliness (3.0.15)
       timeliness (~> 0.3.7)
-    websocket (1.2.2)
+    websocket (1.2.3)
     whenever (0.9.7)
       chronic (>= 0.6.3)
-    will_paginate (3.1.0)
+    will_paginate (3.1.5)
     will_paginate-bootstrap (1.0.1)
       will_paginate (>= 3.0.3)
-    xing_api (0.4)
+    xing_api (0.6)
       oauth (~> 0.4.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -340,9 +342,9 @@ DEPENDENCIES
   bootstrap-rails-engine
   byebug
   cancan
-  capistrano (~> 3.1.0)
+  capistrano (~> 3.6)
   capistrano-bundler
-  capistrano-rails (~> 1.1.0)
+  capistrano-rails (~> 1.2)
   capistrano-rvm
   capybara
   chronic (~> 0.10.2)
@@ -366,7 +368,7 @@ DEPENDENCIES
   letter_opener
   newrelic_rpm (~> 3.7.1.188)
   open_id_authentication
-  paperclip!
+  paperclip
   pg (~> 0.17.1)
   rails (~> 4.0.0)
   rails3_serve_static_assets!
