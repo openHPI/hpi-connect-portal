@@ -19,9 +19,9 @@ de:
     import: "Alumni importieren"
     remind: "Alumni erinnern"
     password_settings: "Passwort ändern"
-    forgot_password: 'Passwort vergessen'
+    forgot_password: "Passwort vergessen"
     reset_password: "Passwort zurücksetzen"
-    request_password: 'Neues Passwort anfordern'
+    request_password: "Neues Passwort anfordern"
     inactive: "Deaktiviert"
     messages:
         account_successfully_updated: "Der Account wurde erfolgreich aktualisiert."
@@ -30,12 +30,12 @@ de:
         successfully_deleted: "Das Profil wurde erfolgreich gelöscht."
         successfully_activated: "Das Profil wurde erfolgreich aktiviert."
         unsuccessfully_activated: "Fehler während der Aktivierung. Bitte versuchen Sie es später erneut."
-        password_changed: "Das Password wurde geändert."
+        password_changed: "Das Passwort wurde geändert."
         password_wrong: "Das alte Passwort scheint ungültig zu sein."
         passwords_not_matching: "Die neuen Passwörter stimmen nicht überein."
-        your_new_password: 'Ihr neues Passwort'
-        forgot_password: 'Passwort vergessen'
-        send_new_password: 'Neues Passwort erhalten'
-        password_resetted: 'Ihr Passwort wurde erfolgreich geändert. Bitte kontrollieren Sie Ihr E-Mail-Postfach.'
-        password_send_instructions: 'Wenn Ihre E-Mail-Adresse in unserer Datenbank hinterlegt ist, erhalten Sie eine E-Mail mit einem neuen Passwort, welches Sie nach dem nächsten Login damit wieder ändern können.'
-        unknown_email: 'Ihre Email-Adresse wurde nicht in der Datenbank gefunden'
+        your_new_password: "Ihr neues Passwort"
+        forgot_password: "Passwort vergessen"
+        send_new_password: "Neues Passwort erhalten"
+        password_resetted: "Ihr Passwort wurde erfolgreich geändert. Bitte kontrollieren Sie Ihr E-Mail-Postfach."
+        password_send_instructions: "Wenn Ihre E-Mail-Adresse in unserer Datenbank hinterlegt ist, erhalten Sie eine E-Mail mit einem neuen Passwort, welches Sie nach dem nächsten Login damit wieder ändern können."
+        unknown_email: "Ihre Email-Adresse wurde nicht in der Datenbank gefunden."

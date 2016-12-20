@@ -77,6 +77,7 @@ GEM
     bootstrap-rails-engine (3.1.1.0)
       railties (>= 3.0)
     builder (3.1.4)
+    byebug (9.0.6)
     cancan (1.6.10)
     capistrano (3.1.0)
       i18n
@@ -335,6 +336,7 @@ DEPENDENCIES
   annotate (>= 2.6.1)
   bcrypt-ruby (~> 3.1.5)
   bootstrap-rails-engine
+  byebug
   cancan
   capistrano (~> 3.1.0)
   capistrano-bundler
@@ -392,3 +394,9 @@ DEPENDENCIES
   will_paginate (~> 3.0)
   will_paginate-bootstrap
   xing_api (~> 0.1)
+
+RUBY VERSION
+   ruby 2.0.0p648
+
+BUNDLED WITH
+   1.13.1
