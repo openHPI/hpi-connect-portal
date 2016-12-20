@@ -18,15 +18,15 @@ describe "the staff page" do
 
   describe "as an admin" do
     it "should view only names of a staff member on the overview" do
-      page.should have_content(@staff1.firstname)
-      page.should have_content(@staff1.lastname)
+      expect(page).to have_content(@staff1.firstname)
+      expect(page).to have_content(@staff1.lastname)
     end
 
     it "should contain a link for showing a profile and it should lead to profile page " do
       find_link(@staff1.firstname).click
 
-      current_path.should_not == staff_index_path
-      current_path.should == staff_path(@staff1)
+      expect(current_path).not_to eq(staff_index_path)
+      expect(current_path).to eq(staff_path(@staff1))
     end
 
     it "should have a button to demote a member of the staff " do
@@ -48,8 +48,8 @@ describe "the staff page" do
       FactoryGirl.create(:job_status, name: 'active')
       login @staff1.user
       visit staff_index_path
-      current_path.should_not == staff_index_path
-      current_path.should == root_path
+      expect(current_path).not_to eq(staff_index_path)
+      expect(current_path).to eq(root_path)
     end
 
     it "should not remove other staff members" do
@@ -65,8 +65,8 @@ describe "the staff page" do
       FactoryGirl.create(:job_status, name: 'active')
       login @student1.user
       visit staff_index_path
-      current_path.should_not == staff_index_path
-      current_path.should == root_path
+      expect(current_path).not_to eq(staff_index_path)
+      expect(current_path).to eq(root_path)
     end
 
     it "should not remove staff members" do
@@ -87,10 +87,10 @@ describe "the staff page" do
       fill_in 'staff_user_attributes_password', with: 'password'
       fill_in 'staff_user_attributes_password_confirmation', with: 'password'
       find('input[type="submit"]').click
-      employer.staff_members.count.should == 2
-      page.should have_content(I18n.t('employers.messages.successfully_created'))
-      page.should have_content("Welcome to HPI Connect!")
-      page.should have_content("Max Mustermann")
+      expect(employer.staff_members.count).to eq(2)
+      expect(page).to have_content(I18n.t('employers.messages.successfully_created'))
+      expect(page).to have_content("Welcome to HPI Connect!")
+      expect(page).to have_content("Max Mustermann")
     end
 
     it "should show an error message when trying to create a staff member that already exists" do
@@ -102,9 +102,9 @@ describe "the staff page" do
         fill_in 'staff_user_attributes_password', with: 'password'
         fill_in 'staff_user_attributes_password_confirmation', with: 'password'
         find('input[type="submit"]').click
-        employer.staff_members.count.should == 2
+        expect(employer.staff_members.count).to eq(2)
       end
-      page.should have_content "An error occurred while trying to create the staff member. Are you sure the member doesn't already exist?"
+      expect(page).to have_content "An error occurred while trying to create the staff member. Are you sure the member doesn't already exist?"
     end
   end
 end

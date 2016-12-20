@@ -21,14 +21,14 @@ describe StaffController do
       login admin
 
       get :index, {}, valid_session
-      assigns(:staff_members).should eq(Staff.all.sort_by { |staff| [staff.lastname, staff.firstname] })
+      expect(assigns(:staff_members)).to eq(Staff.all.sort_by { |staff| [staff.lastname, staff.firstname] })
     end
   end
 
   describe "GET show" do
     it "assigns the requested staff as @staff" do
       get :show, {id: @staff.to_param}, valid_session
-      assigns(:staff).should eq(@staff)
+      expect(assigns(:staff)).to eq(@staff)
     end
   end
 
@@ -55,7 +55,7 @@ describe StaffController do
     it "redirects to the staff list" do
       staff = FactoryGirl.create(:staff)
       delete :destroy, {id: staff.to_param}, valid_session
-      response.should redirect_to(staff_index_path)
+      expect(response).to redirect_to(staff_index_path)
     end
   end
 
@@ -68,12 +68,12 @@ describe StaffController do
 
     it "should render template without account" do
       get :new, ({token: employer.token})
-      response.should render_template("new")
+      expect(response).to render_template("new")
     end
 
     it "should redirect to root if wrong token" do
       get :new, ({token: "wrong-token"})
-      response.should redirect_to root_path
+      expect(response).to redirect_to root_path
     end
   end
 
@@ -91,13 +91,13 @@ describe StaffController do
       expect {
         post :create, {staff: valid_attributes}, valid_session
       }.to change(Staff, :count).by(1)
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "creates staff in right employer" do
       post :create, {staff: valid_attributes}, valid_session
-      Staff.last.firstname.should == "Max"
-      Staff.last.employer.should == employer
+      expect(Staff.last.firstname).to eq("Max")
+      expect(Staff.last.employer).to eq(employer)
     end
   end
 end

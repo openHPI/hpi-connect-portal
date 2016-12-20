@@ -31,7 +31,7 @@ describe "Job Offer pages" do
             visit job_offer_path(job_offer)
           end
 
-          it { should_not have_link('Edit')}
+          it { is_expected.not_to have_link('Edit')}
 
           describe "not being activated" do
             before do
@@ -57,7 +57,7 @@ describe "Job Offer pages" do
           login student.user
         end
 
-        it { should_not have_button('Apply')}
+        it { is_expected.not_to have_button('Apply')}
       end
 
       describe "as a staff of the job offers employer" do
@@ -68,8 +68,8 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link I18n.t('job_offers.job_completed') }
-        it { should_not have_link 'Reopen job offer'}
+        it { is_expected.to have_link I18n.t('job_offers.job_completed') }
+        it { is_expected.not_to have_link 'Reopen job offer'}
       end
 
       describe "as the responsible user" do
@@ -79,7 +79,7 @@ describe "Job Offer pages" do
         end
 
         it "shouldn't display a delete button" do
-          should_not have_link I18n.t("links.destroy")
+          is_expected.not_to have_link I18n.t("links.destroy")
         end
       end
 
@@ -91,8 +91,8 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link I18n.t('job_offers.job_completed') }
-        it { should_not have_link 'Reopen job offer'}
+        it { is_expected.to have_link I18n.t('job_offers.job_completed') }
+        it { is_expected.not_to have_link 'Reopen job offer'}
       end
     end
 
@@ -115,7 +115,7 @@ describe "Job Offer pages" do
 
         it "should not be visible in the job offers list" do
           visit job_offers_path
-          should_not have_content(job_offer.title)
+          is_expected.not_to have_content(job_offer.title)
         end
 
         it "should be redirected to the index page" do
@@ -133,10 +133,10 @@ describe "Job Offer pages" do
         end
 
         it "should be editable for the responsible user" do
-          should have_selector 'a:contains("Edit"):not(disabled)'
-          should have_selector 'a:contains("Delete"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('Pending')
+          is_expected.to have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -150,10 +150,10 @@ describe "Job Offer pages" do
         end
 
         it "should be editable for any staff" do
-          should have_selector 'a:contains("Edit"):not(disabled)'
-          should have_selector 'a:contains("Delete"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('Pending')
+          is_expected.to have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -161,8 +161,8 @@ describe "Job Offer pages" do
 
         it "is not possible to accept or decline the job offer" do
           #This is now Admin Job
-          should_not have_link('Accept')
-          should_not have_link('Decline')
+          is_expected.not_to have_link('Accept')
+          is_expected.not_to have_link('Decline')
         end
       end
 
@@ -175,10 +175,10 @@ describe "Job Offer pages" do
         end
 
         it "should be editable for the any staff" do
-          should have_selector 'a:contains("Edit"):not(disabled)'
-          should have_selector 'a:contains("Delete"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
+          is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          should have_content('Pending')
+          is_expected.to have_content('Pending')
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -186,8 +186,8 @@ describe "Job Offer pages" do
 
         it "is possible to accept or decline the job offer" do
 
-          should have_link('Accept')
-          should have_link('Decline')
+          is_expected.to have_link('Accept')
+          is_expected.to have_link('Decline')
         end
       end
     end
@@ -205,7 +205,7 @@ describe "Job Offer pages" do
           visit job_offer_path(job_offer)
         end
 
-        it { should have_link('Reopen job offer') }
+        it { is_expected.to have_link('Reopen job offer') }
 
       end
     end
@@ -221,19 +221,19 @@ describe "Job Offer pages" do
       it "shows job offer details link for admin" do
         login admin
         visit archive_job_offers_path
-        page.should have_link("archive job")
+        expect(page).to have_link("archive job")
       end
 
       it "doesn't show job offer details link for students" do
         login student.user
         visit archive_job_offers_path
-        page.should_not have_link("archive job")
+        expect(page).not_to have_link("archive job")
       end
 
       it "doesn't show job offer details link for staff" do
         login staff.user
         visit archive_job_offers_path
-        page.should_not have_link("archive job")
+        expect(page).not_to have_link("archive job")
       end
     end
   end
@@ -249,15 +249,15 @@ describe "Job Offer pages" do
     it "also displays job_offers with lower graduation" do
       find('#graduation').find(:xpath, 'option[3]').select_option
       find('#find_jobs_button').click
-      page.should have_content @job_offer_with_bachelor.title
-      page.should have_content @job_offer_with_abitur.title
+      expect(page).to have_content @job_offer_with_bachelor.title
+      expect(page).to have_content @job_offer_with_abitur.title
     end
 
     it "does not display job_offer with higher graduation" do
       find('#graduation').find(:xpath, 'option[2]').select_option
       find('#find_jobs_button').click
-      page.should have_content @job_offer_with_abitur.title
-      page.should_not have_content @job_offer_with_bachelor.title
+      expect(page).to have_content @job_offer_with_abitur.title
+      expect(page).not_to have_content @job_offer_with_bachelor.title
     end
   end
 end

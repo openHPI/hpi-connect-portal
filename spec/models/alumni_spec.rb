@@ -26,24 +26,24 @@ describe Alumni do
 
     it "should not be valid without email" do
       alumnus.email = nil
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
     end
 
     it "should not be valid without alumni_email" do
       alumnus.alumni_email = nil
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
     end
 
     it "should not be valid without token" do
       alumnus.token = nil
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
     end
 
     it "should not be valid with an alumni email already registered on a user" do
       test_alumni_email = 'Firstname.Lastname'
       FactoryGirl.create(:user, alumni_email: test_alumni_email)
       alumnus.alumni_email = test_alumni_email
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
     end
   end
 
@@ -53,7 +53,7 @@ describe Alumni do
       ActionMailer::Base.deliveries = []
       alumni = FactoryGirl.create :alumni
       alumni.send_reminder
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
   end

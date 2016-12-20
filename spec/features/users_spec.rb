@@ -12,11 +12,11 @@ describe "the user editing page" do
     fill_in 'user_email', with: 'test@gmail.com'
     find('input[value="Save"]').click
 
-    current_path.should == edit_user_path(@user)
+    expect(current_path).to eq(edit_user_path(@user))
 
-    page.should have_content(I18n.t('users.messages.account_successfully_updated'))
-    page.should have_content("Account Settings")
-    page.should have_selector("input[type=email][value='test@gmail.com']")
+    expect(page).to have_content(I18n.t('users.messages.account_successfully_updated'))
+    expect(page).to have_content("Account Settings")
+    expect(page).to have_selector("input[type=email][value='test@gmail.com']")
 
   end
 
@@ -27,8 +27,8 @@ describe "the user editing page" do
     fill_in 'user_password_confirmation', with: 'password'
     find('input[value="Change Password"]').click
 
-    current_path.should == edit_user_path(@user)
-    page.should have_content(I18n.t('users.messages.password_changed'))
+    expect(current_path).to eq(edit_user_path(@user))
+    expect(page).to have_content(I18n.t('users.messages.password_changed'))
   end
 end
 
@@ -41,7 +41,7 @@ describe "Login new Alumnus with old HPI Email adress" do
     fill_in 'session_email', with: future_alumni.email
     fill_in 'session_password', with: 'password123'
     click_button I18n.t('home.index.sign_in')
-    current_path.should eq(edit_user_path(future_alumni.user))
-    page.should have_content I18n.t('alumni.choose_another_email')
+    expect(current_path).to eq(edit_user_path(future_alumni.user))
+    expect(page).to have_content I18n.t('alumni.choose_another_email')
   end
 end

@@ -19,16 +19,16 @@ describe "the job-offers page" do
 
   it "should include all jobs currently available" do
     visit job_offers_path
-    page.should have_content(@job_offer_1.title)
-    page.should have_content(@job_offer_2.title)
-    page.should have_content(@job_offer_3.title)
-    page.should_not have_content(@job_offer_4.title)
+    expect(page).to have_content(@job_offer_1.title)
+    expect(page).to have_content(@job_offer_2.title)
+    expect(page).to have_content(@job_offer_3.title)
+    expect(page).not_to have_content(@job_offer_4.title)
   end
 
   it "should sort the jobs by creation date" do
     visit job_offers_path
     # using regex for order of elements
-    page.should have_content(Regexp.new("""
+    expect(page).to have_content(Regexp.new("""
       #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
     """.strip))
   end
@@ -38,13 +38,13 @@ describe "the job-offers page" do
     job_offer = FactoryGirl.create(:job_offer, status: JobStatus.active, prolonged: true, prolonged_at: Date.current,
                        release_date: Date.current-1)
     visit job_offers_path
-    page.should have_content(job_offer.prolonged_at.to_date)
+    expect(page).to have_content(job_offer.prolonged_at.to_date)
   end
 
 
   it "should not show check box to search for pending to students" do
     visit job_offers_path
-    page.should_not have_content("Pending jobs")
+    expect(page).not_to have_content("Pending jobs")
   end
 
   it "should be possible for admins to search for pending jobs" do
@@ -93,8 +93,8 @@ describe "a job offer entry" do
   end
 
   it "should have a title and the professorship" do
-    page.should have_content(@job_offer.title)
-    page.should have_content(@employer.name)
+    expect(page).to have_content(@job_offer.title)
+    expect(page).to have_content(@employer.name)
   end
 
   it "should link to its detailed page" do
@@ -120,17 +120,17 @@ describe "job_offers_history" do
       status: JobStatus.closed
       )
     visit job_offers_path
-    find("#top-links").should have_link "Archive"
+    expect(find("#top-links")).to have_link "Archive"
     click_on "Archive"
 
     expect(current_path).to eq(archive_job_offers_path)
 
-    page.should have_css "ul.list-group li"
-    page.should have_css "#search"
-    page.should have_css "#filtering"
-    page.should have_css "#search"
+    expect(page).to have_css "ul.list-group li"
+    expect(page).to have_css "#search"
+    expect(page).to have_css "#filtering"
+    expect(page).to have_css "#search"
     find_button("Go").visible?
-    first("ul.list-group li").should have_content "Closed Job Touch Floor"
+    expect(first("ul.list-group li")).to have_content "Closed Job Touch Floor"
   end
 
   describe "Show Archive Job Offers" do
@@ -144,18 +144,18 @@ describe "job_offers_history" do
     end
 
     it "should be possible to show own archive jobs" do
-      page.should have_link @closed_job_offer_for_staff_1.title
+      expect(page).to have_link @closed_job_offer_for_staff_1.title
     end
 
     it "should not be possible to show other archive jobs" do
-      page.should_not have_link @closed_job_offer_for_staff_2.title
+      expect(page).not_to have_link @closed_job_offer_for_staff_2.title
     end
 
     it "should be possible to see all jobs for the admin" do
       login FactoryGirl.create(:user, :admin)
       visit archive_job_offers_path
-      page.should have_link @closed_job_offer_for_staff_1.title
-      page.should have_link @closed_job_offer_for_staff_2.title
+      expect(page).to have_link @closed_job_offer_for_staff_1.title
+      expect(page).to have_link @closed_job_offer_for_staff_2.title
     end
   end
 end

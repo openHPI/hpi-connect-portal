@@ -23,19 +23,19 @@ describe "the students page" do
     it "is not available for staff members of not paying employers" do
       login staff.user
       visit students_path
-      current_path.should_not == students_path
-      current_path.should == root_path
+      expect(current_path).not_to eq(students_path)
+      expect(current_path).to eq(root_path)
       staff.employer.update_column :booked_package_id, 2
       visit students_path
-      current_path.should_not == students_path
-      current_path.should == root_path
+      expect(current_path).not_to eq(students_path)
+      expect(current_path).to eq(root_path)
     end
 
     it "is available for staff members of premium employers" do
       staff.employer.update_column :booked_package_id, 3
       login staff.user
       visit students_path
-      current_path.should == students_path
+      expect(current_path).to eq(students_path)
     end
   end
 
@@ -44,7 +44,7 @@ describe "the students page" do
     it "is available for students" do
       login FactoryGirl.create(:student).user
       visit students_path
-      current_path.should == students_path
+      expect(current_path).to eq(students_path)
     end
   end
 
@@ -56,14 +56,14 @@ describe "the students page" do
     end
 
     it "should view only names and status of a student on the overview" do
-      page.should have_content(@student1.firstname)
-      page.should have_content(@student1.lastname)
+      expect(page).to have_content(@student1.firstname)
+      expect(page).to have_content(@student1.lastname)
     end
 
     it "should contain a link for showing a profile and it should lead to profile page " do
       find_link(@student1.firstname).click
-      current_path.should_not == students_path
-      current_path.should == student_path(@student1)
+      expect(current_path).not_to eq(students_path)
+      expect(current_path).to eq(student_path(@student1))
     end
   end
 end
@@ -84,15 +84,15 @@ describe "the students editing page" do
 
   it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
-    page.should have_content("HPI-Status")
-    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
-    page.should have_content("Photo")
-    page.should have_content("Links")
-    page.should have_content("Programming language skills")
-    page.should have_content("Additional information")
-    page.should have_content("Language skills")
-    page.should have_content("Semester")
-    page.should have_content("Resume")
+    expect(page).to have_content("HPI-Status")
+    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("Photo")
+    expect(page).to have_content("Links")
+    expect(page).to have_content("Programming language skills")
+    expect(page).to have_content("Additional information")
+    expect(page).to have_content("Language skills")
+    expect(page).to have_content("Semester")
+    expect(page).to have_content("Resume")
   end
 
   it "should be possible to change attributes of myself " do
@@ -100,11 +100,11 @@ describe "the students editing page" do
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
     first('input[type="submit"]').click
 
-    current_path.should == student_path(@student1)
+    expect(current_path).to eq(student_path(@student1))
 
-    page.should have_content(I18n.t('users.messages.successfully_updated'))
-    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
-    page.should have_content("www.faceboook.com/alex")
+    expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("www.faceboook.com/alex")
    end
 
   it "can be edited by an admin" do
@@ -112,17 +112,17 @@ describe "the students editing page" do
     login admin
     visit student_path(@student1)
 
-    page.should have_link("Edit")
+    expect(page).to have_link("Edit")
     page.find_link("Edit").click
 
     fill_in 'student_facebook', with: 'www.face.com/alex'
     first('input[type="submit"]').click
 
-    current_path.should == student_path(@student1)
+    expect(current_path).to eq(student_path(@student1))
 
-    page.should have_content(I18n.t('users.messages.successfully_updated'))
-    page.should have_content("#{@student1.firstname} #{@student1.lastname}")
-    page.should have_content("www.face.com/alex")
+    expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("www.face.com/alex")
   end
 end
 
@@ -151,44 +151,44 @@ describe "the students profile page" do
     end
 
     it "should contain all the details of student1" do
-      page.should have_content(@student1.firstname)
-      page.should have_content(@student1.lastname)
+      expect(page).to have_content(@student1.firstname)
+      expect(page).to have_content(@student1.lastname)
     end
 
     it "should contain all jobs I am assigned to" do
-      page.should have_content(@job_offer.title)
+      expect(page).to have_content(@job_offer.title)
     end
 
     it "should have an edit link which leads to the students edit page" do
       visit student_path(@student1)
       page.find_link('Edit').click
-      page.current_path.should == edit_student_path(@student1)
+      expect(page.current_path).to eq(edit_student_path(@student1))
     end
 
     it "should not show a reminder if I am activated" do
       @student1.user.update_column :activated, true
       visit student_path(@student1)
 
-      page.should_not have_content(I18n.t("students.activation_reminder"))
-      page.should_not have_css('input#open-id-field')
+      expect(page).not_to have_content(I18n.t("students.activation_reminder"))
+      expect(page).not_to have_css('input#open-id-field')
     end
 
     it "should show a reminder with openID form if I am not activated" do
       @student1.user.update_column :activated, false
       visit student_path(@student1)
 
-      page.should have_content(I18n.t("students.activation_reminder"))
-      page.should have_css('input#open-id-field')
+      expect(page).to have_content(I18n.t("students.activation_reminder"))
+      expect(page).to have_css('input#open-id-field')
     end
 
     it "should not show Dschool Status if I don't have one" do
-      page.should_not have_content("D-School Status")
+      expect(page).not_to have_content("D-School Status")
     end
 
     it "should show Dschool Status if there is one" do
       @student1.update(dschool_status_id: 1)
       visit student_path(@student1)
-      page.should have_content("D-School Status")
+      expect(page).to have_content("D-School Status")
     end
   end
 
@@ -198,8 +198,8 @@ describe "the students profile page" do
     end
 
     it "should not contain all the details of student3" do
-      page.should_not have_content(@student3.firstname)
-      page.should_not have_content(@student3.lastname)
+      expect(page).not_to have_content(@student3.firstname)
+      expect(page).not_to have_content(@student3.lastname)
     end
 
   end
@@ -210,16 +210,16 @@ describe "the students profile page" do
 
 
     it "should contain all the details of student2" do
-      page.should have_content(@student2.firstname)
-      page.should have_content(@student2.lastname)
+      expect(page).to have_content(@student2.firstname)
+      expect(page).to have_content(@student2.lastname)
     end
 
     it "should not contain the job the other student is assigned to" do
-      page.should_not have_content(@job_offer.title)
+      expect(page).not_to have_content(@job_offer.title)
     end
 
     it "should not have an edit link on the show page of someone elses profile" do
-      should_not have_link('Edit')
+      is_expected.not_to have_link('Edit')
       visit edit_student_path(@student1)
       current_path != edit_student_path(@student1)
     end
@@ -229,12 +229,12 @@ describe "the students profile page" do
       login staff.user
       visit edit_student_path(@student1)
 
-      page.should_not have_link('Edit')
+      expect(page).not_to have_link('Edit')
     end
 
     it "should not have a reminder about activation" do
-      page.should_not have_content(I18n.t("students.activation_reminder"))
-      page.should_not have_css('input#open-id-field')
+      expect(page).not_to have_content(I18n.t("students.activation_reminder"))
+      expect(page).not_to have_css('input#open-id-field')
     end
   end
 
@@ -248,26 +248,26 @@ describe "the students profile page" do
 
     it "should not be accessible for staff of free or partner employers" do
       visit student_path(@student)
-      current_path.should_not == student_path(@student)
-      current_path.should == root_path
+      expect(current_path).not_to eq(student_path(@student))
+      expect(current_path).to eq(root_path)
       @employer.update_column :booked_package_id, 2
       visit student_path(@student)
-      current_path.should_not == student_path(@student)
-      current_path.should == root_path
+      expect(current_path).not_to eq(student_path(@student))
+      expect(current_path).to eq(root_path)
     end
 
     it "should not be accessible for staff of premium employers if student is not visible for him" do
       @employer.update_column :booked_package_id, 3
       @student.update_column :visibility_id, 0
       visit student_path(@student)
-      current_path.should_not == student_path(@student)
+      expect(current_path).not_to eq(student_path(@student))
     end
 
     it "should be accessible for staff of premium employers if student is visibile for him" do
       @employer.update_column :booked_package_id, 3
       @student.update_column :visibility_id, 2
       visit student_path(@student)
-      current_path.should == student_path(@student)
+      expect(current_path).to eq(student_path(@student))
     end
 
   end
@@ -279,7 +279,7 @@ describe "the students profile page" do
       student.user.update_column :activated, false
       visit student_path(student)
       assert current_path == student_path(student)
-      page.should have_link 'Activate'
+      expect(page).to have_link 'Activate'
     end
   end
 end
@@ -315,8 +315,8 @@ describe "student newsletters" do
     fill_in "time_effort", with: 20
     page.find("#create_newsletter_button").click
     page.find("#newsletter_creation_submit").click
-    student.newsletter_orders.count.should == 1
-    student.newsletter_orders.first.search_params.count.should == 9
+    expect(student.newsletter_orders.count).to eq(1)
+    expect(student.newsletter_orders.first.search_params.count).to eq(9)
   end
 end
 

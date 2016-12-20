@@ -23,7 +23,7 @@ describe "the employer page" do
       login(staff.user)
       visit employer_path(employer)
 
-      should have_link 'Edit'
+      is_expected.to have_link 'Edit'
       visit edit_employer_path(employer)
       current_path == edit_employer_path(employer)
     end
@@ -33,7 +33,7 @@ describe "the employer page" do
       login(admin)
       visit employer_path(employer)
 
-      should have_link 'Edit'
+      is_expected.to have_link 'Edit'
       visit edit_employer_path(employer)
       current_path == edit_employer_path(employer)
     end
@@ -42,7 +42,7 @@ describe "the employer page" do
       login(user)
       visit employer_path(employer)
 
-      should_not have_link 'Edit'
+      is_expected.not_to have_link 'Edit'
       visit edit_employer_path(employer)
       current_path != edit_employer_path(employer)
     end
@@ -57,21 +57,21 @@ describe "the employer page" do
     it "by admin" do
       login FactoryGirl.create(:user, :admin)
       visit employer_path(@employer)
-      should have_link 'Activate'
+      is_expected.to have_link 'Activate'
     end
 
     it "not by students" do
       login FactoryGirl.create(:student).user
       visit employer_path(@employer)
-      current_path.should eq root_path
-      should have_content "You are not authorized to access this page."
+      expect(current_path).to eq root_path
+      is_expected.to have_content "You are not authorized to access this page."
     end
 
     it "not by staff members" do
       login FactoryGirl.create(:staff)
       visit employer_path(@employer)
-      current_path.should eq root_path
-      should have_content "You are not authorized to access this page."
+      expect(current_path).to eq root_path
+      is_expected.to have_content "You are not authorized to access this page."
     end
 
     it "can also be activated if a new package was booked" do
@@ -79,7 +79,7 @@ describe "the employer page" do
       @employer.update_column :requested_package_id, 1
       login FactoryGirl.create(:user, :admin)
       visit employer_path(@employer)
-      should have_link 'Activate'
+      is_expected.to have_link 'Activate'
     end
   end
 
@@ -91,7 +91,7 @@ describe "the employer page" do
       login(admin)
       visit new_employer_path
 
-      should have_css("input#employer_staff_members_attributes_0_user_attributes_firstname")
+      is_expected.to have_css("input#employer_staff_members_attributes_0_user_attributes_firstname")
     end
 
     it "should always create an inactive employer" do
@@ -108,9 +108,9 @@ describe "the employer page" do
       fill_in 'employer_staff_members_attributes_0_user_attributes_password_confirmation', with: 'password'
       find('input[type="submit"]').click
 
-      page.should have_content(I18n.t('employers.messages.successfully_created'))
-      page.should have_content("Welcome to HPI Connect!")
-      page.should have_content("Max Mustermann")
+      expect(page).to have_content(I18n.t('employers.messages.successfully_created'))
+      expect(page).to have_content("Welcome to HPI Connect!")
+      expect(page).to have_content("Max Mustermann")
 
       employer = Employer.last
       expect(employer.name).to eq('Test Employer')
@@ -126,7 +126,7 @@ describe "the employer page" do
       login(admin)
       visit edit_employer_path(employer)
 
-      should_not have_select("employer[deputy_id]")
+      is_expected.not_to have_select("employer[deputy_id]")
     end
   end
 
@@ -135,38 +135,38 @@ describe "the employer page" do
       visit employer_path(employer)
     end
 
-    it { should have_content(employer.name) }
+    it { is_expected.to have_content(employer.name) }
 
     it "but only show the complete profile for paying employers" do
-      should_not have_content(employer.description)
-      should_not have_content(employer.website)
+      is_expected.not_to have_content(employer.description)
+      is_expected.not_to have_content(employer.website)
       employer.update_column :booked_package_id, 1
       visit employer_path(employer)
-      should have_content(employer.description)
-      should have_content(employer.website)
+      is_expected.to have_content(employer.description)
+      is_expected.to have_content(employer.website)
     end
   end
 
   describe "shows open job offers for the employer" do
-    it { should have_content('Open') }
-    it { should have_content(@job_offer_active.title) }
-    it { should have_content(@job_offer_active.release_date) }
+    it { is_expected.to have_content('Open') }
+    it { is_expected.to have_content(@job_offer_active.title) }
+    it { is_expected.to have_content(@job_offer_active.release_date) }
   end
 
   describe "should show the pending job offers" do
 
     it "not for students" do
       visit employer_path(employer)
-      should_not have_content('Pending')
-      should_not have_content(@job_offer_pending.title)
+      is_expected.not_to have_content('Pending')
+      is_expected.not_to have_content(@job_offer_pending.title)
     end
 
     it "not for an employer of another employer" do
       staff = FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer))
       login(staff.user)
       visit employer_path(employer)
-      should_not have_content('Pending')
-      should_not have_content(@job_offer_pending.title)
+      is_expected.not_to have_content('Pending')
+      is_expected.not_to have_content(@job_offer_pending.title)
     end
 
     it "for an employer of a paying employer" do
@@ -174,32 +174,32 @@ describe "the employer page" do
       staff = FactoryGirl.create(:staff, employer: employer)
       login(staff.user)
       visit employer_path(employer)
-      should have_content('Pending')
-      should have_content(@job_offer_pending.title)
+      is_expected.to have_content('Pending')
+      is_expected.to have_content(@job_offer_pending.title)
     end
   end
 
   describe "should show closed job offers" do
-    it { should have_content(I18n.t("employers.closed_job_offers")) }
-    it { should have_content(@job_offer_closed.title) }
-    it { should have_content(@job_offer_closed.release_date) }
+    it { is_expected.to have_content(I18n.t("employers.closed_job_offers")) }
+    it { is_expected.to have_content(@job_offer_closed.title) }
+    it { is_expected.to have_content(@job_offer_closed.release_date) }
 
     it "should not have_link for students" do
-      should_not have_link @job_offer_closed.title
+      is_expected.not_to have_link @job_offer_closed.title
     end
 
     it "should have link" do
       staff = FactoryGirl.create(:staff, employer: @job_offer_closed.employer)
       login staff.user
       visit employer_path(employer)
-      should have_link @job_offer_closed.title
+      is_expected.to have_link @job_offer_closed.title
     end
 
     it "should not have link for foreign staff" do
       foreign_staff = FactoryGirl.create(:staff)
       login foreign_staff.user
       visit employer_path(employer)
-      should_not have_link @job_offer_closed.title
+      is_expected.not_to have_link @job_offer_closed.title
     end
   end
 
@@ -215,8 +215,8 @@ describe "the employer page" do
       save_and_open_page
       fill_in 'Email', with: 'test@test.de'
       page.find("#send_application_button").click
-      page.should have_content "Email was send to your colleague"
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(page).to have_content "Email was send to your colleague"
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
       Capybara.use_default_driver
     end
 

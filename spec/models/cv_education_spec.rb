@@ -111,7 +111,7 @@ describe CvEducation do
     end
 
     it "should be sorted by to and from date" do
-      CvEducation.all.should eq([@newest, @newer, @middle, @oldest])
+      expect(CvEducation.all).to eq([@newest, @newer, @middle, @oldest])
     end
   end
 end

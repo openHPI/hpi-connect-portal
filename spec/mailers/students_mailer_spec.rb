@@ -18,19 +18,19 @@ describe StudentsMailer do
     end
 
     it "should include the link to the student" do
-      @email.should have_body_text(url_for(controller:"students", action: "show", id: @student.id, only_path: false))
+      expect(@email).to have_body_text(url_for(controller:"students", action: "show", id: @student.id, only_path: false))
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should be send to the administration" do
-      @email.to.should eq([Configurable.mailToAdministration])
+      expect(@email.to).to eq([Configurable.mailToAdministration])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -45,30 +45,30 @@ describe StudentsMailer do
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should be send to student" do
-      @email.to.should eq([@student.email])
+      expect(@email.to).to eq([@student.email])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
 
     it "should include link to job_offers" do
       for i in 0..2 do
-        @email.should have_body_text(url_for(controller:"job_offers", action: "show", id: JobOffer.all[i], only_path: false))
+        expect(@email).to have_body_text(url_for(controller:"job_offers", action: "show", id: JobOffer.all[i], only_path: false))
       end
     end
 
     it "should include link to unsubcribe" do
-      @email.should have_body_text(url_for(controller: "newsletter_orders", action: "destroy", id: @newsletter_order.id, only_path: false))
+      expect(@email).to have_body_text(url_for(controller: "newsletter_orders", action: "destroy", id: @newsletter_order.id, only_path: false))
     end
 
     it "should not include HTML Tags" do
-      @email.should_not have_body_text("<p> Description </p>")
-      @email.should have_body_text("Description")
+      expect(@email).not_to have_body_text("<p> Description </p>")
+      expect(@email).to have_body_text("Description")
     end
   end
 end

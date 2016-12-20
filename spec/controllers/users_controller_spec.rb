@@ -40,7 +40,7 @@ describe UsersController do
    describe "GET edit" do
     it "assigns the requested user as @user" do
       get :edit, {id: @user.to_param}, valid_session
-      assigns(:user).should eq(@user)
+      expect(assigns(:user)).to eq(@user)
     end
 
     it "should be accessible for the logged in user" do
@@ -70,32 +70,32 @@ describe UsersController do
 
     describe "with valid params" do
       it "updates the requested user" do
-        User.any_instance.should_receive(:update).with({ "email" => "test100@test.com" })
+        expect_any_instance_of(User).to receive(:update).with({ "email" => "test100@test.com" })
         put :update, {id: @user.to_param, user: { email: "test100@test.com" }}, valid_session
       end
 
       it "assigns the requested user as @user" do
         put :update, {id: @user.to_param, user: valid_attributes}, valid_session
-        assigns(:user).should eq(@user)
+        expect(assigns(:user)).to eq(@user)
       end
 
       it "redirects to the edit user again" do
         put :update, {id: @user.to_param, user: valid_attributes}, valid_session
-        response.should redirect_to(edit_user_path(@user))
+        expect(response).to redirect_to(edit_user_path(@user))
       end
     end
 
     describe "with invalid params" do
       it "assigns the user as @user" do
-        User.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(User).to receive(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
-        assigns(:user).should eq(@user)
+        expect(assigns(:user)).to eq(@user)
       end
 
       it "re-renders the 'edit' template" do
-        User.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(User).to receive(:save).and_return(false)
         put :update, {id: @user.to_param, user: { email: "" }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -106,7 +106,7 @@ describe UsersController do
       user = FactoryGirl.create :user
       login user
       patch :update_password, {user_id: @user.to_param, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'}}, valid_session
-      assigns(:user).should eq(user)
+      expect(assigns(:user)).to eq(user)
     end
 
     it "should be accessible for the logged in user" do
@@ -126,9 +126,9 @@ describe UsersController do
       old_password = @user.password
       params = {forgot_password: {email: "user1@example.com"} }
       post :forgot_password, params
-      response.should redirect_to(root_path)
-      flash[:notice].should eq(I18n.t('users.messages.password_resetted'))
-      User.find(@user).password.should_not eq(old_password)
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eq(I18n.t('users.messages.password_resetted'))
+      expect(User.find(@user).password).not_to eq(old_password)
 
       # sends an email with the new password to the user
       # because travis is so slow we have to assume that there are more than 1 email
@@ -136,10 +136,10 @@ describe UsersController do
       ActionMailer::Base.deliveries.each_with_index { |mail, index|
           password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
         }
-      password_mail_index.should_not eq(nil)
-      ActionMailer::Base.deliveries[password_mail_index].should have_content(User.find(@user).password)
-      ActionMailer::Base.deliveries[password_mail_index].to.count.should eq(1)
-      ActionMailer::Base.deliveries[password_mail_index].to[0].should eq(User.find(@user).email)
+      expect(password_mail_index).not_to eq(nil)
+      expect(ActionMailer::Base.deliveries[password_mail_index]).to have_content(User.find(@user).password)
+      expect(ActionMailer::Base.deliveries[password_mail_index].to.count).to eq(1)
+      expect(ActionMailer::Base.deliveries[password_mail_index].to[0]).to eq(User.find(@user).email)
     end
 
     it "ignores cases" do
@@ -147,8 +147,8 @@ describe UsersController do
       @user.update(email: "User1.Lastname@example.com")
       params = {forgot_password: {email: "user1.lastname@example.com"} }
       post :forgot_password, params
-      response.should redirect_to(root_path)
-      ActionMailer::Base.deliveries.count.should eq(1)
+      expect(response).to redirect_to(root_path)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
   end
 end

@@ -78,24 +78,24 @@ describe JobOffersController do
 
     it "renders the find results" do
       get :index, ({ employer: employer.id }), valid_session
-      response.should render_template("index")
+      expect(response).to render_template("index")
     end
 
     it "renders the archive" do
       get :archive, {}, valid_session
-      response.should render_template("archive")
+      expect(response).to render_template("archive")
     end
 
     it "renders the jobs found archive" do
       get :archive, ({search: "Ruby"}), valid_session
-      response.should render_template("archive")
+      expect(response).to render_template("archive")
     end
   end
 
   describe "GET index" do
     it "assigns all job_offers as @job_offers_list[:items]" do
       get :index, {}, valid_session
-      assigns(:job_offers_list)[:items].should eq([@job_offer])
+      expect(assigns(:job_offers_list)[:items]).to eq([@job_offer])
     end
   end
 
@@ -103,7 +103,7 @@ describe JobOffersController do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
       @job_offer.update!(status: closed)
       get :archive, {}, valid_session
-      assigns(:job_offers_list)[:items].should eq([@job_offer])
+      expect(assigns(:job_offers_list)[:items]).to eq([@job_offer])
     end
 
     it "does not assign non-closed jobs" do
@@ -115,13 +115,13 @@ describe JobOffersController do
   describe "GET show" do
     it "assigns the requested job_offer as @job_offer" do
       get :show, {id: @job_offer.to_param}, valid_session
-      assigns(:job_offer).should eq(@job_offer)
+      expect(assigns(:job_offer)).to eq(@job_offer)
     end
 
     it "redirects students when job is in archive" do
       archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
-      response.should redirect_to(archive_job_offers_path)
+      expect(response).to redirect_to(archive_job_offers_path)
     end
 
     it "shows archive job for admin" do
@@ -129,8 +129,8 @@ describe JobOffersController do
 
       archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
-      response.should_not redirect_to(archive_job_offers_path)
-      response.should render_template("show")
+      expect(response).not_to redirect_to(archive_job_offers_path)
+      expect(response).to render_template("show")
     end
   end
 
@@ -139,14 +139,14 @@ describe JobOffersController do
       login staff.user
 
       get :new, {}, valid_session
-      assigns(:job_offer).should be_a_new(JobOffer)
+      expect(assigns(:job_offer)).to be_a_new(JobOffer)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested job_offer as @job_offer" do
       get :edit, {id: @job_offer.to_param}, valid_session
-      assigns(:job_offer).should eq(@job_offer)
+      expect(assigns(:job_offer)).to eq(@job_offer)
     end
   end
 
@@ -160,7 +160,7 @@ describe JobOffersController do
 
       job_offers = JobOffer.filter_employer(@employer_one.id)
       get :index, ({employer: @employer_one.id}), valid_session
-      assigns(:job_offers_list)[:items].to_a.should =~ (job_offers).to_a
+      expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers).to_a)
     end
 
     context "student selects student group" do
@@ -178,21 +178,21 @@ describe JobOffersController do
       context "student selects 'HPI' group" do
         it "assings all job offers tagged with 'HPI' and 'Both' group to @job_offers_list[:items]" do
           get :index, ({student_group: hpi_group_id}), valid_session
-          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_both).to_a
+          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_hpi | job_offers_both).to_a)
         end
       end
 
       context "student selects 'D-School' group" do
         it "assings all job offers tagged with with 'D-School' and 'Both' group to @job_offers_list[:items]" do
           get :index, ({student_group: dschool_group_id }), valid_session
-          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_dschool | job_offers_both).to_a
+          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_dschool | job_offers_both).to_a)
         end
       end
 
       context "student selects blank" do
         it "assings all job offers tagged with 'HPI', 'D-School' and 'Both' group to @job_offers_list[:items]" do
           get :index, ({student_group: "" }), valid_session
-          assigns(:job_offers_list)[:items].to_a.should =~ (job_offers_hpi | job_offers_dschool | job_offers_both).to_a
+          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_hpi | job_offers_dschool | job_offers_both).to_a)
         end
       end
     end
@@ -234,27 +234,27 @@ describe JobOffersController do
 
     it "should not immediately prolong the job once" do
       get :request_prolong, {id: @job_offer.id}
-      response.should redirect_to(@job_offer)
-      assigns(:job_offer).prolonged_at.should eq(nil)
-      assigns(:job_offer).prolong_requested.should eq(true)
+      expect(response).to redirect_to(@job_offer)
+      expect(assigns(:job_offer).prolonged_at).to eq(nil)
+      expect(assigns(:job_offer).prolong_requested).to eq(true)
     end
 
     it "should not be possible to request for the staff of another employer" do
       login FactoryGirl.create(:staff).user
       get :request_prolong, {id: @job_offer.id}
-      response.should redirect_to(job_offers_path)
+      expect(response).to redirect_to(job_offers_path)
     end
 
     it "should not be possible to prolong for a staff member" do
       get :prolong, {id: @job_offer.id}
-      response.should redirect_to(job_offers_path)
+      expect(response).to redirect_to(job_offers_path)
     end
 
     it "should only be possible for an admin" do
       login FactoryGirl.create(:user, :admin)
       get :prolong, {id: @job_offer.id}
-      response.should redirect_to(@job_offer)
-      assigns(:job_offer).prolonged_at.should eq(Date.current)
+      expect(response).to redirect_to(@job_offer)
+      expect(assigns(:job_offer).prolonged_at).to eq(Date.current)
     end
   end
 
@@ -268,11 +268,11 @@ describe JobOffersController do
       login FactoryGirl.create(:staff, employer: @job_offer.employer).user
 
       get :close, { id: @job_offer.id }
-      assigns(:job_offer).status.should eq(closed)
+      expect(assigns(:job_offer).status).to eq(closed)
     end
     it "prohibits user to mark jobs as completed if he is no staff of the employer" do
       get :close, { id: @job_offer.id}, valid_session
-      response.should redirect_to(@job_offer)
+      expect(response).to redirect_to(@job_offer)
     end
   end
 
@@ -285,23 +285,23 @@ describe JobOffersController do
     it "prohibits user to accept job offers if he is not the admin" do
       login @job_offer.employer.staff_members[0].user
       get :accept, { id: @job_offer.id }
-      assigns(:job_offer).status.should eq(JobStatus.pending)
-      response.should redirect_to(job_offers_path)
+      expect(assigns(:job_offer).status).to eq(JobStatus.pending)
+      expect(response).to redirect_to(job_offers_path)
     end
 
     it "accepts job offers" do
       login admin
       get :accept, {id: @job_offer.id}
-      assigns(:job_offer).status.should eq(JobStatus.active)
-      ActionMailer::Base.deliveries.count.should >= 1
-      response.should redirect_to(@job_offer)
+      expect(assigns(:job_offer).status).to eq(JobStatus.active)
+      expect(ActionMailer::Base.deliveries.count).to be >= 1
+      expect(response).to redirect_to(@job_offer)
     end
 
     it "sets the release date when job offer is accepted" do
       login admin
-      @job_offer.release_date.should eq(nil)
+      expect(@job_offer.release_date).to eq(nil)
       get :accept, {id: @job_offer.id}
-      assigns(:job_offer).release_date.should_not eq(nil)
+      expect(assigns(:job_offer).release_date).not_to eq(nil)
     end
   end
 
@@ -312,7 +312,7 @@ describe JobOffersController do
 
     it "prohibits user to decline job offers if he is not the admin" do
       get :decline, {id: @job_offer.id}
-      response.should redirect_to(@job_offer)
+      expect(response).to redirect_to(@job_offer)
     end
 
     it "declines job offers" do
@@ -320,7 +320,7 @@ describe JobOffersController do
       expect {
         get :decline, {id: @job_offer.id}
       }.to change(JobOffer, :count).by(-1)
-      response.should redirect_to(job_offers_path)
+      expect(response).to redirect_to(job_offers_path)
     end
   end
 
@@ -334,8 +334,8 @@ describe JobOffersController do
 
       it "assigns a new job_offer as @job_offer" do
         get :reopen, {id: @job_offer}, valid_session
-        assigns(:job_offer).should be_a_new(JobOffer)
-        response.should render_template("new")
+        expect(assigns(:job_offer)).to be_a_new(JobOffer)
+        expect(response).to render_template("new")
       end
 
       it "has same values as the original job offer" do
@@ -343,15 +343,15 @@ describe JobOffersController do
         reopend_job_offer = assigns(:job_offer)
         expected_attr = [:description, :title, :time_effort, :compensation, :employer_id]
 
-        reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr).should eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
-        reopend_job_offer.start_date.should be_nil
-        reopend_job_offer.end_date.should be_nil
+        expect(reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr)).to eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
+        expect(reopend_job_offer.start_date).to be_nil
+        expect(reopend_job_offer.end_date).to be_nil
       end
 
       it "is pending and old job offer changes to closed" do
         get :reopen, {id: @job_offer}, valid_session
         reopend_job_offer = assigns(:job_offer)
-        @job_offer.reload.status.should eql(closed)
+        expect(@job_offer.reload.status).to eql(closed)
       end
     end
   end
@@ -367,7 +367,7 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        response.should redirect_to job_offer_path(JobOffer.last)
+        expect(response).to redirect_to job_offer_path(JobOffer.last)
       end
 
       it "allows the admin to create a new job offer" do
@@ -375,7 +375,7 @@ describe JobOffersController do
         expect {
           post :create, { job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        response.should redirect_to job_offer_path(JobOffer.last)
+        expect(response).to redirect_to job_offer_path(JobOffer.last)
       end
 
       it "doesn't allow students to create a job offer" do
@@ -383,7 +383,7 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
-        response.should redirect_to job_offers_path
+        expect(response).to redirect_to job_offers_path
       end
 
       it "creates a new job_offer" do
@@ -394,13 +394,13 @@ describe JobOffersController do
 
       it "assigns a newly created job_offer as @job_offer" do
         post :create, {job_offer: valid_attributes}, valid_session
-        assigns(:job_offer).should be_a(JobOffer)
-        assigns(:job_offer).should be_persisted
+        expect(assigns(:job_offer)).to be_a(JobOffer)
+        expect(assigns(:job_offer)).to be_persisted
       end
 
       it "redirects to the created job_offer" do
         post :create, {job_offer: valid_attributes}, valid_session
-        response.should redirect_to(JobOffer.last)
+        expect(response).to redirect_to(JobOffer.last)
       end
 
       it "automatically assigns the users employer as the new job offers employer" do
@@ -414,8 +414,8 @@ describe JobOffersController do
         attributes["compensation"] = I18n.t('job_offers.default_compensation')
 
         post :create, {job_offer: attributes}, valid_session
-        assigns(:job_offer).should be_a(JobOffer)
-        assigns(:job_offer).should be_persisted
+        expect(assigns(:job_offer)).to be_a(JobOffer)
+        expect(assigns(:job_offer)).to be_persisted
         offer = JobOffer.last
         assert_equal(offer.compensation, 10.0)
       end
@@ -428,8 +428,8 @@ describe JobOffersController do
           post :create, {job_offer: attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
 
-        assigns(:job_offer).should be_a(JobOffer)
-        assigns(:job_offer).should be_persisted
+        expect(assigns(:job_offer)).to be_a(JobOffer)
+        expect(assigns(:job_offer)).to be_persisted
         offer = JobOffer.last
         assert_equal(offer.start_date, Date.current + 1)
         assert_equal(offer.flexible_start_date, true)
@@ -442,31 +442,31 @@ describe JobOffersController do
                 expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        assigns(:job_offer).status.should eq(JobStatus.pending)
+        expect(assigns(:job_offer).status).to eq(JobStatus.pending)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved job_offer as @job_offer" do
         # Trigger the behavior that occurs when invalid params are submitted
-        JobOffer.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
         post :create, {job_offer: { "description" => "invalid value" }}, valid_session
-        assigns(:job_offer).should be_a_new(JobOffer)
+        expect(assigns(:job_offer)).to be_a_new(JobOffer)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        JobOffer.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
         expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
 
       it "should not send mail to admin" do
         job_offer = FactoryGirl.create(:job_offer)
         #expect
-        JobOffersMailer.should_not_receive(:new_job_offer_email).with( job_offer, valid_session )
+        expect(JobOffersMailer).not_to receive(:new_job_offer_email).with( job_offer, valid_session )
         # when
         FactoryGirl.create(:job_offer)
       end
@@ -478,7 +478,7 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
 
@@ -498,7 +498,7 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        ActionMailer::Base.deliveries.count.should == 1
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
         email = ActionMailer::Base.deliveries[0]
         assert_equal(email.to, [Configurable.mailToAdministration])
         #response.should render_template("new")
@@ -508,7 +508,7 @@ describe JobOffersController do
         expect {
           post :create, {job_offer: @attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
-        ActionMailer::Base.deliveries.count.should == 1
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
         email = ActionMailer::Base.deliveries[0]
         assert_equal(email.to, [Configurable.mailToAdministration])
         #response.should render_template("new")
@@ -562,45 +562,45 @@ describe JobOffersController do
 
     describe "with valid params" do
       it "updates the requested job_offer" do
-        JobOffer.any_instance.should_receive(:update).with({ "description" => "MyString" })
+        expect_any_instance_of(JobOffer).to receive(:update).with({ "description" => "MyString" })
         put :update, {id: @job_offer.to_param, job_offer: { "description" => "MyString" }}, valid_session
       end
 
       it "redirects to the job_offer page if the job is already running" do
         put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        response.should redirect_to(@job_offer)
+        expect(response).to redirect_to(@job_offer)
       end
 
       it "assigns the requested job_offer as @job_offer" do
         put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        assigns(:job_offer).should eq(@job_offer)
+        expect(assigns(:job_offer)).to eq(@job_offer)
       end
 
       it "redirects to the job_offer" do
         put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        response.should redirect_to(@job_offer)
+        expect(response).to redirect_to(@job_offer)
       end
 
       it "only allows the responsible user to update" do
         login FactoryGirl.create(:staff, employer: @job_offer.employer).user
         put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        response.should redirect_to(@job_offer)
+        expect(response).to redirect_to(@job_offer)
       end
     end
 
     describe "with invalid params" do
       it "assigns the job_offer as @job_offer" do
         # Trigger the behavior that occurs when invalid params are submitted
-        JobOffer.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
         put :update, {id: @job_offer.to_param, job_offer: { "description" => "invalid value" }}, valid_session
-        assigns(:job_offer).should eq(@job_offer)
+        expect(assigns(:job_offer)).to eq(@job_offer)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        JobOffer.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
         put :update, {id: @job_offer.to_param, job_offer: { "description" => "invalid value" }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -620,7 +620,7 @@ describe JobOffersController do
 
     it "redirects to the job_offers list" do
       delete :destroy, {id: @job_offer.to_param}, valid_session
-      response.should redirect_to(job_offers_url)
+      expect(response).to redirect_to(job_offers_url)
     end
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
@@ -630,7 +630,7 @@ describe JobOffersController do
       expect {
         delete :destroy, {id: @job_offer.to_param}, valid_session
       }.to change(JobOffer, :count).by(0)
-      response.should redirect_to(@job_offer)
+      expect(response).to redirect_to(@job_offer)
     end
   end
 end

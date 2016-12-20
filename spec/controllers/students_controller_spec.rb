@@ -46,7 +46,7 @@ describe StudentsController do
 
       student = FactoryGirl.create(:student)
       get :index, {}, valid_session
-      assigns(:students).should eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 5))
+      expect(assigns(:students)).to eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 5))
     end
   end
 
@@ -54,7 +54,7 @@ describe StudentsController do
     it "assigns the requested user as @student" do
       student = FactoryGirl.create(:student)
       get :show, { id: student.to_param }, valid_session
-      assigns(:student).should eq(student)
+      expect(assigns(:student)).to eq(student)
     end
   end
 
@@ -62,7 +62,7 @@ describe StudentsController do
     it "assigns the requested student as @student" do
       student = FactoryGirl.create(:student)
       get :edit, {id: student.to_param}, valid_session
-      assigns(:student).should eq(student)
+      expect(assigns(:student)).to eq(student)
     end
   end
 
@@ -70,36 +70,36 @@ describe StudentsController do
     describe "with valid params" do
       it "updates the requested student" do
         student = FactoryGirl.create(:student)
-        Student.any_instance.should_receive(:update).with({ "semester" => "5" })
+        expect_any_instance_of(Student).to receive(:update).with({ "semester" => "5" })
         put :update, {id: student.to_param, student: { semester: 5 }}, valid_session
       end
 
       it "assigns the requested student as @student" do
         student = FactoryGirl.create(:student)
         put :update, {id: student.to_param, student: valid_attributes}, valid_session
-        assigns(:student).should eq(student)
+        expect(assigns(:student)).to eq(student)
       end
 
       it "redirects to the student" do
         student = FactoryGirl.create(:student)
         put :update, {id: student.to_param, student: valid_attributes}, valid_session
-        response.should redirect_to(student_path(student))
+        expect(response).to redirect_to(student_path(student))
       end
     end
 
     describe "with invalid params" do
       it "assigns the student as @student" do
         student = FactoryGirl.create(:student)
-        Student.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Student).to receive(:save).and_return(false)
         put :update, {id: student.to_param, student: { semester: -1 }}, valid_session
-        assigns(:student).should eq(student)
+        expect(assigns(:student)).to eq(student)
       end
 
       it "re-renders the 'edit' template" do
         student = FactoryGirl.create(:student)
-        Student.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(Student).to receive(:save).and_return(false)
         put :update, {id: student.to_param, student: { semester: -1 }}, valid_session
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -125,7 +125,7 @@ describe StudentsController do
       }
 
       patch :update, { id: @student.id, student: params}
-      response.should render_template("edit")
+      expect(response).to render_template("edit")
     end
 
     it "handles incomplete birthdate values" do
@@ -136,7 +136,7 @@ describe StudentsController do
       }
 
       patch :update, { id: @student.id, student: params}
-      response.should render_template("edit")
+      expect(response).to render_template("edit")
     end
 
     it "saves uploaded images" do
@@ -147,7 +147,7 @@ describe StudentsController do
       })
 
       patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
-      response.should redirect_to(student_path(@student))
+      expect(response).to redirect_to(student_path(@student))
     end
   end
 
@@ -158,7 +158,7 @@ describe StudentsController do
       expect {
         delete :destroy, {id: student.to_param}, valid_session
       }.to change(Student, :count).by(-1)
-      response.should redirect_to students_path
+      expect(response).to redirect_to students_path
     end
 
     it "allows student to delete himself" do
@@ -167,7 +167,7 @@ describe StudentsController do
       expect {
         delete :destroy, {id: student.to_param}, valid_session
       }.to change(Student, :count).by(-1)
-      response.should redirect_to students_path
+      expect(response).to redirect_to students_path
     end
 
     it "doesn't allow student to delete other students" do
@@ -177,7 +177,7 @@ describe StudentsController do
       expect {
         delete :destroy, {id: student2.to_param}, valid_session
       }.to change(Student, :count).by(0)
-      response.should redirect_to student_path(student2)
+      expect(response).to redirect_to student_path(student2)
     end
   end
 
@@ -204,15 +204,15 @@ describe StudentsController do
     it "should not send a CSV to a student" do
       login FactoryGirl.create(:student).user
       get :export_alumni
-      response.should redirect_to(root_path)
-      flash[:notice].should eql("You are not authorized to access this page.")
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should not send a CSV to a staff member" do
       login FactoryGirl.create(:staff).user
       get :export_alumni
-      response.should redirect_to(root_path)
-      flash[:notice].should eql("You are not authorized to access this page.")
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
   end
 
@@ -227,7 +227,7 @@ describe StudentsController do
 
       it "should be accessible" do
         get :activate, ({ id: @student.id })
-        response.should redirect_to(@student)
+        expect(response).to redirect_to(@student)
       end
 
       it "should activate the student" do
@@ -246,13 +246,13 @@ describe StudentsController do
 
       it "should be accessible for the own profile" do
         get :activate, ({ id: @student.id, student: { username: 'max.mustermann' }})
-        response.should_not redirect_to(root_path)
+        expect(response).not_to redirect_to(root_path)
       end
 
       it "should not be accessible for other profiles" do
         get :activate, ({ id: FactoryGirl.create(:student).id })
-        response.should redirect_to(root_path)
-        flash[:notice].should eql("You are not authorized to access this page.")
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).to eql("You are not authorized to access this page.")
       end
     end
 
@@ -260,8 +260,8 @@ describe StudentsController do
       staff = FactoryGirl.create(:staff)
       login staff.user
       get :activate, ({ id: FactoryGirl.create(:student).id })
-      response.should redirect_to(root_path)
-      flash[:notice].should eql("You are not authorized to access this page.")
+      expect(response).to redirect_to(root_path)
+      expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
   end
 
@@ -274,8 +274,8 @@ describe StudentsController do
 
     it "updates the requested student with an existing programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
-      @student.programming_languages_users.size.should eq(1)
-      ProgrammingLanguagesUser.any_instance.should_receive(:update_attributes).with({ skill: "2" })
+      expect(@student.programming_languages_users.size).to eq(1)
+      expect_any_instance_of(ProgrammingLanguagesUser).to receive(:update_attributes).with({ skill: "2" })
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
     end
 
@@ -283,17 +283,17 @@ describe StudentsController do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } }, valid_session
       @student.reload
-      @student.programming_languages_users.size.should eq(2)
-      @student.programming_languages.first.should eq(@programming_language_1)
-      @student.programming_languages.last.should eq(@programming_language_2)
+      expect(@student.programming_languages_users.size).to eq(2)
+      expect(@student.programming_languages.first).to eq(@programming_language_1)
+      expect(@student.programming_languages.last).to eq(@programming_language_2)
     end
 
     it "updates the requested student with a removed programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4'), FactoryGirl.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
       @student.reload
-      @student.programming_languages_users.size.should eq(1)
-      @student.programming_languages.first.should eq(@programming_language_1)
+      expect(@student.programming_languages_users.size).to eq(1)
+      expect(@student.programming_languages.first).to eq(@programming_language_1)
     end
   end
 
@@ -306,8 +306,8 @@ describe StudentsController do
 
     it "updates the requested student with an existing language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
-      @student.languages_users.size.should eq(1)
-      LanguagesUser.any_instance.should_receive(:update_attributes).with({ skill: "2" })
+      expect(@student.languages_users.size).to eq(1)
+      expect_any_instance_of(LanguagesUser).to receive(:update_attributes).with({ skill: "2" })
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
     end
 
@@ -315,17 +315,17 @@ describe StudentsController do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }, valid_session
       @student.reload
-      @student.languages_users.size.should eq(2)
-      @student.languages.first.should eq(@language_1)
-      @student.languages.last.should eq(@language_2)
+      expect(@student.languages_users.size).to eq(2)
+      expect(@student.languages.first).to eq(@language_1)
+      expect(@student.languages.last).to eq(@language_2)
     end
 
     it "updates the requested student with a removed language" do
       @student.assign_attributes(languages_users: [FactoryGirl.create(:languages_user, student: @student, language: @language_1, skill: '4'), FactoryGirl.create(:languages_user, language_id: @language_2.id, skill: '2')])
       put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }, valid_session
       @student.reload
-      @student.languages_users.size.should eq(1)
-      @student.languages.first.should eq(@language_1)
+      expect(@student.languages_users.size).to eq(1)
+      expect(@student.languages.first).to eq(@language_1)
     end
   end
 end

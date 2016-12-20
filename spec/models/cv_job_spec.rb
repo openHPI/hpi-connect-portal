@@ -100,7 +100,7 @@ describe CvJob do
     end
 
     it "should be sorted by to and from date" do
-      CvJob.all.should eq([@newest, @newer, @middle, @oldest])
+      expect(CvJob.all).to eq([@newest, @newer, @middle, @oldest])
     end
   end
 end

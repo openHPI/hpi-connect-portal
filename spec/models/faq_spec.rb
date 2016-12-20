@@ -21,16 +21,16 @@ describe Faq do
 
 		it "with question not present" do
 			@faq.question = nil
-			@faq.should be_invalid
+			expect(@faq).to be_invalid
 		end
 
 		it "with answer not present" do
 			@faq.answer = nil
-			@faq.should be_invalid
+			expect(@faq).to be_invalid
 		end
 
 		it "with all necessary parameters present" do
-			@faq.should be_valid
+			expect(@faq).to be_valid
 		end
 
 	end

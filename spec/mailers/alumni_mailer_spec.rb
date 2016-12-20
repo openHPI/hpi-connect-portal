@@ -9,7 +9,7 @@ describe AlumniMailer do
     it "delivers mail" do
       alumni = FactoryGirl.create(:alumni)
       AlumniMailer.reminder_email(alumni).deliver
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
   end
 end

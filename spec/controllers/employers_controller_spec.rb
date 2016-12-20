@@ -54,7 +54,7 @@ describe EmployersController do
     it "assigns all employers as @employers" do
       login FactoryGirl.create(:student).user
       get :index, {}
-      assigns(:employers).should eq(Employer.active)
+      expect(assigns(:employers)).to eq(Employer.active)
     end
   end
 
@@ -62,14 +62,14 @@ describe EmployersController do
     it "assigns the requested employer as @employer" do
       employer = FactoryGirl.create(:employer)
       get :show, { id: employer.to_param }
-      assigns(:employer).should eq(employer)
+      expect(assigns(:employer)).to eq(employer)
     end
   end
 
   describe "GET new" do
     it "assigns a new employer as @employer" do
       get :new, {}
-      assigns(:employer).should be_a_new(Employer)
+      expect(assigns(:employer)).to be_a_new(Employer)
     end
   end
 
@@ -78,14 +78,14 @@ describe EmployersController do
       it "assigns the requested employer as @employer as admin" do
         employer = FactoryGirl.create(:employer)
         get :edit, { id: employer.to_param }
-        assigns(:employer).should eq(employer)
+        expect(assigns(:employer)).to eq(employer)
       end
 
       it "assigns the requested employer as @employer as staff of employer" do
         employer = FactoryGirl.create(:employer)
         login FactoryGirl.create(:staff, employer: employer).user
         get :edit, { id: employer.to_param }
-        assigns(:employer).should eq(employer)
+        expect(assigns(:employer)).to eq(employer)
       end
     end
 
@@ -106,8 +106,8 @@ describe EmployersController do
 
       after(:each) do
         get :edit, { id: @employer.to_param }
-        response.should redirect_to(employers_path)
-        flash[:notice].should eql("You are not authorized to access this page.")
+        expect(response).to redirect_to(employers_path)
+        expect(flash[:notice]).to eql("You are not authorized to access this page.")
       end
     end
   end
@@ -124,19 +124,19 @@ describe EmployersController do
 
       it "assigns a newly created employer as @employer" do
         post :create, { employer: valid_attributes }
-        assigns(:employer).should be_a(Employer)
-        assigns(:employer).should be_persisted
+        expect(assigns(:employer)).to be_a(Employer)
+        expect(assigns(:employer)).to be_persisted
       end
 
       it "redirects to the created employer" do
         post :create, { employer: valid_attributes }
-        response.should redirect_to(home_employers_path)
+        expect(response).to redirect_to(home_employers_path)
       end
 
       it "sends 2 emails" do
         old_count = ActionMailer::Base.deliveries.count
         post :create, { employer: valid_attributes }
-        ActionMailer::Base.deliveries.count.should == old_count + 2
+        expect(ActionMailer::Base.deliveries.count).to eq(old_count + 2)
       end
     end
 
@@ -144,7 +144,7 @@ describe EmployersController do
 
       it "renders new again" do
         post :create, { employer: false_attributes }
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
 
@@ -157,7 +157,7 @@ describe EmployersController do
       it "should also create an employer (there are no insufficient access rights)" do
         employer = FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
-        response.should redirect_to(home_employers_path)
+        expect(response).to redirect_to(home_employers_path)
       end
     end
   end
@@ -170,26 +170,26 @@ describe EmployersController do
       end
 
       it "updates the requested employer" do
-        Employer.any_instance.should_receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction" } )
+        expect_any_instance_of(Employer).to receive(:update).with({ "name" => "HCI", "description" => "Human Computer Interaction" } )
         put :update, { id: @employer.to_param, employer: { "name" => "HCI", "description" => "Human Computer Interaction" } }
       end
 
       it "assigns the requested employer as @employer" do
         put :update, { id: @employer.id, employer: valid_attributes }
-        assigns(:employer).should eq(@employer)
+        expect(assigns(:employer)).to eq(@employer)
       end
 
       it "redirects to the employer" do
         staff.update(employer: @employer)
         put :update, { id: @employer.id, employer: valid_attributes }
-        response.should redirect_to(@employer)
+        expect(response).to redirect_to(@employer)
       end
 
       context "upgrade package" do
         it "sends two emails to staff and admin if a new package was booked" do
           old_count = ActionMailer::Base.deliveries.count
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: premium_package_id } }
-          ActionMailer::Base.deliveries.count.should == old_count + 2
+          expect(ActionMailer::Base.deliveries.count).to eq(old_count + 2)
         end
       end
 
@@ -204,19 +204,19 @@ describe EmployersController do
         it "sends two emails to staff and admin if a new package was booked" do
           old_count = ActionMailer::Base.deliveries.count
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
-          ActionMailer::Base.deliveries.count.should == old_count + 2
+          expect(ActionMailer::Base.deliveries.count).to eq(old_count + 2)
         end
 
         it "updates requested_package_id" do
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
           @employer.reload
-          @employer.requested_package_id.should == free_package_id
+          expect(@employer.requested_package_id).to eq(free_package_id)
         end
 
         it "does not update booked_package_id" do
           put :update, { id: @employer.id, employer: { name: "HCI", description: "Human Computer Interaction", requested_package_id: free_package_id } }
           @employer.reload
-          @employer.booked_package_id.should == premium_package_id
+          expect(@employer.booked_package_id).to eq(premium_package_id)
         end
       end
 
@@ -231,7 +231,7 @@ describe EmployersController do
       it "redirects to the employer index page" do
         employer = FactoryGirl.create(:employer)
         patch :update, { id: employer.id, employer: valid_attributes }
-        response.should redirect_to(employers_path)
+        expect(response).to redirect_to(employers_path)
       end
     end
   end
@@ -246,7 +246,7 @@ describe EmployersController do
 
       it "should be accessible" do
         get :activate, ({ id: @employer.id })
-        response.should redirect_to(@employer)
+        expect(response).to redirect_to(@employer)
       end
 
       it "should activate the employer" do
@@ -266,16 +266,16 @@ describe EmployersController do
         it "updates booked_package_id" do
           get :activate, ({ id: @employer.id })
           @employer.reload
-          @employer.booked_package_id.should == premium_package_id
+          expect(@employer.booked_package_id).to eq(premium_package_id)
         end
 
         it "sends one email to staff to confirm new booked package" do
           old_count = ActionMailer::Base.deliveries.count
           get :activate, ({ id: @employer.id })
-          ActionMailer::Base.deliveries.count.should == old_count + 1
+          expect(ActionMailer::Base.deliveries.count).to eq(old_count + 1)
 
           last_delivery = ActionMailer::Base.deliveries.last
-          last_delivery.body.raw_source.should include I18n.t("activerecord.attributes.employer.packages.premium")
+          expect(last_delivery.body.raw_source).to include I18n.t("activerecord.attributes.employer.packages.premium")
         end
       end
 
@@ -290,16 +290,16 @@ describe EmployersController do
         it "updates booked_package_id" do
           get :activate, ({ id: @employer.id })
           @employer.reload
-          @employer.booked_package_id.should == free_package_id
+          expect(@employer.booked_package_id).to eq(free_package_id)
         end
 
         it "sends one email to staff to confirm new booked package" do
           old_count = ActionMailer::Base.deliveries.count
           get :activate, ({ id: @employer.id })
-          ActionMailer::Base.deliveries.count.should == old_count + 1
+          expect(ActionMailer::Base.deliveries.count).to eq(old_count + 1)
 
           last_delivery = ActionMailer::Base.deliveries.last
-          last_delivery.body.raw_source.should include I18n.t("activerecord.attributes.employer.packages.free")
+          expect(last_delivery.body.raw_source).to include I18n.t("activerecord.attributes.employer.packages.free")
         end
       end
     end
@@ -308,16 +308,16 @@ describe EmployersController do
       staff = FactoryGirl.create(:staff)
       login staff.user
       get :activate, ({ id: FactoryGirl.create(:employer).id })
-      response.should redirect_to(employers_path)
-      flash[:notice].should eql("You are not authorized to access this page.")
+      expect(response).to redirect_to(employers_path)
+      expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should not be accessible for students" do
       student = FactoryGirl.create(:student)
       login student.user
       get :activate, ({ id: FactoryGirl.create(:employer).id })
-      response.should redirect_to(employers_path)
-      flash[:notice].should eql("You are not authorized to access this page.")
+      expect(response).to redirect_to(employers_path)
+      expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should delete staff of an deleted employer" do
@@ -342,20 +342,20 @@ describe EmployersController do
 
     it "should redirect to employer show" do
       post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      response.should redirect_to(employer_path(employer))
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(response).to redirect_to(employer_path(employer))
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should not deliver Email for students" do
       login FactoryGirl.create(:student).user
       post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      ActionMailer::Base.deliveries.count.should == 0
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
 
     it "should not deliver for guest users" do
       logout
       post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      ActionMailer::Base.deliveries.count.should == 0
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
 
   end
@@ -388,8 +388,8 @@ describe EmployersController do
 
       it "doesn't send a CSV" do
         get :export_all
-        response.should redirect_to(employers_path)
-        flash[:notice].should eql("You are not authorized to access this page.")
+        expect(response).to redirect_to(employers_path)
+        expect(flash[:notice]).to eql("You are not authorized to access this page.")
       end
     end
 

@@ -13,13 +13,13 @@ describe "job_offers/index" do
                         name: "job_offers.archive"})
     assign(:radio_button_sort_value, {"date" => false, "employer" => false})
 
-    view.stub(:signed_in?) { false }
-    view.stub(:current_user) { FactoryGirl.create(:user) }
-    view.stub(:can?) { true }
+    allow(view).to receive(:signed_in?) { false }
+    allow(view).to receive(:current_user) { FactoryGirl.create(:user) }
+    allow(view).to receive(:can?) { true }
   end
 
   it "renders a list of job_offers" do
-    view.stub(:will_paginate)
+    allow(view).to receive(:will_paginate)
 
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
@@ -29,7 +29,7 @@ describe "job_offers/index" do
   end
 
   it "has a date radio_button that is checked when loaded" do
-    view.stub(:will_paginate)
+    allow(view).to receive(:will_paginate)
     render
     assert_select "input[id='sort_by_date_RB'][checked='checked']"
   end

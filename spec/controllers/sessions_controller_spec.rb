@@ -14,19 +14,19 @@ describe SessionsController do
 
     it "redirects to root with incorrect password and shows flash message" do
       post 'create', {session: {email: @user.email, password: 'wrong password'}}
-      response.should redirect_to(root_path)
-      flash[:error].should eql(I18n.t('errors.configuration.invalid_email_or_password'))
+      expect(response).to redirect_to(root_path)
+      expect(flash[:error]).to eql(I18n.t('errors.configuration.invalid_email_or_password'))
     end
 
     it "redirects to root with incorrect email" do
       post 'create', {session: {email: 'some_test@email.com', password: 'password'}}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
     it "redirects to employers home if staff logs in" do
       staff = FactoryGirl.create :staff
       post 'create', {session: {email: staff.email, password: "password123"}}
-      response.should redirect_to(home_employers_path)
+      expect(response).to redirect_to(home_employers_path)
     end
   end
 
@@ -34,7 +34,7 @@ describe SessionsController do
     it "returns http success" do
       delete 'destroy'
       assert current_user.nil?
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 end

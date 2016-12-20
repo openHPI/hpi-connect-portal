@@ -21,19 +21,19 @@ describe UsersMailer do
     end
 
     it "should send one email to student" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should have been sent to the student" do
-      @email.to.should eq([@user.email])
+      expect(@email.to).to eq([@user.email])
     end
 
     it "should be sent from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
 
     it "should have the new password in the body" do
-      @email.body.should have_content('123ABCdef-_')
+      expect(@email.body).to have_content('123ABCdef-_')
     end
 
   end

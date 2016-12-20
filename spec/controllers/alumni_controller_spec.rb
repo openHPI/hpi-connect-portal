@@ -7,13 +7,13 @@ describe AlumniController do
     it "should be available for admins" do
       login FactoryGirl.create :user, :admin
       get :new
-      response.should_not redirect_to(root_path)
+      expect(response).not_to redirect_to(root_path)
     end
 
     it "should not be available for anyone else" do
       login FactoryGirl.create :user
       get :new
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -22,13 +22,13 @@ describe AlumniController do
     it "should be available for admins" do
       login FactoryGirl.create :user, :admin
       get :index
-      response.should_not redirect_to(root_path)
+      expect(response).not_to redirect_to(root_path)
     end
 
     it "should not be available for anyone else" do
       login FactoryGirl.create :user
       get :index
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -37,13 +37,13 @@ describe AlumniController do
     it "should be available for admins" do
       login FactoryGirl.create :user, :admin
       get :show, {id: FactoryGirl.create(:alumni).to_param}
-      response.should_not redirect_to(root_path)
+      expect(response).not_to redirect_to(root_path)
     end
 
     it "should not be available for anyone else" do
       login FactoryGirl.create :user
       get :show, {id: FactoryGirl.create(:alumni).to_param}
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -61,7 +61,7 @@ describe AlumniController do
       expect{
           post :create, { alumni: FactoryGirl.attributes_for(:alumni) }
         }.to change(Alumni, :count).by(0)
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
@@ -73,14 +73,14 @@ describe AlumniController do
       FactoryGirl.create :alumni
       FactoryGirl.create :alumni
       get :remind_all
-      response.should redirect_to(alumni_index_path)
-      ActionMailer::Base.deliveries.count.should == 2
+      expect(response).to redirect_to(alumni_index_path)
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
     it "redirects to root if not admin" do
       login FactoryGirl.create :user
       get :remind_all
-      response.should redirect_to(root_path)
+      expect(response).to redirect_to(root_path)
     end
 
   end

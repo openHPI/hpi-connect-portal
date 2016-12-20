@@ -74,7 +74,7 @@ describe JobOffer do
     (sorted_job_offers).each_with_index do |offer, index|
 
        if !sorted_job_offers.length == (index + 1)
-        offer.expiration_date.should >= sorted_job_offers[index+1].expiration_date
+        expect(offer.expiration_date).to be >= sorted_job_offers[index+1].expiration_date
        end
     end
   end
@@ -91,7 +91,7 @@ describe JobOffer do
        if sorted_job_offers.length == (index + 1)
         break
        end
-      offer.employer.name.should <= sorted_job_offers[index+1].employer.name
+      expect(offer.employer.name).to be <= sorted_job_offers[index+1].employer.name
     end
   end
 
@@ -237,7 +237,7 @@ describe JobOffer do
     it "sends an email 2 days before expiration" do
       @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
       JobOffer.check_for_expired
-      ActionMailer::Base.deliveries.count.should eq(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
       email = ActionMailer::Base.deliveries[0]
       assert_equal(email.to, @epic.staff_members.collect(&:email))
     end
@@ -245,7 +245,7 @@ describe JobOffer do
     it "sends an email on expiration and closes the job offer" do
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks)
       JobOffer.check_for_expired
-      ActionMailer::Base.deliveries.count.should eq(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
       email = ActionMailer::Base.deliveries[0]
       assert_equal(email.to, @epic.staff_members.collect(&:email))
       assert_equal(@job_offer_expire.reload.status, JobStatus.closed)
@@ -256,7 +256,7 @@ describe JobOffer do
       @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks)
       @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks)
-      ActionMailer::Base.deliveries.count.should eq(0)
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
 
     it "should set the job status back to active after prolognation" do

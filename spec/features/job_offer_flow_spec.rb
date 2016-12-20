@@ -27,10 +27,10 @@ describe "the job offer flow" do
     visit job_offers_path
 
     within "#top-links" do
-        should have_link(I18n.t("job_offers.new_job_offer"))
+        is_expected.to have_link(I18n.t("job_offers.new_job_offer"))
         click_on I18n.t("job_offers.new_job_offer")
     end
-    current_path.should == new_job_offer_path
+    expect(current_path).to eq(new_job_offer_path)
 
     fill_in "job_offer_title", with: "HPI-Career-Portal"
     fill_in "job_offer_description", with: "A new carrer portal for HPI students should be developed and deployed."
@@ -44,7 +44,7 @@ describe "the job offer flow" do
     }.to change(JobOffer, :count).by(1)
 
     job_offer = JobOffer.last
-    current_path.should == job_offer_path(job_offer)
+    expect(current_path).to eq(job_offer_path(job_offer))
     assert job_offer.pending?
 
     assert_equal(job_offer.title, "HPI-Career-Portal")
@@ -59,31 +59,31 @@ describe "the job offer flow" do
     assert_equal(employer.staff_members.length, 3)
 
     # admin of the employers get acceptance pending email
-    ActionMailer::Base.deliveries.count.should == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [Configurable.mailToAdministration])
     css = 'a[href=3D"' + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + '"]'
-    email.should have_selector('a')
+    expect(email).to have_selector('a')
     ActionMailer::Base.deliveries = []
 
     # admin accepts the new job offer
     login admin
     visit job_offer_path(job_offer)
 
-    current_path.should == job_offer_path(job_offer)
+    expect(current_path).to eq(job_offer_path(job_offer))
 
-    should have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
-    should have_link I18n.t("job_offers.decline"), decline_job_offer_path(job_offer)
+    is_expected.to have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
+    is_expected.to have_link I18n.t("job_offers.decline"), decline_job_offer_path(job_offer)
 
     find_link(I18n.t("job_offers.accept")).click
 
     job_offer = job_offer.reload
-    current_path.should == job_offer_path(job_offer)
-    should_not have_selector(".alert alert-danger")
+    expect(current_path).to eq(job_offer_path(job_offer))
+    is_expected.not_to have_selector(".alert alert-danger")
     assert job_offer.active?
 
     # staff members get notified that the job offer got accepted
-    ActionMailer::Base.deliveries.count.should == employer.staff_members.length
+    expect(ActionMailer::Base.deliveries.count).to eq(employer.staff_members.length)
     emails = ActionMailer::Base.deliveries
     # each staff member gets notified
     employer.staff_members.each { |each_staff|
@@ -93,11 +93,11 @@ describe "the job offer flow" do
 
     # responsible user tries to edit the job offer
     visit edit_job_offer_path(job_offer)
-    current_path.should_not == job_offer_path(job_offer)
-    should_not have_link I18n.t("links.edit")
+    expect(current_path).not_to eq(job_offer_path(job_offer))
+    is_expected.not_to have_link I18n.t("links.edit")
 
     # responsible user tries to delete the job offer
-    should_not have_link I18n.t("links.destroy")
+    is_expected.not_to have_link I18n.t("links.destroy")
 
     job_offer.update(status: JobStatus.closed)
     job_offer = job_offer.reload
@@ -107,12 +107,12 @@ describe "the job offer flow" do
     visit job_offer_path(job_offer)
     find_link(I18n.t("job_offers.reopen_job")).click
 
-    current_path.should == reopen_job_offer_path(job_offer)
+    expect(current_path).to eq(reopen_job_offer_path(job_offer))
 
-    should have_content mark_if_required(job_offer, :title)
-    should have_content job_offer.description
-    should have_content mark_if_required(job_offer, :time_effort)
-    should have_content mark_if_required(job_offer, :compensation)
+    is_expected.to have_content mark_if_required(job_offer, :title)
+    is_expected.to have_content job_offer.description
+    is_expected.to have_content mark_if_required(job_offer, :time_effort)
+    is_expected.to have_content mark_if_required(job_offer, :compensation)
 
     click_button "submit"
 
@@ -120,10 +120,10 @@ describe "the job offer flow" do
     job_offer = JobOffer.last
 
     # the admins get notified about the new job
-    ActionMailer::Base.deliveries.count.should == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [Configurable.mailToAdministration])
-    email.should have_selector("a")
+    expect(email).to have_selector("a")
     ActionMailer::Base.deliveries = []
   end
 end

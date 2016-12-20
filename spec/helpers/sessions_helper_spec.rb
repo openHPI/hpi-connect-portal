@@ -14,7 +14,7 @@ describe SessionsHelper do
 
   before(:each) do
     @user = FactoryGirl.create(:user)
-    helper.stub(:current_user).and_return(@user)
+    allow(helper).to receive(:current_user).and_return(@user)
   end
 
   it "returns correct results for current_user" do

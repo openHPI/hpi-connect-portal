@@ -14,8 +14,8 @@ describe "the alumni flow" do
       file = File.join fixture_path, "csv/alumni_file.csv"
       find("#alumni_file").set(file)
       first('input[type=submit]').click
-      Alumni.count.should eq(3)
-      ActionMailer::Base.deliveries.count.should == 3
+      expect(Alumni.count).to eq(3)
+      expect(ActionMailer::Base.deliveries.count).to eq(3)
     end
 
     it "should be possible to add single alumni" do
@@ -24,14 +24,14 @@ describe "the alumni flow" do
       fill_in 'alumni_email', with: 'max@test.de'
       fill_in 'alumni_alumni_email', with: 'max@alumni.de'
       find('#new_alumni input[type=submit]').click
-      Alumni.count.should eq(1)
+      expect(Alumni.count).to eq(1)
       alumni = Alumni.last
       assert alumni.firstname == 'Max'
       assert alumni.lastname == 'Mustermann'
       assert alumni.email == 'max@test.de'
       assert alumni.alumni_email == 'max@alumni.de'
       assert !alumni.token.blank?
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
   end
 
@@ -47,13 +47,13 @@ describe "the alumni flow" do
       file = File.join fixture_path, "csv/mail_file.csv"
       find("#email_file").set(file)
       first('input[type=submit]').click
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should not be possible for non_admin" do
       login FactoryGirl.create(:user)
       visit remind_via_mail_alumni_index_path
-      current_path.should_not eq(remind_via_mail_alumni_index_path)
+      expect(current_path).not_to eq(remind_via_mail_alumni_index_path)
     end
   end
 
@@ -68,16 +68,16 @@ describe "the alumni flow" do
       fill_in 'session_email', with: student.email
       fill_in 'session_password', with: 'password123'
       click_button I18n.t('home.index.sign_in')
-      current_path.should == student_path(student)
+      expect(current_path).to eq(student_path(student))
       student.reload
       assert student.alumni_email == @alumni.alumni_email
       assert student.activated
     end
 
     it "should be possible to add an alumni address to a new account" do
-      page.should have_field('user_firstname', with: @alumni.firstname)
-      page.should have_field('user_lastname', with: @alumni.lastname)
-      page.should have_field('user_email', with: @alumni.email)
+      expect(page).to have_field('user_firstname', with: @alumni.firstname)
+      expect(page).to have_field('user_lastname', with: @alumni.lastname)
+      expect(page).to have_field('user_email', with: @alumni.email)
       fill_in 'user_password', with: 'password123'
       fill_in 'user_password_confirmation', with: 'password123'
       user_count = User.count
@@ -90,9 +90,9 @@ describe "the alumni flow" do
     end
 
     it "should not be possible to register a hpi-email adress" do
-      page.should have_field('user_firstname', with: @alumni.firstname)
-      page.should have_field('user_lastname', with: @alumni.lastname)
-      page.should have_field('user_email', with: @alumni.email)
+      expect(page).to have_field('user_firstname', with: @alumni.firstname)
+      expect(page).to have_field('user_lastname', with: @alumni.lastname)
+      expect(page).to have_field('user_email', with: @alumni.email)
       fill_in 'user_email', with: 'thorsten.test@hpi-alumni.de'
       fill_in 'user_password', with: 'password123'
       fill_in 'user_password_confirmation', with: 'password123'
@@ -101,21 +101,21 @@ describe "the alumni flow" do
       click_button I18n.t('links.register')
       assert User.count == user_count
       assert Student.count == student_count
-      current_path.should eq(alumni_email_path(token: @alumni.token))
+      expect(current_path).to eq(alumni_email_path(token: @alumni.token))
       fill_in 'user_email', with: 'thorsten.test@hpi.de'
       fill_in 'user_password', with: 'password123'
       fill_in 'user_password_confirmation', with: 'password123'
       click_button I18n.t('links.register')
       assert User.count == user_count
       assert Student.count == student_count
-      current_path.should eq(alumni_email_path(token: @alumni.token))
+      expect(current_path).to eq(alumni_email_path(token: @alumni.token))
       fill_in 'user_email', with: 'thorsten.test@student.hpi.uni-potsdam.de'
       fill_in 'user_password', with: 'password123'
       fill_in 'user_password_confirmation', with: 'password123'
       click_button I18n.t('links.register')
       assert User.count == user_count
       assert Student.count == student_count
-      current_path.should eq(alumni_email_path(token: @alumni.token))
+      expect(current_path).to eq(alumni_email_path(token: @alumni.token))
     end
   end
 end
@@ -126,7 +126,7 @@ describe "the alumni index page" do
     login FactoryGirl.create(:user, :admin)
     visit alumni_index_path
     click_link "Hans Peter"
-    current_path.should eq(alumni_path(alumni))
+    expect(current_path).to eq(alumni_path(alumni))
   end
 end
 
@@ -138,7 +138,7 @@ describe "Alumni Reminder Email" do
     FactoryGirl.create(:alumni)
     visit remind_via_mail_alumni_index_path
     find("#remind-all-button").click
-    ActionMailer::Base.deliveries.count.should == 1
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
 
 end

@@ -9,19 +9,19 @@ describe Admin::ConfigurablesController do
   it "should not be visible for a member of the staff " do
     login(staff.user)
     visit admin_configurable_path
-    current_path.should eq root_path
+    expect(current_path).to eq root_path
   end
 
   it "should not be visible for a student " do
     login(student.user)
     visit admin_configurable_path
-    current_path.should eq root_path
+    expect(current_path).to eq root_path
   end
 
   it "should be editable for an admin" do
     login(admin)
     visit admin_configurable_path
-    current_path.should eq admin_configurable_path
+    expect(current_path).to eq admin_configurable_path
     find('input[value="Save"]')
   end
 end

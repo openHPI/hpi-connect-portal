@@ -15,35 +15,35 @@ describe HomeController do
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "assigns latest 5 job_offers" do
       6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active) }
       get 'index'
-      assigns(:job_offers).length.should eq(5)
-      assigns(:job_offers).should_not include(JobOffer.find_by_title("Testjob1"))
+      expect(assigns(:job_offers).length).to eq(5)
+      expect(assigns(:job_offers)).not_to include(JobOffer.find_by_title("Testjob1"))
     end
 
     it "does not assign pending JobOffers" do
       5.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active) }
       pending_job = FactoryGirl.create(:job_offer, title: "Pending Job", status: JobStatus.pending)
       get 'index'
-      assigns(:job_offers).should_not include(pending_job)
+      expect(assigns(:job_offers)).not_to include(pending_job)
     end
 
     it "assigns latest 5 employers" do
       6.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
       get 'index'
-      assigns(:employers).length.should eq(5)
-      assigns(:employers).should_not include(JobOffer.find_by_title("TestEmployer1"))
+      expect(assigns(:employers).length).to eq(5)
+      expect(assigns(:employers)).not_to include(JobOffer.find_by_title("TestEmployer1"))
     end
 
     it "does not assign not activated employers" do
       3.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
       not_activated_employer = FactoryGirl.create(:employer, activated: false, name:"NotActiveEmployer")
       get 'index'
-      assigns(:employers).should_not include not_activated_employer
+      expect(assigns(:employers)).not_to include not_activated_employer
     end
 
   end
@@ -51,7 +51,7 @@ describe HomeController do
   describe "GET 'imprint'" do
     it "returns http success" do
       get 'imprint'
-      response.should be_success
+      expect(response).to be_success
     end
   end
 

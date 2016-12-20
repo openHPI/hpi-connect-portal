@@ -40,42 +40,42 @@ describe User do
 
     it 'should not be valid with firstname not present' do
       user.firstname = nil
-      user.should be_invalid
+      expect(user).to be_invalid
     end
 
     it 'should not be valid with lastname not present' do
       user.lastname = nil
-      user.should be_invalid
+      expect(user).to be_invalid
     end
 
     it 'should not be valid with email not present' do
       user.email = nil
-      user.should be_invalid
+      expect(user).to be_invalid
     end
 
     it 'should not be valid with duplicate email' do
-      FactoryGirl.build(:user, email: user.email).should be_invalid
+      expect(FactoryGirl.build(:user, email: user.email)).to be_invalid
     end
 
     it 'should not be valid with duplicate HPI email' do
       FactoryGirl.create(:user, email: 'test@student.hpi.uni-potsdam.de')
-      FactoryGirl.build(:user, email: 'test@student.hpi.de').should be_invalid
+      expect(FactoryGirl.build(:user, email: 'test@student.hpi.de')).to be_invalid
     end
 
     it 'should not be valid with duplicate alumni email' do
-      FactoryGirl.build(:user, alumni_email: alumnus.alumni_email).should be_invalid
-      FactoryGirl.build(:user, alumni_email: alumnus.alumni_email.downcase).should be_invalid
+      expect(FactoryGirl.build(:user, alumni_email: alumnus.alumni_email)).to be_invalid
+      expect(FactoryGirl.build(:user, alumni_email: alumnus.alumni_email.downcase)).to be_invalid
     end
 
     it 'should not be valid as alumnus with hpi email' do
       alumnus.email = "test@hpi.de"
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
       alumnus.email = "test@student.hpi.uni-potsdam.de"
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
       alumnus.email = "test@hpi-alumni.de"
-      alumnus.should be_invalid
+      expect(alumnus).to be_invalid
       alumnus.email = "test@bla.de"
-      alumnus.should be_valid
+      expect(alumnus).to be_valid
     end
   end
 end

@@ -10,23 +10,23 @@ describe "students/show" do
       linkedin: "Linkedin"
     ))
 
-    view.stub(:signed_in?) { false }
-    view.stub(:current_user) { FactoryGirl.create(:user) }
-    view.stub(:can?) { true }
+    allow(view).to receive(:signed_in?) { false }
+    allow(view).to receive(:current_user) { FactoryGirl.create(:user) }
+    allow(view).to receive(:can?) { true }
   end
 
   it "renders attributes in <p>" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(@student.user.firstname)
-    rendered.should match(@student.user.lastname)
-    rendered.should match(@student.semester.to_s)
-    rendered.should match(Student::ACADEMIC_PROGRAMS[@student.academic_program_id].capitalize)
-    rendered.should match(@student.additional_information)
-    rendered.should match(@student.homepage)
-    rendered.should match(@student.github)
-    rendered.should match(@student.facebook)
-    rendered.should match(@student.xing)
-    rendered.should match(@student.linkedin)
+    expect(rendered).to match(@student.user.firstname)
+    expect(rendered).to match(@student.user.lastname)
+    expect(rendered).to match(@student.semester.to_s)
+    expect(rendered).to match(Student::ACADEMIC_PROGRAMS[@student.academic_program_id].capitalize)
+    expect(rendered).to match(@student.additional_information)
+    expect(rendered).to match(@student.homepage)
+    expect(rendered).to match(@student.github)
+    expect(rendered).to match(@student.facebook)
+    expect(rendered).to match(@student.xing)
+    expect(rendered).to match(@student.linkedin)
   end
 end

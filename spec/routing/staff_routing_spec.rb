@@ -4,7 +4,7 @@ describe StaffController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/staff").should route_to("staff#index")
+      expect(get("/staff")).to route_to("staff#index")
     end
 
     # it "routes to #new" do
@@ -12,7 +12,7 @@ describe StaffController do
     # end
 
     it "routes to #show" do
-      get("/staff/1").should route_to("staff#show", id: "1")
+      expect(get("/staff/1")).to route_to("staff#show", id: "1")
     end
 
     # it "routes to #create" do
@@ -20,7 +20,7 @@ describe StaffController do
     # end
 
     it "routes to #destroy" do
-      delete("/staff/1").should route_to("staff#destroy", id: "1")
+      expect(delete("/staff/1")).to route_to("staff#destroy", id: "1")
     end
   end
 end

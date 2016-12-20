@@ -48,7 +48,7 @@ describe Student do
       FactoryGirl.create(:job_offer, state_id:1, status: JobStatus.active)
       FactoryGirl.create(:job_offer, state_id:3, status: JobStatus.active)
       Student.deliver_newsletters
-      ActionMailer::Base.deliveries.count.should == 2
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
     it "does not deliver newsletters to students who do not want it" do
@@ -58,9 +58,9 @@ describe Student do
       FactoryGirl.create(:newsletter_order, search_params: search_hash)
       FactoryGirl.create(:job_offer, state_id: 4, status: JobStatus.active)
       Student.deliver_newsletters
-      ActionMailer::Base.deliveries.count.should == 2
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
       ActionMailer::Base.deliveries.each do |mail|
-        mail.to.should_not eq([student_without_newsletter_order.email])
+        expect(mail.to).not_to eq([student_without_newsletter_order.email])
       end
     end
 
@@ -69,8 +69,8 @@ describe Student do
       newsletter_order = FactoryGirl.create(:newsletter_order, search_params: search_hash)
       FactoryGirl.create(:job_offer, status: JobStatus.active)
       Student.deliver_newsletters
-      ActionMailer::Base.deliveries.count.should == 1
-      ActionMailer::Base.deliveries.first.to.should eq([newsletter_order.student.email])
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(ActionMailer::Base.deliveries.first.to).to eq([newsletter_order.student.email])
     end
 
     it "does not deliver if search_hash doesn't match" do
@@ -78,7 +78,7 @@ describe Student do
       FactoryGirl.create(:newsletter_order, search_params: search_hash)
       FactoryGirl.create(:job_offer, state_id: 5, status: JobStatus.active)
       Student.deliver_newsletters
-      ActionMailer::Base.deliveries.count.should == 0
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
 
     it "does not deliver if Job is too much in the past" do
@@ -86,7 +86,7 @@ describe Student do
       FactoryGirl.create(:newsletter_order, search_params: search_hash)
       FactoryGirl.create(:job_offer, state_id: 3, status: JobStatus.active, created_at: DateTime.current-Student::NEWSLETTER_DELIVERIES_CYCLE-1)
       Student.deliver_newsletters
-      ActionMailer::Base.deliveries.count.should == 0
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
   end
 

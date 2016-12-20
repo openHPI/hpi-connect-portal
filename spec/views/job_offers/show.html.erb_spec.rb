@@ -11,14 +11,14 @@ describe "job_offers/show" do
       end_date: Date.current + 20,
       status: FactoryGirl.create(:job_status, name: "active")
     ))
-    view.stub(:can?) { false }
-    view.stub(:current_user) { FactoryGirl.create(:user) }
+    allow(view).to receive(:can?) { false }
+    allow(view).to receive(:current_user) { FactoryGirl.create(:user) }
   end
 
   it "renders attributes in <p>" do
     render
-    rendered.should match(/Description/)
-    rendered.should match(/Title/)
+    expect(rendered).to match(/Description/)
+    expect(rendered).to match(/Title/)
   end
 
   it "renders the default compensation text if applicable" do
@@ -27,7 +27,7 @@ describe "job_offers/show" do
 
     render
 
-    rendered.should match(I18n.t('job_offers.default_compensation'))
+    expect(rendered).to match(I18n.t('job_offers.default_compensation'))
   end
 
   it "renders the actual compensation if its not the default one" do
@@ -36,6 +36,6 @@ describe "job_offers/show" do
 
     render
 
-    rendered.should match(@job_offer.compensation.to_s + " " + I18n.t('job_offers.compensation_description'))
+    expect(rendered).to match(@job_offer.compensation.to_s + " " + I18n.t('job_offers.compensation_description'))
   end
 end

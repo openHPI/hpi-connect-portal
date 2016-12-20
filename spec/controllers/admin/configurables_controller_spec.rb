@@ -12,7 +12,7 @@ describe Admin::ConfigurablesController do
 
     it "checks if an invalid email address is not saved" do
       get :show, { mailToAdministration: 'user@exam'}
-      flash[:notice].should eq(I18n.t("errors.configuration.invalid_email"))
+      expect(flash[:notice]).to eq(I18n.t("errors.configuration.invalid_email"))
     end
   end
 end

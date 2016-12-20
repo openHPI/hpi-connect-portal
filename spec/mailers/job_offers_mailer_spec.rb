@@ -24,23 +24,23 @@ describe JobOffersMailer do
     end
 
     it "should include the link to the job offer" do
-      @email.should have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))
+      expect(@email).to have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))
     end
 
     it "should include the job title int the subject" do
-      @email.subject.should have_content(@job_offer.title)
+      expect(@email.subject).to have_content(@job_offer.title)
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should be send to the admin" do
-      @email.to.should eq([Configurable.mailToAdministration])
+      expect(@email.to).to eq([Configurable.mailToAdministration])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -50,15 +50,15 @@ describe JobOffersMailer do
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should have be send to the staff members" do
-      @email.to.should eq(@job_offer.employer.staff_members.collect(&:email))
+      expect(@email.to).to eq(@job_offer.employer.staff_members.collect(&:email))
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -68,15 +68,15 @@ describe JobOffersMailer do
     end
 
     it "should send an email to both staffs" do
-      ActionMailer::Base.deliveries.count.should == 2
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.employer.staff_members[0].email])
+      expect(@email.to).to eq([@job_offer.employer.staff_members[0].email])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
 
   end
@@ -87,15 +87,15 @@ describe JobOffersMailer do
     end
 
     it "should send an email to both staffs" do
-      ActionMailer::Base.deliveries.count.should == 2
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
     it "should have be send to the responsible WiMi" do
-      @email.to.should eq([@job_offer.employer.staff_members[0].email])
+      expect(@email.to).to eq([@job_offer.employer.staff_members[0].email])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
 
   end
@@ -106,15 +106,15 @@ describe JobOffersMailer do
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == 1
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "should have be send to the default staff address" do
-      @email.to.should eq([Configurable.mailToAdministration])
+      expect(@email.to).to eq([Configurable.mailToAdministration])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
-      @email.from.should eq(['noreply-connect@hpi.de'])
+      expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
   end
 
@@ -124,7 +124,7 @@ describe JobOffersMailer do
     end
 
     it "should send an email" do
-      ActionMailer::Base.deliveries.count.should == @job_offer.employer.staff_members.size
+      expect(ActionMailer::Base.deliveries.count).to eq(@job_offer.employer.staff_members.size)
     end
 
   end

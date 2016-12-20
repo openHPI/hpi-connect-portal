@@ -34,31 +34,31 @@ describe Employer do
 
     it "with name not present" do
       employer.name = nil
-      employer.should be_invalid
+      expect(employer).to be_invalid
     end
 
     it "with name is not unique" do
       employer_with_same_name = employer.dup
-      assert employer_with_same_name.should be_invalid
+      assert expect(employer_with_same_name).to be_invalid
     end
 
     it "with year_of_foundation less than 1800" do
       employer.year_of_foundation = 1745
-      employer.should be_invalid
+      expect(employer).to be_invalid
     end
 
     it "with year_of_foundation greater than 1800" do
       employer.year_of_foundation = 1801
-      employer.should be_valid
+      expect(employer).to be_valid
     end
 
     it "with future year_of_foundation" do
       employer.year_of_foundation = Time.now.year + 1
-      employer.should be_invalid
+      expect(employer).to be_invalid
     end
 
     it "creates token" do
-      employer.token.should_not be_nil
+      expect(employer.token).not_to be_nil
     end
   end
 
@@ -103,11 +103,11 @@ describe Employer do
       FactoryGirl.create(:employer, name: "Zuckerberg")
       FactoryGirl.create(:employer, name: "AtTheTop")
       ordered_employers = Employer.order_by_name
-      ordered_employers[0].name.should == "AtTheTop"
-      ordered_employers[1].name.should == "avis"
-      ordered_employers[2].name.should == "Ca"
-      ordered_employers[3].name.should == "eBay"
-      ordered_employers[4].name.should == "Zuckerberg"
+      expect(ordered_employers[0].name).to eq("AtTheTop")
+      expect(ordered_employers[1].name).to eq("avis")
+      expect(ordered_employers[2].name).to eq("Ca")
+      expect(ordered_employers[3].name).to eq("eBay")
+      expect(ordered_employers[4].name).to eq("Zuckerberg")
     end
   end
 
@@ -119,11 +119,11 @@ describe Employer do
         FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
       end
 
-      employer.can_create_job_offer?('graduate_job').should == TRUE
+      expect(employer.can_create_job_offer?('graduate_job')).to eq(TRUE)
 
       FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
 
-      employer.can_create_job_offer?('graduate_job').should == FALSE
+      expect(employer.can_create_job_offer?('graduate_job')).to eq(FALSE)
     end
   end
 
