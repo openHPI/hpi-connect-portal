@@ -51,6 +51,7 @@ group :development, :test do
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
   gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+  gem 'byebug'
 end
 
 gem 'simplecov', group: :test, require: nil

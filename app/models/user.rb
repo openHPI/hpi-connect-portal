@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   validates :alumni_email, uniqueness: { case_sensitive: false }, unless: Proc.new { |u| u.alumni_email.blank? }
   validates :firstname, :lastname, presence: true
   validate :non_hpi_email_on_alumni
-  validate :non_duplicate_hpi_email
+  validate :non_duplicate_hpi_email, on: :create
 
   has_attached_file :photo, style: { medium: "300x300>", thumb: "100x100>" }, default_url: "/assets/placeholder/:style/missing.png"
   validates_attachment_content_type :photo, content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']
