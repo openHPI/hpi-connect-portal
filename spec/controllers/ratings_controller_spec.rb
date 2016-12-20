@@ -15,7 +15,7 @@
 #  score_work_contents     :integer
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe RatingsController do
 

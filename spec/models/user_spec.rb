@@ -25,7 +25,7 @@
 #  alumni_email       :string(255)      default(""), not null
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe User do
   let(:user) do

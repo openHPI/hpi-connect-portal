@@ -8,7 +8,7 @@
 #  skill                   :integer
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe ProgrammingLanguagesUser do
   describe "does_skill_exist" do

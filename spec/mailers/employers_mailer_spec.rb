@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe EmployersMailer do
   include EmailSpec::Helpers

@@ -28,7 +28,7 @@
 #  student_group_id          :integer          default(0), not null
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe JobOffer do
 

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "home/imprint" do
   it "should render all the necessary information" do
