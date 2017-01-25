@@ -1,46 +1,41 @@
 Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,
- 
-Herzlichen Glückwunsch zu Ihrem Abschluss am HPI! 
- 
+
+Herzlichen Glückwunsch zu Ihrem Abschluss am HPI!
+
 Den Alumni-Service des Hasso-Plattner-Instituts finden Sie ab jetzt auf dem Karriereportal <%= link_to 'HPI Connect', root_url %>. Neben speziellen Angeboten für Alumni können Sie über die Plattform Jobs finden und Kontakt zu interessanten Arbeitgebern aufnehmen.
- 
+
 Damit Sie auch weiterhin mit dem HPI und Ihren Kommilitonen in Kontakt bleiben können, folgen Sie bitte dem unten angegebenen Link. Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet.
- 
+
 Wichtig:
- 
+
 Falls Sie bereits auf HPI Connect registriert sind, geben Sie für Ihr Login als Alumna/Alumnus bitte eine private E-Mail-Adresse (nicht Ihre HPI-E-Mail-Adresse) ein. Die Daten Ihres bisherigen Nutzerprofils bleiben im Alumni-Profil erhalten.
 Wenn Sie bisher noch nicht auf HPI Connect registriert waren, geben Sie bei Anmeldung bitte ebenfalls eine private E-Mail-Adresse ein.
- 
+
 Grund:
- 
+
 Mit Ihrem Account erhalten Sie eine lebenslange E-Mail-Adresse vom HPI <%= @alumni.alumni_email %>@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.
- 
+
 Ihre Daten im Profil:
- 
+
 Nach Aktivierung Ihres Accounts können Sie zum jeweiligen Zeitpunkt wählen, für wen Ihre Daten sichtbar sein sollen: Sie können diese Ihren Kommilitonen oder auch interessierten Unternehmen veröffentlichen. Sie können diese auch gänzlich auf nicht sichtbar schalten.
- 
+
 Hier geht‘s zur Registrierung:
- 
+
 <%= link_to 'HPI-Alumni-Mail-Adresse freischalten!', alumni_email_url(token: @alumni.token) %>
- 
+
 Viele Grüße und bis bald,
- 
-Ihr Alumni-Office bei HPI Connect
+
+Ihr HPI Alumni-Office
 
 Sandra Willoh
-Referentin Relationship Management
- 
-Hasso-Plattner-Institut für Softwaresystemtechnik GmbH
-Prof.-Dr.-Helmert-Str. 2­–3
+Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam
+Prof.-Dr.-Helmert-Str. 2-3
 D-14482 Potsdam
-Fon +49 331 5509-107
-Fax +49 331 5509-322
-sandra.willoh@hpi.de
- 
+Fon (49) 0331 5509 107
+Fax (49) 0331 5509 554
 www.hpi.de
- 
+
 Amtsgericht Potsdam, HRB 12184
 Geschäftsführung: Prof. Dr. Christoph Meinel
- 
- 
+
 Design IT. Create Knowledge.
