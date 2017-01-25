@@ -58,7 +58,6 @@ gem 'simplecov', group: :test, require: nil
 
 # heroku specific stuff
 gem 'rails_12factor', group: :production
-gem 'newrelic_rpm', '~> 3.7.1.188', group: :production
 gem 'airbrake', '~> 3.1.15'
 
 # basic layouting

@@ -176,7 +176,6 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
     netrc (0.11.0)
-    newrelic_rpm (3.7.1.188)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
     nokogumbo (1.1.12)
@@ -366,7 +365,6 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails
   letter_opener
-  newrelic_rpm (~> 3.7.1.188)
   open_id_authentication
   paperclip
   pg (~> 0.17.1)
