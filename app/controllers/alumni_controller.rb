@@ -104,9 +104,15 @@ class AlumniController < ApplicationController
 
   def link_new
     @alumni = Alumni.find_by_token! params[:token]
+
     if Alumni.email_invalid? link_params[:email]
       respond_and_redirect_to alumni_email_path(token: @alumni.token), {error: I18n.t('alumni.choose_another_email')} and return
     end
+
+    if User.where("lower(alumni_email) LIKE ?", @alumni.alumni_email.downcase).exists?
+      respond_and_redirect_to alumni_email_path(token: @alumni.token), {error: I18n.t('alumni.already_registered')} and return
+    end
+
     @user = User.new link_params
     student = Student.create! academic_program_id: Student::ACADEMIC_PROGRAMS.index('alumnus')
     @user.manifestation = student
