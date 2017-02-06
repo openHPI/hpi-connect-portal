@@ -12,6 +12,11 @@ describe SessionsController do
       assert current_user == @user
     end
 
+    it "logs in user with correct email and password (case insensitive)" do
+      post 'create', {session: {email: @user.email.swapcase, password: 'password'}}
+      assert current_user == @user
+    end
+
     it "redirects to root with incorrect password and shows flash message" do
       post 'create', {session: {email: @user.email, password: 'wrong password'}}
       expect(response).to redirect_to(root_path)

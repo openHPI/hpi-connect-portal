@@ -2,7 +2,8 @@ class SessionsController < ApplicationController
   skip_before_filter :signed_in_user
 
   def create
-    user = User.find_by_email params[:session][:email]
+    user = User.where("LOWER(email) = ?", params[:session][:email].downcase).limit(1).first
+
     if user && user.authenticate(params[:session][:password])
       sign_in user
       if user.staff?
