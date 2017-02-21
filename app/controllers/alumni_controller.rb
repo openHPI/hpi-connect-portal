@@ -64,7 +64,7 @@ class AlumniController < ApplicationController
       CSV.foreach(params[:alumni_merge_file].path, headers: true, header_converters: :symbol, quote_char: '"') do |row|
         if row[:vorname] and row[:nachname]
           number += 1
-          alumni = Alumni.merge_from_row row, false
+          Alumni.merge_from_row row
         end
       end
       if errors.any?

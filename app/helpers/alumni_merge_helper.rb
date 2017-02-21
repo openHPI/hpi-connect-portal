@@ -10,7 +10,7 @@ module AlumniMergeHelper
       logger.error e.message
     end
 
-    # Retrieve the already existing user
+    # Retrieve already existing user
     existing_alumnus = get_existing_alumnus(row)
 
     if existing_alumnus
@@ -54,7 +54,7 @@ module AlumniMergeHelper
     existing_alumnus.update!(hidden_phone_number: row[:telefon])
     existing_alumnus.update!(hidden_comment: row[:notiz])
     existing_alumnus.update!(hidden_agreed_alumni_work: row[:einverstndnis_alumniarbeit_erteilt])
-    return existing_alumnus  
+    return existing_alumnus
   end
 
   def self.transform_row_for_alumnus_creation(row)
@@ -66,6 +66,7 @@ module AlumniMergeHelper
     return row
   end
 
+  # Returns existing registered or invited alumnus with matching alumni email
   def self.get_existing_alumnus(row)
     invited_alumnus = get_invited_alumnus(row)
     if invited_alumnus
@@ -78,23 +79,27 @@ module AlumniMergeHelper
     return nil
   end
 
+  # Returns student that matches the alumni email or private emails
   def self.get_registered_alumnus(row)
-    private_emails = get_all_emails row
     found_students = User.where(alumni_email: row[:alumnimail])
     unless found_students.empty?
       return Student.find(found_students.first.manifestation_id)
     end
+
+    private_emails = get_all_emails row
     found_students = User.where(email: private_emails, manifestation_type: "Student")
     unless found_students.empty?
       return Student.find(found_students.first.manifestation_id)
     end
   end
 
+  # Returns alumnus that matches the alumni email or private emails
   def self.get_invited_alumnus(row)
     found_alumni = Alumni.where(alumni_email: row[:alumnimail])
     unless found_alumni.empty?
       return found_alumni.first
     end
+
     private_emails = get_all_emails row
     found_alumni = Alumni.where(email: private_emails)
     unless found_alumni.empty?
@@ -102,35 +107,52 @@ module AlumniMergeHelper
     end
   end
 
+  # Generates alumni email, first name and last name if they do not exist already
   def self.clean_alumni_row(row)
-    row = generate_alumni_email_from_emails(row)
-    row[:alumnimail] = row[:alumnimail].sub("@hpi-alumni.de", "")
+    row = generate_alumni_email(row)
     row[:vorname] ||= row[:alumnimail].split('.')[0].capitalize
     row[:nachname] ||= row[:alumnimail].split('.')[1].capitalize
     return row
   end
 
+  # Generates alumni email by extracting from other emails or generating from name
+  # If alumni email is already present, domain suffix is removed
+  # Returns updated row
+  def self.generate_alumni_email(row)
+    if row[:alumnimail].to_s == ''
+      row[:alumnimail] = generate_alumni_email_from_emails(row)
+
+      if row[:alumnimail].to_s == ''
+        row[:alumnimail] = generate_alumni_email_from_name(row)
+      end
+    else
+      row[:alumnimail] = row[:alumnimail].sub("@hpi-alumni.de", "")
+    end
+
+    return row
+  end
+
+  # Extracts alumni email from other email adresses if HPI email adresses are present
+  # Returns that email address if successful, nil if not
   def self.generate_alumni_email_from_emails(row)
     if row[:alumnimail].to_s == ''
       private_emails = get_all_emails(row)
+
+      # Filter user name of HPI email adress
       private_emails.map!{|email| email.sub("@student.hpi.uni-potsdam.de", "").sub("@hpi.de", "").sub("@student.hpi.de", "").sub("@hpi-alumni.de", "")}
       user_names = private_emails.reject{|user_name| user_name.include?("@")}
       user_names.reject!{|user_name| user_name.to_s == ''}
       user_names.uniq!
 
       if user_names.length == 1
-        #Generate HPI alumni mail from found HPI username
-        row[:alumnimail] = user_names[0]
-      else
-        # Generate HPI alumni mail from first and last name
-        row[:alumnimail] = generate_alumni_email_from_name(row)
+        # Generate HPI alumni mail from found HPI username
+        return user_names[0]
       end
-    else
-      row[:alumnimail] = row[:alumnimail].sub("@hpi-alumni.de", "")
     end
-    return row
+    return nil
   end
 
+  # Returns private and additional email adresses as a string array
   def self.get_all_emails(row)
     row[:private_email] ||= ''
     row[:weitere_emailadresse] ||= ''
@@ -139,9 +161,10 @@ module AlumniMergeHelper
     return private_emails
   end
 
+  # Returns alumni email (first name followed by last name, separated by a period) prepended by "GENERATED_"
   def self.generate_alumni_email_from_name(row)
-    firstname = row[:vorname].include?(' ') ? row[:vorname].split(' ')[0].downcase : row[:vorname].downcase
-    lastname = row[:nachname].include?(' ') ? row[:nachname].split(' ')[0].downcase : row[:nachname].downcase
+    firstname = row[:vorname].include?(' ') ? row[:vorname].split(' ')[0] : row[:vorname]
+    lastname = row[:nachname].include?(' ') ? row[:nachname].split(' ')[0] : row[:nachname]
     "GENERATED_" + firstname + "." + lastname
   end
 
