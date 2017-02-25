@@ -53,6 +53,7 @@ HpiHiwiPortal::Application.routes.draw do
       get 'alumni/:token/email' => 'alumni#register', as: 'alumni_email'
       post 'alumni/:token/link' => 'alumni#link', as: 'alumni_link'
       post 'alumni/:token/link_new' => 'alumni#link_new', as: 'alumni_link_new'
+      post 'alumni/update_alumni_data' => 'alumni#update_alumni_data', as: 'update_alumni_data'
 
       post 'forgot_password' => 'users#forgot_password'
 

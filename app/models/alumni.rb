@@ -63,4 +63,39 @@ class Alumni < ActiveRecord::Base
   def send_reminder
     AlumniMailer.reminder_email(self).deliver
   end
+
+  # Attemps to match alumnus with a user account by alumni mail address
+  # Receives row of a CSV file with the alumnus' data
+  # If successful, the following fields are updated: private mail address, current employer, current position
+  # If not, row is returned unchanged
+
+  # TODO Move to a helper
+  def self.update_alumni_data(row)
+    byebug
+    matched_user = User.where("LOWER(alumni_email) LIKE ?", row[7].gsub("@hpi-alumni.de", "").downcase).first
+
+    if not matched_user
+      # TODO Extract alumni mail from other mails
+      matched_user = User.where("LOWER(alumni_email) LIKE ?", (row[1]+"."+row[0]).downcase).first
+    end
+
+    if matched_user
+      # Update private email
+      row[6] = matched_user.email
+
+      # Update emailverteiler
+      if row[9]
+        row[9].gsub(row[6], matched_user.email)
+      else
+        row[9] = row[6]+";"
+        row[10] = nil
+      end
+
+      current_work = matched_user.manifestation.get_current_enterprises_and_positions
+      row[11] = current_work[0]
+      row[12] = current_work[1]
+    end
+
+    return row
+  end
 end

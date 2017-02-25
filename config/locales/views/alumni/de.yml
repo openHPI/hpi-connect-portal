@@ -5,3 +5,5 @@ de:
     register_account: 'Ich möchte einen neuen Account erstellen'
     choose_another_email: 'Bitte wählen Sie eine Email-Adresse, die Sie nicht vom HPI erhalten haben. An diese Email-Adresse werden künftige Emails, die an Ihre Alumni-Email-Adresse gesendet werden weitergeleitet.'
     already_registered: 'Sie haben bereits einen Account.'
+    update_alumni_data: 'Alumni-Daten aktualisieren'
+    alumni_data_file: 'Alumni-Datei (CSV)'
