@@ -133,8 +133,8 @@ class AlumniController < ApplicationController
       headers = %w{Nachname Vorname akad.\ Titel Geburtsname Abschluss Jahr private\ E-Mail Alumni-Mail Weitere\ E-Mail-Adresse E-Mail-Verteiler keine\ E-Mail letztes\ Unternehmen aktuelle\ Position Ort \ Land auf\ LinkedIN Unternehmen\ bekannt Straße Ort PLZ Land Telefon weitere\ E-Mail\ -\ nicht\ für\ Newsletter\ nutzen Notiz Einverständnis\ Alumniarbeit\ erteilt Straße\ (weitere\ Adresse) PLZ Stadt Land}
       csv << headers
 
-      if params[:alumni_file].present?
-        CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol) do |row|
+      if params[:alumni_file_tbu].present?
+        CSV.foreach(params[:alumni_file_tbu].path, headers: true, header_converters: :symbol) do |row|
           csv << Alumni.update_alumni_data(row)
         end
       end
