@@ -41,5 +41,9 @@ FactoryGirl.define do
     trait :alumnus do
       alumni_email { |n| "Firstname#{n}.Lastname#{n}" }
     end
+
+    trait :has_student_manifestation do
+      manifestation factory: :student
+    end
   end
 end

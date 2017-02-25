@@ -135,12 +135,11 @@ class AlumniController < ApplicationController
 
       if params[:alumni_file_tbu].present?
         CSV.foreach(params[:alumni_file_tbu].path, headers: true, header_converters: :symbol) do |row|
-          csv << Alumni.update_alumni_data(row)
+          csv << User.update_alumni_data(row)
         end
       end
     end
-    send_data csv_file, filename: "Alumni_aktualisiert-#{Date.today}.csv"
-
+    send_data csv_file, filename: "Alumni_aktualisiert-#{Date.today}.csv", type: "text/csv"
   end
 
   private

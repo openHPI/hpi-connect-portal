@@ -78,4 +78,27 @@ describe User do
       expect(alumnus).to be_valid
     end
   end
+
+  describe "Alumni data update" do
+    before(:each) do
+      require 'csv'
+      # TODO student factory
+      @user = FactoryGirl.create(:user, :has_student_manifestation, :alumnus)
+      # TODO: emailverteiler hat keine private email wenn alumni email existiert??
+      @user.manifestation.cv_jobs << FactoryGirl.create(:cv_job, position: "CEO", employer: "Google Inc", current: true)
+      @csv_row = CSV.parse_line("nachname,vorname,akad_titel,geburtsname,abschluss,jahr,private_email,alumnimail,weitere_emailadresse,emailverteiler,keine_email,letztes_unternehmen,aktuelle_position,ort_land,auf_linkedin,unternehmen_bekannt,strae,ort,plz,land,telefon,weitere_email_nicht_fr_newsletter_nutzen,notiz,einverstndnis_alumniarbeit_erteilt,strae_weitere_adresse,plz,stadt,land\n#{@user.lastname},#{@user.firstname},,,Bachelor,2017,old@example.com,#{@user.alumni_email},,old@example.com\;,,Unternehmen,Developer,Deutschland,,,,,,,,,,,,,,", {headers: true, return_headers: false, header_converters: :symbol})
+    end
+
+    it "updates the private email address" do
+      updated_row = User.update_alumni_data(@csv_row)
+      expect(updated_row[:private_email]).to eq(@user.email)
+      expect(updated_row[:emailverteiler]).to eq(@user.email+";")
+    end
+
+    it "updates the current employer and position" do
+      updated_row = User.update_alumni_data(@csv_row)
+      expect(updated_row[:letztes_unternehmen]).to eq("Google Inc")
+      expect(updated_row[:aktuelle_position]).to eq("CEO")
+    end
+  end
 end
