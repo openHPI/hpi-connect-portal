@@ -49,11 +49,11 @@ end
 describe "Alumni data update" do
   before(:all) do
     require 'csv'
-    user = FactoryGirl.create(:user, :has_student_manifestation, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
+    user = FactoryGirl.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
   end
 
   it "returns an updated CSV file" do
-    login FactoryGirl.create :user, :admin
+    login FactoryGirl.create(:user, :admin)
     visit new_alumni_path
     file = File.join fixture_path, "csv/alumni_data_update_file.csv"
     find("#alumni_file_tbu").set(file)
