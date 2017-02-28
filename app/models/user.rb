@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
 
     if matched_user
       if not row[:alumnimail]
-        row[:alumnimail] = matched_user.alumni_email
+        row[:alumnimail] = "#{matched_user.alumni_email}@hpi-alumni.de"
         row[:emailverteiler].gsub!(row[:private_email], row[:alumnimail])
       end
 

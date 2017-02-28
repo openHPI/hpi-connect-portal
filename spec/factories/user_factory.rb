@@ -35,20 +35,20 @@ FactoryGirl.define do
     activated               true
 
     trait :admin do
-      admin                 true
+      admin true
     end
 
     trait :alumnus do
-      manifestation         factory: :student
-      alumni_email          { |n| "Firstname#{n}.Lastname#{n}" }
+      manifestation           factory: :student
+      sequence(:alumni_email) { |n| "Firstname#{n}.Lastname#{n}" }
     end
 
     trait :student do
-      manifestation         factory: :student
+      manifestation factory: :student
     end
 
     trait :staff do
-      manifestation         factory: :staff
+      manifestation factory: :staff
     end
   end
 end
