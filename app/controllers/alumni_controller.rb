@@ -127,6 +127,21 @@ class AlumniController < ApplicationController
     end
   end
 
+  def update_alumni_data
+    require 'csv'
+    csv_file = CSV.generate(headers: true) do |csv|
+      headers = %w{Nachname Vorname akad.\ Titel Geburtsname Abschluss Jahr private\ E-Mail Alumni-Mail Weitere\ E-Mail-Adresse E-Mail-Verteiler keine\ E-Mail letztes\ Unternehmen aktuelle\ Position Ort \ Land auf\ LinkedIN Unternehmen\ bekannt Straße Ort PLZ Land Telefon weitere\ E-Mail\ -\ nicht\ für\ Newsletter\ nutzen Notiz Einverständnis\ Alumniarbeit\ erteilt Straße\ (weitere\ Adresse) PLZ Stadt Land}
+      csv << headers
+
+      if params[:alumni_file_tbu].present?
+        CSV.foreach(params[:alumni_file_tbu].path, headers: true, header_converters: :symbol) do |row|
+          csv << User.update_alumni_data(row)
+        end
+      end
+    end
+    send_data csv_file, filename: "Alumni_aktualisiert-#{Date.today}.csv", type: "text/csv"
+  end
+
   private
     def set_alumni
       @alumni = Alumni.find params[:id]

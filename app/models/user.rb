@@ -102,4 +102,59 @@ class User < ActiveRecord::Base
     self.update password: new_password, password_confirmation: new_password
     UsersMailer.new_password_mail(new_password, self).deliver
   end
+
+  # Attemps to match alumnus with a user account by alumni mail address
+  # Receives row of a CSV file with the alumnus' data
+  # If successful, the following fields are updated: 'alumnimail', 'emailverteiler', 'letztes_unternehmen', 'aktuelle_position'
+  # If not, row is returned unchanged
+  #
+  # CSV file headers:
+  # 0: nachname, 1: vorname, 2: akad_titel, 3: geburtsname, 4: abschluss, 5: jahr, 6: private_email, 7: alumnimail, 8: weitere_emailadresse, 9: emailverteiler, 10: keine_email, 11: letztes_unternehmen, 12: aktuelle_position, 13: ort_land, 14: auf_linkedin, 15: unternehmen_bekannt, 16: strae, 17: ort, 18: plz, 19: land, 20: telefon, 21: weitere_email__nicht_fr_newsletter_nutzen, 22: notiz, 23: einverstndnis_alumniarbeit_erteilt, 24: strae_weitere_adresse, 25: plz, 26: stadt, 27: land
+
+  def self.update_alumni_data(row)
+    matched_user = User.find_by_csv_row(row)
+
+    if matched_user
+      if not row[:alumnimail]
+        row[:alumnimail] = "#{matched_user.alumni_email}@hpi-alumni.de"
+        row[:emailverteiler].gsub!(row[:private_email], row[:alumnimail])
+      end
+
+      if row[:private_email]
+        if not (row[:emailverteiler].include?(matched_user.email) || row[:private_email] == matched_user.email)
+          row[:emailverteiler].concat("#{matched_user.email};")
+          row[:weitere_emailadresse] == nil ? row[:weitere_emailadresse] = matched_user.email : row[:weitere_emailadresse].concat(";#{matched_user.email}")
+        end
+      else
+        row[:private_email] = matched_user.email
+      end
+
+      row[:keine_email] = nil if row[:keine_email]
+
+      current_work = matched_user.manifestation.get_current_enterprises_and_positions
+      row[:letztes_unternehmen] = current_work[0]
+      row[:aktuelle_position] = current_work[1]
+    end
+
+    return row
+  end
+
+  # Finds user by alumni mail address taken from alumni mail address row field or extracted from other HPI domain email addresses (in that order)
+
+  def self.find_by_csv_row(row)
+    if row[:alumnimail]
+      matched_user = User.where('LOWER(alumni_email) LIKE ?', row[:alumnimail].gsub('@hpi-alumni.de', '').downcase).first
+    else
+      row[:emailverteiler].split(';').each do |mail_address|
+        hpi_domain_found = mail_address.gsub!(/@student.hpi.uni-potsdam.de|@student.hpi.de/, '')
+        @extracted_hpi_address = mail_address if hpi_domain_found
+      end
+
+      matched_user = User.where('LOWER(alumni_email) LIKE ?', @extracted_hpi_address.downcase).first if @extracted_hpi_address
+      #
+      # matched_user = User.where('LOWER(alumni_email) LIKE ?', (row[:vorname]+"."+row[:nachname]).downcase).first if not matched_user
+    end
+
+    return matched_user
+  end
 end

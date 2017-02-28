@@ -45,3 +45,24 @@ describe "Login new Alumnus with old HPI Email adress" do
     expect(page).to have_content I18n.t('alumni.choose_another_email')
   end
 end
+
+describe "Alumni data update" do
+  before(:all) do
+    require 'csv'
+    FactoryGirl.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
+  end
+
+  it "returns an updated CSV file" do
+    login FactoryGirl.create(:user, :admin)
+    visit new_alumni_path
+    file = File.join fixture_path, "csv/alumni_data_update_file.csv"
+    find("#alumni_file_tbu").set(file)
+    # Click second submit button
+    find_all('input[type=submit]')[1].click
+
+    header = page.response_headers['Content-Disposition']
+    expect(header).to match /^attachment/
+    expect(header).to match /filename="Alumni_aktualisiert-#{Date.today}.csv"$/
+    expect(page.response_headers['Content-Type']).to eq "text/csv"
+  end
+end

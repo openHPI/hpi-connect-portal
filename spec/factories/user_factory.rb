@@ -39,7 +39,16 @@ FactoryGirl.define do
     end
 
     trait :alumnus do
-      alumni_email { |n| "Firstname#{n}.Lastname#{n}" }
+      manifestation           factory: :student
+      sequence(:alumni_email) { |n| "Firstname#{n}.Lastname#{n}" }
+    end
+
+    trait :student do
+      manifestation factory: :student
+    end
+
+    trait :staff do
+      manifestation factory: :staff
     end
   end
 end

@@ -31,10 +31,7 @@ FactoryGirl.define do
     birthday            '1970-12-10'
     graduation_id       Student::GRADUATIONS.index("abitur")
     visibility_id       2
-
-    before(:create) do |student|
-      student.user = FactoryGirl.create(:user, manifestation: student)
-    end
+    association         :user
 
     after(:create) do |user, evaluator|
       create_list(:language, 1)
