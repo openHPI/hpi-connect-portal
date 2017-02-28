@@ -49,7 +49,7 @@ end
 describe "Alumni data update" do
   before(:all) do
     require 'csv'
-    user = FactoryGirl.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
+    FactoryGirl.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
   end
 
   it "returns an updated CSV file" do
