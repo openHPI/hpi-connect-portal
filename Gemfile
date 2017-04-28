@@ -25,6 +25,9 @@ gem 'jquery-rails', '~> 3.1.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0.2'
 
+# Automatically add rel="noopener noreferrer" to every link with target="_blank"
+gem 'safe_target_blank'
+
 # Create filters easily with scopes
 gem 'has_scope'
 
