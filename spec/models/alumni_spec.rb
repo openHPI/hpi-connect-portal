@@ -57,4 +57,58 @@ describe Alumni do
     end
 
   end
+
+  describe "create from row" do
+    before(:all) do
+      require 'csv'
+    end
+
+    it "creates alumnus when all fields are present" do
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+
+      alumnus = Alumni.create_from_row(csv_row)
+
+      expect(alumnus).to eq(:created)
+
+      alumnus = Alumni.last
+
+      expect(alumnus.firstname).to eq('Max')
+      expect(alumnus.lastname).to eq('Mustermann')
+      expect(alumnus.email).to eq('max@mustermann.de')
+      expect(alumnus.alumni_email).to eq('Max.Mustermann')
+    end
+
+    it "creates alumnus when full name isn't present, but alumni mail adress is" do
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+
+      alumnus = Alumni.create_from_row(csv_row)
+
+      expect(alumnus).to eq(:created)
+
+      alumnus = Alumni.last
+
+      expect(alumnus.firstname).to eq('Max')
+      expect(alumnus.lastname).to eq('Mustermann')
+      expect(alumnus.email).to eq('max@mustermann.de')
+      expect(alumnus.alumni_email).to eq('Max.Mustermann')
+    end
+
+    it 'sends creation mail upon successful alumnus creation' do
+      ActionMailer::Base.deliveries = []
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+
+      alumnus = Alumni.create_from_row(csv_row)
+
+      expect(alumnus).to eq(:created)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
+
+    it "doesn't create alumnus if alumni mail and full name aren't present" do
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@mustermann.de,", {headers: true, return_headers: false, header_converters: :symbol})
+
+      alumnus = Alumni.create_from_row(csv_row)
+
+      expect(alumnus).not_to eq(:created)
+    end
+  end
 end
