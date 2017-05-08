@@ -153,27 +153,33 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def self.export_alumni
+  def self.export_alumni(include_unregistered, registered_from, registered_to)
     CSV.generate(headers: true) do |csv|
       shared_attributes = %w{lastname firstname alumni_email email}
       headers = ["registered?"] + shared_attributes + %w{graduation current_enterprise(s) current_position(s)}
       csv << headers
-      csv = self.add_registered_alumni_to_csv(csv, shared_attributes)
-      csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
-      csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
+
+      csv = self.add_registered_alumni_to_csv(csv, shared_attributes, registered_from, registered_to)
+
+      if include_unregistered
+        csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
+        csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
+      end
     end
   end
 
-  def self.add_registered_alumni_to_csv(csv, attributes)
+  def self.add_registered_alumni_to_csv(csv, attributes, registered_from, registered_to)
     find_each do |student|
       if student.user.alumni?
-        current_enterprises_and_positions = student.get_current_enterprises_and_positions
-        alumni_attributes = ["yes"]
-        alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
-        alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
-        alumni_attributes.push(current_enterprises_and_positions[0])
-        alumni_attributes.push(current_enterprises_and_positions[1])
-        csv << alumni_attributes
+        if registered_from.nil? or (student.user.created_at.to_date >= registered_from and student.user.created_at.to_date <= registered_to)
+          current_enterprises_and_positions = student.get_current_enterprises_and_positions
+          alumni_attributes = ["yes"]
+          alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
+          alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+          alumni_attributes.push(current_enterprises_and_positions[0])
+          alumni_attributes.push(current_enterprises_and_positions[1])
+          csv << alumni_attributes
+        end
       end
     end
     return csv

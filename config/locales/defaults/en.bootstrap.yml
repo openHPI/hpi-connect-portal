@@ -20,6 +20,7 @@ en:
     activate: "Activate"
     deactivate: "Deactivate"
     import: "Import"
+    export: "Export"
   titles:
     edit: "Edit %{model}"
     save: "Save %{model}"

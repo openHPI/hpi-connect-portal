@@ -83,7 +83,8 @@ HpiHiwiPortal::Application.routes.draw do
           get 'activate'
         end
         collection do
-          get 'export_alumni', action: 'export_alumni'
+          get 'export_alumni' => 'students#export_alumni'
+          post 'export_alumni' => 'students#send_alumni_csv'
         end
       end
 

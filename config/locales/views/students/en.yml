@@ -22,3 +22,7 @@ en:
         add_education: "Add Education"
         remove_work_experience: "Remove Work Experience"
         remove_education: "Remove Education"
+        export_alumni: "Export alumni"
+        export_all_alumni: "Export all alumni"
+        export_alumni_from_to: "Export alumni who registered in a timeframe"
+        export_alumni_choice: "Choose alumni to be exported"
