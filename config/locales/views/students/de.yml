@@ -21,3 +21,7 @@ de:
         add_education: "Weitere Ausbildung hinzufügen"
         remove_work_experience: "Berufserfahrung entfernen"
         remove_education: "Ausbildung entfernen"
+        export_alumni: "Alumni exportieren"
+        export_all_alumni: "Alle Alumni exportieren"
+        export_alumni_from_to: "Alumni aus einem Zeitrahmen exportieren"
+        export_alumni_choice: "Auswahl der zu exportierenden Alumni"

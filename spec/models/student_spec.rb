@@ -99,9 +99,49 @@ describe Student do
       expect(alumni.get_current_enterprises_and_positions).to eq(["SAP AG, HPI", "Ruby on Rails developer, Hiwi"])
     end
 
-    it "should return two empty strings if there are no current positions" do 
+    it "should return two empty strings if there are no current positions" do
       alumni = FactoryGirl.create(:student)
       expect(alumni.get_current_enterprises_and_positions).to eq(["", ""])
+    end
+  end
+
+  describe "export_alumni" do
+    before(:each) do
+      require 'csv'
+
+      @registered = FactoryGirl.create(:student)
+      @registered.user.update_attributes(alumni_email: 'registered.alumni')
+      current_cv_job = FactoryGirl.create(:cv_job, current: true)
+      @registered.cv_jobs = [current_cv_job]
+
+      @pending = FactoryGirl.create(:alumni)
+
+      @registered_a_year_ago = FactoryGirl.create(:student)
+      @registered_a_year_ago.user.update_attributes(alumni_email: 'registered.ayearago', created_at: Date.today - 1.years)
+    end
+
+    it "should export all alumni if options are set accordingly" do
+      csv = CSV.parse(Student.export_alumni(true, nil, nil))
+      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
+      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
+      expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email, @registered_a_year_ago.email, "General Qualification for University Entrance", "", ""])
+      expect(csv[3]).to eq(["The following alumni are not registered, yet", "", "", ""])
+      expect(csv[4]).to eq(["no", @pending.lastname, @pending.firstname, @pending.alumni_email, @pending.email])
+    end
+
+    it "should not include unregistered alumni if option is not set" do
+      csv = CSV.parse(Student.export_alumni(false, nil, nil))
+      csv_array = csv.to_a
+      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
+      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
+      expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email, @registered_a_year_ago.email, "General Qualification for University Entrance", "", ""])
+    end
+
+    it "should not include alumni registered outside of timeframe specified" do
+      csv = CSV.parse(Student.export_alumni(false, Date.today - 6.months, Date.today))
+      csv_array = csv.to_a
+      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
+      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
     end
   end
 end

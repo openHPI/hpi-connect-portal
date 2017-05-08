@@ -125,8 +125,20 @@ class StudentsController < ApplicationController
   end
 
   def export_alumni
+  end
+
+  def send_alumni_csv
     require 'csv'
-    send_data Student.export_alumni, filename: "alumni-#{Date.today}.csv"
+
+    if params[:alumni] == 'from_to'
+      from_date = Date.new(params[:from_date]["year"].to_i,params[:from_date]["month"].to_i,params[:from_date]["day"].to_i)
+
+      to_date = Date.new(params[:to_date]["year"].to_i,params[:to_date]["month"].to_i,params[:to_date]["day"].to_i)
+
+      send_data Student.export_alumni(true, from_date, to_date), filename: "alumni-#{Date.today}.csv", type: "text/csv"
+    else
+      send_data Student.export_alumni(true, nil, nil), filename: "alumni-#{Date.today}.csv", type: "text/csv"
+    end
   end
 
   private

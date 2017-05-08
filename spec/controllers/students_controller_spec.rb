@@ -181,36 +181,23 @@ describe StudentsController do
     end
   end
 
-  describe "GET export_alumni" do
-
-    it "should send a CSV file with all alumni to the admin" do
-      require 'csv'
-      registered = FactoryGirl.create(:student)
-      registered.user.update_attributes(alumni_email: 'registered.alumni')
-      current_cv_job = FactoryGirl.create(:cv_job, current: true)
-      registered.cv_jobs = [current_cv_job]
-      pending = FactoryGirl.create(:alumni)
-
+  describe "POST export_alumni" do
+    it "should send a CSV file to an admin" do
       login FactoryGirl.create(:user, :admin)
-      get :export_alumni
-      csv = CSV.parse(response.body)
-      csv_array = csv.to_a
-      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
-      expect(csv[1]).to eq(["yes", registered.lastname, registered.firstname, registered.alumni_email, registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
-      expect(csv[2]).to eq(["The following alumni are not registered, yet", "", "", ""])
-      expect(csv[3]).to eq(["no", pending.lastname, pending.firstname, pending.alumni_email, pending.email])
+      post :send_alumni_csv
+      expect(response.headers['Content-Type']).to eq "text/csv"
     end
 
     it "should not send a CSV to a student" do
       login FactoryGirl.create(:student).user
-      get :export_alumni
+      post :send_alumni_csv
       expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should not send a CSV to a staff member" do
       login FactoryGirl.create(:staff).user
-      get :export_alumni
+      post :send_alumni_csv
       expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
