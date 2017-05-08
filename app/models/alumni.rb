@@ -24,8 +24,9 @@ class Alumni < ActiveRecord::Base
   scope :alumni_email, -> alumni_email {where("lower(alumni_email) LIKE ?", alumni_email.downcase)}
 
   def self.create_from_row(row)
-    row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize
-    row[:lastname] ||= row[:alumni_email].split('.')[1].capitalize
+    row[:firstname] ||= row[:alumni_email].split('.')[0].capitalize unless row[:alumni_email].nil?
+    row[:lastname] ||= row[:alumni_email].split('.')[1].capitalize unless row[:alumni_email].nil?
+
     alumni = Alumni.new firstname: row[:firstname], lastname: row[:lastname], email: row[:email], alumni_email: row[:alumni_email]
     alumni.generate_unique_token
     if alumni.save
