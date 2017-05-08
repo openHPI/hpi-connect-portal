@@ -27,7 +27,7 @@
                   <%= label_tag t("job_offers.jobs_for") , nil, class: "small" %>
                   <%= select_tag "student_group",
                     options_for_select(
-                    Student::GROUPS.reject{|group| group == 'both'}.each_with_index.collect{|group, index| [t("activerecord.attributes.student.groups." + group), index]}, params.fetch(:student_group, nil)), include_blank: true, class: "form-control" %>
+                    Student::GROUPS.each_with_index.collect{|group, index| [t("activerecord.attributes.student.groups." + group), index]}, params.fetch(:student_group, nil)), include_blank: true, class: "form-control" %>
                 </div>
                 <div class="form-group">
                   <%= label_tag t("activerecord.attributes.job_offer.employer") , nil, class: "small" %>
