@@ -19,4 +19,5 @@ en:
           hpi: "HPI Student"
           dschool: "D-School Student"
           both: "HPI and D-School Student"
+          hpi_grad: "HPI Graduate"
         birthday: "Birth date"

@@ -31,7 +31,7 @@ class Student < ActiveRecord::Base
   GRADUATIONS = ['abitur',  'bachelor', 'master', 'phd']
   EMPLOYMENT_STATUSES = ['jobseeking', 'employed', 'employedseeking', 'nointerest']
   DSCHOOL_STATUSES = ['nothing', 'introduction', 'basictrack', 'advancedtrack']
-  GROUPS = ['hpi', 'dschool', 'both']
+  GROUPS = ['hpi', 'dschool', 'both', 'hpi_grad']
   NEWSLETTER_DELIVERIES_CYCLE = 1.week
 
   attr_accessor :username

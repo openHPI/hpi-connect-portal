@@ -36,6 +36,21 @@
 
           <li class="list-group-item">
             <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= label_field f, :graduation_id, t("activerecord.attributes.user.minimum_degree") %>
+                  </div>
+                  <div class="col-sm-9">
+                    <%= f.select :graduation_id, Student::GRADUATIONS.each_with_index.collect { |grade, index| [t("activerecord.attributes.user.degrees." + grade), index] }, { selected: Student::GRADUATIONS[0] }, { id: 'graduation_id', class: 'select optional form-control' } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="list-group-item">
+            <div class="row">
             <% if current_user.admin? %>
               <div class="col-sm-6">
             <% else %>
@@ -117,18 +132,6 @@
                       {'can_book' => can_book}]
                      }, {}, {id: 'category_id', class: 'select optional form-control', } %>
                 <% end %>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= label_field f, :graduation_id, t("activerecord.attributes.user.minimum_degree") %>
-                </div>
-                <div class="col-sm-8 pull-right">
-                  <%= f.select :graduation_id, Student::GRADUATIONS.each_with_index.collect {|grade, index|
-                  [t("activerecord.attributes.user.degrees." + grade), index]
-                  }, {}, {id: 'graduation_id', class: 'select optional form-control'} %>
                 </div>
               </div>
             </li>
