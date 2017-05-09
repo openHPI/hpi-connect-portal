@@ -3,7 +3,7 @@
 # Table name: job_offers
 #
 #  id                        :integer          not null, primary key
-#  description               :text
+#  description_de            :text
 #  title                     :string(255)
 #  created_at                :datetime
 #  updated_at                :datetime
@@ -26,6 +26,7 @@
 #  offer_as_pdf_file_size    :integer
 #  offer_as_pdf_updated_at   :datetime
 #  student_group_id          :integer          default(0), not null
+#  description_en            :text
 #
 
 class JobOffer < ActiveRecord::Base

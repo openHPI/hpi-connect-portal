@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412211730) do
+ActiveRecord::Schema.define(version: 20170509103334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20160412211730) do
   end
 
   create_table "job_offers", force: true do |t|
-    t.text     "description"
+    t.text     "description_de"
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160412211730) do
     t.integer  "offer_as_pdf_file_size"
     t.datetime "offer_as_pdf_updated_at"
     t.integer  "student_group_id",          default: 0,     null: false
+    t.text     "description_en"
   end
 
   create_table "job_offers_languages", id: false, force: true do |t|
