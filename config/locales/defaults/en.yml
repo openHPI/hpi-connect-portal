@@ -159,6 +159,8 @@ en:
     configuration:
       invalid_email:  "Not a valid email address!"
       invalid_email_or_password: "Your email address and/or Your password are invalid."
+  unauthorized:
+    default: "You are not authorized to access this page."
   helpers:
     select:
       prompt: Please select

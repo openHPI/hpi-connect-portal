@@ -1,4 +1,4 @@
-<%= simple_form_for job_offer do |f| %>
+<%= simple_form_for job_offer, defaults: { error: false } do |f| %>
 
   <%= render 'shared/object_errors', object: job_offer %>
 

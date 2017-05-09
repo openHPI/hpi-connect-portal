@@ -148,6 +148,8 @@ de:
     configuration:
       invalid_email:  "Dies ist keine gültige E-Mail-Adresse!"
       invalid_email_or_password: "Deine E-Mail-Adresse und/oder Dein Passwort sind nicht korrekt."
+  unauthorized:
+    default: "Du bist nicht berechtigt, diese Seite aufzurufen."
   helpers:
     select:
       prompt: Bitte wählen
@@ -236,4 +238,4 @@ de:
     polish: "Polisch"
     russian: "Russisch"
     swedish: "Schwedisch"
-    finnish: "Finnisch"    
+    finnish: "Finnisch"
