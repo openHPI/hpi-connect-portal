@@ -304,6 +304,8 @@ GEM
       railties (>= 3.1.1)
     tinymce-rails-langs (4.20160310)
       tinymce-rails (~> 4.1, >= 4.1.10)
+    traco (3.2.1)
+      activerecord (>= 3.0)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -390,6 +392,7 @@ DEPENDENCIES
   therubyracer (~> 0.12.0)
   tinymce-rails (~> 4.1.5)
   tinymce-rails-langs (~> 4.20140129)
+  traco
   uglifier
   unicorn
   validates_timeliness (~> 3.0)
@@ -402,4 +405,4 @@ RUBY VERSION
    ruby 2.0.0p648
 
 BUNDLED WITH
-   1.13.6
+   1.14.6

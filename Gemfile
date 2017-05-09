@@ -122,6 +122,9 @@ gem 'active_enum', git: 'https://github.com/adzap/active_enum.git'
 gem 'jquery-star-rating-rails'
 gem 'simple_form'
 
+# Translatable ActiveRecord attributes
+gem 'traco'
+
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 4.1.5'
 gem 'tinymce-rails-langs', '~> 4.20140129'
