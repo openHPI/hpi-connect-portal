@@ -53,10 +53,11 @@ class JobOffer < ActiveRecord::Base
 
   validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
 
-
-  validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
+  validates :title, :description, :description_de, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
+
+  translates :description
 
   self.per_page = 15
 
