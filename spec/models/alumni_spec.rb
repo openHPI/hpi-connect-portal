@@ -64,7 +64,7 @@ describe Alumni do
     end
 
     it "creates alumnus when all fields are present" do
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann2", {headers: true, return_headers: false, header_converters: :symbol})
 
       alumnus = Alumni.create_from_row(csv_row)
 
@@ -75,11 +75,11 @@ describe Alumni do
       expect(alumnus.firstname).to eq('Max')
       expect(alumnus.lastname).to eq('Mustermann')
       expect(alumnus.email).to eq('max@mustermann.de')
-      expect(alumnus.alumni_email).to eq('Max.Mustermann')
+      expect(alumnus.alumni_email).to eq('Max.Mustermann2')
     end
 
     it "creates alumnus when full name isn't present, but alumni mail adress is" do
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@muster.de,Max.Muster", {headers: true, return_headers: false, header_converters: :symbol})
 
       alumnus = Alumni.create_from_row(csv_row)
 
@@ -88,14 +88,14 @@ describe Alumni do
       alumnus = Alumni.last
 
       expect(alumnus.firstname).to eq('Max')
-      expect(alumnus.lastname).to eq('Mustermann')
-      expect(alumnus.email).to eq('max@mustermann.de')
-      expect(alumnus.alumni_email).to eq('Max.Mustermann')
+      expect(alumnus.lastname).to eq('Muster')
+      expect(alumnus.email).to eq('max@muster.de')
+      expect(alumnus.alumni_email).to eq('Max.Muster')
     end
 
     it 'sends creation mail upon successful alumnus creation' do
       ActionMailer::Base.deliveries = []
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nErika,Mustermann,erika@mustermann.de,Erika.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
 
       alumnus = Alumni.create_from_row(csv_row)
 
