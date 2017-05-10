@@ -59,10 +59,13 @@ class JobOffer < ActiveRecord::Base
 
   translates :description, fallback: :any
 
-  validates :description_de, presence: true, if: -> { description_en.blank? }
-  validates :description_en, presence: true, if: -> { description_de.blank? }
+  validate :at_least_one_description
 
   self.per_page = 15
+
+  def at_least_one_description
+    errors.add(:description, I18n.t("errors.messages.blank")) if description_de.blank? and description_en.blank?
+  end
 
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
