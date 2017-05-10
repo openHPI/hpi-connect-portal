@@ -57,7 +57,7 @@ class JobOffer < ActiveRecord::Base
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
 
-  translates :description, fallback: [:en]
+  translates :description, fallback: :any
 
   validates :description_de, presence: true, if: -> { description_en.blank? }
   validates :description_en, presence: true, if: -> { description_de.blank? }
