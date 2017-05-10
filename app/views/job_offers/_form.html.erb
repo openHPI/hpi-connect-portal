@@ -78,14 +78,32 @@
 
             </div>
           </li>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-12">
-                <%= label_field f, :description, t("activerecord.attributes.job_offer.description") %>
-                <%= f.input :description, placeholder: t("job_offers.enter_description"), input_html: { class: 'tinymce' } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4><%= label_field f, :description_de, t("activerecord.attributes.job_offer.description") %></h4>
+        </div>
+        <ul class="list-group">
+
+          <% JobOffer.locale_columns(:description).each do |description| %>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm-12">
+                  <%= label_field f, :description, JobOffer.human_attribute_name(description) %>
+                </div>
+                <div class="col-sm-12">
+                  <%= f.input description, placeholder: t("job_offers.enter_description"), input_html: { class: 'tinymce' } %>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          <% end %>
+
         </ul>
       </div>
     </div>

@@ -3,7 +3,7 @@
 # Table name: job_offers
 #
 #  id                        :integer          not null, primary key
-#  description               :text
+#  description_de            :text
 #  title                     :string(255)
 #  created_at                :datetime
 #  updated_at                :datetime
@@ -26,6 +26,7 @@
 #  offer_as_pdf_file_size    :integer
 #  offer_as_pdf_updated_at   :datetime
 #  student_group_id          :integer          default(0), not null
+#  description_en            :text
 #
 
 class JobOffer < ActiveRecord::Base
@@ -52,10 +53,14 @@ class JobOffer < ActiveRecord::Base
 
   validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
 
-
-  validates :title, :description, :employer, :category, :state, :graduation_id, :start_date, presence: true
+  validates :title, :employer, :category, :state, :graduation_id, :start_date, presence: true
   validates :compensation, :time_effort, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates_datetime :end_date, on_or_after: :start_date, allow_blank: :end_date
+
+  translates :description, fallback: [:en]
+
+  validates :description_de, presence: true, if: -> { description_en.blank? }
+  validates :description_en, presence: true, if: -> { description_de.blank? }
 
   self.per_page = 15
 

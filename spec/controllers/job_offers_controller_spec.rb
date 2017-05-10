@@ -39,11 +39,11 @@ describe JobOffersController do
   let(:employer) { FactoryGirl.create(:employer) }
   let(:staff) { FactoryGirl.create(:staff, employer: employer) }
   let(:closed) {FactoryGirl.create(:job_status, :closed)}
-  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
-  let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+  let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => closed}}
-  let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+  let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
 
   let(:valid_session) { {} }
@@ -562,8 +562,8 @@ describe JobOffersController do
 
     describe "with valid params" do
       it "updates the requested job_offer" do
-        expect_any_instance_of(JobOffer).to receive(:update).with({ "description" => "MyString" })
-        put :update, {id: @job_offer.to_param, job_offer: { "description" => "MyString" }}, valid_session
+        expect_any_instance_of(JobOffer).to receive(:update).with({ "description_en" => "MyString" })
+        put :update, {id: @job_offer.to_param, job_offer: { "description_en" => "MyString" }}, valid_session
       end
 
       it "redirects to the job_offer page if the job is already running" do

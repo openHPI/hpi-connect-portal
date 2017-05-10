@@ -33,7 +33,7 @@ describe "the job offer flow" do
     expect(current_path).to eq(new_job_offer_path)
 
     fill_in "job_offer_title", with: "HPI-Career-Portal"
-    fill_in "job_offer_description", with: "A new carrer portal for HPI students should be developed and deployed."
+    fill_in "job_offer_description_en", with: "A new carrer portal for HPI students should be developed and deployed."
     fill_in "job_offer_end_date", with: (Date.current + 2).to_s
     fill_in "job_offer_time_effort", with: "12"
     fill_in "job_offer_compensation", with: "11"
