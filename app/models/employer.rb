@@ -4,7 +4,7 @@
 #
 #  id                    :integer          not null, primary key
 #  name                  :string(255)
-#  description           :text
+#  description_de        :text
 #  created_at            :datetime
 #  updated_at            :datetime
 #  avatar_file_name      :string(255)
@@ -21,6 +21,7 @@
 #  booked_package_id     :integer          default(0), not null
 #  single_jobs_requested :integer          default(0), not null
 #  token                 :string(255)
+#  description_en        :text
 #
 
 class Employer < ActiveRecord::Base
@@ -53,6 +54,8 @@ class Employer < ActiveRecord::Base
   scope :active, -> { where(activated: true) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
   scope :order_by_name, -> { order('LOWER(name)') }
+
+  translates :description, fallback: :any
 
   def generate_unique_token
     code = SecureRandom.urlsafe_base64
