@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509103334) do
+ActiveRecord::Schema.define(version: 20170511092527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170509103334) do
 
   create_table "employers", force: true do |t|
     t.string   "name"
-    t.text     "description"
+    t.text     "description_de"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20170509103334) do
     t.integer  "booked_package_id",     default: 0,     null: false
     t.integer  "single_jobs_requested", default: 0,     null: false
     t.string   "token"
+    t.text     "description_en"
   end
 
   add_index "employers", ["name"], name: "index_employers_on_name", unique: true, using: :btree
