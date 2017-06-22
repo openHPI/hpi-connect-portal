@@ -20,10 +20,6 @@
         <% if can? :edit, @student %>
           <%= link_to t("links.edit"), edit_student_path(@student.id), class: "btn btn-default title-button" %>
         <% end %>
-        <% if current_user.admin? %>
-         <% user = User.find_by(manifestation_id: @student.id, manifestation_type: 'Student') %>
-         <%= link_to t("students.edit_user"), edit_user_path(user.id), class: "btn btn-default title-button" %>
-        <% end %>
         <% if current_user.admin? && !@student.activated %>
           <%= link_to t("links.activate"), activate_student_path(@student.id), class: "btn btn-default title-button" %>
         <% end %>

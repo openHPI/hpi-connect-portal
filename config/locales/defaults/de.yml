@@ -140,6 +140,7 @@ de:
       too_long: ist zu lang (mehr als %{count} Zeichen)
       too_short: ist zu kurz (weniger als %{count} Zeichen)
       wrong_length: hat die falsche Länge (muss genau %{count} Zeichen haben)
+      non_hpi_mail: 'darf keine HPI-E-Mail-Adresse sein'
     template:
       body: ! 'Bitte überprüfen Sie die folgenden Felder:'
       header:

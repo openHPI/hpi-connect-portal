@@ -37,6 +37,18 @@
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
+                <%= label_field form, :email, t("activerecord.attributes.user.email") %><%= mark_if_required(student.user, :email) %>
+              </div>
+              <div class="col-sm-9">
+                <%= form.simple_fields_for :user, student.user do |user_form| %>
+                  <%= user_form.input :email %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-3">
                 <%= form.label :photo, class: "control-label" %><%= mark_if_required(student.user, :photo) %>
               </div>
               <div class="col-sm-9">

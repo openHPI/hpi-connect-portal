@@ -48,7 +48,7 @@ class User < ActiveRecord::Base
   after_destroy :clean_manifestation
 
   def non_hpi_email_on_alumni
-    errors.add(:email, 'please choose a non-HPI-Email.') if alumni? && Alumni.email_invalid?(email)
+    errors.add(:email, I18n.t("errors.messages.non_hpi_mail")) if alumni? && Alumni.email_invalid?(email)
   end
 
   def non_duplicate_hpi_email

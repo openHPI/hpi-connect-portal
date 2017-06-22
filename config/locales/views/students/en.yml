@@ -5,7 +5,6 @@ en:
         students_headline: "Student list"
         new_student: "Create new student"
         edit_student: "Edit student"
-        edit_user: "Edit user"
         carrier: "Carrier"
         visibility: "Visibility"
         name: "Name"
