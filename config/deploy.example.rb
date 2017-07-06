@@ -17,7 +17,7 @@ set :keep_releases, 5
 set :linked_files, %w{config/database.yml}
 
 # dirs we want symlinking to shared
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # config files that should be copied by deploy:setup_config
 set(:config_files, %w(
