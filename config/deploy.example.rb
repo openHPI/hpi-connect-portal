@@ -8,7 +8,6 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 # repository variables
-set :scm, "git"
 set :repo_url, "git@github.com:hpi-swt2/hpi-hiwi-portal.git"
 
 # deployment variables
