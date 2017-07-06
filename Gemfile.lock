@@ -324,7 +324,7 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    validates_timeliness (3.0.15)
+    validates_timeliness (4.0.2)
       timeliness (~> 0.3.7)
     websocket (1.2.3)
     whenever (0.9.7)
@@ -400,7 +400,7 @@ DEPENDENCIES
   traco
   uglifier
   unicorn
-  validates_timeliness (~> 3.0)
+  validates_timeliness (~> 4.0)
   whenever
   will_paginate (~> 3.0)
   will_paginate-bootstrap

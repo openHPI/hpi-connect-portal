@@ -7,3 +7,4 @@ before_script:
 - psql -c 'create database hpi_hiwi_portal_test;' -U postgres
 git:
   submodules: false
+cache: bundler
