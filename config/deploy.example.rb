@@ -31,6 +31,11 @@ set(:executable_config_files, %w(
   unicorn_init.sh
 ))
 
+# environment variables
+set :default_env, {
+    'SECRET_KEY_BASE' => ''
+}
+
 namespace :deploy do
 
   # make sure we're deploying what we think we're deploying
