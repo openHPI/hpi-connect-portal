@@ -147,7 +147,7 @@ class Student < ActiveRecord::Base
       student.newsletter_orders.each do |newsletter_order|
         matching_jobs = apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
         if matching_jobs.any?
-          StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver
+          StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver_now
         end
       end
     end

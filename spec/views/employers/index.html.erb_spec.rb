@@ -41,8 +41,8 @@ describe "employers/index" do
 
     assert_select ".carousel img", count: 2
 
-    assert_select ".carousel img[src=/some/url/premium_empl_image]", count: 1
-    assert_select ".carousel img[src=/another/url/premium_empl_image]", count: 1
+    assert_select ".carousel img[src='/some/url/premium_empl_image']", count: 1
+    assert_select ".carousel img[src='/another/url/premium_empl_image']", count: 1
   end
 
 end

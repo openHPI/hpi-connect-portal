@@ -17,7 +17,7 @@ describe UsersMailer do
 
   describe "student forgot password" do
     before(:each) do
-      @email = UsersMailer.new_password_mail('123ABCdef-_', @user).deliver
+      @email = UsersMailer.new_password_mail('123ABCdef-_', @user).deliver_now
     end
 
     it "should send one email to student" do

@@ -75,9 +75,9 @@ class JobOffer < ActiveRecord::Base
     end
 
     if job_offer.save && !job_offer.employer.can_create_job_offer?(job_offer.category)
-      JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver
+      JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver_now
     elsif job_offer.save && job_offer.employer.can_create_job_offer?(job_offer.category)
-      JobOffersMailer.new_job_offer_email(job_offer).deliver
+      JobOffersMailer.new_job_offer_email(job_offer).deliver_now
     elsif parameters[:flexible_start_date]
       job_offer.flexible_start_date = true
     end
@@ -95,10 +95,10 @@ class JobOffer < ActiveRecord::Base
   def self.check_for_expired
     active.each do |offer|
       if offer.expiration_date == Date.today + 2.days
-        JobOffersMailer.job_will_expire_email(offer).deliver
+        JobOffersMailer.job_will_expire_email(offer).deliver_now
       elsif offer.expiration_date <= Date.today
         offer.update_column :status_id, JobStatus.closed.id
-        JobOffersMailer.job_expired_email(offer).deliver
+        JobOffersMailer.job_expired_email(offer).deliver_now
       end
     end
   end
@@ -155,7 +155,7 @@ class JobOffer < ActiveRecord::Base
     update_column :prolonged, true
     update_column :prolong_requested, false
     update_column :status_id, JobStatus.active.id
-    JobOffersMailer.job_prolonged_email(self).deliver
+    JobOffersMailer.job_prolonged_email(self).deliver_now
   end
 
   def expiration_date

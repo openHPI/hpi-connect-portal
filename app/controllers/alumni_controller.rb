@@ -69,7 +69,7 @@ class AlumniController < ApplicationController
         if alumni.nil?
           errors << "Could not find Alumni " + '(' + count.to_s + ')' unless alumni == :created
         else
-          AlumniMailer.creation_email(alumni).deliver
+          AlumniMailer.creation_email(alumni).deliver_now
         end
       end
       if errors.any?
@@ -119,7 +119,7 @@ class AlumniController < ApplicationController
     if @user.save
       @alumni.link @user
       sign_in @user
-      StudentsMailer.new_student_email(@user.manifestation).deliver
+      StudentsMailer.new_student_email(@user.manifestation).deliver_now
       respond_and_redirect_to [:edit, @user.manifestation], I18n.t('users.messages.successfully_created')
     else
       student.destroy

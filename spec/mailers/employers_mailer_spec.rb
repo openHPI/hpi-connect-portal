@@ -16,7 +16,7 @@ describe EmployersMailer do
   describe "new employer" do
 
     before(:each) do
-      @email = EmployersMailer.new_employer_email(@employer).deliver
+      @email = EmployersMailer.new_employer_email(@employer).deliver_now
     end
 
     it "should include the link to the employer" do
@@ -37,13 +37,13 @@ describe EmployersMailer do
   end
 
   describe "registration confirmation" do
-
     before(:each) do
-      @email = EmployersMailer.registration_confirmation(@employer)
+      @email = EmployersMailer.registration_confirmation(@employer, @employer.staff_members[0]).deliver_now
     end
 
-    it "should send email to both staff_members" do
-      expect(ActionMailer::Base.deliveries.count).to eq(@employer.staff_members.size)
+    it "should send email to staff member" do
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(@email.to).to eq([@employer.staff_members[0].email])
     end
 
     it "should contain the subject" do

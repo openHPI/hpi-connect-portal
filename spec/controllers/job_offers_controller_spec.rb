@@ -289,6 +289,12 @@ describe JobOffersController do
       expect(response).to redirect_to(job_offers_path)
     end
 
+    it "should send an email to all staff members" do
+      login admin
+      get :accept, { id: @job_offer.id }
+      expect(ActionMailer::Base.deliveries.count).to eq(@job_offer.employer.staff_members.length)
+    end
+
     it "accepts job offers" do
       login admin
       get :accept, {id: @job_offer.id}

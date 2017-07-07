@@ -12,8 +12,8 @@ HpiHiwiPortal::Application.configure do
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
 
-  # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_assets  = true
+  # Configure static file server for tests with Cache-Control for performance.
+  config.serve_static_files  = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching.
@@ -43,4 +43,8 @@ HpiHiwiPortal::Application.configure do
 
   # Default locale for tests
   config.i18n.default_locale = :en
+  config.action_controller.default_url_options = { locale: I18n.default_locale }
+
+  # Randomize the order test cases are executed.
+  config.active_support.test_order = :random
 end

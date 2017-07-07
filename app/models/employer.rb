@@ -118,7 +118,7 @@ class Employer < ActiveRecord::Base
   end
 
   def invite_colleague(colleague_mail, name, sender)
-    EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver
+    EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver_now
   end
 
   def self.export_all

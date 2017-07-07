@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
     new_password = ""
     (0..10).each { new_password += char_pool[rand(char_pool.length-1)]}
     self.update password: new_password, password_confirmation: new_password
-    UsersMailer.new_password_mail(new_password, self).deliver
+    UsersMailer.new_password_mail(new_password, self).deliver_now
   end
 
   # Attemps to match alumnus with a user account by alumni mail address

@@ -128,7 +128,7 @@ describe UsersController do
       post :forgot_password, params
       expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eq(I18n.t('users.messages.password_resetted'))
-      expect(User.find(@user).password).not_to eq(old_password)
+      expect(User.find(@user.id).password).not_to eq(old_password)
 
       # sends an email with the new password to the user
       # because travis is so slow we have to assume that there are more than 1 email
@@ -137,9 +137,9 @@ describe UsersController do
           password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
         }
       expect(password_mail_index).not_to eq(nil)
-      expect(ActionMailer::Base.deliveries[password_mail_index]).to have_content(User.find(@user).password)
+      expect(ActionMailer::Base.deliveries[password_mail_index]).to have_content(User.find(@user.id).password)
       expect(ActionMailer::Base.deliveries[password_mail_index].to.count).to eq(1)
-      expect(ActionMailer::Base.deliveries[password_mail_index].to[0]).to eq(User.find(@user).email)
+      expect(ActionMailer::Base.deliveries[password_mail_index].to[0]).to eq(User.find(@user.id).email)
     end
 
     it "ignores cases" do

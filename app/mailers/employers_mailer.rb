@@ -28,11 +28,9 @@ class EmployersMailer < ActionMailer::Base
     mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.confirm_booking.subject")
   end
 
-  def registration_confirmation(employer)
+  def registration_confirmation(employer, staff)
     @employer = employer
-    employer.staff_members.each do |staff|
-      @staff = staff
-      mail(to: staff.email, subject: t("employers_mailer.registration_confirmation.subject")).deliver
-    end
+    @staff = staff
+    mail(to: staff.email, subject: t("employers_mailer.registration_confirmation.subject"))
   end
 end

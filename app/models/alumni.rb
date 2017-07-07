@@ -31,7 +31,7 @@ class Alumni < ActiveRecord::Base
     alumni.generate_unique_token
     if alumni.save
       begin
-        AlumniMailer.creation_email(alumni).deliver
+        AlumniMailer.creation_email(alumni).deliver_now
         return :created
       rescue => e
         alumni.delete
@@ -62,6 +62,6 @@ class Alumni < ActiveRecord::Base
   end
 
   def send_reminder
-    AlumniMailer.reminder_email(self).deliver
+    AlumniMailer.reminder_email(self).deliver_now
   end
 end

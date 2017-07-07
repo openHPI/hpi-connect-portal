@@ -78,7 +78,7 @@ class StudentsController < ApplicationController
       sign_in @student.user
       flash[:success] = I18n.t('users.messages.successfully_created')
       redirect_to [:edit, @student]
-      StudentsMailer.new_student_email(@student).deliver
+      StudentsMailer.new_student_email(@student).deliver_now
     else
       render 'new'
     end

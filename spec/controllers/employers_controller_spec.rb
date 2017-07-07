@@ -133,7 +133,7 @@ describe EmployersController do
         expect(response).to redirect_to(home_employers_path)
       end
 
-      it "sends 2 emails" do
+      it "sends 2 emails (one to admins and one to staff members)" do
         old_count = ActionMailer::Base.deliveries.count
         post :create, { employer: valid_attributes }
         expect(ActionMailer::Base.deliveries.count).to eq(old_count + 2)

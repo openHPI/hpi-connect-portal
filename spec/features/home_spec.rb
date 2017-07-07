@@ -51,6 +51,6 @@ describe "the home page" do
     fill_in 'forgot_password_email', with: '"new_password_email@test.de'
     click_on I18n.t("users.request_password")
     expect(current_path).to eq(root_path)
-    expect(User.find(user).password).not_to eq(old_password)
+    expect(User.find(user.id).password).not_to eq(old_password)
   end
 end

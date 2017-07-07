@@ -125,7 +125,7 @@ class JobOffersController < ApplicationController
   def request_prolong
     @job_offer.update_column :prolong_requested, true
     message = I18n.t('job_offers.messages.successfully_prolong_requested')
-    JobOffersMailer.prolong_requested_email(@job_offer).deliver
+    JobOffersMailer.prolong_requested_email(@job_offer).deliver_now
     respond_and_redirect_to @job_offer, message
   end
 
@@ -142,7 +142,7 @@ class JobOffersController < ApplicationController
 
   def close
     if @job_offer.update status: JobStatus.closed
-      JobOffersMailer.job_closed_email(@job_offer).deliver
+      JobOffersMailer.job_closed_email(@job_offer).deliver_now
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_completed')
     else
       render_errors_and_action @job_offer, 'edit'
@@ -151,10 +151,15 @@ class JobOffersController < ApplicationController
 
   def accept
     if @job_offer.update status: JobStatus.active, release_date: Date.current
-      JobOffersMailer.admin_accepted_job_offer_email(@job_offer)
+
+      @job_offer.employer.staff_members.each do |staff|
+        JobOffersMailer.admin_accepted_job_offer_email(@job_offer, staff).deliver_now
+      end
+
       if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
         @job_offer.employer.remove_one_single_booked_job
       end
+
       redirect_to @job_offer, notice: I18n.t('job_offers.messages.successfully_opened')
     else
       render_errors_and_action @job_offer
@@ -163,10 +168,14 @@ class JobOffersController < ApplicationController
 
   def decline
     if @job_offer.destroy
-      JobOffersMailer.admin_declined_job_offer_email(@job_offer)
+      @job_offer.employer.staff_members.each do |staff|
+        JobOffersMailer.admin_declined_job_offer_email(@job_offer, staff).deliver_now
+      end
+
       if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
         @job_offer.employer.remove_one_single_booked_job
       end
+      
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer

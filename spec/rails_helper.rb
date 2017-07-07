@@ -70,4 +70,8 @@ RSpec.configure do |config|
     FactoryGirl.create(:job_status, :active) unless JobStatus.active
     FactoryGirl.create(:job_status, :closed) unless JobStatus.closed
   end
+
+  config.before(:each, type: :feature) do
+    default_url_options[:locale] = I18n.default_locale
+  end
 end

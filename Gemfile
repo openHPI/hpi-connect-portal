@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.2.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.17.1'
@@ -53,9 +53,10 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
-  gem 'rails3_serve_static_assets', git: 'https://github.com/heroku/rails3_serve_static_assets.git'
   gem 'byebug'
 end
+
+gem 'web-console', '~> 2.0', group: :development
 
 gem 'simplecov', group: :test, require: nil
 

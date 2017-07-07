@@ -20,7 +20,7 @@ describe JobOffersMailer do
 
   describe "new job offer" do
     before(:each) do
-      @email = JobOffersMailer.new_job_offer_email(@job_offer).deliver
+      @email = JobOffersMailer.new_job_offer_email(@job_offer).deliver_now
     end
 
     it "should include the link to the job offer" do
@@ -46,7 +46,7 @@ describe JobOffersMailer do
 
   describe "job offer prolonged" do
     before(:each) do
-      @email = JobOffersMailer.job_prolonged_email(@job_offer).deliver
+      @email = JobOffersMailer.job_prolonged_email(@job_offer).deliver_now
     end
 
     it "should send an email" do
@@ -64,14 +64,11 @@ describe JobOffersMailer do
 
   describe "admin accepted application" do
     before(:each) do
-      @email = JobOffersMailer.admin_accepted_job_offer_email(@job_offer.reload).deliver
+      @email = JobOffersMailer.admin_accepted_job_offer_email(@job_offer.reload, @job_offer.employer.staff_members[0]).deliver_now
     end
 
-    it "should send an email to both staffs" do
-      expect(ActionMailer::Base.deliveries.count).to eq(2)
-    end
-
-    it "should have be send to the responsible WiMi" do
+    it "should send an email to staff member" do
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(@email.to).to eq([@job_offer.employer.staff_members[0].email])
     end
 
@@ -83,26 +80,22 @@ describe JobOffersMailer do
 
   describe "admin declined application" do
     before(:each) do
-      @email = JobOffersMailer.admin_declined_job_offer_email(@job_offer.reload).deliver
+      @email = JobOffersMailer.admin_declined_job_offer_email(@job_offer.reload, @job_offer.employer.staff_members[0]).deliver_now
     end
 
-    it "should send an email to both staffs" do
-      expect(ActionMailer::Base.deliveries.count).to eq(2)
-    end
-
-    it "should have be send to the responsible WiMi" do
+    it "should send an email to staff" do
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(@email.to).to eq([@job_offer.employer.staff_members[0].email])
     end
 
     it "should be send from 'noreply-connect@hpi.de'" do
       expect(@email.from).to eq(['noreply-connect@hpi.de'])
     end
-
   end
 
   describe "responsible user closed job" do
     before(:each) do
-      @email = JobOffersMailer.job_closed_email(@job_offer).deliver
+      @email = JobOffersMailer.job_closed_email(@job_offer).deliver_now
     end
 
     it "should send an email" do
@@ -120,7 +113,7 @@ describe JobOffersMailer do
 
   describe "will expire" do
     before(:each) do
-      @email = JobOffersMailer.job_will_expire_email(@job_offer).deliver
+      @email = JobOffersMailer.job_will_expire_email(@job_offer).deliver_now
     end
 
     it "should send an email" do

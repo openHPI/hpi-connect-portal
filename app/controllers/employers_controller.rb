@@ -63,8 +63,11 @@ class EmployersController < ApplicationController
     if @employer.save
       sign_in @employer.staff_members.first.user if @employer.staff_members.any?
       respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
-      EmployersMailer.new_employer_email(@employer).deliver
-      EmployersMailer.registration_confirmation(@employer)
+      EmployersMailer.new_employer_email(@employer).deliver_now
+
+      @employer.staff_members.each do |staff|
+        EmployersMailer.registration_confirmation(@employer, staff).deliver_now
+      end
     else
       render_errors_and_action @employer, 'new'
     end
@@ -79,8 +82,8 @@ class EmployersController < ApplicationController
     old_requested_package = @employer.requested_package_id
     if @employer.update employer_params
       if @employer.requested_package_id != old_requested_package
-        EmployersMailer.book_package_email(@employer).deliver
-        EmployersMailer.requested_package_confirmation_email(@employer).deliver
+        EmployersMailer.book_package_email(@employer).deliver_now
+        EmployersMailer.requested_package_confirmation_email(@employer).deliver_now
       end
       respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_updated.')
     else
@@ -104,7 +107,7 @@ class EmployersController < ApplicationController
     old_booked_package_id = @employer.booked_package_id
     @employer.update_column :activated, true
     @employer.update_column :booked_package_id, @employer.requested_package_id
-    EmployersMailer.booked_package_confirmation_email(@employer).deliver if old_booked_package_id != @employer.booked_package_id
+    EmployersMailer.booked_package_confirmation_email(@employer).deliver_now if old_booked_package_id != @employer.booked_package_id
     respond_and_redirect_to @employer, I18n.t('employers.messages.successfully_activated')
   end
 

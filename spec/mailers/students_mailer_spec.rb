@@ -14,7 +14,7 @@ describe StudentsMailer do
   describe "new student" do
 
     before(:each) do
-      @email = StudentsMailer.new_student_email(@student).deliver
+      @email = StudentsMailer.new_student_email(@student).deliver_now
     end
 
     it "should include the link to the student" do
@@ -41,7 +41,7 @@ describe StudentsMailer do
         FactoryGirl.create(:job_offer, description: "<p> Description </p>")
       end
       @newsletter_order = FactoryGirl.create(:newsletter_order, student: @student)
-      @email = StudentsMailer.newsletter(@student, JobOffer.all, @newsletter_order).deliver
+      @email = StudentsMailer.newsletter(@student, JobOffer.all, @newsletter_order).deliver_now
     end
 
     it "should send an email" do
