@@ -19,6 +19,3 @@ Dir.glob('lib/capistrano/**/*.rb').each { |r| import r }
 # Use git as SCM
 require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
-
-# Use dotenv for managing environment variables
-require 'dotenv'
