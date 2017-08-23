@@ -93,6 +93,6 @@ HpiHiwiPortal::Application.configure do
   #   enable_starttls_auto: true }
 
   # Mount this application to a unique subdirectory
-  #config.relative_url_root = '/connect/jobportal'
-  #config.assets.prefix = '/connect/jobportal/assets'
+  config.relative_url_root = '/connect/jobportal'
+  config.assets.prefix = '/connect/jobportal/assets'
 end
