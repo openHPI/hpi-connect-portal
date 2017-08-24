@@ -95,4 +95,9 @@ HpiHiwiPortal::Application.configure do
   # Mount this application to a unique subdirectory
   config.relative_url_root = '/connect/jobportal'
   config.assets.prefix = '/connect/jobportal/assets'
+
+  # Workaround to fix prefix doubling
+  # See https://github.com/rails/rails/issues/21459#issuecomment-137190532
+  routes.default_url_options ||= {}
+  routes.default_url_options[:script_name]= ''
 end
