@@ -38,7 +38,9 @@
             <li class="list-group-item">
               <div class="row">
                 <div class="col-sm-12">
-                  <%= sanitized_html(@employer.description) %>
+                  <% unless @employer.description.nil? %>
+                    <%= sanitized_html(@employer.description) %>
+                  <% end %>
                 </div>
               </div>
             </li>
