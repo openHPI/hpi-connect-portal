@@ -1,6 +1,9 @@
 Airbrake.configure do |config|
-  config.api_key = '2ebc745c6db0704bc856ce1f8f3abb65'
-  config.host    = 'swt2-2015-errbit.herokuapp.com'
-  config.port    = 80
-  config.secure  = config.port == 443
+  config.host = 'https://hpi-connect-errbit.herokuapp.com'
+  config.project_id = 1 # required, but any positive integer works
+  config.project_key = '8fbd8602b54c6c26bf714bfb7b810c37'
+
+  # Uncomment for Rails apps
+  config.environment = Rails.env
+  config.ignore_environments = %w(development test)
 end
