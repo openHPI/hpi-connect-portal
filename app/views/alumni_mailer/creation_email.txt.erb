@@ -1,41 +1,40 @@
 Hallo <%= @alumni.firstname %> <%= @alumni.lastname %>,
 
-Herzlichen Glückwunsch zu Ihrem Abschluss am HPI!
+herzlichen Glückwunsch zu Ihrem Abschluss am Hasso-Plattner-Institut!
 
-Den Alumni-Service des Hasso-Plattner-Instituts finden Sie ab jetzt auf dem Karriereportal <%= link_to 'HPI Connect', root_url %>. Neben speziellen Angeboten für Alumni können Sie über die Plattform Jobs finden und Kontakt zu interessanten Arbeitgebern aufnehmen.
+Den Alumni-Service des Hasso-Plattner-Instituts finden Sie auf dem Karriereportal <%= link_to 'HPI Connect', root_url %>. Registrieren Sie sich im HPI Connect Portal, um auch zukünftig mit dem HPI in Kontakt zu bleiben. 
 
-Damit Sie auch weiterhin mit dem HPI und Ihren Kommilitonen in Kontakt bleiben können, folgen Sie bitte dem unten angegebenen Link. Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet.
+Das HPI Alumni Office lädt Sie regelmäßig zu Veranstaltungen für Absolventen des Instituts, wie z.B. dem Alumni Stammtisch, und weiteren interessanten Veranstaltungen und Konferenzen am Hasso-Plattner-Institut ein. Wir informieren Sie außerdem über aktuelle Neuigkeiten am HPI.
+
+Neben speziellen Angeboten für Alumni können Sie über das HPI Connect Portal Jobs finden und Kontakt zu interessanten Arbeitgebern aufnehmen.
+
+Mit Ihrem Account erhalten Sie auch Ihre lebenslange E-Mail-Adresse vom HPI <%= @alumni.alumni_email %>@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.
+
+Um die Alumni-E-Mail-Adresse zu erhalten und auch weiterhin mit dem HPI und Ihren Kommilitonen in Kontakt zu bleiben, folgen Sie bitte dem unten angegebenen Link. Nach Eingabe Ihres Namens und Ihrer E-Mail-Adresse wird Ihr neuer Account auf HPI Connect automatisch freigeschaltet.
 
 Wichtig:
-
-Falls Sie bereits auf HPI Connect registriert sind, geben Sie für Ihr Login als Alumna/Alumnus bitte eine private E-Mail-Adresse (nicht Ihre HPI-E-Mail-Adresse) ein. Die Daten Ihres bisherigen Nutzerprofils bleiben im Alumni-Profil erhalten.
+Falls Sie bereits auf HPI Connect registriert sind, geben Sie für Ihren Login als Alumna/Alumnus bitte eine private E-Mail-Adresse (nicht Ihre HPI-E-Mail-Adresse) ein. Die Daten Ihres bisherigen Nutzerprofils bleiben im Alumni-Profil erhalten.
 Wenn Sie bisher noch nicht auf HPI Connect registriert waren, geben Sie bei Anmeldung bitte ebenfalls eine private E-Mail-Adresse ein.
 
-Grund:
+Hier geht's zur Registrierung:
 
-Mit Ihrem Account erhalten Sie eine lebenslange E-Mail-Adresse vom HPI <%= @alumni.alumni_email %>@hpi-alumni.de. E-Mails an diese Adresse werden an die von Ihnen angegebene private E-Mail-Adresse weitergeleitet.
+<%= link_to 'HPI-Alumni-Mail-Adresse freischalten!', alumni_email_url(token: @alumni.token) %>
 
 Ihre Daten im Profil:
 
 Nach Aktivierung Ihres Accounts können Sie zum jeweiligen Zeitpunkt wählen, für wen Ihre Daten sichtbar sein sollen: Sie können diese Ihren Kommilitonen oder auch interessierten Unternehmen veröffentlichen. Sie können diese auch gänzlich auf nicht sichtbar schalten.
-
-Hier geht‘s zur Registrierung:
-
-<%= link_to 'HPI-Alumni-Mail-Adresse freischalten!', alumni_email_url(token: @alumni.token) %>
 
 Viele Grüße und bis bald,
 
 Ihr HPI Alumni-Office
 
 Sandra Willoh
-Hasso-Plattner-Institut für Softwaresystemtechnik GmbH, Potsdam
+Referentin Relationship Management
+Team HPI Connect connect@hpi.de 
+www.hpi.de/connect 
+Hasso-Plattner-Institut für Digital Engineering gGmbH 
 Prof.-Dr.-Helmert-Str. 2-3
 D-14482 Potsdam
-Fon (49) 0331 5509 107
-Fax (49) 0331 5509 554
+Fon +49 (0)331 5509 107
+Fax +49 (0)331 5509 554
 www.hpi.de
-
-Amtsgericht Potsdam, HRB 12184
-Geschäftsführung: Prof. Dr. Christoph Meinel
-
-Design IT. Create Knowledge.
