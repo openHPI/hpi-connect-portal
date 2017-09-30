@@ -84,6 +84,7 @@ class AlumniController < ApplicationController
   def register
     @alumni = Alumni.find_by_token! params[:token]
     @user = User.new
+    @new_user_email = (Alumni.email_invalid? @alumni.email) ? "" : @alumni.email
   end
 
   def link

@@ -7,3 +7,5 @@ en:
     already_registered: 'You already have an account.'
     update_alumni_data: 'Update alumni data'
     alumni_data_file: 'File with alumni data (CSV)'
+    non_hpi_mail: 'Please choose a non-HPI mail address.'
+    hpi_mail_hint: 'HPI mail addresses can be changed after login.'

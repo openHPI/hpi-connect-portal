@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-9">
               <div class="input select optional email">
-                <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" } %>
+                <%= f.input :email, id: "email", placeholder: "Email", input_html: { class: "login-input" }, hint: t("alumni.hpi_mail_hint") %>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="col-sm-9">
               <div class="input select optional user_email">
-                <%= f.input :email, input_html: { value: @alumni.email } %>
+                <%= f.input :email, input_html: { value: @new_user_email }, placeholder: t("alumni.non_hpi_mail") %>
               </div>
             </div>
           </div>

@@ -65,7 +65,7 @@ textarea.form-control {
 table.panel-table tbody {
     border-bottom: none;
 }
-body.accent3 table.table.panel-table tbody > tr > td, 
+body.accent3 table.table.panel-table tbody > tr > td,
 body.accent3 table.table.panel-table thead > tr > th {
     border-top-color: #dddddd;
     border-bottom-color: #dddddd;
@@ -96,6 +96,10 @@ a:hover, a:focus, .btn-default:hover  {
     overflow: hidden;
     background-size: cover;
     margin-bottom: 0px;
+}
+
+.hint {
+  font-size: 12px;
 }
 
 /* Set the image to fill its parent and make transparent */

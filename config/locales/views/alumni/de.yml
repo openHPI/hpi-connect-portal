@@ -7,3 +7,5 @@ de:
     already_registered: 'Sie haben bereits einen Account.'
     update_alumni_data: 'Alumni-Daten aktualisieren'
     alumni_data_file: 'Alumni-Datei (CSV)'
+    non_hpi_mail: 'Bitte keine HPI-E-Mail-Adresse angeben.'
+    hpi_mail_hint: 'HPI-E-Mail-Adressen können nach dem Login geändert werden.'
