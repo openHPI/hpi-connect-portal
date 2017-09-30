@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     rescue_from_exception exception
   end
 
+  rescue_from ActiveRecord::RecordNotFound do
+    flash[:error] = I18n.t("errors.not_found")
+    redirect_to root_path
+  end
+
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
     { locale: I18n.locale }.merge(options)
