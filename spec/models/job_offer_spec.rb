@@ -143,9 +143,9 @@ describe JobOffer do
 
   it "returns job offers filtered between start_date and end_date" do
 
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8, employer: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 6, end_date: Date.current + 8, employer: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 8, employer: @epic)
+    FactoryGirl.create(:job_offer, start_date: Date.current + 5, end_date: Date.current + 8, employer: @epic)
 
     filtered_job_offers = JobOffer.filter_start_date((Date.current + 3).strftime("%Y%m%d")).filter_end_date((Date.current + 9).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
