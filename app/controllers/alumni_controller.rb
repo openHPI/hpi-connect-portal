@@ -34,16 +34,25 @@ class AlumniController < ApplicationController
   def create_from_csv
     require 'csv'
     if params[:alumni_file].present?
-      count, errors = 0, []
+      count, errors = 0, Hash.new { |h, k| h[k] = Array.new }
       CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol) do |row|
         count += 1
         alumni = Alumni.create_from_row row
-        errors << alumni.errors.full_messages.first + '(' + count.to_s + ')' unless alumni == :created
+        unless alumni == :created
+          alumni.errors.full_messages.each do |error_message|
+            errors[error_message] << count
+          end
+        end
       end
-      if errors.any?
-        notice = { error: 'The following lines (starting from 1) contain errors: ' + errors.join(', ')}
-      else
+
+      if errors.empty?
         notice = 'Alumni erfolgreich importiert!'
+      else
+        error_notice = ""
+        errors.each do |error_message, lines|
+          error_notice << "<br/>" + error_message + ": " + lines.map(&:to_s).join(', ')
+        end
+        notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf:' + error_notice }
       end
     end
     respond_and_redirect_to new_alumni_path, notice
@@ -62,18 +71,18 @@ class AlumniController < ApplicationController
   def send_mail_from_csv
     require 'csv'
     if params[:email_file].present?
-      count, errors = 0, []
+      count, lines = 0, []
       CSV.foreach(params[:email_file].path, headers: true, header_converters: :symbol) do |row|
         count += 1
         alumni = Alumni.where("lower(alumni_email) = ?", row[:alumni_email].downcase).first
         if alumni.nil?
-          errors << "Could not find Alumni " + '(' + count.to_s + ')' unless alumni == :created
+          lines << count unless alumni == :created
         else
           AlumniMailer.creation_email(alumni).deliver_now
         end
       end
-      if errors.any?
-        notice = { error: 'The following lines (starting from 1) contain errors: ' + errors.join(', ')}
+      if lines.any?
+        notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf:<br/>Alumni konnte nicht gefunden werden: ' + lines.map(&:to_s).join(', ')}
       else
         notice = 'Alumni Emails erfolgreich gesendet!'
       end
