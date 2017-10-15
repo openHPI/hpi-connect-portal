@@ -73,7 +73,7 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-3">
-                    <%= f2.label programming_language.name, class: "control-label" %>
+                    <%= f2.label programming_language.name, programming_language.name, class: "control-label" %>
                   </div>
                   <div class="col-sm-9">
                     <% if student.persisted? %>
@@ -109,7 +109,7 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-sm-3">
-                    <%= f3.label t("languages." + language.name), class: "control-label" %>
+                    <%= f3.label language.name, t("languages." + language.name), class: "control-label" %>
                   </div>
                   <div class="col-sm-9">
                     <% if student.persisted? %>
