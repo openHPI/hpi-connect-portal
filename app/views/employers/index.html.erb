@@ -1,7 +1,7 @@
 <div class="wrapper-12 panel-wrapper">
   <span class="pull-left" id="top-links">
     <% if can?(:export_all, Employer) %>
-      <%= link_to t('employers.export_all'), export_all_employers_path, class: "btn btn-default pull-right title-button" %>
+      <%= link_to t('employers.export.heading'), export_employers_path, class: "btn btn-default pull-right title-button" %>
     <% end %>
 
      <% if can?(:create, Employer) %>

@@ -6,7 +6,13 @@ en:
         employer_overview: "Listing of employers"
         editing_employer: "Edit Employer"
         new_employer: "New Employer"
-        export_all: "Export all"
+        export:
+          heading: "Export employers"
+          choose: "Choose employers to be exported"
+          all: "Export all employers"
+          registered_from_to: "Only export employers that registered in a certain timeframe"
+          registered_from: "Registered from"
+          registered_to: "to"
         staff: "Staff"
         open: Open
         running: Running

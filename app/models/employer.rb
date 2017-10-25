@@ -121,24 +121,26 @@ class Employer < ActiveRecord::Base
     EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver_now
   end
 
-  def self.export_all
+  def self.export(registered_from, registered_to)
     CSV.generate(headers: true) do |csv|
       employer_attributes = %w{name}
       staff_member_attributes = %w{full_name email}
       headers = employer_attributes.map{ |attr| "employer_".concat(attr) } + staff_member_attributes.map{ |attr| "staff_member_".concat(attr) }
       csv << headers
-      csv = self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes)
+      csv = self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, registered_from, registered_to)
     end
   end
 
-  def self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes)
+  def self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, registered_from, registered_to)
     Employer.find_each do |employer|
-      row = employer_attributes.map{ |attr| employer.send(attr)}
+      if registered_from.nil? or (employer.created_at.to_date >= registered_from and employer.created_at.to_date <= registered_to)
+        row = employer_attributes.map{ |attr| employer.send(attr)}
 
-      staff_member = employer.staff_members.first
-      row += staff_member_attributes.map{ |attr| staff_member.send(attr)}
+        staff_member = employer.staff_members.first
+        row += staff_member_attributes.map{ |attr| staff_member.send(attr)}
 
-      csv << row
+        csv << row
+      end
     end
     return csv
   end
