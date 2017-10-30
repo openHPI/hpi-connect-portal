@@ -148,30 +148,22 @@ describe Employer do
       require 'csv'
 
       @registered_today = FactoryGirl.create :employer
-
-      # @registered.user.update_attributes(alumni_email: 'registered.alumni')
-
-      # staff_member
-      # current_cv_job = FactoryGirl.create(:cv_job, current: true)
-      # @registered.cv_jobs = [current_cv_job]
-      # oder accepts_nested_attributes_for ?
-
       @registered_a_year_ago = FactoryGirl.create(:employer, created_at: Date.today - 1.years)
 
-      #@registered_a_year_ago.user.update_attributes(alumni_email: 'registered.ayearago', created_at: Date.today - 1.years)
+      @headers = %w{employer_name staff_member_full_name staff_member_email contact_street contact_zip_city}
     end
 
     it "should export all employers if options are set accordingly" do
       csv = CSV.parse(Employer.export(nil, nil))
-      expect(csv[0]).to eq(%w{employer_name staff_member_full_name staff_member_email})
-      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email])
-      expect(csv[2]).to eq([@registered_a_year_ago.name, @registered_a_year_ago.staff_members.first.full_name, @registered_a_year_ago.staff_members.first.email])
+      expect(csv[0]).to eq(@headers)
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
+      expect(csv[2]).to eq([@registered_a_year_ago.name, @registered_a_year_ago.staff_members.first.full_name, @registered_a_year_ago.staff_members.first.email, @registered_a_year_ago.contact.street, @registered_a_year_ago.contact.zip_city])
     end
 
-    it "should not include alumni registered outside of timeframe specified" do
+    it "should not include employers registered outside of timeframe specified" do
       csv = CSV.parse(Employer.export(Date.today - 6.months, Date.today))
-      expect(csv[0]).to eq(%w{employer_name staff_member_full_name staff_member_email})
-      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email])
+      expect(csv[0]).to eq(@headers)
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
     end
   end
 

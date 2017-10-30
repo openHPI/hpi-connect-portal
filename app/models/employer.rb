@@ -125,19 +125,24 @@ class Employer < ActiveRecord::Base
     CSV.generate(headers: true) do |csv|
       employer_attributes = %w{name}
       staff_member_attributes = %w{full_name email}
-      headers = employer_attributes.map{ |attr| "employer_".concat(attr) } + staff_member_attributes.map{ |attr| "staff_member_".concat(attr) }
+      contact_attributes = %w{street zip_city}
+      headers = employer_attributes.map{ |attr| "employer_".concat(attr) }
+      headers += staff_member_attributes.map{ |attr| "staff_member_".concat(attr) }
+      headers += contact_attributes.map{ |attr| "contact_".concat(attr) }
       csv << headers
-      csv = self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, registered_from, registered_to)
+      csv = self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, contact_attributes, registered_from, registered_to)
     end
   end
 
-  def self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, registered_from, registered_to)
+  def self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, contact_attributes, registered_from, registered_to)
     Employer.find_each do |employer|
       if registered_from.nil? or (employer.created_at.to_date >= registered_from and employer.created_at.to_date <= registered_to)
-        row = employer_attributes.map{ |attr| employer.send(attr)}
+        row = employer_attributes.map{ |attr| employer.send(attr) }
 
         staff_member = employer.staff_members.first
-        row += staff_member_attributes.map{ |attr| staff_member.send(attr)}
+        row += staff_member_attributes.map{ |attr| staff_member.send(attr) }
+
+        row += contact_attributes.map{ |attr| employer.contact.send(attr) } unless employer.contact.nil?
 
         csv << row
       end
