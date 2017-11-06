@@ -22,10 +22,8 @@ de:
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         closed_job_offers: "Ehemalige Stellenangebote"
         inactive: "Deaktiviert"
-        packages: "Pakete"
-        prices: "Die Preise für alle Leistungen und Pakete können Sie bei connect@hpi.de erfragen."
-        with_costs: "kostenpflichtig"
         contact: "Ansprechpartner"
+        packages: "Pakete"
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil"
@@ -35,6 +33,9 @@ de:
             upgrade_or_book: "Ihr Paket reicht zum Erstellen einer Absolventenstelle leider nicht aus bzw. Sie haben bereits alle mit diesem Paket möglichen Absolventenstellen gebucht. \nSie können nun entweder Ihr Paket upgraden oder dieses einzelne Stellenangebot kostenpflichtig buchen."
             book_single_offer: "Stellenangebot buchen"
             upgrade: "Paket upgraden"
+            with_costs: "Kostenpflichtig"
+            free: "Kostenlos"
+            prices: "Die Preise für alle Leistungen und Pakete können Sie bei connect@hpi.de erfragen."
         messages:
             successfully_created: "Willkommen bei HPI Connect!"
             successfully_updated: "Das Profil wurde erfolgreich aktualisiert."

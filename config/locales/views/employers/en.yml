@@ -21,10 +21,8 @@ en:
         pending_job_offers: "Pending Job offers"
         closed_job_offers: "Former Job offers"
         inactive: "Deactivated"
-        packages: "Packages"
-        prices: "Please send an e-mail to connect@hpi.de to receive information about prices of our services and packages"
-        with_costs: "with costs"
         contact: "Contact"
+        packages: "Packages"
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
             profile: "Employer Profile"
@@ -34,6 +32,9 @@ en:
             upgrade_or_book: "Unfortunately, your package does not allow you to book a graduate job or you've already booked as many graduate jobs as possible for your package. You can now upgrade your package or book this single job offer with costs."
             book_single_offer: "Book single job offer"
             upgrade: "Upgrade package"
+            with_costs: "With costs"
+            free: "Free"
+            prices: "Please send an e-mail to connect@hpi.de to receive information about prices of our services and packages."
         messages:
             successfully_created: "Welcome to HPI Connect!"
             successfully_updated: "Profile successfully updated."

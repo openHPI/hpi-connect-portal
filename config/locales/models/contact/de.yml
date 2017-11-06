@@ -1,0 +1,9 @@
+de:
+  activerecord:
+    attributes:
+      contact:
+          name: "Name"
+          street: "Straße"
+          zip_city: "PLZ/Ort"
+          email: "E-Mail"
+          phone: "Telefon"
