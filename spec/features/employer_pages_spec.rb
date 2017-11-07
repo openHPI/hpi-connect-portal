@@ -106,6 +106,9 @@ describe "the employer page" do
       fill_in 'employer_staff_members_attributes_0_user_attributes_email', with: 'staff@test.com'
       fill_in 'employer_staff_members_attributes_0_user_attributes_password', with: 'password'
       fill_in 'employer_staff_members_attributes_0_user_attributes_password_confirmation', with: 'password'
+      fill_in 'employer_contact_attributes_name', with: 'Max Mustermann'
+      fill_in 'employer_contact_attributes_street', with: 'Teststraße'
+      fill_in 'employer_contact_attributes_zip_city', with: '12345 Teststadt'
       find('input[type="submit"]').click
 
       expect(page).to have_content(I18n.t('employers.messages.successfully_created'))
