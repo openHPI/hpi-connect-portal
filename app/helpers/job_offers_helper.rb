@@ -36,7 +36,11 @@ module JobOffersHelper
     @job_offer.start_date.to_s
   end
 
-  def copy_employer_contact?(field)
+  def copy_from_employer_contact?(field)
     @job_offer.contact.method(field).call.nil? && signed_in_staff? && !current_user.manifestation.employer.nil? && !current_user.manifestation.employer.contact.nil?
+  end
+
+  def copy_to_employer_contact?
+    signed_in_staff? && !current_user.manifestation.employer.nil? && !current_user.manifestation.employer.contact.nil? && !current_user.manifestation.employer.contact.valid?
   end
 end

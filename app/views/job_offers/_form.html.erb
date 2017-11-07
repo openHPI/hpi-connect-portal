@@ -116,7 +116,7 @@
           </div>
           <div class="col-sm-9">
             <%= c.input :name,
-            input_html: copy_employer_contact?(:name) ? { value: current_user.manifestation.employer.contact.name } : { value: @job_offer.contact.name } %>
+            input_html: copy_from_employer_contact?(:name) ? { value: current_user.manifestation.employer.contact.name } : { value: @job_offer.contact.name } %>
           </div>
         </div>
       </li>
@@ -127,7 +127,7 @@
           </div>
           <div class="col-sm-9">
             <%= c.input :street,
-            input_html: copy_employer_contact?(:street) ? { value: current_user.manifestation.employer.contact.street } : { value: @job_offer.contact.street } %>
+            input_html: copy_from_employer_contact?(:street) ? { value: current_user.manifestation.employer.contact.street } : { value: @job_offer.contact.street } %>
           </div>
         </div>
       </li>
@@ -138,7 +138,7 @@
           </div>
           <div class="col-sm-9">
             <%= c.input :zip_city,
-            input_html: copy_employer_contact?(:zip_city) ? { value: current_user.manifestation.employer.contact.zip_city } : { value: @job_offer.contact.zip_city } %>
+            input_html: copy_from_employer_contact?(:zip_city) ? { value: current_user.manifestation.employer.contact.zip_city } : { value: @job_offer.contact.zip_city } %>
           </div>
         </div>
       </li>
@@ -149,7 +149,7 @@
           </div>
           <div class="col-sm-9">
             <%= c.input :email,
-            input_html: copy_employer_contact?(:email) ? { value: current_user.manifestation.employer.contact.email } : { value: @job_offer.contact.email } %>
+            input_html: copy_from_employer_contact?(:email) ? { value: current_user.manifestation.employer.contact.email } : { value: @job_offer.contact.email } %>
           </div>
         </div>
       </li>
@@ -160,7 +160,15 @@
           </div>
           <div class="col-sm-9">
             <%= c.input :phone,
-            input_html: copy_employer_contact?(:phone) ? { value: current_user.manifestation.employer.contact.phone } : { value: @job_offer.contact.phone } %>
+            input_html: copy_from_employer_contact?(:phone) ? { value: current_user.manifestation.employer.contact.phone } : { value: @job_offer.contact.phone } %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= check_box_tag 'copy_to_employer_contact', nil, copy_to_employer_contact? %>
+            <%= label_tag 'copy_to_employer_contact', t("job_offers.copy_to_employer_contact"), class: 'control-label' %>
           </div>
         </div>
       </li>

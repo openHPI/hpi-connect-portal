@@ -100,12 +100,20 @@ class JobOffersController < ApplicationController
     if @job_offer.new_record?
       render_errors_and_action @job_offer, 'new'
     else
+      if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
+        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+      end
+
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     end
   end
 
   def update
     if @job_offer.update job_offer_params
+      if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
+        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+      end
+
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')
     else
       render_errors_and_action @job_offer, 'edit'

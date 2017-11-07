@@ -61,7 +61,7 @@ en:
         successfully_updated: "Job offer was successfully updated."
         successfully_deleted: "Job offer was successfully deleted."
         successfully_prolonged: "Job offer was successfully prolonged."
-        successfully_prolong_requested: "A plongation of the job offer got requested."
+        successfully_prolong_requested: "A prolongation of the job offer got requested."
         successfully_completed: "Job offer was successfully marked as completed."
         successfully_opened: "Job offer was successfully opened."
         prolonging_failed: "Job offer couldn't be prolonged."
@@ -76,3 +76,4 @@ en:
         teammate: "Team-Mate / Co-Founder"
     jobs_for: "Jobs for"
     i_search: "I search"
+    copy_to_employer_contact: "Use as company-wide contact address"

@@ -45,6 +45,9 @@ describe JobOffersController do
     "time_effort" => 3.5, "compensation" => 10.30, "status" => closed}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
+   let(:valid_attributes_with_contact_attr) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active),
+     contact_attributes: {"name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact"}, "copy_to_employer_contact"=>"true"}}
 
   let(:valid_session) { {} }
 
@@ -447,10 +450,26 @@ describe JobOffersController do
         staff = FactoryGirl.create :staff
         staff.employer.update_column :activated, false
         login staff.user
-                expect {
+        expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
         expect(assigns(:job_offer).status).to eq(JobStatus.pending)
+      end
+
+      it "copies contact address to employer if parameter is set" do
+        attributes = valid_attributes_with_contact_attr
+
+        expect{
+          post :create, {job_offer: attributes}, valid_session
+        }.to change(JobOffer, :count).by(1)
+
+        expect(assigns(:job_offer)).to be_a(JobOffer)
+        expect(assigns(:job_offer)).to be_persisted
+        offer = JobOffer.last
+
+        expect(staff.employer.contact.name).to eq(attributes[:contact_attributes]["name"])
+        expect(staff.employer.contact.street).to eq(attributes[:contact_attributes]["street"])
+        expect(staff.employer.contact.zip_city).to eq(attributes[:contact_attributes]["zip_city"])
       end
     end
 

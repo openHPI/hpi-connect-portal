@@ -13,6 +13,43 @@ describe "Job Offer pages" do
     @status_closed = JobStatus.closed
   end
 
+  describe "edit page" do
+    let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_active) }
+
+    describe "visited by a staff member whose employer has no contact address" do
+      before do
+        staff.employer.contact.assign_attributes name: nil, street: nil, zip_city: nil
+        staff.employer.contact.save(validate: false)
+        login staff.user
+        visit new_job_offer_path
+      end
+
+      it "has a checked checkbox to copy contact address to employer" do
+        expect(page).to have_checked_field(I18n.t("job_offers.copy_to_employer_contact"))
+      end
+    end
+
+    describe "visited by a staff member whose employer has a contact address" do
+      before do
+        login staff.user
+        visit new_job_offer_path
+      end
+
+      it "prefills contact fields with employer's contact address" do
+        expect(find_field(I18n.t("activerecord.attributes.contact.name")).value).to eq staff.employer.contact.name
+        expect(find_field(I18n.t("activerecord.attributes.contact.street")).value).to eq staff.employer.contact.street
+        expect(find_field(I18n.t("activerecord.attributes.contact.zip_city")).value).to eq staff.employer.contact.zip_city
+        expect(find_field(I18n.t("activerecord.attributes.contact.email")).value).to eq staff.employer.contact.email
+        expect(find_field(I18n.t("activerecord.attributes.contact.phone")).value).to eq staff.employer.contact.phone
+      end
+
+      it "does not have a checked checkbox to copy contact address to employer" do
+        expect(page).to have_field(I18n.t("job_offers.copy_to_employer_contact"))
+        expect(page).not_to have_checked_field(I18n.t("job_offers.copy_to_employer_contact"))
+      end
+    end
+  end
+
   describe "show page" do
     describe "open job offer" do
       let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_active) }
