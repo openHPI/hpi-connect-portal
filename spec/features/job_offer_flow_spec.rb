@@ -38,6 +38,12 @@ describe "the job offer flow" do
     fill_in "job_offer_time_effort", with: "12"
     fill_in "job_offer_compensation", with: "11"
 
+    expect(find_field(I18n.t("activerecord.attributes.contact.name")).value).to eq creating_staff.employer.contact.name
+    expect(find_field(I18n.t("activerecord.attributes.contact.street")).value).to eq creating_staff.employer.contact.street
+    expect(find_field(I18n.t("activerecord.attributes.contact.zip_city")).value).to eq creating_staff.employer.contact.zip_city
+    expect(find_field(I18n.t("activerecord.attributes.contact.email")).value).to eq creating_staff.employer.contact.email
+    expect(find_field(I18n.t("activerecord.attributes.contact.phone")).value).to eq creating_staff.employer.contact.phone
+
     JobOffer.delete_all
     expect {
       click_button "submit"
@@ -57,6 +63,9 @@ describe "the job offer flow" do
     assert_equal(job_offer.employer, creating_staff.employer)
     assert_equal(job_offer.employer, staff.employer)
     assert_equal(employer.staff_members.length, 3)
+    assert_equal(job_offer.contact.name, creating_staff.employer.contact.name)
+    assert_equal(job_offer.contact.street, creating_staff.employer.contact.street)
+    assert_equal(job_offer.contact.zip_city, creating_staff.employer.contact.zip_city)
 
     # admin of the employers get acceptance pending email
     expect(ActionMailer::Base.deliveries.count).to eq(1)

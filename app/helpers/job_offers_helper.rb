@@ -37,6 +37,6 @@ module JobOffersHelper
   end
 
   def copy_employer_contact?(field)
-    @job_offer.contact.method(field).nil? && signed_in_staff? && !current_user.manifestation.employer.nil? && !current_user.manifestation.employer.contact.nil?
+    @job_offer.contact.method(field).call.nil? && signed_in_staff? && !current_user.manifestation.employer.nil? && !current_user.manifestation.employer.contact.nil?
   end
 end
