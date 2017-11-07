@@ -346,12 +346,14 @@ describe JobOffersController do
 
       it "has same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
-        reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :employer_id]
+        reopened_job_offer = assigns(:job_offer)
+        expected_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
+        expected_contact_attr = ["name", "street", "zip_city", "email", "phone"]
 
-        expect(reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr)).to eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
-        expect(reopend_job_offer.start_date).to be_nil
-        expect(reopend_job_offer.end_date).to be_nil
+        expect(reopened_job_offer.attributes.slice(*expected_attr)).to eql(@job_offer.attributes.slice(*expected_attr))
+        expect(reopened_job_offer.contact.attributes.slice(*expected_contact_attr)).to eql(@job_offer.contact.attributes.slice(*expected_contact_attr))
+        expect(reopened_job_offer.start_date).to be_nil
+        expect(reopened_job_offer.end_date).to be_nil
       end
 
       it "is pending and old job offer changes to closed" do
