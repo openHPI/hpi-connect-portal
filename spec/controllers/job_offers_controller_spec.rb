@@ -219,10 +219,12 @@ describe JobOffersController do
 
       student = FactoryGirl.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
       login student.user
-      get :matching, {language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id)}, valid_session
+      get :matching, { language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id) }, valid_session
       items = assigns(:job_offers_list)[:items].to_a
-      assert items.include? job1
-      assert items.include? job3
+      expect items.to include job1
+      expect items.not_to include job2
+      expect items.to include job3
+      expect items.not_to include job4
     end
   end
 
@@ -347,7 +349,7 @@ describe JobOffersController do
         expect(response).to render_template("new")
       end
 
-      it "has same values as the original job offer" do
+      it "assigns new @job_offer with same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
         reopened_job_offer = assigns(:job_offer)
         expected_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
@@ -359,10 +361,11 @@ describe JobOffersController do
         expect(reopened_job_offer.end_date).to be_nil
       end
 
-      it "is pending and old job offer changes to closed" do
-        get :reopen, {id: @job_offer}, valid_session
-        reopend_job_offer = assigns(:job_offer)
+      it "new @job_offer is pending and old job offer changes to closed" do
+        get :reopen, { id: @job_offer }, valid_session
+        reopened_job_offer = assigns(:job_offer)
         expect(@job_offer.reload.status).to eql(closed)
+        expect(reopened_job_offer.status).to eql(pending)
       end
     end
   end
@@ -465,7 +468,6 @@ describe JobOffersController do
 
         expect(assigns(:job_offer)).to be_a(JobOffer)
         expect(assigns(:job_offer)).to be_persisted
-        offer = JobOffer.last
 
         expect(staff.employer.contact.name).to eq(attributes[:contact_attributes]["name"])
         expect(staff.employer.contact.street).to eq(attributes[:contact_attributes]["street"])

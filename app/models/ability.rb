@@ -47,8 +47,6 @@ class Ability
 
   def initialize_staff(user)
     staff = user.manifestation
-    employer_id = staff.employer_id
-    staff_id = staff.id
 
     can [:create, :show], JobOffer
 
@@ -57,30 +55,32 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update, :invite_colleague], Employer, id: employer_id
+    can [:edit, :update, :invite_colleague], Employer, id: staff.employer_id
 
     if staff.employer.activated
       can :manage, Faq
+
       can :show, Student do |student|
         student.visibility_id > 0 && staff.employer.premium? && student.activated
       end
-
 
       cannot [:edit, :update], Student
       can :close, JobOffer, employer: staff.employer
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
-      can :request_prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
+      can :request_prolong, JobOffer, employer: { id: staff.employer_id }, status: JobStatus.active
       can [:update, :destroy, :fire], JobOffer, employer: staff.employer
-      can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
+      can [:update, :destroy, :fire], JobOffer, employer: { id: staff.employer_id }
+
       can [:update, :edit], JobOffer do |job|
-        job.editable? && job.employer.id == employer_id
+        job.editable? && job.employer.id == staff.employer_id
       end
+
       cannot :destroy, JobOffer do |job|
         job.active?
       end
 
-      can :destroy, Staff, manifestation: { employer: { id: employer_id }}
+      can :destroy, Staff, manifestation: { employer: { id: staff.employer_id }}
 
       if staff.employer.premium?
         can :read, Student do |student|

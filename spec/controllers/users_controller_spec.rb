@@ -37,7 +37,7 @@ describe UsersController do
    login @user
   end
 
-   describe "GET edit" do
+  describe "GET edit" do
     it "assigns the requested user as @user" do
       get :edit, {id: @user.to_param}, valid_session
       expect(assigns(:user)).to eq(@user)
@@ -134,8 +134,8 @@ describe UsersController do
       # because travis is so slow we have to assume that there are more than 1 email
       password_mail_index = nil
       ActionMailer::Base.deliveries.each_with_index { |mail, index|
-          password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
-        }
+        password_mail_index = index if mail.to[0] == @user.email && mail.to.count == 1
+      }
       expect(password_mail_index).not_to eq(nil)
       expect(ActionMailer::Base.deliveries[password_mail_index]).to have_content(User.find(@user.id).password)
       expect(ActionMailer::Base.deliveries[password_mail_index].to.count).to eq(1)

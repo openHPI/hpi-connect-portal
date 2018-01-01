@@ -120,8 +120,8 @@ describe RatingsController do
       it "creates a new rating" do
         login student.user
         expect{
-            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
-          }.to change(Rating, :count).by(1)
+          post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+        }.to change(Rating, :count).by(1)
       end
     end
 
@@ -129,8 +129,8 @@ describe RatingsController do
       it "doesn't create a new rating" do
         login staff.user
         expect{
-            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
-          }.to change(Rating, :count).by(0)
+          post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+        }.to change(Rating, :count).by(0)
       end
     end
   end

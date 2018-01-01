@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :signed_in_user
 
-  rescue_from CanCan::AccessDenied do |exception|
-    rescue_from_exception exception
+  rescue_from CanCan::AccessDenied do
+    rescue_from_exception
   end
 
   rescue_from ActiveRecord::RecordNotFound do
@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    def rescue_from_exception(exception)
+    def rescue_from_exception
       redirect_to root_path
     end
 end

@@ -155,7 +155,7 @@ describe EmployersController do
       end
 
       it "should also create an employer (there are no insufficient access rights)" do
-        employer = FactoryGirl.create(:employer)
+        FactoryGirl.create(:employer)
         post :create, { employer: valid_attributes }
         expect(response).to redirect_to(home_employers_path)
       end
@@ -322,18 +322,19 @@ describe EmployersController do
 
     it "should delete staff of an deleted employer" do
       employer = FactoryGirl.create(:employer, activated: true)
-      staff = FactoryGirl.create(:staff, employer: employer)
-      staff2 = FactoryGirl.create(:staff, employer: employer)
-      job_offer = FactoryGirl.create(:job_offer, employer: employer)
-      student = FactoryGirl.create(:student)
+      FactoryGirl.create(:staff, employer: employer)
+      FactoryGirl.create(:staff, employer: employer)
+      FactoryGirl.create(:job_offer, employer: employer)
+      FactoryGirl.create(:student)
+
       expect {
-        delete :destroy, {id: employer.id}
-        }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1)
+        delete :destroy, { id: employer.id }
+      }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1)
     end
   end
 
   describe "POST invite colleague" do
-    let(:employer) { employer = FactoryGirl.create(:employer, activated: true) }
+    let(:employer) { FactoryGirl.create(:employer, activated: true) }
 
     before :each do
       ActionMailer::Base.deliveries = []

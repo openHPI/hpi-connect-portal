@@ -131,7 +131,6 @@ describe Student do
 
     it "should not include unregistered alumni if option is not set" do
       csv = CSV.parse(Student.export_alumni(false, nil, nil))
-      csv_array = csv.to_a
       expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
       expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
       expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email, @registered_a_year_ago.email, "General Qualification for University Entrance", "", ""])
@@ -139,7 +138,6 @@ describe Student do
 
     it "should not include alumni registered outside of timeframe specified" do
       csv = CSV.parse(Student.export_alumni(false, Date.today - 6.months, Date.today))
-      csv_array = csv.to_a
       expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s)})
       expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer"])
     end

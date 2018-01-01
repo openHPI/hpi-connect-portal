@@ -115,10 +115,10 @@ describe "job_offers_history" do
   it "should have a job-offers-history" do
     student1 = FactoryGirl.create(:student)
     login student1.user
-    job_offer = FactoryGirl.create(:job_offer,
+    closed_job_offer = FactoryGirl.create(:job_offer,
       title: "Closed Job Touch Floor",
       status: JobStatus.closed
-      )
+    )
     visit job_offers_path
     expect(find("#top-links")).to have_link "Archive"
     click_on "Archive"
@@ -130,7 +130,7 @@ describe "job_offers_history" do
     expect(page).to have_css "#filtering"
     expect(page).to have_css "#search"
     find_button("Go").visible?
-    expect(first("ul.list-group li")).to have_content "Closed Job Touch Floor"
+    expect(first("ul.list-group li")).to have_content closed_job_offer.title
   end
 
   describe "Show Archive Job Offers" do

@@ -52,7 +52,7 @@ module UsersHelper
     end
   end
 
-  def update_from_params_for_languages(params, redirect_to)
+  def update_from_params_for_languages(params)
     update_and_remove_for_language(params[:programming_language_skills], params[:id], ProgrammingLanguagesUser, "programming_language_id")
     update_and_remove_for_language(params[:language_skills], params[:id], LanguagesUser, "language_id")
   end

@@ -55,7 +55,7 @@ class StaffController < ApplicationController
       params.require(:staff).permit(:token)
     end
 
-    def rescue_from_exception(exception)
+    def rescue_from_exception
       if [:index].include? exception.action
         respond_and_redirect_to root_path, exception.message
       elsif [:edit].include? exception.action

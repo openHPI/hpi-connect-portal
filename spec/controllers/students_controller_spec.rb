@@ -44,7 +44,7 @@ describe StudentsController do
     it "assigns all students as @students" do
       login FactoryGirl.create(:user, :admin)
 
-      student = FactoryGirl.create(:student)
+      FactoryGirl.create(:student)
       get :index, {}, valid_session
       expect(assigns(:students)).to eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 5))
     end

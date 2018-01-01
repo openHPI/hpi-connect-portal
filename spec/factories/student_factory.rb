@@ -33,7 +33,7 @@ FactoryGirl.define do
     visibility_id       2
     association         :user
 
-    after(:create) do |user, evaluator|
+    after(:create) do
       create_list(:language, 1)
       create_list(:programming_language, 1)
     end

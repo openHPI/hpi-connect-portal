@@ -125,7 +125,7 @@ describe "the employer page" do
     it "does not have a select for former deputy" do
       admin = FactoryGirl.create(:user, :admin)
       employer = FactoryGirl.create(:employer)
-      staff = FactoryGirl.create(:staff, employer: employer)
+      FactoryGirl.create(:staff, employer: employer)
       login(admin)
       visit edit_employer_path(employer)
 
@@ -215,7 +215,6 @@ describe "the employer page" do
       login staff.user
       visit employer_path(employer)
       page.find("#open-popup").click
-      save_and_open_page
       fill_in 'Email', with: 'test@test.de'
       page.find("#send_application_button").click
       expect(page).to have_content "Email was send to your colleague"
@@ -224,4 +223,4 @@ describe "the employer page" do
     end
 
   end
- end
+end

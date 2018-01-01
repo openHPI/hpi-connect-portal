@@ -65,7 +65,6 @@ describe "the job offer flow" do
     expect(ActionMailer::Base.deliveries.count).to eq(1)
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [Configurable.mailToAdministration])
-    css = 'a[href=3D"' + url_for(controller:"job_offers", action: "show", id: job_offer.id, only_path: false) + '"]'
     expect(email).to have_selector('a')
     ActionMailer::Base.deliveries = []
 
@@ -120,13 +119,12 @@ describe "the job offer flow" do
     click_button "submit"
 
     assert_equal(JobOffer.all.count, 2)
-    job_offer = JobOffer.last
 
     # the admins get notified about the new job
     expect(ActionMailer::Base.deliveries.count).to eq(1)
     email = ActionMailer::Base.deliveries[0]
     assert_equal(email.to, [Configurable.mailToAdministration])
-    expect(email).to have_selector("a")
+    expect(email).to have_selector('a')
     ActionMailer::Base.deliveries = []
   end
 end

@@ -37,7 +37,7 @@ describe StudentsMailer do
   describe "newsletter" do
 
     before(:each) do
-      for i in 1..3 do
+      3.times do
         FactoryGirl.create(:job_offer, description: "<p> Description </p>")
       end
       @newsletter_order = FactoryGirl.create(:newsletter_order, student: @student)

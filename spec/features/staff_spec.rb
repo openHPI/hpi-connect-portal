@@ -60,7 +60,7 @@ describe "the staff page" do
     end
   end
 
-   describe "as a student" do
+  describe "as a student" do
     it "should not be visible " do
       FactoryGirl.create(:job_status, name: 'active')
       login @student1.user

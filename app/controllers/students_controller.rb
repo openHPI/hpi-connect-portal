@@ -94,7 +94,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    update_from_params_for_languages params, student_path(@student)
+    update_from_params_for_languages params
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
@@ -150,7 +150,7 @@ class StudentsController < ApplicationController
       params.require(:student).permit(:semester, :dschool_status_id, :group_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
     end
 
-    def rescue_from_exception(exception)
+    def rescue_from_exception
       if [:index].include? exception.action
         redirect_to root_path, notice: exception.message
       elsif [:edit, :destroy, :update].include? exception.action

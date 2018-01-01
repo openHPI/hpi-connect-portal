@@ -51,16 +51,16 @@ describe AlumniController do
 
     it "should be available for admins" do
       login FactoryGirl.create :user, :admin
-      expect{
-          post :create, { alumni: FactoryGirl.attributes_for(:alumni) }
-        }.to change(Alumni, :count).by(1)
+      expect {
+        post :create, { alumni: FactoryGirl.attributes_for(:alumni) }
+      }.to change(Alumni, :count).by(1)
     end
 
     it "should not be available for anyone else" do
       login FactoryGirl.create :user
-      expect{
-          post :create, { alumni: FactoryGirl.attributes_for(:alumni) }
-        }.to change(Alumni, :count).by(0)
+      expect {
+        post :create, { alumni: FactoryGirl.attributes_for(:alumni) }
+      }.to change(Alumni, :count).by(0)
       expect(response).to redirect_to(root_path)
     end
   end

@@ -61,7 +61,7 @@ class Student < ActiveRecord::Base
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
-  scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
+  scope :visible_for_all, -> { where('visibility_id < 0')}
   scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
   scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')}
   scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
@@ -163,7 +163,7 @@ class Student < ActiveRecord::Base
 
       if include_unregistered
         csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
-        csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
+        self.add_unregistered_alumni_to_csv(csv, shared_attributes)
       end
     end
   end

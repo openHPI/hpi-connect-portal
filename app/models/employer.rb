@@ -130,7 +130,7 @@ class Employer < ActiveRecord::Base
       headers += staff_member_attributes.map{ |attr| "staff_member_".concat(attr) }
       headers += contact_attributes.map{ |attr| "contact_".concat(attr) }
       csv << headers
-      csv = self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, contact_attributes, registered_from, registered_to)
+      self.add_employers_to_csv(csv, employer_attributes, staff_member_attributes, contact_attributes, registered_from, registered_to)
     end
   end
 

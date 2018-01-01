@@ -105,7 +105,7 @@ describe "the students editing page" do
     expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
     expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
     expect(page).to have_content("www.faceboook.com/alex")
-   end
+  end
 
   it "can be edited by an admin" do
     admin = FactoryGirl.create(:user, :admin)
@@ -193,21 +193,20 @@ describe "the students profile page" do
   end
 
   describe "of another students" do
-      before(:each) do
-        visit student_path(@student3)
+    before(:each) do
+      visit student_path(@student3)
     end
 
     it "should not contain all the details of student3" do
       expect(page).not_to have_content(@student3.firstname)
       expect(page).not_to have_content(@student3.lastname)
     end
-
   end
+
   describe "of another students" do
     before(:each) do
       visit student_path(@student2)
     end
-
 
     it "should contain all the details of student2" do
       expect(page).to have_content(@student2.firstname)

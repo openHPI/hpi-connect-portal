@@ -41,7 +41,7 @@ FactoryGirl.define do
     association       :status, factory: :job_status
     student_group_id  {Student::GROUPS.index("hpi")}
 
-    before(:create) do |job_offer, evaluator|
+    before(:create) do |job_offer|
       job_offer.employer ||= FactoryGirl.create(:employer)
       job_offer.contact = FactoryGirl.create(:contact, counterpart: job_offer)
     end

@@ -80,8 +80,8 @@ describe Employer do
   describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do
-        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: employer)
-        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: employer)
+        FactoryGirl.create(:rating, score_overall: 3, employer: employer)
+        FactoryGirl.create(:rating, score_overall: 4, employer: employer)
 
         expect(employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
       end
@@ -115,7 +115,7 @@ describe Employer do
     it "can create limited graduate job offers per year" do
       FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
 
-      (limit-1).times do |n|
+      (limit-1).times do
         FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
       end
 
