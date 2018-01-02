@@ -23,7 +23,7 @@ gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 gem 'jquery-rails', '~> 3.1.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0.2'
+gem 'jbuilder', '~> 2.0'
 
 # Automatically add rel="noopener noreferrer" to every link with target="_blank"
 gem 'safe_target_blank'
@@ -113,7 +113,7 @@ gem 'capybara'
 gem 'factory_girl'
 
 # replacement for glyphicons
-gem 'font-awesome-rails', '~> 4.0.3.1'
+gem 'font-awesome-rails'
 
 # pagination
 gem 'will_paginate', '~> 3.0'
@@ -129,8 +129,8 @@ gem 'simple_form'
 gem 'traco'
 
 # WYSIWYG Text Editor
-gem 'tinymce-rails', '~> 4.1.5'
-gem 'tinymce-rails-langs', '~> 4.20140129'
+gem 'tinymce-rails', '~> 4.0'
+gem 'tinymce-rails-langs', '~> 4.0'
 gem 'sanitize', '~> 3.0.2'
 
 # Birthdate validation
