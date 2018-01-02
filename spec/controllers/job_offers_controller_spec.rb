@@ -221,10 +221,10 @@ describe JobOffersController do
       login student.user
       get :matching, { language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id) }, valid_session
       items = assigns(:job_offers_list)[:items].to_a
-      expect items.to include job1
-      expect items.not_to include job2
-      expect items.to include job3
-      expect items.not_to include job4
+      expect(items).to include job1
+      expect(items).not_to include job2
+      expect(items).to include job3
+      expect(items).not_to include job4
     end
   end
 
