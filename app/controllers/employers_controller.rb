@@ -127,7 +127,7 @@ class EmployersController < ApplicationController
 
   def send_csv
     require 'csv'
-    
+
     if params[:employers] == 'registered_from_to'
       from_date = Date.new(params[:from_date]["year"].to_i,params[:from_date]["month"].to_i,params[:from_date]["day"].to_i)
       to_date = Date.new(params[:to_date]["year"].to_i,params[:to_date]["month"].to_i,params[:to_date]["day"].to_i)
@@ -143,7 +143,7 @@ class EmployersController < ApplicationController
 
   private
 
-    def rescue_from_exception
+    def rescue_from_exception(exception)
       redirect_to employers_path, notice: exception.message
     end
 

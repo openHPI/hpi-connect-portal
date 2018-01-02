@@ -224,7 +224,7 @@ class JobOffersController < ApplicationController
       @employers = Employer.all
     end
 
-    def rescue_from_exception
+    def rescue_from_exception(exception)
       if [:close, :edit, :destroy, :update, :decline].include?(exception.action)
         redirect_to exception.subject, notice: exception.message and return
       end
