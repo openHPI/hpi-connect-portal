@@ -24,6 +24,8 @@
 $(document).ready( function() {
   $('.dropdown-toggle').dropdown();
 
+  tinymce.baseURL = '/connect/jobportal/assets/tinymce'; 
+
   $('div.employer_rating_stars').raty({
     score: function() {
       if ($(this).attr('data-score')){
