@@ -5,7 +5,7 @@ ruby '2.4.0'
 gem 'rails', '~> 4.2.0'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.17.1'
+gem 'pg', '~> 0.20.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -72,9 +72,6 @@ gem 'airbrake', '~> 5.0'
 # bootstrap 3
 gem 'bootstrap-rails-engine'
 
-# navigation
-gem 'simple-navigation', '~> 3.11'
-
 # open ID gem for user activation
 gem 'ruby-openid'
 gem 'open_id_authentication'
@@ -131,7 +128,7 @@ gem 'traco'
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 4.0'
 gem 'tinymce-rails-langs', '~> 4.0'
-gem 'sanitize', '~> 3.0.2'
+gem 'sanitize', '~> 4.0'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'
