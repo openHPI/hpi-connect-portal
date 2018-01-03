@@ -2,10 +2,10 @@ require 'rails_helper'
 
 describe "staff/index" do
   before(:each) do
-    @staff_member_1 = FactoryGirl.create(:staff)
-    @staff_member_2 = FactoryGirl.create(:staff)
+    @staff_member_1 = FactoryBot.create(:staff)
+    @staff_member_2 = FactoryBot.create(:staff)
     assign(:staff_members, [@staff_member_1, @staff_member_2])
-    allow(view).to receive(:current_user) { FactoryGirl.create(:staff).user }
+    allow(view).to receive(:current_user) { FactoryBot.create(:staff).user }
   end
 
   it "renders a list of students" do

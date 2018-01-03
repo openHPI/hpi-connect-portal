@@ -9,7 +9,7 @@
 #  updated_at :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :role do
     name 'Student'
     level 1

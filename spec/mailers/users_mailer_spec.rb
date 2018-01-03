@@ -10,7 +10,7 @@ describe UsersMailer do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    @user = FactoryGirl.create :user
+    @user = FactoryBot.create :user
   end
 
 

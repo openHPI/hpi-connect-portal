@@ -12,11 +12,11 @@ require 'rails_helper'
 
 describe ProgrammingLanguagesUser do
   describe "does_skill_exist" do
-    let(:student) {FactoryGirl.create(:student)}
-    let(:programming_language) {FactoryGirl.create(:programming_language)}
+    let(:student) {FactoryBot.create(:student)}
+    let(:programming_language) {FactoryBot.create(:programming_language)}
 
     it "returns true if skill exist" do
-      FactoryGirl.create(:programming_languages_user, student: student, programming_language: programming_language)
+      FactoryBot.create(:programming_languages_user, student: student, programming_language: programming_language)
       assert ProgrammingLanguagesUser.does_skill_exist_for_programming_language_and_student(programming_language, student)
     end
 

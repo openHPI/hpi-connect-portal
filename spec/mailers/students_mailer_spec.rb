@@ -7,7 +7,7 @@ describe StudentsMailer do
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
-    @student = FactoryGirl.create(:student)
+    @student = FactoryBot.create(:student)
     ActionMailer::Base.deliveries = []
   end
 
@@ -38,9 +38,9 @@ describe StudentsMailer do
 
     before(:each) do
       for i in 1..3 do
-        FactoryGirl.create(:job_offer, description: "<p> Description </p>")
+        FactoryBot.create(:job_offer, description: "<p> Description </p>")
       end
-      @newsletter_order = FactoryGirl.create(:newsletter_order, student: @student)
+      @newsletter_order = FactoryBot.create(:newsletter_order, student: @student)
       @email = StudentsMailer.newsletter(@student, JobOffer.all, @newsletter_order).deliver_now
     end
 

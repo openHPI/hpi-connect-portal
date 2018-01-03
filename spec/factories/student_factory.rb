@@ -24,7 +24,7 @@
 #  group_id               :integer          default(0), not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :student do
     semester            1
     academic_program_id Student::ACADEMIC_PROGRAMS.index("bachelor")

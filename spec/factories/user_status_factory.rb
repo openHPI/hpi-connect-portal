@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user_status do
     sequence(:name)  { |n| "User status #{n}" }
   end

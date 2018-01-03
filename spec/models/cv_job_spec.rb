@@ -20,7 +20,7 @@ describe CvJob do
 
   describe "validations" do
     before(:each) do
-      @student = FactoryGirl.create(:student)
+      @student = FactoryBot.create(:student)
     end
 
     it "should not be valid with empty attributes" do
@@ -93,10 +93,10 @@ describe CvJob do
 
   describe "querying" do
     before(:each) do
-      @oldest = FactoryGirl.create(:cv_job, start_date: Date.today - 100.days, end_date: Date.today - 30.days)
-      @middle = FactoryGirl.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 30.days)
-      @newer = FactoryGirl.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 15.days)
-      @newest = FactoryGirl.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 20.days, current: true)
+      @oldest = FactoryBot.create(:cv_job, start_date: Date.today - 100.days, end_date: Date.today - 30.days)
+      @middle = FactoryBot.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 30.days)
+      @newer = FactoryBot.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 15.days)
+      @newest = FactoryBot.create(:cv_job, start_date: Date.today - 90.days, end_date: Date.today - 20.days, current: true)
     end
 
     it "should be sorted by to and from date" do

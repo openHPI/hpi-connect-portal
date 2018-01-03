@@ -8,12 +8,12 @@
 #  updated_at  :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :staff do
 
     before(:create) do |staff|
-      staff.user = FactoryGirl.create(:user, manifestation: staff)
-      staff.employer ||= FactoryGirl.create(:employer)
+      staff.user = FactoryBot.create(:user, manifestation: staff)
+      staff.employer ||= FactoryBot.create(:employer)
     end
   end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "the home page" do
 
   it "renders the latest 5 job offers" do
-    6.times { |i| FactoryGirl.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active )}
+    6.times { |i| FactoryBot.create(:job_offer, title:"Testjob#{i+1}", status: JobStatus.active )}
     visit root_path
     expect(page).to have_content("Testjob2")
     expect(page).to have_content("Testjob3")
@@ -20,7 +20,7 @@ describe "the home page" do
   end
 
   it "renders login not for signed in users" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     login student.user
     visit root_path
     expect(page).not_to have_content "Login"
@@ -33,7 +33,7 @@ describe "the home page" do
   end
 
   it "renders the latest 6 employers" do
-    6.times { |i| FactoryGirl.create(:employer, name:"TestEmployer#{i+1}") }
+    6.times { |i| FactoryBot.create(:employer, name:"TestEmployer#{i+1}") }
     visit root_path
     expect(page).to have_content("TestEmployer2")
     expect(page).to have_content("TestEmployer3")
@@ -45,7 +45,7 @@ describe "the home page" do
 
   it "finds link and fills in email" do
     visit root_path
-    user = FactoryGirl.create(:user, email: "new_password_email@test.de")
+    user = FactoryBot.create(:user, email: "new_password_email@test.de")
     old_password = user.password
     find_link(I18n.t("users.forgot_password")).click
     fill_in 'forgot_password_email', with: '"new_password_email@test.de'

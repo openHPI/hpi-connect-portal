@@ -33,9 +33,9 @@ require 'rails_helper'
 describe JobOffer do
 
   before(:each) do
-      @epic = FactoryGirl.create(:employer, name: "EPIC")
-      @os = FactoryGirl.create(:employer, name: "OS and Middleware")
-      @itas = FactoryGirl.create(:employer, name: "Internet and Systems Technologies")
+      @epic = FactoryBot.create(:employer, name: "EPIC")
+      @os = FactoryBot.create(:employer, name: "OS and Middleware")
+      @itas = FactoryBot.create(:employer, name: "Internet and Systems Technologies")
   end
 
   it "does not create a joboffer if attributes are not set" do
@@ -64,11 +64,11 @@ describe JobOffer do
 
   it "returns job offers sorted by created_at" do
 
-    FactoryGirl.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 10, end_date: Date.current + 11, created_at: Date.current + 10, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 2, created_at: Date.current + 1, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 7, end_date: Date.current + 8, created_at: Date.current + 7, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 4, end_date: Date.current + 5, created_at: Date.current + 4, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 10, end_date: Date.current + 11, created_at: Date.current + 10, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 2, created_at: Date.current + 1, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 7, end_date: Date.current + 8, created_at: Date.current + 7, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 4, end_date: Date.current + 5, created_at: Date.current + 4, employer: @epic)
 
     sorted_job_offers = JobOffer.sort(JobOffer.all, "date")
     (sorted_job_offers).each_with_index do |offer, index|
@@ -81,9 +81,9 @@ describe JobOffer do
 
   it "returns job offers sorted by their employer" do
 
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @itas)
-    FactoryGirl.create(:job_offer, employer: @os)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @itas)
+    FactoryBot.create(:job_offer, employer: @os)
 
     sorted_job_offers = JobOffer.sort(JobOffer.all, "employer")
     (sorted_job_offers).each_with_index do |offer, index|
@@ -97,11 +97,11 @@ describe JobOffer do
 
   it "returns job offers including the word EPIC" do
 
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @itas, description: "develop a website with an epic framework")
-    FactoryGirl.create(:job_offer, employer: @itas)
-    FactoryGirl.create(:job_offer, employer: @os)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @itas, description: "develop a website with an epic framework")
+    FactoryBot.create(:job_offer, employer: @itas)
+    FactoryBot.create(:job_offer, employer: @os)
 
     resulted_job_offers = JobOffer.search("EPIC")
     assert_equal(resulted_job_offers.length, 3);
@@ -109,11 +109,11 @@ describe JobOffer do
 
   it "returns job offers filtered by employer EPIC and start_date >= specified_date" do
 
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
-    FactoryGirl.create(:job_offer, employer: @itas)
-    FactoryGirl.create(:job_offer, employer: @os)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @itas)
+    FactoryBot.create(:job_offer, employer: @os)
 
     filtered_job_offers = JobOffer.filter_employer(@epic.id).filter_start_date((Date.current + 3).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
@@ -121,9 +121,9 @@ describe JobOffer do
 
   it "returns job offers filtered start_date >= specified_date" do
 
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
-    FactoryGirl.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 6, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 1, end_date: Date.current + 8)
+    FactoryBot.create(:job_offer, employer: @epic, start_date: Date.current + 5, end_date: Date.current + 8)
 
     filtered_job_offers = JobOffer.filter_start_date((Date.current + 3).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
@@ -131,11 +131,11 @@ describe JobOffer do
 
   it "returns job offers filtered by employer EPIC" do
 
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @epic)
-    FactoryGirl.create(:job_offer, employer: @itas)
-    FactoryGirl.create(:job_offer, employer: @os)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @epic)
+    FactoryBot.create(:job_offer, employer: @itas)
+    FactoryBot.create(:job_offer, employer: @os)
 
     filtered_job_offers = JobOffer.filter_employer(@epic.id)
     assert_equal(filtered_job_offers.length, 3);
@@ -143,9 +143,9 @@ describe JobOffer do
 
   it "returns job offers filtered between start_date and end_date" do
 
-    FactoryGirl.create(:job_offer, start_date: Date.current + 6, end_date: Date.current + 8, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 8, employer: @epic)
-    FactoryGirl.create(:job_offer, start_date: Date.current + 5, end_date: Date.current + 8, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 6, end_date: Date.current + 8, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 8, employer: @epic)
+    FactoryBot.create(:job_offer, start_date: Date.current + 5, end_date: Date.current + 8, employer: @epic)
 
     filtered_job_offers = JobOffer.filter_start_date((Date.current + 3).strftime("%Y%m%d")).filter_end_date((Date.current + 9).strftime("%Y%m%d"))
     assert_equal(filtered_job_offers.length, 2);
@@ -153,10 +153,10 @@ describe JobOffer do
 
   it "returns job offers filtered with compensation>=10 AND time_effort<=5" do
 
-    FactoryGirl.create(:job_offer, time_effort: 10, compensation: 20, employer: @epic)
-    FactoryGirl.create(:job_offer, time_effort: 5, compensation: 20, employer: @epic)
-    FactoryGirl.create(:job_offer, time_effort: 8, compensation: 5, employer: @epic)
-    FactoryGirl.create(:job_offer, time_effort: 4, compensation: 8, employer: @epic)
+    FactoryBot.create(:job_offer, time_effort: 10, compensation: 20, employer: @epic)
+    FactoryBot.create(:job_offer, time_effort: 5, compensation: 20, employer: @epic)
+    FactoryBot.create(:job_offer, time_effort: 8, compensation: 5, employer: @epic)
+    FactoryBot.create(:job_offer, time_effort: 4, compensation: 8, employer: @epic)
 
     filtered_job_offers = JobOffer.filter_compensation(10).filter_time_effort(5)
     assert_equal(filtered_job_offers.length, 1);
@@ -164,10 +164,10 @@ describe JobOffer do
 
   it "returns job offers searched for programming languages filtered by time effort and sorted by employer" do
 
-    FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
-    job_offer_itas = FactoryGirl.create(:job_offer, time_effort: 8, employer: @itas, description: "Ruby Programming")
-    FactoryGirl.create(:job_offer, time_effort: 5, employer: @epic, description: "Javascript Programming")
-    job_offer_os = FactoryGirl.create(:job_offer, time_effort: 4, employer: @os, description: "Ruby Programming")
+    FactoryBot.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
+    job_offer_itas = FactoryBot.create(:job_offer, time_effort: 8, employer: @itas, description: "Ruby Programming")
+    FactoryBot.create(:job_offer, time_effort: 5, employer: @epic, description: "Javascript Programming")
+    job_offer_os = FactoryBot.create(:job_offer, time_effort: 4, employer: @os, description: "Ruby Programming")
 
     filtered_job_offers = JobOffer.search("Ruby").filter_time_effort(8)
     assert_equal(filtered_job_offers.length, 2);
@@ -176,12 +176,12 @@ describe JobOffer do
   end
 
   it "return job offers which only have the specified programming languages" do
-    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
-    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Python Programming")
+    offer_matched = FactoryBot.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryBot.create(:job_offer, time_effort: 10, employer: @epic, description: "Python Programming")
 
-    language_one = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
-    language_two = FactoryGirl.create(:programming_language, job_offer: [offer_matched])
-    language_three = FactoryGirl.create(:programming_language, job_offer: [offer_not_matched])
+    language_one = FactoryBot.create(:programming_language, job_offer: [offer_matched])
+    language_two = FactoryBot.create(:programming_language, job_offer: [offer_matched])
+    language_three = FactoryBot.create(:programming_language, job_offer: [offer_not_matched])
 
     filtered_jobs = JobOffer.filter_programming_languages([language_one.id, language_two.id])
     assert_equal(filtered_jobs.length, 1)
@@ -194,12 +194,12 @@ describe JobOffer do
   end
 
   it "return job offers which only have the specified programming languages" do
-    offer_matched = FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
-    offer_not_matched = FactoryGirl.create(:job_offer, time_effort: 10, employer: @epic, description: "Python Programming")
+    offer_matched = FactoryBot.create(:job_offer, time_effort: 10, employer: @epic, description: "Ruby Programming")
+    offer_not_matched = FactoryBot.create(:job_offer, time_effort: 10, employer: @epic, description: "Python Programming")
 
-    language_one = FactoryGirl.create(:language)
-    language_two = FactoryGirl.create(:language)
-    language_three = FactoryGirl.create(:language)
+    language_one = FactoryBot.create(:language)
+    language_two = FactoryBot.create(:language)
+    language_three = FactoryBot.create(:language)
 
     offer_matched.languages = [language_one, language_two]
     offer_matched.save
@@ -218,9 +218,9 @@ describe JobOffer do
   end
 
   it "returns job offers filtered by status" do
-    @status = FactoryGirl.create(:job_status, name: "closed")
-    job_offer_with_status = FactoryGirl.create(:job_offer, status: @status)
-    FactoryGirl.create(:job_offer, employer: @epic)
+    @status = FactoryBot.create(:job_status, name: "closed")
+    job_offer_with_status = FactoryBot.create(:job_offer, status: @status)
+    FactoryBot.create(:job_offer, employer: @epic)
     filtered_job_offers = JobOffer.where(status: @status)
     assert filtered_job_offers.include? job_offer_with_status
     assert_equal(filtered_job_offers.length, 1)
@@ -230,12 +230,12 @@ describe JobOffer do
 
     before :each do
       JobOffer.delete_all
-      @job_offer_valid = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active)
+      @job_offer_valid = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.active)
       ActionMailer::Base.deliveries = []
     end
 
     it "sends an email 2 days before expiration" do
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
+      @job_offer_warning = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
       JobOffer.check_for_expired
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       email = ActionMailer::Base.deliveries[0]
@@ -243,7 +243,7 @@ describe JobOffer do
     end
 
     it "sends an email on expiration and closes the job offer" do
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks)
+      @job_offer_expire = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.active, prolonged: true, prolonged_at: Date.today - 8.weeks)
       JobOffer.check_for_expired
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       email = ActionMailer::Base.deliveries[0]
@@ -252,15 +252,15 @@ describe JobOffer do
     end
 
     it "does only send emails with active status" do
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
-      @job_offer_warning = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks)
-      @job_offer_expire = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks)
+      @job_offer_warning = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
+      @job_offer_warning = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks + 2.days)
+      @job_offer_expire = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.closed, prolonged: true, prolonged_at: Date.today - 8.weeks)
+      @job_offer_expire = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.pending, prolonged: true, prolonged_at: Date.today - 8.weeks)
       expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
 
     it "should set the job status back to active after prolognation" do
-      @job_expired = FactoryGirl.create(:job_offer, employer: @epic, status: JobStatus.closed)
+      @job_expired = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.closed)
       @job_expired.prolong
       assert_equal(@job_expired.reload.prolonged, true)
       assert_equal(@job_expired.reload.status, JobStatus.active)

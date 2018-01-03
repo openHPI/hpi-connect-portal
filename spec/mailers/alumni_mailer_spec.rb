@@ -7,7 +7,7 @@ describe AlumniMailer do
   describe "deliver_reminder" do
 
     it "delivers mail" do
-      alumni = FactoryGirl.create(:alumni)
+      alumni = FactoryBot.create(:alumni)
       AlumniMailer.reminder_email(alumni).deliver_now
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end

@@ -29,11 +29,11 @@ require 'rails_helper'
 
 describe User do
   let(:user) do
-    FactoryGirl.create(:user)
+    FactoryBot.create(:user)
   end
 
   let(:alumnus) do
-    FactoryGirl.create(:user, :alumnus)
+    FactoryBot.create(:user, :alumnus)
   end
 
   describe 'validation of attributes' do
@@ -54,17 +54,17 @@ describe User do
     end
 
     it 'should not be valid with duplicate email' do
-      expect(FactoryGirl.build(:user, email: user.email)).to be_invalid
+      expect(FactoryBot.build(:user, email: user.email)).to be_invalid
     end
 
     it 'should not be valid with duplicate HPI email' do
-      FactoryGirl.create(:user, email: 'test@student.hpi.uni-potsdam.de')
-      expect(FactoryGirl.build(:user, email: 'test@student.hpi.de')).to be_invalid
+      FactoryBot.create(:user, email: 'test@student.hpi.uni-potsdam.de')
+      expect(FactoryBot.build(:user, email: 'test@student.hpi.de')).to be_invalid
     end
 
     it 'should not be valid with duplicate alumni email' do
-      expect(FactoryGirl.build(:user, alumni_email: alumnus.alumni_email)).to be_invalid
-      expect(FactoryGirl.build(:user, alumni_email: alumnus.alumni_email.downcase)).to be_invalid
+      expect(FactoryBot.build(:user, alumni_email: alumnus.alumni_email)).to be_invalid
+      expect(FactoryBot.build(:user, alumni_email: alumnus.alumni_email.downcase)).to be_invalid
     end
 
     it 'should not be valid as alumnus with hpi email' do
@@ -83,7 +83,7 @@ describe User do
     before(:each) do
       require 'csv'
 
-      @user = FactoryGirl.create(:user, :alumnus)
+      @user = FactoryBot.create(:user, :alumnus)
 
       @csv_row = CSV.parse_line("nachname,vorname,akad_titel,geburtsname,abschluss,jahr,private_email,alumnimail,weitere_emailadresse,emailverteiler,keine_email,letztes_unternehmen,aktuelle_position,ort_land,auf_linkedin,unternehmen_bekannt,strae,ort,plz,land,telefon,weitere_email_nicht_fr_newsletter_nutzen,notiz,einverstndnis_alumniarbeit_erteilt,strae_weitere_adresse,plz,stadt,land\n#{@user.lastname},#{@user.firstname},,,Bachelor,2017,private@example.com,#{@user.alumni_email}@hpi-alumni.de,,#{@user.alumni_email}@hpi-alumni.de\;,,Unternehmen,Developer,Deutschland,,,,,,,,,,,,,,", {headers: true, return_headers: false, header_converters: :symbol})
     end
@@ -134,7 +134,7 @@ describe User do
     end
 
     it 'updates the current employer and position' do
-      @user.manifestation.cv_jobs << FactoryGirl.create(:cv_job, position: 'CEO', employer: 'Google Inc', current: true)
+      @user.manifestation.cv_jobs << FactoryBot.create(:cv_job, position: 'CEO', employer: 'Google Inc', current: true)
 
       updated_row = User.update_alumni_data(@csv_row)
 

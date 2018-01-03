@@ -4,22 +4,22 @@ describe "the employer page" do
 
   subject { page }
 
-  let(:employer) { FactoryGirl.create(:employer, name: 'EPIC', description: 'A description.', website: 'www.employer.com' ) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:employer) { FactoryBot.create(:employer, name: 'EPIC', description: 'A description.', website: 'www.employer.com' ) }
+  let(:user) { FactoryBot.create(:user) }
   let(:staff) { employer.staff_members.first }
 
   before do
-    @student1 = FactoryGirl.create(:student)
+    @student1 = FactoryBot.create(:student)
     login(@student1.user)
-    @job_offer_active = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.active)
-    @job_offer_pending = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.pending, release_date: nil)
-    @job_offer_closed = FactoryGirl.create(:job_offer, employer: employer, status: JobStatus.closed)
+    @job_offer_active = FactoryBot.create(:job_offer, employer: employer, status: JobStatus.active)
+    @job_offer_pending = FactoryBot.create(:job_offer, employer: employer, status: JobStatus.pending, release_date: nil)
+    @job_offer_closed = FactoryBot.create(:job_offer, employer: employer, status: JobStatus.closed)
     visit employer_path(employer)
   end
 
   describe "can be edited" do
     it "by staff members of the employer" do
-      staff = FactoryGirl.create(:staff, employer: employer)
+      staff = FactoryBot.create(:staff, employer: employer)
       login(staff.user)
       visit employer_path(employer)
 
@@ -29,7 +29,7 @@ describe "the employer page" do
     end
 
     it "by an admin" do
-      admin = FactoryGirl.create(:user, :admin)
+      admin = FactoryBot.create(:user, :admin)
       login(admin)
       visit employer_path(employer)
 
@@ -51,24 +51,24 @@ describe "the employer page" do
   describe "can be activated" do
 
     before :each do
-      @employer = FactoryGirl.create(:employer, activated: false)
+      @employer = FactoryBot.create(:employer, activated: false)
     end
 
     it "by admin" do
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
       visit employer_path(@employer)
       is_expected.to have_link 'Activate'
     end
 
     it "not by students" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       visit employer_path(@employer)
       expect(current_path).to eq root_path
       is_expected.to have_content "You are not authorized to access this page."
     end
 
     it "not by staff members" do
-      login FactoryGirl.create(:staff)
+      login FactoryBot.create(:staff)
       visit employer_path(@employer)
       expect(current_path).to eq root_path
       is_expected.to have_content "You are not authorized to access this page."
@@ -77,7 +77,7 @@ describe "the employer page" do
     it "can also be activated if a new package was booked" do
       @employer.update_column :activated, true
       @employer.update_column :requested_package_id, 1
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
       visit employer_path(@employer)
       is_expected.to have_link 'Activate'
     end
@@ -87,7 +87,7 @@ describe "the employer page" do
   describe "creating a new employer" do
 
     it "displays a form to create the first staff member as admin" do
-      admin = FactoryGirl.create(:user, :admin)
+      admin = FactoryBot.create(:user, :admin)
       login(admin)
       visit new_employer_path
 
@@ -123,9 +123,9 @@ describe "the employer page" do
 
   describe "editing an existing employer" do
     it "does not have a select for former deputy" do
-      admin = FactoryGirl.create(:user, :admin)
-      employer = FactoryGirl.create(:employer)
-      staff = FactoryGirl.create(:staff, employer: employer)
+      admin = FactoryBot.create(:user, :admin)
+      employer = FactoryBot.create(:employer)
+      staff = FactoryBot.create(:staff, employer: employer)
       login(admin)
       visit edit_employer_path(employer)
 
@@ -165,7 +165,7 @@ describe "the employer page" do
     end
 
     it "not for an employer of another employer" do
-      staff = FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer))
+      staff = FactoryBot.create(:staff, employer: FactoryBot.create(:employer))
       login(staff.user)
       visit employer_path(employer)
       is_expected.not_to have_content('Pending')
@@ -174,7 +174,7 @@ describe "the employer page" do
 
     it "for an employer of a paying employer" do
       employer.update_column :booked_package_id, 1
-      staff = FactoryGirl.create(:staff, employer: employer)
+      staff = FactoryBot.create(:staff, employer: employer)
       login(staff.user)
       visit employer_path(employer)
       is_expected.to have_content('Pending')
@@ -192,14 +192,14 @@ describe "the employer page" do
     end
 
     it "should have link" do
-      staff = FactoryGirl.create(:staff, employer: @job_offer_closed.employer)
+      staff = FactoryBot.create(:staff, employer: @job_offer_closed.employer)
       login staff.user
       visit employer_path(employer)
       is_expected.to have_link @job_offer_closed.title
     end
 
     it "should not have link for foreign staff" do
-      foreign_staff = FactoryGirl.create(:staff)
+      foreign_staff = FactoryBot.create(:staff)
       login foreign_staff.user
       visit employer_path(employer)
       is_expected.not_to have_link @job_offer_closed.title

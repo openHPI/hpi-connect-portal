@@ -15,7 +15,7 @@ describe NewsletterOrdersController do
   describe "DELETE destroy" do
 
     before(:each) do
-      @newsletter_order = FactoryGirl.create(:newsletter_order)
+      @newsletter_order = FactoryBot.create(:newsletter_order)
     end
 
     it "deletes newsletter if student belongs to newsletter" do
@@ -25,7 +25,7 @@ describe NewsletterOrdersController do
     end
 
     it "does not delete newsletter if student is not allowed" do
-      login FactoryGirl.create(:user)
+      login FactoryBot.create(:user)
       delete :destroy, { id: @newsletter_order.id }
       expect(NewsletterOrder.count).to eq(1)
     end
@@ -48,7 +48,7 @@ describe NewsletterOrdersController do
     let(:valid_session) { { }}
 
     it "creates newsletter if logged in student" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       expect {
         post :create, valid_attributes, valid_session
       }.to change(NewsletterOrder, :count).by(1)
@@ -60,7 +60,7 @@ describe NewsletterOrdersController do
 
     before(:each) do
       search_hash = {state: 3}
-      @newsletter_order = FactoryGirl.create(:newsletter_order, search_params: search_hash)
+      @newsletter_order = FactoryBot.create(:newsletter_order, search_params: search_hash)
     end
 
     it "should show newsletter_order" do
@@ -70,7 +70,7 @@ describe NewsletterOrdersController do
     end
 
     it "should not show newsletter_order if not allowed" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       get :show, {id: @newsletter_order.to_param}, {}
       expect(response).to redirect_to(root_path)
     end

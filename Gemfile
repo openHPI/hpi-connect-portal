@@ -50,7 +50,7 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_bot_rails', require: false
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
   gem 'byebug'
@@ -106,8 +106,8 @@ gem 'validates_timeliness', '~> 4.0'
 # simplify rspec integration testing
 gem 'capybara'
 
-# factory girl for test factories
-gem 'factory_girl'
+# factory bot for test factories
+gem 'factory_bot'
 
 # replacement for glyphicons
 gem 'font-awesome-rails'

@@ -3,21 +3,21 @@ require 'rails_helper'
 describe StaffController do
 
   before(:each) do
-    login FactoryGirl.create(:student).user
+    login FactoryBot.create(:student).user
   end
 
-  let(:admin_role) { FactoryGirl.create(:role, :admin) }
+  let(:admin_role) { FactoryBot.create(:role, :admin) }
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
   let(:valid_session) { {} }
 
   before(:each) do
-    @staff = FactoryGirl.create(:staff)
+    @staff = FactoryBot.create(:staff)
   end
 
   describe "GET index" do
     it "assigns all staff as @staff" do
-      admin = FactoryGirl.create :user, :admin
+      admin = FactoryBot.create :user, :admin
       login admin
 
       get :index, {}, valid_session
@@ -34,13 +34,13 @@ describe StaffController do
 
   describe "DELETE destroy" do
     before(:each) do
-      admin = FactoryGirl.create(:user, :admin)
+      admin = FactoryBot.create(:user, :admin)
       login admin
     end
 
     describe "destroys the requested staff" do
       before(:each) do
-        @staff = FactoryGirl.create(:staff)
+        @staff = FactoryBot.create(:staff)
       end
 
       it "should delete the staff object" do
@@ -53,14 +53,14 @@ describe StaffController do
     end
 
     it "redirects to the staff list" do
-      staff = FactoryGirl.create(:staff)
+      staff = FactoryBot.create(:staff)
       delete :destroy, {id: staff.to_param}, valid_session
       expect(response).to redirect_to(staff_index_path)
     end
   end
 
   describe "GET new" do
-    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+    let(:employer) { FactoryBot.create(:employer, activated: true) }
 
     before :each do
       logout
@@ -78,7 +78,7 @@ describe StaffController do
   end
 
   describe "POST create" do
-    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+    let(:employer) { FactoryBot.create(:employer, activated: true) }
     let(:valid_attributes) { {token: employer.token, user_attributes:  {firstname: "Max", lastname: "Mustermann", email: "test@testmail.de",
                                                           password: "test", password_confirmation: "test"} } }
 

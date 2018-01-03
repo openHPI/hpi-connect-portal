@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "employers/edit" do
   before(:each) do
-    @employer = assign(:employer, FactoryGirl.create(:employer))
+    @employer = assign(:employer, FactoryBot.create(:employer))
   end
 
   it "renders the edit employer form" do

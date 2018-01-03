@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :language do
     sequence(:name)  { |n| "Language #{n}" }
   end

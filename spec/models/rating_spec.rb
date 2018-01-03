@@ -20,7 +20,7 @@ require 'rails_helper'
 describe Rating do
 
   before(:each) do
-    @rating = FactoryGirl.create(:rating)
+    @rating = FactoryBot.create(:rating)
   end
 
   context "validations" do

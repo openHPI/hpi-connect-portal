@@ -6,12 +6,12 @@ describe "the job offer flow" do
 
   include ApplicationHelper
 
-  let(:employer) { FactoryGirl.create(:employer) }
-  let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:admin) { FactoryGirl.create(:user, :admin)}
-  let(:first_applicant) { FactoryGirl.create(:student) }
-  let(:second_applicant) { FactoryGirl.create(:student) }
+  let(:employer) { FactoryBot.create(:employer) }
+  let(:creating_staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:admin) { FactoryBot.create(:user, :admin)}
+  let(:first_applicant) { FactoryBot.create(:student) }
+  let(:second_applicant) { FactoryBot.create(:student) }
 
   subject { page }
 

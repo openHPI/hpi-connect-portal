@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "students/show" do
   before(:each) do
-    @student = assign(:student, FactoryGirl.create(:student, additional_information: "MyText",
+    @student = assign(:student, FactoryBot.create(:student, additional_information: "MyText",
       homepage: "Homepage",
       github: "Github",
       facebook: "Facebook",
@@ -11,7 +11,7 @@ describe "students/show" do
     ))
 
     allow(view).to receive(:signed_in?) { false }
-    allow(view).to receive(:current_user) { FactoryGirl.create(:user) }
+    allow(view).to receive(:current_user) { FactoryBot.create(:user) }
     allow(view).to receive(:can?) { true }
   end
 
