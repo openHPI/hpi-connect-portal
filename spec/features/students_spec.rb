@@ -2,18 +2,18 @@ require 'rails_helper'
 
 describe "the students page" do
 
-  let(:staff) { FactoryGirl.create(:staff) }
+  let(:staff) { FactoryBot.create(:staff) }
 
   before(:all){
-    FactoryGirl.create(:job_status, :active)
+    FactoryBot.create(:job_status, :active)
   }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-    @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
+    @programming_language = FactoryBot.create(:programming_language)
+    @student1 = FactoryBot.create(:student, programming_languages: [@programming_language])
     login staff.user
     visit students_path
   end
@@ -42,7 +42,7 @@ describe "the students page" do
   describe "as a student" do
 
     it "is available for students" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       visit students_path
       expect(current_path).to eq(students_path)
     end
@@ -51,7 +51,7 @@ describe "the students page" do
   describe "as an admin" do
 
     before(:each) do
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
       visit students_path
     end
 
@@ -71,14 +71,14 @@ end
 describe "the students editing page" do
 
   before(:all) do
-    FactoryGirl.create(:job_status, :active)
+    FactoryBot.create(:job_status, :active)
   end
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-    @student1 = FactoryGirl.create(:student)
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
+    @student1 = FactoryBot.create(:student)
     login @student1.user
   end
 
@@ -108,7 +108,7 @@ describe "the students editing page" do
    end
 
   it "can be edited by an admin" do
-    admin = FactoryGirl.create(:user, :admin)
+    admin = FactoryBot.create(:user, :admin)
     login admin
     visit student_path(@student1)
 
@@ -129,18 +129,18 @@ end
 describe "the students profile page" do
 
   before(:all) do
-    FactoryGirl.create(:job_status, :active)
+    FactoryBot.create(:job_status, :active)
   end
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
 
-    @job_offer =  FactoryGirl.create(:job_offer)
-    @student1 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer])
-    @student2 = FactoryGirl.create(:student, assigned_job_offers: [@job_offer], visibility_id:2)
-    @student3 = FactoryGirl.create(:student, visibility_id:0)
+    @job_offer =  FactoryBot.create(:job_offer)
+    @student1 = FactoryBot.create(:student, assigned_job_offers: [@job_offer])
+    @student2 = FactoryBot.create(:student, assigned_job_offers: [@job_offer], visibility_id:2)
+    @student3 = FactoryBot.create(:student, visibility_id:0)
 
     login @student1.user
   end
@@ -225,7 +225,7 @@ describe "the students profile page" do
     end
 
     it "can't be edited by staff members " do
-      staff = FactoryGirl.create(:staff)
+      staff = FactoryBot.create(:staff)
       login staff.user
       visit edit_student_path(@student1)
 
@@ -240,9 +240,9 @@ describe "the students profile page" do
 
   describe "as a member of the staff" do
     before :each do
-      @student = FactoryGirl.create(:student)
-      @employer = FactoryGirl.create(:employer)
-      @staff = FactoryGirl.create(:staff, employer: @employer)
+      @student = FactoryBot.create(:student)
+      @employer = FactoryBot.create(:employer)
+      @staff = FactoryBot.create(:staff, employer: @employer)
       login @staff.user
     end
 
@@ -274,8 +274,8 @@ describe "the students profile page" do
 
   describe "as admin" do
     it "should have activate button" do
-      login FactoryGirl.create(:user, :admin)
-      student = FactoryGirl.create(:student)
+      login FactoryBot.create(:user, :admin)
+      student = FactoryBot.create(:student)
       student.user.update_column :activated, false
       visit student_path(student)
       assert current_path == student_path(student)
@@ -287,8 +287,8 @@ end
 describe "student newsletters" do
 
   before(:each) do
-    employer = FactoryGirl.create(:employer, name:"Test Company")
-    FactoryGirl.create(:job_offer, state_id: 2,
+    employer = FactoryBot.create(:employer, name:"Test Company")
+    FactoryBot.create(:job_offer, state_id: 2,
                        employer: employer,
                        status: JobStatus.active,
                        start_date: Date.current,
@@ -301,7 +301,7 @@ describe "student newsletters" do
   end
 
   it "creates newsletter_order" do
-    student = FactoryGirl.create(:student)
+    student = FactoryBot.create(:student)
     login student.user
     visit job_offers_path
     select "HPI Student", from: "student_group"
@@ -322,16 +322,16 @@ end
 
 describe "student filtering by employer" do
   before(:each) do
-    job1 = FactoryGirl.create(:cv_job, employer: "SAP")
-    @student1 = FactoryGirl.create(:student, cv_jobs: [job1])
-    job2 = FactoryGirl.create(:cv_job, employer: "SAP AG")
-    @student2 = FactoryGirl.create(:student, cv_jobs: [job2])
-    job3 = FactoryGirl.create(:cv_job, employer: "HPI")
-    @student3 = FactoryGirl.create(:student, cv_jobs: [job3])
+    job1 = FactoryBot.create(:cv_job, employer: "SAP")
+    @student1 = FactoryBot.create(:student, cv_jobs: [job1])
+    job2 = FactoryBot.create(:cv_job, employer: "SAP AG")
+    @student2 = FactoryBot.create(:student, cv_jobs: [job2])
+    job3 = FactoryBot.create(:cv_job, employer: "HPI")
+    @student3 = FactoryBot.create(:student, cv_jobs: [job3])
   end
 
   it "works for one specified employer" do
-    login FactoryGirl.create(:user, :admin)
+    login FactoryBot.create(:user, :admin)
     visit students_path
     fill_in "employer", with: "SAP"
     click_on "Go!"
@@ -341,7 +341,7 @@ describe "student filtering by employer" do
   end
 
   it "works for more specified employers" do
-    login FactoryGirl.create(:user, :admin)
+    login FactoryBot.create(:user, :admin)
     visit students_path
     fill_in "employer", with: "SAP,SAP AG"
     click_on "Go!"
@@ -353,20 +353,20 @@ end
 
 describe "student filtering by programming language and language" do
   before(:each) do
-    @programming_language_1 = FactoryGirl.create(:programming_language)
-    @programming_language_2 = FactoryGirl.create(:programming_language)
-    @language_1 = FactoryGirl.create(:language)
-    @language_2 = FactoryGirl.create(:language)
+    @programming_language_1 = FactoryBot.create(:programming_language)
+    @programming_language_2 = FactoryBot.create(:programming_language)
+    @language_1 = FactoryBot.create(:language)
+    @language_2 = FactoryBot.create(:language)
 
-    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
-    @student2 = FactoryGirl.create(:student, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
-    @student3 = FactoryGirl.create(:student, programming_languages: [@programming_language_2], languages: [@language_1])
-    @student4 = FactoryGirl.create(:student, programming_languages: [@programming_language_2], languages: [@language_2])
-    @student5 = FactoryGirl.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
+    @student1 = FactoryBot.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1])
+    @student2 = FactoryBot.create(:student, programming_languages: [@programming_language_1], languages: [@language_1, @language_2])
+    @student3 = FactoryBot.create(:student, programming_languages: [@programming_language_2], languages: [@language_1])
+    @student4 = FactoryBot.create(:student, programming_languages: [@programming_language_2], languages: [@language_2])
+    @student5 = FactoryBot.create(:student, programming_languages: [@programming_language_1, @programming_language_2], languages: [@language_1, @language_2])
   end
 
   it "finds all users with the requested programming language, and language" do
-    login FactoryGirl.create(:user, :admin)
+    login FactoryBot.create(:user, :admin)
     visit students_path
     check "programming_language_#{@programming_language_1.id}"
     check "language_#{@language_1.id}"

@@ -2,17 +2,17 @@ require 'rails_helper'
 
 describe "job_offers/show" do
   before(:each) do
-    @employer = FactoryGirl.create(:employer)
-    @job_offer = assign(:job_offer, FactoryGirl.create(:job_offer,
+    @employer = FactoryBot.create(:employer)
+    @job_offer = assign(:job_offer, FactoryBot.create(:job_offer,
       description: "Description",
       title: "Title",
       employer: @employer,
       start_date: Date.current + 10,
       end_date: Date.current + 20,
-      status: FactoryGirl.create(:job_status, name: "active")
+      status: FactoryBot.create(:job_status, name: "active")
     ))
     allow(view).to receive(:can?) { false }
-    allow(view).to receive(:current_user) { FactoryGirl.create(:user) }
+    allow(view).to receive(:current_user) { FactoryBot.create(:user) }
   end
 
   it "renders attributes in <p>" do

@@ -26,7 +26,7 @@ end
 
 describe "FAQ page" do
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   before(:each) do
     @faq = Faq.create!([{
@@ -36,7 +36,7 @@ describe "FAQ page" do
   end
 
   it 'should return a page for FAQ' do
-    @student = FactoryGirl.create(:student)
+    @student = FactoryBot.create(:student)
     login @student.user
     visit faqs_path
     expect(page).to have_content "FAQ"
@@ -44,7 +44,7 @@ describe "FAQ page" do
 
 
   it 'should have a buttons for creating new FAQs' do
-    admin = FactoryGirl.create(:user, :admin)
+    admin = FactoryBot.create(:user, :admin)
     login admin
 
     visit faqs_path
@@ -60,7 +60,7 @@ describe "FAQ page" do
 
 
   it 'should have a buttons for editing FAQs' do
-    admin = FactoryGirl.create(:user, :admin)
+    admin = FactoryBot.create(:user, :admin)
     login admin
 
     visit faqs_path

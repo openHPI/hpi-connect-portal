@@ -3,7 +3,7 @@ require 'rails_helper'
 describe SessionsController do
 
   before :each do
-    @user = FactoryGirl.create :user, password: 'password', password_confirmation: 'password'
+    @user = FactoryBot.create :user, password: 'password', password_confirmation: 'password'
   end
 
   describe "POST create" do
@@ -29,7 +29,7 @@ describe SessionsController do
     end
 
     it "redirects to employers home if staff logs in" do
-      staff = FactoryGirl.create :staff
+      staff = FactoryBot.create :staff
       post 'create', {session: {email: staff.email, password: "password123"}}
       expect(response).to redirect_to(home_employers_path)
     end

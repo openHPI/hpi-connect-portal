@@ -5,10 +5,10 @@ ruby '2.4.0'
 gem 'rails', '~> 4.2.0'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.17.1'
+gem 'pg', '~> 0.20.0'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 5.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
@@ -23,7 +23,7 @@ gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 gem 'jquery-rails', '~> 3.1.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0.2'
+gem 'jbuilder', '~> 2.0'
 
 # Automatically add rel="noopener noreferrer" to every link with target="_blank"
 gem 'safe_target_blank'
@@ -50,13 +50,13 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_bot_rails', require: false
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
   gem 'byebug'
 end
 
-gem 'web-console', '~> 2.0', group: :development
+gem 'web-console', group: :development
 
 gem 'simplecov', group: :test, require: nil
 
@@ -71,9 +71,6 @@ gem 'airbrake', '~> 5.0'
 
 # bootstrap 3
 gem 'bootstrap-rails-engine'
-
-# navigation
-gem 'simple-navigation', '~> 3.11'
 
 # open ID gem for user activation
 gem 'ruby-openid'
@@ -109,11 +106,11 @@ gem 'validates_timeliness', '~> 4.0'
 # simplify rspec integration testing
 gem 'capybara'
 
-# factory girl for test factories
-gem 'factory_girl'
+# factory bot for test factories
+gem 'factory_bot'
 
 # replacement for glyphicons
-gem 'font-awesome-rails', '~> 4.0.3.1'
+gem 'font-awesome-rails'
 
 # pagination
 gem 'will_paginate', '~> 3.0'
@@ -129,9 +126,9 @@ gem 'simple_form'
 gem 'traco'
 
 # WYSIWYG Text Editor
-gem 'tinymce-rails', '~> 4.1.5'
-gem 'tinymce-rails-langs', '~> 4.20140129'
-gem 'sanitize', '~> 3.0.2'
+gem 'tinymce-rails', '~> 4.0'
+gem 'tinymce-rails-langs', '~> 4.0'
+gem 'sanitize', '~> 4.0'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'

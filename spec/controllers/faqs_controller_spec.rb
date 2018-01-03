@@ -15,7 +15,7 @@ require 'rails_helper'
 describe FaqsController do
 
   before(:each) do
-    login FactoryGirl.create(:student).user
+    login FactoryBot.create(:student).user
   end
 
   let(:valid_attributes) { { "question" => "Is this a question?", "answer" => "Yes", "locale" => "en"} }
@@ -24,7 +24,7 @@ describe FaqsController do
 
   describe "GET index" do
     it "assigns all faqs as @faqs" do
-      faq = FactoryGirl.create(:faq)
+      faq = FactoryBot.create(:faq)
       get :index, {}, valid_session
       expect(assigns(:faqs)).to eq([faq])
     end
@@ -39,7 +39,7 @@ describe FaqsController do
 
   describe "GET edit" do
     it "assigns the requested faq as @faq" do
-      faq = FactoryGirl.create(:faq)
+      faq = FactoryBot.create(:faq)
       get :edit, {id: faq.to_param}, valid_session
       expect(assigns(:faq)).to eq(faq)
     end
@@ -85,7 +85,7 @@ describe FaqsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested faq" do
-        faq = FactoryGirl.create(:faq)
+        faq = FactoryBot.create(:faq)
         # Assuming there are no other faqs in the database, this
         # specifies that the Faq created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -95,20 +95,20 @@ describe FaqsController do
       end
 
       it "assigns the requested faq as @faq" do
-        faq = FactoryGirl.create(:faq)
+        faq = FactoryBot.create(:faq)
         put :update, {id: faq.to_param, faq: valid_attributes}, valid_session
         expect(assigns(:faq)).to eq(faq)
       end
 
       it "redirects to the faqs index" do
-        faq = FactoryGirl.create(:faq)
+        faq = FactoryBot.create(:faq)
         put :update, {id: faq.to_param, faq: valid_attributes}, valid_session
         expect(response).to redirect_to(faqs_path)
       end
 
       describe "with invalid params" do
         it "assigns the faq as @faq" do
-          faq = FactoryGirl.create(:faq)
+          faq = FactoryBot.create(:faq)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Faq).to receive(:save).and_return(false)
           put :update, {id: faq.to_param, faq: { "question" => "invalid value" }}, valid_session
@@ -116,7 +116,7 @@ describe FaqsController do
         end
 
         it "re-renders the 'edit' template" do
-          faq = FactoryGirl.create(:faq)
+          faq = FactoryBot.create(:faq)
           # Trigger the behavior that occurs when invalid params are submitted
           allow_any_instance_of(Faq).to receive(:save).and_return(false)
           put :update, {id: faq.to_param, faq: { "question" => "invalid value" }}, valid_session
@@ -128,14 +128,14 @@ describe FaqsController do
 
   describe "DELETE destroy" do
     it "destroys the requested faq" do
-      faq = FactoryGirl.create(:faq)
+      faq = FactoryBot.create(:faq)
       expect {
         delete :destroy, {id: faq.to_param}, valid_session
       }.to change(Faq, :count).by(-1)
     end
 
     it "redirects to the faqs list" do
-      faq = FactoryGirl.create(:faq)
+      faq = FactoryBot.create(:faq)
       delete :destroy, {id: faq.to_param}, valid_session
       expect(response).to redirect_to(faqs_url)
     end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Admin::ConfigurablesController do
-  let(:admin) { FactoryGirl.create(:user, :admin) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
   render_views
 
   describe "validation" do

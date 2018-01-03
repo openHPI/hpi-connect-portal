@@ -13,12 +13,12 @@ require 'rails_helper'
 describe JobOffersHelper do
   describe "start date" do
     it "is from now on/ ab sofort if flexible" do
-      @job_offer = FactoryGirl.create(:job_offer, flexible_start_date: true)
+      @job_offer = FactoryBot.create(:job_offer, flexible_start_date: true)
       assert_equal(human_readable_start_date, t('job_offers.default_start_date'))
     end
 
     it "is is the actual date if not flexible" do
-      @job_offer = FactoryGirl.create(:job_offer, flexible_start_date: false)
+      @job_offer = FactoryBot.create(:job_offer, flexible_start_date: false)
       assert_equal(human_readable_start_date, @job_offer.start_date.to_s)
     end
   end

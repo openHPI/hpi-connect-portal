@@ -23,7 +23,7 @@
 #  token                 :string(255)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :employer do
     sequence(:name) { |n| "Employer #{n}" }
     description     "Makes beautiful websites"
@@ -40,8 +40,8 @@ FactoryGirl.define do
     end
 
     before(:create) do | employer |
-      FactoryGirl.create(:staff, employer: employer)
-      employer.contact = FactoryGirl.create(:contact, counterpart: employer)
+      FactoryBot.create(:staff, employer: employer)
+      employer.contact = FactoryBot.create(:contact, counterpart: employer)
     end
   end
 end

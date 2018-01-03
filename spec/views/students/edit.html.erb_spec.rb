@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "students/edit" do
   before(:each) do
-    @student = assign(:student, FactoryGirl.create(:student))
+    @student = assign(:student, FactoryBot.create(:student))
   end
 
   it "renders the edit student form" do

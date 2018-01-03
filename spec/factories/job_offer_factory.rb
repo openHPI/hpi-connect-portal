@@ -28,7 +28,7 @@
 #  student_group_id          :integer          default(0), not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_offer, class: JobOffer do
     sequence(:title)  { |n| "Title #{n}" }
     description       "Develop a website"
@@ -42,8 +42,8 @@ FactoryGirl.define do
     student_group_id  {Student::GROUPS.index("hpi")}
 
     before(:create) do |job_offer, evaluator|
-      job_offer.employer ||= FactoryGirl.create(:employer)
-      job_offer.contact = FactoryGirl.create(:contact, counterpart: job_offer)
+      job_offer.employer ||= FactoryBot.create(:employer)
+      job_offer.contact = FactoryBot.create(:contact, counterpart: job_offer)
     end
   end
 end

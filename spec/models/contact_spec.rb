@@ -18,7 +18,7 @@ require 'rails_helper'
 
 describe Contact do
   let(:contact) do
-    FactoryGirl.create(:contact)
+    FactoryBot.create(:contact)
   end
 
   describe 'validation of attributes' do

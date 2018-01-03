@@ -19,9 +19,9 @@ require 'rails_helper'
 
 describe RatingsController do
 
-  let(:student)  { FactoryGirl.create(:student)  }
-  let(:employer) { FactoryGirl.create(:employer) }
-  let!(:employer_ratings) { FactoryGirl.create_list(:rating, 5, employer: employer, student: student) }
+  let(:student)  { FactoryBot.create(:student)  }
+  let(:employer) { FactoryBot.create(:employer) }
+  let!(:employer_ratings) { FactoryBot.create_list(:rating, 5, employer: employer, student: student) }
   subject(:staff) { employer.staff_members.first }
 
   describe "GET index" do
@@ -69,7 +69,7 @@ describe RatingsController do
 
       context "not as rating owner" do
         it "doesn't destroy the rating from the database" do
-          other_student = FactoryGirl.create(:student)
+          other_student = FactoryBot.create(:student)
           login other_student.user
           expect {
             delete :destroy, { employer_id: employer.id, id: del_rating.id }
@@ -114,7 +114,7 @@ describe RatingsController do
 
   describe "POST create" do
 
-    subject(:new_rating) { FactoryGirl.build(:rating) }
+    subject(:new_rating) { FactoryBot.build(:rating) }
 
     context "as student" do
       it "creates a new rating" do

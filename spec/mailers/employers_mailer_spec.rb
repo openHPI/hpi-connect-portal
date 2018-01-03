@@ -7,9 +7,9 @@ describe EmployersMailer do
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
-    @employer = FactoryGirl.create(:employer)
+    @employer = FactoryBot.create(:employer)
     ActionMailer::Base.deliveries = []
-    FactoryGirl.create(:staff, employer: @employer)
+    FactoryBot.create(:staff, employer: @employer)
     @employer.reload
   end
 
@@ -57,7 +57,7 @@ describe EmployersMailer do
     before(:each) do
       @colleague_email = "tester@test.de"
       @receiver_name = "Top Receiver"
-      @sender = FactoryGirl.create(:user)
+      @sender = FactoryBot.create(:user)
       @email = EmployersMailer.invite_colleague_email(@employer, @colleague_email, @receiver_name, @sender)
     end
 
@@ -90,7 +90,7 @@ describe EmployersMailer do
     end
 
     it "does not contain sender_name if admin" do
-      @sender = FactoryGirl.create(:user, :admin)
+      @sender = FactoryBot.create(:user, :admin)
       @email = EmployersMailer.invite_colleague_email(@employer, @colleague_email, @receiver_name, @sender)
       expect(@email).not_to have_body_text(@sender.full_name)
     end

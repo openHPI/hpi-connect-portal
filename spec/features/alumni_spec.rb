@@ -4,7 +4,7 @@ describe "the alumni flow" do
 
   describe "creating alumni entries" do
     before :each do
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
       visit new_alumni_path
       Alumni.delete_all
       ActionMailer::Base.deliveries = []
@@ -37,8 +37,8 @@ describe "the alumni flow" do
 
   describe "send registration mail to alumni" do
     before :each do
-      login FactoryGirl.create(:user, :admin)
-      FactoryGirl.create(:alumni, alumni_email: "alexander.ernst")
+      login FactoryBot.create(:user, :admin)
+      FactoryBot.create(:alumni, alumni_email: "alexander.ernst")
       visit remind_via_mail_alumni_index_path
       ActionMailer::Base.deliveries = []
     end
@@ -51,7 +51,7 @@ describe "the alumni flow" do
     end
 
     it "should not be possible for non_admin" do
-      login FactoryGirl.create(:user)
+      login FactoryBot.create(:user)
       visit remind_via_mail_alumni_index_path
       expect(current_path).not_to eq(remind_via_mail_alumni_index_path)
     end
@@ -59,12 +59,12 @@ describe "the alumni flow" do
 
   describe "registering alumni addresses" do
     before :each do
-      @alumni = FactoryGirl.create :alumni
+      @alumni = FactoryBot.create :alumni
       visit alumni_email_path(token: @alumni.token)
     end
 
     it "should be possible to add an alumni address to an existing account" do
-      student = FactoryGirl.create :student
+      student = FactoryBot.create :student
       fill_in 'session_email', with: student.email
       fill_in 'session_password', with: 'password123'
       click_button I18n.t('home.index.sign_in')
@@ -122,8 +122,8 @@ end
 
 describe "the alumni index page" do
   it "renders an index page for admins" do
-    alumni = FactoryGirl.create(:alumni, firstname: "Hans", lastname: "Peter")
-    login FactoryGirl.create(:user, :admin)
+    alumni = FactoryBot.create(:alumni, firstname: "Hans", lastname: "Peter")
+    login FactoryBot.create(:user, :admin)
     visit alumni_index_path
     click_link "Hans Peter"
     expect(current_path).to eq(alumni_path(alumni))
@@ -134,8 +134,8 @@ describe "Alumni Reminder Email" do
 
   it "sends mail" do
     ActionMailer::Base.deliveries = []
-    login FactoryGirl.create(:user, :admin)
-    FactoryGirl.create(:alumni)
+    login FactoryBot.create(:user, :admin)
+    FactoryBot.create(:alumni)
     visit remind_via_mail_alumni_index_path
     find("#remind-all-button").click
     expect(ActionMailer::Base.deliveries.count).to eq(1)

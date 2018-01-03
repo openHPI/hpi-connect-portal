@@ -14,7 +14,7 @@
 #  updated_at  :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :cv_education do
     association   :student
     degree        'Bachelor of Science'

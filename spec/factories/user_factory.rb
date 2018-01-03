@@ -25,7 +25,7 @@
 #  alumni_email       :string(255)      default(""), not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     sequence(:firstname)    { |n| "Firstname#{n}" }
     sequence(:lastname)     { |n| "Lastname#{n}" }
