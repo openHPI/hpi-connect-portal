@@ -8,7 +8,7 @@ gem 'rails', '~> 4.2.0'
 gem 'pg', '~> 0.20.0'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 5.0'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
@@ -56,7 +56,7 @@ group :development, :test do
   gem 'byebug'
 end
 
-gem 'web-console', '~> 2.0', group: :development
+gem 'web-console', group: :development
 
 gem 'simplecov', group: :test, require: nil
 
