@@ -156,7 +156,7 @@ class Student < ActiveRecord::Base
   def self.export_alumni(include_unregistered, registered_from, registered_to)
     CSV.generate(headers: true) do |csv|
       shared_attributes = %w{lastname firstname alumni_email email}
-      headers = ["registered?"] + shared_attributes + %w{graduation current_enterprise(s) current_position(s)}
+      headers = ["registered?"] + shared_attributes + %w{graduation current_enterprise(s) current_position(s) registered_on}
       csv << headers
 
       csv = self.add_registered_alumni_to_csv(csv, shared_attributes, registered_from, registered_to)
@@ -178,6 +178,7 @@ class Student < ActiveRecord::Base
           alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
           alumni_attributes.push(current_enterprises_and_positions[0])
           alumni_attributes.push(current_enterprises_and_positions[1])
+          alumni_attributes.push(student.created_at.strftime("%d.%m.%Y"))
           csv << alumni_attributes
         end
       end
