@@ -101,7 +101,7 @@ class StudentsController < ApplicationController
   end
 
   def update
-    #update_from_params_for_languages params, student_path(@student)
+    update_from_params_for_languages params, student_path(@student)
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))

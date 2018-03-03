@@ -262,13 +262,14 @@ describe StudentsController do
     it "updates the requested student with an existing programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       expect(@student.programming_languages_users.size).to eq(1)
-      expect_any_instance_of(ProgrammingLanguagesUser).to receive(:update_attributes).with({ skill: "2" })
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"), programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, skill: "2" } } }, valid_session
+      @student.reload
+      expect(@student.programming_languages_users.first.skill).to eq (2)
     end
 
     it "updates the requested student with a new programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "4", @programming_language_2.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"), programming_languages_users_attributes: { "1" => { id: @student.programming_languages_users.first.id, programming_language_id: @programming_language_1.id.to_s, skill: "3" }, "2" => { programming_language_id: @programming_language_2.id.to_s, skill: "2" } } } }, valid_session
       @student.reload
       expect(@student.programming_languages_users.size).to eq(2)
       expect(@student.programming_languages.first).to eq(@programming_language_1)
@@ -277,7 +278,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryGirl.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4'), FactoryGirl.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, programming_language_skills: { @programming_language_1.id.to_s => "2" } }, valid_session
+      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor"), programming_languages_users_attributes: { id: @student.programming_languages_users.last.id.to_s, _destroy: 1  } } }, valid_session
       @student.reload
       expect(@student.programming_languages_users.size).to eq(1)
       expect(@student.programming_languages.first).to eq(@programming_language_1)
