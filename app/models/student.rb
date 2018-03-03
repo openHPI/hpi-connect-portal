@@ -52,6 +52,7 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :programming_languages
+  accepts_nested_attributes_for :programming_languages_users, allow_destroy: true, reject_if: proc { |attributes| attributes['skill'].blank? }
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
 

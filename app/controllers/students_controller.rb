@@ -86,15 +86,22 @@ class StudentsController < ApplicationController
 
   def edit
     authorize! :edit, @student
-    @programming_languages = ProgrammingLanguage.all
+
     @languages = Language.all
     @employers = Employer.all
+
     @student.cv_jobs.build
     @student.cv_educations.build
+
+    ProgrammingLanguage.where.not(id: @student.programming_languages.pluck(:id)).each do |programming_language|
+      @student.programming_languages_users.build(programming_language: programming_language)
+    end
+
+    @student.programming_languages_users.build(programming_language_attributes: { private: true })
   end
 
   def update
-    update_from_params_for_languages params, student_path(@student)
+    #update_from_params_for_languages params, student_path(@student)
 
     if @student.update student_params
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
@@ -147,7 +154,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:semester, :dschool_status_id, :group_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current])
+      params.require(:student).permit(:semester, :dschool_status_id, :group_id, :visibility_id, :academic_program_id, :graduation_id, :additional_information, :birthday, :homepage, :github, :facebook, :xing, :linkedin, :employment_status_id, :languages, :programming_languages, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation, :photo], cv_jobs_attributes: [:id, :_destroy, :position, :employer, :start_date, :end_date, :current, :description], cv_educations_attributes: [:id, :_destroy, :degree, :field, :institution, :start_date, :end_date, :current], programming_languages_users_attributes: [:id, :_destroy, :programming_language_id, :skill, programming_language_attributes: [:id, :name, :private]])
     end
 
     def rescue_from_exception(exception)

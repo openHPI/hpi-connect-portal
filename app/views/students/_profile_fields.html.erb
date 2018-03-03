@@ -64,34 +64,54 @@
           </li>
         </ul>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default programming-languages">
       <div class="panel-heading"><h4><%= t("activerecord.attributes.user.programming_languages") %></h4></div>
       <ul class="list-group">
-        <%= simple_fields_for :programming_languages do |f2| %>
-          <% if @programming_languages %>
-            <% @programming_languages.each do |programming_language| %>
-              <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <%= f2.label programming_language.name, programming_language.name, class: "control-label" %>
-                  </div>
-                  <div class="col-sm-9">
-                    <% if student.persisted? %>
-                      <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id,programming_language.id) %>
-                    <% end %>
-                    <% (1..5).each do |i| %>
-                      <% if language_skill && i == language_skill.skill %>
-                        <%= radio_button :programming_language_skills, programming_language.id, i, checked: "checked", class: "star" %>
-                      <% else %>
-                        <%= radio_button :programming_language_skills, programming_language.id, i, class: "star" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
-              </li>
-            <% end %>
-          <% end %>
+
+        <%= form.simple_fields_for :programming_languages_users do |f2| %>
+          <% language_skill = ProgrammingLanguagesUser.find_by_student_id_and_programming_language_id(student.id, f2.object.programming_language.id) %>
+          <li class="list-group-item" id="programming-language-<%= f2.object.programming_language.id %>" <%= raw('style="display: none;"') unless language_skill %>>
+            <div class="row">
+
+              <div class="col-sm-6">
+                <% if f2.object.programming_language.id.nil? %>
+                  <%= f2.simple_fields_for :programming_language do |f3| %>
+                    <%= f3.input :name %>
+                    <%= f3.input :private, as: :hidden, input_html: { value: true } %>
+                  <% end %>
+                <% else %>
+                  <%= label_tag 'programming_language_name', f2.object.programming_language.name, class: 'control-label' %>
+                <% end %>
+              </div>
+
+              <div class="col-sm-6">
+                <%= f2.collection_radio_buttons :skill, 1..5, proc { |a| a }, proc { |a| a }, boolean_style: :inline do |b| %>
+                  <%= b.radio_button(class: 'star') %>
+                <% end %>
+                <%= f2.input :programming_language_id, as: :hidden %>
+              </div>
+
+            </div>
+          </li>
         <% end %>
+
+        <% # Dropdown menu for all programming languages with no existing skill %>
+        <li class="list-group-item programming-language-select-li">
+          <div class="row">
+
+            <div class="col-sm-6">
+              <%= select_tag 'add_new_programming_language', options_from_collection_for_select(ProgrammingLanguage.where.not(id: student.programming_languages.pluck(:id)), 'id', 'name') + options_for_select([["Andere", "other"]]), multiple: false, include_blank: true, class: 'select optional form-control programming-language-select' %>
+            </div>
+
+            <div class="col-sm-6">
+              <% (1..5).each do |i| %>
+                <%= radio_button_tag 'stars', i, false, disabled: true, class: 'star' %>
+              <% end %>
+            </div>
+
+          </div>
+        </li>
+
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-12"><%= t("layouts.star_description_prog") %></div>

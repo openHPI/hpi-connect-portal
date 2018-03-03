@@ -3,7 +3,7 @@ $(document).ready( function() {
     jQuery.fn.extend({
         updateIndex: function(index, newIndex) {
             return this.each(function() {
-                $(this).attr('name', $(this).attr('name').replace('[' + index + ']', '[' + newIndex + ']')); 
+                $(this).attr('name', $(this).attr('name').replace('[' + index + ']', '[' + newIndex + ']'));
                 if ($(this).attr('id')) $(this).attr('id', $(this).attr('id').replace('_' + index + '_', '_' + newIndex + '_'));
             });
         }
@@ -26,21 +26,21 @@ $(document).ready( function() {
             cvEntry.appendTo($('.cv-group' + element.data('id')));
         }
     };
-    
+
     $('.cv-add').click( function(e) {
         e.preventDefault();
         var cv = $('.cv-entry-fields' + $(this).data('id'));
         var newEntry = cv.first().clone();
-        
+
 		// remove input values
 		newEntry.find('input, textarea, select').each(function() {
             $(this).updateIndex('0', cv.length);
             $(this).val('').removeAttr('checked').removeAttr('selected');
         });
-		
+
 		// make all form elements visible
 		newEntry.find('li').css('display','');
-		
+
         newEntry.appendTo($('.cv-group' + $(this).data('id')));
     });
 
@@ -68,5 +68,55 @@ $(document).ready( function() {
 
     $(document).on('change', '.current-item input[type=checkbox]', function() {
         $(this).parents('.current-item').prev('.end-date-item').toggle();
+    });
+
+    $(document).on('change', '.programming-language-select', function() {
+        // add programming language to list
+        var programmingLanguageId = $(this).find(":selected").val();
+        var programmingLanguageName = "Test";
+
+        if(programmingLanguageId == '') {
+          // do nothing
+        } else if(programmingLanguageId == 'other') {
+
+          $('#programming-language-').toggle();
+          $('.programming-language-select option[value=' + programmingLanguageId + ']').remove();
+
+          $('input.destroyer[value=' + programmingLanguageId + ']').remove();
+
+        } else {
+
+          $('#programming-language-' + programmingLanguageId).toggle();
+          $('.programming-language-select option[value=' + programmingLanguageId + ']').remove();
+
+          $('input.destroyer[value=' + programmingLanguageId + ']').remove();
+
+        }
+    });
+
+    $(document).on('click', '.rating-cancel', function() {
+      var programmingLanguageId = $(this).closest('.col-sm-6').find('input.hidden').val();
+
+      if(programmingLanguageId == '') {
+
+        programmingLanguageId = 'other';
+        var programmingLanguageName = 'Andere';
+        $('#programming-language-').toggle();
+
+      } else {
+
+        var programmingLanguageName = $(this).closest('.row').find('.control-label').text();
+
+        var destroyer = $(this).closest('.col-sm-6').find('input.hidden').clone();
+        destroyer.attr('id', destroyer.attr('id').replace('programming_language_id', 'destroy'));
+        destroyer.attr('name', destroyer.attr('name').replace('programming_language_id', '_destroy'));
+        destroyer.val('1');
+        destroyer.addClass('destroyer');
+        $(this).closest('.col-sm-6').find('input.hidden').after(destroyer);
+        $('#programming-language-' + programmingLanguageId).toggle();
+
+      }
+
+      $('.programming-language-select').append($('<option>', { value: programmingLanguageId, text: programmingLanguageName}));
     });
 });
