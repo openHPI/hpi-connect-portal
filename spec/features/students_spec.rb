@@ -4,14 +4,7 @@ describe "the students page" do
 
   let(:staff) { FactoryGirl.create(:staff) }
 
-  before(:all){
-    FactoryGirl.create(:job_status, :active)
-  }
-
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
     @programming_language = FactoryGirl.create(:programming_language)
     @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
     login staff.user
@@ -71,16 +64,14 @@ end
 describe "the students editing page" do
 
   before(:all) do
-    FactoryGirl.create(:job_status, :active)
+    @student1 = FactoryGirl.create(:student)
   end
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-    @student1 = FactoryGirl.create(:student)
     login @student1.user
   end
+
+  let(:student2) { FactoryGirl.create(:student) }
 
   it "should contain all attributes of a student" do
     visit edit_student_path(@student1)
@@ -123,6 +114,74 @@ describe "the students editing page" do
     expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
     expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
     expect(page).to have_content("www.face.com/alex")
+  end
+
+  describe "adding programming language skills on the students edit page" do
+    before(:all) do
+      @programming_language1 = FactoryGirl.create(:programming_language)
+      @programming_language2 = FactoryGirl.create(:programming_language)
+
+      @student1.programming_languages_users << FactoryGirl.create(:programming_languages_user, student: @student1, programming_language: @programming_language1, skill: 5)
+    end
+
+    before(:each) do
+      visit edit_student_path(@student1)
+    end
+
+    it "is possible to add a new skill", js: true do
+      page.select(@programming_language2.name, from: 'add_new_programming_language')
+      all('div.row', text: @programming_language2.name).last.first('.star').click
+      page.execute_script "window.scrollTo(0,0)"
+      first('input[type="submit"]').click
+
+      expect(current_path).to eq(student_path(@student1))
+      expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+      expect(page).to have_content(@programming_language2.name)
+      expect(find(:css, "input[type='radio'][name='" + @programming_language2.name + "'][value='1']", visible: false)).to be_checked
+      expect(find(:css, "input[type='radio'][name='" + @programming_language2.name + "'][value='2']", visible: false)).not_to be_checked
+    end
+
+    it "is possible to remove a skill", js: true do
+      all('div.row', text: @programming_language1.name).last.find('.rating-cancel').click
+      page.execute_script "window.scrollTo(0,0)"
+      first('input[type="submit"]').click
+
+      expect(current_path).to eq(student_path(@student1))
+      expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+      expect(page).not_to have_content(@programming_language1.name)
+    end
+
+    it "is possible to change an existing skill", js: true do
+      all('div.row', text: @programming_language1.name).last.first('.star').click
+      page.execute_script "window.scrollTo(0,0)"
+      first('input[type="submit"]').click
+
+      expect(current_path).to eq(student_path(@student1))
+      expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+      expect(page).to have_content(@programming_language1.name)
+      expect(find(:css, "input[type='radio'][name='" + @programming_language1.name + "'][value='1']", visible: false)).to be_checked
+      expect(find(:css, "input[type='radio'][name='" + @programming_language1.name + "'][value='2']", visible: false)).not_to be_checked
+    end
+
+    it "is possible to add a new skill in a new programming language", js: true do
+      page.select('Other', from: 'add_new_programming_language')
+      input_container_div = find('div.student_programming_languages_users_programming_language_name')
+      input_container_div.find('input').set 'New programming language'
+      input_container_div.find(:xpath, '../..').first('.star').click
+      page.execute_script "window.scrollTo(0,0)"
+      first('input[type="submit"]').click
+
+      expect(current_path).to eq(student_path(@student1))
+      expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
+      expect(page).to have_content("New programming language")
+      expect(find(:css, "input[type='radio'][name='New programming language'][value='1']", visible: false)).to be_checked
+      expect(find(:css, "input[type='radio'][name='New programming language'][value='2']", visible: false)).not_to be_checked
+
+      login student2.user
+      visit edit_student_path(student2)
+      expect(page).to have_content(@programming_language1.name)
+      expect(page).not_to have_content("New programming language")
+    end
   end
 end
 

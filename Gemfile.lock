@@ -179,7 +179,7 @@ GEM
     mimemagic (0.3.2)
     mini_mime (0.1.4)
     mini_portile2 (2.2.0)
-    minitest (5.10.3)
+    minitest (5.11.3)
     multi_json (1.12.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -332,7 +332,7 @@ GEM
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.3)
-    tzinfo (1.2.3)
+    tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
@@ -433,4 +433,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.15.4
+   1.16.1

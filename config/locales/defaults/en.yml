@@ -165,6 +165,7 @@ en:
   helpers:
     select:
       prompt: Please select
+      other: Other
     submit:
       create: Create %{model}
       submit: Save %{model}

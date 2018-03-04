@@ -17,4 +17,6 @@ class ProgrammingLanguage < ActiveRecord::Base
 
   has_and_belongs_to_many :job_offer
   validates_uniqueness_of :name
+
+  scope :selectable_for_student, ->(student) { where.not(id: student.programming_languages.pluck(:id), private: true) }
 end

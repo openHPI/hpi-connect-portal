@@ -100,7 +100,7 @@
           <div class="row">
 
             <div class="col-sm-6">
-              <%= select_tag 'add_new_programming_language', options_from_collection_for_select(ProgrammingLanguage.where.not(id: student.programming_languages.pluck(:id), private: true), 'id', 'name') + options_for_select([["Andere", "other"]]), multiple: false, include_blank: true, class: 'select optional form-control programming-language-select' %>
+              <%= select_tag 'add_new_programming_language', options_from_collection_for_select(ProgrammingLanguage.selectable_for_student(student), 'id', 'name') + options_for_select([[t("helpers.select.other"), "other"]]), multiple: false, include_blank: true, class: 'select optional form-control programming-language-select' %>
             </div>
 
             <div class="col-sm-6">

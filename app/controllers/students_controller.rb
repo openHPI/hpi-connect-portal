@@ -94,7 +94,7 @@ class StudentsController < ApplicationController
     @student.cv_educations.build
 
     # build options for select
-    ProgrammingLanguage.where.not(id: @student.programming_languages.pluck(:id), private: true).each do |programming_language|
+    ProgrammingLanguage.selectable_for_student(@student).each do |programming_language|
       @student.programming_languages_users.build(programming_language: programming_language)
     end
     @student.programming_languages_users.build(programming_language_attributes: { private: true })

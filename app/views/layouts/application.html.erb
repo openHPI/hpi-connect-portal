@@ -44,7 +44,7 @@
             <h1><a href="http://www.hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
               <% if signed_in? %>
                 <li class="dropdown menu-dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <a href="#" class="dropdown-toggle" id="dropdown-toggle" data-toggle="dropdown">
                     <%= "#{current_user.firstname} #{current_user.lastname}" %>
                     <b class="caret"></b>
                   </a>
