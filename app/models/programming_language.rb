@@ -16,7 +16,6 @@ class ProgrammingLanguage < ActiveRecord::Base
   accepts_nested_attributes_for :programming_languages_users
 
   has_and_belongs_to_many :job_offer
-  validates_uniqueness_of :name
 
   scope :selectable_for_student, ->(student) { where.not(id: student.programming_languages.pluck(:id), private: true) }
 end

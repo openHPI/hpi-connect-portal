@@ -89,7 +89,7 @@ $(document).ready( function() {
           $('#programming-language-' + programmingLanguageId).toggle();
           $('.programming-language-select option[value=' + programmingLanguageId + ']').remove();
 
-          $('input.destroyer[value=' + programmingLanguageId + ']').remove();
+          $('input.destroyer_' + programmingLanguageId).remove();
 
         }
     });
@@ -111,7 +111,7 @@ $(document).ready( function() {
         destroyer.attr('id', destroyer.attr('id').replace('programming_language_id', 'destroy'));
         destroyer.attr('name', destroyer.attr('name').replace('programming_language_id', '_destroy'));
         destroyer.val('1');
-        destroyer.addClass('destroyer');
+        destroyer.addClass('destroyer_' + programmingLanguageId);
         $(this).closest('.col-sm-6').find('input.hidden').after(destroyer);
         $('#programming-language-' + programmingLanguageId).toggle();
 
