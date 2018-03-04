@@ -13,6 +13,7 @@
       <h4><%= t("activerecord.attributes.faq.answer") %></h4>
     </div>
     <%= f.input :answer, input_html: { class: "tinymce" } %>
+    <%= tinymce %>
   </div>
       <%= f.hidden_field :locale, value: locale.to_s %>
   <div class="actions">

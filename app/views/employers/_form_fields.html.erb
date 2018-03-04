@@ -15,36 +15,97 @@
     </li>
     <li class="list-group-item">
       <div class="row">
-        <div class="col-sm-6">
-            <div class="row">
-              <div class="col-sm-3">
-                <%= label_field form, :avatar, t("activerecord.attributes.employer.avatar") %>
-              </div>
-              <div class="col-sm-9">
-                <% unless employer.avatar.nil? %>
-                    <%= image_tag employer.avatar.url(:medium), class: " employer-thumbnail", alt: employer.name %>
-                <% end %>
-                <br><br>
-                <%= form.file_field :avatar %>
-              </div>
-            </div>
+        <div class="col-sm-3">
+          <%= label_field form, :avatar, t("activerecord.attributes.employer.avatar") %>
+        </div>
+        <div class="col-sm-9">
+          <% unless employer.avatar.nil? %>
+              <%= image_tag employer.avatar.url(:medium), class: "employer-thumbnail", alt: employer.name %>
+          <% end %>
+          <br><br>
+          <%= form.file_field :avatar %>
         </div>
       </div>
     </li>
+  </ul>
 
+  <div class="panel-heading">
+    <h4><%= t("activerecord.attributes.employer.contact") %></h4>
+  </div>
+  <ul class="list-group">
+    <%= form.simple_fields_for :contact, @employer.contact do |c| %>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field c, :name, t("activerecord.attributes.contact.name") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :name %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field c, :street, t("activerecord.attributes.contact.street") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :street %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field c, :zip_city, t("activerecord.attributes.contact.zip_city") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :zip_city %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field c, :email, t("activerecord.attributes.contact.email") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :email %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field c, :phone, t("activerecord.attributes.contact.phone") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :phone %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= t("employers.packages") %></h4>
+  </div>
+  <ul class="list-group">
     <li class="list-group-item">
       <div>
         <div class="package-div">
-            <%= form.label 'Packages', class: "control-label" %>
+          <%= form.label t("employers.package_descriptions.free"), class: "control-label" %>
         </div>
-        <div class="pay-div">
-            <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        <div class="package-div">
+            <%= form.label t("employers.package_descriptions.with_costs"), class: "control-label" %>
         </div>
-        <div class="pay-div">
-          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        <div class="package-div">
+          <%= form.label t("employers.package_descriptions.with_costs"), class: "control-label" %>
         </div>
-        <div class="pay-div">
-          <%= form.label t("employers.with_costs"), class: "controle-label" %>
+        <div class="package-div">
+          <%= form.label t("employers.package_descriptions.with_costs"), class: "control-label" %>
         </div>
       </div>
       <div class="package-div">
@@ -83,20 +144,21 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-sm-12">
-          <%= t("employers.prices") %>
+          <%= t("employers.package_descriptions.prices") %>
         </div>
       </div>
     </li>
   </ul>
 </div>
-      <% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) %>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-              <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %>
-              <%= @employer.single_jobs_requested %>
-          </div>
-        </div>
-      <% end %>
+
+<% if current_user && (current_user.admin? || (current_user.staff? && current_user.manifestation.employer == @employer)) && action_name == 'edit' %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <%= t("activerecord.attributes.employer.number_of_requested_graduate_jobs") %>
+        <%= @employer.single_jobs_requested %>
+    </div>
+  </div>
+<% end %>
 
 <div class="employers-extra-information">
   <div class="panel panel-default">
@@ -112,6 +174,7 @@
             </div>
             <div class="col-sm-9">
               <%= form.input description, placeholder: t("job_offers.enter_description"), input_html: { class: "tinymce" } %>
+              <%= tinymce %>
             </div>
           </div>
         </li>
@@ -157,60 +220,5 @@
         </div>
       </li>
     </ul>
-    <div class="panel-heading">
-      <h4><%= t("activerecord.attributes.employer.contact") %></h4>
-    </div>
-    <%= form.simple_fields_for :contact, @employer.contact do |c| %>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field c, :name, t("activerecord.attributes.employer.contacting.name") %>
-          </div>
-          <div class="col-sm-9">
-            <%= c.input :name %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field form, :street, t("activerecord.attributes.employer.contacting.street") %>
-          </div>
-          <div class="col-sm-9">
-            <%= c.input :street %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field form, :zip_city, t("activerecord.attributes.employer.contacting.zip_city") %>
-          </div>
-          <div class="col-sm-9">
-            <%= c.input :zip_city %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field form, :email, t("activerecord.attributes.employer.contacting.email") %>
-          </div>
-          <div class="col-sm-9">
-            <%= c.input :email %>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field form, :phone, t("activerecord.attributes.employer.contacting.phone") %>
-          </div>
-          <div class="col-sm-9">
-            <%= c.input :phone %>
-          </div>
-        </div>
-      </li>
-      <% end %>
   </div>
 </div>

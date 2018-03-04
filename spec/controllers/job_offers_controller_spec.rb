@@ -33,42 +33,45 @@ require 'rails_helper'
 describe JobOffersController do
 
   before(:each) do
-    login FactoryGirl.create(:student).user
+    login FactoryBot.create(:student).user
   end
-  let(:admin) { FactoryGirl.create(:user, :admin) }
-  let(:employer) { FactoryGirl.create(:employer) }
-  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:closed) {FactoryGirl.create(:job_status, :closed)}
+  let(:admin) { FactoryBot.create(:user, :admin) }
+  let(:employer) { FactoryBot.create(:employer) }
+  let(:staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:closed) {FactoryBot.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => closed}}
   let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryGirl.create(:job_status, :active)}}
+   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
+   let(:valid_attributes_with_contact_attr) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active),
+     contact_attributes: {"name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact"}, "copy_to_employer_contact"=>"true"}}
 
   let(:valid_session) { {} }
 
   before(:all) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
   end
 
   before(:each) do
-    @epic = FactoryGirl.create(:employer)
-    @os = FactoryGirl.create(:employer)
-    @itas = FactoryGirl.create(:employer)
+    @epic = FactoryBot.create(:employer)
+    @os = FactoryBot.create(:employer)
+    @itas = FactoryBot.create(:employer)
 
-    @employer_one = FactoryGirl.create(:employer)
-    @employer_two = FactoryGirl.create(:employer)
-    @employer_three = FactoryGirl.create(:employer)
+    @employer_one = FactoryBot.create(:employer)
+    @employer_two = FactoryBot.create(:employer)
+    @employer_three = FactoryBot.create(:employer)
 
-    @active = FactoryGirl.create(:job_status, name:"active")
+    @active = FactoryBot.create(:job_status, name:"active")
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
 
-    @job_offer = FactoryGirl.create(:job_offer, status: @active)
+    @job_offer = FactoryBot.create(:job_offer, status: @active)
 
     employer.reload
   end
@@ -119,15 +122,15 @@ describe JobOffersController do
     end
 
     it "redirects students when job is in archive" do
-      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
+      archive_job = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
       expect(response).to redirect_to(archive_job_offers_path)
     end
 
     it "shows archive job for admin" do
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
 
-      archive_job = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, name: "closed"))
+      archive_job = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, name: "closed"))
       get :show, {id: archive_job.to_param}, valid_session
       expect(response).not_to redirect_to(archive_job_offers_path)
       expect(response).to render_template("show")
@@ -153,10 +156,10 @@ describe JobOffersController do
   describe "GET find" do
     it "assigns @job_offers_list[:items] to all job offers with the specified employer" do
 
-      FactoryGirl.create(:job_offer, employer: @employer_two, status: @active)
-      FactoryGirl.create(:job_offer, employer: @employer_one, status: @active)
-      FactoryGirl.create(:job_offer, employer: @employer_three, status: @active)
-      FactoryGirl.create(:job_offer, employer: @employer_one, status: @active)
+      FactoryBot.create(:job_offer, employer: @employer_two, status: @active)
+      FactoryBot.create(:job_offer, employer: @employer_one, status: @active)
+      FactoryBot.create(:job_offer, employer: @employer_three, status: @active)
+      FactoryBot.create(:job_offer, employer: @employer_one, status: @active)
 
       job_offers = JobOffer.filter_employer(@employer_one.id)
       get :index, ({employer: @employer_one.id}), valid_session
@@ -171,8 +174,8 @@ describe JobOffersController do
 
 
       let!(:job_offers_hpi)     { [@job_offer] }
-      let!(:job_offers_dschool) { FactoryGirl.create_list(:job_offer, 2, employer: @employer_two, status: @active, student_group_id:  dschool_group_id)}
-      let!(:job_offers_both)    { FactoryGirl.create_list(:job_offer, 2, employer: @employer_three, status: @active, student_group_id: both_group_id)}
+      let!(:job_offers_dschool) { FactoryBot.create_list(:job_offer, 2, employer: @employer_two, status: @active, student_group_id:  dschool_group_id)}
+      let!(:job_offers_both)    { FactoryBot.create_list(:job_offer, 2, employer: @employer_three, status: @active, student_group_id: both_group_id)}
 
 
       context "student selects 'HPI' group" do
@@ -201,20 +204,20 @@ describe JobOffersController do
 
   describe "GET matching" do
     it "assigns @job_offers_list[:items] to all job offers matching to the logged in user" do
-      programming_language1 = FactoryGirl.create(:programming_language)
-      programming_language2 = FactoryGirl.create(:programming_language)
-      programming_language3 = FactoryGirl.create(:programming_language)
+      programming_language1 = FactoryBot.create(:programming_language)
+      programming_language2 = FactoryBot.create(:programming_language)
+      programming_language3 = FactoryBot.create(:programming_language)
 
-      language1 = FactoryGirl.create(:language)
-      language2 = FactoryGirl.create(:language)
+      language1 = FactoryBot.create(:language)
+      language2 = FactoryBot.create(:language)
 
       JobOffer.delete_all
-      job1 = FactoryGirl.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language2])
-      job2 = FactoryGirl.create(:job_offer, status: @active, programming_languages: [programming_language1, programming_language2])
-      job3 = FactoryGirl.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language1] )
-      job4 = FactoryGirl.create(:job_offer, status: @active, languages: [language2], programming_languages:[programming_language3])
+      job1 = FactoryBot.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language2])
+      job2 = FactoryBot.create(:job_offer, status: @active, programming_languages: [programming_language1, programming_language2])
+      job3 = FactoryBot.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language1] )
+      job4 = FactoryBot.create(:job_offer, status: @active, languages: [language2], programming_languages:[programming_language3])
 
-      student = FactoryGirl.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
+      student = FactoryBot.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
       login student.user
       get :matching, {language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id)}, valid_session
       items = assigns(:job_offers_list)[:items].to_a
@@ -226,8 +229,8 @@ describe JobOffersController do
 
   describe "PUT prolong" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active))
-      @staff = FactoryGirl.create(:staff, employer: @job_offer.employer)
+      @job_offer = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, :active))
+      @staff = FactoryBot.create(:staff, employer: @job_offer.employer)
       @job_offer.update({end_date: Date.current + 10 })
       login @staff.user
     end
@@ -240,7 +243,7 @@ describe JobOffersController do
     end
 
     it "should not be possible to request for the staff of another employer" do
-      login FactoryGirl.create(:staff).user
+      login FactoryBot.create(:staff).user
       get :request_prolong, {id: @job_offer.id}
       expect(response).to redirect_to(job_offers_path)
     end
@@ -251,7 +254,7 @@ describe JobOffersController do
     end
 
     it "should only be possible for an admin" do
-      login FactoryGirl.create(:user, :admin)
+      login FactoryBot.create(:user, :admin)
       get :prolong, {id: @job_offer.id}
       expect(response).to redirect_to(@job_offer)
       expect(assigns(:job_offer).prolonged_at).to eq(Date.current)
@@ -260,12 +263,12 @@ describe JobOffersController do
 
   describe "GET close" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, status: FactoryGirl.create(:job_status, :active))
+      @job_offer = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, :active))
     end
 
     it "marks jobs as completed if the user is staff of the employer" do
-      closed = FactoryGirl.create(:job_status, :closed)
-      login FactoryGirl.create(:staff, employer: @job_offer.employer).user
+      closed = FactoryBot.create(:job_status, :closed)
+      login FactoryBot.create(:staff, employer: @job_offer.employer).user
 
       get :close, { id: @job_offer.id }
       expect(assigns(:job_offer).status).to eq(closed)
@@ -279,7 +282,7 @@ describe JobOffersController do
   describe "GET accept" do
 
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, employer: employer, release_date: nil)
+      @job_offer = FactoryBot.create(:job_offer, employer: employer, release_date: nil)
     end
 
     it "prohibits user to accept job offers if he is not the admin" do
@@ -313,7 +316,7 @@ describe JobOffersController do
 
   describe "GET decline" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer, employer: employer)
+      @job_offer = FactoryBot.create(:job_offer, employer: employer)
     end
 
     it "prohibits user to decline job offers if he is not the admin" do
@@ -335,7 +338,7 @@ describe JobOffersController do
 
       before(:each) do
         login staff.user
-        @job_offer = FactoryGirl.create(:job_offer, employer: employer, status: FactoryGirl.create(:job_status, :active))
+        @job_offer = FactoryBot.create(:job_offer, employer: employer, status: FactoryBot.create(:job_status, :active))
       end
 
       it "assigns a new job_offer as @job_offer" do
@@ -346,12 +349,14 @@ describe JobOffersController do
 
       it "has same values as the original job offer" do
         get :reopen, {id: @job_offer}, valid_session
-        reopend_job_offer = assigns(:job_offer)
-        expected_attr = [:description, :title, :time_effort, :compensation, :employer_id]
+        reopened_job_offer = assigns(:job_offer)
+        expected_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
+        expected_contact_attr = ["name", "street", "zip_city", "email", "phone"]
 
-        expect(reopend_job_offer.attributes.with_indifferent_access.slice(expected_attr)).to eql(@job_offer.attributes.with_indifferent_access.slice(expected_attr))
-        expect(reopend_job_offer.start_date).to be_nil
-        expect(reopend_job_offer.end_date).to be_nil
+        expect(reopened_job_offer.attributes.slice(*expected_attr)).to eql(@job_offer.attributes.slice(*expected_attr))
+        expect(reopened_job_offer.contact.attributes.slice(*expected_contact_attr)).to eql(@job_offer.contact.attributes.slice(*expected_contact_attr))
+        expect(reopened_job_offer.start_date).to be_nil
+        expect(reopened_job_offer.end_date).to be_nil
       end
 
       it "is pending and old job offer changes to closed" do
@@ -377,7 +382,7 @@ describe JobOffersController do
       end
 
       it "allows the admin to create a new job offer" do
-        login FactoryGirl.create(:user, :admin)
+        login FactoryBot.create(:user, :admin)
         expect {
           post :create, { job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
@@ -385,7 +390,7 @@ describe JobOffersController do
       end
 
       it "doesn't allow students to create a job offer" do
-        login FactoryGirl.create(:student).user
+        login FactoryBot.create(:student).user
         expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(0)
@@ -442,13 +447,29 @@ describe JobOffersController do
       end
 
       it "does create a pending joboffer if employer is deactivated" do
-        staff = FactoryGirl.create :staff
+        staff = FactoryBot.create :staff
         staff.employer.update_column :activated, false
         login staff.user
-                expect {
+        expect {
           post :create, {job_offer: valid_attributes}, valid_session
         }.to change(JobOffer, :count).by(1)
         expect(assigns(:job_offer).status).to eq(JobStatus.pending)
+      end
+
+      it "copies contact address to employer if parameter is set" do
+        attributes = valid_attributes_with_contact_attr
+
+        expect{
+          post :create, {job_offer: attributes}, valid_session
+        }.to change(JobOffer, :count).by(1)
+
+        expect(assigns(:job_offer)).to be_a(JobOffer)
+        expect(assigns(:job_offer)).to be_persisted
+        offer = JobOffer.last
+
+        expect(staff.employer.contact.name).to eq(attributes[:contact_attributes]["name"])
+        expect(staff.employer.contact.street).to eq(attributes[:contact_attributes]["street"])
+        expect(staff.employer.contact.zip_city).to eq(attributes[:contact_attributes]["zip_city"])
       end
     end
 
@@ -470,11 +491,11 @@ describe JobOffersController do
       end
 
       it "should not send mail to admin" do
-        job_offer = FactoryGirl.create(:job_offer)
+        job_offer = FactoryBot.create(:job_offer)
         #expect
         expect(JobOffersMailer).not_to receive(:new_job_offer_email).with( job_offer, valid_session )
         # when
-        FactoryGirl.create(:job_offer)
+        FactoryBot.create(:job_offer)
       end
 
       it "handles an invalid start date" do
@@ -491,8 +512,8 @@ describe JobOffersController do
     describe "for employers" do
 
       before :each do
-        @employer = FactoryGirl.create(:employer)
-        @staff = FactoryGirl.create(:staff, employer: @employer)
+        @employer = FactoryBot.create(:employer)
+        @staff = FactoryBot.create(:staff, employer: @employer)
         @attributes = valid_attributes
         @attributes["category_id"] = 2
         @attributes["employer_id"] = @employer.id
@@ -561,7 +582,7 @@ describe JobOffersController do
   describe "PUT update" do
 
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer)
+      @job_offer = FactoryBot.create(:job_offer)
 
       login @job_offer.employer.staff_members[0].user
     end
@@ -588,7 +609,7 @@ describe JobOffersController do
       end
 
       it "only allows the responsible user to update" do
-        login FactoryGirl.create(:staff, employer: @job_offer.employer).user
+        login FactoryBot.create(:staff, employer: @job_offer.employer).user
         put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
         expect(response).to redirect_to(@job_offer)
       end
@@ -613,7 +634,7 @@ describe JobOffersController do
 
   describe "DELETE destroy" do
     before(:each) do
-      @job_offer = FactoryGirl.create(:job_offer)
+      @job_offer = FactoryBot.create(:job_offer)
 
       login @job_offer.employer.staff_members[0].user
     end
@@ -630,7 +651,7 @@ describe JobOffersController do
     end
 
     it "redirects to the job offer page and keeps the offer if the job is running" do
-      @job_offer.update!(status: FactoryGirl.create(:job_status, :active))
+      @job_offer.update!(status: FactoryBot.create(:job_status, :active))
       login @job_offer.employer.staff_members[0].user
 
       expect {

@@ -2,16 +2,16 @@ require 'rails_helper'
 
 describe "the staff page" do
 
-  let(:staff) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)) }
-  let(:admin) { FactoryGirl.create(:user, :admin) }
+  let(:staff) { FactoryBot.create(:staff, employer: FactoryBot.create(:employer)) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
-    @staff1 = FactoryGirl.create(:staff)
-    @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
+    @staff1 = FactoryBot.create(:staff)
+    @programming_language = FactoryBot.create(:programming_language)
+    @student1 = FactoryBot.create(:student, programming_languages: [@programming_language])
     login admin
     visit staff_index_path
   end
@@ -45,7 +45,7 @@ describe "the staff page" do
 
   describe "as a member of staff" do
     it "should not be visible " do
-      FactoryGirl.create(:job_status, name: 'active')
+      FactoryBot.create(:job_status, name: 'active')
       login @staff1.user
       visit staff_index_path
       expect(current_path).not_to eq(staff_index_path)
@@ -53,7 +53,7 @@ describe "the staff page" do
     end
 
     it "should not remove other staff members" do
-      staff2 = FactoryGirl.create(:staff)
+      staff2 = FactoryBot.create(:staff)
       login staff2
       visit staff_path(@staff1)
       expect(page).to_not have_content "Delete"
@@ -62,7 +62,7 @@ describe "the staff page" do
 
    describe "as a student" do
     it "should not be visible " do
-      FactoryGirl.create(:job_status, name: 'active')
+      FactoryBot.create(:job_status, name: 'active')
       login @student1.user
       visit staff_index_path
       expect(current_path).not_to eq(staff_index_path)
@@ -77,7 +77,7 @@ describe "the staff page" do
   end
 
   describe "New staff after invitation" do
-    let(:employer) { FactoryGirl.create(:employer, activated: true) }
+    let(:employer) { FactoryBot.create(:employer, activated: true) }
 
     it "should register colleague to the employer" do
       visit new_staff_index_path(token: employer.token)

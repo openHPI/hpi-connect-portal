@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "the user editing page" do
 
   before :each do
-    @user = FactoryGirl.create :user
+    @user = FactoryBot.create :user
     login @user
   end
 
@@ -34,9 +34,9 @@ end
 
 describe "Login new Alumnus with old HPI Email adress" do
   it "should ask me to change my mail" do
-    future_alumni = FactoryGirl.create(:student)
+    future_alumni = FactoryBot.create(:student)
     future_alumni.user.update(email: "test@hpi-alumni.de")
-    alumni = FactoryGirl.create(:alumni, firstname: future_alumni.firstname, lastname: future_alumni.lastname, alumni_email: "test")
+    alumni = FactoryBot.create(:alumni, firstname: future_alumni.firstname, lastname: future_alumni.lastname, alumni_email: "test")
     visit alumni_email_path(token: alumni.token)
     fill_in 'session_email', with: future_alumni.email
     fill_in 'session_password', with: 'password123'
@@ -49,11 +49,11 @@ end
 describe "Alumni data update" do
   before(:all) do
     require 'csv'
-    FactoryGirl.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
+    FactoryBot.create(:user, :alumnus, firstname: "Max", lastname: "Mustermann", alumni_email: "Max.Mustermann", email: "new@example.com")
   end
 
   it "returns an updated CSV file" do
-    login FactoryGirl.create(:user, :admin)
+    login FactoryBot.create(:user, :admin)
     visit new_alumni_path
     file = File.join fixture_path, "csv/alumni_data_update_file.csv"
     find("#alumni_file_tbu").set(file)

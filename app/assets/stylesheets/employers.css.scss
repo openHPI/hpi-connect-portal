@@ -2,21 +2,12 @@ span.label.label-warning {
     vertical-align: middle;
     font-size: 15px;
 }
+
 .employers-extra-information {
     display: none;
 }
+
 .package-div {
-    width: 25%;
-    float: left;
-    min-width: 100px;
-
-    ul {
-        padding: 0 17px;
-        margin-left: 20px;
-    }
-}
-
-.pay-div {
   width: 25%;
   float: left;
   min-width: 100px;
@@ -30,10 +21,10 @@ span.label.label-warning {
   }
 }
 
-.row.invite-colleague{
+.row.invite-colleague {
   margin-top: 5px;
 }
 
-div.description-text{
+div.description-text {
   text-align: left;
 }

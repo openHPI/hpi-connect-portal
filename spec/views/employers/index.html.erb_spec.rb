@@ -2,13 +2,13 @@ require 'rails_helper'
 
 describe "employers/index" do
   before(:each) do
-    @employer_1 = FactoryGirl.create(:employer)
-    @employer_2 = FactoryGirl.create(:employer)
+    @employer_1 = FactoryBot.create(:employer)
+    @employer_2 = FactoryBot.create(:employer)
     assign(:employers, [@employer_1, @employer_2])
 
-    premium_employer_1 = FactoryGirl.create(:employer, :premium)
+    premium_employer_1 = FactoryBot.create(:employer, :premium)
 
-    premium_employer_2 = FactoryGirl.create(:employer, :premium)
+    premium_employer_2 = FactoryBot.create(:employer, :premium)
 
     allow(premium_employer_1.avatar).to receive(:url){"/some/url/premium_empl_image"}
     allow(premium_employer_2.avatar).to receive(:url){"/another/url/premium_empl_image"}

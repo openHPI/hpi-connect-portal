@@ -15,7 +15,7 @@
 #  score_work_contents     :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :rating do
     description             'Rating description'
     headline                'Rating headline'

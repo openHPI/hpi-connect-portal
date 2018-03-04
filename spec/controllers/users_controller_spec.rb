@@ -33,7 +33,7 @@ describe UsersController do
   let(:valid_session) { {} }
 
   before :each do
-   @user = FactoryGirl.create(:user)
+   @user = FactoryBot.create(:user)
    login @user
   end
 
@@ -49,7 +49,7 @@ describe UsersController do
     end
 
     it "should not be accessible for other users" do
-      login FactoryGirl.create(:user)
+      login FactoryBot.create(:user)
       get :edit, {id: @user.to_param}, valid_session
       assert_redirected_to root_path
     end
@@ -63,7 +63,7 @@ describe UsersController do
     end
 
     it "should not be possible to update parameters of other users" do
-      login FactoryGirl.create(:user)
+      login FactoryBot.create(:user)
       put :update, {id: @user.to_param, user: valid_attributes}, valid_session
       assert_redirected_to root_path
     end
@@ -103,7 +103,7 @@ describe UsersController do
   describe "PATCH update password" do
 
     it "assigns the current user as @user" do
-      user = FactoryGirl.create :user
+      user = FactoryBot.create :user
       login user
       patch :update_password, {user_id: @user.to_param, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'}}, valid_session
       expect(assigns(:user)).to eq(user)
@@ -117,7 +117,7 @@ describe UsersController do
 
   describe "get forgotten password" do
     before :each do
-      @user = FactoryGirl.create :user
+      @user = FactoryBot.create :user
       @user.update_attributes(email: "user1@example.com")
     end
 

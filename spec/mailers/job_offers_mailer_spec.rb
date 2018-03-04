@@ -7,10 +7,10 @@ describe JobOffersMailer do
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
-    @staff = FactoryGirl.create(:staff)
-    @staff2 = FactoryGirl.create(:staff)
-    @job_offer = FactoryGirl.create(:job_offer)
-    @job_offer2 = FactoryGirl.create(:job_offer)
+    @staff = FactoryBot.create(:staff)
+    @staff2 = FactoryBot.create(:staff)
+    @job_offer = FactoryBot.create(:job_offer)
+    @job_offer2 = FactoryBot.create(:job_offer)
     @staff2.update(employer: @job_offer2.employer)
     @job_offers = [@job_offer, @job_offer2]
     @job_offer.reload

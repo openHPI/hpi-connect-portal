@@ -1,0 +1,4 @@
+toolbar: undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code
+menubar: table format view insert edit
+plugins: lists link image anchor advlist autolink searchreplace visualblocks code insertdatetime table contextmenu paste textcolor
+language: <%= I18n.locale %>

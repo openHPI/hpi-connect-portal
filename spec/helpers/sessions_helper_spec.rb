@@ -13,13 +13,13 @@ require 'rails_helper'
 describe SessionsHelper do
 
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryBot.create(:user)
     allow(helper).to receive(:current_user).and_return(@user)
   end
 
   it "returns correct results for current_user" do
     assert_equal(true, helper.current_user?(@user))
-    assert_equal(false, helper.current_user?(FactoryGirl.create(:user)))
+    assert_equal(false, helper.current_user?(FactoryBot.create(:user)))
   end
 
 end

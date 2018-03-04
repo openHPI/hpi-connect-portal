@@ -1,9 +1,9 @@
 module FeatureSessionHelper
 
   def login(user)
-    FactoryGirl.create(:job_status, :pending)
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :closed)
+    FactoryBot.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :closed)
     visit signin_path
     if page.has_link?('dropdown-toggle')
       page.click_link('dropdown-toggle')

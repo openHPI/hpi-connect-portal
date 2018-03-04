@@ -1,0 +1,31 @@
+<div class="wrapper-12 panel-wrapper">
+  <h1> <%= t("employers.export.heading") %> </h1>
+
+  <%= form_tag export_employers_path, method: :post, multipart: true do %>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= t("employers.export.choose") %></h4></div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= radio_button_tag 'employers', 'all', true %> <%= t("employers.export.all") %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= radio_button_tag 'employers', 'registered_from_to' %> <%= t("employers.export.registered_from_to") %>
+            </div>
+            <div class="col-sm-12">
+               <br />
+               <%= t("employers.export.registered_from") %> <%= select_date Date.today - 6.months, prefix: :from_date %> <%= t("employers.export.registered_to") %> <%= select_date Date.today, prefix: :to_date %>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.export") %>" />
+    <br /><br />
+  <% end %>
+</div>

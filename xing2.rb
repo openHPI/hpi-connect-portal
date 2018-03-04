@@ -6,45 +6,21 @@ REQUEST = false
 require 'xing_api'
 
 def get_language_name(n)
-    case n
-    when "en"
-      return "english"
-    when "de"
-      return "german"
-    when "es"
-      return "spanish"
-    when "fr"
-      return "french"
-   when "zh"
-      return "chinese"
-    when "pt"
-      return "portuguese"
-    when "it"
-      return "italian"
-    when "ru"
-      return "russian"
-    when "pl"
-      return "polish"
-    when "sv"
-      return "swedish"
-    when "fi"
-      return "finnish"
-    else
-      return -1
-    end
+  language_names = { "en" => "english", "de" => "german", "es" => "spanish",
+    "fr" => "french", "zh" => "chinese", "pt" => "portuguese",
+    "it" => "italian", "ru" => "russian", "pl" => "polish",
+    "sv" => "swedish", "fi" => "finnish"
+  }
+  language_names.default = -1
+
+  return language_names[n]
 end
 
 def get_skill(string)
-    case string
-    when "NATIVE"
-    return 5
-    when "FLUENT"
-      return 4
-    when "GOOD"
-      return 2
-    else
-      return 1
-    end
+  skill_levels = { "NATIVE" => 5, "FLUENT" => 4, "GOOD" => 2 }
+  skill_levels.default = 1
+
+  return skill_levels[string]
 end
 
 userdata = {

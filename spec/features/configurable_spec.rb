@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe Admin::ConfigurablesController do
 
-  let(:staff) { FactoryGirl.create(:staff, employer: FactoryGirl.create(:employer)) }
-  let(:admin) { FactoryGirl.create(:user, :admin) }
-  let(:student) { FactoryGirl.create(:student) }
+  let(:staff) { FactoryBot.create(:staff, employer: FactoryBot.create(:employer)) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
+  let(:student) { FactoryBot.create(:student) }
 
   it "should not be visible for a member of the staff " do
     login(staff.user)

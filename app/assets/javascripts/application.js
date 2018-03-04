@@ -23,24 +23,9 @@
 
 $(document).ready( function() {
   $('.dropdown-toggle').dropdown();
-	
-  
-  var language = window.locale === 'de' ? 'de' : 'en';
-	
-  tinymce.baseURL = '/connect/jobportal/assets/tinymce';
-    
-	$('textarea.tinymce').tinymce({
-			language : language,
-      plugins: [
-		        "advlist autolink lists link image anchor",
 
-		        "searchreplace visualblocks code",
-		        "insertdatetime table contextmenu paste textcolor"
-		    ],
-			menubar: "table format view insert edit",
-		    toolbar: "undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright | bullist outdent indent | link | code"
-	});
-  
+  tinymce.baseURL = '/connect/jobportal/assets/tinymce'; 
+
   $('div.employer_rating_stars').raty({
     score: function() {
       if ($(this).attr('data-score')){
@@ -49,17 +34,17 @@ $(document).ready( function() {
     },
     readOnly: true
   });
-  
-  
+
+
   $('div.rating_form_field').each(function(){
-                
+
     var tid = '#'+ $(this).attr('data-target');
-    
+
     $(this).raty({
         score: function() {
-          
+
           var input_value = $(tid).val();
-           
+
           if (!( isNaN(input_value) || (! input_value)))
           {
             return input_value;
@@ -75,25 +60,25 @@ $(document).ready( function() {
         targetScore: tid,
         targetType  : 'number'
     });
-  });  
-    
+  });
+
   $('#employers_carousel .item').first().addClass("active");
-  
+
   $('#employers_carousel').carousel({
     interval: 4000,
-    pause: "hover" 
+    pause: "hover"
   });
-  
+
   $('#job_offer_preview_button').click(function() {
-      
-    var job_offer_title = jQuery('.job_offer_title input').val(); 
+
+    var job_offer_title = jQuery('.job_offer_title input').val();
     var job_offer_description = tinymce.activeEditor.getContent();
-    
+
     $('#job_offer_preview_modal').find(".modal-title").text(job_offer_title);
     $('#job_offer_preview_modal').find(".modal-body").html(job_offer_description);
     $('#job_offer_preview_modal').modal('show');
   });
-  
+
 });
 
 $(function() {

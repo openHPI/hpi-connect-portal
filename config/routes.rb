@@ -32,7 +32,8 @@ HpiHiwiPortal::Application.routes.draw do
       resources :employers do
         collection do
           get "home"
-          get "export_all"
+          get "export"
+          post "export" => "employers#send_csv"
         end
         member do
           get "activate"

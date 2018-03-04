@@ -6,12 +6,12 @@ describe "the job offer flow" do
 
   include ApplicationHelper
 
-  let(:employer) { FactoryGirl.create(:employer) }
-  let(:creating_staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:staff) { FactoryGirl.create(:staff, employer: employer) }
-  let(:admin) { FactoryGirl.create(:user, :admin)}
-  let(:first_applicant) { FactoryGirl.create(:student) }
-  let(:second_applicant) { FactoryGirl.create(:student) }
+  let(:employer) { FactoryBot.create(:employer) }
+  let(:creating_staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:admin) { FactoryBot.create(:user, :admin)}
+  let(:first_applicant) { FactoryBot.create(:student) }
+  let(:second_applicant) { FactoryBot.create(:student) }
 
   subject { page }
 
@@ -57,6 +57,9 @@ describe "the job offer flow" do
     assert_equal(job_offer.employer, creating_staff.employer)
     assert_equal(job_offer.employer, staff.employer)
     assert_equal(employer.staff_members.length, 3)
+    assert_equal(job_offer.contact.name, creating_staff.employer.contact.name)
+    assert_equal(job_offer.contact.street, creating_staff.employer.contact.street)
+    assert_equal(job_offer.contact.zip_city, creating_staff.employer.contact.zip_city)
 
     # admin of the employers get acceptance pending email
     expect(ActionMailer::Base.deliveries.count).to eq(1)

@@ -5,7 +5,7 @@ describe "Job Offer pages" do
 
   subject { page }
 
-  let(:staff) { FactoryGirl.create(:staff) }
+  let(:staff) { FactoryBot.create(:staff) }
 
   before(:each) do
     @status_pending = JobStatus.pending
@@ -13,9 +13,46 @@ describe "Job Offer pages" do
     @status_closed = JobStatus.closed
   end
 
+  describe "edit page" do
+    let(:job_offer) { FactoryBot.create(:job_offer, status: @status_active) }
+
+    describe "visited by a staff member whose employer has no contact address" do
+      before do
+        staff.employer.contact.assign_attributes name: nil, street: nil, zip_city: nil
+        staff.employer.contact.save(validate: false)
+        login staff.user
+        visit new_job_offer_path
+      end
+
+      it "has a checked checkbox to copy contact address to employer" do
+        expect(page).to have_checked_field(I18n.t("job_offers.copy_to_employer_contact"))
+      end
+    end
+
+    describe "visited by a staff member whose employer has a contact address" do
+      before do
+        login staff.user
+        visit new_job_offer_path
+      end
+
+      it "prefills contact fields with employer's contact address" do
+        expect(find_field(I18n.t("activerecord.attributes.contact.name")).value).to eq staff.employer.contact.name
+        expect(find_field(I18n.t("activerecord.attributes.contact.street")).value).to eq staff.employer.contact.street
+        expect(find_field(I18n.t("activerecord.attributes.contact.zip_city")).value).to eq staff.employer.contact.zip_city
+        expect(find_field(I18n.t("activerecord.attributes.contact.email")).value).to eq staff.employer.contact.email
+        expect(find_field(I18n.t("activerecord.attributes.contact.phone")).value).to eq staff.employer.contact.phone
+      end
+
+      it "does not have a checked checkbox to copy contact address to employer" do
+        expect(page).to have_field(I18n.t("job_offers.copy_to_employer_contact"))
+        expect(page).not_to have_checked_field(I18n.t("job_offers.copy_to_employer_contact"))
+      end
+    end
+  end
+
   describe "show page" do
     describe "open job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_active) }
+      let(:job_offer) { FactoryBot.create(:job_offer, status: @status_active) }
 
       before do
         login staff.user
@@ -23,7 +60,7 @@ describe "Job Offer pages" do
       end
 
       describe "application button and list" do
-        let(:student) { FactoryGirl.create(:student) }
+        let(:student) { FactoryBot.create(:student) }
 
         describe "as a student" do
           before do
@@ -35,7 +72,7 @@ describe "Job Offer pages" do
 
           describe "not being activated" do
             before do
-              student = FactoryGirl.create(:student)
+              student = FactoryBot.create(:student)
               student.user.update_column :activated, false
               login student.user
               visit job_offer_path(job_offer)
@@ -46,11 +83,11 @@ describe "Job Offer pages" do
     end
 
     describe "running job offer" do
-      let(:employer) { FactoryGirl.create(:employer) }
+      let(:employer) { FactoryBot.create(:employer) }
       let(:staff) { employer.staff_members.first }
-      let(:job_offer) { FactoryGirl.create(:job_offer, employer: employer, status: @status_active) }
+      let(:job_offer) { FactoryBot.create(:job_offer, employer: employer, status: @status_active) }
 
-      let(:student) { FactoryGirl.create(:student) }
+      let(:student) { FactoryBot.create(:student) }
 
       describe "as a student" do
         before(:each) do
@@ -61,7 +98,7 @@ describe "Job Offer pages" do
       end
 
       describe "as a staff of the job offers employer" do
-        let(:staff) { FactoryGirl.create(:staff, employer: job_offer.employer) }
+        let(:staff) { FactoryBot.create(:staff, employer: job_offer.employer) }
 
         before do
           login staff.user
@@ -84,7 +121,7 @@ describe "Job Offer pages" do
       end
 
       describe "as a admin" do
-        let(:admin) { FactoryGirl.create(:user, :admin) }
+        let(:admin) { FactoryBot.create(:user, :admin) }
 
         before do
           login admin
@@ -98,11 +135,11 @@ describe "Job Offer pages" do
 
     describe "pending job offer" do
 
-      let(:employer) { FactoryGirl.create(:employer) }
+      let(:employer) { FactoryBot.create(:employer) }
       let(:staff) { employer.staff_members.first }
-      let(:job_offer) { FactoryGirl.create(:job_offer, employer: employer, status: @status_pending) }
+      let(:job_offer) { FactoryBot.create(:job_offer, employer: employer, status: @status_pending) }
 
-      let(:student) { FactoryGirl.create(:student) }
+      let(:student) { FactoryBot.create(:student) }
 
       before do
         staff.update(employer: employer)
@@ -125,7 +162,7 @@ describe "Job Offer pages" do
       end
 
       describe "as a staff of the job offers employer" do
-        let(:staff) { FactoryGirl.create(:staff, employer: employer) }
+        let(:staff) { FactoryBot.create(:staff, employer: employer) }
 
         before do
           login staff.user
@@ -167,7 +204,7 @@ describe "Job Offer pages" do
       end
 
       describe "as admin" do
-        let(:admin) { FactoryGirl.create(:user, :admin) }
+        let(:admin) { FactoryBot.create(:user, :admin) }
 
         before do
           login admin
@@ -193,12 +230,12 @@ describe "Job Offer pages" do
     end
 
     describe "completed job offer" do
-      let(:job_offer) { FactoryGirl.create(:job_offer, status: @status_closed) }
+      let(:job_offer) { FactoryBot.create(:job_offer, status: @status_closed) }
 
       before { visit job_offer_path(job_offer) }
 
       describe "as admin" do
-        let(:admin) { FactoryGirl.create(:user, :admin) }
+        let(:admin) { FactoryBot.create(:user, :admin) }
 
         before do
           login admin
@@ -211,11 +248,11 @@ describe "Job Offer pages" do
     end
 
     describe "show jobs in archive" do
-      let(:admin) { FactoryGirl.create(:user, :admin)}
-      let(:staff) { FactoryGirl.create(:staff)}
-      let(:student) { FactoryGirl.create(:student)}
+      let(:admin) { FactoryBot.create(:user, :admin)}
+      let(:staff) { FactoryBot.create(:staff)}
+      let(:student) { FactoryBot.create(:student)}
       before do
-        FactoryGirl.create(:job_offer, title: "archive job", status: @status_closed)
+        FactoryBot.create(:job_offer, title: "archive job", status: @status_closed)
       end
 
       it "shows job offer details link for admin" do
@@ -241,8 +278,8 @@ describe "Job Offer pages" do
   describe "index page" do
 
     before :each do
-      @job_offer_with_bachelor = FactoryGirl.create(:job_offer, graduation_id: Student::GRADUATIONS.index('bachelor'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
-      @job_offer_with_abitur = FactoryGirl.create(:job_offer, graduation_id: Student::GRADUATIONS.index('abitur'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
+      @job_offer_with_bachelor = FactoryBot.create(:job_offer, graduation_id: Student::GRADUATIONS.index('bachelor'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
+      @job_offer_with_abitur = FactoryBot.create(:job_offer, graduation_id: Student::GRADUATIONS.index('abitur'), state_id: JobOffer::STATES.index("BE"), status: JobStatus.active)
       visit job_offers_path
     end
 

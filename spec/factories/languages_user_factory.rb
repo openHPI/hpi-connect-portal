@@ -8,7 +8,7 @@
 #  skill       :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :languages_user do
     association :student
     association :language

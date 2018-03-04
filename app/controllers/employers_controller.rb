@@ -27,7 +27,7 @@ class EmployersController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
 
-  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy, :invite_colleague, :export_all]
+  authorize_resource only: [:edit, :update, :activate, :deactivate, :destroy, :invite_colleague, :send_csv]
   before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
 
   def index
@@ -125,9 +125,17 @@ class EmployersController < ApplicationController
     end
   end
 
-  def export_all
+  def send_csv
     require 'csv'
-    send_data Employer.export_all, filename: "employers-#{Date.today}.csv"
+    
+    if params[:employers] == 'registered_from_to'
+      from_date = Date.new(params[:from_date]["year"].to_i,params[:from_date]["month"].to_i,params[:from_date]["day"].to_i)
+      to_date = Date.new(params[:to_date]["year"].to_i,params[:to_date]["month"].to_i,params[:to_date]["day"].to_i)
+
+      send_data Employer.export(from_date, to_date), filename: "employers-#{from_date}-#{to_date}.csv", type: "text/csv"
+    else
+      send_data Employer.export(nil, nil), filename: "employers-#{Date.today}.csv", type: "text/csv"
+    end
   end
 
   def home

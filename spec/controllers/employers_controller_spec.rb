@@ -27,8 +27,8 @@ require 'rails_helper'
 
 describe EmployersController do
 
-  let(:staff) { FactoryGirl.create(:staff) }
-  let(:admin) { FactoryGirl.create(:user, :admin) }
+  let(:staff) { FactoryBot.create(:staff) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
       number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998,
@@ -40,19 +40,19 @@ describe EmployersController do
   subject(:free_package_id) { Employer::PACKAGES.index('free') }
 
   before(:each) do
-    FactoryGirl.create(:job_status, :active)
-    FactoryGirl.create(:job_status, :pending)
+    FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :pending)
 
     login admin
   end
 
   describe "GET index" do
     before(:each) do
-      @employer = FactoryGirl.create(:employer)
+      @employer = FactoryBot.create(:employer)
     end
 
     it "assigns all employers as @employers" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       get :index, {}
       expect(assigns(:employers)).to eq(Employer.active)
     end
@@ -60,7 +60,7 @@ describe EmployersController do
 
   describe "GET show" do
     it "assigns the requested employer as @employer" do
-      employer = FactoryGirl.create(:employer)
+      employer = FactoryBot.create(:employer)
       get :show, { id: employer.to_param }
       expect(assigns(:employer)).to eq(employer)
     end
@@ -76,14 +76,14 @@ describe EmployersController do
   describe "GET edit" do
     describe "with sufficient access rights" do
       it "assigns the requested employer as @employer as admin" do
-        employer = FactoryGirl.create(:employer)
+        employer = FactoryBot.create(:employer)
         get :edit, { id: employer.to_param }
         expect(assigns(:employer)).to eq(employer)
       end
 
       it "assigns the requested employer as @employer as staff of employer" do
-        employer = FactoryGirl.create(:employer)
-        login FactoryGirl.create(:staff, employer: employer).user
+        employer = FactoryBot.create(:employer)
+        login FactoryBot.create(:staff, employer: employer).user
         get :edit, { id: employer.to_param }
         expect(assigns(:employer)).to eq(employer)
       end
@@ -92,16 +92,16 @@ describe EmployersController do
     describe "with insufficient access rights it should redirect to employers path" do
 
       before(:each) do
-        @employer = FactoryGirl.create(:employer)
+        @employer = FactoryBot.create(:employer)
       end
 
       it "as a student" do
-        login FactoryGirl.create(:student).user
+        login FactoryBot.create(:student).user
       end
 
       it "as a staff of another chair" do
-        employer2 = FactoryGirl.create(:employer)
-        login FactoryGirl.create(:staff, employer: employer2).user
+        employer2 = FactoryBot.create(:employer)
+        login FactoryBot.create(:staff, employer: employer2).user
       end
 
       after(:each) do
@@ -151,11 +151,11 @@ describe EmployersController do
     describe "with insufficient access rights" do
 
       before(:each) do
-        login FactoryGirl.create(:student).user
+        login FactoryBot.create(:student).user
       end
 
       it "should also create an employer (there are no insufficient access rights)" do
-        employer = FactoryGirl.create(:employer)
+        employer = FactoryBot.create(:employer)
         post :create, { employer: valid_attributes }
         expect(response).to redirect_to(home_employers_path)
       end
@@ -166,7 +166,7 @@ describe EmployersController do
 
     describe "with valid params" do
       before(:each) do
-        @employer = FactoryGirl.create(:employer)
+        @employer = FactoryBot.create(:employer)
       end
 
       it "updates the requested employer" do
@@ -225,11 +225,11 @@ describe EmployersController do
     describe "with missing permission" do
 
       before(:each) do
-        login FactoryGirl.create(:student).user
+        login FactoryBot.create(:student).user
       end
 
       it "redirects to the employer index page" do
-        employer = FactoryGirl.create(:employer)
+        employer = FactoryBot.create(:employer)
         patch :update, { id: employer.id, employer: valid_attributes }
         expect(response).to redirect_to(employers_path)
       end
@@ -240,8 +240,8 @@ describe EmployersController do
     describe "as an admin" do
 
       before :each do
-        login FactoryGirl.create(:user, :admin)
-        @employer = FactoryGirl.create(:employer, activated: false)
+        login FactoryBot.create(:user, :admin)
+        @employer = FactoryBot.create(:employer, activated: false)
       end
 
       it "should be accessible" do
@@ -305,27 +305,27 @@ describe EmployersController do
     end
 
     it "should not be accessible for staff members" do
-      staff = FactoryGirl.create(:staff)
+      staff = FactoryBot.create(:staff)
       login staff.user
-      get :activate, ({ id: FactoryGirl.create(:employer).id })
+      get :activate, ({ id: FactoryBot.create(:employer).id })
       expect(response).to redirect_to(employers_path)
       expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should not be accessible for students" do
-      student = FactoryGirl.create(:student)
+      student = FactoryBot.create(:student)
       login student.user
-      get :activate, ({ id: FactoryGirl.create(:employer).id })
+      get :activate, ({ id: FactoryBot.create(:employer).id })
       expect(response).to redirect_to(employers_path)
       expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
 
     it "should delete staff of an deleted employer" do
-      employer = FactoryGirl.create(:employer, activated: true)
-      staff = FactoryGirl.create(:staff, employer: employer)
-      staff2 = FactoryGirl.create(:staff, employer: employer)
-      job_offer = FactoryGirl.create(:job_offer, employer: employer)
-      student = FactoryGirl.create(:student)
+      employer = FactoryBot.create(:employer, activated: true)
+      staff = FactoryBot.create(:staff, employer: employer)
+      staff2 = FactoryBot.create(:staff, employer: employer)
+      job_offer = FactoryBot.create(:job_offer, employer: employer)
+      student = FactoryBot.create(:student)
       expect {
         delete :destroy, {id: employer.id}
         }.to change(Employer, :count).by(-1) and change(Staff, :count).by(-2) and change(JobOffer, :count).by(-1)
@@ -333,7 +333,7 @@ describe EmployersController do
   end
 
   describe "POST invite colleague" do
-    let(:employer) { employer = FactoryGirl.create(:employer, activated: true) }
+    let(:employer) { employer = FactoryBot.create(:employer, activated: true) }
 
     before :each do
       ActionMailer::Base.deliveries = []
@@ -347,7 +347,7 @@ describe EmployersController do
     end
 
     it "should not deliver Email for students" do
-      login FactoryGirl.create(:student).user
+      login FactoryBot.create(:student).user
       post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
       expect(ActionMailer::Base.deliveries.count).to eq(0)
     end
@@ -360,39 +360,26 @@ describe EmployersController do
 
   end
 
-  describe "GET export_all" do
-
-    context "when logged in as admin" do
-      before(:each) do
-        login FactoryGirl.create :user, :admin
-      end
-
-      it "sends a CSV with all employers" do
-        require 'csv'
-        example_employer = FactoryGirl.create(:employer)
-        example_employer_staff_member = example_employer.staff_members.first
-
-        get :export_all
-
-        csv = CSV.parse(response.body)
-        csv_array = csv.to_a
-        expect(csv[0]).to eq(%w{employer_name staff_member_full_name staff_member_email})
-        expect(csv[1]).to eq([example_employer.name, example_employer_staff_member.full_name, example_employer_staff_member.email])
-      end
+  describe "POST export" do
+    it "should send a CSV file to an admin" do
+      login FactoryBot.create(:user, :admin)
+      post :send_csv
+      expect(response.headers['Content-Type']).to eq "text/csv"
     end
 
-    context "when not logged in as admin" do
-      before(:each) do
-        login FactoryGirl.create :user
-      end
-
-      it "doesn't send a CSV" do
-        get :export_all
-        expect(response).to redirect_to(employers_path)
-        expect(flash[:notice]).to eql("You are not authorized to access this page.")
-      end
+    it "should not send a CSV to a student" do
+      login FactoryBot.create(:student).user
+      post :send_csv
+      expect(response).to redirect_to(employers_path)
+      expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
+    it "should not send a CSV to a staff member" do
+      login FactoryBot.create(:staff).user
+      post :send_csv
+      expect(response).to redirect_to(employers_path)
+      expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
+    end
   end
 
 end

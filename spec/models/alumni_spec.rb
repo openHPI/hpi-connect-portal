@@ -17,7 +17,7 @@ require 'rails_helper'
 describe Alumni do
   describe "validations" do
     let(:alumnus) do
-      FactoryGirl.create :alumni
+      FactoryBot.create :alumni
     end
 
     it "should not be valid with empty attributes" do
@@ -41,7 +41,7 @@ describe Alumni do
 
     it "should not be valid with an alumni email already registered on a user" do
       test_alumni_email = 'Firstname.Lastname'
-      FactoryGirl.create(:user, alumni_email: test_alumni_email)
+      FactoryBot.create(:user, alumni_email: test_alumni_email)
       alumnus.alumni_email = test_alumni_email
       expect(alumnus).to be_invalid
     end
@@ -51,7 +51,7 @@ describe Alumni do
 
     it "sends mail" do
       ActionMailer::Base.deliveries = []
-      alumni = FactoryGirl.create :alumni
+      alumni = FactoryBot.create :alumni
       alumni.send_reminder
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end

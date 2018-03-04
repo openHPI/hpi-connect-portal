@@ -27,7 +27,7 @@ require 'rails_helper'
 
 describe Employer do
   let(:employer) do
-    FactoryGirl.create(:employer)
+    FactoryBot.create(:employer)
   end
 
   describe "validation of parameters" do
@@ -67,7 +67,7 @@ describe Employer do
     before :each do
       ActionMailer::Base.deliveries =[]
       receiver_name = "Test Name"
-      sender = FactoryGirl.create(:user)
+      sender = FactoryBot.create(:user)
       employer.invite_colleague("test@mail.com", receiver_name, sender)
     end
 
@@ -80,8 +80,8 @@ describe Employer do
   describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do
-        r1 = FactoryGirl.create(:rating, score_overall: 3, employer: employer)
-        r2 = FactoryGirl.create(:rating, score_overall: 4, employer: employer)
+        r1 = FactoryBot.create(:rating, score_overall: 3, employer: employer)
+        r2 = FactoryBot.create(:rating, score_overall: 4, employer: employer)
 
         expect(employer.average_rating).to be_within(0.05).of(((3+4)/2.0))
       end
@@ -97,11 +97,11 @@ describe Employer do
   describe "order by name" do
     it "orders by name case insensitive" do
       Employer.delete_all
-      FactoryGirl.create(:employer, name: "Ca")
-      FactoryGirl.create(:employer, name: "avis")
-      FactoryGirl.create(:employer, name: "eBay")
-      FactoryGirl.create(:employer, name: "Zuckerberg")
-      FactoryGirl.create(:employer, name: "AtTheTop")
+      FactoryBot.create(:employer, name: "Ca")
+      FactoryBot.create(:employer, name: "avis")
+      FactoryBot.create(:employer, name: "eBay")
+      FactoryBot.create(:employer, name: "Zuckerberg")
+      FactoryBot.create(:employer, name: "AtTheTop")
       ordered_employers = Employer.order_by_name
       expect(ordered_employers[0].name).to eq("AtTheTop")
       expect(ordered_employers[1].name).to eq("avis")
@@ -113,23 +113,23 @@ describe Employer do
 
   shared_examples "an employer with limited graduate job offers per year" do |limit|
     it "can create limited graduate job offers per year" do
-      FactoryGirl.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
+      FactoryBot.create(:job_offer, category_id: 2, employer: employer, created_at: Date.today - 1.years)
 
       (limit-1).times do |n|
-        FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+        FactoryBot.create(:job_offer, category_id: 2, employer: employer)
       end
 
-      expect(employer.can_create_job_offer?('graduate_job')).to eq(TRUE)
+      expect(employer.can_create_job_offer?('graduate_job')).to eq(true)
 
-      FactoryGirl.create(:job_offer, category_id: 2, employer: employer)
+      FactoryBot.create(:job_offer, category_id: 2, employer: employer)
 
-      expect(employer.can_create_job_offer?('graduate_job')).to eq(FALSE)
+      expect(employer.can_create_job_offer?('graduate_job')).to eq(false)
     end
   end
 
   context "having booked the partner package" do
     let(:employer) do
-      FactoryGirl.create(:employer, booked_package_id: 2)
+      FactoryBot.create(:employer, booked_package_id: 2)
     end
 
     it_behaves_like "an employer with limited graduate job offers per year", 4
@@ -137,10 +137,34 @@ describe Employer do
 
   context "having booked the premium package" do
     let(:employer) do
-      FactoryGirl.create(:employer, booked_package_id: 3)
+      FactoryBot.create(:employer, booked_package_id: 3)
     end
 
     it_behaves_like "an employer with limited graduate job offers per year", 20
+  end
+
+  describe "export" do
+    before(:each) do
+      require 'csv'
+
+      @registered_today = FactoryBot.create :employer
+      @registered_a_year_ago = FactoryBot.create(:employer, created_at: Date.today - 1.years)
+
+      @headers = %w{employer_name staff_member_full_name staff_member_email contact_street contact_zip_city}
+    end
+
+    it "should export all employers if options are set accordingly" do
+      csv = CSV.parse(Employer.export(nil, nil))
+      expect(csv[0]).to eq(@headers)
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
+      expect(csv[2]).to eq([@registered_a_year_ago.name, @registered_a_year_ago.staff_members.first.full_name, @registered_a_year_ago.staff_members.first.email, @registered_a_year_ago.contact.street, @registered_a_year_ago.contact.zip_city])
+    end
+
+    it "should not include employers registered outside of timeframe specified" do
+      csv = CSV.parse(Employer.export(Date.today - 6.months, Date.today))
+      expect(csv[0]).to eq(@headers)
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
+    end
   end
 
 end

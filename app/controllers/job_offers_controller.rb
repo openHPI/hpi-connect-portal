@@ -100,12 +100,20 @@ class JobOffersController < ApplicationController
     if @job_offer.new_record?
       render_errors_and_action @job_offer, 'new'
     else
+      if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
+        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+      end
+
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
     end
   end
 
   def update
     if @job_offer.update job_offer_params
+      if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
+        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+      end
+
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')
     else
       render_errors_and_action @job_offer, 'edit'
@@ -175,7 +183,7 @@ class JobOffersController < ApplicationController
       if(!@job_offer.employer.can_create_job_offer?(@job_offer.category))
         @job_offer.employer.remove_one_single_booked_job
       end
-      
+
       redirect_to job_offers_path, notice: I18n.t('job_offers.messages.successfully_deleted')
     else
       render_errors_and_action @job_offer
@@ -185,8 +193,10 @@ class JobOffersController < ApplicationController
   def reopen
     old_job_offer = JobOffer.find params[:id]
     if old_job_offer.update status: JobStatus.closed
-      @job_offer = JobOffer.new old_job_offer.attributes.with_indifferent_access.except(:id, :start_date, :end_date, :status_id)
-      @job_offer.build_contact
+      copied_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
+      copied_contact_attr = ["name", "street", "zip_city", "email", "phone"]
+      @job_offer = JobOffer.new old_job_offer.attributes.slice(*copied_attr)
+      @job_offer.contact = Contact.new old_job_offer.contact.attributes.slice(*copied_contact_attr)
       render "new", notice: I18n.t('job_offers.messages.successfully_created')
     else
       render_errors_and_action @job_offer

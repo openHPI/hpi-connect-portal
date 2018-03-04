@@ -14,7 +14,7 @@
 #  updated_at  :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :cv_job do
     association   :student
     position      'Ruby on Rails developer'

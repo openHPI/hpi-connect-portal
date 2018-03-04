@@ -78,7 +78,7 @@ class AlumniController < ApplicationController
         if alumni.nil?
           lines << count unless alumni == :created
         else
-          AlumniMailer.creation_email(alumni).deliver_now
+          AlumniMailer.reminder_email(alumni).deliver_now
         end
       end
       if lines.any?

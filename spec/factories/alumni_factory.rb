@@ -12,7 +12,7 @@
 #  updated_at   :datetime
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :alumni do
     sequence(:firstname)    { |n| "Firstname#{n}" }
     sequence(:lastname)     { |n| "Lastname#{n}" }
