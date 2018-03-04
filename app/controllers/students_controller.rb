@@ -93,10 +93,10 @@ class StudentsController < ApplicationController
     @student.cv_jobs.build
     @student.cv_educations.build
 
-    ProgrammingLanguage.where.not(id: @student.programming_languages.pluck(:id)).each do |programming_language|
+    # build options for select
+    ProgrammingLanguage.where.not(id: @student.programming_languages.pluck(:id), private: true).each do |programming_language|
       @student.programming_languages_users.build(programming_language: programming_language)
     end
-
     @student.programming_languages_users.build(programming_language_attributes: { private: true })
   end
 
