@@ -5,8 +5,8 @@ describe "the students page" do
   let(:staff) { FactoryBot.create(:staff) }
 
   before(:each) do
-    @programming_language = FactoryGirl.create(:programming_language)
-    @student1 = FactoryGirl.create(:student, programming_languages: [@programming_language])
+    @programming_language = FactoryBot.create(:programming_language)
+    @student1 = FactoryBot.create(:student, programming_languages: [@programming_language])
     login staff.user
     visit students_path
   end
@@ -64,7 +64,7 @@ end
 describe "the students editing page" do
 
   before(:all) do
-    @student1 = FactoryGirl.create(:student)
+    @student1 = FactoryBot.create(:student)
   end
 
   before(:each) do
@@ -117,14 +117,14 @@ end
 
 describe "the programming languages skills section on the students editing page" do
 
-  let(:student2) { FactoryGirl.create(:student) }
+  let(:student2) { FactoryBot.create(:student) }
 
   before(:all) do
-    @student1 = FactoryGirl.create(:student)
-    @programming_language1 = FactoryGirl.create(:programming_language)
-    @programming_language2 = FactoryGirl.create(:programming_language)
+    @student1 = FactoryBot.create(:student)
+    @programming_language1 = FactoryBot.create(:programming_language)
+    @programming_language2 = FactoryBot.create(:programming_language)
 
-    @student1.programming_languages_users << FactoryGirl.create(:programming_languages_user, student: @student1, programming_language: @programming_language1, skill: 5)
+    @student1.programming_languages_users << FactoryBot.create(:programming_languages_user, student: @student1, programming_language: @programming_language1, skill: 5)
   end
 
   before(:each) do
