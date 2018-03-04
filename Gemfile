@@ -140,6 +140,7 @@ group :test do
   gem 'email_spec'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
+  gem 'poltergeist'
 end
 
 # flags

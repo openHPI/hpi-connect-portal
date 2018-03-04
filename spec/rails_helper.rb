@@ -15,10 +15,15 @@ require 'email_spec'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
-ActiveRecord::Migration.maintain_test_schema!
-
-Capybara.javascript_driver = :selenium
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
 Capybara.raise_server_errors = false
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, { js_errors: false, window_size: [1500, 2500] })
+end
+
+ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -57,7 +62,9 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
+  end
 
+  config.before(:all) do
     FactoryGirl.create(:job_status, :pending)
     FactoryGirl.create(:job_status, :active)
     FactoryGirl.create(:job_status, :closed)
