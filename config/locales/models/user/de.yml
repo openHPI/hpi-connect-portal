@@ -4,9 +4,10 @@ de:
       user:
         visibility: "Profil sichtbar"
         visibility_options:
-                    nobody: "für niemanden"
-                    employers_only: "nur für Arbeitgeber"
-                    employers_and_students: "für Arbeitgeber und Studenten"
+          nobody: "für niemanden"
+          employers_only: "nur für Arbeitgeber"
+          students_only: "nur für Studenten"
+          employers_and_students: "für Arbeitgeber und Studenten"
         first_name: "Vorname"
         last_name: "Nachname"
         password: "Passwort"
