@@ -17,7 +17,7 @@
 class Contact < ActiveRecord::Base
     belongs_to :counterpart, polymorphic: true, touch: true
 
-    validates :name, :street, :zip_city, presence: true
+    validates :name, :street, :zip_city, :email, presence: true
 
     def is_empty?
       self.merged.length == 0

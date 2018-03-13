@@ -109,6 +109,7 @@ describe "the employer page" do
       fill_in 'employer_contact_attributes_name', with: 'Max Mustermann'
       fill_in 'employer_contact_attributes_street', with: 'Teststraße'
       fill_in 'employer_contact_attributes_zip_city', with: '12345 Teststadt'
+      fill_in 'employer_contact_attributes_email', with: 'mmustermann@testemployer.com'
       find('input[type="submit"]').click
 
       expect(page).to have_content(I18n.t('employers.messages.successfully_created'))

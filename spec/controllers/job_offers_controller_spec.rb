@@ -47,7 +47,7 @@ describe JobOffersController do
    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
    let(:valid_attributes_with_contact_attr) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
      "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active),
-     contact_attributes: {"name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact"}, "copy_to_employer_contact"=>"true"}}
+     contact_attributes: {"name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact", "email"=>"contact@me.com"}, "copy_to_employer_contact"=>"true"}}
 
   let(:valid_session) { {} }
 
