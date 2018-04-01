@@ -6,7 +6,6 @@ describe StaffController do
     login FactoryBot.create(:student).user
   end
 
-  let(:admin_role) { FactoryBot.create(:role, :admin) }
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
   let(:valid_session) { {} }

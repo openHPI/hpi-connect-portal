@@ -10,7 +10,6 @@ de:
         semester: "Semester"
         filter_employer_placeholder: "Arbeitgeber (durch Komma getrennt)"
         no_results: "Zu Ihrer Suchanfrage wurde kein passender Student gefunden"
-        new_role_label: "Neue Rolle: "
         new_employer_label: "Neuer Arbeitgeber : "
         activation_reminder: "Ihr Profil ist noch nicht freigeschaltet. Ein Administrator wird Ihr Profil in Kürze freischalten. Falls Sie ein HPI Student sind, können Sie sich auch selbst über OpenID freischalten: "
         successful_import: "Ihre Daten wurden erfolgreich importiert. Sie können nun zusätzliche Änderungen vornehmen."

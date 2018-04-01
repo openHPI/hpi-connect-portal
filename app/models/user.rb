@@ -26,8 +26,7 @@
 #
 
 class User < ActiveRecord::Base
-  include UserScopes
-
+  
   has_secure_password
 
   belongs_to :manifestation, polymorphic: true, touch: true
@@ -46,6 +45,24 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :cv, content_type: ['application/pdf']
 
   after_destroy :clean_manifestation
+
+  scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
+  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct users.*") }
+  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct users.*") }
+  scope :search_students, -> string { where("
+              (lower(firstname) LIKE ?
+              OR lower(lastname) LIKE ?
+              OR lower(email) LIKE ?
+              OR lower(academic_program_id) LIKE ?
+              OR lower(graduation_id) LIKE ?
+              OR lower(homepage) LIKE ?
+              OR lower(github) LIKE ?
+              OR lower(facebook) LIKE ?
+              OR lower(xing) LIKE ?
+              OR lower(linkedin) LIKE ?)
+              ",
+              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase,
+              string.downcase, string.downcase, string.downcase, string.downcase, string.downcase) }
 
   def non_hpi_email_on_alumni
     errors.add(:email, I18n.t("errors.messages.non_hpi_mail")) if alumni? && Alumni.email_invalid?(email)
@@ -116,6 +133,8 @@ class User < ActiveRecord::Base
 
     if matched_user
       if not row[:alumnimail]
+        # Kann es sein, dass ein gefundener User gar keine Alumni-Mailadresse hat?
+        # Dann geht hier was verloren
         row[:alumnimail] = "#{matched_user.alumni_email}@hpi-alumni.de"
         row[:emailverteiler].gsub!(row[:private_email], row[:alumnimail])
       end
