@@ -169,7 +169,7 @@ GEM
     letter_opener (1.6.0)
       launchy (~> 2.2)
     libv8 (3.16.14.19)
-    loofah (2.2.0)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
@@ -232,8 +232,8 @@ GEM
       activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -285,7 +285,7 @@ GEM
     rubyzip (1.2.1)
     safe_target_blank (1.0.1)
       rails
-    sanitize (4.6.0)
+    sanitize (4.6.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
       nokogumbo (~> 1.4)
@@ -406,7 +406,7 @@ DEPENDENCIES
   jquery-ui-rails
   letter_opener
   open_id_authentication
-  paperclip
+  paperclip (~> 5.2.0)
   pg (~> 0.20.0)
   poltergeist
   rails (~> 4.2.0)
