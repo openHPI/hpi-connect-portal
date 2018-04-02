@@ -122,18 +122,6 @@ describe "the employer page" do
     end
   end
 
-  describe "editing an existing employer" do
-    it "does not have a select for former deputy" do
-      admin = FactoryBot.create(:user, :admin)
-      employer = FactoryBot.create(:employer)
-      staff = FactoryBot.create(:staff, employer: employer)
-      login(admin)
-      visit edit_employer_path(employer)
-
-      is_expected.not_to have_select("employer[deputy_id]")
-    end
-  end
-
   describe "should show the basic information of the employer" do
     before :each do
       visit employer_path(employer)

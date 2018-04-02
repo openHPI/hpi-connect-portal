@@ -41,6 +41,8 @@ FactoryBot.define do
     association       :status, factory: :job_status
     student_group_id  {Student::GROUPS.index("hpi")}
 
+    trait :graduate_job { category_id JobOffer::CATEGORIES.index('graduate_job') }
+
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryBot.create(:employer)
       job_offer.contact = FactoryBot.create(:contact, counterpart: job_offer)

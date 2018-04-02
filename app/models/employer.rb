@@ -63,10 +63,6 @@ class Employer < ActiveRecord::Base
     self.token = code
   end
 
-  def check_deputys_employer
-    errors.add(:deputy_id, 'must be a staff member of his employer.') unless deputy && deputy.employer == self
-  end
-
   def requested_package
     PACKAGES[requested_package_id]
   end
@@ -85,10 +81,6 @@ class Employer < ActiveRecord::Base
 
   def premium?
     booked_package_id == 3
-  end
-
-  def graduate_job_count
-    job_offers.graduate_jobs.length
   end
 
   def graduate_job_count_this_year

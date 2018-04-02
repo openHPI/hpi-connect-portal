@@ -36,7 +36,7 @@ describe JobOffersController do
     login FactoryBot.create(:student).user
   end
   let(:admin) { FactoryBot.create(:user, :admin) }
-  let(:employer) { FactoryBot.create(:employer) }
+  let!(:employer) { FactoryBot.create(:employer) }
   let(:staff) { FactoryBot.create(:staff, employer: employer) }
   let(:closed) {FactoryBot.create(:job_status, :closed)}
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
@@ -280,56 +280,86 @@ describe JobOffersController do
   end
 
   describe "GET accept" do
+    let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job) }
 
-    before(:each) do
-      @job_offer = FactoryBot.create(:job_offer, employer: employer, release_date: nil)
+    context "as a user who isn't admin" do
+      before :each do
+        login FactoryBot.create :user
+      end
+
+      it "leaves the job offer pending" do
+        expect(job_offer.status).to eq(JobStatus.pending)
+        expect {
+          get :accept, { id: job_offer.id }
+        }.to_not change(job_offer, :status)
+      end
+
+      it "redirects to job offer index path" do
+        get :accept, { id: job_offer.id }
+        expect(response).to redirect_to(job_offers_path)
+      end
     end
 
-    it "prohibits user to accept job offers if he is not the admin" do
-      login @job_offer.employer.staff_members[0].user
-      get :accept, { id: @job_offer.id }
-      expect(assigns(:job_offer).status).to eq(JobStatus.pending)
-      expect(response).to redirect_to(job_offers_path)
-    end
+    context "as an admin" do
+      before :each do
+        login admin
+      end
 
-    it "should send an email to all staff members" do
-      login admin
-      get :accept, { id: @job_offer.id }
-      expect(ActionMailer::Base.deliveries.count).to eq(@job_offer.employer.staff_members.length)
-    end
+      it "sends an email to all staff members" do
+        get :accept, { id: job_offer.id }
+        expect(ActionMailer::Base.deliveries.count).to eq(job_offer.employer.staff_members.length)
+      end
 
-    it "accepts job offers" do
-      login admin
-      get :accept, {id: @job_offer.id}
-      expect(assigns(:job_offer).status).to eq(JobStatus.active)
-      expect(ActionMailer::Base.deliveries.count).to be >= 1
-      expect(response).to redirect_to(@job_offer)
-    end
+      it "changes the job offer status to active" do
+        get :accept, { id: job_offer.id }
+        expect(job_offer.reload.status).to eq(JobStatus.active)
+      end
 
-    it "sets the release date when job offer is accepted" do
-      login admin
-      expect(@job_offer.release_date).to eq(nil)
-      get :accept, {id: @job_offer.id}
-      expect(assigns(:job_offer).release_date).not_to eq(nil)
+      it "redirects to the job offer page" do
+        get :accept, { id: job_offer.id }
+        expect(response).to redirect_to(job_offer)
+      end
+
+      it "sets the release date when job offer is accepted" do
+        expect(job_offer.release_date).not_to eq(Date.current)
+        get :accept, { id: job_offer.id }
+        expect(job_offer.reload.release_date).to eq(Date.current)
+      end
     end
   end
 
   describe "GET decline" do
-    before(:each) do
-      @job_offer = FactoryBot.create(:job_offer, employer: employer)
+    let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job) }
+
+    context "as a user who isn't admin" do
+      it "prohibits user to decline job offers" do
+        get :decline, { id: job_offer.id }
+        expect(response).to redirect_to(job_offer)
+      end
     end
 
-    it "prohibits user to decline job offers if he is not the admin" do
-      get :decline, {id: @job_offer.id}
-      expect(response).to redirect_to(@job_offer)
-    end
+    context "as an admin" do
+      before :each do
+        login admin
+      end
 
-    it "declines job offers" do
-      login admin
-      expect {
-        get :decline, {id: @job_offer.id}
-      }.to change(JobOffer, :count).by(-1)
-      expect(response).to redirect_to(job_offers_path)
+      it "destroys the job offer" do
+        expect {
+          get :decline, { id: job_offer.id }
+        }.to change(JobOffer, :count).by(-1)
+      end
+
+      it "redirects to the job offer index page" do
+        get :decline, { id: job_offer.id }
+        expect(response).to redirect_to(job_offers_path)
+      end
+
+      it "decrements request counter for employer" do
+        expect(job_offer.employer.single_jobs_requested).to eq 0
+        expect {
+          get :decline, { id: job_offer.id }
+        }.to change{ job_offer.employer.reload.single_jobs_requested }.by(-1)
+      end
     end
   end
 
