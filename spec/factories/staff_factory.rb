@@ -10,10 +10,11 @@
 
 FactoryBot.define do
   factory :staff do
+    association :user
+    association :employer
 
-    before(:create) do |staff|
-      staff.user = FactoryBot.create(:user, manifestation: staff)
-      staff.employer ||= FactoryBot.create(:employer)
+    trait :of_premium_employer do
+      association :employer, :premium
     end
   end
 end

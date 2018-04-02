@@ -117,11 +117,21 @@ describe RatingsController do
     subject(:new_rating) { FactoryBot.build(:rating) }
 
     context "as student" do
-      it "creates a new rating" do
+      before :each do
         login student.user
+      end
+
+      it "creates a new rating" do
         expect{
             post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
           }.to change(Rating, :count).by(1)
+      end
+
+      it "doesn't create a new rating with invalid attributes" do
+        new_rating.score_overall = 0
+        expect{
+            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+          }.to change(Rating, :count).by(0)
       end
     end
 

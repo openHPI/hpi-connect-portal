@@ -39,14 +39,62 @@ describe StudentsController do
 
   let(:valid_session) { {} }
 
-
   describe "GET index" do
-    it "assigns all students as @students" do
-      login FactoryBot.create(:user, :admin)
+    before :all do
+      FactoryBot.create(:student, :visible_for_students)
+      FactoryBot.create(:student, :visible_for_employers)
+      FactoryBot.create(:student, :visible_for_nobody)
+    end
 
-      student = FactoryBot.create(:student)
-      get :index, {}, valid_session
-      expect(assigns(:students)).to eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 5))
+    context "as an admin" do
+      let :admin { FactoryBot.create(:user, :admin) }
+      before :each do
+        login admin
+      end
+
+      it "shows all students" do
+        get :index, {}, valid_session
+        expect(assigns(:students)).to eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
+      end
+    end
+
+    context "as a staff member" do
+      let :staff_member { FactoryBot.create(:staff) }
+
+      before :each do
+        login staff_member.user
+      end
+
+      it "doesn't show any students" do
+        get :index, {}, valid_session
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "as a staff member of a premium employer" do
+      let :staff_member { FactoryBot.create(:staff, :of_premium_employer) }
+
+      before :each do
+        login staff_member.user
+      end
+
+      it "shows only students visible for employers" do
+        get :index, {}, valid_session
+        expect(assigns(:students)).to eq(Student.active.visible_for_employers.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
+      end
+    end
+
+    context "as a student" do
+      let :student { FactoryBot.create(:user, :student_user) }
+
+      before :each do
+        login student
+      end
+
+      it "shows only students visible for other students" do
+        get :index, {}, valid_session
+        expect(assigns(:students)).to eq(Student.active.visible_for_students.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
+      end
     end
   end
 
@@ -327,6 +375,33 @@ describe StudentsController do
       @student.reload
       expect(@student.languages_users.size).to eq(1)
       expect(@student.languages.first).to eq(@language_1)
+    end
+  end
+
+  describe "POST create" do
+    let(:valid_attributes) { { user_attributes:  { firstname: "Max", lastname: "Mustermann", email: "test@testmail.de",
+                                                   password: "test", password_confirmation: "test" } } }
+
+    before :each do
+      logout
+    end
+
+    it "creates student" do
+      expect {
+        post :create, { student: valid_attributes }, valid_session
+      }.to change(Student, :count).by(1)
+      expect(response).to redirect_to edit_student_path(Student.last)
+    end
+  end
+
+  describe "GET new" do
+    before :each do
+      logout
+    end
+
+    it "should render template" do
+      get :new
+      expect(response).to render_template("new")
     end
   end
 end

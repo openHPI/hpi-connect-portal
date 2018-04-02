@@ -2,7 +2,6 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-
     can :create, Student
 
     unless user.nil?
@@ -22,13 +21,12 @@ class Ability
 
   def initialize_student(user)
     can :read, Faq
-    can [:edit, :update, :activate, :insert_imported_data, :destroy], Student, id: user.manifestation.id
-    can [:show], Student do |student|
-      (student.id == user.manifestation.id) || (student.visibility_id == 2)
-    end
-    can :show, NewsletterOrder, student: user.manifestation
+
+    can [:read, :update, :activate, :insert_imported_data, :destroy], Student, id: user.manifestation.id
+
+    can [:read, :destroy], NewsletterOrder, student: user.manifestation
     can :create, NewsletterOrder
-    can :destroy, NewsletterOrder, student: user.manifestation
+
     cannot :show, JobOffer, status: JobStatus.closed
 
     can [:create, :read], Rating
@@ -38,12 +36,13 @@ class Ability
 
     if user.activated
       can :read, Student do |student|
-        student.activated && (student.visibility_id == 2 || student.id == user.manifestation.id)
+        student.activated && (student.visibility_id == Student::VISIBILITYS.index('employers_and_students') ||
+                              student.visibility_id == Student::VISIBILITYS.index('students_only') ||
+                              student.id == user.manifestation.id)
       end
       can :matching, JobOffer
     end
   end
-
 
   def initialize_staff(user)
     staff = user.manifestation
@@ -61,10 +60,6 @@ class Ability
 
     if staff.employer.activated
       can :manage, Faq
-      can :show, Student do |student|
-        student.visibility_id > 0 && staff.employer.premium? && student.activated
-      end
-
 
       cannot [:edit, :update], Student
       can :close, JobOffer, employer: staff.employer

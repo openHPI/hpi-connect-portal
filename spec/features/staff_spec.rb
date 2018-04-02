@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "the staff page" do
+describe "the staff pages" do
 
   let(:staff) { FactoryBot.create(:staff, employer: FactoryBot.create(:employer)) }
   let(:admin) { FactoryBot.create(:user, :admin) }
@@ -16,24 +16,20 @@ describe "the staff page" do
     visit staff_index_path
   end
 
-  describe "as an admin" do
-    it "should view only names of a staff member on the overview" do
+  describe "logged in as an admin" do
+    it "shows only names of a staff member on the overview" do
       expect(page).to have_content(@staff1.firstname)
       expect(page).to have_content(@staff1.lastname)
     end
 
-    it "should contain a link for showing a profile and it should lead to profile page " do
+    it "contains a link thats leads to profile page" do
       find_link(@staff1.firstname).click
 
       expect(current_path).not_to eq(staff_index_path)
       expect(current_path).to eq(staff_path(@staff1))
     end
 
-    it "should have a button to demote a member of the staff " do
-      #should have_button('Demote')
-    end
-
-    it "should be possible to delete staff members" do
+    it "is possible to delete staff members" do
       count_staffs = Staff.all.size
       visit staff_path(@staff1)
       expect(page).to have_content "Delete"
@@ -42,9 +38,8 @@ describe "the staff page" do
     end
   end
 
-
-  describe "as a member of staff" do
-    it "should not be visible " do
+  describe "logged in as a member of staff" do
+    it "is not visible" do
       FactoryBot.create(:job_status, name: 'active')
       login @staff1.user
       visit staff_index_path
@@ -52,7 +47,7 @@ describe "the staff page" do
       expect(current_path).to eq(root_path)
     end
 
-    it "should not remove other staff members" do
+    it "is not possible to remove other staff members" do
       staff2 = FactoryBot.create(:staff)
       login staff2
       visit staff_path(@staff1)
@@ -60,8 +55,8 @@ describe "the staff page" do
     end
   end
 
-   describe "as a student" do
-    it "should not be visible " do
+   describe "logged in as a student" do
+    it "is not visible" do
       FactoryBot.create(:job_status, name: 'active')
       login @student1.user
       visit staff_index_path
@@ -69,7 +64,7 @@ describe "the staff page" do
       expect(current_path).to eq(root_path)
     end
 
-    it "should not remove staff members" do
+    it "is not possible to remove staff members" do
       login @student1.user
       visit staff_path(@staff1)
       expect(page).to_not have_content "Delete"
@@ -79,7 +74,7 @@ describe "the staff page" do
   describe "New staff after invitation" do
     let(:employer) { FactoryBot.create(:employer, activated: true) }
 
-    it "should register colleague to the employer" do
+    it "registers colleague to the employer" do
       visit new_staff_index_path(token: employer.token)
       fill_in 'staff_user_attributes_firstname', with: 'Max'
       fill_in 'staff_user_attributes_lastname', with: 'Mustermann'
@@ -93,7 +88,7 @@ describe "the staff page" do
       expect(page).to have_content("Max Mustermann")
     end
 
-    it "should show an error message when trying to create a staff member that already exists" do
+    it "shows an error message when trying to create a staff member that already exists" do
       2.times do
         visit new_staff_index_path(token: employer.token)
         fill_in 'staff_user_attributes_firstname', with: 'Max'

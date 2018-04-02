@@ -18,7 +18,7 @@
               <h5><%= label_tag t("job_offers.filterLabel") %></h5>
 
               <% unless @employers.empty? %>
-                <% if current_user && current_user.student? %>
+                <% if signed_in_student? %>
                   <% group_id = current_user.manifestation.group_id %>
                 <% else %>
                   <% group_id = 0 %>

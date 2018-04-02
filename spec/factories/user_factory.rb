@@ -27,15 +27,15 @@
 
 FactoryBot.define do
   factory :user do
-    sequence(:firstname)    { |n| "Firstname#{n}" }
-    sequence(:lastname)     { |n| "Lastname#{n}" }
-    sequence(:email)        { |n| "user_#{n}@example.com" }
-    password                "password123"
-    password_confirmation   "password123"
-    activated               true
+    sequence(:firstname)      { |n| "Firstname#{n}" }
+    sequence(:lastname)       { |n| "Lastname#{n}" }
+    sequence(:email)          { |n| "user_#{n}@example.com" }
+    password                  'password123'
+    password_confirmation     'password123'
+    activated                 true
 
     trait :admin do
-      admin true
+      admin                   true
     end
 
     trait :alumnus do
@@ -43,12 +43,12 @@ FactoryBot.define do
       sequence(:alumni_email) { |n| "Firstname#{n}.Lastname#{n}" }
     end
 
-    trait :student do
-      manifestation factory: :student
+    trait :student_user do
+      manifestation           factory: :student
     end
 
-    trait :staff do
-      manifestation factory: :staff
+    trait :staff_user do
+      manifestation           factory: :staff
     end
   end
 end

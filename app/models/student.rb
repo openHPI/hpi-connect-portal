@@ -62,15 +62,15 @@ class Student < ActiveRecord::Base
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
-  scope :visible_for_all, -> visibility_id { where('visibility_id < 0')}
-  scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.find_index('nobody')}
-  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.find_index('employers_and_students'),VISIBILITYS.find_index('students_only')}
-  scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.find_index('employers_only'), VISIBILITYS.find_index('employers_and_students'))}
+  scope :visible_for_all, -> { where('visibility_id < 0') }
+  scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.index('nobody') }
+  scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.index('employers_and_students'),VISIBILITYS.index('students_only') }
+  scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.index('employers_only'), VISIBILITYS.index('employers_and_students')) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
-  scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f)}
-  scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f)}
+  scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f) }
+  scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f) }
   scope :update_immediately, -> { where(frequency: 1) }
   scope :filter_students, -> q { joins(:user).where("
           (lower(firstname) LIKE ?
@@ -82,7 +82,7 @@ class Student < ActiveRecord::Base
           OR lower(xing) LIKE ?
           OR lower(linkedin) LIKE ?)
           ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
-  scope :filter_employer, -> employer { joins(:cv_jobs).where("lower(employer) IN (?)", employer.split(',').map(&:downcase))}
+  scope :filter_employer, -> employer { joins(:cv_jobs).where("lower(employer) IN (?)", employer.split(',').map(&:downcase)) }
 
   def self.group_id(group_name)
     GROUPS.index(group_name)

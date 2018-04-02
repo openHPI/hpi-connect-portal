@@ -27,15 +27,21 @@
 FactoryBot.define do
   factory :student do
     semester            1
-    academic_program_id Student::ACADEMIC_PROGRAMS.index("bachelor")
+    academic_program_id Student::ACADEMIC_PROGRAMS.index('bachelor')
     birthday            '1970-12-10'
-    graduation_id       Student::GRADUATIONS.index("abitur")
-    visibility_id       2
+    graduation_id       Student::GRADUATIONS.index('abitur')
+    visibility_id       Student::VISIBILITYS.index('employers_and_students')
     association         :user
 
     after(:create) do |user, evaluator|
       create_list(:language, 1)
       create_list(:programming_language, 1)
     end
+
+    trait :visible_for_nobody { visibility_id Student::VISIBILITYS.index('nobody') }
+
+    trait :visible_for_employers { visibility_id Student::VISIBILITYS.index('employers_only') }
+
+    trait :visible_for_students { visibility_id Student::VISIBILITYS.index('students_only') }
   end
 end
