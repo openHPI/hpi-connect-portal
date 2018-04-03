@@ -309,7 +309,7 @@ describe EmployersController do
       login staff.user
       get :activate, ({ id: FactoryBot.create(:employer).id })
       expect(response).to redirect_to(employers_path)
-      expect(flash[:notice]).to eql("You are not authorized to access this page.")
+      expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
     it "should not be accessible for students" do
@@ -317,7 +317,7 @@ describe EmployersController do
       login student.user
       get :activate, ({ id: FactoryBot.create(:employer).id })
       expect(response).to redirect_to(employers_path)
-      expect(flash[:notice]).to eql("You are not authorized to access this page.")
+      expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
     it "should delete staff of an deleted employer" do

@@ -29,7 +29,7 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  authorize_resource except: [:destroy, :edit, :index]
+  authorize_resource except: [:destroy, :edit]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
   before_action :birthdate_params_valid?, only: [:update]
 
@@ -42,8 +42,6 @@ class StudentsController < ApplicationController
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
 
   def index
-    authorize! :index, Student
-
     if signed_in? && current_user.admin?
       indexedStudents = Student.all
     else
@@ -61,7 +59,6 @@ class StudentsController < ApplicationController
 
   def show
     authorize! :show, @student
-    not_found unless @student.activated || @student.user == current_user || can?(:activate, @student)
     @job_offers = @student.assigned_job_offers.paginate page: params[:page], per_page: 5
   end
 

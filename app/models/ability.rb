@@ -27,12 +27,8 @@ class Ability
     can [:read, :destroy], NewsletterOrder, student: user.manifestation
     can :create, NewsletterOrder
 
-    cannot :show, JobOffer, status: JobStatus.closed
-
-    can [:create, :read], Rating
-    can [:update, :destroy], Rating do |rating|
-      user.manifestation.id == rating.student.id
-    end
+    cannot :read, JobOffer, status: JobStatus.closed
+    cannot :read, Employer
 
     if user.activated
       can :read, Student do |student|
@@ -40,7 +36,15 @@ class Ability
                               student.visibility_id == Student::VISIBILITYS.index('students_only') ||
                               student.id == user.manifestation.id)
       end
+
       can :matching, JobOffer
+
+      can [:create, :read], Rating
+      can [:update, :destroy], Rating do |rating|
+        user.manifestation.id == rating.student.id
+      end
+
+      can :read, Employer, activated: true
     end
   end
 
@@ -56,10 +60,13 @@ class Ability
 
     can [:edit, :update, :read], Staff, id: staff.id
 
-    can [:edit, :update, :invite_colleague], Employer, id: employer_id
+    can [:read, :edit, :update, :invite_colleague], Employer, id: employer_id
+    can :home, Employer
 
     if staff.employer.activated
       can :manage, Faq
+
+      can :read, Employer, activated: true
 
       cannot [:edit, :update], Student
       can :close, JobOffer, employer: staff.employer

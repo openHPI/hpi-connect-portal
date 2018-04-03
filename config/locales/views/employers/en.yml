@@ -17,9 +17,9 @@ en:
         open: Open
         running: Running
         general_information: "General Information"
-        active_job_offers: "Open Job offers"
-        pending_job_offers: "Pending Job offers"
-        closed_job_offers: "Former Job offers"
+        active_job_offers: "Open Job Offers"
+        pending_job_offers: "Pending Job Offers"
+        closed_job_offers: "Former Job Offers"
         inactive: "Deactivated"
         contact: "Contact"
         packages: "Packages"

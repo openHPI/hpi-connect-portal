@@ -104,7 +104,7 @@ describe JobOffersController do
 
   describe "GET archive" do
     it "assigns all archive job_offers as @job_offerlist[:items]" do
-      @job_offer.update!(status: closed)
+      @job_offer.update!(status: JobStatus.closed)
       get :archive, {}, valid_session
       expect(assigns(:job_offers_list)[:items]).to eq([@job_offer])
     end
