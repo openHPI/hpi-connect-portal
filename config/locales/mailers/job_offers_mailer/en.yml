@@ -18,8 +18,6 @@ en:
       subject: "Extension of your job offer on HPI Connect activated"
     prolong_requested:
       subject: "Prolongation of %{job_title} requested"
-    new_job_offer_info:
-      subject: 'New job offers are available'
     general:
       title: "Title: "
       student: "Student name: "

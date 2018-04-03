@@ -18,8 +18,6 @@ de:
       subject: "Verlängerung Ihres Stellenangebots auf HPI Connect bestätigt"
     prolong_requested:
       subject: "Verlängerung von Angebot %{job_title} angefordert"
-    new_job_offer_info:
-      subject: 'Neue Jobangebote für Dich'
     generamol:
       title: "Titel: "
       student: "Studentenname: "
