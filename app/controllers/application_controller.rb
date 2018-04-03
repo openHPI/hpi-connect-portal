@@ -12,10 +12,7 @@ class ApplicationController < ActionController::Base
     rescue_from_exception exception
   end
 
-  rescue_from ActiveRecord::RecordNotFound do
-    flash[:error] = I18n.t("errors.not_found")
-    redirect_to root_path
-  end
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
@@ -27,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    flash[:error] = "You are not authorized to access this page."
+    flash[:error] = I18n.t("errors.not_found")
     redirect_to root_path
   end
 

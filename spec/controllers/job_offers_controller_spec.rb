@@ -38,7 +38,7 @@ describe JobOffersController do
   let(:admin) { FactoryBot.create(:user, :admin) }
   let!(:employer) { FactoryBot.create(:employer) }
   let(:staff) { FactoryBot.create(:staff, employer: employer) }
-  let(:closed) {FactoryBot.create(:job_status, :closed)}
+
   let(:valid_attributes) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
@@ -226,7 +226,6 @@ describe JobOffersController do
     end
   end
 
-
   describe "PUT prolong" do
     before(:each) do
       @job_offer = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, :active))
@@ -325,6 +324,13 @@ describe JobOffersController do
         get :accept, { id: job_offer.id }
         expect(job_offer.reload.release_date).to eq(Date.current)
       end
+
+      it "redirects to job offer page if update fails" do
+        allow(JobOffer).to receive(:find).and_return(job_offer)
+        allow(job_offer).to receive(:update).and_return(false)
+        get :accept, { id: job_offer.id }
+        expect(response).to redirect_to(job_offer)
+      end
     end
   end
 
@@ -360,39 +366,53 @@ describe JobOffersController do
           get :decline, { id: job_offer.id }
         }.to change{ job_offer.employer.reload.single_jobs_requested }.by(-1)
       end
+
+      it "redirects to job offer page if destroy fails" do
+        allow(JobOffer).to receive(:find).and_return(job_offer)
+        allow(job_offer).to receive(:destroy).and_return(false)
+        get :decline, { id: job_offer.id }
+        expect(response).to redirect_to(job_offer)
+      end
     end
   end
 
   describe "GET reopen" do
-    describe "with valid params" do
+    context "with valid params" do
+      let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job, status: JobStatus.closed) }
+      let(:staff) { job_offer.employer.staff_members.first }
 
       before(:each) do
         login staff.user
-        @job_offer = FactoryBot.create(:job_offer, employer: employer, status: FactoryBot.create(:job_status, :active))
       end
 
       it "assigns a new job_offer as @job_offer" do
-        get :reopen, {id: @job_offer}, valid_session
+        get :reopen, {id: job_offer.id}, valid_session
         expect(assigns(:job_offer)).to be_a_new(JobOffer)
         expect(response).to render_template("new")
       end
 
       it "has same values as the original job offer" do
-        get :reopen, {id: @job_offer}, valid_session
+        get :reopen, {id: job_offer.id}, valid_session
         reopened_job_offer = assigns(:job_offer)
         expected_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
         expected_contact_attr = ["name", "street", "zip_city", "email", "phone"]
 
-        expect(reopened_job_offer.attributes.slice(*expected_attr)).to eql(@job_offer.attributes.slice(*expected_attr))
-        expect(reopened_job_offer.contact.attributes.slice(*expected_contact_attr)).to eql(@job_offer.contact.attributes.slice(*expected_contact_attr))
+        expect(reopened_job_offer.attributes.slice(*expected_attr)).to eql(job_offer.attributes.slice(*expected_attr))
+        expect(reopened_job_offer.contact.attributes.slice(*expected_contact_attr)).to eql(job_offer.contact.attributes.slice(*expected_contact_attr))
         expect(reopened_job_offer.start_date).to be_nil
         expect(reopened_job_offer.end_date).to be_nil
       end
 
-      it "is pending and old job offer changes to closed" do
-        get :reopen, {id: @job_offer}, valid_session
-        reopend_job_offer = assigns(:job_offer)
-        expect(@job_offer.reload.status).to eql(closed)
+      it "old job offer status changes to closed" do
+        get :reopen, {id: job_offer.id}, valid_session
+        expect(job_offer.reload.status).to eql(JobStatus.closed)
+      end
+
+      it "redirects to job offer page if update fails" do
+        allow(JobOffer).to receive(:find).and_return(job_offer)
+        allow(job_offer).to receive(:update).and_return(false)
+        get :reopen, { id: job_offer.id }
+        expect(response).to redirect_to(job_offer)
       end
     end
   end
