@@ -1,62 +1,93 @@
 require 'rails_helper'
 
-describe "the students page" do
-
+describe "the students index page" do
+  let!(:student) { FactoryBot.create(:student) }
   let(:staff) { FactoryBot.create(:staff) }
 
   before(:each) do
-    @programming_language = FactoryBot.create(:programming_language)
-    @student1 = FactoryBot.create(:student, programming_languages: [@programming_language])
     login staff.user
-    visit students_path
   end
 
-  describe "as a staff member" do
+  context "as a staff member of employer with free package" do
+    before(:each) do
+      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('free')
+      visit students_path
+    end
 
-    it "is not available for staff members of not paying employers" do
-      login staff.user
-      visit students_path
-      expect(current_path).not_to eq(students_path)
-      expect(current_path).to eq(root_path)
-      staff.employer.update_column :booked_package_id, 2
-      visit students_path
+    it "is redirects to root path" do
       expect(current_path).not_to eq(students_path)
       expect(current_path).to eq(root_path)
     end
+  end
 
-    it "is available for staff members of premium employers" do
-      staff.employer.update_column :booked_package_id, 3
-      login staff.user
+  context "as a staff member of employer with profile package" do
+    before(:each) do
+      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('profile')
       visit students_path
+    end
+
+    it "is redirects to root path" do
+      expect(current_path).not_to eq(students_path)
+      expect(current_path).to eq(root_path)
+    end
+  end
+
+  context "as a staff member of employer with partner package" do
+    before(:each) do
+      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('partner')
+      visit students_path
+    end
+
+    it "is redirects to root path" do
+      expect(current_path).not_to eq(students_path)
+      expect(current_path).to eq(root_path)
+    end
+  end
+
+  context "as a staff member of employer with premium package" do
+    before(:each) do
+      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('premium')
+      visit students_path
+    end
+
+    it "is available" do
       expect(current_path).to eq(students_path)
     end
   end
 
-  describe "as a student" do
-
-    it "is available for students" do
-      login FactoryBot.create(:student).user
-      visit students_path
-      expect(current_path).to eq(students_path)
-    end
-  end
-
-  describe "as an admin" do
+  context "as a student" do
+    let(:another_student) { FactoryBot.create(:student) }
 
     before(:each) do
-      login FactoryBot.create(:user, :admin)
+      login student.user
       visit students_path
     end
 
-    it "should view only names and status of a student on the overview" do
-      expect(page).to have_content(@student1.firstname)
-      expect(page).to have_content(@student1.lastname)
+    it "is available" do
+      expect(current_path).to eq(students_path)
+    end
+  end
+
+  context "as an admin" do
+    let(:admin) { FactoryBot.create(:user, :admin) }
+
+    before(:each) do
+      login admin
+      visit students_path
     end
 
-    it "should contain a link for showing a profile and it should lead to profile page " do
-      find_link(@student1.firstname).click
-      expect(current_path).not_to eq(students_path)
-      expect(current_path).to eq(student_path(@student1))
+    it "is available" do
+      expect(current_path).to eq(students_path)
+    end
+
+    it "shows student names" do
+      expect(page).to have_content(student.firstname)
+      expect(page).to have_content(student.lastname)
+    end
+
+    it "links to student profile pages" do
+      find_link(student.firstname).click
+      expect(current_path).to eq(student_path(student))
     end
   end
 end
