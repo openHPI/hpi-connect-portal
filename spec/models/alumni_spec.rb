@@ -16,30 +16,28 @@ require 'rails_helper'
 
 describe Alumni do
   describe "validations" do
-    let(:alumnus) do
-      FactoryBot.create :alumni
-    end
+    let(:alumnus) { FactoryBot.create :alumni }
 
-    it "should not be valid with empty attributes" do
+    it "is not valid with empty attributes" do
       assert !Alumni.new.valid?
     end
 
-    it "should not be valid without email" do
+    it "is not valid without email" do
       alumnus.email = nil
       expect(alumnus).to be_invalid
     end
 
-    it "should not be valid without alumni_email" do
+    it "is not valid without alumni_email" do
       alumnus.alumni_email = nil
       expect(alumnus).to be_invalid
     end
 
-    it "should not be valid without token" do
+    it "is not valid without token" do
       alumnus.token = nil
       expect(alumnus).to be_invalid
     end
 
-    it "should not be valid with an alumni email already registered on a user" do
+    it "is not valid with an alumni email already registered on a user" do
       test_alumni_email = 'Firstname.Lastname'
       FactoryBot.create(:user, alumni_email: test_alumni_email)
       alumnus.alumni_email = test_alumni_email
@@ -47,68 +45,101 @@ describe Alumni do
     end
   end
 
-  describe "send_reminder" do
-
-    it "sends mail" do
+  describe "#send_reminder" do
+    it "sends reminder mail" do
       ActionMailer::Base.deliveries = []
       alumni = FactoryBot.create :alumni
       alumni.send_reminder
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
-
   end
 
-  describe "create from row" do
-    before(:all) do
+  describe ".create_from_row" do
+    before :all do
       require 'csv'
+
+      csv_headers = "firstname,lastname,email,alumni_email\n"
+      @valid_csv_string = csv_headers + "Max,Mustermann,max@mustermann.de,Max.Mustermann2"
+      @csv_string_without_fullname = csv_headers + ",,max@mustermann.de,Max.Mustermann2"
+      @csv_string_mail_only = csv_headers + ",,max@mustermann.de,"
+      @csv_options = { headers: true, return_headers: false, header_converters: :symbol }
     end
 
-    it "creates alumnus when all fields are present" do
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nMax,Mustermann,max@mustermann.de,Max.Mustermann2", {headers: true, return_headers: false, header_converters: :symbol})
+    context "when all fields are present" do
+      before :all do
+        ActionMailer::Base.deliveries = []
+        @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
+        @return_val = Alumni.create_from_row(@csv_row)
+        @alumnus = Alumni.last
+      end
 
-      alumnus = Alumni.create_from_row(csv_row)
+      it "creates alumnus" do
+        expect(@return_val).to eq(:created)
+      end
 
-      expect(alumnus).to eq(:created)
+      it "sends creation mail" do
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+      end
 
-      alumnus = Alumni.last
+      it "uses the given first name" do
+        expect(@alumnus.firstname).to eq(@csv_row[:firstname])
+      end
 
-      expect(alumnus.firstname).to eq('Max')
-      expect(alumnus.lastname).to eq('Mustermann')
-      expect(alumnus.email).to eq('max@mustermann.de')
-      expect(alumnus.alumni_email).to eq('Max.Mustermann2')
+      it "uses the given last name" do
+        expect(@alumnus.lastname).to eq(@csv_row[:lastname])
+      end
+
+      it "uses the given email adress" do
+        expect(@alumnus.email).to eq(@csv_row[:email])
+      end
+
+      it "uses the given alumni mail adress" do
+        expect(@alumnus.alumni_email).to eq(@csv_row[:alumni_email])
+      end
     end
 
-    it "creates alumnus when full name isn't present, but alumni mail adress is" do
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@muster.de,Max.Muster", {headers: true, return_headers: false, header_converters: :symbol})
+    context "when full name isn't present, but alumni mail adress is" do
+      before :all do
+        @csv_row = CSV.parse_line(@csv_string_without_fullname, @csv_options)
+        @return_val = Alumni.create_from_row(@csv_row)
+        @alumnus = Alumni.last
+      end
 
-      alumnus = Alumni.create_from_row(csv_row)
+      it "creates alumnus" do
+        expect(@return_val).to eq(:created)
+      end
 
-      expect(alumnus).to eq(:created)
+      it "uses the first name given by alumni mail adress" do
+        expect(@alumnus.firstname).to eq(@csv_row[:alumni_email].split('.').first)
+      end
 
-      alumnus = Alumni.last
-
-      expect(alumnus.firstname).to eq('Max')
-      expect(alumnus.lastname).to eq('Muster')
-      expect(alumnus.email).to eq('max@muster.de')
-      expect(alumnus.alumni_email).to eq('Max.Muster')
+      it "uses the last name given by alumni mail adress" do
+        expect(@alumnus.lastname).to eq(@csv_row[:alumni_email].split('.').last)
+      end
     end
 
-    it 'sends creation mail upon successful alumnus creation' do
-      ActionMailer::Base.deliveries = []
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\nErika,Mustermann,erika@mustermann.de,Erika.Mustermann", {headers: true, return_headers: false, header_converters: :symbol})
+    context "when alumni mail and full name aren't present" do
+      before :all do
+        @csv_row = CSV.parse_line(@csv_string_mail_only, @csv_options)
+        @return_val = Alumni.create_from_row(@csv_row)
+      end
 
-      alumnus = Alumni.create_from_row(csv_row)
-
-      expect(alumnus).to eq(:created)
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      it "doesn't create alumnus" do
+        expect(@return_val).not_to eq(:created)
+      end
     end
 
-    it "doesn't create alumnus if alumni mail and full name aren't present" do
-      csv_row = CSV.parse_line("firstname,lastname,email,alumni_email\n,,max@mustermann.de,", {headers: true, return_headers: false, header_converters: :symbol})
+    context "when mailer raises exception" do
+      before :each do
+        @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
+        allow(AlumniMailer).to receive(:creation_email).and_raise(StandardError)
+      end
 
-      alumnus = Alumni.create_from_row(csv_row)
-
-      expect(alumnus).not_to eq(:created)
+      it "doesn't create alumnus" do
+        expect {
+          Alumni.create_from_row(@csv_row)
+        }.not_to change(Alumni, :count)
+      end
     end
   end
 end

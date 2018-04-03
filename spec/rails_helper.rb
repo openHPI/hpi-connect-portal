@@ -61,21 +61,14 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.clean_with(:truncation, except: %w[job_statuses])
+    DatabaseCleaner.strategy = :truncation, { except: %w[job_statuses] }
   end
 
   config.before(:all) do
     FactoryBot.create(:job_status, :pending)
     FactoryBot.create(:job_status, :active)
     FactoryBot.create(:job_status, :closed)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
   end
 
   config.before(:each) do

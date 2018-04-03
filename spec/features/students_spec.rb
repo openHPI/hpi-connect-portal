@@ -62,19 +62,16 @@ describe "the students page" do
 end
 
 describe "the students editing page" do
-
-  before(:all) do
-    @student1 = FactoryBot.create(:student)
-  end
+  let(:student) { FactoryBot.create(:student) }
 
   before(:each) do
-    login @student1.user
+    login student.user
   end
 
   it "should contain all attributes of a student" do
-    visit edit_student_path(@student1)
+    visit edit_student_path(student)
     expect(page).to have_content("HPI-Status")
-    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("#{student.firstname} #{student.lastname}")
     expect(page).to have_content("Photo")
     expect(page).to have_content("Links")
     expect(page).to have_content("Programming language skills")
@@ -85,21 +82,21 @@ describe "the students editing page" do
   end
 
   it "should be possible to change attributes of myself " do
-    visit edit_student_path(@student1)
+    visit edit_student_path(student)
     fill_in 'student_facebook', with: 'www.faceboook.com/alex'
     first('input[type="submit"]').click
 
-    expect(current_path).to eq(student_path(@student1))
+    expect(current_path).to eq(student_path(student))
 
     expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
-    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("#{student.firstname} #{student.lastname}")
     expect(page).to have_content("www.faceboook.com/alex")
    end
 
   it "can be edited by an admin" do
     admin = FactoryBot.create(:user, :admin)
     login admin
-    visit student_path(@student1)
+    visit student_path(student)
 
     expect(page).to have_link("Edit")
     page.find_link("Edit").click
@@ -107,10 +104,10 @@ describe "the students editing page" do
     fill_in 'student_facebook', with: 'www.face.com/alex'
     first('input[type="submit"]').click
 
-    expect(current_path).to eq(student_path(@student1))
+    expect(current_path).to eq(student_path(student))
 
     expect(page).to have_content(I18n.t('users.messages.successfully_updated'))
-    expect(page).to have_content("#{@student1.firstname} #{@student1.lastname}")
+    expect(page).to have_content("#{student.firstname} #{student.lastname}")
     expect(page).to have_content("www.face.com/alex")
   end
 end

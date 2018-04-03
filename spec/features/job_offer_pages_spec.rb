@@ -7,7 +7,7 @@ describe "Job Offer pages" do
 
   let(:staff) { FactoryBot.create(:staff) }
 
-  before(:each) do
+  before(:all) do
     @status_pending = JobStatus.pending
     @status_active = JobStatus.active
     @status_closed = JobStatus.closed
