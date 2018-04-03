@@ -2,93 +2,21 @@ require 'rails_helper'
 
 describe "the students index page" do
   let!(:student) { FactoryBot.create(:student) }
-  let(:staff) { FactoryBot.create(:staff) }
+  let(:staff) { FactoryBot.create(:staff, :of_premium_employer) }
 
   before(:each) do
     login staff.user
+    visit students_path
   end
 
-  context "as a staff member of employer with free package" do
-    before(:each) do
-      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('free')
-      visit students_path
-    end
-
-    it "is redirects to root path" do
-      expect(current_path).not_to eq(students_path)
-      expect(current_path).to eq(root_path)
-    end
+  it "shows student names" do
+    expect(page).to have_content(student.firstname)
+    expect(page).to have_content(student.lastname)
   end
 
-  context "as a staff member of employer with profile package" do
-    before(:each) do
-      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('profile')
-      visit students_path
-    end
-
-    it "is redirects to root path" do
-      expect(current_path).not_to eq(students_path)
-      expect(current_path).to eq(root_path)
-    end
-  end
-
-  context "as a staff member of employer with partner package" do
-    before(:each) do
-      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('partner')
-      visit students_path
-    end
-
-    it "is redirects to root path" do
-      expect(current_path).not_to eq(students_path)
-      expect(current_path).to eq(root_path)
-    end
-  end
-
-  context "as a staff member of employer with premium package" do
-    before(:each) do
-      staff.employer.update_column :booked_package_id, Employer::PACKAGES.index('premium')
-      visit students_path
-    end
-
-    it "is available" do
-      expect(current_path).to eq(students_path)
-    end
-  end
-
-  context "as a student" do
-    let(:another_student) { FactoryBot.create(:student) }
-
-    before(:each) do
-      login student.user
-      visit students_path
-    end
-
-    it "is available" do
-      expect(current_path).to eq(students_path)
-    end
-  end
-
-  context "as an admin" do
-    let(:admin) { FactoryBot.create(:user, :admin) }
-
-    before(:each) do
-      login admin
-      visit students_path
-    end
-
-    it "is available" do
-      expect(current_path).to eq(students_path)
-    end
-
-    it "shows student names" do
-      expect(page).to have_content(student.firstname)
-      expect(page).to have_content(student.lastname)
-    end
-
-    it "links to student profile pages" do
-      find_link(student.firstname).click
-      expect(current_path).to eq(student_path(student))
-    end
+  it "links to student profile pages" do
+    find_link(student.firstname).click
+    expect(current_path).to eq(student_path(student))
   end
 end
 
