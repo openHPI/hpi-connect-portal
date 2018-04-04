@@ -55,8 +55,8 @@ class Ability
 
     can [:create, :show], JobOffer
 
-    cannot :show, JobOffer, status: JobStatus.closed
-    can :show, JobOffer, status: JobStatus.closed, employer: staff.employer
+    cannot :read, JobOffer, status: JobStatus.closed
+    can :read, JobOffer, status: JobStatus.closed, employer: staff.employer
 
     can [:edit, :update, :read], Staff, id: staff.id
 
@@ -73,8 +73,8 @@ class Ability
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.active
       can :reopen, JobOffer, employer: staff.employer, status: JobStatus.closed
       can :request_prolong, JobOffer, employer: { id: employer_id }, status: JobStatus.active
-      can [:update, :destroy, :fire], JobOffer, employer: staff.employer
-      can [:update, :destroy, :fire], JobOffer, employer: { id: employer_id }
+      can [:update, :destroy], JobOffer, employer: staff.employer
+      can [:update, :destroy], JobOffer, employer: { id: employer_id }
       can [:update, :edit], JobOffer do |job|
         job.editable? && job.employer.id == employer_id
       end

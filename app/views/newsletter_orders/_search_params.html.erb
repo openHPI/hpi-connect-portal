@@ -1,7 +1,7 @@
 <ul class="list-group" id="newsletter-items">
   <% if @newsletter_params.blank?
        @newsletter_params = {} %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-12">
             Einen Newsletter für sämtliche Jobs anlegen
@@ -9,8 +9,20 @@
         </div>
       </li>
   <% end %>
+  <% unless @newsletter_params["search"].nil? %>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-sm-6">
+          <%= t("job_offers.search_term") %>
+        </div>
+        <div class="col-sm-6">
+          "<%= @newsletter_params['search'] %>"
+        </div>
+      </div>
+    </li>
+  <% end %>
   <% unless @newsletter_params["student_group"].nil? %>
-    <li>
+    <li class="list-group-item">
       <div class="row">
         <div class="col-sm-6">
           <%= t("job_offers.jobs_for") %>
@@ -22,7 +34,7 @@
     </li>
   <% end %>
   <% unless @newsletter_params["state"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.region") %>
@@ -35,7 +47,7 @@
   <% end %>
 
   <% unless @newsletter_params["employer"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.employer") %>
@@ -48,7 +60,7 @@
   <% end %>
 
   <% unless @newsletter_params["category"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.category") %>
@@ -61,7 +73,7 @@
   <% end %>
 
   <% unless @newsletter_params["graduation"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.user.degree") %>
@@ -75,7 +87,7 @@
 
 
   <% unless @newsletter_params["start_date"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.start_date")%>
@@ -88,7 +100,7 @@
   <% end %>
 
   <% unless @newsletter_params["end_date"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.end_date")%>
@@ -101,7 +113,7 @@
   <% end %>
 
   <% unless @newsletter_params["programming_language_ids"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.programming_languages")%>
@@ -116,7 +128,7 @@
   <% end %>
 
   <% unless @newsletter_params["language_ids"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.languages")%>
@@ -131,7 +143,7 @@
   <% end %>
 
   <% unless @newsletter_params["time_effort"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.time_effort")%>
@@ -144,7 +156,7 @@
   <% end %>
 
   <% unless @newsletter_params["compensation"].nil? %>
-      <li>
+      <li class="list-group-item">
         <div class="row">
           <div class="col-sm-6">
             <%= t("activerecord.attributes.job_offer.compensation")%>
@@ -155,5 +167,4 @@
         </div>
       </li>
   <% end %>
-  <li></li>
 </ul>

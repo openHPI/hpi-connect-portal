@@ -25,7 +25,6 @@ HpiHiwiPortal::Application.routes.draw do
           get "reopen"
           get "prolong"
           get "request_prolong"
-          post "fire"
         end
       end
 

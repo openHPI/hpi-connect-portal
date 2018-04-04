@@ -66,8 +66,8 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    FactoryBot.create(:job_status, :pending)
     FactoryBot.create(:job_status, :active)
+    FactoryBot.create(:job_status, :pending)
     FactoryBot.create(:job_status, :closed)
   end
 

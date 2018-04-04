@@ -40,15 +40,12 @@ describe EmployersController do
   subject(:free_package_id) { Employer::PACKAGES.index('free') }
 
   before(:each) do
-    FactoryBot.create(:job_status, :active)
-    FactoryBot.create(:job_status, :pending)
-
     login admin
   end
 
   describe "GET index" do
     before(:each) do
-      @employer = FactoryBot.create(:employer)
+      FactoryBot.create(:employer)
     end
 
     it "assigns all employers as @employers" do
@@ -59,10 +56,25 @@ describe EmployersController do
   end
 
   describe "GET show" do
-    it "assigns the requested employer as @employer" do
-      employer = FactoryBot.create(:employer)
-      get :show, { id: employer.to_param }
-      expect(assigns(:employer)).to eq(employer)
+    let!(:employer) { FactoryBot.create(:employer) }
+
+    context "if employer exists" do
+      it "assigns the requested employer as @employer" do
+        get :show, { id: employer.to_param }
+        expect(assigns(:employer)).to eq(employer)
+      end
+    end
+
+    context "if employer does not exist" do
+      it "redirects to root path" do
+        get :show, { id: Employer.last.id + 1 }
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "shows an error message" do
+        get :show, { id: Employer.last.id + 1 }
+        expect(flash[:error]).to eq(I18n.t('errors.not_found'))
+      end
     end
   end
 

@@ -17,6 +17,10 @@ module SessionsHelper
     !!current_user && user_type == 'staff'
   end
 
+  def signed_in_admin?
+    !!current_user && current_user.admin?
+  end
+
   def current_user=(user)
     @current_user = user
   end

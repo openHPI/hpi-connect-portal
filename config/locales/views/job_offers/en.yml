@@ -67,7 +67,6 @@ en:
         prolonging_failed: "Job offer couldn't be prolonged."
         choose_valid_end_date: "Please choose a new end date which is valid."
     no_results: "No job offer matches your search"
-    fire: "Fire"
     category:
         traineeship: "Internship"
         sideline: "Side Job"

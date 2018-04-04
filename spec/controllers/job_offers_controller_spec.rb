@@ -31,198 +31,170 @@
 require 'rails_helper'
 
 describe JobOffersController do
-
-  before(:each) do
-    login FactoryBot.create(:student).user
-  end
-  let(:admin) { FactoryBot.create(:user, :admin) }
-  let!(:employer) { FactoryBot.create(:employer) }
+  let(:employer) { FactoryBot.create(:employer) }
+  let!(:active_job_offer) { FactoryBot.create(:job_offer, title: 'Active Job Offer', employer: employer) }
+  let!(:pending_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.pending, title: 'Pending Job Offer', employer: employer) }
+  let!(:closed_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.closed, title: 'Closed Job Offer', employer: employer) }
   let(:staff) { FactoryBot.create(:staff, employer: employer) }
+  let(:student) { FactoryBot.create(:student) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
 
-  let(:valid_attributes) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
+  let(:valid_attributes) { { "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => JobStatus.active } }
   let(:valid_attributes_status_closed) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-    "time_effort" => 3.5, "compensation" => 10.30, "status" => closed}}
-  let(:valid_attributes_status_active) {{"title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-   "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active)}}
-   let(:valid_attributes_with_contact_attr) {{ "title"=>"Open HPI Job", "description_en" => "MyString", "employer_id" => employer.id, "start_date" => Date.current + 1,
-     "time_effort" => 3.5, "compensation" => 10.30, "status" => FactoryBot.create(:job_status, :active),
-     contact_attributes: {"name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact", "email"=>"contact@me.com"}, "copy_to_employer_contact"=>"true"}}
-
-  let(:valid_session) { {} }
-
-  before(:all) do
-    FactoryBot.create(:job_status, :pending)
-    FactoryBot.create(:job_status, :active)
-    FactoryBot.create(:job_status, :closed)
-  end
+    "time_effort" => 3.5, "compensation" => 10.30, "status" => JobStatus.closed } }
+   let(:valid_contact_attributes) { { contact_attributes: { "name"=>"Contact Me", "street"=>"Contact Street", "zip_city"=>"12345 Contact", "email"=>"contact@me.com" },
+    "copy_to_employer_contact"=>"true" } }
 
   before(:each) do
-    @epic = FactoryBot.create(:employer)
-    @os = FactoryBot.create(:employer)
-    @itas = FactoryBot.create(:employer)
+    #login FactoryBot.create(:student).user
 
-    @employer_one = FactoryBot.create(:employer)
-    @employer_two = FactoryBot.create(:employer)
-    @employer_three = FactoryBot.create(:employer)
+    #ActionMailer::Base.delivery_method = :test
+    #ActionMailer::Base.perform_deliveries = true
+    #ActionMailer::Base.deliveries = []
 
-    @active = FactoryBot.create(:job_status, name:"active")
-    ActionMailer::Base.delivery_method = :test
-    ActionMailer::Base.perform_deliveries = true
-    ActionMailer::Base.deliveries = []
-
-    @job_offer = FactoryBot.create(:job_offer, status: @active)
-
-    employer.reload
-  end
-
-  describe "Check if views are rendered" do
-    render_views
-
-    it "renders the find results" do
-      get :index, ({ employer: employer.id }), valid_session
-      expect(response).to render_template("index")
-    end
-
-    it "renders the archive" do
-      get :archive, {}, valid_session
-      expect(response).to render_template("archive")
-    end
-
-    it "renders the jobs found archive" do
-      get :archive, ({search: "Ruby"}), valid_session
-      expect(response).to render_template("archive")
-    end
+    #employer.reload
   end
 
   describe "GET index" do
-    it "assigns all job_offers as @job_offers_list[:items]" do
-      get :index, {}, valid_session
-      expect(assigns(:job_offers_list)[:items]).to eq([@job_offer])
+    it "assigns active job_offers as @job_offers" do
+      get :index, {}
+      expect(assigns(:job_offers)).to eq(JobOffer.sort(JobOffer.active, 'date'))
+    end
+
+    it "renders the correct template" do
+      get :index, {}
+      expect(response).to render_template("index")
+    end
+
+    context "logged in as admin" do
+      before(:each) do
+        login admin
+      end
+
+      it "assigns all job offers as @job_offers if requested" do
+        get :index, { pending: 'true' }
+        expect(assigns(:job_offers)).to eq(JobOffer.sort(JobOffer.pending, 'date'))
+      end
+    end
+
+    context "logged in as non-admin" do
+      before(:each) do
+        login staff.user
+      end
+
+      it "doesn't assign all job offers as @job_offers even if requested" do
+        get :index, { pending: 'true' }
+        expect(assigns(:job_offers)).to eq(JobOffer.sort(JobOffer.active, 'date'))
+        expect(assigns(:job_offers)).not_to eq(JobOffer.sort(JobOffer.pending, 'date'))
+      end
+    end
+
+    context "when creating a newsletter" do
+      before(:each) do
+        login student.user
+      end
+
+      it "redirects to newsletter_orders#new" do
+        get :index, { commit: I18n.t("job_offers.create_as_newsletter") }
+        expect(response).to redirect_to(new_newsletter_order_path({ newsletter_params: { active: true } }))
+      end
+    end
+
+    context "searching job offers" do
+      let!(:a_job_offer) { FactoryBot.create(:job_offer) }
+      let!(:job_offer_with_different_employer) { FactoryBot.create(:job_offer) }
+      let(:different_employer) { job_offer_with_different_employer.employer }
+
+      it "assigns all job offers with the specified employer to @job_offers" do
+        get :index, ({ employer: different_employer.id })
+        expect(assigns(:job_offers)).to include(job_offer_with_different_employer)
+        expect(assigns(:job_offers)).not_to include(a_job_offer)
+        expect(assigns(:job_offers)).to eq(JobOffer.filter_employer(different_employer.id))
+      end
     end
   end
 
   describe "GET archive" do
-    it "assigns all archive job_offers as @job_offerlist[:items]" do
-      @job_offer.update!(status: JobStatus.closed)
-      get :archive, {}, valid_session
-      expect(assigns(:job_offers_list)[:items]).to eq([@job_offer])
+    before(:each) do
+      login student.user
     end
 
-    it "does not assign non-closed jobs" do
-      get :archive, {}, valid_session
-      assert assigns(:job_offers_list)[:items].empty?
+    it "assigns all closed job offers as @job_offers" do
+      get :archive
+      expect(assigns(:job_offers)).to eq(JobOffer.closed)
     end
   end
 
   describe "GET show" do
-    it "assigns the requested job_offer as @job_offer" do
-      get :show, {id: @job_offer.to_param}, valid_session
-      expect(assigns(:job_offer)).to eq(@job_offer)
+    context "as a student" do
+      before(:each) do
+        login student.user
+      end
+
+      it "assigns the requested job_offer as @job_offer" do
+        get :show, { id: active_job_offer.id }
+        expect(assigns(:job_offer)).to eq(active_job_offer)
+      end
+
+      it "redirects to archive if job is closed" do
+        get :show, { id: closed_job_offer.id }
+        expect(response).to redirect_to(archive_job_offers_path)
+      end
     end
 
-    it "redirects students when job is in archive" do
-      archive_job = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, name: "closed"))
-      get :show, {id: archive_job.to_param}, valid_session
-      expect(response).to redirect_to(archive_job_offers_path)
-    end
+    context "as an admin" do
+      before(:each) do
+        login admin
+      end
 
-    it "shows archive job for admin" do
-      login FactoryBot.create(:user, :admin)
-
-      archive_job = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, name: "closed"))
-      get :show, {id: archive_job.to_param}, valid_session
-      expect(response).not_to redirect_to(archive_job_offers_path)
-      expect(response).to render_template("show")
+      it "shows closed jobs" do
+        get :show, { id: closed_job_offer.id }
+        expect(response).not_to redirect_to(archive_job_offers_path)
+        expect(response).to render_template("show")
+      end
     end
   end
 
   describe "GET new" do
     it "assigns a new job_offer as @job_offer" do
       login staff.user
-
-      get :new, {}, valid_session
+      get :new
       expect(assigns(:job_offer)).to be_a_new(JobOffer)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested job_offer as @job_offer" do
-      get :edit, {id: @job_offer.to_param}, valid_session
-      expect(assigns(:job_offer)).to eq(@job_offer)
+      login staff.user
+      get :edit, { id: active_job_offer.id }
+      expect(assigns(:job_offer)).to eq(active_job_offer)
     end
-  end
-
-  describe "GET find" do
-    it "assigns @job_offers_list[:items] to all job offers with the specified employer" do
-
-      FactoryBot.create(:job_offer, employer: @employer_two, status: @active)
-      FactoryBot.create(:job_offer, employer: @employer_one, status: @active)
-      FactoryBot.create(:job_offer, employer: @employer_three, status: @active)
-      FactoryBot.create(:job_offer, employer: @employer_one, status: @active)
-
-      job_offers = JobOffer.filter_employer(@employer_one.id)
-      get :index, ({employer: @employer_one.id}), valid_session
-      expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers).to_a)
-    end
-
-    context "student selects student group" do
-
-      subject(:hpi_group_id)     { Student.group_id("hpi") }
-      subject(:dschool_group_id) { Student.group_id("dschool") }
-      subject(:both_group_id)    { Student.group_id("both") }
-
-
-      let!(:job_offers_hpi)     { [@job_offer] }
-      let!(:job_offers_dschool) { FactoryBot.create_list(:job_offer, 2, employer: @employer_two, status: @active, student_group_id:  dschool_group_id)}
-      let!(:job_offers_both)    { FactoryBot.create_list(:job_offer, 2, employer: @employer_three, status: @active, student_group_id: both_group_id)}
-
-
-      context "student selects 'HPI' group" do
-        it "assings all job offers tagged with 'HPI' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({student_group: hpi_group_id}), valid_session
-          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_hpi | job_offers_both).to_a)
-        end
-      end
-
-      context "student selects 'D-School' group" do
-        it "assings all job offers tagged with with 'D-School' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({student_group: dschool_group_id }), valid_session
-          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_dschool | job_offers_both).to_a)
-        end
-      end
-
-      context "student selects blank" do
-        it "assings all job offers tagged with 'HPI', 'D-School' and 'Both' group to @job_offers_list[:items]" do
-          get :index, ({student_group: "" }), valid_session
-          expect(assigns(:job_offers_list)[:items].to_a).to match_array((job_offers_hpi | job_offers_dschool | job_offers_both).to_a)
-        end
-      end
-    end
-
   end
 
   describe "GET matching" do
-    it "assigns @job_offers_list[:items] to all job offers matching to the logged in user" do
-      programming_language1 = FactoryBot.create(:programming_language)
-      programming_language2 = FactoryBot.create(:programming_language)
-      programming_language3 = FactoryBot.create(:programming_language)
+    let(:programming_language1) { FactoryBot.create(:programming_language) }
+    let(:programming_language2) { FactoryBot.create(:programming_language) }
+    let(:programming_language3) { FactoryBot.create(:programming_language) }
+    let(:language1) { FactoryBot.create(:language) }
+    let(:language2) { FactoryBot.create(:language) }
+    let(:skilled_student) { FactoryBot.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1]) }
+    let(:language_ids) { skilled_student.languages.map(&:id) }
+    let(:programming_language_ids) { skilled_student.programming_languages.map(&:id) }
+    let!(:matching_job1) { FactoryBot.create(:job_offer, languages: [language1], programming_languages: [programming_language2]) }
+    let!(:matching_job2) { FactoryBot.create(:job_offer, languages: [language1], programming_languages: [programming_language1]) }
+    let!(:non_matching_job1) { FactoryBot.create(:job_offer, programming_languages: [programming_language1, programming_language2]) }
+    let!(:non_matching_job2) { FactoryBot.create(:job_offer, languages: [language2], programming_languages:[programming_language3]) }
 
-      language1 = FactoryBot.create(:language)
-      language2 = FactoryBot.create(:language)
+    before(:each) do
+      login skilled_student.user
+    end
 
-      JobOffer.delete_all
-      job1 = FactoryBot.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language2])
-      job2 = FactoryBot.create(:job_offer, status: @active, programming_languages: [programming_language1, programming_language2])
-      job3 = FactoryBot.create(:job_offer, status: @active, languages: [language1], programming_languages: [programming_language1] )
-      job4 = FactoryBot.create(:job_offer, status: @active, languages: [language2], programming_languages:[programming_language3])
-
-      student = FactoryBot.create(:student, programming_languages: [programming_language1, programming_language2], languages: [language1])
-      login student.user
-      get :matching, {language_ids: student.languages.map(&:id), programming_language_ids: student.programming_languages.map(&:id)}, valid_session
-      items = assigns(:job_offers_list)[:items].to_a
-      assert items.include? job1
-      assert items.include? job3
+    it "assigns all job offers that match the current user to @job_offer" do
+      get :matching, { language_ids: language_ids, programming_language_ids: programming_language_ids }
+      expect(assigns(:job_offers)).to include(matching_job1, matching_job2)
+      expect(assigns(:job_offers)).not_to include(non_matching_job1, non_matching_job2)
+      expect(assigns(:job_offers)).to eq(JobOffer.sort(JobOffer.filter_languages(language_ids).filter_programming_languages(programming_language_ids), 'date'))
     end
   end
 
@@ -261,29 +233,46 @@ describe JobOffersController do
   end
 
   describe "GET close" do
-    before(:each) do
-      @job_offer = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, :active))
+    context "as a staff member" do
+      before(:each) do
+        login staff.user
+      end
+
+      it "changes the job offer status to closed" do
+        get :close, { id: active_job_offer.id }
+        expect(active_job_offer.reload.status).to eq(JobStatus.closed)
+      end
+
+      it "re-renders the edit template if update fails" do
+        allow_any_instance_of(JobOffer).to receive(:update).and_return(false)
+        get :close, { id: active_job_offer.id }
+        expect(response).to render_template('edit')
+      end
     end
 
-    it "marks jobs as completed if the user is staff of the employer" do
-      closed = FactoryBot.create(:job_status, :closed)
-      login FactoryBot.create(:staff, employer: @job_offer.employer).user
+    context "as a staff member of another employer" do
+      before(:each) do
+        login FactoryBot.create(:staff).user
+      end
 
-      get :close, { id: @job_offer.id }
-      expect(assigns(:job_offer).status).to eq(closed)
-    end
-    it "prohibits user to mark jobs as completed if he is no staff of the employer" do
-      get :close, { id: @job_offer.id}, valid_session
-      expect(response).to redirect_to(@job_offer)
+      it "doesn't change the job offer status" do
+        get :close, { id: active_job_offer.id }
+        expect(active_job_offer.reload.status).to eq(JobStatus.active)
+      end
+
+      it "redirects to the job offer" do
+        get :close, { id: active_job_offer.id }
+        expect(response).to redirect_to(active_job_offer)
+      end
     end
   end
 
   describe "GET accept" do
-    let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job) }
+    let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job, status: JobStatus.pending) }
 
     context "as a user who isn't admin" do
-      before :each do
-        login FactoryBot.create :user
+      before(:each) do
+        login student.user
       end
 
       it "leaves the job offer pending" do
@@ -300,8 +289,9 @@ describe JobOffersController do
     end
 
     context "as an admin" do
-      before :each do
+      before(:each) do
         login admin
+        ActionMailer::Base.deliveries = []
       end
 
       it "sends an email to all staff members" do
@@ -338,6 +328,10 @@ describe JobOffersController do
     let!(:job_offer) { FactoryBot.create(:job_offer, :graduate_job) }
 
     context "as a user who isn't admin" do
+      before(:each) do
+        login student.user
+      end
+
       it "prohibits user to decline job offers" do
         get :decline, { id: job_offer.id }
         expect(response).to redirect_to(job_offer)
@@ -386,13 +380,13 @@ describe JobOffersController do
       end
 
       it "assigns a new job_offer as @job_offer" do
-        get :reopen, {id: job_offer.id}, valid_session
+        get :reopen, {id: job_offer.id}
         expect(assigns(:job_offer)).to be_a_new(JobOffer)
         expect(response).to render_template("new")
       end
 
       it "has same values as the original job offer" do
-        get :reopen, {id: job_offer.id}, valid_session
+        get :reopen, {id: job_offer.id}
         reopened_job_offer = assigns(:job_offer)
         expected_attr = ["description_de", "description_en", "title", "time_effort", "compensation", "employer_id", "category_id", "graduation_id", "student_group_id"]
         expected_contact_attr = ["name", "street", "zip_city", "email", "phone"]
@@ -404,7 +398,7 @@ describe JobOffersController do
       end
 
       it "old job offer status changes to closed" do
-        get :reopen, {id: job_offer.id}, valid_session
+        get :reopen, {id: job_offer.id}
         expect(job_offer.reload.status).to eql(JobStatus.closed)
       end
 
@@ -418,7 +412,6 @@ describe JobOffersController do
   end
 
   describe "POST create" do
-
     before(:each) do
       login staff.user
     end
@@ -426,7 +419,7 @@ describe JobOffersController do
     describe "with valid params" do
       it "allows staff members to create a new job offer" do
         expect {
-          post :create, {job_offer: valid_attributes}, valid_session
+          post :create, {job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(1)
         expect(response).to redirect_to job_offer_path(JobOffer.last)
       end
@@ -434,7 +427,7 @@ describe JobOffersController do
       it "allows the admin to create a new job offer" do
         login FactoryBot.create(:user, :admin)
         expect {
-          post :create, { job_offer: valid_attributes}, valid_session
+          post :create, { job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(1)
         expect(response).to redirect_to job_offer_path(JobOffer.last)
       end
@@ -442,30 +435,30 @@ describe JobOffersController do
       it "doesn't allow students to create a job offer" do
         login FactoryBot.create(:student).user
         expect {
-          post :create, {job_offer: valid_attributes}, valid_session
+          post :create, {job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(0)
         expect(response).to redirect_to job_offers_path
       end
 
       it "creates a new job_offer" do
         expect {
-          post :create, {job_offer: valid_attributes}, valid_session
+          post :create, {job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(1)
       end
 
       it "assigns a newly created job_offer as @job_offer" do
-        post :create, {job_offer: valid_attributes}, valid_session
+        post :create, {job_offer: valid_attributes}
         expect(assigns(:job_offer)).to be_a(JobOffer)
         expect(assigns(:job_offer)).to be_persisted
       end
 
       it "redirects to the created job_offer" do
-        post :create, {job_offer: valid_attributes}, valid_session
+        post :create, {job_offer: valid_attributes}
         expect(response).to redirect_to(JobOffer.last)
       end
 
       it "automatically assigns the users employer as the new job offers employer" do
-        post :create, {job_offer: valid_attributes}, valid_session
+        post :create, {job_offer: valid_attributes}
         offer = JobOffer.last
         expect(offer.employer).to eq(staff.employer)
       end
@@ -474,7 +467,7 @@ describe JobOffersController do
         attributes = valid_attributes
         attributes["compensation"] = I18n.t('job_offers.default_compensation')
 
-        post :create, {job_offer: attributes}, valid_session
+        post :create, {job_offer: attributes}
         expect(assigns(:job_offer)).to be_a(JobOffer)
         expect(assigns(:job_offer)).to be_persisted
         offer = JobOffer.last
@@ -486,7 +479,7 @@ describe JobOffersController do
         attributes["start_date"] = I18n.t('job_offers.default_startdate')
 
         expect{
-          post :create, {job_offer: attributes}, valid_session
+          post :create, {job_offer: attributes}
         }.to change(JobOffer, :count).by(1)
 
         expect(assigns(:job_offer)).to be_a(JobOffer)
@@ -501,23 +494,19 @@ describe JobOffersController do
         staff.employer.update_column :activated, false
         login staff.user
         expect {
-          post :create, {job_offer: valid_attributes}, valid_session
+          post :create, {job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(1)
         expect(assigns(:job_offer).status).to eq(JobStatus.pending)
       end
 
       it "copies contact address to employer if parameter is set" do
-        attributes = valid_attributes_with_contact_attr
+        attributes = valid_attributes.merge(valid_contact_attributes)
 
         expect{
-          post :create, {job_offer: attributes}, valid_session
+          post :create, { job_offer: attributes }
         }.to change(JobOffer, :count).by(1)
 
-        expect(assigns(:job_offer)).to be_a(JobOffer)
-        expect(assigns(:job_offer)).to be_persisted
-        offer = JobOffer.last
-
-        expect(staff.employer.contact.name).to eq(attributes[:contact_attributes]["name"])
+        expect(staff.employer.contact.reload.name).to eq(attributes[:contact_attributes]["name"])
         expect(staff.employer.contact.street).to eq(attributes[:contact_attributes]["street"])
         expect(staff.employer.contact.zip_city).to eq(attributes[:contact_attributes]["zip_city"])
       end
@@ -527,7 +516,7 @@ describe JobOffersController do
       it "assigns a newly created but unsaved job_offer as @job_offer" do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
-        post :create, {job_offer: { "description" => "invalid value" }}, valid_session
+        post :create, {job_offer: { "description" => "invalid value" }}
         expect(assigns(:job_offer)).to be_a_new(JobOffer)
       end
 
@@ -535,7 +524,7 @@ describe JobOffersController do
         # Trigger the behavior that occurs when invalid params are submitted
         allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
         expect {
-          post :create, {job_offer: valid_attributes}, valid_session
+          post :create, {job_offer: valid_attributes}
         }.to change(JobOffer, :count).by(0)
         expect(response).to render_template("new")
       end
@@ -543,7 +532,7 @@ describe JobOffersController do
       it "should not send mail to admin" do
         job_offer = FactoryBot.create(:job_offer)
         #expect
-        expect(JobOffersMailer).not_to receive(:new_job_offer_email).with( job_offer, valid_session )
+        expect(JobOffersMailer).not_to receive(:new_job_offer_email).with( job_offer )
         # when
         FactoryBot.create(:job_offer)
       end
@@ -553,14 +542,13 @@ describe JobOffersController do
         attributes["start_date"] = '20-40-2014'
 
         expect {
-          post :create, {job_offer: attributes}, valid_session
+          post :create, {job_offer: attributes}
         }.to change(JobOffer, :count).by(0)
         expect(response).to render_template("new")
       end
     end
 
     describe "for employers" do
-
       before :each do
         @employer = FactoryBot.create(:employer)
         @staff = FactoryBot.create(:staff, employer: @employer)
@@ -573,7 +561,7 @@ describe JobOffersController do
         ActionMailer::Base.deliveries = []
         login @staff.user
         expect {
-          post :create, {job_offer: @attributes}, valid_session
+          post :create, {job_offer: @attributes}
         }.to change(JobOffer, :count).by(1)
         expect(ActionMailer::Base.deliveries.count).to eq(1)
         email = ActionMailer::Base.deliveries[0]
@@ -583,7 +571,7 @@ describe JobOffersController do
         ActionMailer::Base.deliveries = []
         @employer.update_column :booked_package_id, 1
         expect {
-          post :create, {job_offer: @attributes}, valid_session
+          post :create, {job_offer: @attributes}
         }.to change(JobOffer, :count).by(1)
         expect(ActionMailer::Base.deliveries.count).to eq(1)
         email = ActionMailer::Base.deliveries[0]
@@ -597,12 +585,12 @@ describe JobOffersController do
         assert_equal(0, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         4.times do
           expect {
-            post :create, {job_offer: @attributes}, valid_session
+            post :create, {job_offer: @attributes}
           }.to change(JobOffer, :count).by(1)
         end
         assert_equal(0, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         expect {
-          post :create, {job_offer: @attributes}, valid_session
+          post :create, {job_offer: @attributes}
         }.to change(JobOffer, :count).by(1)
         assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         #response.should render_template("new")
@@ -614,12 +602,12 @@ describe JobOffersController do
         assert_equal(0, @employer.single_jobs_requested)
         20.times do
           expect {
-            post :create, {job_offer: @attributes}, valid_session
+            post :create, {job_offer: @attributes}
           }.to change(JobOffer, :count).by(1)
         end
         assert_equal(0, @employer.single_jobs_requested)
         expect {
-          post :create, {job_offer: @attributes}, valid_session
+          post :create, {job_offer: @attributes}
         }.to change(JobOffer, :count).by(1)
         assert_equal(1, (Employer.find @attributes["employer_id"]).single_jobs_requested)
         #assert_equal(flash[:success], I18n.t('employers.messages.successfully_created.'))
@@ -630,84 +618,128 @@ describe JobOffersController do
   end
 
   describe "PUT update" do
+    context "as a staff member" do
+      before(:each) do
+        login staff.user
+      end
 
-    before(:each) do
-      @job_offer = FactoryBot.create(:job_offer)
+      context "with valid params" do
+        it "updates the requested job offer" do
+          expect_any_instance_of(JobOffer).to receive(:update).with({ "description_en" => "New and shiny description." })
+          put :update, { id: active_job_offer.id, job_offer: { "description_en" => "New and shiny description." } }
+        end
 
-      login @job_offer.employer.staff_members[0].user
+        it "updates the job offer's attributes" do
+          put :update, { id: active_job_offer.id, job_offer: { "description_en" => "New and shiny description." } }
+          expect(active_job_offer.reload.description_en).to eq("New and shiny description.")
+        end
+
+        it "assigns the requested job_offer as @job_offer" do
+          put :update, { id: active_job_offer.id, job_offer: valid_attributes }
+          expect(assigns(:job_offer)).to eq(active_job_offer)
+        end
+
+        it "redirects to the job_offer" do
+          put :update, {id: active_job_offer.to_param, job_offer: valid_attributes}
+          expect(response).to redirect_to(active_job_offer)
+        end
+      end
+
+      context "with invalid params" do
+        it "re-renders the edit form" do
+          allow_any_instance_of(JobOffer).to receive(:update).and_return(false)
+          put :update, { id: active_job_offer.id, job_offer: { "description" => "invalid value" } }
+          expect(response).to render_template('edit')
+        end
+      end
+
+      context "with copy_to_employer_contact set" do
+        it "updates the employer's contact" do
+          expect_any_instance_of(Contact).to receive(:update).with(valid_contact_attributes[:contact_attributes])
+          put :update, { id: active_job_offer.id, job_offer: valid_contact_attributes }
+        end
+
+        it "updates the employer's contact attributes" do
+          put :update, { id: active_job_offer.id, job_offer: valid_contact_attributes }
+          expect(active_job_offer.employer.contact.reload.name).to eq(valid_contact_attributes[:contact_attributes]['name'])
+        end
+      end
+
+      context "with a closed job offer" do
+        it "updates the job offer's attributes" do
+          put :update, { id: closed_job_offer.id, job_offer: { "description_en" => "New and shiny description." } }
+          expect(closed_job_offer.reload.description_en).not_to eq("New and shiny description.")
+        end
+
+        it "redirects to the job_offer" do
+          put :update, {id: closed_job_offer.to_param, job_offer: valid_attributes}
+          expect(response).to redirect_to(closed_job_offer)
+        end
+      end
     end
 
-    describe "with valid params" do
-      it "updates the requested job_offer" do
-        expect_any_instance_of(JobOffer).to receive(:update).with({ "description_en" => "MyString" })
-        put :update, {id: @job_offer.to_param, job_offer: { "description_en" => "MyString" }}, valid_session
+    context "as a staff member of another employer" do
+      before(:each) do
+        login FactoryBot.create(:staff).user
       end
 
-      it "redirects to the job_offer page if the job is already running" do
-        put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        expect(response).to redirect_to(@job_offer)
+      it "doesn't update attributes" do
+        put :update, { id: active_job_offer.id, job_offer: { "description_en" => "New and shiny description." } }
+        expect(active_job_offer.reload.description_en).not_to eq("New and shiny description.")
       end
 
-      it "assigns the requested job_offer as @job_offer" do
-        put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        expect(assigns(:job_offer)).to eq(@job_offer)
-      end
-
-      it "redirects to the job_offer" do
-        put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        expect(response).to redirect_to(@job_offer)
-      end
-
-      it "only allows the responsible user to update" do
-        login FactoryBot.create(:staff, employer: @job_offer.employer).user
-        put :update, {id: @job_offer.to_param, job_offer: valid_attributes}, valid_session
-        expect(response).to redirect_to(@job_offer)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the job_offer as @job_offer" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
-        put :update, {id: @job_offer.to_param, job_offer: { "description" => "invalid value" }}, valid_session
-        expect(assigns(:job_offer)).to eq(@job_offer)
-      end
-
-      it "re-renders the 'edit' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        allow_any_instance_of(JobOffer).to receive(:save).and_return(false)
-        put :update, {id: @job_offer.to_param, job_offer: { "description" => "invalid value" }}, valid_session
-        expect(response).to render_template("edit")
+      it "redirects to job offer" do
+        put :update, { id: active_job_offer.id, job_offer: { "description_en" => "New and shiny description." } }
+        expect(response).to redirect_to(active_job_offer)
       end
     end
   end
 
   describe "DELETE destroy" do
     before(:each) do
-      @job_offer = FactoryBot.create(:job_offer)
-
-      login @job_offer.employer.staff_members[0].user
+      login staff.user
     end
 
-    it "destroys the requested job_offer" do
-      expect {
-        delete :destroy, {id: @job_offer.to_param}, valid_session
-      }.to change(JobOffer, :count).by(-1)
+    context "with an active job offer" do
+      it "keeps the job offer" do
+        expect {
+          delete :destroy, { id: active_job_offer.id }
+        }.to change(JobOffer, :count).by(0)
+        expect(response).to redirect_to(active_job_offer)
+      end
+
+      it "redirects to the job offer page" do
+        delete :destroy, { id: active_job_offer.id }
+        expect(response).to redirect_to(active_job_offer)
+      end
     end
 
-    it "redirects to the job_offers list" do
-      delete :destroy, {id: @job_offer.to_param}, valid_session
-      expect(response).to redirect_to(job_offers_url)
+    context "with a pending job offer" do
+      it "destroys the requested job_offer" do
+        expect {
+          delete :destroy, { id: pending_job_offer.id }
+        }.to change(JobOffer, :count).by(-1)
+      end
+
+      it "redirects to the job_offers list" do
+        delete :destroy, { id: pending_job_offer.id }
+        expect(response).to redirect_to(job_offers_url)
+      end
+    end
+  end
+
+  describe "GET export" do
+    it "should send a CSV file to an admin user" do
+      login admin
+      get :export
+      expect(response.headers['Content-Type']).to eq 'text/csv'
     end
 
-    it "redirects to the job offer page and keeps the offer if the job is running" do
-      @job_offer.update!(status: FactoryBot.create(:job_status, :active))
-      login @job_offer.employer.staff_members[0].user
-
-      expect {
-        delete :destroy, {id: @job_offer.to_param}, valid_session
-      }.to change(JobOffer, :count).by(0)
-      expect(response).to redirect_to(@job_offer)
+    it "should not send a CSV file to a non-admin user" do
+      login FactoryBot.create(:user)
+      get :export
+      expect(response).to redirect_to(job_offers_path)
+      expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
   end
 end

@@ -4,13 +4,12 @@ describe "job_offers/index" do
   before(:each) do
     @employer = FactoryBot.create(:employer)
     assign(:employers, [@employer])
-    
+
     @job_offer_1 = FactoryBot.create(:job_offer, employer: @employer)
     @job_offer_2 = FactoryBot.create(:job_offer, employer: @employer)
-    job_offers = [@job_offer_1, @job_offer_2]
-    
-    assign(:job_offers_list, {items: job_offers,
-                        name: "job_offers.archive"})
+    all_job_offers = [@job_offer_1, @job_offer_2]
+
+    assign(:job_offers, all_job_offers)
     assign(:radio_button_sort_value, {"date" => false, "employer" => false})
 
     allow(view).to receive(:signed_in?) { false }

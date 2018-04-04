@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_found
-    flash[:error] = I18n.t("errors.not_found")
+    flash[:error] = I18n.t('errors.not_found')
     redirect_to root_path
   end
 

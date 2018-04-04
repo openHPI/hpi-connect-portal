@@ -37,9 +37,9 @@ FactoryBot.define do
     release_date      Date.current - 3
     compensation      10.5
     time_effort       9
-    state_id          0
     association       :status, factory: :job_status
-    student_group_id  {Student::GROUPS.index("hpi")}
+    status_id         1 #JobStatus.active.id
+    student_group_id  Student::GROUPS.index("hpi")
 
     trait :graduate_job { category_id JobOffer::CATEGORIES.index('graduate_job') }
 

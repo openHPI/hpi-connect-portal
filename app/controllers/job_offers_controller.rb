@@ -39,10 +39,11 @@ class JobOffersController < ApplicationController
   #before_filter :new_job_offer, only: [:create]
   before_filter :check_job_is_in_editable_state, only: [:update, :edit]
 
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong, :fire]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
-  has_scope :pending, only: [:index, :archive], type: :boolean, as: :pending
+  has_scope :active, only: [:index], type: :boolean, default: true, unless: -> controller { controller.signed_in_admin? && controller.params[:pending] }
+  has_scope :pending, only: [:index], type: :boolean, if: :signed_in_admin?
   has_scope :filter_employer, only: [:index, :archive], as: :employer
   has_scope :filter_category, only: [:index, :archive], as: :category
   has_scope :filter_graduation, only: [:index, :archive], as: :graduation
@@ -58,21 +59,11 @@ class JobOffersController < ApplicationController
 
   def index
     if params[:commit] == I18n.t("job_offers.create_as_newsletter")
-      unless signed_in?
-        store_location and redirect_to root_url, notice: I18n.t('layouts.messages.sign_in.') and return
-      end
-      authorize! :create, NewsletterOrder
-      # to fill current_scopes
-      apply_scopes(JobOffer.active)
-      if Rails.env.production?
-        redirect_to URI.decode(new_newsletter_order_path({newsletter_params: current_scopes}))
-      else
-        redirect_to new_newsletter_order_path({newsletter_params: current_scopes})
-      end
+      apply_scopes(JobOffer.active) # to fill current_scopes
+      redirect_to new_newsletter_order_path({ newsletter_params: current_scopes })
     end
 
-    job_offers = JobOffer.sort(apply_scopes(params.keys().include?("pending") ? JobOffer.all : JobOffer.active), params[:sort]).paginate(page: params[:page])
-    @job_offers_list = { items: job_offers, name: "job_offers.headline" }
+    @job_offers = JobOffer.sort(apply_scopes(JobOffer).all, params[:sort]).paginate(page: params[:page])
   end
 
   def show
@@ -126,8 +117,7 @@ class JobOffersController < ApplicationController
   end
 
   def archive
-    job_offers = JobOffer.sort(apply_scopes(JobOffer.closed), params[:sort]).paginate(page: params[:page])
-    @job_offers_list = { items: job_offers, name: "job_offers.archive" }
+    @job_offers = JobOffer.sort(apply_scopes(JobOffer.closed), params[:sort]).paginate(page: params[:page])
   end
 
   def request_prolong
@@ -143,8 +133,7 @@ class JobOffersController < ApplicationController
   end
 
   def matching
-    job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
-    @job_offers_list = { items: job_offers, name: "job_offers.matching_job_offers" }
+    @job_offers = JobOffer.sort(apply_scopes(JobOffer.active), params[:sort]).paginate(page: params[:page])
     render "index"
   end
 
@@ -203,16 +192,8 @@ class JobOffersController < ApplicationController
     end
   end
 
-  def fire
-    student = Student.find job_offer_params[:student_id]
-    @job_offer.fire student
-    respond_and_redirect_to @job_offer, student.full_name + " was successfully removed from this job offer."
-  end
-
   def export
-    respond_to do |format|
-        format.csv { send_data JobOffer.export_active_jobs, filename: 'job_list.csv'  }
-    end
+    send_data JobOffer.export_active_jobs, filename: "Stellenangebote-#{Date.today}.csv", type: 'text/csv'
   end
 
   private

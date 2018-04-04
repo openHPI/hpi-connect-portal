@@ -22,12 +22,12 @@ textarea.form-control {
 
 .btn-warning {
     background-color: #e0671e;
-    color: #FFF;
+    color: #FFF !important;
 }
 
 .btn-danger {
     background-color: #e0671e;
-    color: #FFF;
+    color: #FFF !important;
 }
 
 .btn-danger:hover {
