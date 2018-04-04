@@ -200,7 +200,7 @@ describe JobOffersController do
 
   describe "PUT prolong" do
     before(:each) do
-      @job_offer = FactoryBot.create(:job_offer, status: FactoryBot.create(:job_status, :active))
+      @job_offer = FactoryBot.create(:job_offer, status: JobStatus.active)
       @staff = FactoryBot.create(:staff, employer: @job_offer.employer)
       @job_offer.update({end_date: Date.current + 10 })
       login @staff.user
