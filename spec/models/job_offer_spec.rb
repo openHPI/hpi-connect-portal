@@ -232,7 +232,7 @@ describe JobOffer do
   end
 
   describe "#prolong" do
-    let!(:expired_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.closed) }
+    let!(:expired_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.closed, employer: employer) }
 
     it "sets the job status back to active" do
       expired_job_offer.prolong
@@ -248,7 +248,7 @@ describe JobOffer do
       expect {
         expired_job_offer.prolong
       }.to change{ ActionMailer::Base.deliveries.count }.by(1)
-      email = ActionMailer::Base.deliveries[0]
+      email = ActionMailer::Base.deliveries.last
       expect(email.to).to eq(expired_job_offer.employer.staff_members.collect(&:email))
       expect(email.subject).to eq(I18n.t('job_offers_mailer.job_offer_prolonged.subject'))
     end

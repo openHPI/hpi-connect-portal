@@ -30,7 +30,7 @@ require 'rails_helper'
 describe UsersController do
 
   let(:valid_attributes) { { "email" => "test@test.de", "firstname" => "Alex", "lastname" => "Musterwomen" } }
-  let(:valid_session) { {} }
+  let(:user) { FactoryBot.create(:user) }
 
   before :each do
    @user = FactoryBot.create(:user)
@@ -39,18 +39,18 @@ describe UsersController do
 
    describe "GET edit" do
     it "assigns the requested user as @user" do
-      get :edit, {id: @user.to_param}, valid_session
+      get :edit, {id: @user.to_param}
       expect(assigns(:user)).to eq(@user)
     end
 
     it "should be accessible for the logged in user" do
-      get :edit, {id: @user.to_param}, valid_session
+      get :edit, {id: @user.to_param}
       assert_template :edit
     end
 
     it "should not be accessible for other users" do
       login FactoryBot.create(:user)
-      get :edit, {id: @user.to_param}, valid_session
+      get :edit, {id: @user.to_param}
       assert_redirected_to root_path
     end
   end
@@ -58,29 +58,29 @@ describe UsersController do
   describe "PUT update" do
 
     it "should be possible to update parameters of the logged in user" do
-      put :update, {id: @user.to_param, user: valid_attributes}, valid_session
+      put :update, {id: @user.to_param, user: valid_attributes}
       assert_redirected_to edit_user_path(@user)
     end
 
     it "should not be possible to update parameters of other users" do
       login FactoryBot.create(:user)
-      put :update, {id: @user.to_param, user: valid_attributes}, valid_session
+      put :update, {id: @user.to_param, user: valid_attributes}
       assert_redirected_to root_path
     end
 
     describe "with valid params" do
       it "updates the requested user" do
         expect_any_instance_of(User).to receive(:update).with({ "email" => "test100@test.com" })
-        put :update, {id: @user.to_param, user: { email: "test100@test.com" }}, valid_session
+        put :update, {id: @user.to_param, user: { email: "test100@test.com" }}
       end
 
       it "assigns the requested user as @user" do
-        put :update, {id: @user.to_param, user: valid_attributes}, valid_session
+        put :update, {id: @user.to_param, user: valid_attributes}
         expect(assigns(:user)).to eq(@user)
       end
 
       it "redirects to the edit user again" do
-        put :update, {id: @user.to_param, user: valid_attributes}, valid_session
+        put :update, {id: @user.to_param, user: valid_attributes}
         expect(response).to redirect_to(edit_user_path(@user))
       end
     end
@@ -88,67 +88,117 @@ describe UsersController do
     describe "with invalid params" do
       it "assigns the user as @user" do
         allow_any_instance_of(User).to receive(:save).and_return(false)
-        put :update, {id: @user.to_param, user: { email: "" }}, valid_session
+        put :update, {id: @user.to_param, user: { email: "" }}
         expect(assigns(:user)).to eq(@user)
       end
 
       it "re-renders the 'edit' template" do
         allow_any_instance_of(User).to receive(:save).and_return(false)
-        put :update, {id: @user.to_param, user: { email: "" }}, valid_session
+        put :update, {id: @user.to_param, user: { email: "" }}
         expect(response).to render_template("edit")
       end
     end
   end
 
-  describe "PATCH update password" do
+  describe "PATCH update_password" do
+    before(:each) do
+      login user
+    end
 
     it "assigns the current user as @user" do
-      user = FactoryBot.create :user
-      login user
-      patch :update_password, {user_id: @user.to_param, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'}}, valid_session
+      patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'} }
       expect(assigns(:user)).to eq(user)
     end
 
-    it "should be accessible for the logged in user" do
-      patch :update_password, {user_id: @user.to_param, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'}}, valid_session
-      assert_redirected_to edit_user_path(@user)
+    it "redirects to user page" do
+      patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'} }
+      assert_redirected_to edit_user_path(user)
+    end
+
+    context "with valid passwords" do
+      it "updates the password" do
+        old_password_digest = user.password_digest
+        patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'} }
+        expect(user.reload.password_digest).not_to eq(old_password_digest)
+      end
+
+      it "displays success message" do
+        patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'password'} }
+        expect(flash[:success]).to eq(I18n.t('users.messages.password_changed'))
+      end
+    end
+
+    context "with non-matching passwords" do
+      it "doesn't update the password" do
+        old_password_digest = user.password_digest
+        patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'passwordd'} }
+        expect(user.reload.password_digest).to eq(old_password_digest)
+      end
+
+      it "displays error message" do
+        patch :update_password, { user_id: user.id, user: { old_password: 'password123', password: 'password', password_confirmation: 'passwordd'} }
+        expect(flash[:error]).to eq(I18n.t('users.messages.passwords_not_matching'))
+      end
+    end
+
+    context "with wrong old password" do
+      it "doesn't update the password" do
+        old_password_digest = user.password_digest
+        patch :update_password, { user_id: user.id, user: { old_password: 'password1234', password: 'password', password_confirmation: 'password'} }
+        expect(user.reload.password_digest).to eq(old_password_digest)
+      end
+
+      it "displays error message" do
+        patch :update_password, { user_id: user.id, user: { old_password: 'password1234', password: 'password', password_confirmation: 'password'} }
+        expect(flash[:error]).to eq(I18n.t('users.messages.password_wrong'))
+      end
     end
   end
 
-  describe "get forgotten password" do
-    before :each do
-      @user = FactoryBot.create :user
-      @user.update_attributes(email: "user1@example.com")
+  describe "GET forgot_password" do
+    before(:each) do
+      login user
     end
 
-    it "posts forgot_password" do
-      ActionMailer::Base.deliveries = []
-      old_password = @user.password
-      params = {forgot_password: {email: "user1@example.com"} }
-      post :forgot_password, params
-      expect(response).to redirect_to(root_path)
-      expect(flash[:notice]).to eq(I18n.t('users.messages.password_resetted'))
-      expect(User.find(@user.id).password).not_to eq(old_password)
-
-      # sends an email with the new password to the user
-      # because travis is so slow we have to assume that there are more than 1 email
-      password_mail_index = nil
-      ActionMailer::Base.deliveries.each_with_index { |mail, index|
-          password_mail_index = index if mail.to[0]==@user.email && mail.to.count==1
-        }
-      expect(password_mail_index).not_to eq(nil)
-      expect(ActionMailer::Base.deliveries[password_mail_index]).to have_content(User.find(@user.id).password)
-      expect(ActionMailer::Base.deliveries[password_mail_index].to.count).to eq(1)
-      expect(ActionMailer::Base.deliveries[password_mail_index].to[0]).to eq(User.find(@user.id).email)
+    context "with blank email adress" do
+      it "displays a notice" do
+        post :forgot_password, { forgot_password: { email: '' } }
+        expect(flash[:notice]).to eq(I18n.t('users.messages.unknown_email'))
+      end
     end
 
-    it "ignores cases" do
-      ActionMailer::Base.deliveries = []
-      @user.update(email: "User1.Lastname@example.com")
-      params = {forgot_password: {email: "user1.lastname@example.com"} }
-      post :forgot_password, params
-      expect(response).to redirect_to(root_path)
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    context "with valid email adress" do
+      before(:each) do
+        ActionMailer::Base.deliveries = []
+      end
+
+      it "redirects to root path" do
+        post :forgot_password, { forgot_password: { email: user.email } }
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "displays success message" do
+        post :forgot_password, { forgot_password: { email: user.email } }
+        expect(flash[:notice]).to eq(I18n.t('users.messages.password_resetted'))
+      end
+
+      it "sends mail with new password" do
+        post :forgot_password, { forgot_password: { email: user.email } }
+        expect(ActionMailer::Base.deliveries.first.to.count).to eq(1)
+        expect(ActionMailer::Base.deliveries.first.to[0]).to eq(user.email)
+      end
+
+      it "sets new password" do
+        old_password_digest = user.password_digest
+        post :forgot_password, { forgot_password: { email: user.email } }
+        expect(user.reload.password_digest).not_to eq(old_password_digest)
+      end
+
+      it "ignores cases" do
+        post :forgot_password, { forgot_password: { email: user.email.swapcase } }
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+        expect(ActionMailer::Base.deliveries.first.to[0]).to eq(user.email)
+      end
     end
   end
 end
