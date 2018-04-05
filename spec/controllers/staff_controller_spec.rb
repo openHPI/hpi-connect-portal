@@ -1,77 +1,93 @@
 require 'rails_helper'
 
 describe StaffController do
-
-  before(:each) do
-    login FactoryBot.create(:student).user
-  end
-
+  let!(:staff) { FactoryBot.create(:staff) }
+  let(:admin) { FactoryBot.create(:user, :admin) }
   let(:programming_languages_attributes) { { "1" => "5", "2" => "2" } }
 
-  let(:valid_session) { {} }
-
-  before(:each) do
-    @staff = FactoryBot.create(:staff)
-  end
-
   describe "GET index" do
-    it "assigns all staff as @staff" do
-      admin = FactoryBot.create :user, :admin
-      login admin
+    context "as admin" do
+      before(:each) do
+        login admin
+      end
 
-      get :index, {}, valid_session
-      expect(assigns(:staff_members)).to eq(Staff.all.sort_by { |staff| [staff.lastname, staff.firstname] })
+      it "assigns all staff as @staff" do
+        get :index
+        expect(assigns(:staff_members)).to eq(Staff.all.sort_by { |staff| [staff.lastname, staff.firstname] })
+      end
+    end
+
+    context "when logged out" do
+      it "redirects to root path" do
+        get :index
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
   describe "GET show" do
-    it "assigns the requested staff as @staff" do
-      get :show, {id: @staff.to_param}, valid_session
-      expect(assigns(:staff)).to eq(@staff)
+    context "as a student" do
+      before(:each) do
+        login FactoryBot.create(:student).user
+      end
+
+      it "assigns the requested staff as @staff" do
+        get :show, { id: staff.id }
+        expect(assigns(:staff)).to eq(staff)
+      end
     end
   end
 
   describe "DELETE destroy" do
-    before(:each) do
-      admin = FactoryBot.create(:user, :admin)
-      login admin
-    end
-
-    describe "destroys the requested staff" do
+    context "as admin user" do
       before(:each) do
-        @staff = FactoryBot.create(:staff)
+        login admin
       end
 
-      it "should delete the staff object" do
-        expect { delete :destroy, {id: @staff.to_param}, valid_session }.to change(Staff, :count).by(-1)
+      describe "destroys the requested staff" do
+        it "should delete the staff object" do
+          expect { delete :destroy, { id: staff.id } }.to change(Staff, :count).by(-1)
+        end
+
+        it "should delete the user object" do
+          expect { delete :destroy, { id: staff.id } }.to change(User, :count).by(-1)
+        end
       end
 
-      it "should delete the user object" do
-        expect { delete :destroy, {id: @staff.to_param}, valid_session }.to change(User, :count).by(-1)
+      it "redirects to the staff list" do
+        delete :destroy, { id: staff.id }
+        expect(response).to redirect_to(staff_index_path)
       end
     end
 
-    it "redirects to the staff list" do
-      staff = FactoryBot.create(:staff)
-      delete :destroy, {id: staff.to_param}, valid_session
-      expect(response).to redirect_to(staff_index_path)
+    context "as staff of another employer" do
+      before(:each) do
+        login FactoryBot.create(:staff).user
+      end
+
+      it "redirects to the staff member page" do
+        delete :destroy, { id: staff.id }
+        expect(response).to redirect_to(staff)
+      end
+
+      it "doesn't destroy the staff member" do
+        expect { delete :destroy, { id: staff.id } }.to change(Staff, :count).by(0)
+      end
     end
   end
 
   describe "GET new" do
-    let(:employer) { FactoryBot.create(:employer, activated: true) }
-
-    before :each do
+    before(:each) do
       logout
     end
 
     it "should render template without account" do
-      get :new, ({token: employer.token})
+      get :new, ({ token: staff.employer.token })
       expect(response).to render_template("new")
     end
 
     it "should redirect to root if wrong token" do
-      get :new, ({token: "wrong-token"})
+      get :new, ({ token: "wrong-token" })
       expect(response).to redirect_to root_path
     end
   end
@@ -81,20 +97,20 @@ describe StaffController do
     let(:valid_attributes) { {token: employer.token, user_attributes:  {firstname: "Max", lastname: "Mustermann", email: "test@testmail.de",
                                                           password: "test", password_confirmation: "test"} } }
 
-    before :each do
+    before(:each) do
       logout
     end
 
     it "creates staff" do
       employer.reload
       expect {
-        post :create, {staff: valid_attributes}, valid_session
+        post :create, {staff: valid_attributes}
       }.to change(Staff, :count).by(1)
       expect(response).to redirect_to(root_path)
     end
 
     it "creates staff in right employer" do
-      post :create, {staff: valid_attributes}, valid_session
+      post :create, {staff: valid_attributes}
       expect(Staff.last.firstname).to eq("Max")
       expect(Staff.last.employer).to eq(employer)
     end

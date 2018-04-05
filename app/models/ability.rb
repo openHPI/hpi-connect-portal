@@ -7,7 +7,7 @@ class Ability
     unless user.nil?
       can [:archive, :read], JobOffer
       can [:edit, :update, :read, :update_password], User, id: user.id
-      can :read, Staff
+      can :show, Staff
       initialize_admin and return if user.admin?
       initialize_student user and return if user.student?
       initialize_staff user and return if user.staff?
@@ -27,8 +27,8 @@ class Ability
     can [:read, :destroy], NewsletterOrder, student: user.manifestation
     can :create, NewsletterOrder
 
-    cannot :read, JobOffer, status: JobStatus.closed
-    cannot :read, Employer
+    cannot :show, JobOffer, status: JobStatus.closed
+    cannot :show, Employer
 
     if user.activated
       can :read, Student do |student|
@@ -55,10 +55,10 @@ class Ability
 
     can [:create, :show], JobOffer
 
-    cannot :read, JobOffer, status: JobStatus.closed
-    can :read, JobOffer, status: JobStatus.closed, employer: staff.employer
+    cannot :show, JobOffer, status: JobStatus.closed
+    can :show, JobOffer, status: JobStatus.closed, employer: staff.employer
 
-    can [:edit, :update, :read], Staff, id: staff.id
+    can [:edit, :update, :show], Staff, id: staff.id
 
     can [:read, :edit, :update, :invite_colleague], Employer, id: employer_id
     can :home, Employer
@@ -82,7 +82,7 @@ class Ability
         job.active?
       end
 
-      can :destroy, Staff, manifestation: { employer: { id: employer_id }}
+      can :destroy, Staff, employer: staff.employer
 
       if staff.employer.premium?
         can :read, Student do |student|

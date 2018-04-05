@@ -3,10 +3,12 @@ class StaffController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
-  before_action :set_staff, only: [:show, :edit, :update, :destroy]
+  before_action :set_staff, only: [:show, :edit, :update]
+
+  authorize_resource only: [:index]
+  load_and_authorize_resource only: [:destroy]
 
   def index
-    authorize! :index, Staff.all
     @staff_members = Staff.all.sort_by { |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
@@ -36,7 +38,6 @@ class StaffController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @staff
     @staff.destroy
     respond_and_redirect_to staff_index_path, I18n.t('users.messages.successfully_deleted.')
   end
@@ -56,12 +57,10 @@ class StaffController < ApplicationController
     end
 
     def rescue_from_exception(exception)
-      if [:index].include? exception.action
-        respond_and_redirect_to root_path, exception.message
-      elsif [:edit].include? exception.action
+      if [:destroy].include? exception.action
         respond_and_redirect_to exception.subject, exception.message
       else
-        respond_and_redirect_to staff_index_path, exception.message
+        respond_and_redirect_to root_path, exception.message
       end
     end
 end
