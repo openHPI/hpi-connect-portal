@@ -69,15 +69,6 @@ describe "Job Offer pages" do
           end
 
           it { is_expected.not_to have_link('Edit')}
-
-          describe "not being activated" do
-            before do
-              student = FactoryBot.create(:student)
-              student.user.update_column :activated, false
-              login student.user
-              visit job_offer_path(job_offer)
-            end
-          end
         end
       end
     end

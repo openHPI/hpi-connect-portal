@@ -38,7 +38,8 @@ FactoryBot.define do
     compensation      10.5
     time_effort       9
     association       :status, factory: :job_status
-    student_group_id  Student::GROUPS.index("hpi")
+    student_group_id  Student::GROUPS.index('hpi')
+    graduation_id     Student::GRADUATIONS.index('bachelor')
 
     trait :graduate_job { category_id JobOffer::CATEGORIES.index('graduate_job') }
 

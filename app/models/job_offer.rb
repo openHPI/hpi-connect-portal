@@ -70,7 +70,8 @@ class JobOffer < ActiveRecord::Base
   def self.create_and_notify(parameters, current_user)
     job_offer = JobOffer.new parameters, status: JobStatus.pending
     job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
-    if(!(job_offer.employer && job_offer.employer.can_create_job_offer?(job_offer.category)))
+
+    if(job_offer.employer && !job_offer.employer.can_create_job_offer?(job_offer.category))
       job_offer.employer.add_one_single_booked_job
     end
 
@@ -78,9 +79,8 @@ class JobOffer < ActiveRecord::Base
       JobOffersMailer.new_single_job_offer_email(job_offer, job_offer.employer).deliver_now
     elsif job_offer.save && job_offer.employer.can_create_job_offer?(job_offer.category)
       JobOffersMailer.new_job_offer_email(job_offer).deliver_now
-    elsif parameters[:flexible_start_date]
-      job_offer.flexible_start_date = true
     end
+
     return job_offer
   end
 
@@ -123,13 +123,6 @@ class JobOffer < ActiveRecord::Base
     self.status ||= JobStatus.pending
   end
 
-  def can_be_created
-    if(!(employer && employer.can_create_job_offer?(category)))
-      employer.add_one_single_booked_job
-    end
-    return true
-  end
-
   def closed?
     status && status == JobStatus.closed
   end
@@ -168,10 +161,6 @@ class JobOffer < ActiveRecord::Base
 
   def state
     STATES[state_id]
-  end
-
-  def student_group
-    Student::GROUPS[student_group_id]
   end
 
   def minimum_degree

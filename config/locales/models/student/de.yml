@@ -16,8 +16,8 @@ de:
           advancedtrack: "Advanced Track"
         group: "Studentengruppe"
         groups:
-          hpi: "HPI Student"
-          dschool: "D-School Student"
-          both: "HPI und D-School Student"
-          hpi_grad: "HPI Absolvent"
+          hpi: "HPI-Student"
+          dschool: "D-School-Student"
+          both: "HPI und D-School-Student"
+          hpi_grad: "HPI-Absolvent"
         birthday: "Geburtsdatum"
