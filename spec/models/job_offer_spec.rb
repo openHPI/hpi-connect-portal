@@ -198,6 +198,96 @@ describe JobOffer do
     end
   end
 
+  describe ".apply_saved_scopes" do
+
+    it "filters by state" do
+      job_offer_in_state = FactoryBot.create(:job_offer, state_id: JobOffer::STATES.index('BB'))
+      job_offer_out_of_state = FactoryBot.create(:job_offer, state_id: JobOffer::STATES.index('MV'))
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { state: JobOffer::STATES.index('BB') })
+      expect(returned_job_offers).to include(job_offer_in_state)
+      expect(returned_job_offers).not_to include(job_offer_out_of_state)
+    end
+
+    it "filters by employer" do
+      cool_employer = FactoryBot.create(:employer, name: 'Really Cool Company')
+      cool_job_offer = FactoryBot.create(:job_offer, employer: cool_employer)
+      regular_job_offer = FactoryBot.create(:job_offer)
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { employer: cool_employer.id })
+      expect(returned_job_offers).to include(cool_job_offer)
+      expect(returned_job_offers).not_to include(regular_job_offer)
+    end
+
+    it "filters by category" do
+      big_job = FactoryBot.create(:job_offer, category_id: JobOffer::CATEGORIES.index('graduate_job'))
+      small_job = FactoryBot.create(:job_offer, category_id: JobOffer::CATEGORIES.index('working_student'))
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { category: JobOffer::CATEGORIES.index('graduate_job') })
+      expect(returned_job_offers).to include(big_job)
+      expect(returned_job_offers).not_to include(small_job)
+    end
+
+    it "filters by graduations" do
+      easy_job = FactoryBot.create(:job_offer, graduation_id: Student::GRADUATIONS.index('abitur'))
+      hard_job = FactoryBot.create(:job_offer, graduation_id: Student::GRADUATIONS.index('phd'))
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { graduations: Student::GRADUATIONS.index('abitur') })
+      expect(returned_job_offers).to include(easy_job)
+      expect(returned_job_offers).not_to include(hard_job)
+    end
+
+    it "filters by start and end date" do
+      short_time_job = FactoryBot.create(:job_offer, start_date: Date.current, end_date: Date.current + 6.month)
+      long_time_job = FactoryBot.create(:job_offer, start_date: Date.current + 2.month, end_date: Date.current + 2.year)
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { start_date: (Date.current + 1.month).to_s, end_date: (Date.current + 3.year).to_s })
+      expect(returned_job_offers).to include(long_time_job)
+      expect(returned_job_offers).not_to include(short_time_job)
+    end
+
+    it "filters by time expenditure" do
+      part_time_job = FactoryBot.create(:job_offer, time_effort: 5)
+      full_time_job = FactoryBot.create(:job_offer, time_effort: 40)
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { time_effort: 10 })
+      expect(returned_job_offers).to include(part_time_job)
+      expect(returned_job_offers).not_to include(full_time_job)
+    end
+
+    it "filters by compensation" do
+      illegal_job = FactoryBot.create(:job_offer, compensation: 5)
+      legal_job = FactoryBot.create(:job_offer, compensation: 15)
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { compensation: 10 })
+      expect(returned_job_offers).to include(legal_job)
+      expect(returned_job_offers).not_to include(illegal_job)
+    end
+
+    let(:korean_language) { FactoryBot.create(:language, name: 'Korean') }
+    let(:english_language) { FactoryBot.create(:language, name: 'English') }
+
+    it "filters by languages" do
+      foreign_job = FactoryBot.create(:job_offer, languages: [korean_language])
+      english_job = FactoryBot.create(:job_offer, languages: [english_language])
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { language_ids: [korean_language.id] })
+      expect(returned_job_offers).to include(foreign_job)
+      expect(returned_job_offers).not_to include(english_job)
+    end
+
+    let(:java) { FactoryBot.create(:programming_language, name: 'Java') }
+    let(:ruby) { FactoryBot.create(:programming_language, name: 'Ruby') }
+
+    it "filters by programming languages" do
+      java_job = FactoryBot.create(:job_offer, programming_languages: [java])
+      ruby_job = FactoryBot.create(:job_offer, programming_languages: [ruby])
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { programming_language_ids: [java.id] })
+      expect(returned_job_offers).to include(java_job)
+      expect(returned_job_offers).not_to include(ruby_job)
+    end
+
+    it "filters by student groups" do
+      dschool_job = FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('dschool'))
+      hpi_job = FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('hpi'))
+      returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { student_group: Student::GROUPS.index('hpi').to_s })
+      expect(returned_job_offers).to include(hpi_job)
+      expect(returned_job_offers).not_to include(dschool_job)
+    end
+  end
+
   describe '.check_for_expired' do
     before(:each) do
       @job_offer_valid = FactoryBot.create(:job_offer, employer: @epic, status: JobStatus.active)

@@ -119,6 +119,36 @@ class JobOffer < ActiveRecord::Base
     return csv_string
   end
 
+  def self.apply_saved_scopes(job_offers, saved_scopes)
+    saved_scopes.each do |key, value|
+      case key
+      when :state
+        job_offers = job_offers.filter_state(value)
+      when :employer
+        job_offers = job_offers.filter_employer(value)
+      when :category
+        job_offers = job_offers.filter_category(value)
+      when :graduations
+        job_offers = job_offers.filter_graduation(value)
+      when :start_date
+        job_offers = job_offers.filter_start_date(value)
+      when :end_date
+        job_offers = job_offers.filter_end_date(value)
+      when :time_effort
+        job_offers = job_offers.filter_time_effort(value)
+      when :compensation
+        job_offers = job_offers.filter_compensation(value)
+      when :language_ids
+        job_offers = job_offers.filter_languages(value)
+      when :programming_language_ids
+        job_offers = job_offers.filter_programming_languages(value)
+      else
+        job_offers = job_offers.filter_student_group(value)
+      end
+    end
+    return job_offers
+  end
+
   def default_values
     self.status ||= JobStatus.pending
   end

@@ -27,17 +27,26 @@
 require 'rails_helper'
 
 describe Student do
-  before(:each) do
-    @english = Language.create(name: 'english')
-    @programming_language = FactoryBot.create(:programming_language)
-    @student = FactoryBot.create(:student, languages: [@english], programming_languages: [@programming_language])
+  let(:programming_language) { FactoryBot.create(:programming_language) }
+  let(:english_language) { FactoryBot.create(:language, name: 'English') }
+  let!(:student) { FactoryBot.create(:student, languages: [english_language], programming_languages: [programming_language]) }
+
+  describe "#visibility" do
+    it "returns visibility level in text form" do
+      student.update_attributes visibility_id: Student::VISIBILITYS.index('nobody')
+      expect(student.visibility).to eq('nobody')
+      student.update_attributes visibility_id: Student::VISIBILITYS.index('employers_only')
+      expect(student.visibility).to eq('employers_only')
+      student.update_attributes visibility_id: Student::VISIBILITYS.index('employers_and_students')
+      expect(student.visibility).to eq('employers_and_students')
+      student.update_attributes visibility_id: Student::VISIBILITYS.index('students_only')
+      expect(student.visibility).to eq('students_only')
+    end
   end
 
-  subject { @student }
-
-  describe "Deliver Newsletter" do
+  describe ".deliver_newsletters" do
     before(:each) do
-      ActionMailer::Base.deliveries.clear
+      ActionMailer::Base.deliveries = []
     end
 
     it "delivers newsletters" do
@@ -90,22 +99,20 @@ describe Student do
     end
   end
 
-  describe "get_current_enterprises_and_positions" do
+  describe "#get_current_enterprises_and_positions" do
     it "should return the current enterprises and positions" do
-      alumni = FactoryBot.create(:student)
       current_cv_job1 = FactoryBot.create(:cv_job, current: true)
       current_cv_job2 = FactoryBot.create(:cv_job, current: true, employer: "HPI", position: "Hiwi")
-      alumni.cv_jobs = [current_cv_job1, current_cv_job2]
-      expect(alumni.get_current_enterprises_and_positions).to eq(["SAP AG, HPI", "Ruby on Rails developer, Hiwi"])
+      student.cv_jobs = [current_cv_job1, current_cv_job2]
+      expect(student.get_current_enterprises_and_positions).to eq(["SAP AG, HPI", "Ruby on Rails developer, Hiwi"])
     end
 
     it "should return two empty strings if there are no current positions" do
-      alumni = FactoryBot.create(:student)
-      expect(alumni.get_current_enterprises_and_positions).to eq(["", ""])
+      expect(student.get_current_enterprises_and_positions).to eq(["", ""])
     end
   end
 
-  describe "export_alumni" do
+  describe ".export_alumni" do
     before(:each) do
       require 'csv'
 
