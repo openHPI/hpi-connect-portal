@@ -62,21 +62,6 @@ describe Employer do
     end
   end
 
-  describe "invite colleague" do
-
-    before :each do
-      ActionMailer::Base.deliveries =[]
-      receiver_name = "Test Name"
-      sender = FactoryBot.create(:user)
-      employer.invite_colleague("test@mail.com", receiver_name, sender)
-    end
-
-    it "sends mail" do
-      ActionMailer::Base.deliveries == 1
-    end
-
-  end
-
   describe "#average_rating" do
     context "employer rated" do
       it "returns the arithmetic mean of all rating scores" do

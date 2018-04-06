@@ -109,10 +109,6 @@ class Employer < ActiveRecord::Base
     Rating.where(employer: self).count
   end
 
-  def invite_colleague(colleague_mail, name, sender)
-    EmployersMailer.invite_colleague_email(self, colleague_mail, name, sender).deliver_now
-  end
-
   def self.export(registered_from, registered_to)
     CSV.generate(headers: true) do |csv|
       employer_attributes = %w{name}

@@ -26,9 +26,11 @@
 require 'rails_helper'
 
 describe EmployersController do
-
+  let!(:employer) { FactoryBot.create(:employer) }
+  let!(:premium_employer) { FactoryBot.create(:employer, :premium) }
   let(:staff) { FactoryBot.create(:staff) }
   let(:admin) { FactoryBot.create(:user, :admin) }
+  let(:student) { FactoryBot.create(:student) }
 
   let(:valid_attributes) { { name: "HCI", description: "Human Computer Interaction",
       number_of_employees: "50", place_of_business: "Potsdam", year_of_foundation: 1998,
@@ -108,12 +110,11 @@ describe EmployersController do
       end
 
       it "as a student" do
-        login FactoryBot.create(:student).user
+        login student.user
       end
 
-      it "as a staff of another chair" do
-        employer2 = FactoryBot.create(:employer)
-        login FactoryBot.create(:staff, employer: employer2).user
+      it "as a staff member of another employer" do
+        login FactoryBot.create(:staff).user
       end
 
       after(:each) do
@@ -125,9 +126,7 @@ describe EmployersController do
   end
 
   describe "POST create" do
-
     describe "with valid params" do
-
       it "creates a new employer" do
         expect {
           post :create, { employer: valid_attributes }
@@ -153,7 +152,6 @@ describe EmployersController do
     end
 
     describe "with invalid params" do
-
       it "renders new again" do
         post :create, { employer: false_attributes }
         expect(response).to render_template("new")
@@ -161,9 +159,8 @@ describe EmployersController do
     end
 
     describe "with insufficient access rights" do
-
       before(:each) do
-        login FactoryBot.create(:student).user
+        login student.user
       end
 
       it "should also create an employer (there are no insufficient access rights)" do
@@ -175,7 +172,6 @@ describe EmployersController do
   end
 
   describe "PUT update" do
-
     describe "with valid params" do
       before(:each) do
         @employer = FactoryBot.create(:employer)
@@ -235,13 +231,11 @@ describe EmployersController do
     end
 
     describe "with missing permission" do
-
       before(:each) do
-        login FactoryBot.create(:student).user
+        login student.user
       end
 
       it "redirects to the employer index page" do
-        employer = FactoryBot.create(:employer)
         patch :update, { id: employer.id, employer: valid_attributes }
         expect(response).to redirect_to(employers_path)
       end
@@ -250,9 +244,8 @@ describe EmployersController do
 
   describe "GET activate" do
     describe "as an admin" do
-
       before :each do
-        login FactoryBot.create(:user, :admin)
+        login admin
         @employer = FactoryBot.create(:employer, activated: false)
       end
 
@@ -325,7 +318,6 @@ describe EmployersController do
     end
 
     it "should not be accessible for students" do
-      student = FactoryBot.create(:student)
       login student.user
       get :activate, ({ id: FactoryBot.create(:employer).id })
       expect(response).to redirect_to(employers_path)
@@ -344,43 +336,152 @@ describe EmployersController do
     end
   end
 
-  describe "POST invite colleague" do
-    let(:employer) { employer = FactoryBot.create(:employer, activated: true) }
+  describe "GET deactivate" do
+    context "as an admin" do
+      before(:each) do
+        login admin
+      end
 
-    before :each do
-      ActionMailer::Base.deliveries = []
-      login employer.staff_members.first.user
+      it "deactivates the employer" do
+        get :deactivate, { id: employer.id }
+        expect(employer.reload.activated).to eq(false)
+      end
+
+      it "sets the free package as booked package" do
+        employer = FactoryBot.create(:employer, :premium)
+        expect(employer.booked_package_id).to eq(Employer::PACKAGES.index('premium'))
+        get :deactivate, { id: employer.id }
+        expect(employer.reload.booked_package_id).to eq(Employer::PACKAGES.index('free'))
+      end
+
+      it "redirects to employer" do
+        get :deactivate, { id: employer.id }
+        expect(response).to redirect_to(employer)
+      end
+
+      it "displays a success message" do
+        get :deactivate, { id: employer.id }
+        expect(flash[:success]).to eq(I18n.t('employers.messages.successfully_deactivated'))
+      end
     end
 
-    it "should redirect to employer show" do
-      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      expect(response).to redirect_to(employer_path(employer))
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    context "as a staff member" do
+      before(:each) do
+        login staff.user
+      end
+
+      it "redirects to employers index" do
+        get :deactivate, { id: employer.id }
+        expect(response).to redirect_to(employers_path)
+      end
+
+      it "doesn't deactivate the employer" do
+        get :deactivate, { id: employer.id }
+        expect(employer.reload.activated).to eq(true)
+      end
     end
 
-    it "should not deliver Email for students" do
-      login FactoryBot.create(:student).user
-      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      expect(ActionMailer::Base.deliveries.count).to eq(0)
-    end
+    context "as a student" do
+      before(:each) do
+        login student.user
+      end
 
-    it "should not deliver for guest users" do
-      logout
-      post :invite_colleague, ({id: employer.id, invite_colleague_email: {colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann"}})
-      expect(ActionMailer::Base.deliveries.count).to eq(0)
-    end
+      it "redirects to employers index" do
+        get :deactivate, { id: employer.id }
+        expect(response).to redirect_to(employers_path)
+      end
 
+      it "doesn't deactivate the employer" do
+        get :deactivate, { id: employer.id }
+        expect(employer.reload.activated).to eq(true)
+      end
+    end
   end
 
-  describe "POST export" do
+  describe "POST invite_colleague" do
+    before(:each) do
+      ActionMailer::Base.deliveries = []
+    end
+
+    context "as a staff member" do
+      before(:each) do
+        login employer.staff_members.first.user
+      end
+
+      it "redirects to employer" do
+        post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann" } })
+        expect(response).to redirect_to(employer_path(employer))
+      end
+
+      it "sends invitation mail to colleague" do
+        post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann" } })
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
+        expect(ActionMailer::Base.deliveries.last.to[0]).to eq('test@test.de')
+      end
+
+      context "when email is blank" do
+        it "redirects to employer" do
+          post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "", first_name: "Max", last_name: "Mustermann" } })
+          expect(response).to redirect_to(employer_path(employer))
+        end
+
+        it "displays notice" do
+          post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "", first_name: "Max", last_name: "Mustermann" } })
+          expect(flash[:notice]).to eq(I18n.t('employers.messages.invalid_colleague_email'))
+        end
+
+        it "doesn't send invitation mail" do
+          expect {
+            post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "", first_name: "Max", last_name: "Mustermann" } })
+          }.to change { ActionMailer::Base.deliveries.count }.by(0)
+        end
+      end
+    end
+
+    context "as a student" do
+      before(:each) do
+        login student.user
+      end
+
+      it "redirects to employers index" do
+        post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "", first_name: "Max", last_name: "Mustermann" } })
+        expect(response).to redirect_to(employers_path)
+      end
+
+      it "doesn't send mail" do
+        post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann" } })
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
+      end
+    end
+
+    context "when logged out" do
+      before(:each) do
+        logout
+      end
+
+      it "doesn't send mail" do
+        login FactoryBot.create(:student).user
+        post :invite_colleague, ({ id: employer.id, invite_colleague_email: { colleague_email: "test@test.de", first_name: "Max", last_name: "Mustermann" } })
+        expect(ActionMailer::Base.deliveries.count).to eq(0)
+      end
+    end
+  end
+
+  describe "POST send_csv" do
     it "should send a CSV file to an admin" do
-      login FactoryBot.create(:user, :admin)
+      login admin
       post :send_csv
       expect(response.headers['Content-Type']).to eq "text/csv"
     end
 
+    it "calls Employer.export with specified time span" do
+      login admin
+      expect(Employer).to receive(:export).with(Date.new(1970,1,1), Date.current)
+      post :send_csv, { employers: 'registered_from_to', from_date: {day: 1, month: 1, year: 1970}, to_date: {day: Date.current.day, month: Date.current.month, year: Date.current.year} }
+    end
+
     it "should not send a CSV to a student" do
-      login FactoryBot.create(:student).user
+      login student.user
       post :send_csv
       expect(response).to redirect_to(employers_path)
       expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
@@ -394,4 +495,44 @@ describe EmployersController do
     end
   end
 
+  describe "DELETE destroy" do
+    context "as an admin" do
+      before(:each) do
+        login admin
+      end
+
+      it "destroys the employer" do
+        expect {
+          delete :destroy, { id: employer.id }
+        }.to change(Employer, :count).by(-1)
+      end
+
+      it "redirects to employers index" do
+        delete :destroy, { id: employer.id }
+        expect(response).to redirect_to(employers_path)
+      end
+
+      it "displays success message" do
+        delete :destroy, { id: employer.id }
+        expect(flash[:success]).to eq(I18n.t('employers.messages.successfully_deleted'))
+      end
+
+      context "if destroy fails" do
+        before(:each) do
+          allow(Employer).to receive(:find).and_return(employer)
+          allow(employer).to receive(:destroy).and_return(false)
+        end
+
+        it "redirects to employer" do
+          delete :destroy, { id: employer.id }
+          expect(response).to redirect_to(employer)
+        end
+
+        it "displays an error message" do
+          delete :destroy, { id: employer.id }
+          expect(flash[:error]).to eq(I18n.t('employers.messages.unsuccessfully_deleted'))
+        end
+      end
+    end
+  end
 end
