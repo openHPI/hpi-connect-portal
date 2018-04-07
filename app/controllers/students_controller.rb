@@ -29,6 +29,7 @@ class StudentsController < ApplicationController
 
   skip_before_filter :signed_in_user, only: [:new, :create]
 
+  load_resource only: [:index]
   authorize_resource except: [:destroy, :edit]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
   before_action :birthdate_params_valid?, only: [:update]
@@ -42,19 +43,7 @@ class StudentsController < ApplicationController
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
 
   def index
-    if signed_in? && current_user.admin?
-      indexedStudents = Student.all
-    else
-      if signed_in_staff? && current_user.manifestation.employer.premium?
-        indexedStudents = Student.active.visible_for_employers
-      elsif signed_in_student?
-        indexedStudents = Student.active.visible_for_students
-      else
-        indexedStudents = Student.active.visible_for_all
-      end
-    end
-
-    @students = apply_scopes(indexedStudents).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @students = apply_scopes(@students).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
   end
 
   def show

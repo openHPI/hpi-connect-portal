@@ -62,10 +62,9 @@ class Student < ActiveRecord::Base
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
-  scope :visible_for_all, -> { where('visibility_id < 0') }
   scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.index('nobody') }
   scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.index('employers_and_students'),VISIBILITYS.index('students_only') }
-  scope :visible_for_employers, ->  { where('visibility_id > ? or visibility_id = ?', VISIBILITYS.index('employers_only'), VISIBILITYS.index('employers_and_students')) }
+  scope :visible_for_employers, ->  { where('visibility_id = ? or visibility_id = ?', VISIBILITYS.index('employers_only'), VISIBILITYS.index('employers_and_students')) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
   scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
   scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
@@ -112,41 +111,11 @@ class Student < ActiveRecord::Base
     GROUPS[group_id]
   end
 
-  def self.apply_saved_scopes(job_offers, saved_scopes)
-    saved_scopes.each do |key, value|
-      case key
-      when :state
-        job_offers = job_offers.filter_state(value)
-      when :employer
-        job_offers = job_offers.filter_employer(value)
-      when :category
-        job_offers = job_offers.filter_category(value)
-      when :graduations
-        job_offers = job_offers.filter_graduations(value)
-      when :start_date
-        job_offers = job_offers.filter_start_date(value)
-      when :end_date
-        job_offers = job_offers.filter_end_date(value)
-      when :time_effort
-        job_offers = job_offers.filter_time_effort(value)
-      when :compensation
-        job_offers = job_offers.filter_compensation(value)
-      when :language_ids
-        job_offers = job_offers.filter_languages(value)
-      when :programming_language_ids
-        job_offers = job_offers.filter_programming_languages(value)
-      else
-        job_offers = job_offers.filter_student_group(value)
-      end
-    end
-    return job_offers
-  end
-
   def self.deliver_newsletters
     possible_job_offers = JobOffer.active.where("created_at > ?", Student::NEWSLETTER_DELIVERIES_CYCLE.ago)
     Student.all.each do |student|
       student.newsletter_orders.each do |newsletter_order|
-        matching_jobs = apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
+        matching_jobs = JobOffer.apply_saved_scopes(possible_job_offers, newsletter_order.search_params)
         if matching_jobs.any?
           StudentsMailer.newsletter(student, matching_jobs, newsletter_order).deliver_now
         end

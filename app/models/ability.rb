@@ -31,11 +31,8 @@ class Ability
     cannot :show, Employer
 
     if user.activated
-      can :read, Student do |student|
-        student.activated && (student.visibility_id == Student::VISIBILITYS.index('employers_and_students') ||
-                              student.visibility_id == Student::VISIBILITYS.index('students_only') ||
-                              student.id == user.manifestation.id)
-      end
+      can :read, Student, user: { activated: true }, visibility_id: Student::VISIBILITYS.index('employers_and_students')
+      can :read, Student, user: { activated: true }, visibility_id: Student::VISIBILITYS.index('students_only')
 
       can :matching, JobOffer
 
@@ -85,9 +82,8 @@ class Ability
       can :destroy, Staff, employer: staff.employer
 
       if staff.employer.premium?
-        can :read, Student do |student|
-          student.activated && student.visibility_id > 0
-        end
+        can :read, Student, user: { activated: true }, visibility_id: Student::VISIBILITYS.index('employers_only')
+        can :read, Student, user: { activated: true }, visibility_id: Student::VISIBILITYS.index('employers_and_students')
       end
     end
   end
