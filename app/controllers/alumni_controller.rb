@@ -52,7 +52,7 @@ class AlumniController < ApplicationController
         errors.each do |error_message, lines|
           error_notice << "<br/>" + error_message + ": " + lines.map(&:to_s).join(', ')
         end
-        notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf:' + error_notice }
+        notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: ' + error_notice }
       end
     end
     respond_and_redirect_to new_alumni_path, notice
@@ -105,9 +105,9 @@ class AlumniController < ApplicationController
       if Alumni.email_invalid? params[:session][:email]
         respond_and_redirect_to edit_user_path(user), {error: I18n.t('alumni.choose_another_email')} and return
       end
-      respond_and_redirect_to user.manifestation, 'Alumni-Email erfolgreich hinzugefügt!'
+      respond_and_redirect_to user.manifestation, I18n.t('students.alumni_email_linked')
     else
-      flash[:error] = 'Invalid email/password combination'
+      flash[:error] = I18n.t('errors.configuration.invalid_email_or_password')
       redirect_to alumni_email_path(token: params[:token])
     end
   end

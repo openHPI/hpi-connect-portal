@@ -3,6 +3,7 @@ require 'rails_helper'
 describe "the alumni flow" do
 
   describe "creating alumni entries" do
+    # Alumni#create_from_csv
     before :each do
       login FactoryBot.create(:user, :admin)
       visit new_alumni_path
@@ -11,7 +12,7 @@ describe "the alumni flow" do
     end
 
     it "should be possible to upload a csv file with alumni" do
-      file = File.join fixture_path, "csv/alumni_file.csv"
+      file = File.join fixture_path, "csv/import_alumni.csv"
       find("#alumni_file").set(file)
       first('input[type=submit]').click
       expect(Alumni.count).to eq(3)
@@ -33,10 +34,18 @@ describe "the alumni flow" do
       assert !alumni.token.blank?
       expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
+
+    it "displays error message when alumni can't be created" do
+      file = File.join fixture_path, "csv/import_alumni_w_errors.csv"
+      find("#alumni_file").set(file)
+      first('input[type=submit]').click
+      expect(page).to have_content("In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: Redirect Email can't be blank: 4")
+    end
   end
 
   describe "send registration mail to alumni" do
-    before :each do
+    # Alumni#send_mail_from_csv
+    before(:each) do
       login FactoryBot.create(:user, :admin)
       FactoryBot.create(:alumni, alumni_email: "alexander.ernst")
       visit remind_via_mail_alumni_index_path
@@ -44,10 +53,18 @@ describe "the alumni flow" do
     end
 
     it "should be possible to upload a csv file to send mails" do
-      file = File.join fixture_path, "csv/mail_file.csv"
+      FactoryBot.create(:alumni, alumni_email: "max.mustermann")
+      file = File.join fixture_path, "csv/remind_alumni.csv"
       find("#email_file").set(file)
       first('input[type=submit]').click
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
+    end
+
+    it "displays error message for alumni that weren't found" do
+      file = File.join fixture_path, "csv/remind_alumni.csv"
+      find("#email_file").set(file)
+      first('input[type=submit]').click
+      expect(page).to have_content('Alumni konnte nicht gefunden werden: 2')
     end
 
     it "should not be possible for non_admin" do
@@ -131,7 +148,6 @@ describe "the alumni index page" do
 end
 
 describe "Alumni Reminder Email" do
-
   it "sends mail" do
     ActionMailer::Base.deliveries = []
     login FactoryBot.create(:user, :admin)
@@ -140,5 +156,4 @@ describe "Alumni Reminder Email" do
     find("#remind-all-button").click
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
-
 end
