@@ -143,6 +143,20 @@
           </div>
         </div>
       </li>
+
+      <%= f.simple_fields_for :employer, @job_offer.employer do |employer_fields| %>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-3">
+              <%= label_field employer_fields, :name, t("activerecord.attributes.employer.name") %>
+            </div>
+            <div class="col-sm-9">
+              <%= employer_fields.input :name %>
+            </div>
+          </div>
+        </li>
+      <% end %>
+
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">

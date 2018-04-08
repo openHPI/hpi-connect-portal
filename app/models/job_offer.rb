@@ -50,6 +50,7 @@ class JobOffer < ActiveRecord::Base
   accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :languages
   accepts_nested_attributes_for :contact
+  accepts_nested_attributes_for :employer, update_only: true
 
   validates_attachment_content_type :offer_as_pdf, content_type: ['application/pdf']
 
