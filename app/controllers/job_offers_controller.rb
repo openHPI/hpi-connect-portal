@@ -92,7 +92,7 @@ class JobOffersController < ApplicationController
       render_errors_and_action @job_offer, 'new'
     else
       if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
-        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+        @job_offer.employer.contact.update contact_params
       end
 
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_created'), 'show', :created
@@ -102,7 +102,7 @@ class JobOffersController < ApplicationController
   def update
     if @job_offer.update job_offer_params
       if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
-        @job_offer.employer.contact.update job_offer_params[:contact_attributes]
+        @job_offer.employer.contact.update contact_params
       end
 
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')
@@ -216,7 +216,7 @@ class JobOffersController < ApplicationController
     end
 
     def job_offer_params
-      parameters = params.require(:job_offer).permit(JobOffer.locale_columns(:description), :title, :offer_as_pdf, :employer_id, :state_id, :category_id, :student_group_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []}, contact_attributes: [:name, :street, :zip_city, :email, :phone])
+      parameters = params.require(:job_offer).permit(JobOffer.locale_columns(:description), :title, :offer_as_pdf, :employer_id, :state_id, :category_id, :student_group_id, :graduation_id, :start_date, :end_date, :compensation, :flexible_start_date, :time_effort, :student_id, { programming_language_ids: []}, {language_ids: []}, contact_attributes: [:name, :street, :zip_city, :email, :phone, :company])
 
       if parameters[:compensation] == I18n.t('job_offers.default_compensation')
         parameters[:compensation] = 10.0
@@ -227,6 +227,10 @@ class JobOffersController < ApplicationController
         parameters[:flexible_start_date] = true
       end
       parameters
+    end
+
+    def contact_params
+      job_offer_params[:contact_attributes]
     end
 
     def check_job_is_in_editable_state
