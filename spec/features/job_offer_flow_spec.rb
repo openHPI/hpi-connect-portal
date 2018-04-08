@@ -60,6 +60,7 @@ describe "the job offer flow" do
     assert_equal(job_offer.contact.name, creating_staff.employer.contact.name)
     assert_equal(job_offer.contact.street, creating_staff.employer.contact.street)
     assert_equal(job_offer.contact.zip_city, creating_staff.employer.contact.zip_city)
+    assert_equal(job_offer.contact.company, creating_staff.employer.name)
 
     # admin of the employers get acceptance pending email
     expect(ActionMailer::Base.deliveries.count).to eq(1)

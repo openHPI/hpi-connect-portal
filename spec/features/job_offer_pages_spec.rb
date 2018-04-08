@@ -41,6 +41,7 @@ describe "Job Offer pages" do
         expect(find_field(I18n.t("activerecord.attributes.contact.zip_city")).value).to eq staff.employer.contact.zip_city
         expect(find_field(I18n.t("activerecord.attributes.contact.email")).value).to eq staff.employer.contact.email
         expect(find_field(I18n.t("activerecord.attributes.contact.phone")).value).to eq staff.employer.contact.phone
+        expect(find_field(I18n.t("activerecord.attributes.contact.company")).value).to eq staff.employer.name
       end
 
       it "does not have a checked checkbox to copy contact address to employer" do

@@ -157,6 +157,17 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-sm-3">
+            <%= label_field c, :company, t("activerecord.attributes.contact.company") %>
+          </div>
+          <div class="col-sm-9">
+            <%= c.input :company,
+            input_html: (@job_offer.contact.company.blank? && signed_in_staff?) ? { value: current_user.manifestation.employer.name } : { value: @job_offer.contact.company } %>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
             <%= label_field c, :phone, t("activerecord.attributes.contact.phone") %>
           </div>
           <div class="col-sm-9">

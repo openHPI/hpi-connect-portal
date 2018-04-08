@@ -10,6 +10,7 @@
 #  zip_city         :string(255)
 #  email            :string(255)
 #  phone            :string(255)
+#  company          :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
 #
@@ -24,6 +25,6 @@ class Contact < ActiveRecord::Base
     end
 
     def merged
-      [name, street, zip_city, email, phone].reject { |x| x.blank?}.join("\n")
+      [name, street, zip_city, company, email, phone].reject { |x| x.blank?}.join("\n")
     end
 end
