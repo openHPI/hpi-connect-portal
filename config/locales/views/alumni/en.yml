@@ -1,9 +1,9 @@
 en:
   alumni:
-    register_address: 'Register Alumni-Email'
+    register_address: 'Register alumni mail address'
     already_have_account: 'I already have an account'
     register_account: 'I want to create a new account'
-    choose_another_email: 'Please choose an email which is not from HPI. Your mails going to your alumni email adress, will be forwarded to this adress.'
+    choose_another_email: 'Please choose an email address which is not from HPI. Any mails to your alumni email address will be forwarded to this address.'
     already_registered: 'You already have an account.'
     update_alumni_data: 'Update alumni data'
     alumni_data_file: 'File with alumni data (CSV)'
