@@ -42,7 +42,7 @@ class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
 
-  has_scope :active, only: [:index], type: :boolean, default: true, unless: -> controller { controller.signed_in_admin? && controller.params[:pending] }
+  has_scope :active, only: [:index], type: :boolean, default: true, unless: -> controller { controller.signed_in_admin? && !controller.params[:pending].nil? }
   has_scope :pending, only: [:index], type: :boolean, if: :signed_in_admin?
   has_scope :filter_employer, only: [:index, :archive], as: :employer
   has_scope :filter_category, only: [:index, :archive], as: :category
