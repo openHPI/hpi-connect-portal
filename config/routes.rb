@@ -61,8 +61,9 @@ HpiHiwiPortal::Application.routes.draw do
         patch 'update_password' => 'users#update_password', as: 'update_password'
       end
 
-      resources :home, only: [:index, :imprint]
+      resources :home, only: [:index, :imprint, :privacy]
       get 'home/imprint'
+      get 'home/privacy'
 
       resources :sessions, only: [:create]
       get 'signin' => 'home#index', as: 'signin'
