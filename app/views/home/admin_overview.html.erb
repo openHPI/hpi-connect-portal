@@ -1,0 +1,30 @@
+<div class="wrapper-12 panel-wrapper">
+<h1>Adminübersicht</h1>
+</div>
+
+<div class="wrapper-12 teaser">
+
+<div class="col-md-12 list-container">
+  <p>
+    <h1>Noch nicht freigeschaltete Jobangebote (<%= JobOffer.pending.count %>)</h1>
+  </p>
+  <br/>
+  <p>
+    <%= render 'shared/jobs_listing_detailed', job_offer_list: JobOffer.pending, create_link_to_details: true %>
+  </p>
+</div>
+
+<div class="col-md-12 list-container">
+  <p>
+    <h1>Noch nicht freigeschaltete Unternehmensprofile (<%= Employer.all.count %>)</h1>
+  </p>
+  <br/>
+  <p>
+    <ul class="list-group list">
+      <div class="row">
+        <%= render Employer.all %>
+      </div>
+    </ul>
+  </p>
+  </div>
+</div>

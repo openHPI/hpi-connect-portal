@@ -35,7 +35,5 @@
     <%= will_paginate job_offer_list, renderer: BootstrapPagination::Rails %>
   </div>
 <% else %>
-  <div class="col-sm-6 col-sm-offset-3">
-    <h4><%= t("job_offers.no_results") %></h4>
-  </div>
+  <%= t("job_offers.no_results") %>
 <% end %>

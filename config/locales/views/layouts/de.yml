@@ -22,6 +22,7 @@ de:
     imprint: "Impressum"
     asterisk_description: "Felder, die mit * gekennzeichnet sind, sind Pflichtfelder"
     configuration: "Plattformeinstellungen"
+    admin_overview: "Adminübersicht"
     import: "Alumni importieren"
     export: "Alumni exportieren"
     mail_alumni: "Alumni erinnern"

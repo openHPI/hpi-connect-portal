@@ -22,6 +22,7 @@ en:
     imprint: "About"
     asterisk_description: "Fields marked with * are obligatory"
     configuration: "Platform Settings"
+    admin_overview: "Admin overview"
     import: "Import Alumni"
     export: "Export Alumni"
     mail_alumni: "Remind Alumni"

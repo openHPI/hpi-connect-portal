@@ -12,6 +12,8 @@ HpiHiwiPortal::Application.routes.draw do
         resource :configurable, except: [:index]
       end
 
+      get 'admin/overview' => 'home#admin_overview'
+
       resources :job_offers do
         collection do
           get "archive"
