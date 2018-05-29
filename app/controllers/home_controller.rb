@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   def admin_overview
     @job_offers = JobOffer.pending.where('created_at >= ?', 2.week.ago).order(created_at: :desc)
     @employers = Employer.pending.where('created_at >= ?', 2.week.ago).order(created_at: :desc)
-    flash[:notice] = I18n.t('home.admin_overview.notice')
+    flash.now[:notice] = I18n.t('home.admin_overview.notice')
   end
 
   def imprint
