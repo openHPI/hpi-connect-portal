@@ -22,9 +22,10 @@
   <p>
     <ul class="list-group list">
       <div class="row">
-        <%= render Employer.all %>
+        <%= render Employer.all.paginate(page: params[:page]) %>
       </div>
     </ul>
+    <%= will_paginate Employer.all.paginate(page: params[:page]), renderer: BootstrapPagination::Rails %>
   </p>
   </div>
 </div>
