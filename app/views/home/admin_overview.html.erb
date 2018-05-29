@@ -10,7 +10,7 @@
   </p>
   <br/>
   <p>
-    <%= render 'shared/jobs_listing_detailed', job_offer_list: JobOffer.pending, create_link_to_details: true %>
+    <%= render 'shared/jobs_listing_detailed', job_offer_list: JobOffer.pending.paginate(page: params[:page]), create_link_to_details: true %>
   </p>
 </div>
 
