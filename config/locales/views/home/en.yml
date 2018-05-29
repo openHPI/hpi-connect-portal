@@ -1,45 +1,47 @@
 en:
   home:
     index:
-        latest_job_offers: "The %{number_of_job_offers} latest Job Offers"
-        latest_employers: "The %{number_of_employers} latest Employers"
-        sign_in: "Sign in"
-        register_user: "Register User"
-        register_company: "Register Company"
+      latest_job_offers: "The %{number_of_job_offers} latest Job Offers"
+      latest_employers: "The %{number_of_employers} latest Employers"
+      sign_in: "Sign in"
+      register_user: "Register User"
+      register_company: "Register Company"
     imprint:
-        headline: "Impressum"
-        tel: "Telefon"
-        fax: "Telefax"
-        email: "E-Mail"
-        internet: "Internet"
-        reg_office: "Registry Office"
-        reg_num: "Register Number"
-        hpi:
-            headline: "Hasso Plattner Institute for Software Systems Engineering"
-            street: "Prof.-Dr.-Helmert-Str. 2-3"
-            city: "14482 Potsdam"
-            tel: "+49 (0)331 5509-0"
-            fax: "14482 Potsdam"
-            email: "hpi-info(at)hpi.uni-potsdam.de"
-            internet_title: "Homepage"
-            internet_link: "http://www.hpi.uni-potsdam.de/"
-        manager:
-            headline: "Authorized Representative Managing Directors"
-            person: "Prof. Dr. Christoph Meinel"
-            court: "Amtsgericht Potsdam"
-            court_num: "HRB 12184"
-        content_resp:
-            headline: "Persons responsible for content in accordance with § 6 MDStV"
-            name: "Chair for Enterprise Platform and Integration Concepts"
-        editor:
-            headline: "Editor"
-            name: "Hasso-Plattner-Institut"
-        design:
-            headline: "Web Design"
-            name: "Hasso-Plattner-Institut"
-        text:
-            headline: "Texts"
-            name: "Hasso-Plattner-Institut"
-        info:
-            headline: "Legal information"
-            text: "Hasso Plattner Institute (HPI) constantly checks and updates the information on its web pages. Despite the utmost care taken, we cannot rule out that some of the data may since have become outdated. Therefore, we cannot accept liability for the currency, accuracy and completeness of the information displayed. The same applies to all other web pages that can be reached via hyperlink. HPI is not responsible for the content of websites which can be reached via such links. Furthermore, HPI reserves the right to make changes or additions to the information displayed. Content and structure of the HPI website is protected by copyright. The reproduction of information or data, in particular the use of texts, text excerpts or illustrative material, requires our prior approval. We wish you an informative stay on our pages and would welcome any suggestions, requests or criticism you may have."
+      headline: "Impressum"
+      tel: "Telefon"
+      fax: "Telefax"
+      email: "E-Mail"
+      internet: "Internet"
+      reg_office: "Registry Office"
+      reg_num: "Register Number"
+      hpi:
+        headline: "Hasso Plattner Institute for Software Systems Engineering"
+        street: "Prof.-Dr.-Helmert-Str. 2-3"
+        city: "14482 Potsdam"
+        tel: "+49 (0)331 5509-0"
+        fax: "14482 Potsdam"
+        email: "hpi-info(at)hpi.uni-potsdam.de"
+        internet_title: "Homepage"
+        internet_link: "http://www.hpi.uni-potsdam.de/"
+      manager:
+        headline: "Authorized Representative Managing Directors"
+        person: "Prof. Dr. Christoph Meinel"
+        court: "Amtsgericht Potsdam"
+        court_num: "HRB 12184"
+      content_resp:
+        headline: "Persons responsible for content in accordance with § 6 MDStV"
+        name: "Chair for Enterprise Platform and Integration Concepts"
+      editor:
+        headline: "Editor"
+        name: "Hasso-Plattner-Institut"
+      design:
+        headline: "Web Design"
+        name: "Hasso-Plattner-Institut"
+      text:
+        headline: "Texts"
+        name: "Hasso-Plattner-Institut"
+      info:
+        headline: "Legal information"
+        text: "Hasso Plattner Institute (HPI) constantly checks and updates the information on its web pages. Despite the utmost care taken, we cannot rule out that some of the data may since have become outdated. Therefore, we cannot accept liability for the currency, accuracy and completeness of the information displayed. The same applies to all other web pages that can be reached via hyperlink. HPI is not responsible for the content of websites which can be reached via such links. Furthermore, HPI reserves the right to make changes or additions to the information displayed. Content and structure of the HPI website is protected by copyright. The reproduction of information or data, in particular the use of texts, text excerpts or illustrative material, requires our prior approval. We wish you an informative stay on our pages and would welcome any suggestions, requests or criticism you may have."
+    admin_overview:
+      notice: "All new (i.e., created within the last two weeks) and pending job offers and employer profiles are displayed here."

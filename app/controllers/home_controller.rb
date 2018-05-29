@@ -7,6 +7,15 @@ class HomeController < ApplicationController
     @employers = Employer.active.last(5).reverse
   end
 
+  def admin_overview
+    @job_offers = JobOffer.pending.where('created_at >= ?', 2.week.ago).order(created_at: :desc)
+    @employers = Employer.pending.where('created_at >= ?', 2.week.ago).order(created_at: :desc)
+    flash[:notice] = I18n.t('home.admin_overview.notice')
+  end
+
   def imprint
+  end
+
+  def privacy
   end
 end

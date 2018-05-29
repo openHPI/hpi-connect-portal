@@ -52,6 +52,7 @@ class Employer < ActiveRecord::Base
     less_than_or_equal_to: Time.now.year}, allow_nil: true
 
   scope :active, -> { where(activated: true) }
+  scope :pending, -> { where(activated: false) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
   scope :order_by_name, -> { order('LOWER(name)') }
 

@@ -6,26 +6,28 @@
 
 <div class="col-md-12 list-container">
   <p>
-    <h1>Noch nicht freigeschaltete Jobangebote (<%= JobOffer.pending.count %>)</h1>
+    <h1>Noch nicht freigeschaltete Jobangebote (<%= @job_offers.count %>)</h1>
   </p>
   <br/>
   <p>
-    <%= render 'shared/jobs_listing_detailed', job_offer_list: JobOffer.pending.paginate(page: params[:page]), create_link_to_details: true %>
+    <%= render 'shared/jobs_listing_detailed', job_offer_list: @job_offers.paginate(page: params[:job_offers_page]), create_link_to_details: true %>
   </p>
 </div>
 
 <div class="col-md-12 list-container">
   <p>
-    <h1>Noch nicht freigeschaltete Unternehmensprofile (<%= Employer.all.count %>)</h1>
+    <h1>Noch nicht freigeschaltete Unternehmensprofile (<%= @employers.count %>)</h1>
   </p>
   <br/>
   <p>
     <ul class="list-group list">
       <div class="row">
-        <%= render Employer.all.paginate(page: params[:page]) %>
+        <%= render @employers.paginate(page: params[:page]) %>
       </div>
     </ul>
-    <%= will_paginate Employer.all.paginate(page: params[:page]), renderer: BootstrapPagination::Rails %>
+    <%= will_paginate @employers.paginate(page: params[:employers_page]), renderer: BootstrapPagination::Rails %>
   </p>
   </div>
 </div>
+
+<% # sort by creation date. wie die deaktivierten rausfiltern? alle, die in der letzten woche created wurden und nicht aktiviert sind? %>
