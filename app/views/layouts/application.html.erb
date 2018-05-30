@@ -41,7 +41,7 @@
         </div>
         <div class="subsitebackhead">
           <div>
-            <h1><a href="http://www.hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
+            <h1><a href="http://hpi.uni-potsdam.de/"><%= image_tag("hpi_header_logo_neg_srgb.png", alt: "Hasso-Plattner-Institut") %></a>
               <% if signed_in? %>
                 <li class="dropdown menu-dropdown">
                   <a href="#" class="dropdown-toggle" id="dropdown-toggle" data-toggle="dropdown">
@@ -111,7 +111,7 @@
       <div class="container">
         <div>
         <ul class="footer-links">
-          <li>Copyright Hasso-Plattner-Institut 2014</li>
+          <li>Copyright Hasso-Plattner-Institut <%= Date.current.year %></li>
           <li><a href="http://hpi.de/impressum.html"><span>Impressum</span></a></li>
           <li><a href="http://hpi.de/kontakt.html"><span>Kontakt</span></a></li>
           <li><a href="http://hpi.de/sitemap.html"><span>Sitemap</span></a></li>
