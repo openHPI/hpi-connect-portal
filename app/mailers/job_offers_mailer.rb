@@ -4,13 +4,13 @@ class JobOffersMailer < ActionMailer::Base
 
   def new_job_offer_email(job_offer)
     @job_offer = job_offer
-    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
+    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: (t "job_offers_mailer.new_job_offer.subject", job_title: @job_offer.title)
   end
 
   def new_single_job_offer_email(job_offer, employer)
     @job_offer = job_offer
     @employer = employer
-    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.new_single_job_offer.subject", job_title: @job_offer.title, employer: @job_offer.employer)
+    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: (t "job_offers_mailer.new_single_job_offer.subject", job_title: @job_offer.title, employer: @job_offer.employer)
   end
 
   def admin_accepted_job_offer_email(job_offer, staff)
@@ -40,7 +40,7 @@ class JobOffersMailer < ActionMailer::Base
 
   def prolong_requested_email(job_offer)
     @job_offer = job_offer
-    mail to: Configurable[:mailToAdministration], subject: (t "job_offers_mailer.prolong_requested.subject", job_title: @job_offer.title)
+    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: (t "job_offers_mailer.prolong_requested.subject", job_title: @job_offer.title)
   end
 
   def job_will_expire_email(job_offer)

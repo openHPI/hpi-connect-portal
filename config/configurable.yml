@@ -2,3 +2,7 @@ mailToAdministration:
   name: E-Mail-Adresse der Administration  # sets the edit label
   default: "connect@hpi.uni-potsdam.de"  # sets the default value
   type: email                            # uses input type="email"
+administration_cc:
+  name: CC-E-Mail-Adresse der Administration
+  default: ""
+  type: email

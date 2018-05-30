@@ -3,7 +3,7 @@ class EmployersMailer < ActionMailer::Base
 
   def new_employer_email(employer)
     @employer = employer
-    mail to: Configurable[:mailToAdministration], subject: t("employers_mailer.new_employer.subject")
+    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: t("employers_mailer.new_employer.subject")
   end
 
   def book_package_email(employer)
