@@ -39,8 +39,6 @@ HpiHiwiPortal::Application.configure do
 
   config.action_mailer.default_url_options = { host: "http://www.example.com" }
 
-  config.action_mailer.delivery_method = :test
-
   # Default locale for tests
   config.i18n.default_locale = :en
   config.action_controller.default_url_options = { locale: I18n.default_locale }

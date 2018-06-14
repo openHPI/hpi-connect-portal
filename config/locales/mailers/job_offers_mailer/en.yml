@@ -1,9 +1,9 @@
 en:
   job_offers_mailer:
     new_job_offer:
-      subject: 'Job offer %{job_title} is pending'
+      subject: "Job offer %{job_title} is pending"
     new_single_job_offer:
-      subject: '%{employer} wants to book the single graduate job #{job_title}'
+      subject: "%{employer} wants to book the single graduate job %{job_title}"
     job_offer_declined:
       subject: "Your job offer has been rejected"
     job_offer_accepted:

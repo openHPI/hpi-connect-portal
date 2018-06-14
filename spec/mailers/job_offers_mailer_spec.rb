@@ -5,8 +5,6 @@ describe JobOffersMailer do
   include EmailSpec::Matchers
 
   before(:each) do
-    ActionMailer::Base.delivery_method = :test
-    ActionMailer::Base.perform_deliveries = true
     @staff = FactoryBot.create(:staff)
     @staff2 = FactoryBot.create(:staff)
     @job_offer = FactoryBot.create(:job_offer)
@@ -27,7 +25,7 @@ describe JobOffersMailer do
       expect(@email).to have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))
     end
 
-    it "should include the job title int the subject" do
+    it "should include the job title in the subject" do
       expect(@email.subject).to have_content(@job_offer.title)
     end
 
@@ -41,6 +39,34 @@ describe JobOffersMailer do
 
     it "should be send from 'noreply-connect@hpi.de'" do
       expect(@email.from).to eq(['noreply-connect@hpi.de'])
+    end
+  end
+
+  describe "new single job offer" do
+    let!(:email) { JobOffersMailer.new_single_job_offer_email(@job_offer, @job_offer.employer).deliver_now }
+
+    it "should include the link to the job offer" do
+      expect(email).to have_body_text(url_for(controller:"job_offers", action: "show", id: @job_offer.id, only_path: false))
+    end
+
+    it "should include the employer in the subject" do
+      expect(email.subject).to have_content(@job_offer.employer.name)
+    end
+
+    it "should include the job title in the subject" do
+      expect(email.subject).to have_content(@job_offer.title)
+    end
+
+    it "should send an email" do
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
+
+    it "should be send to the admin" do
+      expect(email.to).to eq([Configurable.mailToAdministration])
+    end
+
+    it "should be send from 'noreply-connect@hpi.de'" do
+      expect(email.from).to eq(['noreply-connect@hpi.de'])
     end
   end
 

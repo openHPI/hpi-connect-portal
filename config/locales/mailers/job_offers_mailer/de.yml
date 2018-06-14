@@ -1,11 +1,11 @@
 de:
   job_offers_mailer:
     new_job_offer:
-      subject: 'Jobangebot %{job_title} wartet auf Freigabe'
+      subject: "Jobangebot %{job_title} wartet auf Freigabe"
     new_single_job_offer:
-      subject: '%{employer} möchte die einzelne Absolventenstelle #{job_title} buchen'
+      subject: "%{employer} möchte die einzelne Absolventenstelle %{job_title} buchen"
     job_offer_declined:
-      subject: "Ihr Stellenagebot wurde leider abgelehnt"
+      subject: "Ihr Stellenangebot wurde leider abgelehnt"
     job_offer_accepted:
       subject: "Freischaltung Ihres Stellenangebots auf HPI Connect"
     job_offer_closed:

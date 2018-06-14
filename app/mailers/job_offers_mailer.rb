@@ -10,7 +10,7 @@ class JobOffersMailer < ActionMailer::Base
   def new_single_job_offer_email(job_offer, employer)
     @job_offer = job_offer
     @employer = employer
-    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: (t "job_offers_mailer.new_single_job_offer.subject", job_title: @job_offer.title, employer: @job_offer.employer)
+    mail to: Configurable[:mailToAdministration], cc: Configurable[:administration_cc], subject: (t "job_offers_mailer.new_single_job_offer.subject", job_title: @job_offer.title, employer: @job_offer.employer.name)
   end
 
   def admin_accepted_job_offer_email(job_offer, staff)
