@@ -165,7 +165,7 @@ describe "Job Offer pages" do
           is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
           is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          is_expected.to have_content('Pending')
+          is_expected.to have_content(I18n.t('job_offers.pending'))
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -182,7 +182,7 @@ describe "Job Offer pages" do
           is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
           is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          is_expected.to have_content('Pending')
+          is_expected.to have_content(I18n.t('job_offers.pending'))
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
@@ -207,7 +207,7 @@ describe "Job Offer pages" do
           is_expected.to have_selector 'a:contains("Edit"):not(disabled)'
           is_expected.to have_selector 'a:contains("Delete"):not(disabled)'
 
-          is_expected.to have_content('Pending')
+          is_expected.to have_content(I18n.t('job_offers.pending'))
 
           click_on "Edit"
           expect(current_path).to eq(edit_job_offer_path(job_offer))
