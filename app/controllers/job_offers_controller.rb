@@ -70,6 +70,10 @@ class JobOffersController < ApplicationController
     if @job_offer.pending? && signed_in? && !user_is_staff_of_employer?(@job_offer) && !current_user.admin?
       redirect_to job_offers_path
     end
+
+    if @job_offer.pending?
+      flash.now[:notice] = I18n.t('job_offers.pending')
+    end
   end
 
   def new

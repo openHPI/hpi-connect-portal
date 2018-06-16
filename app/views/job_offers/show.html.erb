@@ -1,9 +1,6 @@
 <div class="wrapper-12 panel-wrapper">
   <div class="row">
     <div class="col-sm-12">
-          <% if @job_offer.pending? %>
-            <span> - <%= t("job_status.pending") %></span>
-          <% end %>
         <p style="color:#FFFFFF;"><%= @job_offer.employer.name %></p>
     </div>
     <div class="col-sm-12 text-left">
