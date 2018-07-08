@@ -15,4 +15,5 @@ en:
     remind_all_alumni: 'Remind all alumni'
     import_single: 'Import single alumnus'
     following_alumni_are_not_registered_yet: 'The following alumni are not registered yet.'
-    import_list_explanation: 'Please note: The CSV file should have the following column names: lastname, firstname, email, alumni_email.'
+    import_list_explanation: 'Please note: The CSV file should have the following column names: lastname, firstname, email, alumni_email. It must be UTF8-encoded.'
+    import_error: 'Something went wrong! Are you certain the CSV file is UTF8-encoded?'

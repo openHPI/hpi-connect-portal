@@ -35,26 +35,32 @@ class AlumniController < ApplicationController
     require 'csv'
     if params[:alumni_file].present?
       count, errors = 0, Hash.new { |h, k| h[k] = Array.new }
-      CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol) do |row|
-        count += 1
-        alumni = Alumni.create_from_row row
-        unless alumni == :created
-          alumni.errors.full_messages.each do |error_message|
-            errors[error_message] << count
+
+      begin
+        CSV.foreach(params[:alumni_file].path, headers: true, header_converters: :symbol, encoding: "UTF-8") do |row|
+          count += 1
+          alumni = Alumni.create_from_row row
+          unless alumni == :created
+            alumni.errors.full_messages.each do |error_message|
+              errors[error_message] << count
+            end
           end
         end
-      end
 
-      if errors.empty?
-        notice = 'Alumni erfolgreich importiert!'
-      else
-        error_notice = ""
-        errors.each do |error_message, lines|
-          error_notice << "<br/>" + error_message + ": " + lines.map(&:to_s).join(', ')
+        if errors.empty?
+          notice = 'Alumni erfolgreich importiert!'
+        else
+          error_notice = ""
+          errors.each do |error_message, lines|
+            error_notice << "<br/>" + error_message + ": " + lines.map(&:to_s).join(', ')
+          end
+          notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: ' + error_notice }
         end
-        notice = { error: 'In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: ' + error_notice }
+      rescue ArgumentError
+        notice = { error: I18n.t('alumni.import_error') }
       end
     end
+
     respond_and_redirect_to new_alumni_path, notice
   end
 
