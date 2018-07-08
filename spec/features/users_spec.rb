@@ -15,7 +15,7 @@ describe "the user editing page" do
     expect(current_path).to eq(edit_user_path(@user))
 
     expect(page).to have_content(I18n.t('users.messages.account_successfully_updated'))
-    expect(page).to have_content("Account Settings")
+    expect(page).to have_content(I18n.t('users.settings'))
     expect(page).to have_selector("input[type=email][value='test@gmail.com']")
 
   end
@@ -25,7 +25,7 @@ describe "the user editing page" do
     fill_in 'user_old_password', with: 'password123'
     fill_in 'user_password', with: 'password'
     fill_in 'user_password_confirmation', with: 'password'
-    find('input[value="Change Password"]').click
+    find('input[value="' + I18n.t('users.password_settings') + '"]').click
 
     expect(current_path).to eq(edit_user_path(@user))
     expect(page).to have_content(I18n.t('users.messages.password_changed'))

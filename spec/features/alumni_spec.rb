@@ -39,7 +39,7 @@ describe "the alumni flow" do
       file = File.join fixture_path, "csv/import_alumni_w_errors.csv"
       find("#alumni_file").set(file)
       first('input[type=submit]').click
-      expect(page).to have_content("In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: Redirect Email can't be blank: 4")
+      expect(page).to have_content("In den folgenden Zeilen (beginnend bei 1) treten Fehler auf: " + I18n.t('activerecord.attributes.alumni.email') + " can't be blank: 4")
     end
   end
 

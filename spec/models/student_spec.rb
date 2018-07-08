@@ -132,7 +132,7 @@ describe Student do
       expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
       expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email, @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
       expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email, @registered_a_year_ago.email, "General Qualification for University Entrance", "", "", @registered_a_year_ago.created_at.strftime("%d.%m.%Y")])
-      expect(csv[3]).to eq(["The following alumni are not registered, yet", "", "", ""])
+      expect(csv[3]).to eq([I18n.t('alumni.following_alumni_are_not_registered_yet'), "", "", ""])
       expect(csv[4]).to eq(["no", @pending.lastname, @pending.firstname, @pending.alumni_email, @pending.email])
     end
 
