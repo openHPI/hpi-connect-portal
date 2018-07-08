@@ -3,12 +3,12 @@
 
   <%= form_tag import_alumni_index_path, method: :post, multipart: true do %>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_list") %></h4></div>
+      <div class="panel-heading"><h4><%= t("alumni.import_list") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              <%= t("activerecord.attributes.alumni.alumni_file") %>
+              <%= t("alumni.alumni_file") %>
             </div>
             <div class="col-sm-9">
               <div class="input select optional alumni_file">
@@ -18,10 +18,15 @@
           </div>
         </li>
       </ul>
+      <div class="panel-footer">
+        <%= t("alumni.import_list_explanation") %>
+      </div>
     </div>
     <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.import") %>" />
     <br /><br />
   <% end %>
+
+  <br/>
 
   <%= form_tag update_alumni_data_path, method: :post, multipart: true do %>
     <div class="panel panel-default">
@@ -41,14 +46,16 @@
         </li>
       </ul>
     </div>
-    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.import") %>" />
+    <input type="submit" class="btn btn-primary pull-right" value="<%= t("links.update") %>" />
     <br /><br />
   <% end %>
+
+  <br/>
 
   <%= simple_form_for @alumni, url: alumni_index_path do |f| %>
     <%= render 'shared/object_errors', object: @alumni %>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.import_single") %></h4></div>
+      <div class="panel-heading"><h4><%= t("alumni.import_single") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">

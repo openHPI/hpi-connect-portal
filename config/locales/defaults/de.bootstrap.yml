@@ -21,6 +21,7 @@ de:
     deactivate: "Deaktivieren"
     import: "Importieren"
     export: "Exportieren"
+    update: "Aktualisieren"
   titles:
     edit: "%{model} bearbeiten"
     save: "%{model} speichern"

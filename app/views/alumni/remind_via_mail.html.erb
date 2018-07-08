@@ -3,12 +3,12 @@
 
   <%= form_tag mail_csv_alumni_index_path, method: :post, multipart: true do %>
     <div class="panel panel-default">
-      <div class="panel-heading"><h4><%= t("activerecord.attributes.alumni.send_mail_list") %></h4></div>
+      <div class="panel-heading"><h4><%= t("alumni.send_mail_list") %></h4></div>
       <ul class="list-group">
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-3">
-              Alumni aus EmailFile erinnern
+              <%= t("alumni.alumni_file") %>
             </div>
             <div class="col-sm-9">
               <div class="input select optional email_file">
@@ -18,11 +18,11 @@
           </div>
           <div class="row">
             <div class="col-sm-3">
-                Alle Alumni erinnern
+                <%= t("alumni.remind_all_alumni") %>
             </div>
             <div class="col-sm-9">
               <div class="input select optional email_file">
-                <%= link_to "Alle Alumni jetzt erinnern", remind_all_alumni_index_path, class: "btn", id:"remind-all-button" %>
+                <%= link_to t("alumni.remind_all_alumni"), remind_all_alumni_index_path, class: "btn", id:"remind-all-button" %>
               </div>
             </div>
           </div>

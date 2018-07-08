@@ -2,11 +2,8 @@ en:
   activerecord:
     attributes:
       alumni:
-        first_name: 'First Name'
-        last_name: 'Last Name'
-        email: 'Redirect Email'
-        alumni_email: 'Alumni Email'
-        alumni_file: 'Alumni File'
-        import_list: 'Importieren Alumni List'
-        import_single: 'Import Single Alumnus'
-        following_alumni_are_not_registered_yet: 'The following alumni are not registered, yet'
+        first_name: 'First name'
+        last_name: 'Last name'
+        email: 'Redirect e-mail'
+        alumni_email: 'Alumni e-mail'
+        email_file: 'E-mail file'

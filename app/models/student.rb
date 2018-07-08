@@ -132,7 +132,7 @@ class Student < ActiveRecord::Base
       csv = self.add_registered_alumni_to_csv(csv, shared_attributes, registered_from, registered_to)
 
       if include_unregistered
-        csv << [I18n.t('activerecord.attributes.alumni.following_alumni_are_not_registered_yet'), '', '', '']
+        csv << [I18n.t('alumni.following_alumni_are_not_registered_yet'), '', '', '']
         csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
       end
     end
