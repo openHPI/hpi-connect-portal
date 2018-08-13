@@ -13,7 +13,7 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 
 # dont try and infer something as important as environment from
 # stage name.
-set :rails_env, :development
+set :rails_env, :staging
 
 # number of unicorn workers, this will be reflected in
 # the unicorn.rb and the monit configs
