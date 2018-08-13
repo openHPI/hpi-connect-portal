@@ -27,7 +27,7 @@ set :unicorn_worker_count, 10
 # config file
 set :enable_ssl, false
 
-# files that need to be symlinked
+# files that need to be symlinked by deploy:setup_config
 set(:symlinks, [
   {
     source: "nginx.conf",

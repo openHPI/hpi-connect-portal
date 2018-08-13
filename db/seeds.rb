@@ -109,9 +109,9 @@ sap_staff = Staff.create!(
 # Admin Users
 
 User.create!([{
-  email: "alexander.ernst@student.hpi.uni-potsdam.de",
-  lastname: "Ernst",
-  firstname: "Alexander",
+  email: "admin@admin.com",
+  lastname: "Min",
+  firstname: "A.D.",
   password: "admin",
   password_confirmation: "admin",
   admin: true,

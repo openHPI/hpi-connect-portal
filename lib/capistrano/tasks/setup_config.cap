@@ -22,7 +22,7 @@ namespace :deploy do
         execute :chmod, "+x #{shared_path}/config/#{file}"
       end
 
-      # symlink stuff which should be... symlinked
+      # symlink stuff which should be symlinked
       symlinks = fetch(:symlinks)
 
       symlinks.each do |symlink|
