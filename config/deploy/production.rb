@@ -15,6 +15,8 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 # stage name.
 set :rails_env, :production
 
+set :assets_prefix, '/connect/jobportal/assets'
+
 # number of unicorn workers, this will be reflected in
 # the unicorn.rb and the monit configs
 set :unicorn_worker_count, 10

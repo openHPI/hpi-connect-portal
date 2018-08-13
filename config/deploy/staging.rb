@@ -1,5 +1,5 @@
 set :stage, :staging
-set :branch, "master"
+set :branch, "staging"
 
 # used in case we're deploying multiple versions of the same
 # app side by side. Also provides quick sanity checks when looking
@@ -14,6 +14,10 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 # dont try and infer something as important as environment from
 # stage name.
 set :rails_env, :staging
+
+set :whenever_environment, "#{fetch(:stage)}"
+
+set :assets_prefix, '/assets'
 
 # number of unicorn workers, this will be reflected in
 # the unicorn.rb and the monit configs
