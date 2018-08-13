@@ -41,7 +41,9 @@ FactoryBot.define do
     student_group_id  Student::GROUPS.index('hpi')
     graduation_id     Student::GRADUATIONS.index('bachelor')
 
-    trait :graduate_job { category_id JobOffer::CATEGORIES.index('graduate_job') }
+    trait :graduate_job do
+      category_id JobOffer::CATEGORIES.index('graduate_job')
+    end
 
     before(:create) do |job_offer, evaluator|
       job_offer.employer ||= FactoryBot.create(:employer)

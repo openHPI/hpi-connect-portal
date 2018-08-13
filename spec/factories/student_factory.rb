@@ -38,10 +38,16 @@ FactoryBot.define do
       create_list(:programming_language, 1)
     end
 
-    trait :visible_for_nobody { visibility_id Student::VISIBILITYS.index('nobody') }
+    trait :visible_for_nobody do
+      visibility_id Student::VISIBILITYS.index('nobody')
+    end
 
-    trait :visible_for_employers { visibility_id Student::VISIBILITYS.index('employers_only') }
+    trait :visible_for_employers do
+      visibility_id Student::VISIBILITYS.index('employers_only')
+    end
 
-    trait :visible_for_students { visibility_id Student::VISIBILITYS.index('students_only') }
+    trait :visible_for_students do
+      visibility_id Student::VISIBILITYS.index('students_only')
+    end
   end
 end
