@@ -90,9 +90,9 @@ sap = Employer.create!(
 Contact.create!(
   counterpart: sap,
   name: "SAP Contact",
-  street: "",
+  street: "SAP-Str. 1",
   zip_city: "Waldorf",
-  email: "",
+  email: "contact@sap.de",
   phone: "01000000"
 )
 sap_staff = Staff.create!(
