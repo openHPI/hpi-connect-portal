@@ -25,6 +25,6 @@ class Contact < ActiveRecord::Base
     end
 
     def merged
-      [name, street, zip_city, company, email, phone].reject { |x| x.blank?}.join("\n")
+      [company, name, street, zip_city, email, phone].reject { |x| x.blank?}.join("\n")
     end
 end
