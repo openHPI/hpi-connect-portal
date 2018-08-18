@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.0'
+ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2.0'
@@ -35,7 +35,7 @@ gem 'has_scope'
 gem 'annotate', '>=2.6.1'
 
 # Secure Password Hashes
-gem 'bcrypt-ruby', '~> 3.1.5'
+gem 'bcrypt', '~> 3.1.5'
 
 # Ruby linting
 gem 'rubocop'
@@ -50,7 +50,8 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
-  gem 'factory_bot_rails', require: false
+  gem 'factory_bot_rails', '~> 4.0'
+  gem 'capybara'
   gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
   gem 'byebug'
@@ -102,12 +103,6 @@ gem 'jquery-turbolinks'
 
 # a Helper to validate dates
 gem 'validates_timeliness', '~> 4.0'
-
-# simplify rspec integration testing
-gem 'capybara'
-
-# factory bot for test factories
-gem 'factory_bot'
 
 # replacement for glyphicons
 gem 'font-awesome-rails'
