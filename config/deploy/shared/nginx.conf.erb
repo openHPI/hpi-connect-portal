@@ -16,6 +16,15 @@ server {
   try_files $uri/index.html $uri @unicorn;
   location @unicorn {
     <% if fetch(:stage) == 'production' %>
+    <% if fetch(:stage) == :staging %>
+    # symbol
+    <% end %>
+    <% if fetch(:stage) == 'staging' %>
+    # single quotes
+    <% end %>
+    <% if fetch(:stage) == "staging" %>
+    # double quotes
+    <% end %>
     rewrite ^/(.*)$ /connect/jobportal/$1 break;
     <% end %>
     proxy_set_header X-Forwarded-Proto $scheme;
