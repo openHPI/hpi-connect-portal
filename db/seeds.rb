@@ -46,6 +46,7 @@ Employer.delete_all
 User.delete_all
 Student.delete_all
 Staff.delete_all
+Contact.delete_all
 
 hpi = Employer.create!(
   booked_package_id: Employer::PACKAGES.index("premium"),
@@ -58,11 +59,16 @@ hpi = Employer.create!(
   line_of_business: "IT",
   website: "http://www.hpi.uni-potsdam.de",
   year_of_foundation: 1998,
-    avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
+  avatar: File.open(Rails.root.join('public', 'photos', 'original', 'matthias-uflacker.jpg'))
 )
-
-Contact.delete_all
-
+Contact.create!(
+  counterpart: hpi,
+  name: "HPI Contact",
+  street: "Hasso-Plattner-Straße 1",
+  zip_city: "Waldorf",
+  email: "hasso@plattner.de",
+  phone: "01000000"
+)
 hpi_staff = Staff.create!(
   user: User.new(
     password: 'password',
@@ -90,9 +96,9 @@ sap = Employer.create!(
 Contact.create!(
   counterpart: sap,
   name: "SAP Contact",
-  street: "",
+  street: "SAP-Weg 1",
   zip_city: "Waldorf",
-  email: "",
+  email: "sap@sap.de",
   phone: "01000000"
 )
 sap_staff = Staff.create!(
@@ -109,13 +115,12 @@ sap_staff = Staff.create!(
 # Admin Users
 
 User.create!([{
-  email: "alexander.ernst@student.hpi.uni-potsdam.de",
-  lastname: "Ernst",
-  firstname: "Alexander",
+  email: "admin@example.com",
+  lastname: "Istrator",
+  firstname: "Admin",
   password: "admin",
   password_confirmation: "admin",
-  admin: true,
-  photo: File.open(Rails.root.join('public', 'photos', 'original', 'student-1.jpg'))
+  admin: true
 }])
 
 # Students
