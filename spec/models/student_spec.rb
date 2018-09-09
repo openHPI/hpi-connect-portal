@@ -112,7 +112,7 @@ describe Student do
     end
   end
 
-  describe ".export_alumni" do
+  describe ".export_registered_alumni" do
     before(:each) do
       require 'csv'
 
@@ -121,34 +121,24 @@ describe Student do
       current_cv_job = FactoryBot.create(:cv_job, current: true)
       @registered.cv_jobs = [current_cv_job]
 
-      @pending = FactoryBot.create(:alumni)
-
       @registered_a_year_ago = FactoryBot.create(:student)
       @registered_a_year_ago.user.update_attributes(alumni_email: 'registered.ayearago', created_at: Date.today - 1.years)
     end
 
     it "should export all alumni if options are set accordingly" do
-      csv = CSV.parse(Student.export_alumni(true, nil, nil))
-      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
-      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email + "@hpi-alumni.de", @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
-      expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email + "@hpi-alumni.de", @registered_a_year_ago.email, "General Qualification for University Entrance", "", "", @registered_a_year_ago.created_at.strftime("%d.%m.%Y")])
-      expect(csv[3]).to eq([I18n.t('alumni.following_alumni_are_not_registered_yet'), "", "", ""])
-      expect(csv[4]).to eq(["no", @pending.lastname, @pending.firstname, @pending.alumni_email + "@hpi-alumni.de", @pending.email])
-    end
-
-    it "should not include unregistered alumni if option is not set" do
-      csv = CSV.parse(Student.export_alumni(false, nil, nil))
-      csv_array = csv.to_a
-      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
-      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email + "@hpi-alumni.de", @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
-      expect(csv[2]).to eq(["yes", @registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email + "@hpi-alumni.de", @registered_a_year_ago.email, "General Qualification for University Entrance", "", "", @registered_a_year_ago.created_at.strftime("%d.%m.%Y")])
+      csv = CSV.parse(Student.export_registered_alumni(nil, nil))
+      expect(csv.length).to eq 3
+      expect(csv[0]).to eq(%w{lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
+      expect(csv[1]).to eq([@registered.lastname, @registered.firstname, @registered.alumni_email + "@hpi-alumni.de", @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
+      expect(csv[2]).to eq([@registered_a_year_ago.lastname, @registered_a_year_ago.firstname, @registered_a_year_ago.alumni_email + "@hpi-alumni.de", @registered_a_year_ago.email, "General Qualification for University Entrance", "", "", @registered_a_year_ago.created_at.strftime("%d.%m.%Y")])
     end
 
     it "should not include alumni registered outside of timeframe specified" do
-      csv = CSV.parse(Student.export_alumni(false, Date.today - 6.months, Date.today))
+      csv = CSV.parse(Student.export_registered_alumni(Date.today - 6.months, Date.today))
+      expect(csv.length).to eq 2
       csv_array = csv.to_a
-      expect(csv[0]).to eq(%w{registered? lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
-      expect(csv[1]).to eq(["yes", @registered.lastname, @registered.firstname, @registered.alumni_email + "@hpi-alumni.de", @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
+      expect(csv[0]).to eq(%w{lastname firstname alumni_email email graduation current_enterprise(s) current_position(s) registered_on})
+      expect(csv[1]).to eq([@registered.lastname, @registered.firstname, @registered.alumni_email + "@hpi-alumni.de", @registered.email, "General Qualification for University Entrance", "SAP AG", "Ruby on Rails developer", @registered.created_at.strftime("%d.%m.%Y")])
     end
   end
 end

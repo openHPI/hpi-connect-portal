@@ -142,4 +142,19 @@ describe Alumni do
       end
     end
   end
+
+  describe ".export_unregistered_alumni" do
+    before(:each) do
+      require 'csv'
+
+      @pending = FactoryBot.create(:alumni)
+    end
+
+    it "should export all unregistered alumni if options are set accordingly" do
+      csv = CSV.parse(Alumni.export_unregistered_alumni)
+      expect(csv.length).to eq 2
+      expect(csv[0]).to eq(%w{lastname firstname alumni_email email invited_on})
+      expect(csv[1]).to eq([@pending.lastname, @pending.firstname, @pending.alumni_email + "@hpi-alumni.de", @pending.email, @pending.created_at.strftime("%d.%m.%Y")])
+    end
+  end
 end
