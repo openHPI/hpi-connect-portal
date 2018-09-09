@@ -225,20 +225,20 @@ describe StudentsController do
   describe "POST export_alumni" do
     it "should send a CSV file to an admin" do
       login admin
-      post :send_alumni_csv
+      post :send_alumni_csv, { which_alumni: 'registered' }
       expect(response.headers['Content-Type']).to eq "text/csv"
     end
 
     it "calls Student.export_registered_alumni with specified time span" do
       login admin
       expect(Student).to receive(:export_registered_alumni).with(Date.new(1970,1,1), Date.current)
-      post :send_alumni_csv, { alumni: 'from_to', from_date: {day: 1, month: 1, year: 1970}, to_date: {day: Date.current.day, month: Date.current.month, year: Date.current.year} }
+      post :send_alumni_csv, { which_alumni: 'from_to', from_date: {day: 1, month: 1, year: 1970}, to_date: {day: Date.current.day, month: Date.current.month, year: Date.current.year} }
     end
 
     it "calls Alumni.export_unregistered_alumni" do
       login admin
       expect(Alumni).to receive(:export_unregistered_alumni)
-      post :send_alumni_csv, { alumni: 'unregistered' }
+      post :send_alumni_csv, { which_alumni: 'unregistered' }
     end
 
     it "should not send a CSV to a student" do
