@@ -8,14 +8,21 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-12">
-              <%= radio_button_tag 'alumni', 'all', true %> <%= t("students.export_all_alumni") %>
+              <%= radio_button_tag 'which_alumni', 'registered', true %> <%= t("students.export_all_registered_alumni") %>
             </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-sm-12">
-              <%= radio_button_tag 'alumni', 'from_to' %> <%= t("students.export_alumni_from_to") %>
+              <%= radio_button_tag 'which_alumni', 'unregistered' %> <%= t("students.export_all_unregistered_alumni") %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= radio_button_tag 'which_alumni', 'from_to' %> <%= t("students.export_alumni_from_to") %>
             </div>
             <div class="col-sm-12">
                <br />

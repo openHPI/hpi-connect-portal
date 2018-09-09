@@ -45,6 +45,20 @@ class Alumni < ActiveRecord::Base
     email.include?("@hpi-alumni") || email.include?("@student.hpi") || email.include?("@hpi.")
   end
 
+  def self.export_unregistered_alumni
+    attributes = %w{lastname firstname alumni_email email}
+    headers = attributes + %w{invited_on}
+    CSV.generate(headers: true) do |csv|
+      csv << headers
+      find_each do |alumnus|
+        alumni_attributes = attributes.map{ |attr| alumnus.send(attr)}
+        alumni_attributes[2] << "@hpi-alumni.de"
+        alumni_attributes.push(alumnus.created_at.strftime("%d.%m.%Y"))
+        csv << alumni_attributes
+      end
+    end
+  end
+
   def uniqueness_of_alumni_email_on_user
     errors.add(:alumni_email, I18n.t("errors.messages.taken")) if alumni_email && User.where("lower(alumni_email) LIKE ?", alumni_email.downcase).exists?
   end

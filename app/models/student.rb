@@ -123,46 +123,26 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def self.export_alumni(include_unregistered, registered_from, registered_to)
+  def self.export_registered_alumni(registered_from, registered_to)
+    model_attributes = %w{lastname firstname alumni_email email}
+    headers = model_attributes + %w{graduation current_enterprise(s) current_position(s) registered_on}
     CSV.generate(headers: true) do |csv|
-      shared_attributes = %w{lastname firstname alumni_email email}
-      headers = ["registered?"] + shared_attributes + %w{graduation current_enterprise(s) current_position(s) registered_on}
       csv << headers
-
-      csv = self.add_registered_alumni_to_csv(csv, shared_attributes, registered_from, registered_to)
-
-      if include_unregistered
-        csv << [I18n.t('alumni.following_alumni_are_not_registered_yet'), '', '', '']
-        csv = self.add_unregistered_alumni_to_csv(csv, shared_attributes)
-      end
-    end
-  end
-
-  def self.add_registered_alumni_to_csv(csv, attributes, registered_from, registered_to)
-    find_each do |student|
-      if student.user.alumni?
-        if registered_from.nil? or (student.user.created_at.to_date >= registered_from and student.user.created_at.to_date <= registered_to)
-          current_enterprises_and_positions = student.get_current_enterprises_and_positions
-          alumni_attributes = ["yes"].concat(attributes.map{ |attr| student.send(attr)})
-          alumni_attributes[3] << "@hpi-alumni.de"
-          alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
-          alumni_attributes.push(current_enterprises_and_positions[0])
-          alumni_attributes.push(current_enterprises_and_positions[1])
-          alumni_attributes.push(student.created_at.strftime("%d.%m.%Y"))
-          csv << alumni_attributes
+      find_each do |student|
+        if student.user.alumni?
+          if registered_from.nil? or (student.user.created_at.to_date >= registered_from and student.user.created_at.to_date <= registered_to)
+            current_enterprises_and_positions = student.get_current_enterprises_and_positions
+            alumni_attributes = model_attributes.map{ |attr| student.send(attr)}
+            alumni_attributes[2] << "@hpi-alumni.de"
+            alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
+            alumni_attributes.push(current_enterprises_and_positions[0])
+            alumni_attributes.push(current_enterprises_and_positions[1])
+            alumni_attributes.push(student.created_at.strftime("%d.%m.%Y"))
+            csv << alumni_attributes
+          end
         end
       end
     end
-    return csv
-  end
-
-  def self.add_unregistered_alumni_to_csv(csv, attributes)
-    Alumni.find_each do |alumni|
-      alumni_attributes = ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
-      alumni_attributes[3] << "@hpi-alumni.de"
-      csv << alumni_attributes
-    end
-    return csv
   end
 
   def get_current_enterprises_and_positions

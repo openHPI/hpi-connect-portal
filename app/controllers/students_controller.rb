@@ -121,14 +121,18 @@ class StudentsController < ApplicationController
   def send_alumni_csv
     require 'csv'
 
-    if params[:alumni] == 'from_to'
-      from_date = Date.new(params[:from_date]["year"].to_i,params[:from_date]["month"].to_i,params[:from_date]["day"].to_i)
-
-      to_date = Date.new(params[:to_date]["year"].to_i,params[:to_date]["month"].to_i,params[:to_date]["day"].to_i)
-
-      send_data Student.export_alumni(false, from_date, to_date), filename: "alumni-#{from_date}-#{to_date}.csv", type: "text/csv"
-    else
-      send_data Student.export_alumni(true, nil, nil), filename: "alumni-#{Date.today}.csv", type: "text/csv"
+    case params[:which_alumni]
+      when 'from_to'
+        from_date = Date.new(params[:from_date]["year"].to_i,params[:from_date]["month"].to_i,params[:from_date]["day"].to_i)
+        to_date = Date.new(params[:to_date]["year"].to_i,params[:to_date]["month"].to_i,params[:to_date]["day"].to_i)
+        send_data Student.export_registered_alumni(from_date, to_date), filename: "alumni-#{from_date}-#{to_date}.csv", type: "text/csv"
+      when 'registered'
+        send_data Student.export_registered_alumni(nil, nil), filename: "registered-alumni-#{Date.today}.csv", type: "text/csv"
+      when 'unregistered'
+        send_data Alumni.export_unregistered_alumni, filename: "unregistered-alumni-#{Date.today}.csv", type: "text/csv"
+      else
+        flash[:error] = I18n.t('errors.not_found')
+        redirect_to export_alumni_students_path
     end
   end
 
