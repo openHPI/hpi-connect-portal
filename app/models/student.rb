@@ -51,7 +51,7 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :user, update_only: true
   accepts_nested_attributes_for :languages
-  accepts_nested_attributes_for :programming_languages
+  #accepts_nested_attributes_for :programming_languages
   accepts_nested_attributes_for :programming_languages_users, allow_destroy: true, reject_if: proc { |attributes| attributes['skill'].blank? }
   accepts_nested_attributes_for :cv_jobs, allow_destroy: true, reject_if: proc { |attributes| CvJob.too_blank? attributes }
   accepts_nested_attributes_for :cv_educations, allow_destroy: true, reject_if: proc { |attributes| CvEducation.too_blank? attributes }
@@ -143,8 +143,8 @@ class Student < ActiveRecord::Base
       if student.user.alumni?
         if registered_from.nil? or (student.user.created_at.to_date >= registered_from and student.user.created_at.to_date <= registered_to)
           current_enterprises_and_positions = student.get_current_enterprises_and_positions
-          alumni_attributes = ["yes"]
-          alumni_attributes.concat(attributes.map{ |attr| student.send(attr)})
+          alumni_attributes = ["yes"].concat(attributes.map{ |attr| student.send(attr)})
+          alumni_attributes[3] << "@hpi-alumni.de"
           alumni_attributes.push(I18n.t('activerecord.attributes.user.degrees.' + student.graduation))
           alumni_attributes.push(current_enterprises_and_positions[0])
           alumni_attributes.push(current_enterprises_and_positions[1])
@@ -158,7 +158,9 @@ class Student < ActiveRecord::Base
 
   def self.add_unregistered_alumni_to_csv(csv, attributes)
     Alumni.find_each do |alumni|
-      csv << ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
+      alumni_attributes = ["no"].concat(attributes.map{ |attr| alumni.send(attr)})
+      alumni_attributes[3] << "@hpi-alumni.de"
+      csv << alumni_attributes
     end
     return csv
   end
