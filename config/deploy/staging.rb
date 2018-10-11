@@ -23,10 +23,6 @@ set :assets_prefix, '/assets'
 # the unicorn.rb and the monit configs
 set :unicorn_worker_count, 5
 
-# whether we're using ssl or not, used for building nginx
-# config file
-set :enable_ssl, false
-
 # files that need to be symlinked by deploy:setup_config
 set(:symlinks, [
   {
