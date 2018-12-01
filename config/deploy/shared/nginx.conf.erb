@@ -6,7 +6,7 @@ server {
   server_name <%= fetch(:server_name) %>;
   listen 80;
   listen 443 ssl;
-  root <%= fetch(:deploy_to) %>/current/public
+  root <%= fetch(:deploy_to) %>/current/public;
 
   server_name hpi-career.hpi.de;
   ssl_certificate /etc/nginx/ssl/career-crt.pem;
