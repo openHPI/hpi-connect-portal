@@ -23,6 +23,6 @@ FactoryBot.define do
     sequence(:street)       { |n| "Street #{n}" }
     sequence(:zip_city)     { |n| "City #{n}" }
     sequence(:email)        { |n| "contact_#{n}@example.com" }
-    phone                   "0815"
+    phone                   { "0815" }
   end
 end

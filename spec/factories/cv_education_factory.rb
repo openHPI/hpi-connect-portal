@@ -17,11 +17,11 @@
 FactoryBot.define do
   factory :cv_education do
     association   :student
-    degree        'Bachelor of Science'
-    field         'IT Systems Engineering'
-    institution   'Hasso Plattner Institute'
-    start_date    Date.current - 100
-    end_date      Date.current - 10
-    current       false
+    degree        { 'Bachelor of Science' }
+    field         { 'IT Systems Engineering' }
+    institution   { 'Hasso Plattner Institute' }
+    start_date    { Date.current - 100 }
+    end_date      { Date.current - 10 }
+    current       { false }
   end
 end

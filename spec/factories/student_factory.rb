@@ -26,11 +26,11 @@
 
 FactoryBot.define do
   factory :student do
-    semester            1
-    academic_program_id Student::ACADEMIC_PROGRAMS.index('bachelor')
-    birthday            '1970-12-10'
-    graduation_id       Student::GRADUATIONS.index('abitur')
-    visibility_id       Student::VISIBILITYS.index('employers_and_students')
+    semester            { 1 }
+    academic_program_id { Student::ACADEMIC_PROGRAMS.index('bachelor') }
+    birthday            { '1970-12-10' }
+    graduation_id       { Student::GRADUATIONS.index('abitur') }
+    visibility_id       { Student::VISIBILITYS.index('employers_and_students') }
     association         :user
 
     after(:create) do |user, evaluator|
@@ -39,15 +39,15 @@ FactoryBot.define do
     end
 
     trait :visible_for_nobody do
-      visibility_id Student::VISIBILITYS.index('nobody')
+      visibility_id { Student::VISIBILITYS.index('nobody') }
     end
 
     trait :visible_for_employers do
-      visibility_id Student::VISIBILITYS.index('employers_only')
+      visibility_id { Student::VISIBILITYS.index('employers_only') }
     end
 
     trait :visible_for_students do
-      visibility_id Student::VISIBILITYS.index('students_only')
+      visibility_id { Student::VISIBILITYS.index('students_only') }
     end
   end
 end

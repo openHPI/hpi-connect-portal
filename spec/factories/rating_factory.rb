@@ -17,13 +17,13 @@
 
 FactoryBot.define do
   factory :rating do
-    description             'Rating description'
-    headline                'Rating headline'
-    score_overall           5
-    score_atmosphere        4
-    score_salary            3
-    score_work_life_balance 2
-    score_work_contents     1
+    description             { 'Rating description' }
+    headline                { 'Rating headline' }
+    score_overall           { 5 }
+    score_atmosphere        { 4 }
+    score_salary            { 3 }
+    score_work_life_balance { 2 }
+    score_work_contents     { 1 }
     employer
     student
   end

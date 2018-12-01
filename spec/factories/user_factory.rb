@@ -30,12 +30,12 @@ FactoryBot.define do
     sequence(:firstname)      { |n| "Firstname#{n}" }
     sequence(:lastname)       { |n| "Lastname#{n}" }
     sequence(:email)          { |n| "user_#{n}@example.com" }
-    password                  'password123'
-    password_confirmation     'password123'
-    activated                 true
+    password                  { 'password123' }
+    password_confirmation     { 'password123' }
+    activated                 { true }
 
     trait :admin do
-      admin                   true
+      admin                   { true }
     end
 
     trait :alumnus do

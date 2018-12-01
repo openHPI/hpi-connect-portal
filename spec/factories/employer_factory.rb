@@ -26,17 +26,17 @@
 FactoryBot.define do
   factory :employer do
     sequence(:name) { |n| "Employer #{n}" }
-    description     "Makes beautiful websites"
-    activated       true
-    place_of_business "Berlin"
-    website         "http://mrboss.de"
-    line_of_business "IT"
-    year_of_foundation 1991
-    number_of_employees "50 - 100"
-    booked_package_id 0
+    description     { "Makes beautiful websites" }
+    activated       { true }
+    place_of_business { "Berlin" }
+    website         { "http://mrboss.de" }
+    line_of_business { "IT" }
+    year_of_foundation { 1991 }
+    number_of_employees { "50 - 100" }
+    booked_package_id { 0 }
 
     trait :premium do
-      booked_package_id Employer::PACKAGES.index('premium')
+      booked_package_id { Employer::PACKAGES.index('premium') }
     end
 
     before(:create) do | employer |

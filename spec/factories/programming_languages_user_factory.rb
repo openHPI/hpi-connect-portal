@@ -12,6 +12,6 @@ FactoryBot.define do
   factory :programming_languages_user do
     association :student
     association :programming_language
-    skill 1
+    skill { 1 }
   end
 end

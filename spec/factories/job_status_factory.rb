@@ -10,19 +10,19 @@
 
 FactoryBot.define do
   factory :job_status do
-    name 'active'
+    name { 'active' }
     initialize_with { JobStatus.find_or_create_by!(name: name) }
   end
 
   trait :pending do
-    name 'pending'
+    name { 'pending' }
   end
 
   trait :active do
-    name 'active'
+    name { 'active' }
   end
 
   trait :closed do
-    name 'closed'
+    name { 'closed' }
   end
 end

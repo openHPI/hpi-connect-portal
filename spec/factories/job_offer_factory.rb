@@ -31,18 +31,18 @@
 FactoryBot.define do
   factory :job_offer, class: JobOffer do
     sequence(:title)  { |n| "Title #{n}" }
-    description       "Develop a website"
-    start_date        Date.current + 1
-    end_date          Date.current + 2
-    release_date      Date.current - 3
-    compensation      10.5
-    time_effort       9
+    description       { "Develop a website" }
+    start_date        { Date.current + 1 }
+    end_date          { Date.current + 2 }
+    release_date      { Date.current - 3 }
+    compensation      { 10.5 }
+    time_effort       { 9 }
     association       :status, factory: :job_status
-    student_group_id  Student::GROUPS.index('hpi')
-    graduation_id     Student::GRADUATIONS.index('bachelor')
+    student_group_id  { Student::GROUPS.index('hpi') }
+    graduation_id     { Student::GRADUATIONS.index('bachelor') }
 
     trait :graduate_job do
-      category_id JobOffer::CATEGORIES.index('graduate_job')
+      category_id { JobOffer::CATEGORIES.index('graduate_job') }
     end
 
     before(:create) do |job_offer, evaluator|

@@ -14,6 +14,6 @@ FactoryBot.define do
   factory :faq do
     sequence(:question)  { |n| "Question #{n}" }
     sequence(:answer)  { |n| "Answer #{n}" }
-    locale "en"
+    locale { "en" }
   end
 end

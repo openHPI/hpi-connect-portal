@@ -17,11 +17,11 @@
 FactoryBot.define do
   factory :cv_job do
     association   :student
-    position      'Ruby on Rails developer'
-    employer      'SAP AG'
-    description   'Developing a career portal'
-    start_date    Date.current - 100
-    end_date      Date.current - 10
-    current       false
+    position      { 'Ruby on Rails developer' }
+    employer      { 'SAP AG' }
+    description   { 'Developing a career portal' }
+    start_date    { Date.current - 100 }
+    end_date      { Date.current - 10 }
+    current       { false }
   end
 end
