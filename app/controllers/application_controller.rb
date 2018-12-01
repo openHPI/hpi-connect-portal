@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ArgumentError, with: :not_found
 
   def default_url_options(options={})
     logger.debug "default_url_options is passed options: #{options.inspect}\n"
