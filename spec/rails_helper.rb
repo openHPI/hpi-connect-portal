@@ -16,6 +16,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 Capybara.raise_server_errors = false
+Capybara.server = :webrick
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, { js_errors: false, window_size: [1500, 2500] })

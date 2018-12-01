@@ -76,8 +76,8 @@ describe "the job offer flow" do
 
     expect(current_path).to eq(job_offer_path(job_offer))
 
-    is_expected.to have_link I18n.t("job_offers.accept"), accept_job_offer_path(job_offer)
-    is_expected.to have_link I18n.t("job_offers.decline"), decline_job_offer_path(job_offer)
+    is_expected.to have_link I18n.t("job_offers.accept"), href: accept_job_offer_path(job_offer)
+    is_expected.to have_link I18n.t("job_offers.decline"), href: decline_job_offer_path(job_offer)
 
     find_link(I18n.t("job_offers.accept")).click
 

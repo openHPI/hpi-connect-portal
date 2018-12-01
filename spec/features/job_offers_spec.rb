@@ -30,7 +30,7 @@ describe "the job-offers page" do
     # using regex for order of elements
     expect(page).to have_content(Regexp.new("""
       #{@job_offer_3.title}.*#{@job_offer_2.title}.*#{@job_offer_1.title}
-    """.strip))
+    """.strip, Regexp::MULTILINE))
   end
 
   it "should show prolonged Date if available" do

@@ -12,7 +12,7 @@ en:
         filter_employer_placeholder: "Employer (seperated by comma)"
         no_results: "No student matches your search"
         new_employer_label: "New Employer: "
-        activation_reminder: "This Profile is not yet activated. Please wait until the administrator has verified and activated your account. If you are a student at HPI you can also verify yourself using OpenID: "
+        activation_reminder: "This Profile is not yet activated. Please wait until the administrator has verified and activated your account. If you are a student at HPI you can also verify yourself using OpenID:"
         successful_import: "Your data was succesfully imported. You can now go on making additional changes."
         aborted: "You refused to allow us to use your LinkedIn data. We didn't import anything."
         alumni_email_linked: 'Your alumni mail address was added succesfully.'
