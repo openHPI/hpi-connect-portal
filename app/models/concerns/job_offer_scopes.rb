@@ -5,10 +5,6 @@ module JobOfferScopes
       scope :active, -> { where(status_id: JobStatus.active.id) }
       scope :closed, -> { where(status_id: JobStatus.closed.id) }
       scope :graduate_jobs, -> { where(category_id: 2) }
-
-      scope :hpi_group, -> { where(student_group_id: Student.group_id('hpi')) }
-      scope :dschool_group, -> { where(student_group_id: Student.group_id('dschool')) }
-      scope :both_group, -> { where(student_group_id: Student.group_id('both')) }
     end
 
     add_filter_and_search_scopes job_offer
@@ -23,6 +19,10 @@ module JobOfferScopes
                                                         where("student_group_id = ? OR student_group_id = ?", Student.group_id('hpi'), Student.group_id('both'))
                                                       elsif student_group == Student.group_id('dschool').to_s
                                                         where("student_group_id = ? OR student_group_id = ?", Student.group_id('dschool'), Student.group_id('both'))
+                                                      elsif student_group == Student.group_id('both').to_s
+                                                        where("student_group_id = ? OR student_group_id = ? OR student_group_id = ?", Student.group_id('hpi'), Student.group_id('dschool'), Student.group_id('both'))
+                                                      elsif student_group == Student.group_id('hpi_grad').to_s
+                                                        where("student_group_id = ?", Student.group_id('hpi_grad'))
                                                       end
                                                     }
       scope :filter_graduation, -> graduation {where('graduation_id <= ?', graduation.to_f)}

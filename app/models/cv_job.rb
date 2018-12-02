@@ -26,6 +26,6 @@ class CvJob < ActiveRecord::Base
   validates :end_date, presence: true, unless: :current
 
   def self.too_blank?(attributes)
-    attributes['position'].blank? && attributes['employer'].blank? && attributes['description'].blank?
+    attributes['position'].blank? & attributes['employer'].blank? & attributes['description'].blank?
   end
 end

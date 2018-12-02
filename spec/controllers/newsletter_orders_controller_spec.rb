@@ -44,15 +44,30 @@ describe NewsletterOrdersController do
   end
 
   describe "POST create" do
-    let(:valid_attributes) {{ newsletter_params:  {state: 2}}}
-    let(:valid_session) { { }}
+    let(:valid_attributes) { { newsletter_params:  { state: 2 } } }
+    let(:student) { FactoryBot.create(:student) }
 
-    it "creates newsletter if logged in student" do
-      login FactoryBot.create(:student).user
-      expect {
-        post :create, valid_attributes, valid_session
-      }.to change(NewsletterOrder, :count).by(1)
-      expect(response).to redirect_to job_offers_path
+    context "when logged in as student" do
+      before(:each) do
+        login student.user
+      end
+
+      it "creates a newsletter order when given attributes" do
+        expect {
+          post :create, valid_attributes
+        }.to change(NewsletterOrder, :count).by(1)
+      end
+
+      it "creates a newsletter order when not given attributes" do
+        expect {
+          post :create, {}
+        }.to change(NewsletterOrder, :count).by(1)
+      end
+
+      it "redirects to job offers index" do
+        post :create, valid_attributes
+        expect(response).to redirect_to job_offers_path
+      end
     end
   end
 

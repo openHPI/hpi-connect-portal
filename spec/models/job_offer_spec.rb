@@ -110,12 +110,14 @@ describe JobOffer do
       let!(:hpi_job_offer) { FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('hpi')) }
       let!(:dschool_job_offer) { FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('dschool')) }
       let!(:job_offer_for_both) { FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('both')) }
+      let!(:hpi_grad_job_offer) { FactoryBot.create(:job_offer, student_group_id: Student::GROUPS.index('hpi_grad')) }
 
       it "returns job offers for HPI students" do
         filtered_job_offers = JobOffer.filter_student_group(Student::GROUPS.index('hpi').to_s)
         expect(filtered_job_offers).to include(hpi_job_offer)
         expect(filtered_job_offers).to include(job_offer_for_both)
         expect(filtered_job_offers).not_to include(dschool_job_offer)
+        expect(filtered_job_offers).not_to include(hpi_grad_job_offer)
       end
 
       it "returns job offers for D-School students" do
@@ -123,6 +125,31 @@ describe JobOffer do
         expect(filtered_job_offers).not_to include(hpi_job_offer)
         expect(filtered_job_offers).to include(job_offer_for_both)
         expect(filtered_job_offers).to include(dschool_job_offer)
+        expect(filtered_job_offers).not_to include(hpi_grad_job_offer)
+      end
+
+      it "returns job offers for both HPI and D-School students" do
+        filtered_job_offers = JobOffer.filter_student_group(Student::GROUPS.index('both').to_s)
+        expect(filtered_job_offers).to include(hpi_job_offer)
+        expect(filtered_job_offers).to include(job_offer_for_both)
+        expect(filtered_job_offers).to include(dschool_job_offer)
+        expect(filtered_job_offers).not_to include(hpi_grad_job_offer)
+      end
+
+      it "returns job offers for HPI graduates" do
+        filtered_job_offers = JobOffer.filter_student_group(Student::GROUPS.index('hpi_grad').to_s)
+        expect(filtered_job_offers).not_to include(hpi_job_offer)
+        expect(filtered_job_offers).not_to include(job_offer_for_both)
+        expect(filtered_job_offers).not_to include(dschool_job_offer)
+        expect(filtered_job_offers).to include(hpi_grad_job_offer)
+      end
+
+      it "returns all job offers if invalid student group is given" do
+        filtered_job_offers = JobOffer.filter_student_group(Student::GROUPS.length.to_s)
+        expect(filtered_job_offers).to include(hpi_job_offer)
+        expect(filtered_job_offers).to include(job_offer_for_both)
+        expect(filtered_job_offers).to include(dschool_job_offer)
+        expect(filtered_job_offers).to include(hpi_grad_job_offer)
       end
     end
 

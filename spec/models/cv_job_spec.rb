@@ -19,75 +19,73 @@ require 'rails_helper'
 describe CvJob do
 
   describe "validations" do
-    before(:each) do
-      @student = FactoryBot.create(:student)
+    let(:student) { FactoryBot.create(:student) }
+
+    it "is not valid with empty attributes" do
+      expect(CvJob.new).not_to be_valid
     end
 
-    it "should not be valid with empty attributes" do
-      assert !CvJob.new.valid?
-    end
-
-    it "should not be valid without student" do
-      assert !CvJob.new(
+    it "is not valid without student" do
+      expect(CvJob.new(
         position:     'Ruby on Rails developer',
         employer:     'SAP AG',
         description:  'Developing a career portal',
         start_date:   Date.current - 100,
         end_date:     Date.current - 10,
         current:      false
-      ).valid?
+      )).not_to be_valid
     end
 
-    it "should not be valid without position" do
-      assert !CvJob.new(
-        student:      @student,
+    it "is not valid without position" do
+      expect(CvJob.new(
+        student:      student,
         employer:     'SAP AG',
         description:  'Developing a career portal',
         start_date:   Date.current - 100,
         end_date:     Date.current - 10,
         current:      false
-      ).valid?
+      )).not_to be_valid
     end
 
-    it "should not be valid without employer" do
-      assert !CvJob.new(
-        student:      @student,
+    it "is not valid without employer" do
+      expect(CvJob.new(
+        student:      student,
         position:     'Ruby on Rails developer',
         description:  'Developing a career portal',
         start_date:   Date.current - 100,
         end_date:     Date.current - 10,
         current:      false
-      ).valid?
+      )).not_to be_valid
     end
 
-    it "should not be valid without start_date" do
-      assert !CvJob.new(
-        student:      @student,
+    it "is not valid without start_date" do
+      expect(CvJob.new(
+        student:      student,
         employer:     'SAP AG',
         position:     'Ruby on Rails developer',
         description:  'Developing a career portal',
         end_date:     Date.current - 10,
         current:      false
-      ).valid?
+      )).not_to be_valid
     end
 
-    it "should not be valid without end_date except current is true" do
-      assert !CvJob.new(
-        student:      @student,
+    it "is not valid without end_date except if current is true" do
+      expect(CvJob.new(
+        student:      student,
         employer:     'SAP AG',
         position:     'Ruby on Rails developer',
         description:  'Developing a career portal',
         start_date:   Date.current - 100,
         current:      false
-      ).valid?
-      assert CvJob.new(
-        student:      @student,
+      )).not_to be_valid
+      expect(CvJob.new(
+        student:      student,
         employer:     'SAP AG',
         position:     'Ruby on Rails developer',
         description:  'Developing a career portal',
         start_date:   Date.current - 100,
         current:      true
-      ).valid?
+      )).to be_valid
     end
   end
 
