@@ -1,7 +1,7 @@
 de:
   activerecord:
     attributes:
-      cv_entry:
+      cv_entry: &CVTranslations
         degree: "Abschluss"
         field: "Fach-/Studienrichtung"
         institution: "Einrichtung"
@@ -12,3 +12,5 @@ de:
         position: "Position"
         employer: "Unternehmen"
         description: "Aufgaben"
+      cv_jobs: *CVTranslations
+      cv_educations: *CVTranslations
