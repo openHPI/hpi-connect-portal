@@ -182,7 +182,11 @@ class JobOffer < ActiveRecord::Base
   end
 
   def expiration_date
-    (prolonged_at || created_at).to_date + 8.weeks
+    begin
+      (prolonged_at || release_date).to_date + 8.weeks
+    rescue NoMethodError
+      return nil
+    end
   end
 
   def category

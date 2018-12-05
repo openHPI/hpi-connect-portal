@@ -60,18 +60,21 @@ describe JobOffer do
   end
 
   describe ".sort" do
-    it "returns job offers sorted by created_at" do
-      FactoryBot.create(:job_offer, start_date: Date.current + 2, end_date: Date.current + 3, created_at: Date.current + 2, employer: @epic)
-      FactoryBot.create(:job_offer, start_date: Date.current + 10, end_date: Date.current + 11, created_at: Date.current + 10, employer: @epic)
-      FactoryBot.create(:job_offer, start_date: Date.current + 1, end_date: Date.current + 2, created_at: Date.current + 1, employer: @epic)
-      FactoryBot.create(:job_offer, start_date: Date.current + 7, end_date: Date.current + 8, created_at: Date.current + 7, employer: @epic)
-      FactoryBot.create(:job_offer, start_date: Date.current + 4, end_date: Date.current + 5, created_at: Date.current + 4, employer: @epic)
+    it "returns job offers sorted by expiration date, then created_at" do
+      FactoryBot.create(:job_offer, created_at: Date.current - 12.days, release_date: Date.current)
+      FactoryBot.create(:job_offer, created_at: Date.current - 10.days)
+      FactoryBot.create(:job_offer, created_at: Date.current - 1.days)
+      FactoryBot.create(:job_offer, created_at: Date.current - 7.days)
+      FactoryBot.create(:job_offer, created_at: Date.current - 4.days, release_date: Date.current - 3.days)
 
       sorted_job_offers = JobOffer.sort(JobOffer.all, "date")
       (sorted_job_offers).each_with_index do |offer, index|
 
          if !sorted_job_offers.length == (index + 1)
           expect(offer.expiration_date).to be >= sorted_job_offers[index+1].expiration_date
+          if offer.expiration_date == sorted_job_offers[index+1].expiration_date
+            expect(offer.created_at).to be >= sorted_job_offers[index+1].created_at
+          end
          end
       end
     end
@@ -312,6 +315,24 @@ describe JobOffer do
       returned_job_offers = JobOffer.apply_saved_scopes(JobOffer.active, { student_group: Student::GROUPS.index('hpi').to_s })
       expect(returned_job_offers).to include(hpi_job)
       expect(returned_job_offers).not_to include(dschool_job)
+    end
+  end
+
+  describe '#expiration_date' do
+    let(:pending_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.pending, release_date: nil) }
+    let(:active_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.active, release_date: Date.today, created_at: Date.today - 2.weeks) }
+    let(:prolonged_job_offer) { FactoryBot.create(:job_offer, status: JobStatus.active, prolonged_at: Date.today, created_at: Date.today - 10.weeks) }
+
+    it "returns nil for job offers that are not yet released" do
+      expect(pending_job_offer.expiration_date).to be_nil
+    end
+
+    it "returns the date 8 weeks after release date for active, not prolonged job offers" do
+      expect(active_job_offer.expiration_date).to eq(active_job_offer.release_date + 8.weeks)
+    end
+
+    it "returns the date 8 weeks after prolongation date for active, prolonged job offers" do
+      expect(prolonged_job_offer.expiration_date).to eq(prolonged_job_offer.prolonged_at + 8.weeks)
     end
   end
 
