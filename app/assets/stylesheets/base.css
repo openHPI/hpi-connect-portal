@@ -127,9 +127,6 @@ a:hover, a:focus, .btn-default:hover  {
 [data-toggle=collapse]{
     cursor: pointer;
 }
-[data-toggle=collapse]:hover {
-    background-color: #ddd;
-}
 
 .title-button {
     margin-top: 15px;
