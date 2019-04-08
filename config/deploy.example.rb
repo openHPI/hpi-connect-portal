@@ -1,4 +1,4 @@
-lock '3.10.1'
+lock '3.11.0'
 
 # server variables
 set :application, "hpi-career"
