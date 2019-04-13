@@ -54,7 +54,7 @@ class Employer < ApplicationRecord
   scope :active, -> { where(activated: true) }
   scope :pending, -> { where(activated: false) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
-  scope :order_by_name, -> { order('LOWER(name)') }
+  scope :order_by_name, -> { order(Arel.sql('LOWER(name)')) }
 
   translates :description, fallback: :any
 

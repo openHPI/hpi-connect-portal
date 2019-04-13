@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.6.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 5.2.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.20.0'
@@ -78,7 +78,7 @@ gem 'ruby-openid'
 gem 'open_id_authentication'
 
 # authorizations in one place
-gem 'cancancan', '~> 1.6'
+gem 'cancancan', '~> 2.0'
 
 # simple http requests
 gem 'rest-client'
