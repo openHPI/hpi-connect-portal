@@ -90,7 +90,7 @@ class JobOffersController < ApplicationController
   end
 
   def create
-    @job_offer = JobOffer.create_and_notify job_offer_params, current_user
+    @job_offer = JobOffer.create_and_notify job_offer_params.to_h, current_user
     if @job_offer.new_record?
       render_errors_and_action @job_offer, 'new'
     else

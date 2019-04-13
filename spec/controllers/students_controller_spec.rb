@@ -181,11 +181,7 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      test_file = Rack::Test::UploadedFile.new({
-        filename: 'test_picture.jpg',
-        type: 'image/jpeg',
-        tempfile: fixture_file_upload('/images/test_picture.jpg')
-      })
+      test_file = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/images/test_picture.jpg'), 'image/jpeg')
 
       patch :update, params: { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
       expect(response).to redirect_to(student_path(@student))

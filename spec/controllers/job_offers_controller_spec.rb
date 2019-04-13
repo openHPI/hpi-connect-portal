@@ -228,7 +228,7 @@ describe JobOffersController do
       login FactoryBot.create(:user, :admin)
       get :prolong, params: { id: @job_offer.id }
       expect(response).to redirect_to(@job_offer)
-      expect(assigns(:job_offer).prolonged_at).to eq(Date.current)
+      expect(assigns(:job_offer).prolonged_at - DateTime.current).to be <= 2.seconds
     end
   end
 
