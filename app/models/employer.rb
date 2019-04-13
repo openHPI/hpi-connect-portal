@@ -24,7 +24,7 @@
 #  description_en        :text
 #
 
-class Employer < ActiveRecord::Base
+class Employer < ApplicationRecord
   NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
   PACKAGES = ['free', 'profile', 'partner', 'premium']
 

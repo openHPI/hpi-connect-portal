@@ -25,8 +25,8 @@
 #  alumni_email       :string(255)      default(""), not null
 #
 
-class User < ActiveRecord::Base
-  
+class User < ApplicationRecord
+
   has_secure_password
 
   belongs_to :manifestation, polymorphic: true, touch: true

@@ -9,7 +9,7 @@
 #  private    :boolean          default: false
 #
 
-class ProgrammingLanguage < ActiveRecord::Base
+class ProgrammingLanguage < ApplicationRecord
   has_many :programming_languages_users
   has_many :students, through: :programming_languages_users
 

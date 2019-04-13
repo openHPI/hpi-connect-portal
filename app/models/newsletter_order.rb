@@ -9,7 +9,7 @@
 #  updated_at    :datetime
 #
 
-class NewsletterOrder < ActiveRecord::Base
+class NewsletterOrder < ApplicationRecord
   belongs_to :student
   serialize :search_params
   validate :search_hash_cannot_be_nil

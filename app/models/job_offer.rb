@@ -29,7 +29,7 @@
 #  description_en            :text
 #
 
-class JobOffer < ActiveRecord::Base
+class JobOffer < ApplicationRecord
   include JobOfferScopes
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']

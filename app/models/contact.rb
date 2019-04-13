@@ -15,7 +15,7 @@
 #  updated_at       :datetime
 #
 
-class Contact < ActiveRecord::Base
+class Contact < ApplicationRecord
     belongs_to :counterpart, polymorphic: true, touch: true
 
     validates :name, :street, :zip_city, :email, presence: true

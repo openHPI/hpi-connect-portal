@@ -8,7 +8,7 @@
 #  skill       :integer
 #
 
-class LanguagesUser < ActiveRecord::Base
+class LanguagesUser < ApplicationRecord
   belongs_to :student
   belongs_to :language
 end

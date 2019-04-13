@@ -8,7 +8,7 @@
 #  updated_at  :datetime
 #
 
-class Staff < ActiveRecord::Base
+class Staff < ApplicationRecord
 
   has_one :user, as: :manifestation, dependent: :destroy
   belongs_to :employer

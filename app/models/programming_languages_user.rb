@@ -8,7 +8,7 @@
 #  skill                   :integer
 #
 
-class ProgrammingLanguagesUser < ActiveRecord::Base
+class ProgrammingLanguagesUser < ApplicationRecord
   belongs_to :student
   belongs_to :programming_language
 

@@ -14,7 +14,7 @@
 #  updated_at  :datetime
 #
 
-class CvJob < ActiveRecord::Base
+class CvJob < ApplicationRecord
   belongs_to :student
 
   default_scope { order 'current DESC, end_date DESC, start_date DESC' }

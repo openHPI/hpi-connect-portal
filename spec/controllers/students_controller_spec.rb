@@ -181,7 +181,7 @@ describe StudentsController do
     end
 
     it "saves uploaded images" do
-      test_file = ActionDispatch::Http::UploadedFile.new({
+      test_file = Rack::Test::UploadedFile.new({
         filename: 'test_picture.jpg',
         type: 'image/jpeg',
         tempfile: fixture_file_upload('/images/test_picture.jpg')

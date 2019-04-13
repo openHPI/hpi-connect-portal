@@ -9,7 +9,7 @@
 #  updated_at   :datetime
 #
 
-class Assignment < ActiveRecord::Base
+class Assignment < ApplicationRecord
 
   belongs_to :student
   belongs_to :job_offer

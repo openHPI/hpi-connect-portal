@@ -15,7 +15,7 @@
 #  score_work_contents     :integer
 #
 
-class Rating < ActiveRecord::Base
+class Rating < ApplicationRecord
   belongs_to :student
   belongs_to :employer
   belongs_to :job_offer

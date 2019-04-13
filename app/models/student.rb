@@ -24,7 +24,7 @@
 #  group_id               :integer          default(0), not null
 #
 
-class Student < ActiveRecord::Base
+class Student < ApplicationRecord
 
   VISIBILITYS = ['nobody','employers_only','employers_and_students','students_only']
   ACADEMIC_PROGRAMS = ['bachelor', 'master', 'phd', 'alumnus']

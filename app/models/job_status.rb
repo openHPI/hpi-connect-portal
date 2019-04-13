@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-class JobStatus < ActiveRecord::Base
+class JobStatus < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }, presence: true
 
   def self.pending
