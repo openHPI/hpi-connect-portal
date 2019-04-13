@@ -40,7 +40,7 @@ module UsersHelper
 
       remove_for_language(params, student_id, language_class, language_id_attribute)
     else
-      language_class.destroy_all(student_id: student_id)
+      language_class.where(student_id: student_id).destroy_all
     end
   end
 

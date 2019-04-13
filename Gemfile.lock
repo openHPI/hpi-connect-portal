@@ -76,7 +76,7 @@ GEM
       railties (>= 3.0)
     builder (3.2.3)
     byebug (11.0.1)
-    cancan (1.6.10)
+    cancancan (1.17.0)
     capistrano (3.11.0)
       airbrussh (>= 1.0.0)
       i18n
@@ -386,7 +386,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.5)
   bootstrap-rails-engine
   byebug
-  cancan
+  cancancan (~> 1.6)
   capistrano (~> 3.6)
   capistrano-bundler
   capistrano-rails (~> 1.2)

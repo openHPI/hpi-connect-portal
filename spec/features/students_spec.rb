@@ -337,7 +337,7 @@ describe "student newsletters" do
     page.find("#create_newsletter_button").click
     page.find("#newsletter_creation_submit").click
     expect(student.newsletter_orders.count).to eq(1)
-    expect(student.newsletter_orders.first.search_params.count).to eq(10)
+    expect(student.newsletter_orders.first.search_params.to_h.count).to eq(10)
   end
 end
 

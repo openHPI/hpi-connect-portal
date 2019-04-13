@@ -24,7 +24,7 @@
 #
 
 class EmployersController < ApplicationController
-  skip_before_filter :signed_in_user, only: [:index, :show, :new, :create]
+  skip_before_action :signed_in_user, only: [:index, :show, :new, :create]
 
   load_and_authorize_resource except: [:index, :new, :create]
   before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
@@ -78,7 +78,7 @@ class EmployersController < ApplicationController
 
   def update
     old_requested_package = @employer.requested_package_id
-    if @employer.update employer_params
+    if @employer.update employer_params.to_h
       if @employer.requested_package_id != old_requested_package
         EmployersMailer.book_package_email(@employer).deliver_now
         EmployersMailer.requested_package_confirmation_email(@employer).deliver_now

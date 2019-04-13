@@ -27,7 +27,7 @@
 class StudentsController < ApplicationController
   include UsersHelper
 
-  skip_before_filter :signed_in_user, only: [:new, :create]
+  skip_before_action :signed_in_user, only: [:new, :create]
 
   load_resource only: [:index]
   authorize_resource except: [:destroy, :edit]
@@ -87,7 +87,7 @@ class StudentsController < ApplicationController
   def update
     update_from_params_for_languages params, student_path(@student)
 
-    if @student.update student_params
+    if @student.update student_params.to_h
       respond_and_redirect_to(@student, I18n.t('users.messages.successfully_updated.'))
     else
       render_errors_and_action(@student, 'edit')

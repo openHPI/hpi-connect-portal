@@ -20,25 +20,25 @@ describe NewsletterOrdersController do
 
     it "deletes newsletter if student belongs to newsletter" do
       login @newsletter_order.student.user
-      delete :destroy, { id: @newsletter_order.id }
+      delete :destroy, params: { id: @newsletter_order.id }
       expect(NewsletterOrder.count).to eq(0)
     end
 
     it "does not delete newsletter if student is not allowed" do
       login FactoryBot.create(:user)
-      delete :destroy, { id: @newsletter_order.id }
+      delete :destroy, params: { id: @newsletter_order.id }
       expect(NewsletterOrder.count).to eq(1)
     end
 
     it "redirect to root if not logged in" do
-      delete :destroy, { id: @newsletter_order.id }
+      delete :destroy, params: { id: @newsletter_order.id }
       expect(NewsletterOrder.count).to eq(1)
       expect(response).to redirect_to(root_path)
     end
 
     it "redirects to job_offers_index" do
       login @newsletter_order.student.user
-      delete :destroy, { id: @newsletter_order.id }
+      delete :destroy, params: { id: @newsletter_order.id }
       expect(response).to redirect_to(job_offers_path)
     end
   end
@@ -54,18 +54,18 @@ describe NewsletterOrdersController do
 
       it "creates a newsletter order when given attributes" do
         expect {
-          post :create, valid_attributes
+          post :create, params: valid_attributes
         }.to change(NewsletterOrder, :count).by(1)
       end
 
       it "creates a newsletter order when not given attributes" do
         expect {
-          post :create, {}
+          post :create, params: {}
         }.to change(NewsletterOrder, :count).by(1)
       end
 
       it "redirects to job offers index" do
-        post :create, valid_attributes
+        post :create, params: valid_attributes
         expect(response).to redirect_to job_offers_path
       end
     end
@@ -80,13 +80,13 @@ describe NewsletterOrdersController do
 
     it "should show newsletter_order" do
       login @newsletter_order.student.user
-      get :show, {id: @newsletter_order.to_param}, {}
+      get :show, params: { id: @newsletter_order.to_param }
       expect(response).to render_template("show")
     end
 
     it "should not show newsletter_order if not allowed" do
       login FactoryBot.create(:student).user
-      get :show, {id: @newsletter_order.to_param}, {}
+      get :show, params: { id: @newsletter_order.to_param }
       expect(response).to redirect_to(root_path)
     end
   end

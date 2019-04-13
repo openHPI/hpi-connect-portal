@@ -51,7 +51,7 @@ describe StudentsController do
       end
 
       it "shows all students" do
-        get :index, {}
+        get :index
         expect(assigns(:students)).to eq(Student.all.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
       end
     end
@@ -62,7 +62,7 @@ describe StudentsController do
       end
 
       it "doesn't show any students" do
-        get :index, {}
+        get :index
         expect(response).to redirect_to(root_path)
       end
     end
@@ -75,7 +75,7 @@ describe StudentsController do
       end
 
       it "shows only students visible for employers" do
-        get :index, {}
+        get :index
         expect(assigns(:students)).to eq(Student.active.visible_for_employers.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
       end
     end
@@ -86,7 +86,7 @@ describe StudentsController do
       end
 
       it "shows only students visible for other students" do
-        get :index, {}
+        get :index
         expect(assigns(:students)).to eq(Student.active.visible_for_students.sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: 1, per_page: 20))
       end
     end
@@ -95,7 +95,7 @@ describe StudentsController do
   describe "GET show" do
     it "assigns the requested user as @student" do
       student = FactoryBot.create(:student)
-      get :show, { id: student.to_param }
+      get :show, params: { id: student.to_param }
       expect(assigns(:student)).to eq(student)
     end
   end
@@ -103,7 +103,7 @@ describe StudentsController do
   describe "GET edit" do
     it "assigns the requested student as @student" do
       student = FactoryBot.create(:student)
-      get :edit, {id: student.to_param}
+      get :edit, params: { id: student.to_param }
       expect(assigns(:student)).to eq(student)
     end
   end
@@ -113,18 +113,18 @@ describe StudentsController do
       it "updates the requested student" do
         student = FactoryBot.create(:student)
         expect_any_instance_of(Student).to receive(:update).with({ "semester" => "5" })
-        put :update, {id: student.to_param, student: { semester: 5 }}
+        put :update, params: { id: student.to_param, student: { semester: 5 } }
       end
 
       it "assigns the requested student as @student" do
         student = FactoryBot.create(:student)
-        put :update, {id: student.to_param, student: valid_attributes}
+        put :update, params: { id: student.to_param, student: valid_attributes }
         expect(assigns(:student)).to eq(student)
       end
 
       it "redirects to the student" do
         student = FactoryBot.create(:student)
-        put :update, {id: student.to_param, student: valid_attributes}
+        put :update, params: { id: student.to_param, student: valid_attributes }
         expect(response).to redirect_to(student_path(student))
       end
     end
@@ -133,14 +133,14 @@ describe StudentsController do
       it "assigns the student as @student" do
         student = FactoryBot.create(:student)
         allow_any_instance_of(Student).to receive(:save).and_return(false)
-        put :update, {id: student.to_param, student: { semester: -1 }}
+        put :update, params: { id: student.to_param, student: { semester: -1 } }
         expect(assigns(:student)).to eq(student)
       end
 
       it "re-renders the 'edit' template" do
         student = FactoryBot.create(:student)
         allow_any_instance_of(Student).to receive(:save).and_return(false)
-        put :update, {id: student.to_param, student: { semester: -1 }}
+        put :update, params: { id: student.to_param, student: { semester: -1 } }
         expect(response).to render_template("edit")
       end
     end
@@ -165,7 +165,7 @@ describe StudentsController do
         "xing" => nil
       }
 
-      patch :update, { id: @student.id, student: params}
+      patch :update, params: { id: @student.id, student: params }
       expect(response).to render_template("edit")
     end
 
@@ -176,7 +176,7 @@ describe StudentsController do
         "birthday(3i)" => ""
       }
 
-      patch :update, { id: @student.id, student: params}
+      patch :update, params: { id: @student.id, student: params }
       expect(response).to render_template("edit")
     end
 
@@ -187,7 +187,7 @@ describe StudentsController do
         tempfile: fixture_file_upload('/images/test_picture.jpg')
       })
 
-      patch :update, { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
+      patch :update, params: { id: @student.id, student: { user_attributes: { "photo" => test_file } } }
       expect(response).to redirect_to(student_path(@student))
     end
   end
@@ -197,7 +197,7 @@ describe StudentsController do
       student = FactoryBot.create(:student)
       login FactoryBot.create(:user, :admin)
       expect {
-        delete :destroy, {id: student.to_param}
+        delete :destroy, params: { id: student.to_param }
       }.to change(Student, :count).by(-1)
       expect(response).to redirect_to students_path
     end
@@ -206,7 +206,7 @@ describe StudentsController do
       student = FactoryBot.create(:student)
       login student.user
       expect {
-        delete :destroy, {id: student.to_param}
+        delete :destroy, params: { id: student.to_param }
       }.to change(Student, :count).by(-1)
       expect(response).to redirect_to students_path
     end
@@ -216,7 +216,7 @@ describe StudentsController do
       student2 = FactoryBot.create(:student)
       login student1.user
       expect {
-        delete :destroy, {id: student2.to_param}
+        delete :destroy, params: { id: student2.to_param }
       }.to change(Student, :count).by(0)
       expect(response).to redirect_to student_path(student2)
     end
@@ -225,20 +225,20 @@ describe StudentsController do
   describe "POST export_alumni" do
     it "should send a CSV file to an admin" do
       login admin
-      post :send_alumni_csv, { which_alumni: 'registered' }
+      post :send_alumni_csv, params: { which_alumni: 'registered' }
       expect(response.headers['Content-Type']).to eq "text/csv"
     end
 
     it "calls Student.export_registered_alumni with specified time span" do
       login admin
       expect(Student).to receive(:export_registered_alumni).with(Date.new(1970,1,1), Date.current)
-      post :send_alumni_csv, { which_alumni: 'from_to', from_date: {day: 1, month: 1, year: 1970}, to_date: {day: Date.current.day, month: Date.current.month, year: Date.current.year} }
+      post :send_alumni_csv, params: { which_alumni: 'from_to', from_date: {day: 1, month: 1, year: 1970}, to_date: {day: Date.current.day, month: Date.current.month, year: Date.current.year} }
     end
 
     it "calls Alumni.export_unregistered_alumni" do
       login admin
       expect(Alumni).to receive(:export_unregistered_alumni)
-      post :send_alumni_csv, { which_alumni: 'unregistered' }
+      post :send_alumni_csv, params: { which_alumni: 'unregistered' }
     end
 
     it "should not send a CSV to a student" do
@@ -267,13 +267,13 @@ describe StudentsController do
       end
 
       it "redirects to student" do
-        get :activate, ({ id: student.id })
+        get :activate, params: { id: student.id }
         expect(response).to redirect_to(student)
       end
 
       it "activates the student" do
         expect {
-          get :activate, ({ id: student.id })
+          get :activate, params: { id: student.id }
         }.to change { student.user.reload.activated }.from(false).to(true)
       end
     end
@@ -288,18 +288,18 @@ describe StudentsController do
       end
 
       it "redirects to own profile" do
-        get :activate, ({ id: student.id, student: { username: 'max.mustermann' }})
+        get :activate, params: { id: student.id, student: { username: 'max.mustermann' } }
         expect(response).to redirect_to(student)
       end
 
       it "activates the student" do
         expect {
-          get :activate, ({ id: student.id })
+          get :activate, params: { id: student.id }
         }.to change { student.user.reload.activated }.from(false).to(true)
       end
 
       it "displays a success message" do
-        get :activate, ({ id: student.id, student: { username: 'max.mustermann' }})
+        get :activate, params: { id: student.id, student: { username: 'max.mustermann' } }
         expect(flash[:success]).to eq(I18n.t('users.messages.successfully_activated'))
       end
 
@@ -308,12 +308,12 @@ describe StudentsController do
         identity_url = double
         allow_any_instance_of(StudentsController).to receive(:authenticate_with_open_id).and_yield(result, identity_url)
         allow(result).to receive(:successful?).and_return(false)
-        get :activate, ({ id: student.id, student: { username: 'max.mustermann' }})
+        get :activate, params: { id: student.id, student: { username: 'max.mustermann' } }
         expect(flash[:error]).to eq(I18n.t('users.messages.unsuccessfully_activated'))
       end
 
       it "is not possible to activate other students" do
-        get :activate, ({ id: FactoryBot.create(:student).id, student: { username: 'maria.mustermann' }})
+        get :activate, params: { id: FactoryBot.create(:student).id, student: { username: 'maria.mustermann' } }
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to eql("You are not authorized to access this page.")
       end
@@ -321,7 +321,7 @@ describe StudentsController do
 
     it "should not be accessible for staff members" do
       login staff.user
-      get :activate, ({ id: student.id })
+      get :activate, params: { id: student.id }
       expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql("You are not authorized to access this page.")
     end
@@ -338,14 +338,14 @@ describe StudentsController do
     it "updates the requested student with an existing programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryBot.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
       expect(@student.programming_languages_users.size).to eq(1)
-      put :update, {id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, skill: "2" } } }
+      put :update, params: { id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, skill: "2" } } }
       @student.reload
       expect(@student.programming_languages_users.first.skill).to eq (2)
     end
 
     it "updates the requested student with a new programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryBot.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { programming_languages_users_attributes: { "1" => { id: @student.programming_languages_users.first.id, programming_language_id: @programming_language_1.id.to_s, skill: "3" }, "2" => { programming_language_id: @programming_language_2.id.to_s, skill: "2" } } } }
+      put :update, params: { id: @student.to_param, student: { programming_languages_users_attributes: { "1" => { id: @student.programming_languages_users.first.id, programming_language_id: @programming_language_1.id.to_s, skill: "3" }, "2" => { programming_language_id: @programming_language_2.id.to_s, skill: "2" } } } }
       @student.reload
       expect(@student.programming_languages_users.size).to eq(2)
       expect(@student.programming_languages.first).to eq(@programming_language_1)
@@ -354,7 +354,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed programming language" do
       @student.assign_attributes(programming_languages_users: [FactoryBot.create(:programming_languages_user, student: @student, programming_language: @programming_language_1, skill: '4'), FactoryBot.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.last.id.to_s, _destroy: 1  } } }
+      put :update, params: { id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.last.id.to_s, _destroy: 1  } } }
       @student.reload
       expect(@student.programming_languages_users.size).to eq(1)
       expect(@student.programming_languages.first).to eq(@programming_language_1)
@@ -364,11 +364,11 @@ describe StudentsController do
       @student.assign_attributes(programming_languages_users: [FactoryBot.create(:programming_languages_user, student: @student, programming_language: @private_programming_language, skill: '4'), FactoryBot.create(:programming_languages_user, programming_language_id: @programming_language_2.id, skill: '2')])
 
       expect{
-        put :update, {id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, _destroy: 1  } } }
+        put :update, params: { id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, _destroy: 1  } } }
       }.to change{ProgrammingLanguage.count}.by(-1)
 
       expect{
-        put :update, {id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, _destroy: 1  } } }
+        put :update, params: { id: @student.to_param, student: { programming_languages_users_attributes: { id: @student.programming_languages_users.first.id.to_s, _destroy: 1  } } }
       }.to change{ProgrammingLanguage.count}.by(0)
     end
   end
@@ -384,12 +384,12 @@ describe StudentsController do
       @student.assign_attributes(languages_users: [FactoryBot.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       expect(@student.languages_users.size).to eq(1)
       expect_any_instance_of(LanguagesUser).to receive(:update_attributes).with({ skill: "2" })
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }
+      put :update, params: { id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }
     end
 
     it "updates the requested student with a new language" do
       @student.assign_attributes(languages_users: [FactoryBot.create(:languages_user, student: @student, language: @language_1, skill: '4')])
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }
+      put :update, params: { id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "4", @language_2.id.to_s => "2" } }
       @student.reload
       expect(@student.languages_users.size).to eq(2)
       expect(@student.languages.first).to eq(@language_1)
@@ -398,7 +398,7 @@ describe StudentsController do
 
     it "updates the requested student with a removed language" do
       @student.assign_attributes(languages_users: [FactoryBot.create(:languages_user, student: @student, language: @language_1, skill: '4'), FactoryBot.create(:languages_user, language_id: @language_2.id, skill: '2')])
-      put :update, {id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }
+      put :update, params: { id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }
       @student.reload
       expect(@student.languages_users.size).to eq(1)
       expect(@student.languages.first).to eq(@language_1)
@@ -415,30 +415,30 @@ describe StudentsController do
 
     it "creates student" do
       expect {
-        post :create, { student: valid_attributes }
+        post :create, params: { student: valid_attributes }
       }.to change(Student, :count).by(1)
     end
 
     it "redirects to new student" do
-      post :create, { student: valid_attributes }
+      post :create, params: { student: valid_attributes }
       expect(response).to redirect_to edit_student_path(Student.last)
     end
 
     it "shows success message" do
-      post :create, { student: valid_attributes }
+      post :create, params: { student: valid_attributes }
       expect(flash[:success]).to eq(I18n.t('users.messages.successfully_created'))
     end
 
     it "sends mail to admin" do
       ActionMailer::Base.deliveries = []
-      post :create, { student: valid_attributes }
+      post :create, params: { student: valid_attributes }
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(ActionMailer::Base.deliveries.last.to[0]).to eq(Configurable[:mailToAdministration])
     end
 
     it "re-renders template if save fails" do
       allow_any_instance_of(Student).to receive(:save).and_return(false)
-      post :create, { student: valid_attributes }
+      post :create, params: { student: valid_attributes }
       expect(response).to render_template('new')
     end
   end

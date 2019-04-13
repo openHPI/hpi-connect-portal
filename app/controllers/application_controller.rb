@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_constants
 
-  before_filter :signed_in_user
+  before_action :signed_in_user
 
   rescue_from CanCan::AccessDenied do |exception|
     rescue_from_exception exception
