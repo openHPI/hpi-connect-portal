@@ -13,12 +13,12 @@
 <%= javascript_include_tag "application" %>
 
 <%= javascript_tag do %>
-	<!-- preferred language available for javascript-->
+  <!-- preferred language available for javascript-->
 	window.locale = '<%= locale %>';
   <!-- get url to assets for javascript plugins -->
-  window.assets_url = '<%= asset_url 'assets' %>';
+  window.assets_url = '<%= asset_url 'assets', skip_pipeline: true %>';
   <!-- image load path for jquery raty plugin -->
-  $.fn.raty.defaults.path = '<%= asset_path 'assets' %>/jquery.raty';
+  $.fn.raty.defaults.path = '<%= asset_path 'assets', skip_pipeline: true %>/jquery.raty';
 <% end %>
 
 
