@@ -64,9 +64,6 @@ gem 'simplecov', group: :test, require: nil
 # heroku specific stuff
 gem 'rails_12factor', group: :production
 
-# error logging
-gem 'airbrake', '~> 5.0'
-
 # basic layouting
 # gem 'twitter-bootstrap-rails'
 
