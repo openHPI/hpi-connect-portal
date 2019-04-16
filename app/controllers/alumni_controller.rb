@@ -1,6 +1,6 @@
 class AlumniController < ApplicationController
   authorize_resource except: [:register, :link, :link_new, :show]
-  skip_before_filter :signed_in_user, only: [:register, :link, :link_new, :index, :show]
+  skip_before_action :signed_in_user, only: [:register, :link, :link_new, :index, :show]
   before_action :set_alumni, only: [:show]
 
   has_scope :firstname, only: [:index], as: :firstname

@@ -29,7 +29,7 @@
 #  description_en            :text
 #
 
-class JobOffer < ActiveRecord::Base
+class JobOffer < ApplicationRecord
   include JobOfferScopes
 
   CATEGORIES = ['traineeship', 'sideline', 'graduate_job', 'working_student', 'teammate']
@@ -68,7 +68,7 @@ class JobOffer < ActiveRecord::Base
   end
 
   def self.create_and_notify(parameters, current_user)
-    job_offer = JobOffer.new parameters, status: JobStatus.pending
+    job_offer = JobOffer.new parameters.merge({ status: JobStatus.pending })
     job_offer.employer = current_user.manifestation.employer unless parameters[:employer_id]
 
     if(job_offer.employer && !job_offer.employer.can_create_job_offer?(job_offer.category))
@@ -174,7 +174,7 @@ class JobOffer < ActiveRecord::Base
   end
 
   def prolong
-    update_column :prolonged_at, Date.current
+    update_column :prolonged_at, DateTime.current
     update_column :prolonged, true
     update_column :prolong_requested, false
     update_column :status_id, JobStatus.active.id

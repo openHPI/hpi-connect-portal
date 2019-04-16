@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_filter :signed_in_user
+  skip_before_action :signed_in_user
 
   def create
     user = User.where("LOWER(email) = ?", params[:session][:email].downcase).limit(1).first

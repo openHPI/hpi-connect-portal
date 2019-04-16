@@ -4,7 +4,7 @@ class Admin::ConfigurablesController < ApplicationController
 
   load_and_authorize_resource
 
-  before_filter :validation
+  before_action :validation
 
   layout 'configurable'
 

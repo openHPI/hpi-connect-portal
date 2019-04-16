@@ -27,7 +27,7 @@
 
 class UsersController < ApplicationController
 
-  skip_before_filter :signed_in_user, only: [:forgot_password]
+  skip_before_action :signed_in_user, only: [:forgot_password]
   before_action :set_user, only: [:edit, :update]
 
   def edit
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def update
     authorize! :update, @user
-    if @user.update user_params
+    if @user.update user_params.to_h
       respond_and_redirect_to([:edit, @user], I18n.t('users.messages.account_successfully_updated.'))
     else
       render_errors_and_action(@user, 'edit')

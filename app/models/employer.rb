@@ -24,7 +24,7 @@
 #  description_en        :text
 #
 
-class Employer < ActiveRecord::Base
+class Employer < ApplicationRecord
   NUMBER_OF_EMPLOYEES_FIELDS = ["< 50", "50 - 100", "100 - 500", "500 - 1000", "> 1000"]
   PACKAGES = ['free', 'profile', 'partner', 'premium']
 
@@ -54,7 +54,7 @@ class Employer < ActiveRecord::Base
   scope :active, -> { where(activated: true) }
   scope :pending, -> { where(activated: false) }
   scope :paying, -> { where('booked_package_id >= ?', 1) }
-  scope :order_by_name, -> { order('LOWER(name)') }
+  scope :order_by_name, -> { order(Arel.sql('LOWER(name)')) }
 
   translates :description, fallback: :any
 

@@ -29,7 +29,7 @@ describe RatingsController do
     context "as student" do
       it "indexes all ratings of a specific employer" do
         login student.user
-        get :index, { employer_id: employer.id }
+        get :index, params: { employer_id: employer.id }
 
         expect(assigns(:ratings)).to match_array(employer_ratings)
         assert_template :index
@@ -39,14 +39,14 @@ describe RatingsController do
     context "as staff" do
       it "redirects to root path" do
         login staff.user
-        get :index, { employer_id: employer.id }
+        get :index, params: { employer_id: employer.id }
         expect(response).to redirect_to(root_path)
       end
     end
 
     context "as guest user" do
       it "redirects to root path" do
-        get :index, { employer_id: employer.id }
+        get :index, params: { employer_id: employer.id }
         expect(response).to redirect_to(root_path)
       end
     end
@@ -62,7 +62,7 @@ describe RatingsController do
         it "destroys the rating from the database" do
           login student.user
           expect {
-            delete :destroy, { employer_id: employer.id, id: del_rating.id }
+            delete :destroy, params: { employer_id: employer.id, id: del_rating.id }
           }.to change(Rating, :count).by(-1)
         end
       end
@@ -72,7 +72,7 @@ describe RatingsController do
           other_student = FactoryBot.create(:student)
           login other_student.user
           expect {
-            delete :destroy, { employer_id: employer.id, id: del_rating.id }
+            delete :destroy, params: { employer_id: employer.id, id: del_rating.id }
           }.to change(Rating, :count).by(0)
         end
       end
@@ -87,7 +87,7 @@ describe RatingsController do
       it "updates valid attributes" do
         login student.user
         up_rating.headline = 'This headline was updated!'
-        put :update, { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
+        put :update, params: { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
         up_rating.headline = 'Another update!'
         expect(up_rating.reload.headline).to eq('This headline was updated!')
       end
@@ -95,7 +95,7 @@ describe RatingsController do
       it "returns errors in case of invalid attributes" do
         login student.user
         up_rating.score_overall = 10000
-        put :update, { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
+        put :update, params: { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
 
         expect(assigns(:rating).errors.empty?).to_not be true
       end
@@ -106,7 +106,7 @@ describe RatingsController do
         old_headline = 'Rating headline'
         login staff.user
         up_rating.headline = 'Best Job ever!'
-        put :update, { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
+        put :update, params: { employer_id: employer.id, id: up_rating.id, rating: up_rating.attributes }
         expect(up_rating.reload.headline).to eq(old_headline)
       end
     end
@@ -123,14 +123,14 @@ describe RatingsController do
 
       it "creates a new rating" do
         expect{
-            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+            post :create, params: { employer_id: new_rating.employer.id, rating: new_rating.attributes }
           }.to change(Rating, :count).by(1)
       end
 
       it "doesn't create a new rating with invalid attributes" do
         new_rating.score_overall = 0
         expect{
-            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+            post :create, params: { employer_id: new_rating.employer.id, rating: new_rating.attributes }
           }.to change(Rating, :count).by(0)
       end
     end
@@ -139,7 +139,7 @@ describe RatingsController do
       it "doesn't create a new rating" do
         login staff.user
         expect{
-            post :create, { employer_id: new_rating.employer.id, rating: new_rating.attributes }
+            post :create, params: { employer_id: new_rating.employer.id, rating: new_rating.attributes }
           }.to change(Rating, :count).by(0)
       end
     end

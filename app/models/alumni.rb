@@ -12,7 +12,7 @@
 #  updated_at   :datetime
 #
 
-class Alumni < ActiveRecord::Base
+class Alumni < ApplicationRecord
 
   validates :email, presence: true
   validates :alumni_email, presence: true, uniqueness: { case_sensitive: false }

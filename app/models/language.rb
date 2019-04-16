@@ -8,7 +8,7 @@
 #  updated_at :datetime
 #
 
-class Language < ActiveRecord::Base
+class Language < ApplicationRecord
   has_many :languages_users
   has_many :users, through: :languages_users
 

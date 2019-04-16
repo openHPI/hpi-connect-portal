@@ -11,8 +11,8 @@
 #
 
 class FaqsController < ApplicationController
-  skip_before_filter :signed_in_user
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :signed_in_user
+  skip_before_action :verify_authenticity_token
   before_action :set_faq, only: [:show, :edit, :update, :destroy]
 
   # GET /faqs
@@ -45,7 +45,7 @@ class FaqsController < ApplicationController
   # PATCH/PUT /faqs/1
   # PATCH/PUT /faqs/1.json
   def update
-    if @faq.update faq_params
+    if @faq.update faq_params.to_h
       respond_and_redirect_to faqs_url, I18n.t('faqs.messages.successfully_updated.')
     else
       render_errors_and_action @faq, 'edit'

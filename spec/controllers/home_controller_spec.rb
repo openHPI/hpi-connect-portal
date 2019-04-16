@@ -15,7 +15,7 @@ describe HomeController do
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "assigns latest 5 job_offers" do
@@ -51,7 +51,7 @@ describe HomeController do
   describe "GET 'imprint'" do
     it "returns http success" do
       get 'imprint'
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 

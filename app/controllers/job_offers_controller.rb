@@ -31,13 +31,12 @@
 class JobOffersController < ApplicationController
   include UsersHelper
 
-  skip_before_filter :signed_in_user, only: [:index]
+  skip_before_action :signed_in_user, only: [:index]
 
   load_and_authorize_resource except: [:index, :edit]
   skip_load_resource only: [:create]
 
-  #before_filter :new_job_offer, only: [:create]
-  before_filter :check_job_is_in_editable_state, only: [:update, :edit]
+  before_action :check_job_is_in_editable_state, only: [:update, :edit]
 
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy, :close, :accept, :decline, :prolong, :request_prolong]
   before_action :set_employers, only: [:index, :find_archived_jobs, :archive, :matching]
@@ -91,7 +90,7 @@ class JobOffersController < ApplicationController
   end
 
   def create
-    @job_offer = JobOffer.create_and_notify job_offer_params, current_user
+    @job_offer = JobOffer.create_and_notify job_offer_params.to_h, current_user
     if @job_offer.new_record?
       render_errors_and_action @job_offer, 'new'
     else
@@ -104,9 +103,9 @@ class JobOffersController < ApplicationController
   end
 
   def update
-    if @job_offer.update job_offer_params
+    if @job_offer.update job_offer_params.to_h
       if !@job_offer.employer.contact.nil? && params[:job_offer][:copy_to_employer_contact] == "true"
-        @job_offer.employer.contact.update contact_params
+        @job_offer.employer.contact.update contact_params.to_h
       end
 
       respond_and_redirect_to @job_offer, I18n.t('job_offers.messages.successfully_updated')

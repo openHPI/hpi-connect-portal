@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.6.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2.0'
+gem 'rails', '~> 5.2.0'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.20.0'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.0'
 gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-rails', '~> 4.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -78,7 +78,7 @@ gem 'ruby-openid'
 gem 'open_id_authentication'
 
 # authorizations in one place
-gem 'cancan'
+gem 'cancancan', '~> 2.0'
 
 # simple http requests
 gem 'rest-client'
@@ -133,6 +133,7 @@ group :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'poltergeist'
+  gem 'rails-controller-testing'
 end
 
 # flags

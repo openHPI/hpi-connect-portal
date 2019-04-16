@@ -1,7 +1,7 @@
 class StaffController < ApplicationController
   include UsersHelper
 
-  skip_before_filter :signed_in_user, only: [:new, :create]
+  skip_before_action :signed_in_user, only: [:new, :create]
 
   before_action :set_staff, only: [:show, :edit, :update]
 
@@ -33,7 +33,7 @@ class StaffController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = I18n.t("staff.messages.staff_already_exists")
-      redirect_to :back
+      redirect_back fallback_location: staff_index_path
     end
   end
 

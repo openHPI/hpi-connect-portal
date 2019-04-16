@@ -10,6 +10,6 @@
 #  locale     :string(255)
 #
 
-class Faq < ActiveRecord::Base
+class Faq < ApplicationRecord
 	validates :question, :answer, :locale, presence: true
 end
