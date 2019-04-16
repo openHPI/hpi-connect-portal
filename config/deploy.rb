@@ -2,12 +2,12 @@ lock '3.11.0'
 
 # server variables
 set :application, "hpi-career"
-set :deploy_user, "username"
+set :deploy_user, "deploy"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
 # repository variables
-set :repo_url, "git@github.com:hpi-swt2/hpi-hiwi-portal.git"
+set :repo_url, "git@github.com:openHPI/hpi-connect-portal.git"
 
 # deployment variables
 set :keep_releases, 5
