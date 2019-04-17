@@ -120,7 +120,7 @@ gem 'traco'
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 4.0'
 gem 'tinymce-rails-langs', '~> 4.0'
-gem 'sanitize', '~> 4.0'
+gem 'sanitize', '~> 5.0'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'
