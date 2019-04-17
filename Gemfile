@@ -84,7 +84,7 @@ gem 'rest-client'
 gem 'highline'
 
 # for picture Upload
-gem 'paperclip', '~> 5.2.0'
+gem 'paperclip', '~> 6.1.0'
 
 # for cron jobs
 gem 'whenever'
