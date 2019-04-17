@@ -52,7 +52,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'factory_bot_rails', '~> 4.0'
   gem 'capybara'
-  gem 'codeclimate-test-reporter', '~> 0.3.0', require: nil
+  gem 'codeclimate-test-reporter', '~> 1.0.7', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
   gem 'byebug'
 end
