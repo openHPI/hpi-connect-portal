@@ -50,7 +50,7 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
-  gem 'factory_bot_rails', '~> 4.0'
+  gem 'factory_bot_rails', '~> 5.0'
   gem 'capybara'
   gem 'codeclimate-test-reporter', '~> 1.0.7', require: nil
   gem 'rails_log_stdout',           git: 'https://github.com/heroku/rails_log_stdout.git'
