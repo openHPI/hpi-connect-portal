@@ -135,6 +135,8 @@ GEM
       railties (>= 3.0.0)
     famfamfam_flags_rails (0.3.0)
       railties (>= 3.1.0)
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
@@ -187,6 +189,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    multipart-post (2.0.0)
     net-scp (2.0.0)
       net-ssh (>= 2.6.5, < 6.0.0)
     net-ssh (5.2.0)
@@ -312,6 +315,8 @@ GEM
     selenium-webdriver (3.142.0)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
+    sentry-raven (2.9.0)
+      faraday (>= 0.7.6, < 1.0)
     simple_form (4.1.0)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -432,6 +437,7 @@ DEPENDENCIES
   sassc-rails
   sdoc (~> 1.0.0)
   selenium-webdriver
+  sentry-raven
   simple_form
   simplecov
   therubyracer (~> 0.12.0)

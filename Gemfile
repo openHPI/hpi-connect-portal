@@ -145,6 +145,9 @@ gem 'rails_serve_static_assets'
 # xing
 gem 'xing_api', '~> 0.1'
 
+# error reporting with sentry
+gem 'sentry-raven'
+
 # deployment with nginx and unicorn
 gem 'unicorn'
 gem 'capistrano', '~> 3.6'
