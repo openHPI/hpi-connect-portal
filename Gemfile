@@ -14,7 +14,7 @@ gem 'sassc-rails'
 gem 'uglifier'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0'
+gem 'coffee-rails', '~> 5.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', '~> 0.12.0', platforms: :ruby
