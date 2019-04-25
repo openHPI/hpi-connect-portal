@@ -61,3 +61,12 @@ production:
   username: postgres
   host: localhost
   port: 5432
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: hpi_hiwi_portal_staging
+  pool: 5
+  username: postgres
+  host: localhost
+  port: 5432
