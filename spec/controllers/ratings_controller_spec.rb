@@ -114,7 +114,7 @@ describe RatingsController do
 
   describe "POST create" do
 
-    subject(:new_rating) { FactoryBot.build(:rating) }
+    subject(:new_rating) { FactoryBot.build(:rating, employer: create(:employer)) }
 
     context "as student" do
       before :each do
