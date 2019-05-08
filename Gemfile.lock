@@ -104,8 +104,6 @@ GEM
     chronic (0.10.2)
     climate_control (0.2.0)
     cliver (0.3.2)
-    codeclimate-test-reporter (1.0.7)
-      simplecov
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 5.2.0)
@@ -398,7 +396,6 @@ DEPENDENCIES
   capistrano-rvm
   capybara
   chronic (~> 0.10.2)
-  codeclimate-test-reporter (~> 1.0.7)
   coffee-rails (~> 5.0)
   configurable_engine
   database_cleaner
