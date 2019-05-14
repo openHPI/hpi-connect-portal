@@ -23,7 +23,7 @@ gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 gem 'jquery-rails', '~> 4.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder', '~> 2.9'
 
 # Automatically add rel="noopener noreferrer" to every link with target="_blank"
 gem 'safe_target_blank'
