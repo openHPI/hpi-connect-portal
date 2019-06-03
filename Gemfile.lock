@@ -71,7 +71,7 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
     ast (2.4.0)
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     bindex (0.7.0)
     bootstrap-rails-engine (3.1.1.0)
       railties (>= 3.0)
@@ -384,7 +384,7 @@ PLATFORMS
 DEPENDENCIES
   active_enum!
   annotate (>= 2.6.1)
-  bcrypt (~> 3.1.5)
+  bcrypt (~> 3.1.13)
   bootstrap-rails-engine
   byebug
   cancancan (~> 3.0)
