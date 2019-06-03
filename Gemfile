@@ -35,7 +35,7 @@ gem 'has_scope'
 gem 'annotate', '>=2.6.1'
 
 # Secure Password Hashes
-gem 'bcrypt', '~> 3.1.5'
+gem 'bcrypt', '~> 3.1.13'
 
 # Ruby linting
 gem 'rubocop'
