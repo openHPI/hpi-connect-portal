@@ -98,7 +98,7 @@ gem 'jquery-raty-rails', git: 'https://github.com/bmc/jquery-raty-rails.git'
 gem 'jquery-turbolinks'
 
 # a Helper to validate dates
-gem 'validates_timeliness', '~> 4.0'
+gem 'validates_timeliness', '~> 4.1'
 
 # replacement for glyphicons
 gem 'font-awesome-rails'
