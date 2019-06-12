@@ -337,7 +337,7 @@ GEM
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.9)
-    timeliness (0.3.10)
+    timeliness (0.4.1)
     tinymce-rails (4.9.4)
       railties (>= 3.1.1)
     tinymce-rails-langs (4.20180103)
@@ -358,8 +358,8 @@ GEM
     unicorn (5.5.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    validates_timeliness (4.0.2)
-      timeliness (~> 0.3.7)
+    validates_timeliness (4.1.0)
+      timeliness (>= 0.3.10, < 1)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -439,7 +439,7 @@ DEPENDENCIES
   traco
   uglifier
   unicorn
-  validates_timeliness (~> 4.0)
+  validates_timeliness (~> 4.1)
   web-console
   whenever
   will_paginate (~> 3.0)
