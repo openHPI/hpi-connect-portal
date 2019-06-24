@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 5.0'
 gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.0'
+gem 'jquery-rails', '~> 4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.9'
