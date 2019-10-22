@@ -147,7 +147,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.6.0)
+    i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.3)
     jbuilder (2.9.1)
@@ -239,8 +239,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.2.0)
-      loofah (~> 2.2, >= 2.2.2)
+    rails-html-sanitizer (1.3.0)
+      loofah (~> 2.3)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -339,7 +339,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.9)
     timeliness (0.4.3)
-    tinymce-rails (4.9.4)
+    tinymce-rails (4.9.6)
       railties (>= 3.1.1)
     tinymce-rails-langs (4.20180103)
       tinymce-rails (~> 4.1, >= 4.1.10)
@@ -435,7 +435,7 @@ DEPENDENCIES
   simple_form
   simplecov
   therubyracer (~> 0.12.0)
-  tinymce-rails (~> 4.0)
+  tinymce-rails (~> 4.9)
   tinymce-rails-langs (~> 4.0)
   traco
   uglifier
