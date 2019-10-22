@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/adzap/active_enum.git
-  revision: 9998fa96816097f77bf2200680967338804feff5
+  revision: 90d2c8fda9bbbaa24422e234991d6718d6402435
   specs:
-    active_enum (1.0.0.pre)
+    active_enum (1.0.0.rc3)
       activesupport (>= 3.0)
 
 GIT
@@ -147,7 +147,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.6.0)
+    i18n (1.7.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.3)
     jbuilder (2.9.1)
