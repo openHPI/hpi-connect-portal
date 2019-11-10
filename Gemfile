@@ -117,7 +117,7 @@ gem 'simple_form'
 gem 'traco'
 
 # WYSIWYG Text Editor
-gem 'tinymce-rails', '~> 4.0'
+gem 'tinymce-rails', '~> 4.9'
 gem 'tinymce-rails-langs', '~> 4.0'
 gem 'sanitize', '~> 5.1'
 
