@@ -28,9 +28,11 @@ class EmployersController < ApplicationController
 
   load_and_authorize_resource except: [:index, :new, :create]
   before_action :set_employer, only: [:show, :edit, :update, :activate, :deactivate, :destroy, :invite_colleague]
+  has_scope :filter_employers, only: [:index], as: :q
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
+    @employers = apply_scopes(@employers)
 
     @premium_employers = @employers.select {|employer| employer.premium? }
     @premium_employers = @premium_employers.sort_by { |premium_employer| premium_employer.name.downcase }
