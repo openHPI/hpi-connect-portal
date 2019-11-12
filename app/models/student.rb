@@ -72,15 +72,15 @@ class Student < ApplicationRecord
   scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f) }
   scope :update_immediately, -> { where(frequency: 1) }
   scope :filter_students, -> q { joins(:user).where("
-          (lower(firstname) LIKE ?
-          OR lower(lastname) LIKE ?
-          OR lower(email) LIKE ?
-          OR lower(homepage) LIKE ?
-          OR lower(github) LIKE ?
-          OR lower(facebook) LIKE ?
-          OR lower(xing) LIKE ?
-          OR lower(linkedin) LIKE ?)
-          ",   q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase, q.downcase)}
+          (lower(firstname) LIKE :search
+          OR lower(lastname) LIKE :search
+          OR lower(email) LIKE :search
+          OR lower(homepage) LIKE :search
+          OR lower(github) LIKE :search
+          OR lower(facebook) LIKE :search
+          OR lower(xing) LIKE :search
+          OR lower(linkedin) LIKE :search)
+          ", search: "#{q.downcase}%")}
   scope :filter_employer, -> employer { joins(:cv_jobs).where("lower(employer) IN (?)", employer.split(',').map(&:downcase)) }
 
   def self.group_id(group_name)

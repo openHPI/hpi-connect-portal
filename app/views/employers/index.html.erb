@@ -25,7 +25,7 @@
 
 <div class="wrapper-4 teaser sidebar">
 
-    <div class="col-md-4">
+  <div class="col-md-4">
     <h1><%= t('employers.partner_employers') %></h1>
 
     <div id="employers_carousel" class="slide carousel">
@@ -47,10 +47,17 @@
     	<a class="left carousel-control" href="#employers_carousel" role="button" data-slide="prev"><</a>
       <a class="right carousel-control" href="#employers_carousel" role="button" data-slide="next">></a>
     </div>
+  </div>
+</div>
+<div class="wrapper-4 teaser sidebar">
+
+  <div class="col-md-4">
+    <%= render "search" %>
+  </div>
+
+  <div class="col-md-4">
+    <%= render "shared/contact" %>
+  </div>
 </div>
 
-<div class="col-md-4">
-  <%= render "shared/contact" %>
-</div>
 
-</div>
