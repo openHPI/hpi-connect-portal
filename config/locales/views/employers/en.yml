@@ -20,6 +20,7 @@ en:
         active_job_offers: "Open Job Offers"
         pending_job_offers: "Pending Job Offers"
         closed_job_offers: "Former Job Offers"
+        no_results: "No employer matches this search."
         inactive: "Deactivated"
         contact: "Contact"
         packages: "Packages"
