@@ -1,27 +1,32 @@
-<div class="wrapper-12 panel-wrapper">
-  <span class="pull-left" id="top-links">
-    <% if can?(:export_all, Employer) %>
-      <%= link_to t('employers.export.heading'), export_employers_path, class: "btn btn-default pull-right title-button" %>
-    <% end %>
+  <div class="wrapper-12 panel-wrapper">
+    <span class="pull-left" id="top-links">
+      <% if can?(:export_all, Employer) %>
+        <%= link_to t('employers.export.heading'), export_employers_path, class: "btn btn-default pull-right title-button" %>
+      <% end %>
 
-     <% if can?(:create, Employer) %>
-      <%= link_to t('employers.new_employer'), new_employer_path, class: "btn btn-default pull-right title-button" %>
-    <% end %>
-  </span>
-</div>
-
-<div class="wrapper-8 teaser">
-  <div class="col-md-8 list-container">
-    <ul class="list-group list">
-      <div class="row">
-        <div class="col-sm-12">
-          <%= render @employers %>
-        </div>
-      </div>
-    </ul>
+       <% if can?(:create, Employer) %>
+        <%= link_to t('employers.new_employer'), new_employer_path, class: "btn btn-default pull-right title-button" %>
+      <% end %>
+    </span>
   </div>
-  <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
-</div>
+
+  <div class="wrapper-8 teaser">
+    <div class="col-md-8 list-container">
+      <% unless @employers.empty? %>
+        <ul class="list-group list">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= render @employers %>
+            </div>
+          </div>
+        </ul>
+      <% else %>
+        <%= t("employers.no_results") %>
+      <% end %>
+    </div>
+    <%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
+  </div>
+
 
 <div class="wrapper-4 teaser sidebar">
 
@@ -48,8 +53,6 @@
       <a class="right carousel-control" href="#employers_carousel" role="button" data-slide="next">></a>
     </div>
   </div>
-</div>
-<div class="wrapper-4 teaser sidebar">
 
   <div class="col-md-4">
     <%= render "search" %>
@@ -59,5 +62,6 @@
     <%= render "shared/contact" %>
   </div>
 </div>
+
 
 

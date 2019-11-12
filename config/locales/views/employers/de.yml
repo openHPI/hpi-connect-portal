@@ -21,6 +21,7 @@ de:
         active_job_offers: "Offene Stellenangebote"
         pending_job_offers: "Noch nicht abgesegnete Stellenangebote"
         closed_job_offers: "Ehemalige Stellenangebote"
+        no_results: "Zu dieser Suchanfrage wurde kein passender Arbeitgeber gefunden."
         inactive: "Deaktiviert"
         contact: "Ansprechpartner"
         packages: "Pakete"

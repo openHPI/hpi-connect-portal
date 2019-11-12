@@ -32,11 +32,11 @@ class EmployersController < ApplicationController
 
   def index
     @employers = can?(:activate, Employer) ? Employer.all : Employer.active
-    @employers = apply_scopes(@employers)
 
     @premium_employers = @employers.select {|employer| employer.premium? }
     @premium_employers = @premium_employers.sort_by { |premium_employer| premium_employer.name.downcase }
-
+    
+    @employers = apply_scopes(@employers)
     @employers = @employers.sort_by { |employer| employer.name.downcase }
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
