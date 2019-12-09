@@ -46,7 +46,7 @@ group :doc do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 3.9'
   gem 'rspec-mocks'
   gem 'rake'
   gem 'letter_opener'
