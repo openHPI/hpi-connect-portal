@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/adzap/active_enum.git
-  revision: 90d2c8fda9bbbaa24422e234991d6718d6402435
+  revision: 860db63d281289a23dea73a11ce85fc1e8c172fc
   specs:
-    active_enum (1.0.0.rc3)
+    active_enum (1.0.0.rc4)
       activesupport (>= 3.0)
 
 GIT
@@ -147,7 +147,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (1.7.0)
+    i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
     jbuilder (2.9.1)
@@ -184,7 +184,7 @@ GEM
     mimemagic (0.3.3)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.13.0)
+    minitest (5.14.0)
     multipart-post (2.1.1)
     net-scp (2.0.0)
       net-ssh (>= 2.6.5, < 6.0.0)
@@ -348,7 +348,7 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.5)
+    tzinfo (1.2.6)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
