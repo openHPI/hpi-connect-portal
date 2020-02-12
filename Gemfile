@@ -5,7 +5,7 @@ ruby '2.6.2'
 gem 'rails', '~> 5.2.0'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1.4'
+gem 'pg', '~> 1.2.2'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'
