@@ -289,7 +289,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-openid (2.9.2)
     ruby-progressbar (1.10.1)
-    rubyzip (2.0.0)
+    rubyzip (2.2.0)
     safe_target_blank (1.0.2)
       rails
     sanitize (5.1.0)
@@ -307,7 +307,7 @@ GEM
       tilt
     sdoc (1.0.0)
       rdoc (>= 5.0)
-    selenium-webdriver (3.142.6)
+    selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     sentry-raven (2.13.0)
