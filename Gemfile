@@ -74,7 +74,7 @@ gem 'ruby-openid'
 gem 'open_id_authentication'
 
 # authorizations in one place
-gem 'cancancan', '~> 3.0'
+gem 'cancancan', '~> 3.1'
 
 # simple http requests
 gem 'rest-client'
