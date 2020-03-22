@@ -128,6 +128,13 @@ describe "the employer pages" do
       it "doesn't link to closed job offers" do
         expect(page).not_to have_link(job_offer_closed.title)
       end
+
+      it "shows an externel website link for the employer website, even if it doesn't begin with http://" do
+        employer.update_column :booked_package_id, 1
+        employer.update_column :website, "test.de"
+        visit employer_path(employer)
+        expect(page).to have_link( nil , href: 'http://test.de')
+      end
     end
 
     context "as a staff member of another employer" do
