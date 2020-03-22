@@ -115,7 +115,7 @@
                     <%= t("activerecord.attributes.employer.website") %>
                   </div>
                   <div class="col-sm-8">
-                    <%= link_to @employer.website %>
+                    <%= link_to url_without_protocol(@employer.website), url_with_protocol(@employer.website), :target => "_blank" %>
                   </div>
                 </div>
               </li>
