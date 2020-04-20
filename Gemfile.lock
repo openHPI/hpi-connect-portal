@@ -76,7 +76,7 @@ GEM
     bootstrap-rails-engine (3.1.1.0)
       railties (>= 3.0)
     builder (3.2.4)
-    byebug (11.0.1)
+    byebug (11.1.2)
     cancancan (3.0.1)
     capistrano (3.11.2)
       airbrussh (>= 1.0.0)
