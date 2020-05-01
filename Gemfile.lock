@@ -206,7 +206,7 @@ GEM
     parallel (1.19.1)
     parser (2.7.1.1)
       ast (~> 2.4.0)
-    pg (1.2.2)
+    pg (1.2.3)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -413,7 +413,7 @@ DEPENDENCIES
   letter_opener
   open_id_authentication
   paperclip (~> 6.1.0)
-  pg (~> 1.2.2)
+  pg (~> 1.2.3)
   poltergeist
   rails (~> 5.2.4)
   rails-controller-testing
