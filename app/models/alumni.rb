@@ -78,4 +78,18 @@ class Alumni < ApplicationRecord
   def send_reminder
     AlumniMailer.reminder_email(self).deliver_now
   end
+
+  def self.export_adress_mapping
+    path = "./alumni_data.csv"
+    alumni = Alumni.where("email !~* ?", '\@.*hpi.*')
+    user = User.where.not(alumni_email: "")
+    entries = (alumni + user).sort_by{ |entry| entry[:lastname]}
+
+    File.open(path, "w") do |file|
+      file.write("firstname,lastname,account,forward_address,creation_date\n")
+      entries.each do |entry|
+        file.write("#{entry.firstname},#{entry.lastname},#{entry.alumni_email.downcase},#{entry.email},#{entry.created_at}\n")
+      end
+    end
+  end
 end

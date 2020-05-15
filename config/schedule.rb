@@ -8,6 +8,7 @@ set :output, "log/cron.log"
 if environment == 'production'
   every :day, at: '1am' do
     runner "JobOffer.check_for_expired"
+    runner "Alumni.export_adress_mapping"
   end
 
   every :thursday, at: '9am' do
