@@ -145,7 +145,7 @@ class EmployersController < ApplicationController
   private
 
     def rescue_from_exception(exception)
-      redirect_to employers_path, notice: exception.message
+      redirect_to root_path, notice: exception.message
     end
 
     def set_employer

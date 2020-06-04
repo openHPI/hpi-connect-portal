@@ -119,7 +119,7 @@ describe EmployersController do
 
       after(:each) do
         get :edit, params: { id: @employer.to_param }
-        expect(response).to redirect_to(employers_path)
+        expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to eql("You are not authorized to access this page.")
       end
     end
@@ -237,7 +237,7 @@ describe EmployersController do
 
       it "redirects to the employer index page" do
         patch :update, params: { id: employer.id, employer: valid_attributes }
-        expect(response).to redirect_to(employers_path)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
@@ -313,14 +313,14 @@ describe EmployersController do
       staff = FactoryBot.create(:staff)
       login staff.user
       get :activate, params: { id: FactoryBot.create(:employer).id }
-      expect(response).to redirect_to(employers_path)
+      expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
     it "should not be accessible for students" do
       login student.user
       get :activate, params: { id: FactoryBot.create(:employer).id }
-      expect(response).to redirect_to(employers_path)
+      expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
@@ -372,7 +372,7 @@ describe EmployersController do
 
       it "redirects to employers index" do
         get :deactivate, params: { id: employer.id }
-        expect(response).to redirect_to(employers_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "doesn't deactivate the employer" do
@@ -388,7 +388,7 @@ describe EmployersController do
 
       it "redirects to employers index" do
         get :deactivate, params: { id: employer.id }
-        expect(response).to redirect_to(employers_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "doesn't deactivate the employer" do
@@ -445,7 +445,7 @@ describe EmployersController do
 
       it "redirects to employers index" do
         post :invite_colleague, params: { id: employer.id, invite_colleague_email: { colleague_email: "", first_name: "Max", last_name: "Mustermann" } }
-        expect(response).to redirect_to(employers_path)
+        expect(response).to redirect_to(root_path)
       end
 
       it "doesn't send mail" do
@@ -483,14 +483,14 @@ describe EmployersController do
     it "should not send a CSV to a student" do
       login student.user
       post :send_csv
-      expect(response).to redirect_to(employers_path)
+      expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
 
     it "should not send a CSV to a staff member" do
       login FactoryBot.create(:staff).user
       post :send_csv
-      expect(response).to redirect_to(employers_path)
+      expect(response).to redirect_to(root_path)
       expect(flash[:notice]).to eql(I18n.t('unauthorized.default'))
     end
   end
