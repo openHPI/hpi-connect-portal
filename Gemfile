@@ -104,7 +104,7 @@ gem 'validates_timeliness', '~> 4.1'
 gem 'font-awesome-rails'
 
 # pagination
-gem 'will_paginate', '~> 3.2'
+gem 'will_paginate', '~> 3.3'
 
 # styles pagination with bootstrap
 gem 'will_paginate-bootstrap'
