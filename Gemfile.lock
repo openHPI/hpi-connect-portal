@@ -254,7 +254,7 @@ GEM
     rainbow (3.0.0)
     raindrops (0.19.1)
     rake (13.0.1)
-    rdoc (6.1.1)
+    rdoc (6.2.1)
     ref (2.0.0)
     regexp_parser (1.6.0)
     rest-client (2.1.0)
@@ -306,7 +306,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sdoc (1.0.0)
+    sdoc (1.1.0)
       rdoc (>= 5.0)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -429,7 +429,7 @@ DEPENDENCIES
   safe_target_blank
   sanitize (~> 5.2)
   sassc-rails
-  sdoc (~> 1.0.0)
+  sdoc (~> 1.1.0)
   selenium-webdriver
   sentry-raven
   simple_form
