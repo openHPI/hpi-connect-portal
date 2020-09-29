@@ -66,8 +66,8 @@ describe Alumni do
     end
 
     context "when all fields are present" do
-      before :all do
-        ActionMailer::Base.deliveries = []
+      before :each do
+        ActionMailer::Base.deliveries.clear
         @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
         @return_val = Alumni.create_from_row(@csv_row)
         @alumnus = Alumni.last
