@@ -67,7 +67,6 @@ describe Alumni do
 
     context "when all fields are present" do
       before :all do
-        ActionMailer::Base.deliveries = []
         @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
         @return_val = Alumni.create_from_row(@csv_row)
         @alumnus = Alumni.last
@@ -78,6 +77,8 @@ describe Alumni do
       end
 
       it "sends creation mail" do
+        ActionMailer::Base.deliveries = []
+        @return_val = Alumni.create_from_row(@csv_row)
         expect(ActionMailer::Base.deliveries.count).to eq(1)
       end
 
