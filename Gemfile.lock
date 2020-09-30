@@ -356,7 +356,7 @@ GEM
     timeliness (0.4.3)
     tinymce-rails (4.9.8)
       railties (>= 3.1.1)
-    tinymce-rails-langs (4.20180103)
+    tinymce-rails-langs (4.20190124)
       tinymce-rails (~> 4.1, >= 4.1.10)
     traco (5.0.0)
       activerecord (>= 3.0)
@@ -452,7 +452,7 @@ DEPENDENCIES
   simplecov
   therubyracer (~> 0.12.0)
   tinymce-rails (~> 4.9)
-  tinymce-rails-langs (~> 4.0)
+  tinymce-rails-langs (~> 4.20190124)
   traco
   uglifier
   unicorn
