@@ -5,7 +5,7 @@ HpiHiwiPortal::Application.configure do
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both thread web servers
+  # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
@@ -14,13 +14,13 @@ HpiHiwiPortal::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Enable Rack::Cache to put a simple HTTP cache in front of your application
-  # Add `rack-cache` to your Gemfile before enabling this.
-  # For large-scale production use, consider using a caching reverse proxy like nginx, varnish or squid.
-  # config.action_dispatch.rack_cache = true
+  # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
+  # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
+  # config.require_master_key = true
 
-  # Disable Rails's static file server (Apache or nginx will already do this).
-  config.public_file_server.enabled = false
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -34,6 +34,8 @@ HpiHiwiPortal::Application.configure do
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '1.0'
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  # config.action_controller.asset_host = 'http://assets.example.com'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache

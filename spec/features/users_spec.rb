@@ -62,7 +62,7 @@ describe "Alumni data update" do
 
     header = page.response_headers['Content-Disposition']
     expect(header).to match /^attachment/
-    expect(header).to match /filename="Alumni_aktualisiert-#{Date.today}.csv"$/
+    expect(header).to match /filename="Alumni_aktualisiert-#{Date.today}.csv"/
     expect(page.response_headers['Content-Type']).to eq "text/csv"
   end
 end
