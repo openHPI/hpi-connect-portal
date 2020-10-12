@@ -33,13 +33,13 @@ describe Student do
 
   describe "#visibility" do
     it "returns visibility level in text form" do
-      student.update_attributes visibility_id: Student::VISIBILITYS.index('nobody')
+      student.update visibility_id: Student::VISIBILITYS.index('nobody')
       expect(student.visibility).to eq('nobody')
-      student.update_attributes visibility_id: Student::VISIBILITYS.index('employers_only')
+      student.update visibility_id: Student::VISIBILITYS.index('employers_only')
       expect(student.visibility).to eq('employers_only')
-      student.update_attributes visibility_id: Student::VISIBILITYS.index('employers_and_students')
+      student.update visibility_id: Student::VISIBILITYS.index('employers_and_students')
       expect(student.visibility).to eq('employers_and_students')
-      student.update_attributes visibility_id: Student::VISIBILITYS.index('students_only')
+      student.update visibility_id: Student::VISIBILITYS.index('students_only')
       expect(student.visibility).to eq('students_only')
     end
   end
@@ -117,12 +117,12 @@ describe Student do
       require 'csv'
 
       @registered = FactoryBot.create(:student)
-      @registered.user.update_attributes(alumni_email: 'registered.alumni')
+      @registered.user.update(alumni_email: 'registered.alumni')
       current_cv_job = FactoryBot.create(:cv_job, current: true)
       @registered.cv_jobs = [current_cv_job]
 
       @registered_a_year_ago = FactoryBot.create(:student)
-      @registered_a_year_ago.user.update_attributes(alumni_email: 'registered.ayearago', created_at: Date.today - 1.years)
+      @registered_a_year_ago.user.update(alumni_email: 'registered.ayearago', created_at: Date.today - 1.years)
     end
 
     it "should export all alumni if options are set accordingly" do

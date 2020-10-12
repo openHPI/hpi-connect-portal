@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   def update_password
     @user = current_user
     if @user.authenticate params[:user][:old_password]
-      if @user.update_attributes password_params
+      if @user.update password_params
         flash[:success] = I18n.t('users.messages.password_changed')
       else
         flash[:error] = I18n.t('users.messages.passwords_not_matching')

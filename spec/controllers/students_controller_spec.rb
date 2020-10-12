@@ -254,7 +254,7 @@ describe StudentsController do
 
   describe "GET activate" do
     before(:each) do
-      student.user.update_attributes activated: false
+      student.user.update activated: false
     end
 
     context "as an admin" do
@@ -379,7 +379,7 @@ describe StudentsController do
     it "updates the requested student with an existing language" do
       @student.assign_attributes(languages_users: [FactoryBot.create(:languages_user, student: @student, language: @language_1, skill: '4')])
       expect(@student.languages_users.size).to eq(1)
-      expect_any_instance_of(LanguagesUser).to receive(:update_attributes).with({ skill: "2" })
+      expect_any_instance_of(LanguagesUser).to receive(:update).with({ skill: "2" })
       put :update, params: { id: @student.to_param, student: { academic_program_id: Student::ACADEMIC_PROGRAMS.index("bachelor") }, language_skills: { @language_1.id.to_s => "2" } }
     end
 

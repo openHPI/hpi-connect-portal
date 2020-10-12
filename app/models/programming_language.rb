@@ -17,5 +17,5 @@ class ProgrammingLanguage < ApplicationRecord
 
   has_and_belongs_to_many :job_offer
 
-  scope :selectable_for_student, ->(student) { where.not(id: student.programming_languages.pluck(:id), private: true) }
+  scope :selectable_for_student, ->(student) { where.not(id: student.programming_languages.pluck(:id)).where.not(private: true) }
 end

@@ -60,9 +60,6 @@ gem 'web-console', group: :development
 
 gem 'simplecov', group: :test, require: nil
 
-# heroku specific stuff
-gem 'rails_12factor', group: :production
-
 # basic layouting
 # gem 'twitter-bootstrap-rails'
 

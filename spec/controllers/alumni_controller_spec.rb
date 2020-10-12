@@ -119,7 +119,7 @@ describe AlumniController do
     end
 
     it "redirects to user edit page if email is invalid" do
-      student.user.update_attributes email: 'max.mustermann@student.hpi.de'
+      student.user.update email: 'max.mustermann@student.hpi.de'
       post :link, params: { token: alumnus.token, session: session_params }
       expect(response).to redirect_to(edit_user_path(student.user))
       expect(flash[:error]).to eq(I18n.t('alumni.choose_another_email'))
@@ -185,7 +185,7 @@ describe AlumniController do
     end
 
     it "shows an error message if alumnus already has an account" do
-      registered_alumnus.update_attributes alumni_email: alumnus.alumni_email
+      registered_alumnus.update alumni_email: alumnus.alumni_email
       post :link_new, params: { token: alumnus.token, user: link_params }
       expect(response).to redirect_to(alumni_email_path(alumnus.token))
       expect(flash[:error]).to eq(I18n.t('alumni.already_registered'))
