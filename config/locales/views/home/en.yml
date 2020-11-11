@@ -7,7 +7,9 @@ en:
       register_user: "Register User"
       register_company: "Register Company"
     imprint:
-      headline: "Impressum"
+      headline: "Imprint"
+      contact: "Contact"
+      data_protection: "Data Privacy Statement"
       tel: "Telefon"
       fax: "Telefax"
       email: "E-Mail"
@@ -44,5 +46,10 @@ en:
         headline: "Legal information"
         text: "Hasso Plattner Institute (HPI) constantly checks and updates the information on its web pages. Despite the utmost care taken, we cannot rule out that some of the data may since have become outdated. Therefore, we cannot accept liability for the currency, accuracy and completeness of the information displayed. The same applies to all other web pages that can be reached via hyperlink. HPI is not responsible for the content of websites which can be reached via such links. Furthermore, HPI reserves the right to make changes or additions to the information displayed. Content and structure of the HPI website is protected by copyright. The reproduction of information or data, in particular the use of texts, text excerpts or illustrative material, requires our prior approval. We wish you an informative stay on our pages and would welcome any suggestions, requests or criticism you may have."
     admin_overview:
-      no_employers_to_be_activated: "No employer is waiting for activation of its profile."
-      no_packages_to_be_activated: "No employer is waiting for activation of a package."
+      job_offers_not_activated: "Job offer that have not been activated"
+      job_offers_not_extended: "Job offers that have not bees extended"
+      company_profiles_not_activated: "Company profiles not yet activated"
+      packeges_not_activated: "Packages not activated"
+      no_job_offer_matches: "No suitable vacancy was found for this search query"
+      no_employers_to_be_activated: "No company was found with a profile that has not been activated."
+      no_packages_to_be_activated: "No company was found with a package that has not been activated."
