@@ -5,7 +5,7 @@
 <div class="wrapper-12 teaser">
   <div class="col-md-12 list-container">
     <p>
-      <h1>Noch nicht freigeschaltete Stellenangebote (<%= @job_offers_pending_activation.count %>)</h1>
+      <h1> <%= I18n.t("home.admin_overview.job_offers_not_activated") %> (<%= @job_offers_pending_activation.count %>)</h1>
     </p>
     <br/>
     <p>
@@ -13,17 +13,18 @@
     </p>
     <br />
     <p>
-      <h1>Noch nicht verlängerte Stellenangebote (<%= @job_offers_pending_prolongation.count %>)</h1>
+      <h1> <%= I18n.t("home.admin_overview.job_offers_not_extended") %> (<%= @job_offers_pending_prolongation.count %>)</h1>
     </p>
     <br/>
     <p>
       <%= render 'shared/jobs_listing_detailed', job_offer_list: @job_offers_pending_prolongation.paginate(page: params[:job_offers_page]), create_link_to_details: true %>
     </p>
+    <br/>
   </div>
 
   <div class="col-md-12 list-container">
     <p>
-      <h1>Noch nicht freigeschaltete Unternehmensprofile (<%= @employers_pending_activation.count %>)</h1>
+      <h1><%= I18n.t("home.admin_overview.company_profiles_not_activated") %> (<%= @employers_pending_activation.count %>)</h1>
     </p>
     <br/>
     <p>
@@ -35,12 +36,12 @@
         </ul>
         <%= will_paginate @employers_pending_activation.paginate(page: params[:employers_page]), renderer: BootstrapPagination::Rails %>
       <% else %>
-       <%= I18n.t("home.admin_overview.no_employers_to_be_activated") %>
+        <%= I18n.t("home.admin_overview.no_employers_to_be_activated") %>
       <% end %>
     </p>
     <br />
     <p>
-      <h1>Noch nicht freigeschaltete Pakete (<%= @employers_pending_package.count %>)</h1>
+      <h1> <%= I18n.t("home.admin_overview.packeges_not_activated") %>(<%= @employers_pending_package.count %>)</h1>
     </p>
     <br/>
     <p>

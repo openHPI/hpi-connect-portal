@@ -116,15 +116,15 @@
     <footer>
       <div class="container">
         <div>
-        <ul class="footer-links">
-          <li>Copyright Hasso-Plattner-Institut <%= Date.current.year %></li>
-          <li><a href="http://hpi.de/impressum.html"><span>Impressum</span></a></li>
-          <li><a href="http://hpi.de/kontakt.html"><span>Kontakt</span></a></li>
-          <li><a href="http://hpi.de/sitemap.html"><span>Sitemap</span></a></li>
-          <li><%= link_to t('layouts.faqs'), faqs_path %></li>
-          <li><%= link_to "AGB", asset_path("AGB HPI Connect.pdf") %></li>
-          <li><%= link_to "Datenschutzerklärung", home_privacy_path %></li>
-        </ul>
+          <ul class="footer-links">
+            <li>Copyright Hasso-Plattner-Institut <%= Date.current.year %></li>
+            <li><a href="http://hpi.de/impressum.html"><span><%= I18n.t("home.imprint.headline") %></span></a></li>
+            <li><a href="http://hpi.de/kontakt.html"><span><%= I18n.t("home.imprint.contact") %></span></a></li>
+            <li><a href="http://hpi.de/sitemap.html"><span>Sitemap</span></a></li>
+            <li><%= link_to t('layouts.faqs'), faqs_path %></li>
+            <li><%= link_to t('layouts.agb'), asset_path("AGB HPI Connect.pdf") %></li>
+            <li><%= link_to t('layouts.data_privacy'), home_privacy_path %></li>
+          </ul>
         </div>
       </div>
     </footer>
