@@ -24,6 +24,7 @@ en:
         inactive: "Deactivated"
         contact: "Contact"
         packages: "Packages"
+        package_expiring_html: "Your booked package is about to expire. In order to extend it, please send a mail to <a href='mailto:connect@hpi.de'>connect@hpi.de</a> and we will inform you about our current conditions and reactivate your package as soon as possible."
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
             profile: "Employer Profile"
@@ -47,6 +48,7 @@ en:
             unsuccessfully_deactivated: "Error during deactivation. Please try again later."
             invalid_colleague_email: "The given email address was not correct. Email could not be sent."
             colleague_successfully_invited: "Your colleague has been informed to join your company."
+            package_extended: "The package of this employer has been successfully extended by one year."
         home:
             edit_account_settings_html: "Edit my %{account_settings}"
             account_settings: "account settings"

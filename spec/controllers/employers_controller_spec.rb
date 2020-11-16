@@ -307,6 +307,24 @@ describe EmployersController do
           expect(last_delivery.body.raw_source).to include I18n.t("activerecord.attributes.employer.packages.free")
         end
       end
+
+      context "extend package" do
+        before(:each) do
+          @employer = FactoryBot.create(:employer, activated: true, package_booking_date: Date.today - 1.year)
+        end
+
+        it "updates package_booking_date" do
+            get :extend_package, params: { id:@employer.id }
+            @employer.reload
+            expect(@employer.package_booking_date).to eq(Date.today)
+        end
+
+        it "sends one email to staff to confirm the extension of the package" do
+            old_count = ActionMailer::Base.deliveries.count
+            get :extend_package, params: { id:@employer.id }
+            expect(ActionMailer::Base.deliveries.count).to eq(old_count + 1)
+        end
+      end
     end
 
     it "should not be accessible for staff members" do

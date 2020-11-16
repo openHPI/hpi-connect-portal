@@ -22,6 +22,7 @@
 #  single_jobs_requested :integer          default(0), not null
 #  token                 :string(255)
 #  description_en        :text
+#  package_booking_date  :date
 #
 
 class Employer < ApplicationRecord
@@ -85,6 +86,32 @@ class Employer < ApplicationRecord
     booked_package_id == 3
   end
 
+  def package_expiring?
+    begin
+      self.paying? && self.package_booking_date + 1.year <= Date.today + 2.weeks
+    rescue NoMethodError
+      return nil
+    end
+  end
+
+  def self.check_for_expired_package
+    paying.each do |employer|
+      begin
+        if employer.package_booking_date + 1.year == Date.today + 2.weeks
+          EmployersMailer.package_will_expire_email(employer).deliver_now
+        elsif employer.package_booking_date + 1.year <= Date.today
+          EmployersMailer.package_expired_email(employer).deliver_now
+          employer.update_column :booked_package_id, 0
+          employer.update_column :requested_package_id, 0
+          employer.update_column :package_booking_date, nil
+        end
+      rescue StandardError => e
+        logger.warn "Checking for expired packages failed for employer #{employer.name} and raised the exception #{e.class.name} : #{e.message}"
+
+      end
+    end
+  end
+
   def graduate_job_count_this_year
     job_offers.graduate_jobs.where('extract(year from created_at) = ?', Date.today.year).length
   end
@@ -139,5 +166,4 @@ class Employer < ApplicationRecord
     end
     return csv
   end
-
 end

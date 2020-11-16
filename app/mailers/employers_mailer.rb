@@ -33,4 +33,19 @@ class EmployersMailer < ActionMailer::Base
     @staff = staff
     mail(to: staff.email, subject: t("employers_mailer.registration_confirmation.subject"))
   end
+
+  def package_will_expire_email(employer)
+    @employer = employer
+    mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.package_will_expire.subject")
+  end
+
+  def package_expired_email(employer)
+    @employer = employer
+    mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.package_expired.subject")
+  end
+
+  def extended_package_confirmation_email(employer)
+    @employer = employer
+    mail to: @employer.staff_members.map(&:email), subject: t("employers_mailer.package_extended.subject")
+  end 
 end

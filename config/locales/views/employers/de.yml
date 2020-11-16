@@ -25,6 +25,7 @@ de:
         inactive: "Deaktiviert"
         contact: "Ansprechpartner"
         packages: "Pakete"
+        package_expiring_html: "Ihr gebuchtes Paket läuft demnächst aus. Um es zu verlängern, schicken sie bitte eine Mail an <a href='mailto:connect@hpi.de'>connect@hpi.de</a> und wir informieren Sie über unsere Konditionen und schalten Ihr Paket schnellstmöglich wieder frei."
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil"
@@ -48,6 +49,7 @@ de:
             unsuccessfully_deactivated: "Fehler während der Deaktivierung. Bitte versuchen Sie es später erneut."
             invalid_colleague_email: "Die angegebene Email Adresse war fehlerhaft. Es konnte keine Email gesendet werden."
             colleague_successfully_invited: "Ihr Kollege wurde per E-Mail eingeladen, Ihrem Unternehmen beizutreten."
+            package_extended: "Das Paket dieses Arbeitgerbes wurde erfolgreich um ein Jahr verlängert."
         home:
             edit_account_settings_html: "Mein %{account_settings} bearbeiten"
             account_settings: "Kontaktprofil"

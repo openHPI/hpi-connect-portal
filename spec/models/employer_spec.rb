@@ -24,6 +24,11 @@
 #
 
 require 'rails_helper'
+require './spec/support/model_employer_helper'
+
+RSpec.configure do |c|
+  c.include EmployerHelper
+end
 
 describe Employer do
   let(:employer) do
@@ -152,4 +157,57 @@ describe Employer do
     end
   end
 
+
+  describe "package expiration" do
+    before(:each) do
+      Employer.delete_all
+      ActionMailer::Base.deliveries = []
+    end
+
+    it "should return true that a package is about to expire when it is 2 weeks from expiration" do
+      @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: Date.today - 1.year + 2.weeks)
+      assert_equal(@employer.package_expiring?, true)
+    end
+
+    it "should retun nil when package_booking_date is not set" do
+      @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: nil)
+      assert_nil(@employer.package_expiring?)
+    end
+
+    it "should send an email to the employer 2 weeks before expiration" do
+      @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: Date.today - 1.year + 2.weeks)
+      Employer.check_for_expired_package
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      email = ActionMailer::Base.deliveries[0]
+      assert_equal(email.to, @employer.staff_members.collect(&:email))
+    end
+
+    it "should not send an email if the expiration date is more than 2 weeks in the future" do
+       @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: Date.today - 1.year + 3.weeks)
+      Employer.check_for_expired_package
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
+    end
+
+     it "should send an email to the employer when the package expires and reset the package attributes" do
+      @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: Date.today - 1.year)
+      Employer.check_for_expired_package
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      email = ActionMailer::Base.deliveries[0]
+      assert_equal(email.to, @employer.staff_members.collect(&:email))
+      @employer.reload
+      expect(@employer.booked_package_id).to eq(0)
+      expect(@employer.requested_package_id).to eq(0)
+    end
+
+    it "should not send emails if the employer is not paying" do
+      employer = FactoryBot.create(:employer, booked_package_id: 0, package_booking_date: Date.today - 1.year)
+      Employer.check_for_expired_package
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
+    end
+
+    it "should log when an paying employer can't be updated due to having no package_booking_date" do
+      @employer = FactoryBot.create(:employer, booked_package_id: 2, package_booking_date: nil) 
+      expect { Employer.check_for_expired_package }.to output(/#{@employer.name}/).to_stdout_from_any_process
+    end
+  end
 end

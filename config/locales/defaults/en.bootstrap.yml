@@ -22,6 +22,7 @@ en:
     import: "Import"
     export: "Export"
     update: "Update"
+    extend_package: "Extend Package"
   titles:
     edit: "Edit %{model}"
     save: "Save %{model}"

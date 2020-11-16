@@ -28,3 +28,13 @@ span.label.label-warning {
 div.description-text {
   text-align: left;
 }
+
+
+div.remove-all-styles {
+  all: initial;
+  * {
+    all: unset;
+    
+   
+  }
+}

@@ -38,6 +38,7 @@ HpiHiwiPortal::Application.routes.draw do
         end
         member do
           get "activate"
+          get "extend_package"
           get "deactivate"
           post "invite_colleague"
         end

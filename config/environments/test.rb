@@ -56,4 +56,7 @@ HpiHiwiPortal::Application.configure do
   config.active_support.test_order = :random
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  config.logger = Logger.new(STDOUT)
+  config.log_level = ENV.fetch("LOG_LEVEL", "WARN")
 end
