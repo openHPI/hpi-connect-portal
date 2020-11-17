@@ -12,3 +12,9 @@ en:
       subject: 'Your packet was activated'
     invite_colleague:
           subject: "Invitation to join HPI Connect Jobportal"
+    package_extended:
+      subject: 'Confirmation on your package extension'
+    package_expired:
+      subject: 'Your package is expired'
+    package_will_expire:
+      subject: 'Your package is about to expire soon'

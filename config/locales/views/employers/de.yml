@@ -25,7 +25,7 @@ de:
         inactive: "Deaktiviert"
         contact: "Ansprechpartner"
         packages: "Pakete"
-        package_expiring_html: "Ihr gebuchtes Paket läuft demnächst aus. Um es zu verlängern, schicken sie bitte eine Mail an <a href='mailto:connect@hpi.de'>connect@hpi.de</a> und wir informieren Sie über unsere Konditionen und schalten Ihr Paket schnellstmöglich wieder frei."
+        package_expiring_html: "Ihr gebuchtes Paket läuft demnächst aus. Um es zu verlängern, schicken Sie bitte eine Mail an <a href='mailto:connect@hpi.de'>connect@hpi.de</a> und wir informieren Sie über unsere Konditionen."
         package_descriptions:
             student_jobs: "Beliebig viele Studentenjobs"
             profile: "Unternehmensprofil"

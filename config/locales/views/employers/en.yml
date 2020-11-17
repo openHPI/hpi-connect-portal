@@ -24,7 +24,7 @@ en:
         inactive: "Deactivated"
         contact: "Contact"
         packages: "Packages"
-        package_expiring_html: "Your booked package is about to expire. In order to extend it, please send a mail to <a href='mailto:connect@hpi.de'>connect@hpi.de</a> and we will inform you about our current conditions and reactivate your package as soon as possible."
+        package_expiring_html: "Your booked package is about to expire. In order to extend it, please send a mail to <a href='mailto:connect@hpi.de'>connect@hpi.de</a> and we will inform you about our current conditions."
         package_descriptions:
             student_jobs: "Offer as many student jobs as you want"
             profile: "Employer Profile"

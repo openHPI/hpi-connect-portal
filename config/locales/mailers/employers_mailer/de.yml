@@ -12,3 +12,9 @@ de:
       subject: 'Ihr Paket wurde freigeschaltet'
     invite_colleague:
       subject: "Einladung HPI Connect Jobportal"
+    package_extended:
+      subject: 'Ihr Paket wurde verlängert'
+    package_expired:
+      subject: 'Ihr Paket ist abgelaufen'
+    package_will_expire:
+      subject: 'Ihr Paket wird demnächst ablaufen'
