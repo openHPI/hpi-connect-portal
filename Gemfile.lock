@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/adzap/active_enum.git
-  revision: abd089db4fdd91d0282ce8cde165df2716a411ee
+  revision: 949849eced0db3b056cde29a8b1a605edbfa7cbb
   specs:
-    active_enum (1.0.0.rc5)
+    active_enum (1.0.0.rc8)
       activesupport (>= 3.0)
 
 GIT
@@ -359,7 +359,7 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.8)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -389,7 +389,7 @@ GEM
       oauth (~> 0.4.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby
