@@ -146,7 +146,7 @@ gem 'sentry-raven'
 
 # deployment with nginx and unicorn
 gem 'unicorn'
-gem 'capistrano', '~> 3.13'
+gem 'capistrano', '~> 3.16'
 gem 'capistrano-rails', '~> 1.6'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
