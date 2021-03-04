@@ -1,6 +1,6 @@
 class Admin::ConfigurablesController < ApplicationController
   # include the engine controller actions
-  include ConfigurableEngine::ConfigurablesController
+  include ConfigurableEngine::ConfigurablesControllerMethods
 
   load_and_authorize_resource
 
