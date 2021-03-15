@@ -64,8 +64,12 @@ class EmployersController < ApplicationController
     @employer.staff_members.first.employer = @employer if @employer.staff_members.any?
 
     if @employer.save
-      sign_in @employer.staff_members.first.user if @employer.staff_members.any?
-      respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      if @employer.staff_members.any?
+        sign_in @employer.staff_members.first.user
+        respond_and_redirect_to home_employers_path, I18n.t('employers.messages.successfully_created.'), 'show', :created
+      else
+        respond_and_redirect_to employer_path(@employer), I18n.t('employers.messages.successfully_created.'), 'show', :created
+      end
       EmployersMailer.new_employer_email(@employer).deliver_now
 
       @employer.staff_members.each do |staff|

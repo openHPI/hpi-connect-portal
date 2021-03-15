@@ -4,10 +4,10 @@
   <%= simple_form_for @employer, html: { multipart: true } do |f| %>
     <%= render 'shared/object_errors', object: @employer %>
 
-    <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
-
-      <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
-
+    <% if (!signed_in?  || !current_user.admin?) %>
+      <%= f.simple_fields_for :staff_members, @employer.staff_members do |first_staff_form| %>
+        <%= render 'staff/form_fields', form: first_staff_form, user: @employer.staff_members.first.user %>
+      <% end %>
     <% end %>
 
     <%= render 'form_fields', form: f, employer: @employer %>
