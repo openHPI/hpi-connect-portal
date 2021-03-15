@@ -99,7 +99,7 @@ describe "the staff pages" do
         find('input[type="submit"]').click
         expect(employer.staff_members.count).to eq(2)
       end
-      expect(page).to have_content "An error occurred while trying to create the staff member. Are you sure the member doesn't already exist?"
+      expect(page).to have_content "Login Mail Address has already been taken"
     end
   end
 end

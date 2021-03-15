@@ -1,0 +1,8 @@
+de:
+  activerecord:
+    attributes:
+      staff/user:
+        firstname: "Mitarbeiter-Vorname"
+        lastname: "Mitarbeiter-Nachname"
+        email: "Login-E-Mail-Adresse"
+        password: "Passwort"

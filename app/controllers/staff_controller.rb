@@ -32,7 +32,7 @@ class StaffController < ApplicationController
       flash[:success] = "Welcome to HPI Connect!"
       redirect_to root_path
     else
-      flash[:error] = I18n.t("staff.messages.staff_already_exists")
+      flash[:error] = @staff.errors.full_messages.join(", ")
       redirect_back fallback_location: staff_index_path
     end
   end
