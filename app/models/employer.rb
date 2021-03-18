@@ -100,10 +100,10 @@ class Employer < ApplicationRecord
         if employer.package_booking_date + 1.year == Date.today + 2.weeks
           EmployersMailer.package_will_expire_email(employer).deliver_now
         elsif employer.package_booking_date + 1.year <= Date.today
-          EmployersMailer.package_expired_email(employer).deliver_now
           employer.update_column :booked_package_id, 0
           employer.update_column :requested_package_id, 0
           employer.update_column :package_booking_date, nil
+          EmployersMailer.package_expired_email(employer).deliver_now
         end
       rescue StandardError => e
         logger.warn "Checking for expired packages failed for employer #{employer.name} and raised the exception #{e.class.name} : #{e.message}"
