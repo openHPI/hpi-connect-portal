@@ -29,7 +29,6 @@ class StudentsController < ApplicationController
 
   skip_before_action :signed_in_user, only: [:new, :create]
 
-  load_resource only: [:index]
   authorize_resource except: [:destroy, :edit]
   before_action :set_student, only: [:show, :edit, :update, :destroy, :activate]
   before_action :birthdate_params_valid?, only: [:update]
@@ -43,7 +42,8 @@ class StudentsController < ApplicationController
   has_scope :filter_graduation, only: [:index],  as: :graduation_id
 
   def index
-    @students = apply_scopes(@students).sort_by{ |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @students = Student.joins(:user).order('lastname', 'firstname').paginate(page: params[:page], per_page: 20)
+    @students = apply_scopes(@students)
   end
 
   def show

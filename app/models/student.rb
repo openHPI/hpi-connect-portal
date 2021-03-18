@@ -66,8 +66,8 @@ class Student < ApplicationRecord
   scope :visible_for_students, -> {where 'visibility_id = ? or visibility_id = ?',VISIBILITYS.index('employers_and_students'),VISIBILITYS.index('students_only') }
   scope :visible_for_employers, ->  { where('visibility_id = ? or visibility_id = ?', VISIBILITYS.index('employers_only'), VISIBILITYS.index('employers_and_students')) }
   scope :filter_semester, -> semester { where("semester IN (?)", semester.split(',').map(&:to_i)) }
-  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select("distinct students.*") }
-  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select("distinct students.*") }
+  scope :filter_programming_languages, -> programming_language_ids { joins(:programming_languages).where('programming_languages.id IN (?)', programming_language_ids).select(:lastname, :firstname, :id).distinct }
+  scope :filter_languages, -> language_ids { joins(:languages).where('languages.id IN (?)', language_ids).select(:lastname, :firstname, :id).distinct }
   scope :filter_academic_program, -> academic_program_id { where('academic_program_id = ?', academic_program_id.to_f) }
   scope :filter_graduation, -> graduation_id { where('graduation_id >= ?', graduation_id.to_f) }
   scope :update_immediately, -> { where(frequency: 1) }
