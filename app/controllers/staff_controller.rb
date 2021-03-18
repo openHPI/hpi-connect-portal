@@ -9,7 +9,7 @@ class StaffController < ApplicationController
   load_and_authorize_resource only: [:destroy]
 
   def index
-    @staff_members = Staff.all.sort_by { |user| [user.lastname, user.firstname] }.paginate(page: params[:page], per_page: 20)
+    @staff_members = Staff.joins(:user).order(:lastname, :firstname).paginate(page: params[:page], per_page: 20)
   end
 
   def show

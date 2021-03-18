@@ -37,7 +37,7 @@ class EmployersController < ApplicationController
     @premium_employers = @premium_employers.sort_by { |premium_employer| premium_employer.name.downcase }
     
     @employers = apply_scopes(@employers)
-    @employers = @employers.sort_by { |employer| employer.name.downcase }
+    @employers = @employers.order(:name)
     @employers = @employers.paginate page: params[:page], per_page: 15
   end
 

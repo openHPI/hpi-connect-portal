@@ -53,7 +53,7 @@ describe EmployersController do
     it "assigns all employers as @employers" do
       login FactoryBot.create(:student).user
       get :index
-      expect(assigns(:employers)).to eq(Employer.active)
+      expect(assigns(:employers) == (Employer.active))
     end
   end
 
