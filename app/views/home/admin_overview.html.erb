@@ -28,7 +28,7 @@
     </p>
     <br/>
     <p>
-      <% if @employers_pending_package.count > 0 %>
+      <% if @employers_pending_activation.count > 0 %>
         <ul class="list-group list">
           <div class="row">
             <%= render @employers_pending_activation.paginate(page: params[:page]) %>
