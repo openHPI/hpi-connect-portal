@@ -138,9 +138,6 @@ gem 'configurable_engine'
 # asset handling for heroku
 gem 'rails_serve_static_assets'
 
-# xing
-gem 'xing_api', '~> 0.1'
-
 # error reporting with sentry
 gem 'sentry-raven'
 
