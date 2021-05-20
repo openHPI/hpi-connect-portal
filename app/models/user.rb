@@ -113,9 +113,11 @@ class User < ApplicationRecord
   end
 
   def set_random_password
-    char_pool = [('a'..'z'),('A'..'Z'),('0'..'9'),['_', '-']].map { |char| char.to_a }.flatten
+    char_pool = [('a'..'z'),('A'..'Z'),('0'..'9')].map { |char| char.to_a }.flatten
+    special_char_pool = ['_', '-', '&', '!', '$', '#', '/', '\\']
     new_password = ""
     (0..10).each { new_password += char_pool[rand(char_pool.length-1)]}
+    (0..rand(2)).each { new_password[rand(10)] = special_char_pool[rand(special_char_pool.length-1)]}
     self.update password: new_password, password_confirmation: new_password
     UsersMailer.new_password_mail(new_password, self).deliver_now
   end
