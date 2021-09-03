@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     services:
       db:
@@ -29,11 +29,9 @@ jobs:
 
       - name: Setup Databse
         run: |
-          cp config/database.travis.yml config/database.yml
+          cp config/database.ci.yml config/database.yml
           bundle exec rails db:setup
         env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
           RAILS_ENV: test
 
       - name: Run tests
