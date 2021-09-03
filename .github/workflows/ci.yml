@@ -30,7 +30,11 @@ jobs:
       - name: Setup Databse
         run: |
           cp config/database.travis.yml config/database.yml
-          psql -c 'create database hpi_hiwi_portal_test;' -U postgres
+          bundle exec rails db:setup
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          RAILS_ENV: test
 
       - name: Run tests
         env:
