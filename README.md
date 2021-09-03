@@ -1,4 +1,4 @@
 hpi-connect-portal
 ===============
 
-[![Build Status](https://travis-ci.org/openHPI/hpi-connect-portal.svg?branch=master)](https://travis-ci.org/openHPI/hpi-connect-portal)
+[![Build Status](https://github.com/openHPI/hpi-connect-portal/actions/workflows/ci.yml/badge.svg)](https://github.com/openHPI/hpi-connect-portal/actions/workflows/ci.yml)
