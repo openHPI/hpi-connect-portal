@@ -155,15 +155,19 @@ class Employer < ApplicationRecord
     Employer.find_each do |employer|
       if registered_from.nil? or (employer.created_at.to_date >= registered_from and employer.created_at.to_date <= registered_to)
         row = employer_attributes.map{ |attr| employer.send(attr) }
-        staff_member = employer.staff_members.first
-
-        if staff_member.nil?
-          row += staff_member_attributes.map{ |attr| "" }
+        if employer.staff_members.first.nil?
+          row += staff_member_attributes.map { |attr| "" }
+          csv << row
         else
-          row += staff_member_attributes.map{ |attr| staff_member.send(attr) } 
+          row_without_staff = row
+          employer.staff_members.each do |staff_member|
+            row += staff_member_attributes.map { |attr| staff_member.send(attr) }
+
+            row += contact_attributes.map { |attr| employer.contact.send(attr) } unless employer.contact.nil?
+            csv << row
+            row = row_without_staff
+          end
         end
-        row += contact_attributes.map{ |attr| employer.contact.send(attr) } unless employer.contact.nil?
-        csv << row
       end
     end
     return csv
