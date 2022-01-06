@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/adzap/active_enum.git
-  revision: 949849eced0db3b056cde29a8b1a605edbfa7cbb
+  revision: 5cbcf1787fcadd5d034b540cbb481316f9c29537
   specs:
     active_enum (1.0.0.rc8)
       activesupport (>= 3.0)
