@@ -141,7 +141,7 @@ class Employer < ApplicationRecord
   def self.export(registered_from, registered_to)
     CSV.generate(headers: true) do |csv|
       employer_attributes = %w{name}
-      staff_member_attributes = %w{full_name email}
+      staff_member_attributes = %w{full_name email created_at updated_at}
       contact_attributes = %w{street zip_city}
       headers = employer_attributes.map{ |attr| "employer_".concat(attr) }
       headers += staff_member_attributes.map{ |attr| "staff_member_".concat(attr) }
