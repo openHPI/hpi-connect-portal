@@ -140,20 +140,20 @@ describe Employer do
       @registered_today = FactoryBot.create :employer
       @registered_a_year_ago = FactoryBot.create(:employer, created_at: Date.today - 1.years)
 
-      @headers = %w{employer_name staff_member_full_name staff_member_email contact_street contact_zip_city}
+      @headers = %w{employer_name staff_member_full_name staff_member_email staff_member_created_at staff_member_updated_at contact_street contact_zip_city}
     end
 
     it "should export all employers if options are set accordingly" do
       csv = CSV.parse(Employer.export(nil, nil))
       expect(csv[0]).to eq(@headers)
-      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
-      expect(csv[2]).to eq([@registered_a_year_ago.name, @registered_a_year_ago.staff_members.first.full_name, @registered_a_year_ago.staff_members.first.email, @registered_a_year_ago.contact.street, @registered_a_year_ago.contact.zip_city])
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.staff_members.first.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_today.staff_members.first.updated_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_today.contact.street, @registered_today.contact.zip_city])
+      expect(csv[2]).to eq([@registered_a_year_ago.name, @registered_a_year_ago.staff_members.first.full_name, @registered_a_year_ago.staff_members.first.email, @registered_today.staff_members.first.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_today.staff_members.first.updated_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_a_year_ago.contact.street, @registered_a_year_ago.contact.zip_city])
     end
 
     it "should not include employers registered outside of timeframe specified" do
       csv = CSV.parse(Employer.export(Date.today - 6.months, Date.today))
       expect(csv[0]).to eq(@headers)
-      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.contact.street, @registered_today.contact.zip_city])
+      expect(csv[1]).to eq([@registered_today.name, @registered_today.staff_members.first.full_name, @registered_today.staff_members.first.email, @registered_today.staff_members.first.created_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_today.staff_members.first.updated_at.strftime("%Y-%m-%d %H:%M:%S UTC"), @registered_today.contact.street, @registered_today.contact.zip_city])
     end
   end
 
