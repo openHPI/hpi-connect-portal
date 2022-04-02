@@ -60,7 +60,7 @@ class Student < ApplicationRecord
 
   validates :academic_program_id, presence: true
   validates_inclusion_of :semester, in: 1..20, allow_nil: true
-  validates_acceptance_of :terms_of_service_agreement, allow_nil: false, on: :create
+  validates_acceptance_of :terms_of_service, allow_nil: false, on: :create
 
   scope :active, -> { joins(:user).where('users.activated = ?', true) }
   scope :visible_for_nobody, -> {where 'visibility_id = ?', VISIBILITYS.index('nobody') }
@@ -110,10 +110,6 @@ class Student < ApplicationRecord
 
   def group
     GROUPS[group_id]
-  end
-
-  def terms_of_service_agreement
-    nil
   end
 
   def self.deliver_newsletters
