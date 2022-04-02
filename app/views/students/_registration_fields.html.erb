@@ -99,5 +99,20 @@
           </div>
         </div>
       </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-sm-3">
+            <%= label_field form, :terms_of_service_agreement, t("activerecord.attributes.student.terms_of_service_agreement") %>
+          </div>
+          <div class="col-sm-9">
+            <div class="col-sm-3" style="margin-top: -1.5rem"><%= form.input :terms_of_service_agreement, as: :boolean%></div>
+              <div class="col-sm-6">
+                <p>
+                  Ich stimme den <%= link_to "AGB", "https:terms_path",:remote => true %> des HPI Connect Jobportals zu
+                </p>
+            </div>
+          </div>
+        </div>
+      </li>
     </ul>
 </div>
