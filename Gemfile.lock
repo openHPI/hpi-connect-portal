@@ -236,6 +236,8 @@ GEM
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    psych (4.0.3)
+      stringio
     public_suffix (4.0.6)
     racc (1.6.0)
     rack (2.2.3)
@@ -278,7 +280,8 @@ GEM
     rainbow (3.0.0)
     raindrops (0.19.1)
     rake (13.0.6)
-    rdoc (6.3.1)
+    rdoc (6.4.0)
+      psych (>= 4.0.0)
     ref (2.0.0)
     regexp_parser (2.1.1)
     rest-client (2.1.0)
@@ -333,7 +336,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sdoc (1.1.0)
+    sdoc (2.3.2)
       rdoc (>= 5.0)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
@@ -359,6 +362,7 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    stringio (3.0.1)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
     therubyracer (0.12.3)
@@ -455,7 +459,7 @@ DEPENDENCIES
   safe_target_blank
   sanitize (~> 5.2)
   sassc-rails
-  sdoc (~> 1.1.0)
+  sdoc (~> 2.3.2)
   selenium-webdriver
   sentry-raven
   simple_form
