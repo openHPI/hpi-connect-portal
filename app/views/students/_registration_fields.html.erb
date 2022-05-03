@@ -99,20 +99,5 @@
           </div>
         </div>
       </li>
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-sm-3">
-            <%= label_field form, :terms_of_service, t("activerecord.attributes.student.terms_of_service") %>
-          </div>
-          <div class="col-sm-9">
-            <div class="col-sm-3"><%= form.check_box :terms_of_service %></div>
-              <div class="col-sm-6">
-                <p>
-                  Ich stimme den <%= link_to "AGB", asset_path("AGB HPI Connect.pdf"), class: "links"%> des HPI Connect Jobportals zu
-                </p>
-            </div>
-          </div>
-        </div>
-      </li>
     </ul>
 </div>

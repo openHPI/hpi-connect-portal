@@ -6,3 +6,4 @@ en:
         lastname: "Employee Last Name"
         email: "Login Mail Address"
         password: "Password"
+        terms_of_service: "Terms of Service"

@@ -18,5 +18,6 @@ class Staff < ApplicationRecord
   delegate :firstname, :lastname, :full_name, :email, to: :user
 
   validates :employer, presence: true
+  validates_acceptance_of :terms_of_service, allow_nil: false, on: :create
 
 end

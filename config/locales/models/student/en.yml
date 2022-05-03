@@ -8,7 +8,6 @@ en:
         additional_information: "Additional Information"
         programming_languages: "Programming Languages"
         languages: "Languages"
-        terms_of_service: "Terms of Service"
         dschool_status: "D-School Status"
         dschool_statuses:
           nothing: "didn't take part"
