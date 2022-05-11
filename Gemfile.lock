@@ -192,7 +192,6 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (3.16.14.19)
     loofah (2.16.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -279,7 +278,6 @@ GEM
     raindrops (0.19.1)
     rake (13.0.6)
     rdoc (6.3.1)
-    ref (2.0.0)
     regexp_parser (2.1.1)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
@@ -361,9 +359,6 @@ GEM
       net-ssh (>= 2.8.0)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (1.2.1)
     tilt (2.0.10)
     timeliness (0.4.4)
@@ -460,7 +455,6 @@ DEPENDENCIES
   sentry-raven
   simple_form
   simplecov
-  therubyracer (~> 0.12.0)
   tinymce-rails (~> 5.6)
   tinymce-rails-langs (~> 5.20200505)
   traco
@@ -473,7 +467,7 @@ DEPENDENCIES
   will_paginate-bootstrap
 
 RUBY VERSION
-   ruby 2.7.4p191
+   ruby 2.7.6p219
 
 BUNDLED WITH
-   2.1.4
+   2.3.11
