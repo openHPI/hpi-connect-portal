@@ -116,7 +116,7 @@ gem 'traco'
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 5.6'
 gem 'tinymce-rails-langs', '~> 5.20200505'
-gem 'sanitize', '~> 5.2'
+gem 'sanitize', '~> 6.0'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'
