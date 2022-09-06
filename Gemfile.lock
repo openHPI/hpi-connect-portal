@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/heroku/rails_log_stdout.git
-  revision: f9a92758f2d5dca5a88bf899a83256302f16ab6c
+  revision: 868ae69489c05f8905650a27f0954c22ea0b9573
   specs:
     rails_log_stdout (0.0.1)
 
