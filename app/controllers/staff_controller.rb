@@ -49,7 +49,7 @@ class StaffController < ApplicationController
     end
 
     def staff_params
-      params.require(:staff).permit(user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
+      params.require(:staff).permit(:terms_of_service, user_attributes: [:firstname, :lastname, :email, :password, :password_confirmation])
     end
 
     def employer_params

@@ -6,3 +6,4 @@ de:
         lastname: "Mitarbeiter-Nachname"
         email: "Login-E-Mail-Adresse"
         password: "Passwort"
+        terms_of_service: "Allgemeine Geschäftsbedingungen"
