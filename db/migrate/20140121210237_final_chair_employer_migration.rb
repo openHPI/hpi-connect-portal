@@ -1,4 +1,4 @@
-class FinalChairEmployerMigration < ActiveRecord::Migration
+class FinalChairEmployerMigration < ActiveRecord::Migration[4.2]
   def change
   	rename_table :chairs_job_offers, :employers_job_offers
   	rename_column :employers_job_offers, :chair_id, :employer_id

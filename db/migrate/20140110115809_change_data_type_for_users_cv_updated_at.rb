@@ -1,4 +1,4 @@
-class ChangeDataTypeForUsersCvUpdatedAt < ActiveRecord::Migration
+class ChangeDataTypeForUsersCvUpdatedAt < ActiveRecord::Migration[4.2]
   def change
   	change_column :users, :cv_updated_at, :timestamp
   end

@@ -1,4 +1,4 @@
-class RemoveDeviseFromUser < ActiveRecord::Migration
+class RemoveDeviseFromUser < ActiveRecord::Migration[4.2]
   def change
     remove_column :users, :remember_created_at, :datetime
     remove_column :users, :sign_in_count, :integer
