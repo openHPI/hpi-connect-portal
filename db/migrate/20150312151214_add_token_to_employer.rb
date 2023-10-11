@@ -1,4 +1,4 @@
-class AddTokenToEmployer < ActiveRecord::Migration
+class AddTokenToEmployer < ActiveRecord::Migration[4.2]
   def up
     add_column :employers, :token, :string
     Employer.all.each do |employer|

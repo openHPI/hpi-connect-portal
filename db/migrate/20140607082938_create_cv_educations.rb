@@ -1,4 +1,4 @@
-class CreateCvEducations < ActiveRecord::Migration
+class CreateCvEducations < ActiveRecord::Migration[4.2]
   def change
     create_table :cv_educations do |t|
       t.integer :student_id

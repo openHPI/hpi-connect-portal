@@ -1,4 +1,4 @@
-class ChangeDataTypeForUsersPhotoFileNameAndUsersPhotoUpdatedAt < ActiveRecord::Migration
+class ChangeDataTypeForUsersPhotoFileNameAndUsersPhotoUpdatedAt < ActiveRecord::Migration[4.2]
   def change
   	change_column :users, :photo_file_name, :string
   	change_column :users, :photo_updated_at, :timestamp

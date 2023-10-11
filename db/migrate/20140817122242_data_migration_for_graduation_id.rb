@@ -1,4 +1,4 @@
-class DataMigrationForGraduationId < ActiveRecord::Migration
+class DataMigrationForGraduationId < ActiveRecord::Migration[4.2]
   def up
     JobOffer.all.each do |job_offer|
       unless job_offer.graduation_id.nil?

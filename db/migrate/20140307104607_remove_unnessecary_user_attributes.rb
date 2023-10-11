@@ -1,4 +1,4 @@
-class RemoveUnnessecaryUserAttributes < ActiveRecord::Migration
+class RemoveUnnessecaryUserAttributes < ActiveRecord::Migration[4.2]
   def change
     remove_column :users, :identity_url, :string
     remove_column :users, :role_id, :integer

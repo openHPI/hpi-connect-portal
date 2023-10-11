@@ -1,4 +1,4 @@
-class CreateJobOffersUsers < ActiveRecord::Migration
+class CreateJobOffersUsers < ActiveRecord::Migration[4.2]
   def up
     create_table :job_offers_users, :id => false do |t|
       t.integer :job_offer_id

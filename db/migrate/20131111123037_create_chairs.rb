@@ -1,4 +1,4 @@
-class CreateChairs < ActiveRecord::Migration
+class CreateChairs < ActiveRecord::Migration[4.2]
   def change
     create_table :chairs do |t|
       t.string :name

@@ -1,4 +1,4 @@
-class MergeUserAndStudent < ActiveRecord::Migration
+class MergeUserAndStudent < ActiveRecord::Migration[4.2]
   def change
     add_column :users, :semester, :integer
     add_column :users, :academic_program, :string
