@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.4'
+ruby '3.1.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.6.1'
@@ -15,9 +15,6 @@ gem 'uglifier'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 5.0'
-
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-gem 'therubyracer', '~> 0.12.0', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.3'
@@ -80,7 +77,7 @@ gem 'rest-client'
 gem 'highline'
 
 # for picture Upload
-gem 'paperclip', '~> 6.1.0'
+gem 'kt-paperclip'
 
 # for cron jobs
 gem 'whenever'
@@ -95,7 +92,7 @@ gem 'jquery-raty-rails', git: 'https://github.com/bmc/jquery-raty-rails.git'
 gem 'jquery-turbolinks'
 
 # a Helper to validate dates
-gem 'validates_timeliness', '~> 5.0'
+gem 'validates_timeliness'
 
 # replacement for glyphicons
 gem 'font-awesome-rails'
@@ -116,7 +113,7 @@ gem 'traco'
 # WYSIWYG Text Editor
 gem 'tinymce-rails', '~> 5.6'
 gem 'tinymce-rails-langs', '~> 5.20200505'
-gem 'sanitize', '~> 5.2'
+gem 'sanitize'
 
 # Birthdate validation
 gem 'chronic', '~> 0.10.2'
@@ -147,3 +144,10 @@ gem 'capistrano', '~> 3.13'
 gem 'capistrano-rails', '~> 1.6'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
+
+# Gems needed explicitly after Ruby 3.1.4 upgrade
+gem "matrix", "~> 0.4.2"
+gem "net-ftp", "~> 0.2.0"
+gem "net-smtp", "~> 0.4.0"
+gem "webrick", "~> 1.8"
+gem "phantomjs", "~> 2.1", :require => 'phantomjs/poltergeist'
