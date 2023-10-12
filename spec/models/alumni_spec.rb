@@ -68,7 +68,7 @@ describe Alumni do
     context "when all fields are present" do
       before :each do
         ActionMailer::Base.deliveries.clear
-        @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
+        @csv_row = CSV.parse_line(@valid_csv_string, **@csv_options)
         @return_val = Alumni.create_from_row(@csv_row)
         @alumnus = Alumni.last
       end
@@ -100,7 +100,7 @@ describe Alumni do
 
     context "when full name isn't present, but alumni mail adress is" do
       before :all do
-        @csv_row = CSV.parse_line(@csv_string_without_fullname, @csv_options)
+        @csv_row = CSV.parse_line(@csv_string_without_fullname, **@csv_options)
         @return_val = Alumni.create_from_row(@csv_row)
         @alumnus = Alumni.last
       end
@@ -120,7 +120,7 @@ describe Alumni do
 
     context "when alumni mail and full name aren't present" do
       before :all do
-        @csv_row = CSV.parse_line(@csv_string_mail_only, @csv_options)
+        @csv_row = CSV.parse_line(@csv_string_mail_only, **@csv_options)
         @return_val = Alumni.create_from_row(@csv_row)
       end
 
@@ -131,7 +131,7 @@ describe Alumni do
 
     context "when mailer raises exception" do
       before :each do
-        @csv_row = CSV.parse_line(@valid_csv_string, @csv_options)
+        @csv_row = CSV.parse_line(@valid_csv_string, **@csv_options)
         allow(AlumniMailer).to receive(:creation_email).and_raise(StandardError)
       end
 
