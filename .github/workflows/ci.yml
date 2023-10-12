@@ -17,6 +17,23 @@ jobs:
           - 5432:5432
 
     steps:
+      - name: Install PhantomJS
+        run: |
+          PHANTOM_JS_LATEST=$(curl -s https://bitbucket.org/ariya/phantomjs/downloads/ | grep -i -e zip -e bz2 | grep -vi beta | grep -i linux-x86_64 | grep -v symbols | cut -d '>' -f 2 | cut -d '<' -f 1 | head -n 1)
+          PHANTOM_VERSION=${PHANTOM_JS_LATEST%-*-*.*.*}
+          ARCH=$(uname -m)
+
+          PHANTOM_JS="$PHANTOM_VERSION-linux-x86_64"
+
+          sudo apt-get update
+          sudo apt-get -y install build-essential chrpath libssl-dev libxft-dev libfreetype6 libfreetype6-dev libfontconfig1 libfontconfig1-dev
+
+          cd ~
+          wget https://bitbucket.org/ariya/phantomjs/downloads/$PHANTOM_JS.tar.bz2
+          tar xvjf $PHANTOM_JS.tar.bz2
+
+          sudo mv $PHANTOM_JS /usr/local/share
+          sudo ln -sf /usr/local/share/$PHANTOM_JS/bin/phantomjs /usr/local/bin
 
       - name: Checkout code
         uses: actions/checkout@v2
