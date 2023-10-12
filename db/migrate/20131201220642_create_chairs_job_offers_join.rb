@@ -1,4 +1,4 @@
-class CreateChairsJobOffersJoin < ActiveRecord::Migration
+class CreateChairsJobOffersJoin < ActiveRecord::Migration[4.2]
     def up
     create_table :chairs_job_offers, :id => false do |t|
     	t.integer :chair_id

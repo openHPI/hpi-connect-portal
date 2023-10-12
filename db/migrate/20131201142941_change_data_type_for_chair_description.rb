@@ -1,4 +1,4 @@
-class ChangeDataTypeForChairDescription < ActiveRecord::Migration
+class ChangeDataTypeForChairDescription < ActiveRecord::Migration[4.2]
   def up
    change_column :chairs, :description, :text
   end

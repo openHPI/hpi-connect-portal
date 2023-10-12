@@ -1,4 +1,4 @@
-class ChangeForeignKeysToStudentId < ActiveRecord::Migration
+class ChangeForeignKeysToStudentId < ActiveRecord::Migration[4.2]
 
   def up
     rename_column :applications, :user_id, :student_id

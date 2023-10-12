@@ -85,7 +85,7 @@ describe User do
 
       @user = FactoryBot.create(:user, :alumnus)
 
-      @csv_row = CSV.parse_line("nachname,vorname,akad_titel,geburtsname,abschluss,jahr,private_email,alumnimail,weitere_emailadresse,emailverteiler,keine_email,letztes_unternehmen,aktuelle_position,ort_land,auf_linkedin,unternehmen_bekannt,strae,ort,plz,land,telefon,weitere_email_nicht_fr_newsletter_nutzen,notiz,einverstndnis_alumniarbeit_erteilt,strae_weitere_adresse,plz,stadt,land\n#{@user.lastname},#{@user.firstname},,,Bachelor,2017,private@example.com,#{@user.alumni_email}@hpi-alumni.de,,#{@user.alumni_email}@hpi-alumni.de\;,,Unternehmen,Developer,Deutschland,,,,,,,,,,,,,,", {headers: true, return_headers: false, header_converters: :symbol})
+      @csv_row = CSV.parse_line("nachname,vorname,akad_titel,geburtsname,abschluss,jahr,private_email,alumnimail,weitere_emailadresse,emailverteiler,keine_email,letztes_unternehmen,aktuelle_position,ort_land,auf_linkedin,unternehmen_bekannt,strae,ort,plz,land,telefon,weitere_email_nicht_fr_newsletter_nutzen,notiz,einverstndnis_alumniarbeit_erteilt,strae_weitere_adresse,plz,stadt,land\n#{@user.lastname},#{@user.firstname},,,Bachelor,2017,private@example.com,#{@user.alumni_email}@hpi-alumni.de,,#{@user.alumni_email}@hpi-alumni.de\;,,Unternehmen,Developer,Deutschland,,,,,,,,,,,,,,", headers: true, return_headers: false, header_converters: :symbol)
     end
 
     it "updates row with the user's email address" do

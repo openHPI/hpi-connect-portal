@@ -1,4 +1,4 @@
-class CreateJoboffersProgrammingLanguagesJoin < ActiveRecord::Migration
+class CreateJoboffersProgrammingLanguagesJoin < ActiveRecord::Migration[4.2]
   def up
     create_table :job_offers_programming_languages, :id => false do |t|
     	t.integer :job_offer_id

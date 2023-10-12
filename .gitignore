@@ -12,3 +12,4 @@
 .orig
 .idea
 /.byebug_history
+/spec/examples.txt

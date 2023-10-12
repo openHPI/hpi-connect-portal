@@ -1,4 +1,4 @@
-class AddSeveralFieldsToEmployer < ActiveRecord::Migration
+class AddSeveralFieldsToEmployer < ActiveRecord::Migration[4.2]
   def change
     add_column :employers, :place_of_business, :string
     add_column :employers, :website, :string
