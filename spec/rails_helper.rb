@@ -14,13 +14,13 @@ require 'email_spec'
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
-Capybara.raise_server_errors = false
-Capybara.server = :webrick
-
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, { js_errors: false, window_size: [1500, 2500] })
 end
+
+Capybara.javascript_driver = :poltergeist
+Capybara.raise_server_errors = false
+Capybara.server = :webrick
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -32,6 +32,8 @@ RSpec.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+
+  config.example_status_persistence_file_path = 'spec/examples.txt'
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
