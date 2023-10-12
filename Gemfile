@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 ruby '3.1.4'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.6.1'
+gem 'rails', '~> 6.1.0'
 
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.2.3'
+gem 'pg', '~> 1.0'
 
 # Use SCSS for stylesheets
 gem 'sassc-rails'
@@ -29,7 +28,7 @@ gem 'safe_target_blank'
 gem 'has_scope'
 
 # Annotate database fields to model files
-gem 'annotate', '>=2.6.1'
+gem 'annotate', '>= 2.6.1'
 
 # Secure Password Hashes
 gem 'bcrypt', '~> 3.1.13'
