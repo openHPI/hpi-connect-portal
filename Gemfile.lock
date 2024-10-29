@@ -458,7 +458,7 @@ DEPENDENCIES
   font-awesome-rails
   has_scope
   highline
-  jbuilder (~> 2.10)
+  jbuilder (~> 2.11)
   jquery-rails (~> 4.3)
   jquery-raty-rails!
   jquery-star-rating-rails

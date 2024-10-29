@@ -19,7 +19,7 @@ gem 'coffee-rails', '~> 5.0'
 gem 'jquery-rails', '~> 4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.10'
+gem 'jbuilder', '~> 2.11'
 
 # Automatically add rel="noopener noreferrer" to every link with target="_blank"
 gem 'safe_target_blank'
