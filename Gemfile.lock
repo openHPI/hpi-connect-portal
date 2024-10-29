@@ -6,17 +6,17 @@ GIT
       activesupport (>= 3.0)
 
 GIT
-  remote: https://github.com/bmc/jquery-raty-rails.git
-  revision: a4fb8a9cc7d0b20ab4c0b8d0a6480dd31d4a8c26
-  specs:
-    jquery-raty-rails (0.0.2)
-      rails (>= 3.2.3)
-
-GIT
   remote: https://github.com/heroku/rails_log_stdout.git
   revision: 868ae69489c05f8905650a27f0954c22ea0b9573
   specs:
     rails_log_stdout (0.0.1)
+
+GIT
+  remote: https://github.com/tfantina/jquery-raty-rails.git
+  revision: 38c4a53577b31f82f1fc5d9b778594f260c148c0
+  specs:
+    jquery-raty-rails (2.0.0)
+      rails
 
 GEM
   remote: https://rubygems.org/
